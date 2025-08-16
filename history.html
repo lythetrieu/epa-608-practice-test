@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPA 608 Test History - EPA 608 Practice Test</title>
+    <meta name="description" content="View your EPA 608 practice test history, track progress, and analyze performance with detailed statistics and score tracking.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://epa608practicetest.com/history.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="EPA 608 Test History - EPA 608 Practice Test">
+    <meta property="og:description" content="Track your EPA 608 certification practice test progress with detailed history and performance analytics.">
+    <meta property="og:image" content="https://epa608practicetest.com/images/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EPA 608 Test History - EPA 608 Practice Test">
+    <meta name="twitter:description" content="Track your EPA 608 certification practice test progress with detailed history and performance analytics.">
+    <meta name="twitter:image" content="https://epa608practicetest.com/images/og-image.jpg">
+    <style>
+        :root {
+            --color-primary: #007acc;
+            --color-success: #28a745;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
+        .container{width:100%;margin:0;padding:0 20px}
+        
+        /* Header */
+        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
+        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+        .logo{font-size:24px;font-weight:bold;color:var(--color-primary);text-decoration:none}
+        .nav-menu{display:flex;list-style:none;gap:32px}
+        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
+        .nav-menu a:hover,.nav-menu a.active{color:var(--color-primary)}
+        
+        /* History Container */
+        .history-container{max-width:1000px;margin:40px auto;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);overflow:hidden;margin-top:20px}
+        .history-header{background:var(--color-primary);color:#fff;padding:24px;text-align:center}
+        .history-header h1{font-size:24px;margin-bottom:8px;color:#fff}
+        .user-info{font-size:14px;opacity:.9}
+        .history-main{padding:24px}
+        .nav-btn{background:var(--color-success);color:#fff;border:none;padding:8px 16px;border-radius:4px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;margin:0 8px}
+        .nav-btn:hover{background:#218838;text-decoration:none;color:#fff}
+        .stats-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+        .stat-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:24px;text-align:center}
+        .stat-number{font-size:32px;font-weight:bold;color:var(--color-primary);margin-bottom:8px}
+        .stat-label{font-size:14px;color:#666}
+        h2{font-size:20px;margin-bottom:16px;color:#333;border-bottom:2px solid var(--color-primary);padding-bottom:8px}
+        .no-history{text-align:center;padding:48px;color:#666}
+        .no-history p{font-size:18px;margin-bottom:16px}
+        .history-table{width:100%;border-collapse:collapse;margin-top:16px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+        .history-table th,.history-table td{padding:16px;text-align:left;border-bottom:1px solid #e0e0e0}
+        .history-table th{background:#f8f9fa;font-weight:600;color:#555}
+        .history-table tbody tr:hover{background:#f8f9fa}
+        .score-badge{padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold}
+        .score-excellent{background:#d4edda;color:#155724}
+        .score-good{background:#d1ecf1;color:#0c5460}
+        .score-fair{background:#fff3cd;color:#856404}
+        .score-poor{background:#f8d7da;color:#721c24}
+        .date-time{font-size:14px;color:#666}
+        .actions{text-align:center;margin-top:32px}
+        .clear-btn{background:#dc3545;color:#fff;border:none;padding:8px 16px;border-radius:4px;font-size:14px;cursor:pointer}
+        .clear-btn:hover{background:#c82333}
+        .export-btn{background:#6c757d;color:#fff;border:none;padding:8px 16px;border-radius:4px;font-size:14px;cursor:pointer;margin-right:16px}
+        .export-btn:hover{background:#545b62}
+        /* Footer */
+        footer{background:#333;color:#fff;padding:48px 0 32px;margin-top:40px}
+        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
+        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
+        .footer-section ul{list-style:none}
+        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
+        .footer-section a:hover{color:#fff}
+        .footer-section li{margin-bottom:8px}
+        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
+        
+        @media (max-width:768px){
+            .container{padding:0 16px}
+            .header-content{flex-direction:column;gap:16px}
+            .nav-menu{gap:20px}
+            .history-container{margin:20px 16px}
+            .history-header{padding:16px}
+            .history-header h1{font-size:20px}
+            .history-main{padding:16px}
+            .stats-summary{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+            .stat-card{padding:16px}
+            .stat-number{font-size:24px}
+            .history-table{font-size:14px}
+            .history-table th,.history-table td{padding:8px}
+            .footer-content{grid-template-columns:1fr;text-align:center}
+        }
+        
+        /* Weak Topics Review Styles */
+        .review-section{margin-top:32px;padding:24px;background:#fff3cd;border:1px solid #ffeaa7;border-radius:8px}
+        .review-section h3{color:#856404;margin-bottom:16px;font-size:20px}
+        .weak-topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+        .weak-topic-card{background:#fff;padding:20px;border-radius:8px;border-left:4px solid #dc3545;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+        .weak-topic-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:8px;text-transform:uppercase}
+        .weak-topic-score{font-size:28px;font-weight:bold;color:#dc3545;margin-bottom:4px}
+        .weak-topic-label{font-size:12px;color:#666}
+        .review-button{background:#dc3545;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:background 0.3s;width:100%}
+        .review-button:hover{background:#c82333}
+        .review-info{color:#856404;margin-bottom:16px;font-size:14px}
+        .no-weak-topics{text-align:center;padding:32px;color:#28a745;font-size:18px}
+        .no-weak-topics .success-icon{font-size:48px;margin-bottom:16px}
+        
+        /* Pagination Styles */
+        .pagination{display:flex;justify-content:center;align-items:center;gap:16px;margin:20px 0;padding:16px}
+        .page-btn{background:#007acc;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:14px;transition:background 0.3s}
+        .page-btn:hover:not(:disabled){background:#005a9e}
+        .page-btn:disabled{background:#ccc;cursor:not-allowed}
+        .page-info{font-size:14px;color:#666;font-weight:500}
+        
+        @media (max-width:480px){
+            .nav-btn{padding:8px 12px;font-size:13px}
+            .history-table th,.history-table td{padding:6px;font-size:13px}
+            .actions button{display:block;width:100%;margin:8px 0}
+            .pagination{flex-direction:column;gap:12px}
+            .page-btn{padding:10px 20px}
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 40px; width: auto;">
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="history.html" class="active" aria-current="page">Progress</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="history-container">
+            <div class="history-header">
+                <h1>EPA 608 Test History</h1>
+                <div class="user-info" id="userInfo">Loading...</div>
+            </div>
+            
+            <main class="history-main">
+            
+            <section id="statsSection" class="stats-summary" aria-labelledby="stats-heading">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTests">0</div>
+                    <div class="stat-label">Total Tests Taken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avgScore">0%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="bestScore">0%</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="lastScore">N/A</div>
+                    <div class="stat-label">Last Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="passRate">0%</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="recentStreak">0</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+            </section>
+            
+            <!-- Areas for Improvement Section -->
+            <section class="review-section" id="areasSection" style="display:none">
+                <h3>📊 Areas for Improvement</h3>
+                <div class="review-info" id="areasInfo"></div>
+                <div class="weak-topics-grid" id="weakTopicsGrid"></div>
+            </section>
+
+            <!-- Simple Review Section -->
+            <section class="review-section" id="simpleReviewSection" style="display:none; background:#e8f5e8; border-color:#28a745;">
+                <h3>🎯 Wrong Answer Review</h3>
+                <div class="review-info" id="wrongAnswersInfo"></div>
+                <button class="review-button" onclick="startSimpleReview()" id="simpleReviewBtn">📝 Review Wrong Answers</button>
+            </section>
+            
+            <article class="history-section" aria-labelledby="history-heading">
+                <h2 id="history-heading">Test Attempts</h2>
+                
+                <section id="noHistory" class="no-history" style="display:none">
+                    <p>No test history found.</p>
+                    <p>Take your first practice test to see your results here!</p>
+                    <a href="test.html" class="nav-btn">Start Practice Test</a>
+                </section>
+                
+                <div id="historyContent">
+                    <table class="history-table" id="historyTable" style="display:none" role="table" aria-labelledby="history-heading">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Test Type</th>
+                                <th scope="col">Date & Time</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav class="pagination" id="paginationSection" style="display:none" aria-label="Test history pagination">
+                    <button type="button" class="page-btn" id="prevPage" onclick="changePage(-1)" disabled>← Previous</button>
+                    <span class="page-info" id="pageInfo">Page 1 of 1</span>
+                    <button type="button" class="page-btn" id="nextPage" onclick="changePage(1)" disabled>Next →</button>
+                </nav>
+                
+                <nav class="actions" id="actionsSection" style="display:none" aria-label="History actions">
+                    <button type="button" class="export-btn" onclick="exportHistory()">Export Data</button>
+                    <button type="button" class="clear-btn" onclick="clearHistory()">Clear History</button>
+                </nav>
+            </article>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Practice & Learn</h4>
+                    <ul>
+                        <li><a href="history.html">History & Progress</a></li>
+                        <li><a href="index.html#how-it-works">Study Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>EPA 608 Information</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#requirements">Certification Requirements</a></li>
+                        <li><a href="index.html#exam-tips">Exam Tips</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support & Info</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Support</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                        <li><a href="policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Use</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Start</h4>
+                    <p>Ready to begin? No registration required. Start your free EPA 608 practice test now and boost your chances of passing the certification exam.</p>
+                    <a href="index.html#tests" style="color:#28a745;font-weight:bold">Choose Your Test →</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 EPA 608 Practice Test. Built to help you succeed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let userID = null;
+        let userHistory = [];
+        let currentPage = 1;
+        const itemsPerPage = 20;
+
+        function initializeHistoryPage() {
+            // Use the same data structure as our test page
+            userHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
+            
+            if (userHistory.length === 0) {
+                document.getElementById('userInfo').textContent = 'Take your first test to see your progress';
+                showNoHistory();
+                return;
+            }
+
+            document.getElementById('userInfo').textContent = `${userHistory.length} test${userHistory.length === 1 ? '' : 's'} completed`;
+            displayStats();
+            displayHistory();
+            displayWeakTopicsReview(); // Add weak topics analysis
+            document.getElementById('actionsSection').style.display = 'block';
+        }
+
+        function loadTestHistory() {
+            // This function is now handled in initializeHistoryPage
+            initializeHistoryPage();
+        }
+
+        function showNoHistory() {
+            document.getElementById('noHistory').style.display = 'block';
+            document.getElementById('historyTable').style.display = 'none';
+            document.getElementById('actionsSection').style.display = 'none';
+        }
+
+        function displayStats() {
+            const totalTests = userHistory.length;
+            const scores = userHistory.map(test => test.score);
+            const avgScore = totalTests > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / totalTests) : 0;
+            const bestScore = totalTests > 0 ? Math.max(...scores) : 0;
+            const lastScore = totalTests > 0 ? userHistory[0].score : 'N/A';
+            
+            // Calculate pass rate (72% or higher)
+            const passedTests = userHistory.filter(test => test.passed).length;
+            const passRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+            
+            // Calculate current streak (consecutive passes from most recent)
+            let currentStreak = 0;
+            for (let i = 0; i < userHistory.length; i++) {
+                if (userHistory[i].passed) {
+                    currentStreak++;
+                } else {
+                    break;
+                }
+            }
+
+            document.getElementById('totalTests').textContent = totalTests;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+            document.getElementById('bestScore').textContent = bestScore + '%';
+            document.getElementById('lastScore').textContent = lastScore + '%';
+            document.getElementById('passRate').textContent = passRate + '%';
+            document.getElementById('recentStreak').textContent = currentStreak;
+        }
+
+        function displayHistory() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            // Calculate pagination
+            const totalItems = userHistory.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+            
+            // Get items for current page
+            const pageItems = userHistory.slice(startIndex, endIndex);
+
+            pageItems.forEach((test, index) => {
+                const row = document.createElement('tr');
+                const testNumber = totalItems - (startIndex + index);
+                
+                const formattedDate = test.date;
+                const formattedTime = test.time;
+
+                const scoreClass = getScoreClass(test.score);
+                const resultBadge = test.passed ? 
+                    '<span class="score-badge score-excellent">PASS</span>' : 
+                    '<span class="score-badge score-poor">FAIL</span>';
+
+                row.innerHTML = `
+                    <td><strong>#${testNumber}</strong></td>
+                    <td><strong>${test.type.toUpperCase()}</strong></td>
+                    <td class="date-time">${formattedDate}<br><small>${formattedTime}</small></td>
+                    <td><span class="score-badge ${scoreClass}">${test.score}%</span></td>
+                    <td>${resultBadge}</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('historyTable').style.display = 'table';
+            updatePagination(totalPages);
+        }
+
+        function updatePagination(totalPages) {
+            const paginationSection = document.getElementById('paginationSection');
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+
+            if (totalPages <= 1) {
+                paginationSection.style.display = 'none';
+                return;
+            }
+
+            paginationSection.style.display = 'flex';
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
+        function changePage(direction) {
+            const totalPages = Math.ceil(userHistory.length / itemsPerPage);
+            const newPage = currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                displayHistory();
+            }
+        }
+
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-excellent';
+            if (score >= 72) return 'score-good';
+            if (score >= 60) return 'score-fair';
+            return 'score-poor';
+        }
+
+        function exportHistory() {
+            if (userHistory.length === 0) {
+                alert('No history to export');
+                return;
+            }
+
+            const exportData = {
+                userID: userID,
+                exportDate: new Date().toISOString(),
+                testHistory: userHistory.map((test, index) => ({
+                    testNumber: userHistory.length - index,
+                    date: test.date,
+                    score: test.score,
+                    totalQuestions: test.totalQuestions,
+                    percentage: test.percentage,
+                    userAnswers: test.userAnswers
+                }))
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `epa608-test-history-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        function clearHistory() {
+            if (userHistory.length === 0) {
+                alert('No history to clear');
+                return;
+            }
+
+            const confirmClear = confirm(
+                `Are you sure you want to clear all ${userHistory.length} test attempts? This action cannot be undone.`
+            );
+
+            if (confirmClear) {
+                localStorage.removeItem('epa608History');
+                userHistory = [];
+                showNoHistory();
+                
+                document.getElementById('totalTests').textContent = '0';
+                document.getElementById('avgScore').textContent = '0%';
+                document.getElementById('bestScore').textContent = '0%';
+                document.getElementById('lastScore').textContent = 'N/A';
+                document.getElementById('passRate').textContent = '0%';
+                document.getElementById('recentStreak').textContent = '0';
+
+                alert('Test history cleared successfully.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeHistoryPage);
+        
+        /**
+         * Analyze test history to find weak topics
+         * @param {Array} testHistory - Array of test results
+         * @returns {Array} - Array of weak topics with accuracy rates
+         */
+        function analyzeWeakTopics(testHistory) {
+            if (!Array.isArray(testHistory) || testHistory.length === 0) {
+                return [];
+            }
+            
+            // Mock topic mapping based on test types (in production, use actual question-level data)
+            const topicMapping = {
+                'core': ['Environmental Regulations', 'Refrigerant Safety', 'Recovery Procedures'],
+                'type1': ['Small Appliances', 'Recovery Requirements', 'Leak Detection'],
+                'type2': ['High-Pressure Systems', 'Leak Repair', 'Charging Procedures'],
+                'type3': ['Low-Pressure Chillers', 'Evacuation Methods', 'Safety Precautions'],
+                'universal': ['Environmental Regulations', 'Small Appliances', 'High-Pressure Systems', 'Low-Pressure Chillers']
+            };
+            
+            // Calculate accuracy by test type/topic
+            const topicStats = {};
+            
+            testHistory.forEach(test => {
+                const topics = topicMapping[test.type] || [test.type.charAt(0).toUpperCase() + test.type.slice(1)];
+                
+                topics.forEach(topic => {
+                    if (!topicStats[topic]) {
+                        topicStats[topic] = { correct: 0, total: 0 };
+                    }
+                    
+                    // Simulate question-level data based on overall test score
+                    const questionsPerTopic = test.type === 'universal' ? 10 : 8;
+                    const topicScore = test.score + (Math.random() - 0.5) * 20; // Add some variation
+                    const correctAnswers = Math.round((Math.max(0, Math.min(100, topicScore)) / 100) * questionsPerTopic);
+                    
+                    topicStats[topic].total += questionsPerTopic;
+                    topicStats[topic].correct += correctAnswers;
+                });
+            });
+            
+            // Calculate accuracy rates and filter
+            const topicsWithAccuracy = Object.entries(topicStats)
+                .map(([topic, stats]) => ({
+                    topic,
+                    accuracy: Math.round((stats.correct / stats.total) * 100),
+                    totalQuestions: stats.total,
+                    correctAnswers: stats.correct
+                }))
+                .filter(topic => topic.accuracy < 75) // Exclude topics with ≥75% accuracy
+                .sort((a, b) => a.accuracy - b.accuracy); // Sort from lowest to highest
+            
+            return topicsWithAccuracy.slice(0, 3); // Return top 3 weakest
+        }
+        
+        /**
+         * Display weak topics analysis section
+         */
+        function displayWeakTopicsReview() {
+            const weakTopics = analyzeWeakTopics(userHistory);
+            const hasWrongAnswers = checkForWrongAnswersInHistory();
+            
+            // Handle Areas for Improvement section
+            displayAreasForImprovement(weakTopics);
+            
+            // Handle Simple Review section  
+            displaySimpleReviewSection(hasWrongAnswers);
+        }
+
+        function displayAreasForImprovement(weakTopics) {
+            const areasSection = document.getElementById('areasSection');
+            const areasInfo = document.getElementById('areasInfo');
+            const weakTopicsGrid = document.getElementById('weakTopicsGrid');
+            
+            if (weakTopics.length === 0) {
+                areasSection.style.display = 'block';
+                areasSection.style.background = '#d4edda';
+                areasSection.style.borderColor = '#c3e6cb';
+                
+                areasInfo.innerHTML = '';
+                weakTopicsGrid.innerHTML = `
+                    <div class="no-weak-topics" style="grid-column: 1/-1;">
+                        <div class="success-icon">🎉</div>
+                        <div><strong>Excellent Performance!</strong></div>
+                        <div>All your topic areas show strong performance (≥75% accuracy)</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show weak topics analysis
+            areasSection.style.display = 'block';
+            areasSection.style.background = '#fff3cd';
+            areasSection.style.borderColor = '#ffeaa7';
+            
+            areasInfo.innerHTML = `Found ${weakTopics.length} topic area${weakTopics.length === 1 ? '' : 's'} that need improvement (below 75% accuracy):`;
+            
+            weakTopicsGrid.innerHTML = weakTopics.map(topic => `
+                <div class="weak-topic-card">
+                    <div class="weak-topic-title">${topic.topic}</div>
+                    <div class="weak-topic-score">${topic.accuracy}%</div>
+                    <div class="weak-topic-label">Accuracy Rate</div>
+                    <div class="weak-topic-label">${topic.correctAnswers}/${topic.totalQuestions} correct</div>
+                </div>
+            `).join('');
+        }
+
+        function displaySimpleReviewSection(hasWrongAnswers) {
+            const simpleReviewSection = document.getElementById('simpleReviewSection');
+            const wrongAnswersInfo = document.getElementById('wrongAnswersInfo');
+            const simpleReviewBtn = document.getElementById('simpleReviewBtn');
+            
+            if (!hasWrongAnswers) {
+                // Don't show the simple review section if no wrong answers
+                simpleReviewSection.style.display = 'none';
+                return;
+            }
+            
+            // Count total wrong answers and mastered questions
+            const testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
+            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
+            
+            let totalWrongAnswers = 0;
+            let questionsToReview = 0;
+            
+            testHistory.forEach(test => {
+                if (test.detailedResults && Array.isArray(test.detailedResults)) {
+                    test.detailedResults.forEach(result => {
+                        if (!result.isCorrect) {
+                            totalWrongAnswers++;
+                            // Check if this question is not mastered
+                            const questionId = result.questionId || btoa(result.question.substring(0, 50) + result.topic).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
+                            if (!masteredQuestions.has(questionId)) {
+                                questionsToReview++;
+                            }
+                        }
+                    });
+                }
+            });
+            
+            if (questionsToReview === 0) {
+                // All questions have been mastered
+                simpleReviewSection.style.display = 'block';
+                simpleReviewSection.style.background = '#d4edda';
+                simpleReviewSection.style.borderColor = '#c3e6cb';
+                wrongAnswersInfo.innerHTML = `🎉 <strong>Amazing!</strong> You've mastered all ${totalWrongAnswers} previously wrong questions! No more review needed.`;
+                simpleReviewBtn.style.display = 'none';
+                return;
+            }
+            
+            // Show simple review section with progress
+            simpleReviewSection.style.display = 'block';
+            const masteredCount = totalWrongAnswers - questionsToReview;
+            let progressText = `You have <strong>${questionsToReview} question${questionsToReview === 1 ? '' : 's'}</strong> left to review`;
+            
+            if (masteredCount > 0) {
+                progressText += ` <span style="color: #28a745;">(${masteredCount} already mastered! 🎯)</span>`;
+            }
+            
+            wrongAnswersInfo.innerHTML = progressText;
+            simpleReviewBtn.style.display = 'block';
+        }
+        
+        /**
+         * Check if there are actual wrong answers in the test history
+         * @returns {boolean} True if wrong answers exist, false otherwise
+         */
+        function checkForWrongAnswersInHistory() {
+            if (!Array.isArray(userHistory) || userHistory.length === 0) {
+                return false;
+            }
+            
+            // Check for detailed results with wrong answers
+            for (let test of userHistory) {
+                if (test.detailedResults && Array.isArray(test.detailedResults)) {
+                    for (let result of test.detailedResults) {
+                        if (!result.isCorrect) {
+                            return true; // Found at least one wrong answer
+                        }
+                    }
+                }
+                
+                // Alternative check: if test score is less than 100%, there were wrong answers
+                if (test.score && test.score < 100) {
+                    return true;
+                }
+            }
+            
+            return false; // No wrong answers found
+        }
+        
+        /**
+         * Start simple review of wrong answers only
+         */
+        function startSimpleReview() {
+            // Check if there are any wrong answers to review
+            const hasWrongAnswers = checkForWrongAnswersInHistory();
+            
+            if (!hasWrongAnswers) {
+                alert('Great job! No wrong answers found to review.');
+                return;
+            }
+            
+            // Clear any previous review data and go directly to review page
+            localStorage.removeItem('reviewTopics');
+            localStorage.setItem('reviewMode', 'simple');
+            
+            // Navigate to simple review page
+            window.location.href = 'review.html';
+        }
+    </script>
+</body>
+</html>

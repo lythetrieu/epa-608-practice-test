@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPA 608 Review Session</title>
+    <style>
+        :root {
+            --color-primary: #007acc;
+            --color-success: #28a745;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
+        .container{width:100%;margin:0 auto;padding:0 20px}
+        
+        /* Header */
+        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
+        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+        .logo{font-size:24px;font-weight:bold;color:var(--color-primary);text-decoration:none}
+        .nav-menu{display:flex;list-style:none;gap:32px}
+        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
+        .nav-menu a:hover,.nav-menu a.active{color:var(--color-primary)}
+
+        /* Review Container */
+        .review-container{max-width:1000px;margin:40px auto;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);overflow:hidden;margin-top:20px}
+        .review-header{background:var(--color-primary);color:#fff;padding:24px;text-align:center}
+        .review-header h1{font-size:24px;margin-bottom:8px;color:#fff}
+        .review-header p{font-size:14px;opacity:.9}
+        
+        /* Review Content */
+        .review-main{padding:24px}
+
+        .review-setup {
+            background: #f8f9fa;
+            border-left: 4px solid var(--color-primary);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 4px;
+        }
+
+        .review-info {
+            background: #e8f5e8;
+            border-left: 4px solid var(--color-success);
+            color: #155724;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .review-topics-display {
+            margin: 25px 0;
+        }
+
+        .review-topics-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .review-topic-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .topic-icon {
+            font-size: 1.2em;
+        }
+
+        .topic-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .topic-accuracy {
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        .start-button {
+            background: var(--color-success);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            margin: 32px auto;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .start-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .start-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .review-actions {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .nav-button {
+            background: #6c757d;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #545b62;
+            transform: translateY(-1px);
+        }
+
+        /* Test Container Styles - Same as main test page */
+        .test-container {
+            display: none;
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .test-progress {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+            min-width: 120px;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .section-badge {
+            background: #dc3545;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .answers {
+            list-style: none;
+        }
+
+        .answer-item {
+            margin-bottom: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .answer-item:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .answer-item.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+            animation: correctPulse 0.8s ease-out;
+        }
+
+        .answer-item.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+            animation: incorrectShake 0.6s ease-out;
+        }
+
+        .answer-item.selected {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        @keyframes correctPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+            }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+
+        .answer-item input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #3498db;
+        }
+
+        .answer-item label {
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .answer-feedback {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            font-size: 1.4em;
+            opacity: 0;
+            animation: bounceIn 0.6s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        .answer-feedback.correct {
+            color: #27ae60;
+            text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+        }
+
+        .answer-feedback.incorrect {
+            color: #e74c3c;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(-50%);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1) translateY(-50%);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(-50%);
+            }
+        }
+
+        .test-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-button-test {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.2s ease;
+        }
+
+        .nav-button-test:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .nav-button-test:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-button {
+            background: #e74c3c;
+        }
+
+        .submit-button:hover {
+            background: #c0392b;
+        }
+
+        .results {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .pass {
+            color: #28a745;
+        }
+
+        .results-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .history-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .history-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .error-notice {
+            background: #f8d7da;
+            border: 2px solid #e74c3c;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .error-notice.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .error-notice::before {
+            content: '⚠️';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-notice.shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Answer Explanation Styles */
+        .answer-explanation {
+            margin: 20px 0;
+            padding: 0;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .answer-explanation.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .explanation-header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .explanation-header.correct {
+            background: #d4edda;
+            color: #155724;
+            border-bottom: 1px solid #c3e6cb;
+        }
+
+        .explanation-header.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border-bottom: 1px solid #f1b0b7;
+        }
+
+        .explanation-icon {
+            font-size: 1.3em;
+        }
+
+        .explanation-content {
+            padding: 15px 20px;
+            background: #fafafa;
+        }
+
+        .explanation-content p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+        }
+
+        .explanation-content strong {
+            color: #333;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-weight: 500;
+            margin-top: 10px !important;
+        }
+
+        .learn-message {
+            color: #856404;
+            font-weight: 500;
+            margin-top: 10px !important;
+        }
+
+        /* Progress Message Styles */
+        .progress-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 2px solid #007acc;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: all 0.3s ease;
+            min-width: 300px;
+        }
+
+        .progress-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .progress-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .progress-text {
+            font-size: 1.1em;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .progress-text strong {
+            color: #007acc;
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #3498db;
+            font-size: 1.3em;
+        }
+
+        .footer-section p, .footer-section li {
+            margin-bottom: 10px;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .page-header h1 {
+                font-size: 2em;
+            }
+            
+            .review-topics-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Footer */
+        footer{background:#333;color:#fff;padding:48px 0 32px;margin-top:40px}
+        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
+        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
+        .footer-section ul{list-style:none}
+        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
+        .footer-section a:hover{color:#fff}
+        .footer-section li{margin-bottom:8px}
+        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
+        
+        /* Responsive Design */
+        @media (max-width:768px){
+            .container{padding:0 16px}
+            .header-content{flex-direction:column;gap:16px}
+            .nav-menu{gap:20px;flex-wrap:wrap;justify-content:center}
+            .review-container{margin:20px 16px}
+            .review-header{padding:16px}
+            .review-header h1{font-size:20px}
+            .review-main{padding:16px}
+            .footer-content{grid-template-columns:1fr;text-align:center}
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 40px; width: auto;">
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="history.html">Progress</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="review-container">
+            <div class="review-header">
+                <h1>📝 Review Wrong Answers</h1>
+                <p>Practice questions you got wrong from your test history</p>
+            </div>
+            
+            <main class="review-main">
+
+        <div class="review-setup" id="reviewSetup">
+            <h2>🎯 Simple Review Mode</h2>
+            
+            <div class="review-info">
+                <strong>📝 Review:</strong> Practice ALL questions you've answered incorrectly. Simple and straightforward - just you and your wrong answers.
+            </div>
+
+            <div class="review-topics-display" id="topicsDisplay">
+                <h3>Questions to Review:</h3>
+                <div class="review-topics-list" id="topicsList">
+                    <!-- Wrong questions count will be loaded here -->
+                </div>
+            </div>
+
+            <button class="start-button" onclick="startReviewTest()" id="startReviewBtn">Start Review</button>
+            
+            <div class="review-actions">
+                <a href="history.html" class="nav-button">← Back to History</a>
+            </div>
+        </div>
+
+        <div class="test-container" id="testContainer">
+            <div class="test-header">
+                <div class="question-number" id="questionCounter">Question 1 of 25</div>
+                <div class="test-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="timer" id="timer">Review Mode</div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-header">
+                    <div class="section-badge" id="sectionBadge">Review</div>
+                </div>
+                <div class="question-text" id="questionText"></div>
+                <ul class="answers" id="answersContainer"></ul>
+            </div>
+
+            <div class="test-navigation">
+                <button class="nav-button-test" id="prevButton" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="nav-button-test" id="nextButton" onclick="nextQuestion()">Next Question</button>
+                <button class="nav-button-test submit-button" id="submitButton" onclick="submitTest()" style="display: none;">Complete Review</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div style="font-size: 4em; margin-bottom: 20px;">🎉</div>
+            <h2 style="color: #28a745; margin-bottom: 20px;">Congratulations!</h2>
+            <div class="score-display pass" style="font-size: 2.5em; margin: 30px 0;">100%</div>
+            <p style="font-size: 1.3em; margin-bottom: 30px; color: #28a745; font-weight: bold;">
+                You did a great job! No wrong answers remaining.
+            </p>
+            <p style="margin-bottom: 30px; color: #666;">
+                You have successfully mastered all the weak topics identified in your test history. 
+                Your knowledge in these areas has significantly improved!
+            </p>
+            <div class="results-buttons">
+                <a href="history.html" class="history-button">📊 View Progress</a>
+            </div>
+        </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Practice & Learn</h4>
+                    <ul>
+                        <li><a href="history.html">History & Progress</a></li>
+                        <li><a href="index.html#how-it-works">Study Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>EPA 608 Information</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#requirements">Certification Requirements</a></li>
+                        <li><a href="index.html#exam-tips">Exam Tips</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support & Info</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Support</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                        <li><a href="policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Use</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Start</h4>
+                    <p>Ready to begin? No registration required. Start your free EPA 608 practice test now and boost your chances of passing the certification exam.</p>
+                    <a href="index.html#tests" style="color:#28a745;font-weight:bold">Choose Your Test →</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 EPA 608 Practice Test. Built to help you succeed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Expanded question bank with more questions per topic
+        const reviewQuestionBank = {
+            'Environmental Regulations': [
+                {
+                    question: "What is the primary purpose of EPA Section 608 regulations?",
+                    answers: [
+                        "To increase energy efficiency in HVAC systems",
+                        "To protect the ozone layer and reduce greenhouse gas emissions", 
+                        "To standardize refrigerant pricing",
+                        "To regulate equipment warranties"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which refrigerant has the highest Ozone Depletion Potential (ODP)?",
+                    answers: [
+                        "R-134a",
+                        "R-410A", 
+                        "CFC-12 (R-12)",
+                        "R-22"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What does GWP stand for in refrigerant terminology?",
+                    answers: [
+                        "Global Warming Potential",
+                        "Gas Weight Pressure",
+                        "General Working Protocol", 
+                        "Greenhouse Weight Percentage"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "According to EPA regulations, what is required before disposing of appliances containing refrigerants?",
+                    answers: [
+                        "Only disconnecting the power supply",
+                        "Recovering the refrigerant to specified levels",
+                        "Removing all components",
+                        "Testing for leaks"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What is the Clean Air Act's definition of 'knowingly releasing' refrigerants?",
+                    answers: [
+                        "Only intentional releases",
+                        "Releases due to equipment failure",
+                        "Any release that could have been prevented with proper service practices",
+                        "Only releases during system charging"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is the maximum penalty for knowingly releasing refrigerants?",
+                    answers: [
+                        "$10,000 per day per violation",
+                        "$25,000 per day per violation",
+                        "$37,500 per day per violation",
+                        "$50,000 per day per violation"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Recovery equipment must be certified to which standard?",
+                    answers: [
+                        "ARI 700",
+                        "ARI 740",
+                        "ASHRAE 15",
+                        "EPA 608"
+                    ],
+                    correct: 1
+                }
+            ],
+            'Small Appliances': [
+                {
+                    question: "What is the definition of a small appliance under EPA Section 608?",
+                    answers: [
+                        "Any appliance using less than 2 pounds of refrigerant",
+                        "Any appliance that is fully manufactured, charged, and hermetically sealed with 5 pounds or less of refrigerant",
+                        "Window air conditioners only",
+                        "Appliances under 1000 BTU/hr"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What recovery level is required for small appliances before disposal?",
+                    answers: [
+                        "80% of refrigerant charge",
+                        "85% of refrigerant charge", 
+                        "90% of refrigerant charge",
+                        "100% of refrigerant charge"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "When is recovery NOT required for small appliances?",
+                    answers: [
+                        "When the repair cost exceeds the appliance value",
+                        "When the compressor is not functional and the system has leaked",
+                        "When the appliance is more than 10 years old",
+                        "Recovery is always required"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What type of recovery equipment is typically used for small appliances?",
+                    answers: [
+                        "System-dependent recovery only",
+                        "Self-contained recovery equipment",
+                        "Push-pull recovery method",
+                        "Any EPA-certified recovery equipment"
+                    ],
+                    correct: 3
+                },
+                {
+                    question: "Which of the following is considered a small appliance?",
+                    answers: [
+                        "A 3-ton rooftop unit",
+                        "A household refrigerator",
+                        "A commercial ice machine",
+                        "A chiller system"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What must be done with recovered refrigerant from small appliances?",
+                    answers: [
+                        "It can be immediately reused",
+                        "It must be destroyed",
+                        "It must be reclaimed or destroyed",
+                        "It can be vented if under 2 pounds"
+                    ],
+                    correct: 2
+                }
+            ],
+            'High-Pressure Systems': [
+                {
+                    question: "What defines a high-pressure appliance under EPA Section 608?",
+                    answers: [
+                        "Any system operating above 50 psi",
+                        "Systems using refrigerants with boiling points below 50°F at atmospheric pressure",
+                        "Commercial systems only",
+                        "Systems with more than 50 pounds of refrigerant"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What is the required recovery level for high-pressure appliances before disposal?",
+                    answers: [
+                        "10 inches Hg vacuum",
+                        "15 inches Hg vacuum",
+                        "4 inches Hg vacuum", 
+                        "0 psi gauge"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "What is the maximum allowable annual leak rate for commercial refrigeration equipment?",
+                    answers: [
+                        "10% of total charge",
+                        "15% of total charge",
+                        "20% of total charge",
+                        "35% of total charge"
+                    ],
+                    correct: 3
+                },
+                {
+                    question: "When must leak repair be performed on high-pressure commercial systems?",
+                    answers: [
+                        "Within 30 days of detection",
+                        "Within 60 days of detection",
+                        "Within 90 days of detection",
+                        "Within 1 year of detection"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "What recovery level is required for high-pressure systems during normal service?",
+                    answers: [
+                        "10 inches Hg vacuum",
+                        "15 inches Hg vacuum", 
+                        "4 inches Hg vacuum",
+                        "0 psi gauge pressure"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which refrigerant is commonly used in high-pressure air conditioning systems?",
+                    answers: [
+                        "R-123",
+                        "R-11",
+                        "R-22",
+                        "R-717 (ammonia)"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What happens if a high-pressure system cannot be evacuated to the required level?",
+                    answers: [
+                        "Recovery can be stopped",
+                        "System must be leak-checked and repaired",
+                        "Alternative recovery methods must be attempted",
+                        "Both B and C are correct"
+                    ],
+                    correct: 3
+                }
+            ],
+            'Low-Pressure Chillers': [
+                {
+                    question: "What defines a low-pressure appliance under EPA Section 608?",
+                    answers: [
+                        "Systems operating below 50 psi",
+                        "Systems using refrigerants with boiling points at or above 50°F at atmospheric pressure",
+                        "Small residential systems",
+                        "Systems with less than 50 pounds of refrigerant"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which refrigerant is commonly used in low-pressure chillers?",
+                    answers: [
+                        "R-22",
+                        "R-410A",
+                        "R-123", 
+                        "R-134a"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is the required recovery level for low-pressure appliances before disposal?",
+                    answers: [
+                        "25 inches Hg vacuum",
+                        "26 inches Hg vacuum",
+                        "27 inches Hg vacuum",
+                        "29 inches Hg vacuum"
+                    ],
+                    correct: 3
+                },
+                {
+                    question: "What special safety concern exists with low-pressure chillers using R-123?",
+                    answers: [
+                        "High flammability",
+                        "Air can enter system creating combustible mixture",
+                        "Extremely high pressure",
+                        "Toxic vapor production"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "How often must low-pressure chillers be leak tested?",
+                    answers: [
+                        "Monthly",
+                        "Quarterly", 
+                        "Annually",
+                        "Every 3 years"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is the maximum allowable annual leak rate for low-pressure chillers?",
+                    answers: [
+                        "10% of total charge",
+                        "15% of total charge",
+                        "20% of total charge",
+                        "35% of total charge"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Which method is commonly used for leak detection in low-pressure systems?",
+                    answers: [
+                        "Electronic leak detectors only",
+                        "Soap bubble solution",
+                        "Pressurizing with nitrogen and using tracer gas",
+                        "Visual inspection only"
+                    ],
+                    correct: 2
+                }
+            ]
+        };
+
+        let currentTest = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let reviewTopics = [];
+        let currentScore = 0;
+        let totalQuestions = 0;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            debugTestHistory(); // Debug data when page loads
+            loadReviewTopics();
+        });
+
+        function loadReviewTopics() {
+            // Simple check: are there any wrong answers to review?
+            const wrongQuestions = getPreviouslyWrongQuestions();
+
+            if (wrongQuestions.length === 0) {
+                // No wrong answers to review - redirect to history
+                alert('Great job! No wrong answers found to review.');
+                window.location.href = 'history.html';
+                return;
+            }
+
+            displayReviewTopics();
+        }
+
+        function displayReviewTopics() {
+            const topicsList = document.getElementById('topicsList');
+            
+            // Get all wrong questions from history
+            const wrongQuestions = getPreviouslyWrongQuestions();
+            
+            // Filter out mastered questions
+            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
+            const questionsToReview = wrongQuestions.filter(question => {
+                const questionId = question.id || generateQuestionId(question.question, question.topic);
+                return !masteredQuestions.has(questionId);
+            });
+            
+            if (questionsToReview.length === 0) {
+                topicsList.innerHTML = `
+                    <div class="review-topic-item" style="justify-content: center; color: #28a745;">
+                        <span class="topic-icon">🎉</span>
+                        <span class="topic-name">All questions mastered!</span>
+                        <span class="topic-accuracy">Great progress</span>
+                    </div>
+                `;
+                document.getElementById('startReviewBtn').style.display = 'none';
+                return;
+            }
+            
+            // Show count of remaining questions to review
+            const masteredCount = wrongQuestions.length - questionsToReview.length;
+            topicsList.innerHTML = `
+                <div class="review-topic-item">
+                    <span class="topic-icon">📝</span>
+                    <span class="topic-name">Questions to Review</span>
+                    <span class="topic-accuracy">${questionsToReview.length} remaining${masteredCount > 0 ? ` (${masteredCount} mastered)` : ''}</span>
+                </div>
+            `;
+            
+            document.getElementById('startReviewBtn').style.display = 'block';
+        }
+
+        function startReviewTest() {
+            // Generate questions from weak topics
+            currentTest = generateReviewQuestions();
+            
+            if (currentTest.length === 0) {
+                alert('No questions available for the selected topics.');
+                return;
+            }
+
+            userAnswers = new Array(currentTest.length).fill(null);
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            totalQuestions = currentTest.length;
+
+            // Hide setup and show test
+            document.getElementById('reviewSetup').style.display = 'none';
+            document.getElementById('testContainer').style.display = 'block';
+
+            displayQuestion();
+        }
+
+        function generateReviewQuestions() {
+            // Get all wrong questions from history
+            const wrongQuestionsFromHistory = getPreviouslyWrongQuestions();
+            console.log(`Found ${wrongQuestionsFromHistory.length} wrong questions from history`);
+            
+            // Get mastered questions to exclude
+            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
+            console.log(`Mastered questions: ${masteredQuestions.size}`);
+            
+            // Filter out mastered questions
+            const questionsToReview = wrongQuestionsFromHistory.filter(question => {
+                const questionId = question.id || generateQuestionId(question.question, question.topic);
+                return !masteredQuestions.has(questionId);
+            });
+            
+            console.log(`Questions to review after filtering mastered: ${questionsToReview.length}`);
+            
+            // Randomize answer order for each question  
+            questionsToReview.forEach(question => {
+                if (!question.answers || question.answers.length === 0) {
+                    return;
+                }
+                
+                // Create mapping for original correct answer
+                const originalAnswers = [...question.answers];
+                const originalCorrect = question.correct;
+                
+                // Create array with indices and shuffle
+                const indices = question.answers.map((_, index) => index);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                
+                // Reorder answers and update correct index
+                question.answers = indices.map(i => originalAnswers[i]);
+                question.correct = indices.indexOf(originalCorrect);
+            });
+
+            // Shuffle questions order
+            for (let i = questionsToReview.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questionsToReview[i], questionsToReview[j]] = [questionsToReview[j], questionsToReview[i]];
+            }
+
+            return questionsToReview;
+        }
+
+        function getPreviouslyWrongQuestions() {
+            const testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
+            const wrongQuestions = [];
+            
+            // Extract ALL wrong answers from test history (not filtered by reviewTopics)
+            testHistory.forEach(test => {
+                if (test.detailedResults && Array.isArray(test.detailedResults)) {
+                    test.detailedResults.forEach(result => {
+                        if (!result.isCorrect) { // Include ALL wrong answers regardless of topic
+                            // Reconstruct the question object
+                            wrongQuestions.push({
+                                id: result.questionId || generateQuestionId(result.question, result.topic),
+                                question: result.question,
+                                answers: result.answers || [],
+                                correct: result.correctAnswer,
+                                topic: result.topic,
+                                fromHistory: true // Mark as historical wrong answer
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Temporarily disable deduplication to test if that's the issue
+            console.log(`Found ${wrongQuestions.length} total wrong answers before deduplication`);
+            
+            // Remove duplicates based on question ID or full question text (more precise)
+            const uniqueQuestions = [];
+            const seenQuestions = new Set();
+            
+            wrongQuestions.forEach(q => {
+                // Use question ID if available, otherwise use full question text as key
+                const key = q.id || q.question.substring(0, 100); // Use more of question text for uniqueness
+                if (!seenQuestions.has(key)) {
+                    seenQuestions.add(key);
+                    uniqueQuestions.push(q);
+                    console.log(`Adding unique question: "${q.question.substring(0, 50)}..." with key: ${key.substring(0, 30)}`);
+                } else {
+                    console.log(`Skipping duplicate question: "${q.question.substring(0, 50)}..." with key: ${key.substring(0, 30)}`);
+                }
+            });
+            
+            console.log(`After deduplication: ${uniqueQuestions.length} unique questions`);
+            return uniqueQuestions;
+        }
+
+        function generateQuestionId(questionText, topic) {
+            // Generate a consistent ID for a question based on its text and topic
+            return btoa(questionText.substring(0, 50) + topic).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
+        }
+
+        // Debug function to check localStorage data
+        function debugTestHistory() {
+            const testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
+            console.log('=== TEST HISTORY DEBUG ===');
+            console.log(`Total tests in history: ${testHistory.length}`);
+            console.log('Raw test history:', testHistory);
+            
+            testHistory.forEach((test, index) => {
+                console.log(`\nTest ${index + 1}:`);
+                console.log(`  Type: ${test.type}`);
+                console.log(`  Score: ${test.score}%`);
+                console.log(`  Date: ${test.date} ${test.time}`);
+                console.log(`  Has detailedResults: ${!!test.detailedResults}`);
+                
+                if (test.detailedResults) {
+                    console.log(`  Total questions in test: ${test.detailedResults.length}`);
+                    const wrongAnswers = test.detailedResults.filter(r => !r.isCorrect);
+                    console.log(`  Wrong answers: ${wrongAnswers.length}/${test.detailedResults.length}`);
+                    
+                    wrongAnswers.forEach((wrong, i) => {
+                        console.log(`    ${i + 1}. "${wrong.question.substring(0, 80)}..." (${wrong.topic})`);
+                        console.log(`        ID: ${wrong.questionId}`);
+                        console.log(`        Correct: ${wrong.correctAnswer}, User: ${wrong.userAnswer}, isCorrect: ${wrong.isCorrect}`);
+                    });
+                } else {
+                    console.log(`  No detailed results found - this is an old test`);
+                }
+            });
+            console.log('=== END DEBUG ===');
+        }
+
+        // Global function to check review questions (run in console)
+        window.checkReviewData = function() {
+            console.log('\n=== REVIEW DATA CHECK ===');
+            
+            // Check wrong questions
+            const wrongQuestions = getPreviouslyWrongQuestions();
+            console.log(`Found ${wrongQuestions.length} wrong questions from history:`);
+            wrongQuestions.forEach((q, i) => {
+                console.log(`  ${i + 1}. "${q.question.substring(0, 60)}..." (${q.topic})`);
+            });
+            
+            // Check mastered questions
+            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
+            console.log(`\nMastered questions: ${masteredQuestions.size}`);
+            [...masteredQuestions].forEach((id, i) => {
+                console.log(`  ${i + 1}. ID: ${id}`);
+            });
+            
+            // Check final review questions
+            const reviewQuestions = generateReviewQuestions();
+            console.log(`\nFinal review questions: ${reviewQuestions.length}`);
+            reviewQuestions.forEach((q, i) => {
+                console.log(`  ${i + 1}. "${q.question.substring(0, 60)}..." (${q.topic})`);
+            });
+        };
+
+        function displayQuestion() {
+            const question = currentTest[currentQuestionIndex];
+            
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentTest.length}`;
+            document.getElementById('sectionBadge').textContent = question.topic.toUpperCase();
+            document.getElementById('questionText').textContent = question.question;
+            
+            const progressPercent = ((currentQuestionIndex + 1) / currentTest.length) * 100;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const li = document.createElement('li');
+                li.className = 'answer-item';
+                li.innerHTML = `
+                    <label>
+                        <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                        ${String.fromCharCode(65 + index)}. ${answer}
+                    </label>
+                `;
+                li.addEventListener('click', () => {
+                    if (!li.querySelector('input[type="radio"]').disabled) {
+                        document.querySelectorAll('.answer-item').forEach(item => {
+                            item.classList.remove('selected');
+                        });
+                        
+                        const radio = li.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        li.classList.add('selected');
+                    }
+                });
+                answersContainer.appendChild(li);
+            });
+            
+            // Re-enable navigation and clear any previous feedback
+            document.getElementById('nextButton').style.display = 'block';
+            document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
+            
+            // Clear any previous animations, feedback, and explanations
+            document.querySelectorAll('.answer-item').forEach(item => {
+                item.classList.remove('correct', 'incorrect');
+                const feedback = item.querySelector('.answer-feedback');
+                if (feedback) feedback.remove();
+            });
+            
+            // Remove any existing answer explanation
+            const existingExplanation = document.querySelector('.answer-explanation');
+            if (existingExplanation) {
+                existingExplanation.remove();
+            }
+            
+            // Re-enable all radio buttons
+            document.querySelectorAll('input[name="answer"]').forEach(radio => {
+                radio.disabled = false;
+            });
+            
+            // Reset next button styling
+            const nextButton = document.getElementById('nextButton');
+            nextButton.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            
+            if (currentQuestionIndex === currentTest.length - 1) {
+                nextButton.textContent = 'Complete Review';
+                document.getElementById('submitButton').style.display = 'none';
+            } else {
+                nextButton.textContent = 'Next Question';
+                document.getElementById('submitButton').style.display = 'none';
+            }
+        }
+
+        function nextQuestion() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            
+            // If no answer selected and question hasn't been answered yet
+            if (!selectedAnswer && userAnswers[currentQuestionIndex] === null) {
+                showErrorNotice('Please select an answer before continuing.');
+                return;
+            }
+
+            // If answer just selected for the first time
+            if (selectedAnswer && userAnswers[currentQuestionIndex] === null) {
+                const selectedValue = parseInt(selectedAnswer.value);
+                userAnswers[currentQuestionIndex] = selectedValue;
+
+                showAnswerFeedback(selectedValue);
+
+                if (selectedValue === currentTest[currentQuestionIndex].correct) {
+                    currentScore++;
+                }
+                return; // Stop here - wait for user to click next again
+            }
+
+            // If answer already given and user clicks next - proceed to next question
+            if (currentQuestionIndex < currentTest.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                submitTest();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function showAnswerFeedback(selectedAnswer) {
+            const question = currentTest[currentQuestionIndex];
+            const answerItems = document.querySelectorAll('.answer-item');
+            const isCorrect = selectedAnswer === question.correct;
+            
+            answerItems.forEach((item, index) => {
+                const label = item.querySelector('label');
+                
+                if (index === question.correct) {
+                    setTimeout(() => {
+                        item.classList.add('correct');
+                        label.innerHTML += '<span class="answer-feedback correct">✅</span>';
+                    }, 100);
+                } else if (index === selectedAnswer) {
+                    setTimeout(() => {
+                        item.classList.add('incorrect');
+                        label.innerHTML += '<span class="answer-feedback incorrect">❌</span>';
+                    }, 100);
+                }
+            });
+
+            // Show the correct answer explanation
+            setTimeout(() => {
+                showCorrectAnswerExplanation(selectedAnswer, question);
+            }, 300);
+
+            document.querySelectorAll('input[name="answer"]').forEach(radio => {
+                radio.disabled = true;
+            });
+
+            // Always show next button and wait for user click (no automatic navigation)
+            const nextButton = document.getElementById('nextButton');
+            nextButton.style.display = 'block';
+            
+            if (isCorrect) {
+                nextButton.textContent = 'Next Question';
+                nextButton.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            } else {
+                nextButton.textContent = 'Continue Learning';
+                nextButton.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+            }
+            
+            // Update text for last question
+            if (currentQuestionIndex === currentTest.length - 1) {
+                nextButton.textContent = isCorrect ? 'Complete Review' : 'Continue to Results';
+            }
+            
+            document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
+        }
+
+        function showCorrectAnswerExplanation(selectedAnswer, question) {
+            // Remove any existing explanation
+            const existingExplanation = document.querySelector('.answer-explanation');
+            if (existingExplanation) {
+                existingExplanation.remove();
+            }
+
+            // Create explanation container
+            const explanationDiv = document.createElement('div');
+            explanationDiv.className = 'answer-explanation';
+            
+            const isCorrect = selectedAnswer === question.correct;
+            const correctAnswerLetter = String.fromCharCode(65 + question.correct);
+            const correctAnswerText = question.answers[question.correct];
+            
+            explanationDiv.innerHTML = `
+                <div class="explanation-header ${isCorrect ? 'correct' : 'incorrect'}">
+                    <span class="explanation-icon">${isCorrect ? '✅' : '❌'}</span>
+                    <span class="explanation-title">${isCorrect ? 'Correct!' : 'Incorrect'}</span>
+                </div>
+                <div class="explanation-content">
+                    <p><strong>Correct Answer:</strong> ${correctAnswerLetter}. ${correctAnswerText}</p>
+                    ${isCorrect ? 
+                        '<p class="success-message">Great job! You got this question right.</p>' : 
+                        '<p class="learn-message">Review this answer to improve your understanding.</p>'
+                    }
+                </div>
+            `;
+
+            // Insert after the answers container
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.parentNode.insertBefore(explanationDiv, answersContainer.nextSibling);
+
+            // Animate in
+            setTimeout(() => {
+                explanationDiv.classList.add('show');
+            }, 10);
+        }
+
+        function showErrorNotice(message) {
+            const existingNotice = document.querySelector('.error-notice');
+            if (existingNotice) {
+                existingNotice.remove();
+            }
+
+            const errorNotice = document.createElement('div');
+            errorNotice.className = 'error-notice';
+            errorNotice.textContent = message;
+
+            const questionText = document.getElementById('questionText');
+            questionText.parentNode.insertBefore(errorNotice, questionText.nextSibling);
+
+            setTimeout(() => {
+                errorNotice.classList.add('show', 'shake');
+            }, 10);
+
+            setTimeout(() => {
+                errorNotice.classList.remove('show');
+                setTimeout(() => {
+                    if (errorNotice.parentNode) {
+                        errorNotice.remove();
+                    }
+                }, 400);
+            }, 3000);
+        }
+
+        function submitTest() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer && userAnswers[currentQuestionIndex] === null) {
+                userAnswers[currentQuestionIndex] = parseInt(selectedAnswer.value);
+                if (userAnswers[currentQuestionIndex] === currentTest[currentQuestionIndex].correct) {
+                    currentScore++;
+                }
+            }
+
+            // Mark correctly answered questions as mastered (won't appear in future reviews)
+            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
+            
+            currentTest.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    // Mark this question as mastered - won't show in future reviews
+                    const questionId = question.id || generateQuestionId(question.question, question.topic);
+                    masteredQuestions.add(questionId);
+                }
+            });
+            
+            // Save updated mastered questions
+            localStorage.setItem('masteredQuestions', JSON.stringify([...masteredQuestions]));
+
+            // Show cheerful completion
+            showReviewComplete();
+        }
+
+        function showProgressMessage(correctCount, wrongCount) {
+            const existingMessage = document.querySelector('.progress-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'progress-message';
+            messageDiv.innerHTML = `
+                <div class="progress-icon">📊</div>
+                <div class="progress-text">
+                    <strong>Progress Update</strong><br>
+                    Mastered: ${correctCount} questions<br>
+                    Reviewing: ${wrongCount} more question${wrongCount === 1 ? '' : 's'}
+                </div>
+            `;
+
+            document.getElementById('testContainer').appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.classList.add('show');
+            }, 10);
+
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, 300);
+            }, 1200);
+        }
+
+        function showReviewComplete() {
+            document.getElementById('testContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            // Calculate results
+            const finalScore = Math.round((currentScore / totalQuestions) * 100);
+            const correctAnswers = currentScore;
+            const masteredNow = currentScore; // Questions answered correctly this session
+            
+            // Update score display
+            document.querySelector('.results .score-display').textContent = finalScore + '%';
+            
+            // Generate cheerful completion message based on performance
+            let cheerMessage = '';
+            let celebrationEmoji = '';
+            
+            if (finalScore === 100) {
+                celebrationEmoji = '🎉🏆🌟';
+                cheerMessage = `<h2 style="color: #28a745; margin-bottom: 20px;">${celebrationEmoji} PERFECT SCORE! ${celebrationEmoji}</h2>
+                               <p style="font-size: 1.3em; margin-bottom: 15px; color: #155724;">
+                                   🎯 Outstanding! You got all ${totalQuestions} questions right!<br>
+                                   🚀 These questions are now mastered and won't appear in future reviews!
+                               </p>`;
+            } else if (finalScore >= 80) {
+                celebrationEmoji = '🎊✨👏';
+                cheerMessage = `<h2 style="color: #28a745; margin-bottom: 20px;">${celebrationEmoji} Excellent Work! ${celebrationEmoji}</h2>
+                               <p style="font-size: 1.2em; margin-bottom: 15px; color: #155724;">
+                                   🎯 Great job! You got ${correctAnswers} out of ${totalQuestions} questions right!<br>
+                                   📚 Those ${correctAnswers} questions are now mastered!
+                               </p>`;
+            } else if (finalScore >= 60) {
+                celebrationEmoji = '👍💪📈';
+                cheerMessage = `<h2 style="color: #28a745; margin-bottom: 20px;">${celebrationEmoji} Good Progress! ${celebrationEmoji}</h2>
+                               <p style="font-size: 1.2em; margin-bottom: 15px; color: #155724;">
+                                   🎯 Nice work! You mastered ${correctAnswers} more questions!<br>
+                                   💡 Keep practicing - you're improving!
+                               </p>`;
+            } else {
+                celebrationEmoji = '💪🎯📚';
+                cheerMessage = `<h2 style="color: #007acc; margin-bottom: 20px;">${celebrationEmoji} Keep Going! ${celebrationEmoji}</h2>
+                               <p style="font-size: 1.2em; margin-bottom: 15px; color: #0c5460;">
+                                   🎯 You mastered ${correctAnswers} questions this time!<br>
+                                   💪 Every correct answer is progress - keep it up!
+                               </p>`;
+            }
+            
+            // Update the results content with cheerful message
+            const resultsContent = document.querySelector('.results');
+            const existingContent = resultsContent.innerHTML;
+            
+            // Find the score display and add cheerful message after it
+            const scoreDisplayElement = resultsContent.querySelector('.score-display');
+            if (scoreDisplayElement) {
+                // Create cheerful message element
+                const cheerElement = document.createElement('div');
+                cheerElement.innerHTML = cheerMessage;
+                cheerElement.style.textAlign = 'center';
+                cheerElement.style.marginTop = '30px';
+                
+                // Insert after score display
+                scoreDisplayElement.parentNode.insertBefore(cheerElement, scoreDisplayElement.nextSibling);
+            }
+            
+            // Clear review data
+            localStorage.removeItem('reviewTopics');
+            localStorage.removeItem('reviewMode');
+        }
+    </script>
+</body>
+</html>
