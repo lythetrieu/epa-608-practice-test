@@ -1,3 +1,12 @@
+// Vercel Analytics Setup
+function loadVercelAnalytics() {
+    const script = document.createElement('script');
+    script.src = 'https://va.vercel-scripts.com/v1/script.debug.js';
+    script.defer = true;
+    script.setAttribute('data-api', '_vercel/insights');
+    document.head.appendChild(script);
+}
+
 // Include system for loading header and footer
 function loadIncludes() {
     // Load header
@@ -23,5 +32,8 @@ function loadIncludes() {
     }
 }
 
-// Load includes when DOM is ready
-document.addEventListener('DOMContentLoaded', loadIncludes);
+// Load includes and analytics when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    loadVercelAnalytics();
+    loadIncludes();
+});
