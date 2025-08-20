@@ -786,35 +786,39 @@
             padding: 20px;
         }
         
-        .live-stats-demo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
+        .simple-stats {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
-        .stat-demo {
+        .simple-stat {
             text-align: center;
             padding: 16px;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            min-width: 100px;
         }
         
-        .stat-demo .label {
+        .stat-label {
             display: block;
             font-size: 12px;
             color: #666;
             margin-bottom: 4px;
         }
         
-        .stat-demo .value {
+        .stat-number {
             display: block;
             font-size: 20px;
             font-weight: 700;
-            color: #333;
+            color: var(--color-primary);
         }
         
-        .stat-demo.trending .value {
+        .stat-text {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
             color: var(--color-success);
         }
         
@@ -1317,25 +1321,9 @@
     </style>
 </head>
 <body>
+    <script src="includes.js"></script>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 40px; width: auto;">
-                </a>
-                <nav>
-                    <ul class="nav-menu">
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="history.html">Progress</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="about.html">About</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <!-- Smart Recommendation Banner -->
     <div class="smart-banner" id="smartBanner">
@@ -1374,7 +1362,7 @@
                     </div>
                 </div>
                 
-                <a href="test.html" class="cta-primary" id="primaryCTA">
+                <a href="#tests" class="cta-primary" id="primaryCTA">
                     Start Free Practice Test →
                 </a>
                 
@@ -1396,8 +1384,8 @@
                     <p>Ever-Growing Question Bank</p>
                 </div>
                 <div class="stat-item">
-                    <h3 class="stat-counter">∞</h3>
-                    <p>Unlimited Practice Time</p>
+                    <h3 class="stat-counter">Unlimited</h3>
+                    <p>Practice Time</p>
                 </div>
                 <div class="stat-item">
                     <h3 class="stat-counter" data-target="5">5</h3>
@@ -1494,7 +1482,7 @@
             
             <!-- Continue Progress Button -->
             <div class="continue-section">
-                <a href="#tests" class="continue-btn" onclick="scrollToTests()">Try Free Test →</a>
+                <a href="#tests" class="continue-btn">Try Free Test →</a>
                 <p class="continue-subtitle">Start practicing immediately - no signup required</p>
             </div>
         </div>
@@ -1548,7 +1536,7 @@
             
             <!-- Continue Progress Button -->
             <div class="continue-section">
-                <a href="test.html" class="continue-btn">Get Exam Ready →</a>
+                <a href="#tests" class="continue-btn">Get Exam Ready →</a>
                 <p class="continue-subtitle">Take your first practice test now</p>
             </div>
         </div>
@@ -1612,18 +1600,18 @@
                     <p>Watch your skills improve in real-time during tests with live accuracy tracking and instant weak-spot identification.</p>
                     
                     <div class="progress-preview">
-                        <div class="live-stats-demo">
-                            <div class="stat-demo">
-                                <span class="label">Current Accuracy</span>
-                                <span class="value">73%</span>
+                        <div class="simple-stats">
+                            <div class="simple-stat">
+                                <span class="stat-label">Timer</span>
+                                <span class="stat-number" id="demo-timer">30:00</span>
                             </div>
-                            <div class="stat-demo">
-                                <span class="label">Questions Left</span>
-                                <span class="value">12</span>
+                            <div class="simple-stat">
+                                <span class="stat-label">Analysis</span>
+                                <span class="stat-text">Active</span>
                             </div>
-                            <div class="stat-demo trending">
-                                <span class="label">Trending</span>
-                                <span class="value">📈 Improving</span>
+                            <div class="simple-stat">
+                                <span class="stat-label">Alerts</span>
+                                <span class="stat-text">On</span>
                             </div>
                         </div>
                     </div>
@@ -1692,7 +1680,7 @@
                 
                 <div class="unique-feature">
                     <div class="unique-icon">⚡</div>
-                    <h3>Instant Smart Recommendations</h3>
+                    <h3>Instant Smart Recommendations (Coming Soon)</h3>
                     <p>Get personalized study suggestions after every test. Our AI tells you exactly what to focus on next for maximum improvement.</p>
                     
                     <div class="recommendation-preview">
@@ -1735,8 +1723,8 @@
             
             <!-- Continue Progress Button -->
             <div class="continue-section">
-                <a href="history.html" class="continue-btn">Track Your Progress →</a>
-                <p class="continue-subtitle">See your improvement journey and test history</p>
+                <a href="#tests" class="continue-btn">Start a Test →</a>
+                <p class="continue-subtitle">Start tracking your improvement instantly</p>
             </div>
         </div>
     </section>
@@ -1816,7 +1804,7 @@
             <div class="final-cta-content">
                 <h2 id="finalCTATitle">Ready to Pass Your EPA 608?</h2>
                 <p id="finalCTAText">Join thousands of successful technicians. Start your free practice test now.</p>
-                <a href="test.html" class="cta-secondary" id="finalCTA">Start Free Practice Test →</a>
+                <a href="#tests" class="cta-secondary" id="finalCTA">Start Free Practice Test →</a>
             </div>
         </div>
     </section>
@@ -1913,6 +1901,7 @@
                     primaryCTA.textContent = 'Continue Your Progress';
                     primaryCTA.href = '#tests';
                     document.getElementById('finalCTA').textContent = 'Continue Practicing';
+                    document.getElementById('finalCTA').href = '#tests';
                     
                     // Show streak badge if > 1 day
                     if (this.userData.studyStreak > 1) {
@@ -2261,51 +2250,52 @@
                 localStorage.setItem('epa_lastTestIntent', testType);
             });
         });
+        
+        // Demo Timer Animation
+        function startDemoTimer() {
+            const timerDisplay = document.getElementById('demo-timer');
+            const progressBar = document.getElementById('demo-progress');
+            
+            if (!timerDisplay || !progressBar) return;
+            
+            let timeLeft = 30 * 60; // 30 minutes in seconds
+            const totalTime = 30 * 60;
+            
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                // Update display
+                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update progress bar (starts at 100% and decreases)
+                const percentage = (timeLeft / totalTime) * 100;
+                progressBar.style.width = percentage + '%';
+                
+                // Change color as time runs out
+                if (percentage > 50) {
+                    progressBar.style.background = 'linear-gradient(90deg, var(--color-success), #20c997)';
+                } else if (percentage > 25) {
+                    progressBar.style.background = 'linear-gradient(90deg, #ffc107, #fd7e14)';
+                } else {
+                    progressBar.style.background = 'linear-gradient(90deg, #dc3545, #e74c3c)';
+                }
+                
+                timeLeft--;
+                
+                // Reset when it reaches 0
+                if (timeLeft < 0) {
+                    timeLeft = totalTime;
+                }
+            }, 1000);
+        }
+        
+        // Start demo timer when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(startDemoTimer, 2000); // Start after 2 seconds
+        });
     </script>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Practice & Learn</h4>
-                    <ul>
-                        <li><a href="history.html">History & Progress</a></li>
-                        <li><a href="index.html#how-it-works">Study Resources</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>EPA 608 Information</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="index.html#requirements">Certification Requirements</a></li>
-                        <li><a href="index.html#exam-tips">Exam Tips</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Support & Info</h4>
-                    <ul>
-                        <li><a href="contact.html">Contact Support</a></li>
-                        <li><a href="changelog.html">Changelog</a></li>
-                        <li><a href="terms.html">Terms of Use</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="policy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Start</h4>
-                    <p>Ready to begin? No registration required. Start your free EPA 608 practice test now and boost your chances of passing the certification exam.</p>
-                    <a href="index.html#tests" style="color:#28a745;font-weight:bold">Choose Your Test →</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 EPA 608 Practice Test. Built to help you succeed. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 </body>
 </html>

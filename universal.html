@@ -102,6 +102,20 @@
         .history-button:hover{background:#138496}
         .restart-button:hover{background:#218838}
         
+        /* Social Share Buttons */
+        .social-share{margin-top:40px;padding-top:32px;border-top:1px solid #e9ecef}
+        .social-share p{font-size:18px;font-weight:600;color:#333;margin-bottom:16px}
+        .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .share-btn{padding:10px 20px;border:none;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+        .share-btn.twitter{background:#1da1f2;color:#fff}
+        .share-btn.twitter:hover{background:#0d8bd9}
+        .share-btn.facebook{background:#1877f2;color:#fff}
+        .share-btn.facebook:hover{background:#166fe5}
+        .share-btn.linkedin{background:#0077b5;color:#fff}
+        .share-btn.linkedin:hover{background:#005885}
+        .share-btn.copy-link{background:#6c757d;color:#fff}
+        .share-btn.copy-link:hover{background:#545b62}
+        
         @keyframes correctPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(40,167,69,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,0)}}
         @keyframes incorrectShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
         
@@ -134,37 +148,8 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 40px; width: auto;">
-                </a>
-                <nav>
-                    <ul class="nav-menu">
-                        <li><a href="index.html">Home</a></li>
-                        
-                        <li><a href="history.html">Progress</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        
-                        <li><a href="about.html">About</a></li>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Test Hero Section -->
@@ -227,7 +212,17 @@
                 <p id="certificationStatus"></p>
                 <div class="results-buttons">
                     <button class="history-button" onclick="window.location.href='history.html'">📊 Check Your History</button>
-                    <button class="restart-button" onclick="restartTest()">🔄 Take Another Test</button>
+                    <button class="restart-button" onclick="location.reload()">🔄 Take Another Test</button>
+                </div>
+                
+                <div class="social-share">
+                    <p>Share your success:</p>
+                    <div class="share-buttons">
+                        <button class="share-btn twitter" onclick="shareOnTwitter()">🐦 Twitter</button>
+                        <button class="share-btn facebook" onclick="shareOnFacebook()">📘 Facebook</button>
+                        <button class="share-btn linkedin" onclick="shareOnLinkedIn()">💼 LinkedIn</button>
+                        <button class="share-btn copy-link" onclick="copyTestLink()">🔗 Copy Link</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -283,52 +278,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Practice & Learn</h4>
-                    <ul>
-                        
-                        <li><a href="history.html">History & Progress</a></li>
-                        <li><a href="index.html#how-it-works">Study Resources</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>EPA 608 Information</h4>
-                    <ul>
-                        <li><a href="index.html#about">About EPA 608</a></li>
-                        <li><a href="index.html#requirements">Certification Requirements</a></li>
-                        <li><a href="index.html#exam-tips">Exam Tips</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Support & Info</h4>
-                    <ul>
-                        <li><a href="contact.html">Contact Support</a></li>
-                        <li><a href="changelog.html">Changelog</a></li>
-                        <li><a href="policy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Use</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Start</h4>
-                    <p>Ready to begin? No registration required. Start your free EPA 608 practice test now and boost your chances of passing the certification exam.</p>
-                    <a href="index.html#tests" style="color:#28a745;font-weight:bold">Choose Your Test →</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 EPA 608 Practice Test. Built to help you succeed. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script>
         // Test state variables
@@ -1623,6 +1573,43 @@
         document.addEventListener('DOMContentLoaded', function() {
             startTest();
         });
+        
+        // Social sharing functions
+        function shareOnTwitter() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const text = `Just scored ${score} on the EPA 608 Universal Practice Test! 🎯 Test your knowledge for free at`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+        
+        function shareOnFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+        
+        function shareOnLinkedIn() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const title = `EPA 608 Universal Practice Test Result: ${score}`;
+            const summary = `Just completed the EPA 608 Universal Practice Test and scored ${score}! Great free resource for certification prep.`;
+            const url = window.location.href;
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`, '_blank');
+        }
+        
+        function copyTestLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#6c757d';
+                }, 2000);
+            }).catch(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
 
         // Utility functions
         function generateQuestionId(questionText, section) {
