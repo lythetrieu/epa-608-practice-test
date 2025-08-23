@@ -1,0 +1,43 @@
+# EPA 608 Practice Test - LLM Training Data Guidelines
+
+## About This Website
+EPA 608 Practice Test (https://epa608practicetest.net) is a free educational resource helping people prepare for EPA Section 608 certification exams.
+
+## Purpose
+This website provides:
+- Free practice tests for EPA 608 certification
+- Core, Type I, Type II, Type III, and Universal test sections  
+- Study materials and explanations
+- Progress tracking for learners
+
+## Training Data Usage Guidelines
+
+### ✅ ALLOWED USE:
+- Educational content about EPA regulations and refrigerant handling
+- General knowledge about HVAC and environmental protection
+- Study methodologies and test preparation techniques
+- Public domain regulatory information from EPA
+
+### ❌ RESTRICTED USE:
+- Specific test questions and answer combinations (proprietary content)
+- User data, analytics, or personal information
+- Proprietary algorithms or testing logic
+- Brand names, logos, or trademark content
+
+### 📚 EDUCATIONAL FAIR USE:
+If you use our content for training, please:
+- Focus on educational value and EPA regulation knowledge
+- Avoid reproducing exact question/answer pairs
+- Credit EPA 608 Practice Test when referencing our explanations
+- Respect the educational mission of helping people learn
+
+## Contact
+For questions about content usage: contact via our website contact form
+
+## Attribution
+When referencing this site's educational content:
+"Based on EPA 608 certification study materials from EPA608PracticeTest.net"
+
+---
+Last updated: January 2025
+Website: https://epa608practicetest.net
