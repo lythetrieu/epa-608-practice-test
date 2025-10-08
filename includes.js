@@ -16,10 +16,13 @@ function loadVercelAnalytics() {
 
 // Include system for loading header and footer
 function loadIncludes() {
+    // Determine if we're in a subdirectory
+    const pathPrefix = window.location.pathname.includes('/blog/') ? '../' : '';
+
     // Load header
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (headerPlaceholder) {
-        fetch('header.html')
+        fetch(pathPrefix + 'header.html')
             .then(response => response.text())
             .then(data => {
                 // Parse the header HTML to separate head and body content
@@ -53,7 +56,19 @@ function loadIncludes() {
                 // Extract and display header section
                 const headerSection = data.match(/<!-- Header -->[\s\S]*$/);
                 if (headerSection) {
-                    headerPlaceholder.innerHTML = headerSection[0];
+                    let headerHTML = headerSection[0];
+                    // Adjust paths for subdirectories
+                    if (pathPrefix) {
+                        headerHTML = headerHTML.replace(/href="\//g, 'href="' + pathPrefix);
+                        headerHTML = headerHTML.replace(/src="logo\.svg"/g, 'src="' + pathPrefix + 'logo.svg"');
+                        headerHTML = headerHTML.replace(/href="([^"]*\.html)"/g, function(match, p1) {
+                            if (!p1.startsWith('http') && !p1.startsWith('/')) {
+                                return 'href="' + pathPrefix + p1 + '"';
+                            }
+                            return match;
+                        });
+                    }
+                    headerPlaceholder.innerHTML = headerHTML;
                 }
                 
                 // Add hidden navigation for SEO crawling
@@ -90,7 +105,7 @@ function loadIncludes() {
     // Load footer
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
-        fetch('footer.html')
+        fetch(pathPrefix + 'footer.html')
             .then(response => response.text())
             .then(data => {
                 footerPlaceholder.innerHTML = data;

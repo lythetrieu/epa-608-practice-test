@@ -27,6 +27,212 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+<style>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navigation Container */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu > li {
+    position: relative;
+}
+
+/* Regular Menu Links */
+.nav-menu > li > a {
+    display: block;
+    padding: 16px 24px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-menu > li > a:hover {
+    color: #007acc;
+    background-color: rgba(0, 122, 204, 0.05);
+}
+
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown Toggle */
+.dropdown-toggle {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+}
+
+.dropdown-toggle::after {
+    content: "▼";
+    font-size: 10px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Dropdown Hover State */
+.dropdown:hover > .dropdown-toggle {
+    color: #007acc;
+    background-color: rgba(0, 122, 204, 0.05);
+}
+
+.dropdown:hover > .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+    min-width: 240px;
+    padding: 12px 0;
+    margin-top: 4px;
+    list-style: none;
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-menu {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Dropdown Arrow Pointer */
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu li {
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Staggered Animation */
+.dropdown:hover .dropdown-menu li:nth-child(1) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(2) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.2s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(3) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+}
+
+/* Dropdown Links */
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Icons for Menu Items */
+.dropdown-menu a::before {
+    content: "📚";
+    font-size: 18px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dropdown-menu li:nth-child(2) a::before {
+    content: "🎓";
+}
+
+.dropdown-menu li:nth-child(3) a::before {
+    content: "📝";
+}
+
+/* Hover Effect on Dropdown Items */
+.dropdown-menu a:hover {
+    background: linear-gradient(90deg, rgba(0, 122, 204, 0.08) 0%, rgba(0, 122, 204, 0.04) 100%);
+    color: #007acc;
+    padding-left: 24px;
+}
+
+.dropdown-menu a:hover::before {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 0;
+    }
+
+    .nav-menu > li > a,
+    .dropdown-toggle {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .dropdown-menu {
+        min-width: 200px;
+    }
+}
+</style>
+
 <!-- Header -->
 <header>
     <div class="container">
@@ -36,10 +242,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </a>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="history.html">Progress</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/history.html">Test History</a></li>
+                    <li><a href="/review.html">Fix Your Mistakes</a></li>
+                    <li><a href="/index.html#features">Features</a></li>
                 </ul>
             </nav>
         </div>
