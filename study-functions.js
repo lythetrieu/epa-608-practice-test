@@ -271,7 +271,7 @@ function cleanupOldDailyStudySets() {
         const cutoffDate = new Date();
         cutoffDate.setDate(cutoffDate.getDate() - 7);
         const cutoffString = cutoffDate.toISOString().split('T')[0];
-        
+
         // Get all localStorage keys
         const keysToRemove = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -283,7 +283,7 @@ function cleanupOldDailyStudySets() {
                 }
             }
         }
-        
+
         // Remove old entries
         keysToRemove.forEach(key => localStorage.removeItem(key));
     } catch (e) {
@@ -291,12 +291,183 @@ function cleanupOldDailyStudySets() {
     }
 }
 
+/**
+ * 4. Generates smart, actionable recommendations based on test history
+ * @param {Array} testHistory - User's complete test history with { qId, topic, isCorrect, testType }
+ * @param {number} maxRecommendations - Maximum number of recommendations to return (default: 3)
+ * @returns {Array} Array of recommendation objects with { icon, text, priority }
+ *
+ * Recommendation types:
+ * 1. Weak topic focus suggestions
+ * 2. Specific question review alerts
+ * 3. Next test type suggestions
+ * 4. Progress encouragement
+ * 5. Mastery achievements
+ */
+function generateSmartRecommendations(testHistory, maxRecommendations = 3) {
+    // Input validation
+    if (!Array.isArray(testHistory) || testHistory.length === 0) {
+        return [{
+            icon: '🚀',
+            text: '<strong>Start your first practice test</strong> - begin building your study profile',
+            priority: 1
+        }];
+    }
+
+    const recommendations = [];
+
+    // Analyze weak topics
+    const weakTopics = getWeakTopics(testHistory);
+
+    // Get topic-based statistics
+    const topicStats = new Map();
+    testHistory.forEach(record => {
+        const { topic, isCorrect } = record;
+        if (!topic || typeof isCorrect !== 'boolean') return;
+
+        if (!topicStats.has(topic)) {
+            topicStats.set(topic, { correct: 0, total: 0, recent: [] });
+        }
+
+        const stats = topicStats.get(topic);
+        stats.total++;
+        if (isCorrect) stats.correct++;
+        stats.recent.push(isCorrect);
+
+        // Keep only last 10 for trend analysis
+        if (stats.recent.length > 10) {
+            stats.recent.shift();
+        }
+    });
+
+    // Recommendation 1: Focus on weakest topic (if accuracy < 70%)
+    if (weakTopics.length > 0 && weakTopics[0].accuracy < 70) {
+        const weakest = weakTopics[0];
+        recommendations.push({
+            icon: '💡',
+            text: `<strong>Focus on ${weakest.topic} next</strong> - it's your growth opportunity (${weakest.accuracy}% accuracy)`,
+            priority: 1
+        });
+    }
+
+    // Recommendation 2: Review specific topics with multiple recent mistakes
+    const recentWrongsByTopic = new Map();
+    const recentHistory = testHistory.slice(-50); // Last 50 questions
+
+    recentHistory.forEach(record => {
+        if (!record.isCorrect && record.topic) {
+            const count = recentWrongsByTopic.get(record.topic) || 0;
+            recentWrongsByTopic.set(record.topic, count + 1);
+        }
+    });
+
+    // Find topics with 3+ recent mistakes
+    for (const [topic, count] of recentWrongsByTopic.entries()) {
+        if (count >= 3 && recommendations.length < maxRecommendations) {
+            recommendations.push({
+                icon: '🎯',
+                text: `<strong>Review ${topic}</strong> - ${count} questions missed recently`,
+                priority: 2
+            });
+        }
+    }
+
+    // Recommendation 3: Identify improving topics (encouragement)
+    for (const [topic, stats] of topicStats.entries()) {
+        if (stats.recent.length >= 5) {
+            const recentAccuracy = stats.recent.slice(-5).filter(Boolean).length / 5;
+            const overallAccuracy = stats.correct / stats.total;
+
+            // If recent performance is 20%+ better than overall
+            if (recentAccuracy > overallAccuracy + 0.2 && recommendations.length < maxRecommendations) {
+                recommendations.push({
+                    icon: '📈',
+                    text: `<strong>Great progress on ${topic}!</strong> - keep practicing to maintain this improvement`,
+                    priority: 3
+                });
+                break; // Only show one encouragement
+            }
+        }
+    }
+
+    // Recommendation 4: Suggest test type based on performance
+    const testTypeStats = new Map();
+    testHistory.forEach(record => {
+        if (record.testType) {
+            if (!testTypeStats.has(record.testType)) {
+                testTypeStats.set(record.testType, { correct: 0, total: 0 });
+            }
+            const stats = testTypeStats.get(record.testType);
+            stats.total++;
+            if (record.isCorrect) stats.correct++;
+        }
+    });
+
+    // Find untested or weak test types
+    const allTestTypes = ['Core', 'Type I', 'Type II', 'Type III', 'Universal'];
+    const untriedTypes = allTestTypes.filter(type => !testTypeStats.has(type));
+
+    if (untriedTypes.length > 0 && recommendations.length < maxRecommendations) {
+        recommendations.push({
+            icon: '🆕',
+            text: `<strong>Try ${untriedTypes[0]} practice test</strong> - expand your certification coverage`,
+            priority: 4
+        });
+    } else {
+        // Find weakest test type
+        let weakestType = null;
+        let lowestAccuracy = 100;
+
+        for (const [type, stats] of testTypeStats.entries()) {
+            const accuracy = (stats.correct / stats.total) * 100;
+            if (accuracy < lowestAccuracy && stats.total >= 10) {
+                lowestAccuracy = accuracy;
+                weakestType = type;
+            }
+        }
+
+        if (weakestType && lowestAccuracy < 75 && recommendations.length < maxRecommendations) {
+            recommendations.push({
+                icon: '🔄',
+                text: `<strong>Retake ${weakestType} practice test</strong> - improve your ${Math.round(lowestAccuracy)}% score`,
+                priority: 4
+            });
+        }
+    }
+
+    // Recommendation 5: Mastery achievement (if overall accuracy > 85%)
+    const totalCorrect = testHistory.filter(r => r.isCorrect === true).length;
+    const overallAccuracy = Math.round((totalCorrect / testHistory.length) * 100);
+
+    if (overallAccuracy >= 85 && recommendations.length < maxRecommendations) {
+        recommendations.push({
+            icon: '⭐',
+            text: `<strong>Excellent work!</strong> - ${overallAccuracy}% overall accuracy. You're ready for the real exam!`,
+            priority: 5
+        });
+    }
+
+    // Recommendation 6: If not enough data, encourage more practice
+    if (testHistory.length < 20 && recommendations.length < maxRecommendations) {
+        recommendations.push({
+            icon: '📚',
+            text: `<strong>Keep building your test history</strong> - more practice = better insights`,
+            priority: 6
+        });
+    }
+
+    // Sort by priority and return top recommendations
+    recommendations.sort((a, b) => a.priority - b.priority);
+    return recommendations.slice(0, maxRecommendations);
+}
+
 // Export functions for use in other files (if using modules)
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         getWeakTopics,
         generateWrongQuestionSet,
-        generateDailyStudySet
+        generateDailyStudySet,
+        generateSmartRecommendations
     };
 }
 

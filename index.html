@@ -1726,15 +1726,12 @@
                 
                 <div class="unique-feature">
                     <div class="unique-icon">⚡</div>
-                    <h3>Instant Smart Recommendations (Coming Soon)</h3>
+                    <h3>Instant Smart Recommendations</h3>
                     <p>Get personalized study suggestions after every test. Our AI tells you exactly what to focus on next for maximum improvement.</p>
-                    
-                    <div class="recommendation-preview">
+
+                    <div class="recommendation-preview" id="smartRecommendations">
                         <div class="recommendation-item">
-                            💡 <strong>Focus on Type II next</strong> - it's your growth opportunity
-                        </div>
-                        <div class="recommendation-item">
-                            🎯 <strong>Review leak detection</strong> - 3 questions missed
+                            💡 <strong>Start your first practice test</strong> - begin building your study profile
                         </div>
                     </div>
                 </div>
@@ -2156,6 +2153,34 @@
                     const weakSpots = this.analyzeWeakSpots();
                     this.showWeakSpotRecommendations(weakSpots);
                 }
+
+                // Update recommendation preview on homepage with real data
+                this.updateRecommendationPreview();
+            }
+
+            updateRecommendationPreview() {
+                const recommendationContainer = document.getElementById('smartRecommendations');
+                if (!recommendationContainer) return;
+
+                // Load test history from localStorage
+                const testHistory = JSON.parse(localStorage.getItem('epa_testHistory') || '[]');
+
+                // Generate smart recommendations using the new function
+                let recommendations = [];
+                if (typeof generateSmartRecommendations === 'function') {
+                    recommendations = generateSmartRecommendations(testHistory, 2);
+                } else {
+                    // Fallback if function not loaded
+                    recommendations = [{
+                        icon: '🚀',
+                        text: '<strong>Start your first practice test</strong> - begin building your study profile'
+                    }];
+                }
+
+                // Update the DOM with recommendations
+                recommendationContainer.innerHTML = recommendations.map(rec =>
+                    `<div class="recommendation-item">${rec.icon} ${rec.text}</div>`
+                ).join('');
             }
             
             analyzeWeakSpots() {
@@ -2341,6 +2366,9 @@
             setTimeout(startDemoTimer, 2000); // Start after 2 seconds
         });
     </script>
+
+    <!-- Study Functions for Smart Recommendations -->
+    <script src="study-functions.js"></script>
 
     <div id="footer-placeholder"></div>
 </body>

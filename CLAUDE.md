@@ -196,7 +196,7 @@ Detailed breakdowns by topic, difficulty, and improvement trends.
 Complete Test History
 Every attempt saved with timestamps and scores to track growth.
 
-Smart Recommendations (Coming Soon)
+Smart Recommendations
 AI tells you what to study next for maximum improvement.
 
 
