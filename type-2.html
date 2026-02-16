@@ -1,909 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPA 608 Type II Practice Test - EPA 608 Practice Test</title>
-    <meta name="description" content="EPA 608 Type II Test Practice - High-pressure appliances like commercial refrigeration systems. 25 questions, instant scoring, detailed explanations.">
+    <title>EPA 608 Type 2 Practice Test | Free High-Pressure</title>
+    <meta name="description"
+        content="Take the free EPA 608 Type 2 practice test. 25 questions covering high-pressure system recovery, leak repair rates (10%, 20%, 30%), and vacuum standards.">
     <meta name="author" content="EPA 608 Practice Test">
     <meta name="robots" content="index, follow">
-    
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://epa608practicetest.net/type-2.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="EPA 608 Type II Practice Test - EPA 608 Practice Test">
-    <meta property="og:description" content="Practice the EPA 608 Type II section covering high-pressure appliances. 25 expert-designed questions for commercial refrigeration systems.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Type 2 Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Type 2 exam with 25 expert-designed questions. Practice leak repair requirements for systems with 50+ pounds of refrigerant.">
     <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
     <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EPA 608 Type II Practice Test - EPA 608 Practice Test">
-    <meta name="twitter:description" content="Practice the EPA 608 Type II section covering high-pressure appliances. 25 expert-designed questions for commercial refrigeration systems.">
-    <meta name="twitter:image" content="https://epa608practicetest.net/images/og-image.jpg">
+
     <style>
         :root {
             --color-primary: #007acc;
             --color-success: #28a745;
+            --color-error: #dc3545;
         }
-        
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
-        .container{width:100%;margin:0;padding:0 20px}
-        
-        /* Header */
-        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
-        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
-        .logo{font-size:24px;font-weight:bold;color:var(--color-primary);text-decoration:none}
-        .nav-menu{display:flex;list-style:none;gap:32px}
-        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
-        .nav-menu a:hover,.nav-menu a.active{color:var(--color-primary)}
-        
-        /* Test Hero */
-        .test-hero{background:linear-gradient(135deg,var(--color-success),#20c997);color:#fff;padding:60px 0;text-align:center}
-        .test-hero h1{font-size:42px;font-weight:bold;margin-bottom:16px}
-        .test-hero .subtitle{font-size:20px;margin-bottom:32px;opacity:.9}
-        .test-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:800px;margin:0 auto 40px}
-        .info-card{background:rgba(255,255,255,.15);padding:20px;border-radius:8px;text-align:center}
-        .info-number{font-size:28px;font-weight:bold;margin-bottom:8px}
-        .info-label{font-size:14px;opacity:.9}
-        
-        /* Start Test Section */
-        .start-section{padding:60px 0;background:#f8f9fa;text-align:center}
-        .start-btn{background:var(--color-success);color:#fff;border:none;padding:20px 48px;border-radius:8px;font-size:20px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;margin-bottom:24px}
-        .start-btn:hover{background:#218838;transform:translateY(-2px);box-shadow:0 8px 25px rgba(40,167,69,.3)}
-        .test-notes{max-width:600px;margin:0 auto;color:#666;line-height:1.7}
-        
-        /* Content Sections */
-        .content-section{padding:60px 0}
-        .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:40px}
-        .content-card{background:#fff;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);border-left:4px solid var(--color-success)}
-        .content-card h4{font-size:20px;margin-bottom:16px;color:#333}
-        .content-card ul{margin:0;padding-left:20px}
-        .content-card li{margin-bottom:8px;line-height:1.6;color:#666}
-        
-        /* Test Interface Styles */
-        .test-container{padding:40px 0;background:#f8f9fa}
-        .test-header{display:flex;align-items:center;background:#fff;padding:20px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-counter{font-weight:bold;color:#333}
-        .test-progress{flex-grow:1;background:#e9ecef;height:8px;border-radius:4px;overflow:hidden;margin:0 20px}
-        .progress-bar{background:linear-gradient(90deg,var(--color-success),#20c997);height:100%;width:0%;transition:width .3s ease}
-        .timer{font-size:1.2em;font-weight:bold;color:#dc3545;min-width:80px}
-        
-        .question-container{background:#fff;padding:32px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-text{font-size:20px;font-weight:600;color:#333;margin-bottom:24px;line-height:1.4}
-        .answers{list-style:none;margin:0;padding:0}
-        .answer-item{margin-bottom:12px;padding:16px;border:2px solid #e9ecef;border-radius:8px;cursor:pointer;transition:all .3s ease;background:#fff}
-        .answer-item:hover{border-color:#007acc;background:#f8f9fa}
-        .answer-item.selected{border-color:#007acc;background:#e3f2fd}
-        .answer-item.correct{background:#d4edda;border-color:var(--color-success);animation:correctPulse .8s ease-out}
-        .answer-item.incorrect{background:#f8d7da;border-color:#dc3545;animation:incorrectShake .6s ease-out}
-        .answer-item label{display:flex;align-items:center;font-size:16px;color:#333;cursor:pointer;width:100%}
-        .answer-item input{margin-right:12px}
-        .answer-feedback{margin-left:auto;font-weight:bold}
-        .answer-feedback.correct{color:var(--color-success)}
-        .answer-feedback.incorrect{color:#dc3545}
-        
-        .test-navigation{display:flex;justify-content:space-between;gap:16px}
-        .nav-button{padding:12px 32px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
-        .nav-button:disabled{background:#e9ecef;color:#6c757d;cursor:not-allowed}
-        .nav-button:not(:disabled){background:var(--color-primary);color:#fff}
-        .nav-button:not(:disabled):hover{background:#0056b3;transform:translateY(-1px)}
-        .submit-button{background:#dc3545!important}
-        .submit-button:hover{background:#c82333!important}
-        
-        .results{padding:60px 0;background:#f8f9fa;text-align:center}
-        .score-display{font-size:48px;font-weight:bold;margin:32px 0;color:var(--color-success)}
-        .results-buttons{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
-        .history-button,.restart-button{padding:12px 24px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .history-button{background:#17a2b8;color:#fff}
-        .restart-button{background:var(--color-success);color:#fff}
-        .history-button:hover{background:#138496}
-        .restart-button:hover{background:#218838}
-        
-        /* Social Share Buttons */
-        .social-share{margin-top:40px;padding-top:32px;border-top:1px solid #e9ecef}
-        .social-share p{font-size:18px;font-weight:600;color:#333;margin-bottom:16px}
-        .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .share-btn{padding:10px 20px;border:none;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .share-btn.twitter{background:#1da1f2;color:#fff}
-        .share-btn.twitter:hover{background:#0d8bd9}
-        .share-btn.facebook{background:#1877f2;color:#fff}
-        .share-btn.facebook:hover{background:#166fe5}
-        .share-btn.linkedin{background:#0077b5;color:#fff}
-        .share-btn.linkedin:hover{background:#005885}
-        .share-btn.copy-link{background:#6c757d;color:#fff}
-        .share-btn.copy-link:hover{background:#545b62}
-        
-        @keyframes correctPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(40,167,69,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,0)}}
-        @keyframes incorrectShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        
-        /* Footer */
-        footer{background:#333;color:#fff;padding:48px 0 32px}
-        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
-        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
-        .footer-section ul{list-style:none}
-        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
-        .footer-section a:hover{color:#fff}
-        .footer-section li{margin-bottom:8px}
-        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
-        
-        /* Responsive Design */
-        @media (max-width:768px){
-            .container{padding:0 16px}
-            .header-content{flex-direction:column;gap:16px}
-            .nav-menu{gap:20px;flex-wrap:wrap;justify-content:center}
-            .test-hero{padding:40px 0}
-            .test-hero h1{font-size:32px}
-            .test-info{grid-template-columns:repeat(2,1fr);gap:16px}
-            .start-btn{padding:16px 32px;font-size:18px}
-            .content-grid{grid-template-columns:1fr}
-            .footer-content{grid-template-columns:1fr;text-align:center}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @media (max-width:480px){
-            .test-hero h1{font-size:28px}
-            .test-info{grid-template-columns:1fr}
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
         }
     </style>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KJ8X1DQ1GT');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
-    <!-- End Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
 
-    <!-- Vercel Analytics -->
-    <script defer src="https://va.vercel-scripts.com/v1/script.debug.js" data-api="_vercel/insights"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Type 2 Practice Test 2026",
+      "description": "25 questions covering high-pressure system recovery, leak repair rates, and vacuum standards.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/type-2.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What systems fall under Type II certification?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "High-pressure and medium-pressure systems including residential central AC, heat pumps, and\n                        commercial refrigeration racks. Any refrigerant with a boiling point above -50\u00b0C at atmospheric\n                        pressure is classified as high or medium pressure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the leak rate threshold for comfort cooling systems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding\n                        this threshold must be repaired within 30 days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does IPR stand for in EPA 608?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due\n                        to the complexity and continuous operation requirements of industrial processes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can nitrogen be used to test for leaks in a Type II system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and\n                        before recharging. Never use oxygen or air \u2014 they create combustion risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a shallow vacuum versus a deep vacuum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300\u2013500\n                        microns) removes moisture and confirms system integrity before recharging. Type II tests both\n                        procedures and their respective equipment requirements."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Type II Practice Test",
+      "url": "https://epa608practicetest.net/type-2.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Type II practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
 </head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- SEO Navigation for Crawlers -->
-    <nav style="position: absolute; left: -9999px;" aria-hidden="true">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/history.html">Progress</a></li>
-            <li><a href="/core.html">Core Test</a></li>
-            <li><a href="/type-1.html">Type 1 Test</a></li>
-            <li><a href="/type-2.html">Type 2 Test</a></li>
-            <li><a href="/type-3.html">Type 3 Test</a></li>
-            <li><a href="/universal.html">Universal Test</a></li>
-            <li><a href="/review.html">Review</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="/terms.html">Terms</a></li>
-            <li><a href="/policy.html">Privacy</a></li>
-            <li><a href="/changelog.html">Changelog</a></li>
-        </ul>
-    </nav>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
 
     <script src="includes.js"></script>
     <div id="header-placeholder"></div>
 
-    <main>
-        <!-- Test Hero Section -->
-        <section class="test-hero">
-            <div class="container">
-                <h1>EPA 608 Type II Practice Test</h1>
-                <p class="subtitle">Free EPA 608 Practice Test—Start in Seconds<br>No signup. Instant scoring & explanations. Track your progress.</p>
-                
-                
-                <div class="test-info">
-                    <div class="info-card">
-                        <div class="info-number">25</div>
-                        <div class="info-label">Questions</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">72%</div>
-                        <div class="info-label">Passing Score</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">30</div>
-                        <div class="info-label">Minutes</div>
-                    </div>
-                </div>
-            </div>
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>Free EPA 608 Type 2 Practice Test (High-Pressure)</h1>
+            <p>The EPA 608 Type 2 section tests 25 questions on high-pressure systems including central air
+                conditioners, heat pumps, and commercial refrigeration racks. This test measures your ability to handle
+                leak repair requirements for systems with 50+ pounds of refrigerant.</p>
         </section>
 
-
-        <!-- Test Container -->
-        <section class="test-container" id="testContainer">
-            <div class="container">
+        <section class="test-container" id="quizApp">
+            <div id="testView">
                 <div class="test-header">
-                    <div class="question-counter" id="questionCounter">Question 1 of 25</div>
-                    <div class="test-progress">
-                        <div class="progress-bar" id="progressBar"></div>
+                    <div id="questionNumber">Question 1 of 25</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
                     </div>
-                    <div class="timer" id="timer">30:00</div>
+                    <div id="countdown">30:00</div>
                 </div>
 
-                <div class="question-container">
-                    <div class="question-text" id="questionText"></div>
-                    <ul class="answers" id="answersContainer"></ul>
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
                 </div>
 
-                <div class="test-navigation">
-                    <button class="nav-button" id="prevButton" onclick="previousQuestion()" disabled>Previous</button>
-                    <button class="nav-button" id="nextButton" onclick="nextQuestion()">Next</button>
-                    <button class="nav-button submit-button" id="submitButton" onclick="submitTest()" style="display: none;">Submit Test</button>
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <h2>Test Results</h2>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div class="results-nav">
+                    <a href="history.html" class="btn-secondary">View History</a>
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
                 </div>
             </div>
         </section>
 
-        <!-- Results Section -->
-        <section class="results" id="results" style="display:none;">
-            <div class="container">
-                <h2>🎯 Test Results</h2>
-                <div class="score-display" id="scoreDisplay"></div>
-                <p id="certificationStatus"></p>
-                <div class="results-buttons">
-                    <button class="history-button" onclick="window.location.href='history.html'">📊 Check Your History</button>
-                    <button class="restart-button" onclick="location.reload()">🔄 Take Another Test</button>
-                </div>
-                
-                <div class="social-share">
-                    <p>Share your success:</p>
-                    <div class="share-buttons">
-                        <button class="share-btn twitter" onclick="shareOnTwitter()">🐦 Twitter</button>
-                        <button class="share-btn facebook" onclick="shareOnFacebook()">📘 Facebook</button>
-                        <button class="share-btn linkedin" onclick="shareOnLinkedIn()">💼 LinkedIn</button>
-                        <button class="share-btn copy-link" onclick="copyTestLink()">🔗 Copy Link</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <article class="content-body">
+            <h2>Understanding EPA 608 Type II Scope</h2>
+            <p>Type II certification covers high-pressure and medium-pressure systems — the most common appliances
+                HVAC technicians encounter in the field. This includes residential central air conditioners, heat
+                pumps, commercial refrigeration racks, and refrigerated warehouses. Any system using a refrigerant with
+                a boiling point above -50°C at atmospheric pressure falls under Type II jurisdiction.</p>
 
-        <!-- Content Overview -->
-        <section class="content-section">
-            <div class="container">
-                <h2 class="section-title">What's Covered in Type II Test</h2>
-                <p class="section-subtitle">High-pressure refrigeration and air conditioning systems</p>
-                
-                <div class="content-grid">
-                    <div class="content-card">
-                        <h4>High-Pressure Systems</h4>
-                        <ul>
-                            <li>Commercial refrigeration equipment</li>
-                            <li>Central air conditioning systems</li>
-                            <li>Heat pump systems</li>
-                            <li>Industrial refrigeration units</li>
-                            <li>Split-system air conditioners</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Leak Repair Procedures</h4>
-                        <ul>
-                            <li>Leak detection requirements</li>
-                            <li>Repair verification methods</li>
-                            <li>Follow-up leak inspections</li>
-                            <li>Major vs. minor leak classifications</li>
-                            <li>Repair deadlines and compliance</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Charging & Recovery</h4>
-                        <ul>
-                            <li>Proper charging procedures</li>
-                            <li>System evacuation methods</li>
-                            <li>Recovery equipment operation</li>
-                            <li>Refrigerant handling safety</li>
-                            <li>Documentation and record keeping</li>
-                        </ul>
-                    </div>
-                </div>
+            <p>The Type II exam focuses on three high-value technical areas:</p>
+            <ul>
+                <li><strong>Leak Repair Requirements</strong> — Systems with more than 50 pounds of refrigerant are
+                    subject to mandatory leak repair thresholds. The threshold varies by system category.</li>
+                <li><strong>Recovery Vacuum Standards</strong> — Evacuation depth requirements (in inches of mercury)
+                    differ based on refrigerant type and whether recovery equipment was manufactured before or after
+                    November 15, 1993.</li>
+                <li><strong>High-Pressure System Components</strong> — Receivers, accumulators, moisture-indicating
+                    sight glasses, oil separators, and relief valves are all testable entities.</li>
+            </ul>
+
+            <h2>Leak Repair Requirements for Systems Over 50 Pounds</h2>
+            <p>Under Section 608, systems containing more than 50 pounds of refrigerant that leak above the annual
+                threshold must be repaired within 30 days, or within 120 days with an approved retrofit or retirement
+                plan. Leak rates are calculated as a percentage of the total system charge per year.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>System Category</th>
+                        <th>Annual Leak Rate Threshold</th>
+                        <th>Example Systems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Comfort Cooling</td>
+                        <td>10%</td>
+                        <td>Central AC, chillers for buildings</td>
+                    </tr>
+                    <tr>
+                        <td>Commercial Refrigeration</td>
+                        <td>20%</td>
+                        <td>Grocery store racks, walk-in coolers</td>
+                    </tr>
+                    <tr>
+                        <td>Industrial Process Refrigeration (IPR)</td>
+                        <td>30%</td>
+                        <td>Food processing, chemical plants</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Field Note:</strong> Grocery store refrigeration racks often blend Commercial and IPR
+                categories. Always verify the system classification before calculating the applicable leak rate
+                threshold on the job.
             </div>
-        </section>
+
+            <h2>Recovery Vacuum Standards for High-Pressure Systems</h2>
+            <p>Recovery depth requirements are measured in inches of mercury (in. Hg) vacuum. Equipment manufactured
+                after November 15, 1993 must meet the higher post-1993 standard. For most HFC refrigerants (R-410A,
+                R-32) in systems under 200 pounds, the recovery standard requires pulling to 0 psig. Systems over 200
+                pounds require a deeper vacuum pull to 4 in. Hg. The Type II exam tests these thresholds directly —
+                memorize them alongside the leak rate table above.</p>
+
+            <p>After completing this practice test, take the <a href="/type-1.html">Type I practice test</a> or the <a href="/universal.html">EPA 608 Universal practice
+                test</a> to simulate the full 100-question exam. Review the
+                <a href="/epa-608-cheat-sheet.html">EPA 608 cheat sheet</a> for a consolidated table of all vacuum
+                levels by refrigerant and system size.</p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>What systems fall under Type II certification?</strong>
+                    <p>High-pressure and medium-pressure systems including residential central AC, heat pumps, and
+                        commercial refrigeration racks. Any refrigerant with a boiling point above -50°C at atmospheric
+                        pressure is classified as high or medium pressure.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the leak rate threshold for comfort cooling systems?</strong>
+                    <p>10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding
+                        this threshold must be repaired within 30 days.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What does IPR stand for in EPA 608?</strong>
+                    <p>Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due
+                        to the complexity and continuous operation requirements of industrial processes.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can nitrogen be used to test for leaks in a Type II system?</strong>
+                    <p>Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and
+                        before recharging. Never use oxygen or air — they create combustion risk.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is a shallow vacuum versus a deep vacuum?</strong>
+                    <p>A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300–500
+                        microns) removes moisture and confirms system integrity before recharging. Type II tests both
+                        procedures and their respective equipment requirements.</p>
+                </div>
+            </section>
+        </article>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script>
-        // Test state variables
-        let currentTest = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let testTimer = null;
-        let startTime = null;
-        let currentScore = 0;
-        let testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
-        const selectedTestType = 'type2';
+        const ctrl = {
+            questions: [],
+            currentIdx: 0,
+            answers: [],
+            timer: null,
+            timeLeft: 1800,
 
-        // Type II EPA 608 Questions Bank
-        const questionBank = {
-            type2: [
-                {
-                    question: "What is the maximum time allowed to repair a leak in a commercial refrigeration system with more than 50 pounds of refrigerant?",
-                    answers: [
-                        "30 days",
-                        "14 days", 
-                        "7 days",
-                        "24 hours"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "Which of the following systems is considered a high-pressure appliance under EPA 608 Type II regulations?",
-                    answers: [
-                        "Domestic refrigerator",
-                        "Commercial ice machine",
-                        "Vehicle air conditioning",
-                        "Industrial process refrigeration using ammonia"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "When evacuating a high-pressure system, what is the required vacuum level before charging with refrigerant?",
-                    answers: [
-                        "29 inches Hg",
-                        "500 microns",
-                        "1000 microns",
-                        "15 inches Hg"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What percentage of refrigerant charge constitutes a major leak in a comfort cooling system?",
-                    answers: [
-                        "35% annually",
-                        "20% annually",
-                        "15% annually",
-                        "10% annually"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "Which method is required to verify that a leak has been successfully repaired?",
-                    answers: [
-                        "Visual inspection only",
-                        "Electronic leak detector verification",
-                        "Bubble test with soap solution",
-                        "Either electronic leak detector or bubble test"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What is the minimum required recovery efficiency for self-contained recovery equipment used on high-pressure systems?",
-                    answers: [
-                        "70%",
-                        "80%",
-                        "85%",
-                        "95%"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "When must industrial process refrigeration equipment be retrofitted or retired?",
-                    answers: [
-                        "When it leaks more than 35% annually",
-                        "When it uses CFC refrigerants",
-                        "When it's more than 20 years old",
-                        "When it cannot maintain proper temperatures"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What is the proper procedure for charging a system with HCFC-22?",
-                    answers: [
-                        "Charge as a vapor from the high side",
-                        "Charge as a liquid from the low side",
-                        "Charge as a vapor from the low side while running",
-                        "Charge as a liquid from the high side"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which of the following requires EPA certification under Section 608?",
-                    answers: [
-                        "Installing new refrigeration equipment",
-                        "Opening refrigerant circuits during maintenance",
-                        "Reading system pressures",
-                        "Cleaning condenser coils"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the maximum allowable leak rate for commercial refrigeration systems?",
-                    answers: [
-                        "10% annually",
-                        "15% annually",
-                        "20% annually",
-                        "35% annually"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "When recovering refrigerant from a system with a burned-out compressor, what special precaution must be taken?",
-                    answers: [
-                        "Use only liquid recovery methods",
-                        "Recover into a separate container",
-                        "Add nitrogen to the system first",
-                        "Use double evacuation procedures"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the required follow-up verification period after repairing a leak?",
-                    answers: [
-                        "30 days",
-                        "12 months",
-                        "No follow-up required",
-                        "6 months"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "Which refrigerant requires charging as a liquid due to potential fractionation?",
-                    answers: [
-                        "R-22",
-                        "R-134a",
-                        "R-410A",
-                        "R-12"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What vacuum level must be achieved when using a system-dependent recovery method?",
-                    answers: [
-                        "0 inches Hg",
-                        "4 inches Hg",
-                        "10 inches Hg",
-                        "15 inches Hg"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "When is it acceptable to knowingly release refrigerant to the atmosphere?",
-                    answers: [
-                        "During pressure testing with nitrogen",
-                        "When recovering refrigerant would be dangerous",
-                        "Never, unless specifically exempted by EPA",
-                        "When the amount is less than 1 pound"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the primary purpose of deep evacuation in refrigeration systems?",
-                    answers: [
-                        "Remove all refrigerant",
-                        "Remove moisture and non-condensables",
-                        "Test system integrity",
-                        "Increase system efficiency"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which type of leak detection is most effective for locating small refrigerant leaks?",
-                    answers: [
-                        "Soap bubble testing",
-                        "Electronic leak detectors",
-                        "Fluorescent dye",
-                        "Ultrasonic detection"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What must be done before opening a system for major repairs?",
-                    answers: [
-                        "Add nitrogen pressure",
-                        "Recover refrigerant to required levels",
-                        "Isolate the compressor",
-                        "Check system pressures"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "How often must leak inspections be performed on commercial refrigeration systems?",
-                    answers: [
-                        "Monthly",
-                        "Quarterly",
-                        "Annually",
-                        "As needed"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the correct procedure for disposing of recovered refrigerant?",
-                    answers: [
-                        "Release it to atmosphere slowly",
-                        "Reclaim it to ARI standards",
-                        "Bury it in approved landfills",
-                        "Send to an EPA-certified reclaimer"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "Which component failure most commonly causes acid formation in refrigeration systems?",
-                    answers: [
-                        "Expansion valve",
-                        "Condenser",
-                        "Compressor motor burnout",
-                        "Evaporator"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the minimum access fitting size required for appliances manufactured after November 15, 1993?",
-                    answers: [
-                        "1/8 inch",
-                        "1/4 inch",
-                        "3/8 inch",
-                        "1/2 inch"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "When charging a system, what should be monitored to prevent overcharging?",
-                    answers: [
-                        "Suction pressure only",
-                        "Discharge pressure only",
-                        "Both suction and discharge pressures",
-                        "Superheat and subcooling"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What record-keeping requirement applies to commercial refrigeration systems?",
-                    answers: [
-                        "Maintenance logs only",
-                        "Leak repair records for 3 years",
-                        "No records required",
-                        "Temperature logs only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which factor most affects the efficiency of refrigerant recovery equipment?",
-                    answers: [
-                        "Ambient temperature",
-                        "System size",
-                        "Refrigerant type",
-                        "Recovery rate setting"
-                    ],
-                    correct: 0
+            async init() {
+                try {
+                    const res = await fetch('questions.json');
+                    const data = await res.json();
+                    this.questions = data.filter(q => q.category === 'Type II').slice(0, 25);
+                    if (this.questions.length === 0) this.questions = data.slice(0, 25);
+                    this.answers = new Array(this.questions.length).fill(null);
+                    this.render();
+                    this.startTimer();
+                } catch (e) {
+                    document.getElementById('qText').innerHTML = "Error loading questions. <button onclick='location.reload()'>Retry</button>";
                 }
-            ]
+            },
+
+            render() {
+                const q = this.questions[this.currentIdx];
+                if (!q) return;
+                document.getElementById('qText').textContent = q.question;
+                document.getElementById('questionNumber').textContent = `Question ${this.currentIdx + 1} of ${this.questions.length}`;
+                document.getElementById('progressFill').style.width = `${((this.currentIdx + 1) / this.questions.length) * 100}%`;
+
+                const list = document.getElementById('ansList');
+                list.innerHTML = '';
+                q.options.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = `answer-btn ${this.answers[this.currentIdx] === i ? 'selected' : ''}`;
+                    btn.textContent = opt;
+                    btn.onclick = () => this.select(i);
+                    list.appendChild(btn);
+                });
+
+                document.getElementById('prevBtn').disabled = this.currentIdx === 0;
+                document.getElementById('nextBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'none' : 'block';
+                document.getElementById('submitBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'block' : 'none';
+            },
+
+            select(i) {
+                this.answers[this.currentIdx] = i;
+                this.render();
+            },
+
+            next() { if (this.currentIdx < this.questions.length - 1) { this.currentIdx++; this.render(); } },
+            prev() { if (this.currentIdx > 0) { this.currentIdx--; this.render(); } },
+
+            finish() {
+                clearInterval(this.timer);
+                let score = 0;
+                this.questions.forEach((q, i) => {
+                    if (q.options[this.answers[i]] === q.answer_text) score++;
+                });
+
+                const pct = Math.round((score / this.questions.length) * 100);
+                document.getElementById('testView').style.display = 'none';
+                document.getElementById('resultView').style.display = 'block';
+                document.getElementById('scoreValue').textContent = `${pct}%`;
+                document.getElementById('feedbackText').textContent = pct >= 70 ? "Pass! You've mastered the High-Pressure Type 2 requirements." : "Focus on leak repair percentages (10/20/30%) and vacuum recovery levels.";
+
+                const history = JSON.parse(localStorage.getItem('epa608History') || '[]');
+                history.push({ type: 'type2', score: pct, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString() });
+                localStorage.setItem('epa608History', JSON.stringify(history));
+
+                window.scrollTo(0, 0);
+            },
+
+            startTimer() {
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    const m = Math.floor(this.timeLeft / 60);
+                    const s = this.timeLeft % 60;
+                    document.getElementById('countdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                    if (this.timeLeft <= 0) this.finish();
+                }, 1000);
+            }
         };
 
-        function startTest() {
-            // Show test container
-            document.getElementById('testContainer').style.display = 'block';
-            
-            // Generate test questions
-            currentTest = generateTest(['type2']);
-            currentQuestionIndex = 0;
-            userAnswers = new Array(currentTest.length).fill(null);
-            currentScore = 0;
-            startTime = new Date();
-            
-            // Start timer (30 minutes for Type II)
-            startTimer(30);
-            
-            // Display first question
-            displayQuestion();
-        }
-
-        function generateTest(sections) {
-            let test = [];
-            sections.forEach(section => {
-                const sectionQuestions = [...questionBank[section]];
-                
-                // Shuffle questions
-                for (let i = sectionQuestions.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [sectionQuestions[i], sectionQuestions[j]] = [sectionQuestions[j], sectionQuestions[i]];
-                }
-                
-                sectionQuestions.forEach(q => {
-                    const question = { ...q, section: section };
-                    // Shuffle answers
-                    const correctAnswer = question.answers[question.correct];
-                    for (let i = question.answers.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]];
-                    }
-                    question.correct = question.answers.indexOf(correctAnswer);
-                    test.push(question);
-                });
-            });
-            
-            return test;
-        }
-
-        function startTimer(minutes) {
-            let timeLeft = minutes * 60;
-            const timerDisplay = document.getElementById('timer');
-            
-            testTimer = setInterval(() => {
-                const mins = Math.floor(timeLeft / 60);
-                const secs = timeLeft % 60;
-                timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(testTimer);
-                    submitTest();
-                }
-                
-                timeLeft--;
-            }, 1000);
-        }
-
-        function displayQuestion() {
-            const question = currentTest[currentQuestionIndex];
-            
-            // Update question counter and progress
-            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentTest.length}`;
-            const progress = ((currentQuestionIndex + 1) / currentTest.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            
-            // Display question
-            document.getElementById('questionText').textContent = question.question;
-            
-            // Display answers
-            const answersContainer = document.getElementById('answersContainer');
-            answersContainer.innerHTML = '';
-            
-            // Check if this question was already answered
-            const isAnswered = userAnswers[currentQuestionIndex] !== null;
-            
-            question.answers.forEach((answer, index) => {
-                const li = document.createElement('li');
-                li.className = 'answer-item';
-                
-                if (isAnswered) {
-                    // Show feedback for already answered questions
-                    if (index === question.correct) {
-                        li.classList.add('correct');
-                    } else if (index === userAnswers[currentQuestionIndex]) {
-                        li.classList.add('incorrect');
-                    }
-                }
-                
-                li.innerHTML = `
-                    <label>
-                        <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''} ${isAnswered ? 'disabled' : ''}>
-                        ${answer}
-                    </label>
-                `;
-                
-                if (!isAnswered) {
-                    li.addEventListener('click', () => selectAnswer(index));
-                }
-                answersContainer.appendChild(li);
-            });
-            
-            // Update navigation buttons
-            document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
-            
-            if (currentQuestionIndex === currentTest.length - 1) {
-                document.getElementById('nextButton').style.display = 'none';
-                document.getElementById('submitButton').style.display = 'block';
-            } else {
-                document.getElementById('nextButton').style.display = 'block';
-                document.getElementById('submitButton').style.display = 'none';
-            }
-        }
-
-        function selectAnswer(answerIndex) {
-            userAnswers[currentQuestionIndex] = answerIndex;
-            
-            // Update visual selection
-            document.querySelectorAll('.answer-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            document.querySelectorAll('.answer-item')[answerIndex].classList.add('selected');
-            document.querySelectorAll('input[name="answer"]')[answerIndex].checked = true;
-            
-            // Don't show feedback immediately - wait for next button click
-        }
-
-        function showAnswerFeedback(selectedAnswer) {
-            const question = currentTest[currentQuestionIndex];
-            const answerItems = document.querySelectorAll('.answer-item');
-            
-            answerItems.forEach((item, index) => {
-                const label = item.querySelector('label');
-                
-                if (index === question.correct) {
-                    setTimeout(() => {
-                        item.classList.add('correct');
-                        // Green color feedback is sufficient
-                    }, 100);
-                } else if (index === selectedAnswer) {
-                    setTimeout(() => {
-                        item.classList.add('incorrect');
-                        // Red color feedback is sufficient
-                    }, 100);
-                }
-            });
-
-            document.querySelectorAll('input[name="answer"]').forEach(radio => {
-                radio.disabled = true;
-            });
-        }
-
-        function nextQuestion() {
-            // Show feedback for current question if answered
-            if (userAnswers[currentQuestionIndex] !== null) {
-                showAnswerFeedback(userAnswers[currentQuestionIndex]);
-                
-                // Wait for animation before moving to next question
-                setTimeout(() => {
-                    if (currentQuestionIndex < currentTest.length - 1) {
-                        currentQuestionIndex++;
-                        displayQuestion();
-                    }
-                }, 1000);
-            } else {
-                // Move to next question without feedback if no answer selected
-                if (currentQuestionIndex < currentTest.length - 1) {
-                    currentQuestionIndex++;
-                    displayQuestion();
-                }
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                displayQuestion();
-            }
-        }
-
-        function submitTest() {
-            clearInterval(testTimer);
-            
-            // Calculate score
-            currentScore = 0;
-            userAnswers.forEach((answer, index) => {
-                if (answer !== null && answer === currentTest[index].correct) {
-                    currentScore++;
-                }
-            });
-            
-            calculateResults();
-        }
-
-        function calculateResults() {
-            const overallPercentage = Math.round((currentScore / currentTest.length) * 100);
-            const passed = overallPercentage >= 72;
-            
-            // Create detailed results
-            const detailedResults = currentTest.map((question, index) => {
-                const userAnswer = userAnswers[index];
-                const isCorrect = userAnswer !== null && userAnswer === question.correct;
-                
-                return {
-                    questionId: generateQuestionId(question.question, question.section),
-                    question: question.question,
-                    answers: [...question.answers],
-                    correctAnswer: question.correct,
-                    userAnswer: userAnswer,
-                    isCorrect: isCorrect,
-                    topic: mapSectionToTopic(question.section)
-                };
-            });
-            
-            // Save to history
-            const testResult = {
-                type: selectedTestType,
-                score: overallPercentage,
-                passed: passed,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                totalQuestions: currentTest.length,
-                correctAnswers: currentScore,
-                detailedResults: detailedResults
-            };
-            
-            testHistory.unshift(testResult);
-            if (testHistory.length > 20) testHistory.pop();
-            localStorage.setItem('epa608History', JSON.stringify(testHistory));
-            
-            displayResults(overallPercentage, passed);
-        }
-
-        function displayResults(score, passed) {
-            // Hide test container and show results
-            document.getElementById('testContainer').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            
-            // Display score
-            document.getElementById('scoreDisplay').textContent = score + '%';
-            document.getElementById('scoreDisplay').style.color = passed ? '#28a745' : '#dc3545';
-            
-            // Display certification status
-            const statusText = passed ? 
-                '🎉 Congratulations! You passed the Type II test!' : 
-                '📚 Keep studying! You need 72% to pass.';
-            document.getElementById('certificationStatus').textContent = statusText;
-        }
-
-        function restartTest() {
-            // Reset test state
-            currentTest = [];
-            currentQuestionIndex = 0;
-            userAnswers = [];
-            currentScore = 0;
-            
-            // Hide results and start test again
-            document.getElementById('results').style.display = 'none';
-            startTest();
-        }
-
-        // Auto-start test when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            startTest();
-        });
-        
-        // Social sharing functions
-        function shareOnTwitter() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const text = `Just scored ${score} on the EPA 608 Type 2 Practice Test! 🎯 Test your knowledge for free at`;
-            const url = window.location.href;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-        }
-        
-        function shareOnFacebook() {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
-        
-        function shareOnLinkedIn() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const title = `EPA 608 Type 2 Practice Test Result: ${score}`;
-            const summary = `Just completed the EPA 608 Type 2 Practice Test and scored ${score}! Great free resource for certification prep.`;
-            const url = window.location.href;
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`, '_blank');
-        }
-        
-        function copyTestLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = '#28a745';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#6c757d';
-                }, 2000);
-            }).catch(() => {
-                alert('Link copied to clipboard!');
-            });
-        }
-
-        // Utility functions
-        function generateQuestionId(questionText, section) {
-            return btoa(questionText.substring(0, 50) + section).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-        }
-
-        function mapSectionToTopic(section) {
-            const mapping = {
-                'core': 'Environmental Regulations',
-                'type1': 'Small Appliances',
-                'type2': 'High-Pressure Systems', 
-                'type3': 'Low-Pressure Systems'
-            };
-            return mapping[section] || section;
-        }
+        document.addEventListener('DOMContentLoaded', () => ctrl.init());
     </script>
 </body>
+
 </html>

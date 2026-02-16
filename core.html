@@ -1,924 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EPA 608 Core Test Practice - Essential knowledge for all technicians working with refrigerants. 25 questions, instant scoring, detailed explanations.">
+    <title>Free EPA 608 Core Practice Test 2026 | 25 Questions</title>
+    <meta name="description"
+        content="Take the free EPA 608 Core practice test. 25 multiple-choice questions covering Montreal Protocol, Clean Air Act, and refrigerant safety with instant scoring.">
     <meta name="author" content="EPA 608 Practice Test">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="EPA 608 Core Practice Test - EPA 608 Practice Test">
-    <meta property="og:description" content="Practice the EPA 608 Core section with 25 expert-designed questions. Essential knowledge for all refrigerant technicians.">
-    <meta property="og:type" content="website">
-    <title>EPA 608 Core Practice Test - EPA 608 Practice Test</title>
-    
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://epa608practicetest.net/core.html">
-    
-    <!-- Open Graph / Facebook -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Core Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Core exam with 25 expert-designed questions. Instant feedback and detailed explanations included.">
     <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EPA 608 Core Practice Test - EPA 608 Practice Test">
-    <meta name="twitter:description" content="Practice the EPA 608 Core section with 25 expert-designed questions. Essential knowledge for all refrigerant technicians.">
-    <meta name="twitter:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --color-primary: #007acc;
             --color-success: #28a745;
+            --color-error: #dc3545;
         }
-        
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
-        .container{width:100%;margin:0;padding:0 20px}
-        
-        /* Header */
-        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
-        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
-        .logo{font-size:24px;font-weight:bold;color:var(--color-primary);text-decoration:none}
-        .nav-menu{display:flex;list-style:none;gap:32px}
-        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
-        .nav-menu a:hover,.nav-menu a.active{color:var(--color-primary)}
-        
-        /* Test Hero */
-        .test-hero{background:linear-gradient(135deg,#28a745,#20c997);color:#fff;padding:60px 0;text-align:center}
-        .test-hero h1{font-size:42px;font-weight:bold;margin-bottom:16px}
-        .test-hero .subtitle{font-size:20px;margin-bottom:32px;opacity:.9}
-        .test-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:800px;margin:0 auto 40px}
-        .info-card{background:rgba(255,255,255,.15);padding:20px;border-radius:8px;text-align:center}
-        .info-number{font-size:28px;font-weight:bold;margin-bottom:8px}
-        .info-label{font-size:14px;opacity:.9}
-        
-        /* Start Test Section */
-        .start-section{padding:60px 0;background:#f8f9fa;text-align:center}
-        .start-btn{background:#28a745;color:#fff;border:none;padding:20px 48px;border-radius:8px;font-size:20px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;margin-bottom:24px}
-        .start-btn:hover{background:#218838;transform:translateY(-2px);box-shadow:0 8px 25px rgba(40,167,69,.3)}
-        .test-notes{max-width:600px;margin:0 auto;color:#666;line-height:1.7}
-        
-        /* Content Sections */
-        .content-section{padding:60px 0}
-        .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:40px}
-        .content-card{background:#fff;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:4px solid #28a745}
-        .content-card h4{font-size:20px;margin-bottom:16px;color:#333}
-        .content-card ul{margin:0;padding-left:20px}
-        .content-card li{margin-bottom:8px;line-height:1.6;color:#666}
-        
-        /* Test Interface Styles */
-        .test-container{padding:40px 0;background:#f8f9fa}
-        .test-header{display:flex;align-items:center;background:#fff;padding:20px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-counter{font-weight:bold;color:#333}
-        .test-progress{flex-grow:1;background:#e9ecef;height:8px;border-radius:4px;overflow:hidden;margin:0 20px}
-        .progress-bar{background:linear-gradient(90deg,#28a745,#20c997);height:100%;width:0%;transition:width .3s ease}
-        .timer{font-size:1.2em;font-weight:bold;color:#dc3545;min-width:80px}
-        
-        .question-container{background:#fff;padding:32px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-text{font-size:20px;font-weight:600;color:#333;margin-bottom:24px;line-height:1.4}
-        .answers{list-style:none;margin:0;padding:0}
-        .answer-item{margin-bottom:12px;padding:16px;border:2px solid #e9ecef;border-radius:8px;cursor:pointer;transition:all .3s ease;background:#fff}
-        .answer-item:hover{border-color:#007acc;background:#f8f9fa}
-        .answer-item.selected{border-color:#007acc;background:#e3f2fd}
-        .answer-item.correct{background:#d4edda;border-color:#28a745;animation:correctPulse .8s ease-out}
-        .answer-item.incorrect{background:#f8d7da;border-color:#dc3545;animation:incorrectShake .6s ease-out}
-        .answer-item label{display:flex;align-items:center;font-size:16px;color:#333;cursor:pointer;width:100%}
-        .answer-item input{margin-right:12px}
-        .answer-feedback{margin-left:auto;font-weight:bold}
-        .answer-feedback.correct{color:#28a745}
-        .answer-feedback.incorrect{color:#dc3545}
-        
-        .test-navigation{display:flex;justify-content:space-between;gap:16px}
-        #prevButton{float:left}
-        .nav-button{padding:12px 32px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
-        .nav-button:disabled{background:#e9ecef;color:#6c757d;cursor:not-allowed}
-        .nav-button:not(:disabled){background:#007acc;color:#fff}
-        .nav-button:not(:disabled):hover{background:#0056b3;transform:translateY(-1px)}
-        .submit-button{background:#dc3545!important}
-        .submit-button:hover{background:#c82333!important}
-        
-        .results{padding:60px 0;background:#f8f9fa;text-align:center}
-        .score-display{font-size:48px;font-weight:bold;margin:32px 0;color:#28a745}
-        .results-buttons{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
-        .history-button,.restart-button{padding:12px 24px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .history-button{background:#17a2b8;color:#fff}
-        .restart-button{background:#28a745;color:#fff}
-        .history-button:hover{background:#138496}
-        .restart-button:hover{background:#218838}
-        
-        /* Social Share Buttons */
-        .social-share{margin-top:40px;padding-top:32px;border-top:1px solid #e9ecef}
-        .social-share p{font-size:18px;font-weight:600;color:#333;margin-bottom:16px}
-        .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .share-btn{padding:10px 20px;border:none;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .share-btn.twitter{background:#1da1f2;color:#fff}
-        .share-btn.twitter:hover{background:#0d8bd9}
-        .share-btn.facebook{background:#1877f2;color:#fff}
-        .share-btn.facebook:hover{background:#166fe5}
-        .share-btn.linkedin{background:#0077b5;color:#fff}
-        .share-btn.linkedin:hover{background:#005885}
-        .share-btn.copy-link{background:#6c757d;color:#fff}
-        .share-btn.copy-link:hover{background:#545b62}
-        
-        @keyframes correctPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(40,167,69,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,0)}}
-        @keyframes incorrectShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        
-        /* Footer */
-        footer{background:#333;color:#fff;padding:48px 0 32px}
-        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
-        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
-        .footer-section ul{list-style:none}
-        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
-        .footer-section a:hover{color:#fff}
-        .footer-section li{margin-bottom:8px}
-        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
-        
-        /* Responsive Design */
-        @media (max-width:768px){
-            .container{padding:0 16px}
-            .header-content{flex-direction:column;gap:16px}
-            .nav-menu{gap:20px;flex-wrap:wrap;justify-content:center}
-            .test-hero{padding:40px 0}
-            .test-hero h1{font-size:32px}
-            .test-info{grid-template-columns:repeat(2,1fr);gap:16px}
-            .start-btn{padding:16px 32px;font-size:18px}
-            .content-grid{grid-template-columns:1fr}
-            .footer-content{grid-template-columns:1fr;text-align:center}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @media (max-width:480px){
-            .test-hero h1{font-size:28px}
-            .test-info{grid-template-columns:1fr}
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
         }
     </style>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KJ8X1DQ1GT');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
-    <!-- End Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
 
-    <!-- Vercel Analytics -->
-    <script defer src="https://va.vercel-scripts.com/v1/script.debug.js" data-api="_vercel/insights"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Core Practice Test 2026",
+      "description": "25 questions covering refrigerant handling, Clean Air Act, and environmental safety.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/core.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many questions are in the EPA 608 Core section?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Core section contains 25 multiple-choice questions. A passing score is 70%, which equals 18\n                        correct answers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the passing score for the EPA 608 Core exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "70% \u2014 you need 18 out of 25 correct. The official proctored exam is administered closed-book by\n                        EPA-approved organizations such as ESCO Institute and Mainstream Engineering."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Core section expire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Core certification is permanent once earned. It does not require renewal or re-testing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Montreal Protocol on the Core exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Core exam directly tests knowledge of the Montreal Protocol, its 1987 implementation,\n                        and how it drove the phase-out of CFCs and HCFCs under U.S. Clean Air Act regulations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I take the Core section online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Some EPA-approved providers offer online proctored testing. Check our guide on\n                        online and in-person testing options\n                        for current providers and availability."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Core Practice Test",
+      "url": "https://epa608practicetest.net/core.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Core practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
 </head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- SEO Navigation for Crawlers -->
-    <nav style="position: absolute; left: -9999px;" aria-hidden="true">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/history.html">Progress</a></li>
-            <li><a href="/core.html">Core Test</a></li>
-            <li><a href="/type-1.html">Type 1 Test</a></li>
-            <li><a href="/type-2.html">Type 2 Test</a></li>
-            <li><a href="/type-3.html">Type 3 Test</a></li>
-            <li><a href="/universal.html">Universal Test</a></li>
-            <li><a href="/review.html">Review</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="/terms.html">Terms</a></li>
-            <li><a href="/policy.html">Privacy</a></li>
-            <li><a href="/changelog.html">Changelog</a></li>
-        </ul>
-    </nav>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
 
     <script src="includes.js"></script>
     <div id="header-placeholder"></div>
 
-    <main>
-        <!-- Test Hero Section -->
-        <section class="test-hero">
-            <div class="container">
-                <h1>EPA 608 Core Practice Test</h1>
-                <p class="subtitle">Essential knowledge for all technicians working with refrigerants</p>
-                
-                <div class="test-info">
-                    <div class="info-card">
-                        <div class="info-number">25</div>
-                        <div class="info-label">Questions</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">72%</div>
-                        <div class="info-label">Passing Score</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">30</div>
-                        <div class="info-label">Minutes</div>
-                    </div>
-                </div>
-            </div>
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>Free EPA 608 Core Practice Test</h1>
+            <p>The EPA 608 Core section tests 25 multiple-choice questions on refrigerant handling, safety procedures,
+                and Clean Air Act regulations. Every technician certification starts here — Core is mandatory regardless
+                of which Type you pursue.</p>
         </section>
 
-
-        <!-- Test Container -->
-        <section class="test-container" id="testContainer">
-            <div class="container">
+        <section class="test-container" id="quizApp">
+            <div id="testView">
                 <div class="test-header">
-                    <div class="question-counter" id="questionCounter">Question 1 of 25</div>
-                    <div class="test-progress">
-                        <div class="progress-bar" id="progressBar"></div>
+                    <div id="questionNumber">Question 1 of 25</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
                     </div>
-                    <div class="timer" id="timer">30:00</div>
+                    <div id="countdown">30:00</div>
                 </div>
 
-                <div class="question-container">
-                    <div class="question-text" id="questionText"></div>
-                    <ul class="answers" id="answersContainer"></ul>
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
                 </div>
 
-                <div class="test-navigation">
-                    <button class="nav-button" id="prevButton" onclick="previousQuestion()" disabled>Previous</button>
-                    <button class="nav-button" id="nextButton" onclick="nextQuestion()">Next</button>
-                    <button class="nav-button submit-button" id="submitButton" onclick="submitTest()" style="display: none;">Submit Test</button>
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <h2>Test Results</h2>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div class="results-nav">
+                    <a href="history.html" class="btn-secondary">View History</a>
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
                 </div>
             </div>
         </section>
 
-        <!-- Results Section -->
-        <section class="results" id="results" style="display:none;">
-            <div class="container">
-                <h2>🎯 Test Results</h2>
-                <div class="score-display" id="scoreDisplay"></div>
-                <p id="certificationStatus"></p>
-                <div class="results-buttons">
-                    <button class="history-button" onclick="window.location.href='history.html'">📊 Check Your History</button>
-                    <button class="restart-button" onclick="location.reload()">🔄 Take Another Test</button>
-                </div>
-                
-                <div class="social-share">
-                    <p>Share your success:</p>
-                    <div class="share-buttons">
-                        <button class="share-btn twitter" onclick="shareOnTwitter()">🐦 Twitter</button>
-                        <button class="share-btn facebook" onclick="shareOnFacebook()">📘 Facebook</button>
-                        <button class="share-btn linkedin" onclick="shareOnLinkedIn()">💼 LinkedIn</button>
-                        <button class="share-btn copy-link" onclick="copyTestLink()">🔗 Copy Link</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <article class="content-body">
+            <h2>What the EPA 608 Core Exam Covers</h2>
+            <p>The EPA 608 Core section tests foundational knowledge every refrigerant technician must know — regardless
+                of the system type they service. Section 608 of the Clean Air Act prohibits venting refrigerants that
+                harm the stratospheric ozone layer, and the Core exam verifies you understand <em>why</em> and
+                <em>how</em> those rules apply in the field.</p>
 
-        <!-- Content Overview -->
-        <section class="content-section">
-            <div class="container">
-                <h2 class="section-title">What's Covered in the Core Test</h2>
-                <p class="section-subtitle">Essential topics every refrigerant technician must know</p>
-                
-                <div class="content-grid">
-                    <div class="content-card">
-                        <h4>Environmental Regulations</h4>
-                        <ul>
-                            <li>Clean Air Act requirements</li>
-                            <li>Montreal Protocol guidelines</li>
-                            <li>Ozone depletion potential (ODP)</li>
-                            <li>Global warming potential (GWP)</li>
-                            <li>Refrigerant phase-out schedules</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Refrigerant Safety</h4>
-                        <ul>
-                            <li>Proper handling procedures</li>
-                            <li>Personal protective equipment</li>
-                            <li>Ventilation requirements</li>
-                            <li>Emergency response protocols</li>
-                            <li>Refrigerant classification systems</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Recovery Procedures</h4>
-                        <ul>
-                            <li>Recovery equipment operation</li>
-                            <li>Evacuation techniques</li>
-                            <li>Proper storage methods</li>
-                            <li>Reclamation vs. recycling</li>
-                            <li>Documentation requirements</li>
-                        </ul>
-                    </div>
-                </div>
+            <p>The Core section measures five knowledge pillars:</p>
+            <ul>
+                <li><strong>Environmental Impact</strong> — Ozone Depletion Potential (ODP) and Global Warming
+                    Potential (GWP) for refrigerant families. The 1987 Montreal Protocol and the 1990 Clean Air Act
+                    Amendments set phase-out schedules for CFCs, HCFCs, and now HFCs under the 2020 AIM Act.</li>
+                <li><strong>Recovery, Recycling, and Reclamation</strong> — These three terms have distinct legal
+                    meanings. Recovery = removing refrigerant from a system into an external container. Recycling =
+                    cleaning refrigerant for reuse on-site. Reclamation = processing to ARI 700 standard, certified by
+                    an EPA-approved reclaimer.</li>
+                <li><strong>Evacuation and Dehydration</strong> — Deep vacuum requirements (measured in inches of
+                    mercury or microns) before recharging a system. Core asks about both pre- and post-1993 recovery
+                    equipment standards.</li>
+                <li><strong>Safety</strong> — Cylinder color codes, pressure-relief valve requirements, oxygen
+                    deprivation risks, and the toxicity classification of refrigerants (A1, A2L, B1, B2L).</li>
+                <li><strong>Regulatory Compliance</strong> — Maximum civil penalties exceed $44,539 per day per
+                    violation for illegal venting. Technicians must retain service records for a minimum of 3 years.</li>
+            </ul>
+
+            <h2>Refrigerant Families: CFC, HCFC, HFC, HFO</h2>
+            <p>The Core exam consistently tests your ability to distinguish refrigerant generations by their
+                environmental properties. The phase-out timeline follows ozone impact — the higher the ODP, the faster
+                the phase-out.</p>
+
+            <div class="highlight-box">
+                <strong>Field Note:</strong> R-22 (HCFC) production ended January 1, 2020. Technicians can still
+                recover and recycle existing R-22, but no new production is permitted in the U.S. The Core exam tests
+                this distinction.
             </div>
-        </section>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Family</th>
+                        <th>Example</th>
+                        <th>ODP</th>
+                        <th>GWP</th>
+                        <th>Status (2026)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CFC</td>
+                        <td>R-11, R-12</td>
+                        <td>High (1.0)</td>
+                        <td>High</td>
+                        <td>Fully phased out</td>
+                    </tr>
+                    <tr>
+                        <td>HCFC</td>
+                        <td>R-22, R-123</td>
+                        <td>Low (0.055)</td>
+                        <td>Moderate</td>
+                        <td>Production ended 2020</td>
+                    </tr>
+                    <tr>
+                        <td>HFC</td>
+                        <td>R-410A, R-134a</td>
+                        <td>Zero</td>
+                        <td>High (2,088)</td>
+                        <td>AIM Act phase-down in progress</td>
+                    </tr>
+                    <tr>
+                        <td>HFO</td>
+                        <td>R-1234yf</td>
+                        <td>Zero</td>
+                        <td>Very Low (4)</td>
+                        <td>Current transition target</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Passing the EPA 608 Core Section</h2>
+            <p>The Core section requires a minimum score of <strong>70% — 18 correct answers out of 25</strong>. Core
+                is mandatory for every technician certification level. You cannot earn a Type I, II, or III
+                certification without passing Core first. Most technicians find the recovery definitions and evacuation
+                micron levels the most difficult to memorize — if you score below 70% on this practice test, focus your
+                review on those two areas.</p>
+
+            <p>Once passed, Core certification does not expire. It is a permanent part of your Section 608 technician
+                credential. Take the <a href="/type-1.html">Type I Small Appliance practice test</a> next, or jump to the <a href="/universal.html">EPA 608 Universal practice test</a> when you're ready
+                to simulate the full 100-question proctored exam. For in-depth topic coverage, visit our
+                <a href="/study-guides.html">EPA 608 study guide collection</a>.</p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>How many questions are in the EPA 608 Core section?</strong>
+                    <p>The Core section contains 25 multiple-choice questions. A passing score is 70%, which equals 18
+                        correct answers.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the passing score for the EPA 608 Core exam?</strong>
+                    <p>70% — you need 18 out of 25 correct. The official proctored exam is administered closed-book by
+                        EPA-approved organizations such as ESCO Institute and Mainstream Engineering.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Does the Core section expire?</strong>
+                    <p>No. Core certification is permanent once earned. It does not require renewal or re-testing.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Is the Montreal Protocol on the Core exam?</strong>
+                    <p>Yes. The Core exam directly tests knowledge of the Montreal Protocol, its 1987 implementation,
+                        and how it drove the phase-out of CFCs and HCFCs under U.S. Clean Air Act regulations.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can I take the Core section online?</strong>
+                    <p>Some EPA-approved providers offer online proctored testing. Check our guide on
+                        <a href="/online-and-in-person-testing-options.html">online and in-person testing options</a>
+                        for current providers and availability.</p>
+                </div>
+            </section>
+        </article>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script>
-        // Test state variables
-        let currentTest = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let testTimer = null;
-        let startTime = null;
-        let currentScore = 0;
-        let testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
-        const selectedTestType = 'core';
+        const ctrl = {
+            questions: [],
+            currentIdx: 0,
+            answers: [],
+            timer: null,
+            timeLeft: 1800,
 
-        // Core EPA 608 Questions Bank
-        const questionBank = {
-            core: [
-                {
-                    question: "What is the primary purpose of the EPA Section 608 regulations?",
-                    answers: [
-                        "To increase energy efficiency in HVAC systems",
-                        "To protect the ozone layer and reduce greenhouse gas emissions", 
-                        "To standardize refrigerant pricing",
-                        "To regulate equipment warranties"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which of the following refrigerants has the highest ozone depletion potential (ODP)?",
-                    answers: [
-                        "R-410A",
-                        "R-134a",
-                        "R-12",
-                        "R-404A"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What does GWP stand for in refrigerant terminology?",
-                    answers: [
-                        "Gas Working Pressure",
-                        "Global Warming Potential",
-                        "General Warranty Period", 
-                        "Gas Weight Percentage"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "According to EPA regulations, what is the maximum allowable leak rate for commercial refrigeration equipment?",
-                    answers: [
-                        "5% annually",
-                        "10% annually",
-                        "20% annually",
-                        "35% annually"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which recovery method is required for systems containing more than 200 pounds of refrigerant?",
-                    answers: [
-                        "Passive recovery only",
-                        "Active recovery to 0 psig",
-                        "Active recovery to 10 inches of mercury vacuum",
-                        "No recovery required"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the Montreal Protocol?",
-                    answers: [
-                        "A US federal law regulating refrigerants",
-                        "An international treaty to protect the ozone layer",
-                        "A state-level HVAC certification program",
-                        "A manufacturer warranty agreement"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "When must technicians recover refrigerant from appliances?",
-                    answers: [
-                        "Only when the system is being disposed of",
-                        "Before opening the system for maintenance",
-                        "Only if the refrigerant is contaminated",
-                        "Recovery is optional for small leaks"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What happens to ozone-depleting refrigerants in the stratosphere?",
-                    answers: [
-                        "They increase atmospheric pressure",
-                        "They break down ozone molecules",
-                        "They create acid rain",
-                        "They improve air quality"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which organization is responsible for enforcing EPA Section 608 regulations?",
-                    answers: [
-                        "Department of Energy",
-                        "Occupational Safety and Health Administration",
-                        "Environmental Protection Agency",
-                        "National Institute of Standards and Technology"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the penalty for venting refrigerant intentionally?",
-                    answers: [
-                        "Warning letter only",
-                        "Up to $37,500 per day per violation",
-                        "$500 maximum fine",
-                        "Loss of EPA certification only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerant classification indicates no ozone depletion potential?",
-                    answers: [
-                        "Class A1",
-                        "Class B1", 
-                        "HFC refrigerants",
-                        "CFC refrigerants"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What does the Clean Air Act require regarding refrigerant recovery?",
-                    answers: [
-                        "Recovery is optional for small systems",
-                        "All refrigerant must be recovered before disposal",
-                        "Only CFC refrigerants need recovery",
-                        "Recovery is only required in certain states"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the difference between recycling and reclaiming refrigerant?",
-                    answers: [
-                        "No difference - terms are interchangeable",
-                        "Recycling is cleaning for reuse in same system; reclaiming is restoring to new specifications",
-                        "Reclaiming is cheaper than recycling", 
-                        "Recycling requires EPA certification; reclaiming does not"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "When did the production of CFC refrigerants end in the United States?",
-                    answers: [
-                        "1990",
-                        "1995",
-                        "2000",
-                        "2010"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What safety equipment is required when working with refrigerants?",
-                    answers: [
-                        "Hard hat only",
-                        "Safety goggles and gloves",
-                        "Steel-toed boots",
-                        "Hearing protection"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which factor most affects the amount of refrigerant that must be recovered?",
-                    answers: [
-                        "Ambient temperature",
-                        "Type of recovery equipment used",
-                        "Age of the system",
-                        "Brand of refrigerant"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What documentation is required when recovering refrigerant?",
-                    answers: [
-                        "Recovery equipment certification",
-                        "Technician EPA certification",
-                        "Both recovery records and technician certification",
-                        "No documentation required"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "How often should leak detection be performed on commercial refrigeration equipment?",
-                    answers: [
-                        "Monthly",
-                        "Quarterly", 
-                        "Annually",
-                        "Only when problems occur"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the primary environmental concern with refrigerant emissions?",
-                    answers: [
-                        "Air pollution in cities",
-                        "Ozone depletion and global warming",
-                        "Acid rain formation",
-                        "Noise pollution"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerant requires the highest recovery efficiency?",
-                    answers: [
-                        "R-22 in systems with more than 200 lbs",
-                        "R-410A in residential systems",
-                        "R-134a in automotive systems", 
-                        "All refrigerants have the same requirements"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What must be done before disposing of an appliance containing refrigerant?",
-                    answers: [
-                        "Tag the appliance with disposal date",
-                        "Remove all refrigerant to required levels",
-                        "Notify the EPA in advance",
-                        "Obtain a disposal permit"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "When is refrigerant venting allowed under EPA regulations?",
-                    answers: [
-                        "When the quantity is less than 1 pound",
-                        "In emergency situations only",
-                        "Never - venting is prohibited",
-                        "When the refrigerant is contaminated"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is required to transport recovered refrigerant?",
-                    answers: [
-                        "DOT-approved cylinders",
-                        "Temperature monitoring devices",
-                        "Special shipping permits",
-                        "Refrigerated transport vehicles"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "How long must records of refrigerant recovery be kept?",
-                    answers: [
-                        "1 year",
-                        "3 years",
-                        "5 years",
-                        "10 years"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the phase-out schedule for HCFC refrigerants?",
-                    answers: [
-                        "Immediate ban",
-                        "Gradual reduction through 2030",
-                        "No phase-out required",
-                        "Voluntary reduction only"
-                    ],
-                    correct: 1
+            async init() {
+                try {
+                    const res = await fetch('questions.json');
+                    const data = await res.json();
+                    this.questions = data.filter(q => q.section === 'core').slice(0, 25);
+                    if (this.questions.length === 0) this.questions = data.slice(0, 25);
+                    this.answers = new Array(this.questions.length).fill(null);
+                    this.render();
+                    this.startTimer();
+                } catch (e) {
+                    document.getElementById('qText').innerHTML = "Error loading questions. <button onclick='location.reload()'>Retry</button>";
                 }
-            ]
+            },
+
+            render() {
+                const q = this.questions[this.currentIdx];
+                if (!q) return;
+                document.getElementById('qText').textContent = q.question;
+                document.getElementById('questionNumber').textContent = `Question ${this.currentIdx + 1} of ${this.questions.length}`;
+                document.getElementById('progressFill').style.width = `${((this.currentIdx + 1) / this.questions.length) * 100}%`;
+
+                const list = document.getElementById('ansList');
+                list.innerHTML = '';
+                q.options.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = `answer-btn ${this.answers[this.currentIdx] === i ? 'selected' : ''}`;
+                    btn.textContent = opt;
+                    btn.onclick = () => this.select(i);
+                    list.appendChild(btn);
+                });
+
+                document.getElementById('prevBtn').disabled = this.currentIdx === 0;
+                document.getElementById('nextBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'none' : 'block';
+                document.getElementById('submitBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'block' : 'none';
+            },
+
+            select(i) {
+                this.answers[this.currentIdx] = i;
+                this.render();
+            },
+
+            next() { if (this.currentIdx < this.questions.length - 1) { this.currentIdx++; this.render(); } },
+            prev() { if (this.currentIdx > 0) { this.currentIdx--; this.render(); } },
+
+            finish() {
+                clearInterval(this.timer);
+                let score = 0;
+                this.questions.forEach((q, i) => {
+                    if (this.answers[i] === q.correctAnswer) score++;
+                });
+
+                const pct = Math.round((score / this.questions.length) * 100);
+                document.getElementById('testView').style.display = 'none';
+                document.getElementById('resultView').style.display = 'block';
+                document.getElementById('scoreValue').textContent = `${pct}%`;
+                document.getElementById('feedbackText').textContent = pct >= 70 ? "Pass! You've mastered the Core foundations." : "Keep studying. Focus on environmental regulations and safety.";
+
+                const history = JSON.parse(localStorage.getItem('epa608History') || '[]');
+                history.push({ type: 'core', score: pct, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString() });
+                localStorage.setItem('epa608History', JSON.stringify(history));
+
+                window.scrollTo(0, 0);
+            },
+
+            startTimer() {
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    const m = Math.floor(this.timeLeft / 60);
+                    const s = this.timeLeft % 60;
+                    document.getElementById('countdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                    if (this.timeLeft <= 0) this.finish();
+                }, 1000);
+            }
         };
 
-        function startTest() {
-            // Show test container
-            document.getElementById('testContainer').style.display = 'block';
-            
-            // Generate test questions
-            currentTest = generateTest(['core']);
-            currentQuestionIndex = 0;
-            userAnswers = new Array(currentTest.length).fill(null);
-            currentScore = 0;
-            startTime = new Date();
-            
-            // Start timer (30 minutes for Core)
-            startTimer(30);
-            
-            // Display first question
-            displayQuestion();
-        }
-
-        function generateTest(sections) {
-            let test = [];
-            sections.forEach(section => {
-                const sectionQuestions = [...questionBank[section]];
-                
-                // Shuffle questions
-                for (let i = sectionQuestions.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [sectionQuestions[i], sectionQuestions[j]] = [sectionQuestions[j], sectionQuestions[i]];
-                }
-                
-                sectionQuestions.forEach(q => {
-                    const question = { ...q, section: section };
-                    // Shuffle answers
-                    const correctAnswer = question.answers[question.correct];
-                    for (let i = question.answers.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]];
-                    }
-                    question.correct = question.answers.indexOf(correctAnswer);
-                    test.push(question);
-                });
-            });
-            
-            return test;
-        }
-
-        function startTimer(minutes) {
-            let timeLeft = minutes * 60;
-            const timerDisplay = document.getElementById('timer');
-            
-            testTimer = setInterval(() => {
-                const mins = Math.floor(timeLeft / 60);
-                const secs = timeLeft % 60;
-                timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(testTimer);
-                    submitTest();
-                }
-                
-                timeLeft--;
-            }, 1000);
-        }
-
-        function displayQuestion() {
-            const question = currentTest[currentQuestionIndex];
-            
-            // Update question counter and progress
-            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentTest.length}`;
-            const progress = ((currentQuestionIndex + 1) / currentTest.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            
-            // Display question
-            document.getElementById('questionText').textContent = question.question;
-            
-            // Display answers
-            const answersContainer = document.getElementById('answersContainer');
-            answersContainer.innerHTML = '';
-            
-            // Check if this question was already answered
-            const isAnswered = userAnswers[currentQuestionIndex] !== null;
-            
-            question.answers.forEach((answer, index) => {
-                const li = document.createElement('li');
-                li.className = 'answer-item';
-                
-                if (isAnswered) {
-                    // Show feedback for already answered questions
-                    if (index === question.correct) {
-                        li.classList.add('correct');
-                    } else if (index === userAnswers[currentQuestionIndex]) {
-                        li.classList.add('incorrect');
-                    }
-                }
-                
-                li.innerHTML = `
-                    <label>
-                        <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''} ${isAnswered ? 'disabled' : ''}>
-                        ${answer}
-                    </label>
-                `;
-                
-                if (!isAnswered) {
-                    li.addEventListener('click', () => selectAnswer(index));
-                }
-                answersContainer.appendChild(li);
-            });
-            
-            // Update navigation buttons
-            document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
-            
-            if (currentQuestionIndex === currentTest.length - 1) {
-                document.getElementById('nextButton').style.display = 'none';
-                document.getElementById('submitButton').style.display = 'block';
-            } else {
-                document.getElementById('nextButton').style.display = 'block';
-                document.getElementById('submitButton').style.display = 'none';
-            }
-        }
-
-        function selectAnswer(answerIndex) {
-            userAnswers[currentQuestionIndex] = answerIndex;
-            
-            // Update visual selection
-            document.querySelectorAll('.answer-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            document.querySelectorAll('.answer-item')[answerIndex].classList.add('selected');
-            document.querySelectorAll('input[name="answer"]')[answerIndex].checked = true;
-            
-            // Don't show feedback immediately - wait for next button click
-        }
-
-        function showAnswerFeedback(selectedAnswer) {
-            const question = currentTest[currentQuestionIndex];
-            const answerItems = document.querySelectorAll('.answer-item');
-            
-            answerItems.forEach((item, index) => {
-                const label = item.querySelector('label');
-                
-                if (index === question.correct) {
-                    setTimeout(() => {
-                        item.classList.add('correct');
-                        // Green color feedback is sufficient
-                    }, 100);
-                } else if (index === selectedAnswer) {
-                    setTimeout(() => {
-                        item.classList.add('incorrect');
-                        // Red color feedback is sufficient
-                    }, 100);
-                }
-            });
-
-            document.querySelectorAll('input[name="answer"]').forEach(radio => {
-                radio.disabled = true;
-            });
-        }
-
-        function nextQuestion() {
-            // Show feedback for current question if answered
-            if (userAnswers[currentQuestionIndex] !== null) {
-                showAnswerFeedback(userAnswers[currentQuestionIndex]);
-                
-                // Wait for animation before moving to next question
-                setTimeout(() => {
-                    if (currentQuestionIndex < currentTest.length - 1) {
-                        currentQuestionIndex++;
-                        displayQuestion();
-                    }
-                }, 1000);
-            } else {
-                // Move to next question without feedback if no answer selected
-                if (currentQuestionIndex < currentTest.length - 1) {
-                    currentQuestionIndex++;
-                    displayQuestion();
-                }
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                displayQuestion();
-            }
-        }
-
-        function submitTest() {
-            clearInterval(testTimer);
-            
-            // Calculate score
-            currentScore = 0;
-            userAnswers.forEach((answer, index) => {
-                if (answer !== null && answer === currentTest[index].correct) {
-                    currentScore++;
-                }
-            });
-            
-            calculateResults();
-        }
-
-        function calculateResults() {
-            const overallPercentage = Math.round((currentScore / currentTest.length) * 100);
-            const passed = overallPercentage >= 72;
-            
-            // Create detailed results
-            const detailedResults = currentTest.map((question, index) => {
-                const userAnswer = userAnswers[index];
-                const isCorrect = userAnswer !== null && userAnswer === question.correct;
-                
-                return {
-                    questionId: generateQuestionId(question.question, question.section),
-                    question: question.question,
-                    answers: [...question.answers],
-                    correctAnswer: question.correct,
-                    userAnswer: userAnswer,
-                    isCorrect: isCorrect,
-                    topic: mapSectionToTopic(question.section)
-                };
-            });
-            
-            // Save to history
-            const testResult = {
-                type: selectedTestType,
-                score: overallPercentage,
-                passed: passed,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                totalQuestions: currentTest.length,
-                correctAnswers: currentScore,
-                detailedResults: detailedResults
-            };
-            
-            testHistory.unshift(testResult);
-            if (testHistory.length > 20) testHistory.pop();
-            localStorage.setItem('epa608History', JSON.stringify(testHistory));
-            
-            displayResults(overallPercentage, passed);
-        }
-
-        function displayResults(score, passed) {
-            // Hide test container and show results
-            document.getElementById('testContainer').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            
-            // Display score
-            document.getElementById('scoreDisplay').textContent = score + '%';
-            document.getElementById('scoreDisplay').style.color = passed ? '#28a745' : '#dc3545';
-            
-            // Display certification status
-            const statusText = passed ? 
-                '🎉 Congratulations! You passed the Core test!' : 
-                '📚 Keep studying! You need 72% to pass.';
-            document.getElementById('certificationStatus').textContent = statusText;
-        }
-
-        function restartTest() {
-            // Reset test state
-            currentTest = [];
-            currentQuestionIndex = 0;
-            userAnswers = [];
-            currentScore = 0;
-            
-            // Hide results and start test again
-            document.getElementById('results').style.display = 'none';
-            startTest();
-        }
-
-        // Auto-start test when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            startTest();
-        });
-
-        // Utility functions
-        function generateQuestionId(questionText, section) {
-            return btoa(questionText.substring(0, 50) + section).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-        }
-
-        function mapSectionToTopic(section) {
-            const mapping = {
-                'core': 'Environmental Regulations',
-                'type1': 'Small Appliances',
-                'type2': 'High-Pressure Systems', 
-                'type3': 'Low-Pressure Systems'
-            };
-            return mapping[section] || section;
-        }
-
-        // Social Share Functions
-        function shareOnTwitter() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const text = `Just scored ${score} on the EPA 608 Core Practice Test! 🎯 Test your knowledge for free at`;
-            const url = window.location.href;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-        }
-
-        function shareOnFacebook() {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
-
-        function shareOnLinkedIn() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const title = `EPA 608 Core Practice Test Result: ${score}`;
-            const summary = `Just completed the EPA 608 Core Practice Test and scored ${score}! Great free resource for certification prep.`;
-            const url = window.location.href;
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`, '_blank');
-        }
-
-        function copyTestLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = '#28a745';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#6c757d';
-                }, 2000);
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = '#28a745';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#6c757d';
-                }, 2000);
-            });
-        }
+        document.addEventListener('DOMContentLoaded', () => ctrl.init());
     </script>
 </body>
+
 </html>

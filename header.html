@@ -176,6 +176,18 @@ nav {
     transition-delay: 0.3s;
 }
 
+.dropdown:hover .dropdown-menu li:nth-child(4) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.4s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(5) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.5s;
+}
+
 /* Dropdown Links */
 .dropdown-menu a {
     display: flex;
@@ -191,18 +203,15 @@ nav {
 
 /* Icons for Menu Items */
 .dropdown-menu a::before {
-    content: "📚";
+    content: "🏆";
     font-size: 18px;
     transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.dropdown-menu li:nth-child(2) a::before {
-    content: "🎓";
-}
-
-.dropdown-menu li:nth-child(3) a::before {
-    content: "📝";
-}
+.dropdown-menu li:nth-child(2) a::before { content: "📘"; }
+.dropdown-menu li:nth-child(3) a::before { content: "📦"; }
+.dropdown-menu li:nth-child(4) a::before { content: "🏗️"; }
+.dropdown-menu li:nth-child(5) a::before { content: "❄️"; }
 
 /* Hover Effect on Dropdown Items */
 .dropdown-menu a:hover {
@@ -243,9 +252,19 @@ nav {
             <nav>
                 <ul class="nav-menu">
                     <li><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Practice Tests</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/universal.html">Universal Practice Test</a></li>
+                            <li><a href="/core.html">Core Practice Test</a></li>
+                            <li><a href="/type-1.html">Type I Practice Test</a></li>
+                            <li><a href="/type-2.html">Type II Practice Test</a></li>
+                            <li><a href="/type-3.html">Type III Practice Test</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/study-guides.html">Study Guides</a></li>
                     <li><a href="/history.html">Test History</a></li>
-                    <li><a href="/review.html">Fix Your Mistakes</a></li>
-                    <li><a href="/index.html#features">Features</a></li>
+                    <li><a href="/review.html">Fix Mistakes</a></li>
                 </ul>
             </nav>
         </div>

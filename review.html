@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPA 608 Review Session</title>
-    
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/review.html">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KJ8X1DQ1GT');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
     <!-- End Google Tag Manager -->
 
     <!-- Vercel Analytics -->
@@ -30,27 +36,99 @@
             --color-primary: #007acc;
             --color-success: #28a745;
         }
-        
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
-        .container{width:100%;margin:0 auto;padding:0 20px}
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font: 16px/1.6 system-ui, sans-serif;
+            color: #333;
+            background: #fff
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
         /* Header */
-        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
-        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
-        .logo{font-size:24px;font-weight:bold;color:var(--color-primary);text-decoration:none}
-        .nav-menu{display:flex;list-style:none;gap:32px}
-        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
-        .nav-menu a:hover,.nav-menu a.active{color:var(--color-primary)}
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 32px
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color .3s
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--color-primary)
+        }
 
         /* Review Container */
-        .review-container{max-width:1000px;margin:40px auto;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);overflow:hidden;margin-top:20px}
-        .review-header{background:var(--color-primary);color:#fff;padding:24px;text-align:center}
-        .review-header h1{font-size:24px;margin-bottom:8px;color:#fff}
-        .review-header p{font-size:14px;opacity:.9}
-        
+        .review-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 20px
+        }
+
+        .review-header {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 24px;
+            text-align: center
+        }
+
+        .review-header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #fff
+        }
+
+        .review-header p {
+            font-size: 14px;
+            opacity: .9
+        }
+
         /* Review Content */
-        .review-main{padding:24px}
+        .review-main {
+            padding: 24px
+        }
 
         .review-setup {
             background: #f8f9fa;
@@ -161,7 +239,7 @@
             background: white;
             padding: 32px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 20px;
         }
 
@@ -272,10 +350,12 @@
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
             }
+
             100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
@@ -283,9 +363,26 @@
         }
 
         @keyframes incorrectShake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-            20%, 40%, 60%, 80% { transform: translateX(8px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-8px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(8px);
+            }
         }
 
         .answer-item input[type="radio"] {
@@ -327,10 +424,12 @@
                 opacity: 0;
                 transform: scale(0.3) translateY(-50%);
             }
+
             50% {
                 opacity: 1;
                 transform: scale(1.1) translateY(-50%);
             }
+
             100% {
                 opacity: 1;
                 transform: scale(1) translateY(-50%);
@@ -377,7 +476,7 @@
             background: white;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             text-align: center;
         }
 
@@ -459,9 +558,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         .error-notice.shake {
@@ -548,7 +657,7 @@
             border-radius: 12px;
             padding: 25px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.8);
@@ -599,7 +708,8 @@
             font-size: 1.3em;
         }
 
-        .footer-section p, .footer-section li {
+        .footer-section p,
+        .footer-section li {
             margin-bottom: 10px;
             color: #bdc3c7;
             line-height: 1.6;
@@ -631,50 +741,114 @@
             .container {
                 padding: 20px 10px;
             }
-            
+
             .page-header h1 {
                 font-size: 2em;
             }
-            
+
             .review-topics-list {
                 grid-template-columns: 1fr;
             }
-            
+
             .test-header {
                 flex-direction: column;
                 gap: 15px;
             }
         }
-        
+
         /* Footer */
-        footer{background:#333;color:#fff;padding:48px 0 32px;margin-top:40px}
-        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
-        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
-        .footer-section ul{list-style:none}
-        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
-        .footer-section a:hover{color:#fff}
-        .footer-section li{margin-bottom:8px}
-        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
-        
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 48px 0 32px;
+            margin-top: 40px
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #fff
+        }
+
+        .footer-section ul {
+            list-style: none
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color .3s
+        }
+
+        .footer-section a:hover {
+            color: #fff
+        }
+
+        .footer-section li {
+            margin-bottom: 8px
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            margin-top: 32px;
+            padding-top: 24px;
+            text-align: center;
+            color: #ccc
+        }
+
         /* Responsive Design */
-        @media (max-width:768px){
-            .container{padding:0 16px}
-            .header-content{flex-direction:column;gap:16px}
-            .nav-menu{gap:20px;flex-wrap:wrap;justify-content:center}
-            .review-container{margin:20px 16px}
-            .review-header{padding:16px}
-            .review-header h1{font-size:20px}
-            .review-main{padding:16px}
-            .footer-content{grid-template-columns:1fr;text-align:center}
+        @media (max-width:768px) {
+            .container {
+                padding: 0 16px
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 16px
+            }
+
+            .nav-menu {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center
+            }
+
+            .review-container {
+                margin: 20px 16px
+            }
+
+            .review-header {
+                padding: 16px
+            }
+
+            .review-header h1 {
+                font-size: 20px
+            }
+
+            .review-main {
+                padding: 16px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
     <!-- SEO Navigation for Crawlers -->
     <nav style="position: absolute; left: -9999px;" aria-hidden="true">
         <ul>
@@ -694,7 +868,7 @@
             <li><a href="/changelog.html">Changelog</a></li>
         </ul>
     </nav>
-    
+
     <script src="includes.js"></script>
     <div id="header-placeholder"></div>
 
@@ -704,69 +878,72 @@
                 <h1>📝 Review Wrong Answers</h1>
                 <p>Practice questions you got wrong from your test history</p>
             </div>
-            
+
             <main class="review-main">
 
-        <div class="review-setup" id="reviewSetup">
-            <h2>🎯 Simple Review Mode</h2>
-            
-            <div class="review-info">
-                <strong>📝 Review:</strong> Practice ALL questions you've answered incorrectly. Simple and straightforward - just you and your wrong answers.
-            </div>
+                <div class="review-setup" id="reviewSetup">
+                    <h2>🎯 Simple Review Mode</h2>
 
-            <div class="review-topics-display" id="topicsDisplay">
-                <h3>Questions to Review:</h3>
-                <div class="review-topics-list" id="topicsList">
-                    <!-- Wrong questions count will be loaded here -->
+                    <div class="review-info">
+                        <strong>📝 Review:</strong> Practice ALL questions you've answered incorrectly. Simple and
+                        straightforward - just you and your wrong answers.
+                    </div>
+
+                    <div class="review-topics-display" id="topicsDisplay">
+                        <h3>Questions to Review:</h3>
+                        <div class="review-topics-list" id="topicsList">
+                            <!-- Wrong questions count will be loaded here -->
+                        </div>
+                    </div>
+
+                    <button class="start-button" onclick="startReviewTest()" id="startReviewBtn">Start Review</button>
+
+                    <div class="review-actions">
+                        <a href="history.html" class="nav-button">← Back to History</a>
+                    </div>
                 </div>
-            </div>
 
-            <button class="start-button" onclick="startReviewTest()" id="startReviewBtn">Start Review</button>
-            
-            <div class="review-actions">
-                <a href="history.html" class="nav-button">← Back to History</a>
-            </div>
-        </div>
+                <div class="test-container" id="testContainer">
+                    <div class="test-header">
+                        <div class="question-number" id="questionCounter">Question 1 of 25</div>
+                        <div class="test-progress">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="timer" id="timer">Review Mode</div>
+                    </div>
 
-        <div class="test-container" id="testContainer">
-            <div class="test-header">
-                <div class="question-number" id="questionCounter">Question 1 of 25</div>
-                <div class="test-progress">
-                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="question-container">
+                        <div class="question-header">
+                            <div class="section-badge" id="sectionBadge">Review</div>
+                        </div>
+                        <div class="question-text" id="questionText"></div>
+                        <ul class="answers" id="answersContainer"></ul>
+                    </div>
+
+                    <div class="test-navigation">
+                        <button class="nav-button-test" id="prevButton" onclick="previousQuestion()"
+                            disabled>Previous</button>
+                        <button class="nav-button-test" id="nextButton" onclick="nextQuestion()">Next Question</button>
+                        <button class="nav-button-test submit-button" id="submitButton" onclick="submitTest()"
+                            style="display: none;">Complete Review</button>
+                    </div>
                 </div>
-                <div class="timer" id="timer">Review Mode</div>
-            </div>
 
-            <div class="question-container">
-                <div class="question-header">
-                    <div class="section-badge" id="sectionBadge">Review</div>
+                <div class="results" id="results">
+                    <div style="font-size: 4em; margin-bottom: 20px;">🎉</div>
+                    <h2 style="color: #28a745; margin-bottom: 20px;">Congratulations!</h2>
+                    <div class="score-display pass" style="font-size: 2.5em; margin: 30px 0;">100%</div>
+                    <p style="font-size: 1.3em; margin-bottom: 30px; color: #28a745; font-weight: bold;">
+                        You did a great job! No wrong answers remaining.
+                    </p>
+                    <p style="margin-bottom: 30px; color: #666;">
+                        You have successfully mastered all the weak topics identified in your test history.
+                        Your knowledge in these areas has significantly improved!
+                    </p>
+                    <div class="results-buttons">
+                        <a href="history.html" class="history-button">📊 View Progress</a>
+                    </div>
                 </div>
-                <div class="question-text" id="questionText"></div>
-                <ul class="answers" id="answersContainer"></ul>
-            </div>
-
-            <div class="test-navigation">
-                <button class="nav-button-test" id="prevButton" onclick="previousQuestion()" disabled>Previous</button>
-                <button class="nav-button-test" id="nextButton" onclick="nextQuestion()">Next Question</button>
-                <button class="nav-button-test submit-button" id="submitButton" onclick="submitTest()" style="display: none;">Complete Review</button>
-            </div>
-        </div>
-
-        <div class="results" id="results">
-            <div style="font-size: 4em; margin-bottom: 20px;">🎉</div>
-            <h2 style="color: #28a745; margin-bottom: 20px;">Congratulations!</h2>
-            <div class="score-display pass" style="font-size: 2.5em; margin: 30px 0;">100%</div>
-            <p style="font-size: 1.3em; margin-bottom: 30px; color: #28a745; font-weight: bold;">
-                You did a great job! No wrong answers remaining.
-            </p>
-            <p style="margin-bottom: 30px; color: #666;">
-                You have successfully mastered all the weak topics identified in your test history. 
-                Your knowledge in these areas has significantly improved!
-            </p>
-            <div class="results-buttons">
-                <a href="history.html" class="history-button">📊 View Progress</a>
-            </div>
-        </div>
             </main>
         </div>
     </div>
@@ -781,7 +958,7 @@
                     question: "What is the primary purpose of EPA Section 608 regulations?",
                     answers: [
                         "To increase energy efficiency in HVAC systems",
-                        "To protect the ozone layer and reduce greenhouse gas emissions", 
+                        "To protect the ozone layer and reduce greenhouse gas emissions",
                         "To standardize refrigerant pricing",
                         "To regulate equipment warranties"
                     ],
@@ -791,7 +968,7 @@
                     question: "Which refrigerant has the highest Ozone Depletion Potential (ODP)?",
                     answers: [
                         "R-134a",
-                        "R-410A", 
+                        "R-410A",
                         "CFC-12 (R-12)",
                         "R-22"
                     ],
@@ -802,7 +979,7 @@
                     answers: [
                         "Global Warming Potential",
                         "Gas Weight Pressure",
-                        "General Working Protocol", 
+                        "General Working Protocol",
                         "Greenhouse Weight Percentage"
                     ],
                     correct: 0
@@ -863,7 +1040,7 @@
                     question: "What recovery level is required for small appliances before disposal?",
                     answers: [
                         "80% of refrigerant charge",
-                        "85% of refrigerant charge", 
+                        "85% of refrigerant charge",
                         "90% of refrigerant charge",
                         "100% of refrigerant charge"
                     ],
@@ -926,7 +1103,7 @@
                     answers: [
                         "10 inches Hg vacuum",
                         "15 inches Hg vacuum",
-                        "4 inches Hg vacuum", 
+                        "4 inches Hg vacuum",
                         "0 psi gauge"
                     ],
                     correct: 0
@@ -955,7 +1132,7 @@
                     question: "What recovery level is required for high-pressure systems during normal service?",
                     answers: [
                         "10 inches Hg vacuum",
-                        "15 inches Hg vacuum", 
+                        "15 inches Hg vacuum",
                         "4 inches Hg vacuum",
                         "0 psi gauge pressure"
                     ],
@@ -998,7 +1175,7 @@
                     answers: [
                         "R-22",
                         "R-410A",
-                        "R-123", 
+                        "R-123",
                         "R-134a"
                     ],
                     correct: 2
@@ -1027,7 +1204,7 @@
                     question: "How often must low-pressure chillers be leak tested?",
                     answers: [
                         "Monthly",
-                        "Quarterly", 
+                        "Quarterly",
                         "Annually",
                         "Every 3 years"
                     ],
@@ -1064,7 +1241,7 @@
         let totalQuestions = 0;
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             debugTestHistory(); // Debug data when page loads
             loadReviewTopics();
         });
@@ -1085,17 +1262,17 @@
 
         function displayReviewTopics() {
             const topicsList = document.getElementById('topicsList');
-            
+
             // Get all wrong questions from history
             const wrongQuestions = getPreviouslyWrongQuestions();
-            
+
             // Filter out mastered questions
             const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
             const questionsToReview = wrongQuestions.filter(question => {
                 const questionId = question.id || generateQuestionId(question.question, question.topic);
                 return !masteredQuestions.has(questionId);
             });
-            
+
             if (questionsToReview.length === 0) {
                 topicsList.innerHTML = `
                     <div class="review-topic-item" style="justify-content: center; color: #28a745;">
@@ -1107,7 +1284,7 @@
                 document.getElementById('startReviewBtn').style.display = 'none';
                 return;
             }
-            
+
             // Show count of remaining questions to review
             const masteredCount = wrongQuestions.length - questionsToReview.length;
             topicsList.innerHTML = `
@@ -1117,14 +1294,14 @@
                     <span class="topic-accuracy">${questionsToReview.length} remaining${masteredCount > 0 ? ` (${masteredCount} mastered)` : ''}</span>
                 </div>
             `;
-            
+
             document.getElementById('startReviewBtn').style.display = 'block';
         }
 
         function startReviewTest() {
             // Generate questions from weak topics
             currentTest = generateReviewQuestions();
-            
+
             if (currentTest.length === 0) {
                 alert('No questions available for the selected topics.');
                 return;
@@ -1146,36 +1323,36 @@
             // Get all wrong questions from history
             const wrongQuestionsFromHistory = getPreviouslyWrongQuestions();
             console.log(`Found ${wrongQuestionsFromHistory.length} wrong questions from history`);
-            
+
             // Get mastered questions to exclude
             const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
             console.log(`Mastered questions: ${masteredQuestions.size}`);
-            
+
             // Filter out mastered questions
             const questionsToReview = wrongQuestionsFromHistory.filter(question => {
                 const questionId = question.id || generateQuestionId(question.question, question.topic);
                 return !masteredQuestions.has(questionId);
             });
-            
+
             console.log(`Questions to review after filtering mastered: ${questionsToReview.length}`);
-            
+
             // Randomize answer order for each question  
             questionsToReview.forEach(question => {
                 if (!question.answers || question.answers.length === 0) {
                     return;
                 }
-                
+
                 // Create mapping for original correct answer
                 const originalAnswers = [...question.answers];
                 const originalCorrect = question.correct;
-                
+
                 // Create array with indices and shuffle
                 const indices = question.answers.map((_, index) => index);
                 for (let i = indices.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [indices[i], indices[j]] = [indices[j], indices[i]];
                 }
-                
+
                 // Reorder answers and update correct index
                 question.answers = indices.map(i => originalAnswers[i]);
                 question.correct = indices.indexOf(originalCorrect);
@@ -1193,7 +1370,7 @@
         function getPreviouslyWrongQuestions() {
             const testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
             const wrongQuestions = [];
-            
+
             // Extract ALL wrong answers from test history (not filtered by reviewTopics)
             testHistory.forEach(test => {
                 if (test.detailedResults && Array.isArray(test.detailedResults)) {
@@ -1212,14 +1389,14 @@
                     });
                 }
             });
-            
+
             // Temporarily disable deduplication to test if that's the issue
             console.log(`Found ${wrongQuestions.length} total wrong answers before deduplication`);
-            
+
             // Remove duplicates based on question ID or full question text (more precise)
             const uniqueQuestions = [];
             const seenQuestions = new Set();
-            
+
             wrongQuestions.forEach(q => {
                 // Use question ID if available, otherwise use full question text as key
                 const key = q.id || q.question.substring(0, 100); // Use more of question text for uniqueness
@@ -1231,7 +1408,7 @@
                     console.log(`Skipping duplicate question: "${q.question.substring(0, 50)}..." with key: ${key.substring(0, 30)}`);
                 }
             });
-            
+
             console.log(`After deduplication: ${uniqueQuestions.length} unique questions`);
             return uniqueQuestions;
         }
@@ -1247,19 +1424,19 @@
             console.log('=== TEST HISTORY DEBUG ===');
             console.log(`Total tests in history: ${testHistory.length}`);
             console.log('Raw test history:', testHistory);
-            
+
             testHistory.forEach((test, index) => {
                 console.log(`\nTest ${index + 1}:`);
                 console.log(`  Type: ${test.type}`);
                 console.log(`  Score: ${test.score}%`);
                 console.log(`  Date: ${test.date} ${test.time}`);
                 console.log(`  Has detailedResults: ${!!test.detailedResults}`);
-                
+
                 if (test.detailedResults) {
                     console.log(`  Total questions in test: ${test.detailedResults.length}`);
                     const wrongAnswers = test.detailedResults.filter(r => !r.isCorrect);
                     console.log(`  Wrong answers: ${wrongAnswers.length}/${test.detailedResults.length}`);
-                    
+
                     wrongAnswers.forEach((wrong, i) => {
                         console.log(`    ${i + 1}. "${wrong.question.substring(0, 80)}..." (${wrong.topic})`);
                         console.log(`        ID: ${wrong.questionId}`);
@@ -1273,23 +1450,23 @@
         }
 
         // Global function to check review questions (run in console)
-        window.checkReviewData = function() {
+        window.checkReviewData = function () {
             console.log('\n=== REVIEW DATA CHECK ===');
-            
+
             // Check wrong questions
             const wrongQuestions = getPreviouslyWrongQuestions();
             console.log(`Found ${wrongQuestions.length} wrong questions from history:`);
             wrongQuestions.forEach((q, i) => {
                 console.log(`  ${i + 1}. "${q.question.substring(0, 60)}..." (${q.topic})`);
             });
-            
+
             // Check mastered questions
             const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
             console.log(`\nMastered questions: ${masteredQuestions.size}`);
             [...masteredQuestions].forEach((id, i) => {
                 console.log(`  ${i + 1}. ID: ${id}`);
             });
-            
+
             // Check final review questions
             const reviewQuestions = generateReviewQuestions();
             console.log(`\nFinal review questions: ${reviewQuestions.length}`);
@@ -1300,17 +1477,17 @@
 
         function displayQuestion() {
             const question = currentTest[currentQuestionIndex];
-            
+
             document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentTest.length}`;
             document.getElementById('sectionBadge').textContent = question.topic.toUpperCase();
             document.getElementById('questionText').textContent = question.question;
-            
+
             const progressPercent = ((currentQuestionIndex + 1) / currentTest.length) * 100;
             document.getElementById('progressBar').style.width = progressPercent + '%';
-            
+
             const answersContainer = document.getElementById('answersContainer');
             answersContainer.innerHTML = '';
-            
+
             question.answers.forEach((answer, index) => {
                 const li = document.createElement('li');
                 li.className = 'answer-item';
@@ -1325,7 +1502,7 @@
                         document.querySelectorAll('.answer-item').forEach(item => {
                             item.classList.remove('selected');
                         });
-                        
+
                         const radio = li.querySelector('input[type="radio"]');
                         radio.checked = true;
                         li.classList.add('selected');
@@ -1333,33 +1510,33 @@
                 });
                 answersContainer.appendChild(li);
             });
-            
+
             // Re-enable navigation and clear any previous feedback
             document.getElementById('nextButton').style.display = 'block';
             document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
-            
+
             // Clear any previous animations, feedback, and explanations
             document.querySelectorAll('.answer-item').forEach(item => {
                 item.classList.remove('correct', 'incorrect');
                 const feedback = item.querySelector('.answer-feedback');
                 if (feedback) feedback.remove();
             });
-            
+
             // Remove any existing answer explanation
             const existingExplanation = document.querySelector('.answer-explanation');
             if (existingExplanation) {
                 existingExplanation.remove();
             }
-            
+
             // Re-enable all radio buttons
             document.querySelectorAll('input[name="answer"]').forEach(radio => {
                 radio.disabled = false;
             });
-            
+
             // Reset next button styling
             const nextButton = document.getElementById('nextButton');
             nextButton.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
-            
+
             if (currentQuestionIndex === currentTest.length - 1) {
                 nextButton.textContent = 'Complete Review';
                 document.getElementById('submitButton').style.display = 'none';
@@ -1371,7 +1548,7 @@
 
         function nextQuestion() {
             const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-            
+
             // If no answer selected and question hasn't been answered yet
             if (!selectedAnswer && userAnswers[currentQuestionIndex] === null) {
                 showErrorNotice('Please select an answer before continuing.');
@@ -1411,10 +1588,10 @@
             const question = currentTest[currentQuestionIndex];
             const answerItems = document.querySelectorAll('.answer-item');
             const isCorrect = selectedAnswer === question.correct;
-            
+
             answerItems.forEach((item, index) => {
                 const label = item.querySelector('label');
-                
+
                 if (index === question.correct) {
                     setTimeout(() => {
                         item.classList.add('correct');
@@ -1440,7 +1617,7 @@
             // Always show next button and wait for user click (no automatic navigation)
             const nextButton = document.getElementById('nextButton');
             nextButton.style.display = 'block';
-            
+
             if (isCorrect) {
                 nextButton.textContent = 'Next Question';
                 nextButton.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
@@ -1448,12 +1625,12 @@
                 nextButton.textContent = 'Continue Learning';
                 nextButton.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
             }
-            
+
             // Update text for last question
             if (currentQuestionIndex === currentTest.length - 1) {
                 nextButton.textContent = isCorrect ? 'Complete Review' : 'Continue to Results';
             }
-            
+
             document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
         }
 
@@ -1467,11 +1644,11 @@
             // Create explanation container
             const explanationDiv = document.createElement('div');
             explanationDiv.className = 'answer-explanation';
-            
+
             const isCorrect = selectedAnswer === question.correct;
             const correctAnswerLetter = String.fromCharCode(65 + question.correct);
             const correctAnswerText = question.answers[question.correct];
-            
+
             explanationDiv.innerHTML = `
                 <div class="explanation-header ${isCorrect ? 'correct' : 'incorrect'}">
                     <span class="explanation-icon">${isCorrect ? '✅' : '❌'}</span>
@@ -1479,10 +1656,10 @@
                 </div>
                 <div class="explanation-content">
                     <p><strong>Correct Answer:</strong> ${correctAnswerLetter}. ${correctAnswerText}</p>
-                    ${isCorrect ? 
-                        '<p class="success-message">Great job! You got this question right.</p>' : 
-                        '<p class="learn-message">Review this answer to improve your understanding.</p>'
-                    }
+                    ${isCorrect ?
+                    '<p class="success-message">Great job! You got this question right.</p>' :
+                    '<p class="learn-message">Review this answer to improve your understanding.</p>'
+                }
                 </div>
             `;
 
@@ -1534,7 +1711,7 @@
 
             // Mark correctly answered questions as mastered (won't appear in future reviews)
             const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
-            
+
             currentTest.forEach((question, index) => {
                 if (userAnswers[index] === question.correct) {
                     // Mark this question as mastered - won't show in future reviews
@@ -1542,7 +1719,7 @@
                     masteredQuestions.add(questionId);
                 }
             });
-            
+
             // Save updated mastered questions
             localStorage.setItem('masteredQuestions', JSON.stringify([...masteredQuestions]));
 
@@ -1586,19 +1763,19 @@
         function showReviewComplete() {
             document.getElementById('testContainer').style.display = 'none';
             document.getElementById('results').style.display = 'block';
-            
+
             // Calculate results
             const finalScore = Math.round((currentScore / totalQuestions) * 100);
             const correctAnswers = currentScore;
             const masteredNow = currentScore; // Questions answered correctly this session
-            
+
             // Update score display
             document.querySelector('.results .score-display').textContent = finalScore + '%';
-            
+
             // Generate cheerful completion message based on performance
             let cheerMessage = '';
             let celebrationEmoji = '';
-            
+
             if (finalScore === 100) {
                 celebrationEmoji = '🎉🏆🌟';
                 cheerMessage = `<h2 style="color: #28a745; margin-bottom: 20px;">${celebrationEmoji} PERFECT SCORE! ${celebrationEmoji}</h2>
@@ -1628,11 +1805,11 @@
                                    💪 Every correct answer is progress - keep it up!
                                </p>`;
             }
-            
+
             // Update the results content with cheerful message
             const resultsContent = document.querySelector('.results');
             const existingContent = resultsContent.innerHTML;
-            
+
             // Find the score display and add cheerful message after it
             const scoreDisplayElement = resultsContent.querySelector('.score-display');
             if (scoreDisplayElement) {
@@ -1641,15 +1818,16 @@
                 cheerElement.innerHTML = cheerMessage;
                 cheerElement.style.textAlign = 'center';
                 cheerElement.style.marginTop = '30px';
-                
+
                 // Insert after score display
                 scoreDisplayElement.parentNode.insertBefore(cheerElement, scoreDisplayElement.nextSibling);
             }
-            
+
             // Clear review data
             localStorage.removeItem('reviewTopics');
             localStorage.removeItem('reviewMode');
         }
     </script>
 </body>
+
 </html>

@@ -1,58 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>EPA 608 Type 2 Study Guide: High-Pressure Systems [2025]</title>
-
-    <meta name="description" content="Complete EPA 608 Type 2 study guide for high-pressure system certification. Covers residential AC, commercial refrigeration, heat pumps, recovery procedures, and leak repair requirements.">
+    <title>EPA 608 Type 2 Study Guide: High-Pressure Systems 2026</title>
+    <meta name="description"
+        content="Master the EPA 608 Type 2 exam with this complete 2026 study guide. Covers recovery requirements, leak repair rules, and safety for residential and commercial AC.">
     <meta name="author" content="EPA 608 Practice Test">
-
     <link rel="canonical" href="https://epa608practicetest.net/study-guide-type-2.html">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="EPA 608 Type 2 Study Guide: High-Pressure Systems [2025]">
-    <meta property="og:description" content="Complete EPA 608 Type 2 study guide for high-pressure system certification. Covers residential AC, commercial refrigeration, and heat pumps.">
-    <meta property="og:type" content="article">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EPA 608 Type 2 Study Guide: High-Pressure Systems [2025]">
-    <meta name="twitter:description" content="Complete EPA 608 Type 2 study guide for high-pressure system certification.">
-
-    <!-- Article Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "EPA 608 Type 2 Study Guide: High-Pressure Systems [2025]",
-      "description": "Complete EPA 608 Type 2 certification study guide covering high-pressure HVAC systems, recovery requirements, and commercial refrigeration.",
-      "author": {
-        "@type": "Organization",
-        "name": "EPA 608 Practice Test"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "EPA 608 Practice Test"
-      },
-      "datePublished": "2025-01-20",
-      "dateModified": "2025-01-20"
-    }
-    </script>
 
     <style>
         :root {
             --color-primary: #007acc;
             --color-success: #28a745;
-            --color-type2: #4a90e2;
+            --color-bg-alt: #f8fafc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
+            font: 16px/1.8 system-ui, -apple-system, sans-serif;
             color: #333;
             background: #fff;
         }
@@ -64,747 +37,466 @@
             padding: 0 20px;
         }
 
-        /* Header & Footer */
-        header {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        #header-placeholder {
+            min-height: 70px;
         }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--color-primary);
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-menu > li > a {
-            display: block;
-            padding: 16px 24px;
-            color: #2c3e50;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-menu > li > a:hover {
-            color: #007acc;
-            background-color: rgba(0, 122, 204, 0.05);
-        }
-
-        footer {
-            background: #333;
-            color: #fff;
-            padding: 48px 0 32px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #fff;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color .3s;
-        }
-
-        .footer-section a:hover {
-            color: #fff;
-        }
-
-        .footer-section li {
-            margin-bottom: 8px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #555;
-            margin-top: 32px;
-            padding-top: 24px;
-            text-align: center;
-            color: #ccc;
-        }
-
-        /* Breadcrumb */
-        .breadcrumb {
-            background: #f8f9fa;
-            padding: 12px 0;
-            font-size: 14px;
-        }
-
-        .breadcrumb a {
-            color: var(--color-primary);
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        /* Article Header */
-        .article-header {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        .hero {
             padding: 60px 0 40px;
             text-align: center;
-            border-bottom: 3px solid var(--color-type2);
+            background: var(--color-bg-alt);
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 40px;
         }
 
-        .article-header h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #333;
-        }
-
-        .article-meta {
-            color: #666;
-            font-size: 14px;
-            margin-top: 16px;
-        }
-
-        /* Article Content */
-        .article-content {
-            padding: 60px 0;
-        }
-
-        .article-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin: 48px 0 24px;
-            color: #333;
-        }
-
-        .article-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 32px 0 16px;
-            color: #333;
-        }
-
-        .article-content h4 {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 24px 0 12px;
-            color: #333;
-        }
-
-        .article-content p {
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            color: #444;
-        }
-
-        .article-content ul,
-        .article-content ol {
-            margin: 20px 0 20px 40px;
-            line-height: 1.8;
-        }
-
-        .article-content li {
+        .hero h1 {
+            font-size: 38px;
+            color: #1e293b;
             margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .hero p {
             font-size: 18px;
-            color: #444;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .article-content strong {
-            color: #222;
-            font-weight: 600;
+        .content-body h2 {
+            font-size: 28px;
+            color: #1e293b;
+            margin: 48px 0 20px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
         }
 
-        /* Info Boxes */
+        .content-body h3 {
+            font-size: 22px;
+            color: #334155;
+            margin: 32px 0 16px;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            color: #334155;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+        }
+
         .info-box {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.08) 0%, rgba(74, 144, 226, 0.03) 100%);
-            border-left: 4px solid var(--color-type2);
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
             padding: 24px;
             border-radius: 8px;
             margin: 32px 0;
         }
 
-        .info-box h3 {
-            margin-top: 0;
-            color: var(--color-type2);
+        .info-box h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
 
-        .success-box {
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, rgba(40, 167, 69, 0.02) 100%);
-            border-left: 4px solid var(--color-success);
-            padding: 24px;
-            border-radius: 8px;
-            margin: 32px 0;
-        }
-
-        .success-box h3 {
-            margin-top: 0;
-            color: var(--color-success);
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.08) 0%, rgba(255, 193, 7, 0.03) 100%);
-            border-left: 4px solid #ffc107;
-            padding: 24px;
-            border-radius: 8px;
-            margin: 32px 0;
-        }
-
-        .warning-box h3 {
-            margin-top: 0;
-            color: #f57c00;
-        }
-
-        /* Key Points */
-        .key-points {
+        /* Mini Quiz Styles */
+        .mini-quiz {
             background: #fff;
-            border: 2px solid #bbdefb;
-            border-radius: 12px;
-            padding: 32px;
-            margin: 32px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 60px 0;
         }
 
-        .key-points h3 {
-            margin-top: 0;
-            color: var(--color-type2);
-        }
-
-        .key-points ul {
-            margin-left: 20px;
-        }
-
-        /* CTA Boxes */
-        .cta-box {
-            background: linear-gradient(135deg, var(--color-type2) 0%, #5ba3f5 100%);
-            color: white;
-            padding: 32px;
-            border-radius: 12px;
+        .mini-quiz h3 {
+            margin-bottom: 20px;
             text-align: center;
-            margin: 48px 0;
+            color: var(--color-primary);
         }
 
-        .cta-box h3 {
-            color: white;
-            margin-top: 0;
+        .quiz-q {
+            margin-bottom: 25px;
+            display: none;
         }
 
-        .cta-box a {
-            display: inline-block;
-            background: white;
-            color: var(--color-type2);
-            padding: 14px 32px;
+        .quiz-q.active {
+            display: block;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .opt-btn {
+            padding: 12px 20px;
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .opt-btn:hover {
+            background: #f1f5f9;
+            border-color: var(--color-primary);
+        }
+
+        .opt-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .opt-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .quiz-footer {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: 600;
-            margin-top: 16px;
-            transition: transform 0.3s;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
         }
 
-        .cta-box a:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 32px 0;
-            background: white;
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        thead {
-            background: var(--color-type2);
-            color: white;
+        .faq-q {
+            padding: 15px 20px;
+            background: #f8fafc;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
         }
 
-        th {
-            padding: 16px;
-            text-align: left;
-            font-weight: 600;
+        .faq-q::after {
+            content: '+';
         }
 
-        td {
-            padding: 16px;
-            border-bottom: 1px solid #e9ecef;
+        .faq-a {
+            padding: 20px;
+            display: none;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        .faq-item.active .faq-a {
+            display: block;
         }
 
-        tbody tr:hover {
-            background: #e3f2fd;
+        .faq-item.active .faq-q::after {
+            content: '−';
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .article-header h1 {
-                font-size: 32px;
-            }
-
-            .article-content h2 {
-                font-size: 26px;
-            }
-
-            .article-content h3 {
-                font-size: 22px;
-            }
-
-            .article-content p,
-            .article-content li {
-                font-size: 16px;
-            }
-
-            table {
-                font-size: 14px;
-            }
-
-            th, td {
-                padding: 12px;
+            .hero h1 {
+                font-size: 30px;
             }
         }
     </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "EPA 608 Type 2 Study Guide: High-Pressure Systems (2026)",
+  "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
+  "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
+  "datePublished": "2026-02-16",
+  "dateModified": "2026-02-16",
+  "url": "https://epa608practicetest.net/study-guide-type-2.html"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+,    {"@type":"Question","name":"Does Type 2 certification include Type 1?","acceptedAnswer":{"@type":"Answer","text":"No, each certification type is separate. However, passing Core + Types 1, 2, and                         3 earns you the Universal certification."}}
+    {"@type":"Question","name":"What is the boiling point of high-pressure
+                        refrigerants?","acceptedAnswer":{"@type":"Answer","text":"High-pressure refrigerants have a boiling point between -50.8°F and 50°F at                         atmospheric pressure."}}
+  ]
+}
+</script>
 </head>
 
 <body>
-    <!-- GTM noscript -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-    <div id="header-placeholder"></div>
     <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <div class="container">
-            <a href="/">Home</a> › <a href="/study-guides.html">Study Guides</a> › <span>Type 2 Guide</span>
-        </div>
-    </div>
+    <main class="container">
+        <section class="hero">
+            <h1>EPA 608 Type 2 Study Guide [2026]</h1>
+            <p>Prepare for high-pressure system certification, covering residential air conditioning, split systems, and
+                commercial refrigeration.</p>
+        </section>
 
-    <!-- Article Header -->
-    <section class="article-header">
-        <div class="container">
-            <h1>EPA 608 Type 2 Study Guide: High-Pressure Systems</h1>
-            <div class="article-meta">
-                Updated January 20, 2025 | 11 min read | Most Common HVAC Certification
-            </div>
-        </div>
-    </section>
-
-    <!-- Article Content -->
-    <article class="article-content">
-        <div class="container">
-
-            <p><strong>EPA 608 Type 2 certification authorizes you to service high-pressure refrigeration and air conditioning systems, covering the vast majority of residential and commercial HVAC equipment.</strong> This guide provides complete coverage of Type 2 exam topics including system classifications, recovery requirements for various refrigerants, leak repair thresholds, evacuation procedures, charging methods, and industry best practices for high-pressure system service.</p>
-
-            <div class="info-box">
-                <h3>❄️ Type 2 Exam Quick Facts</h3>
-                <ul>
-                    <li><strong>Questions:</strong> 25 multiple-choice (Core) + 25 Type 2 = 50 total</li>
-                    <li><strong>Passing Score:</strong> 70% on each section (18/25 Core, 18/25 Type 2)</li>
-                    <li><strong>Covers:</strong> Residential AC, heat pumps, commercial refrigeration, rooftop units</li>
-                    <li><strong>Recovery Levels:</strong> Varies by refrigerant type and system size</li>
-                    <li><strong>Study Time:</strong> 8-12 hours for HVAC professionals, 16-24 hours for beginners</li>
-                </ul>
+        <article class="content-body">
+            <div class="intro info-box">
+                <h4>🎯 Type 2 Certification Scope</h4>
+                <p>The EPA 608 Type 2 certification authorizes technicians to maintain, service, or repair high-pressure
+                    appliances that are not small appliances or MVACs. This certification covers the majority of
+                    residential split systems, heat pumps, and commercial refrigeration units.</p>
             </div>
 
-            <h2>What Are Type 2 High-Pressure Systems?</h2>
-
-            <p>Type 2 encompasses appliances using high-pressure refrigerants (boiling point below 50°F at atmospheric pressure) except for small appliances under 5 pounds and motor vehicle air conditioning. High-pressure refrigerants operate above atmospheric pressure in both the evaporator and condenser at normal operating temperatures.</p>
-
-            <p><strong>Common Type 2 equipment:</strong></p>
-
+            <h2>High-Pressure System Classification and Definition</h2>
+            <p>High-pressure systems use refrigerants with a boiling point between -50.8°F and 50°F at atmospheric
+                pressure. Unlike small appliances, Type 2 equipment often contains significant refrigerant charges and
+                requires advanced recovery and leak repair procedures to ensure environmental safety.</p>
             <ul>
-                <li><strong>Residential Air Conditioning:</strong> Split systems, package units, heat pumps for single-family homes</li>
-                <li><strong>Light Commercial AC:</strong> Rooftop units (RTUs), split systems for small businesses and offices</li>
-                <li><strong>Commercial Refrigeration:</strong> Walk-in coolers and freezers, reach-in refrigerators, display cases</li>
-                <li><strong>Ice Machines:</strong> Commercial ice makers (over 5 lbs refrigerant charge)</li>
-                <li><strong>Heat Pumps:</strong> Air-source heat pumps, mini-splits, ductless systems</li>
-                <li><strong>Process Cooling:</strong> Industrial process chillers using high-pressure refrigerants</li>
-                <li><strong>Condensing Units:</strong> Remote condensers for refrigeration applications</li>
+                <li><strong>Common Equipment:</strong> Residential central air conditioners, heat pumps, and walk-in
+                    coolers.</li>
+                <li><strong>Refrigerant Types:</strong> Includes R-22 (HCFC), R-410A (HFC), and R-404A (HFC).</li>
+                <li><strong>System Size:</strong> Generally refers to systems containing more than 5 pounds of
+                    refrigerant.</li>
             </ul>
 
-            <h3>What Type 2 Does NOT Cover</h3>
-
-            <p>Understanding Type 2 boundaries prevents certification confusion:</p>
-
-            <ul>
-                <li><strong>Small Appliances:</strong> Equipment with 5 lbs or less refrigerant (requires Type 1)</li>
-                <li><strong>Low-Pressure Chillers:</strong> Centrifugal chillers using R-123 or similar (requires Type 3)</li>
-                <li><strong>Motor Vehicle AC:</strong> Cars, trucks, buses (requires separate MVAC-like certification)</li>
-                <li><strong>Specialty Applications:</strong> Marine refrigeration, aircraft AC, railway car AC (industry-specific certifications)</li>
-            </ul>
-
-            <h2>Type 2 Recovery Requirements</h2>
-
-            <h3>Recovery Levels by Refrigerant Type</h3>
-
-            <p>EPA mandates specific vacuum levels based on refrigerant classification and recovery equipment capability. Type 2 recovery requirements are more stringent than Type 1 due to larger refrigerant charges and environmental impact.</p>
-
+            <h2>Required Recovery Vacuum Levels for Type 2</h2>
+            <p>Recovery requirements for Type 2 equipment vary based on the date the recovery equipment was manufactured
+                and the type of refrigerant in the system. Technicians must achieve specific vacuum levels to minimize
+                the release of ozone-depleting substances during service.</p>
             <table>
+                <style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 30px;
+                        font-size: 15px;
+                    }
+
+                    th {
+                        text-align: left;
+                        background: #f1f5f9;
+                        padding: 12px;
+                        border: 1px solid #e2e8f0;
+                    }
+
+                    td {
+                        padding: 12px;
+                        border: 1px solid #e2e8f0;
+                    }
+                </style>
                 <thead>
                     <tr>
-                        <th>Refrigerant Class</th>
-                        <th>Examples</th>
-                        <th>Required Vacuum</th>
+                        <th>Refrigerant Type</th>
+                        <th>Required Vacuum (Inches of Hg)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>HCFC-22 Systems</strong></td>
-                        <td>R-22 residential and commercial AC</td>
-                        <td>10 inches Hg vacuum</td>
+                        <td>HCFC-22 systems < 200 lbs</td>
+                        <td>10" Hg vacuum</td>
                     </tr>
                     <tr>
-                        <td><strong>Other HCFCs/CFCs</strong></td>
-                        <td>R-12, R-502 (legacy systems)</td>
-                        <td>10 inches Hg vacuum</td>
+                        <td>HCFC-22 systems > 200 lbs</td>
+                        <td>15" Hg vacuum</td>
                     </tr>
                     <tr>
-                        <td><strong>HFC Systems</strong></td>
-                        <td>R-134a, R-404A, R-407C</td>
-                        <td>0 psig</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Very High-Pressure</strong></td>
-                        <td>R-410A (residential AC)</td>
-                        <td>0 psig</td>
-                    </tr>
-                    <tr>
-                        <td><strong>HFO Blends</strong></td>
-                        <td>R-454B, R-32 (newer systems)</td>
-                        <td>0 psig</td>
+                        <td>HFC systems (R-410A)</td>
+                        <td>0 psig (until recovery stops)</td>
                     </tr>
                 </tbody>
             </table>
 
-            <div class="success-box">
-                <h3>✅ Recovery Equipment Standards</h3>
-                <p>All Type 2 recovery requires self-contained recovery equipment certified by EPA-approved organizations. System-dependent recovery is NOT acceptable for Type 2 equipment regardless of size. Your recovery machine must achieve required vacuum levels and meet AHRI 740 or SAE J2810 standards.</p>
-            </div>
-
-            <h3>Recovery Procedures</h3>
-
-            <p><strong>Vapor Recovery (Push-Pull Method):</strong> Most common for Type 2 systems. Connect recovery machine to both high and low sides, operate in push-pull mode pulling vapor from low side while pushing recovered liquid back through high side. Fastest method for systems with significant refrigerant charges.</p>
-
-            <p><strong>Liquid Recovery:</strong> For systems with liquid line service valves, recover liquid refrigerant first (much faster than vapor recovery), then switch to vapor recovery to clear remaining refrigerant. Always recover liquid into recovery cylinder vapor port to prevent overfilling.</p>
-
-            <p><strong>Passive Recovery:</strong> After active recovery reaches required vacuum, close manifold valves and monitor system pressure. If pressure rises (indicating remaining liquid refrigerant), continue recovery. Wait 5-10 minutes between recovery cycles on large systems.</p>
-
-            <h3>Special Recovery Considerations</h3>
-
-            <p><strong>Heat Pumps:</strong> Some heat pumps have reversing valve positions affecting recovery efficiency. Position reversing valve to cooling mode during recovery for best results. Check service manual for manufacturer recommendations.</p>
-
-            <p><strong>Refrigerant Blends:</strong> R-410A, R-404A, R-407C are zeotropic or near-azeotropic blends. Never top off blends with vapor — always charge as liquid to prevent composition shift. Recover blends as liquid when possible to maintain proper composition for recycling.</p>
-
-            <p><strong>Contaminated Refrigerant:</strong> If you suspect refrigerant contamination (wrong refrigerant added, air, moisture), recover into separate cylinder marked "contaminated" and send for reclamation. Don't mix contaminated refrigerant with clean refrigerant.</p>
-
-            <h2>Common Type 2 Refrigerants</h2>
-
-            <h3>Current Refrigerants in Use</h3>
-
-            <p><strong>R-22 (HCFC-22):</strong> Legacy refrigerant being phased out. Production banned January 1, 2020, but existing equipment can use reclaimed or recycled R-22 indefinitely. Most common refrigerant in older residential AC and commercial refrigeration. Being replaced by R-410A (residential) and R-404A/R-407C (commercial).</p>
-
-            <p><strong>R-410A (Puron):</strong> Industry standard for new residential and light commercial AC since 2010. Near-azeotropic blend of R-32 and R-125. Operates at 60% higher pressure than R-22, requiring specific equipment design. Cannot be used as R-22 drop-in replacement.</p>
-
-            <p><strong>R-404A:</strong> Common in commercial refrigeration (walk-in coolers, ice machines, display cases). Blend of R-125, R-143a, and R-134a. High GWP (3,922) driving phase-down under AIM Act. Being replaced by R-448A, R-449A in new equipment.</p>
-
-            <p><strong>R-407C:</strong> R-22 replacement for some commercial applications. Zeotropic blend exhibiting temperature glide during phase change. Must be charged as liquid to prevent composition shift. Moderate GWP compared to R-404A.</p>
-
-            <p><strong>R-134a:</strong> Used in commercial refrigeration, chillers, and some automotive applications. Single-component HFC with lower GWP than blends. Common in ice machines and medium-temperature refrigeration.</p>
-
-            <h3>New Lower-GWP Refrigerants</h3>
-
-            <p>EPA regulations under the AIM Act are phasing down high-GWP refrigerants. Newer systems use lower-GWP alternatives:</p>
-
+            <h2>Leak Repair Requirements for Commercial Systems</h2>
+            <p>EPA regulations mandate that owners of equipment containing 50 or more pounds of refrigerant must repair
+                leaks when the annual leak rate exceeds specific thresholds. The 2026 regulations continue to enforce
+                these standards to reduce overall emissions from commercial and industrial systems.</p>
             <ul>
-                <li><strong>R-32:</strong> Single-component HFC replacing R-410A in residential AC. 68% lower GWP than R-410A. Mildly flammable (A2L classification) requiring updated installation practices.</li>
-                <li><strong>R-454B:</strong> R-410A replacement blend. 78% lower GWP. A2L flammable, increasingly common in 2024+ residential equipment.</li>
-                <li><strong>R-448A:</strong> R-404A replacement for commercial refrigeration. 65% lower GWP. Non-flammable, drop-in compatible with many R-404A systems.</li>
-                <li><strong>R-449A:</strong> Another R-404A alternative. 66% lower GWP. Better energy efficiency than R-404A in many applications.</li>
+                <li><strong>Commercial Refrigeration:</strong> Leaks must be repaired if the annual rate exceeds 20%.
+                </li>
+                <li><strong>Industrial Process Cooling:</strong> The threshold for mandatory repair is a 30% annual leak
+                    rate.</li>
+                <li><strong>Comfort Cooling:</strong> Residential and office AC systems have a 10% annual leak rate
+                    threshold for mandatory repair.</li>
             </ul>
 
-            <div class="warning-box">
-                <h3>⚠️ A2L Flammable Refrigerants</h3>
-                <p>R-32, R-454B, and similar A2L refrigerants are mildly flammable. Installation requires updated practices: no open flames during service, proper ventilation, leak detection systems in occupied spaces, explosion-proof recovery equipment for some applications. Follow ASHRAE 15 and local codes for A2L refrigerant handling.</p>
-            </div>
+            <h2>Self-Contained vs. System-Dependent Recovery</h2>
+            <p>Type 2 recovery requires the use of self-contained (active) recovery equipment that does not rely on the
+                appliance's compressor. System-dependent recovery is generally prohibited for Type 2 appliances because
+                their refrigerant charges are too large for passive containers.</p>
+            <p>Active recovery machines use their own internal compressor to pull refrigerant into a recovery cylinder.
+                This method ensures that technicians can achieve the deep vacuum levels required by law even if the
+                appliance compressor has failed.</p>
 
-            <h2>Leak Repair Requirements</h2>
-
-            <h3>Federal Leak Repair Thresholds</h3>
-
-            <p>EPA requires leak repairs when annual leak rates exceed specific thresholds. Leak rate is calculated as percentage of full charge lost over 12 months:</p>
-
-            <p><strong>Commercial refrigeration:</strong></p>
-            <ul>
-                <li>35% annual leak rate threshold for systems with 50+ lbs refrigerant</li>
-                <li>20% for systems with comfort cooling applications</li>
-                <li>Calculated annually: (refrigerant added - refrigerant recovered during service) / full charge</li>
-            </ul>
-
-            <p><strong>Industrial process refrigeration:</strong></p>
-            <ul>
-                <li>35% annual leak rate for systems with 50+ lbs refrigerant</li>
-                <li>Some exemptions for process-critical equipment with documented repair plans</li>
-            </ul>
-
-            <p><strong>Repair timelines:</strong></p>
-            <ul>
-                <li>Commercial equipment: 30 days from discovering leak exceeding threshold</li>
-                <li>Industrial process: 30 days, with possible extension to 120 days if repairs require process shutdown</li>
-                <li>Residential equipment: No federal leak repair requirements (follow state/local codes)</li>
-            </ul>
-
-            <h3>Leak Detection Methods</h3>
-
-            <p><strong>Electronic Leak Detectors:</strong> Standard tool for Type 2 systems. Heated-diode and infrared detectors locate leaks down to 0.1 oz/year. Test detector calibration weekly. Different refrigerants require different detector settings — verify your detector is set correctly before testing.</p>
-
-            <p><strong>Ultrasonic Leak Detectors:</strong> Detect high-frequency sound of refrigerant escaping under pressure. Effective in noisy mechanical rooms where electronic detectors struggle. More expensive but useful for commercial applications.</p>
-
-            <p><strong>Fluorescent Dye:</strong> Add UV-reactive dye to system, operate for 1-2 weeks, inspect with UV light. Excellent for finding intermittent leaks or leaks in inaccessible locations. Some refrigerants and compressor oils react poorly to dyes — check compatibility first.</p>
-
-            <p><strong>Nitrogen Pressure Testing:</strong> After refrigerant recovery, pressurize system with dry nitrogen to operating pressure (not exceeding nameplate test pressure). Use soap bubbles or electronic detection to locate leaks. Most reliable method for finding small leaks before charging new refrigerant.</p>
-
-            <p><strong>Bubble Testing:</strong> Mix dish soap with water, spray on suspected leak points, watch for bubbles. Simple, inexpensive, reliable for pressurized systems. Ineffective for very small leaks or vacuum-side leaks.</p>
-
-            <h2>Evacuation and Dehydration</h2>
-
-            <h3>Why Evacuation Matters</h3>
-
-            <p>Proper evacuation removes air, moisture, and non-condensables from refrigerant systems. Moisture causes acid formation damaging compressors, freeze-ups at expansion devices, and reduced system efficiency. Air increases head pressure, reduces capacity, and accelerates oil breakdown.</p>
-
-            <p><strong>Deep vacuum requirements:</strong></p>
-            <ul>
-                <li>500 microns or lower for residential AC and heat pumps</li>
-                <li>500 microns for commercial refrigeration (250 microns preferred)</li>
-                <li>Use electronic vacuum gauge (micron gauge), not compound gauge</li>
-                <li>Hold vacuum for 15+ minutes — pressure should not rise more than 50 microns</li>
-            </ul>
-
-            <h3>Evacuation Procedure</h3>
-
-            <ol>
-                <li><strong>Initial Pulldown:</strong> Connect vacuum pump to system high and low sides via manifold. Open both valves, start pump, evacuate to 500 microns or lower. Large systems may take 30-60+ minutes.</li>
-                <li><strong>Vacuum Hold Test:</strong> Close manifold valves, shut off vacuum pump, monitor micron gauge for 15 minutes. Vacuum should remain stable below 500 microns.</li>
-                <li><strong>If Vacuum Rises:</strong> Pressure rise indicates moisture or leak. If rise exceeds 100 microns in 15 minutes, continue evacuation or locate leak. Moisture removal requires extended evacuation or triple evacuation method.</li>
-                <li><strong>Triple Evacuation:</strong> For severely contaminated systems, evacuate to 500 microns, break vacuum with dry nitrogen to 5 psig, evacuate again. Repeat 2-3 times. Most effective moisture removal method.</li>
-                <li><strong>Final Check:</strong> Achieve and hold 500 microns for 15 minutes, then charge refrigerant per manufacturer specifications.</li>
-            </ol>
-
+            <h2>Safety Practices for High-Pressure Refrigerants</h2>
+            <p>Handling high-pressure refrigerants like R-410A requires specialized tools and safety gear because these
+                systems operate at much higher pressures than older R-22 equipment. Technicians must use manifold gauges
+                and hoses rated for high-pressure service to prevent equipment failure and personal injury.</p>
             <div class="info-box">
-                <h3>🔧 Vacuum Pump Sizing</h3>
-                <p>Use vacuum pump sized appropriately for system volume. Residential split systems: 3-6 CFM pump. Commercial refrigeration: 6-12 CFM pump. Large commercial systems: 12+ CFM. Undersized pumps take excessive time reaching deep vacuum. Change vacuum pump oil every 5-10 uses for consistent performance.</p>
-            </div>
-
-            <h2>Charging Methods and Procedures</h2>
-
-            <h3>Vapor vs. Liquid Charging</h3>
-
-            <p><strong>Vapor Charging:</strong> Introduce refrigerant through low-side (suction) service port with system running. Use for single-component refrigerants (R-22, R-134a, R-32) and final topping after liquid charge. Cylinder remains upright, vapor port open. Slower than liquid charging but prevents compressor damage from liquid slugging.</p>
-
-            <p><strong>Liquid Charging:</strong> Required for blends (R-410A, R-404A, R-407C) to prevent composition shift. Charge through high-side (liquid line) service port with system OFF, or through low side with metering device restricting flow. Invert cylinder or use liquid port. Never liquid charge into compressor suction while running — causes compressor damage.</p>
-
-            <h3>Charging by Weight</h3>
-
-            <p>Most accurate method. Place refrigerant cylinder on electronic scale, note starting weight, charge system until scale shows proper amount removed. Manufacturer nameplate or service manual specifies refrigerant charge weight.</p>
-
-            <p><strong>Typical charges by system type:</strong></p>
-            <ul>
-                <li>Residential split system 2-ton: 6-8 lbs R-410A</li>
-                <li>Residential split system 3-ton: 9-12 lbs R-410A</li>
-                <li>Commercial walk-in cooler: 15-40 lbs R-404A (varies by size)</li>
-                <li>Commercial ice machine: 8-20 lbs R-404A or R-134a</li>
-            </ul>
-
-            <h3>Charging by Subcooling</h3>
-
-            <p>Used when nameplate charge is unknown or system is field-charged (lineset length varies). Measure liquid line temperature and pressure, calculate subcooling (saturation temperature - actual temperature). Target subcooling typically 10-15°F for TXV systems.</p>
-
-            <p><strong>Subcooling procedure:</strong></p>
-            <ol>
-                <li>System running in cooling mode, outdoor temp above 65°F</li>
-                <li>Measure liquid line pressure, convert to saturation temperature using PT chart</li>
-                <li>Measure liquid line temperature at service valve</li>
-                <li>Calculate: Subcooling = Saturation Temp - Actual Temp</li>
-                <li>Add refrigerant if subcooling low, recover refrigerant if subcooling high</li>
-            </ol>
-
-            <h3>Charging by Superheat</h3>
-
-            <p>Used for fixed-orifice systems (piston, capillary tube). Measure suction line temperature and pressure, calculate superheat (actual temperature - saturation temperature). Target superheat varies by system design, typically 10-20°F.</p>
-
-            <p><strong>Superheat procedure:</strong></p>
-            <ol>
-                <li>System running in cooling mode, load conditions stabilized</li>
-                <li>Measure suction pressure at service valve, convert to saturation temp</li>
-                <li>Measure suction line temperature 6-8 inches from compressor</li>
-                <li>Calculate: Superheat = Actual Temp - Saturation Temp</li>
-                <li>Add refrigerant if superheat high, recover refrigerant if superheat low</li>
-            </ol>
-
-            <h2>Type 2 System Components</h2>
-
-            <h3>Compressor Types</h3>
-
-            <p><strong>Reciprocating:</strong> Most common in residential AC and small commercial refrigeration. Piston-driven compression. Typical capacities 1-20 tons. Relatively inexpensive, serviceable, good efficiency.</p>
-
-            <p><strong>Scroll:</strong> Industry standard for residential AC 2+ tons and commercial systems to 25 tons. Orbiting scroll compresses refrigerant in spiral chambers. Higher efficiency than reciprocating, quieter operation, fewer moving parts. Not field-serviceable — complete replacement when failed.</p>
-
-            <p><strong>Rotary:</strong> Used in mini-splits, window AC units, small commercial applications. Single rotating vane or dual-vane design. Very quiet, compact, efficient at partial loads. Common in Japanese and European equipment.</p>
-
-            <p><strong>Screw:</strong> Large commercial and industrial refrigeration (50-500+ tons). Twin helical screws compress refrigerant. Excellent efficiency, continuous compression, good part-load performance. High initial cost, complex controls.</p>
-
-            <h3>Metering Devices</h3>
-
-            <p><strong>Thermostatic Expansion Valve (TXV):</strong> Automatically adjusts refrigerant flow based on superheat at evaporator outlet. Best efficiency across varying load conditions. Requires accurate charging (by subcooling). Common in commercial refrigeration and higher-efficiency AC.</p>
-
-            <p><strong>Piston (Fixed Orifice):</strong> Fixed-size orifice restricts refrigerant flow. Simple, inexpensive, no moving parts. Less efficient at partial loads. Charge by superheat. Common in budget residential AC and older systems.</p>
-
-            <p><strong>Electronic Expansion Valve (EEV):</strong> Computer-controlled valve optimizes refrigerant flow. Best efficiency and part-load performance. Expensive, requires sophisticated controls. Increasingly common in inverter-driven systems and commercial equipment.</p>
-
-            <p><strong>Capillary Tube:</strong> Fixed-length tube provides refrigerant restriction. Critical charge — system must have exact refrigerant amount. Common in window AC units and small refrigeration. Not field-adjustable.</p>
-
-            <h2>Safety Practices for Type 2 Work</h2>
-
-            <h3>High-Pressure System Hazards</h3>
-
-            <p>Type 2 systems operate at significantly higher pressures than Type 1 equipment. R-410A systems reach 400+ psig high-side pressure in normal operation, creating serious injury risks from refrigerant release or system rupture.</p>
-
-            <p><strong>Pressure safety:</strong></p>
-            <ul>
-                <li>Never apply torch heat to pressurized systems — refrigerant decomposes at high temperature forming toxic gases</li>
-                <li>Don't overpressurize during leak testing — follow nameplate test pressure (typically 300-600 psig depending on refrigerant)</li>
-                <li>Use pressure-relief manifold gauges rated for refrigerant type (800 psig minimum for R-410A)</li>
-                <li>Never cap off pressure relief valves or safety devices</li>
-            </ul>
-
-            <h3>Electrical Safety</h3>
-
-            <p>Type 2 systems use 120V, 208V, 240V, or 480V power. Follow NFPA 70E electrical safety standards:</p>
-
-            <ul>
-                <li><strong>Lockout/Tagout:</strong> De-energize equipment at disconnect, lock out power source, verify de-energized with voltmeter before touching electrical components</li>
-                <li><strong>Capacitor Discharge:</strong> Run capacitors can hold lethal charge for hours after power disconnection. Discharge with insulated tool before touching terminals</li>
-                <li><strong>Arc Flash:</strong> Use appropriate PPE when working on energized equipment. Maintain proper approach distances from exposed conductors</li>
-            </ul>
-
-            <h3>Refrigerant Handling Safety</h3>
-
-            <ul>
-                <li><strong>Ventilation:</strong> Work in well-ventilated areas. Refrigerant displaces oxygen causing asphyxiation in confined spaces</li>
-                <li><strong>Skin Contact:</strong> Liquid refrigerant causes instant frostbite. Wear safety glasses, gloves when connecting/disconnecting refrigerant lines</li>
-                <li><strong>Cylinder Safety:</strong> Secure cylinders upright, never exceed 80% fill, store away from heat sources, transport properly secured</li>
-                <li><strong>A2L Refrigerants:</strong> Eliminate ignition sources when working with R-32, R-454B. No smoking, no hot work, use spark-free tools</li>
-            </ul>
-
-            <div class="cta-box">
-                <h3>Practice Type 2 Exam Questions</h3>
-                <p>Test your Type 2 knowledge with 50 free practice questions (25 Core + 25 Type 2) covering all topics from this guide.</p>
-                <a href="/type-2.html">Take Free Type 2 Practice Test →</a>
-            </div>
-
-            <h2>Type 2 Exam Study Tips</h2>
-
-            <h3>High-Frequency Exam Topics</h3>
-
-            <p>Type 2 exams heavily test recovery requirements (know the vacuum levels for each refrigerant class), leak repair thresholds (35% for commercial refrigeration, 20% for comfort cooling), and proper charging methods (vapor vs. liquid charging, when to use each).</p>
-
-            <h3>Memorize Recovery Levels</h3>
-
-            <p>Create flashcards: R-22 = 10" Hg, R-410A = 0 psig, R-404A = 0 psig. Know why these differ (CFCs/HCFCs have higher ODP requiring deeper vacuum). Understand "0 psig" means gauge pressure, equivalent to 0 psig above atmospheric.</p>
-
-            <h3>Understand Refrigerant Transitions</h3>
-
-            <p>Questions about R-22 phaseout are common. Know production stopped 2020, existing systems can use reclaimed R-22, common replacements include R-410A (residential) and R-407C (commercial). HFC phasedown drives adoption of R-32, R-454B, R-448A.</p>
-
-            <h3>Practice Calculations</h3>
-
-            <p>Some exams include superheat/subcooling calculations. Practice: Given liquid line pressure 260 psig (R-410A), liquid line temp 100°F, what is subcooling? (Answer: Convert 260 psig to ~115°F saturation temp using PT chart, subcooling = 115 - 100 = 15°F)</p>
-
-            <div class="key-points">
-                <h3>🎯 Type 2 Must-Know Points</h3>
+                <h4>⚠️ High-Pressure Safety Rules</h4>
                 <ul>
-                    <li>High-pressure refrigerants have boiling points below 50°F at atmospheric pressure</li>
-                    <li>Type 2 covers residential AC, commercial refrigeration, heat pumps (excludes small appliances and MVACs)</li>
-                    <li>Recovery levels: R-22 = 10" Hg vacuum, HFCs/R-410A = 0 psig</li>
-                    <li>Self-contained recovery equipment required (system-dependent NOT allowed)</li>
-                    <li>Leak repair threshold: 35% annual leak rate commercial refrigeration, 20% comfort cooling</li>
-                    <li>R-22 production banned 2020, reclaimed R-22 still usable indefinitely</li>
-                    <li>R-410A is near-azeotropic blend — charge as liquid, operates 60% higher pressure than R-22</li>
-                    <li>Evacuation to 500 microns minimum, hold 15 minutes without rising</li>
-                    <li>Charge blends as liquid to prevent composition shift, single-component as vapor</li>
-                    <li>A2L refrigerants (R-32, R-454B) are mildly flammable — eliminate ignition sources</li>
+                    <li><strong>PPE:</strong> Always wear safety glasses and gloves when handling refrigerant.</li>
+                    <li><strong>Equipment Rating:</strong> Ensure gauges are rated for the high pressures of R-410A.
+                    </li>
+                    <li><strong>Nitrogen Safety:</strong> Use a pressure regulator when leak testing with dry nitrogen.
+                    </li>
+                    <li><strong>Phase State:</strong> Charge blends like R-410A as a liquid to maintain proper
+                        composition.</li>
                 </ul>
             </div>
 
-            <h2>Advancing Your Certification</h2>
-
-            <p>Type 2 is the most versatile individual certification, covering the majority of residential and commercial HVAC work. However, Universal certification maximizes employment opportunities and eliminates equipment restrictions.</p>
-
-            <p><strong>Next steps:</strong></p>
-
-            <ul>
-                <li><strong>Add Type 3:</strong> Study <a href="/study-guide-type-3.html">Type 3 Guide</a> for low-pressure chiller certification (completes Universal)</li>
-                <li><strong>Universal Certification:</strong> Review <a href="/study-guide-universal.html">Universal Guide</a> for strategic approach to all exam sections</li>
-                <li><strong>Strengthen Core Knowledge:</strong> Revisit <a href="/study-guide-core.html">Core Guide</a> for foundational regulations and science</li>
-            </ul>
-
-            <p>Many HVAC employers prefer or require Universal certification. If you already have Type 2, adding Type 3 requires learning only low-pressure chiller material (centrifugal compressors, purge units, low-pressure refrigerants). Most Type 2 knowledge transfers directly to Type 3 work.</p>
-
-            <div class="info-box">
-                <h3>📚 Related Resources</h3>
-                <ul>
-                    <li><a href="/study-guides.html">All Study Guides</a> - Complete collection of EPA 608 study resources</li>
-                    <li><a href="/study-guide-core.html">Core Exam Guide</a> - Required foundation for all certifications</li>
-                    <li><a href="/type-2.html">Type 2 Practice Test</a> - 50 free practice questions</li>
-                    <li><a href="/universal.html">Universal Practice Test</a> - 100-question full exam simulation</li>
-                </ul>
+            <!-- Mini Quiz Component -->
+            <div class="mini-quiz" id="miniQuiz">
+                <h3>Type 2 Knowledge Check</h3>
+                <div id="quizContainer">
+                    <!-- Q1 -->
+                    <div class="quiz-q active" data-ans="b">
+                        <p><strong>Question 1:</strong> Which certification is required to service a residential central
+                            AC system with 10 lbs of R-410A?</p>
+                        <div class="options">
+                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) Type 1</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) Type 2</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) Type 3</button>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="quiz-q" data-ans="a">
+                        <p><strong>Question 2:</strong> What is the mandatory leak repair threshold for comfort cooling
+                            appliances with 50+ lbs of refrigerant?</p>
+                        <div class="options">
+                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) 10%</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) 20%</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) 30%</button>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="quiz-q" data-ans="c">
+                        <p><strong>Question 3:</strong> How should R-410A be charged into a system?</p>
+                        <div class="options">
+                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) As a vapor through the suction
+                                line</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) As a liquid through the suction
+                                line</button>
+                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) As a liquid to prevent
+                                fractionation</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-footer">
+                    <button class="btn-primary" id="nextBtn" style="display:none;" onclick="nextQuestion()">Next
+                        Question</button>
+                    <div id="quizFinal" style="display:none;">
+                        <p>Great job! Ready for the full Type 2 exam?</p>
+                        <a href="/type-2.html" class="btn-primary">Start Full Type 2 Practice Test →</a>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </article>
+            <script>
+                let currentQ = 0;
+                const questions = document.querySelectorAll('.quiz-q');
+                const nextBtn = document.getElementById('nextBtn');
+                const quizFinal = document.getElementById('quizFinal');
+
+                function checkAns(btn, choice) {
+                    const correctAns = questions[currentQ].getAttribute('data-ans');
+                    const opts = questions[currentQ].querySelectorAll('.opt-btn');
+                    opts.forEach(o => o.disabled = true);
+
+                    if (choice === correctAns) {
+                        btn.classList.add('correct');
+                    } else {
+                        btn.classList.add('incorrect');
+                        questions[currentQ].querySelector(`[onclick*="'${correctAns}'"]`).classList.add('correct');
+                    }
+                    nextBtn.style.display = 'inline-block';
+                }
+
+                function nextQuestion() {
+                    questions[currentQ].classList.remove('active');
+                    currentQ++;
+                    nextBtn.style.display = 'none';
+                    if (currentQ < questions.length) {
+                        questions[currentQ].classList.add('active');
+                    } else {
+                        quizFinal.style.display = 'block';
+                    }
+                }
+            </script>
+
+            
+            <h2>System Evacuation Standards: Micron Levels</h2>
+            <p>After recovering refrigerant, technicians must evacuate (dehydrate) the system before recharging. The EPA sets minimum vacuum levels by equipment age and compressor type.</p>
+            <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+                <thead><tr style="background:#007acc;color:#fff;">
+                    <th style="padding:12px;text-align:left;">Equipment</th>
+                    <th style="padding:12px;text-align:left;">Manufactured Before Nov 15, 1993</th>
+                    <th style="padding:12px;text-align:left;">Manufactured After Nov 15, 1993</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:#f8fafc;"><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">≥200 lbs charge</td><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">15 in. Hg</td><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">10 in. Hg</td></tr>
+                    <tr><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">&lt;200 lbs, high-pressure</td><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">4 in. Hg</td><td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">4 in. Hg</td></tr>
+                    <tr style="background:#f8fafc;"><td style="padding:10px 12px;">&lt;200 lbs, very high-pressure</td><td style="padding:10px 12px;">0 in. Hg (push to atmosphere)</td><td style="padding:10px 12px;">0 in. Hg</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Nitrogen pressure test:</strong> After evacuation, many technicians pressurize the system with dry nitrogen to <strong>150 psi</strong> to check for leaks before recharging. Nitrogen is inert and safe — never use oxygen (explosion risk).</p>
+
+            <h2>Liquid vs Vapor Recovery: When to Use Each</h2>
+            <p>Type 2 systems contain large refrigerant charges. Choosing the right recovery method saves time and prevents equipment damage.</p>
+            <ul style="margin:16px 0 16px 20px;line-height:2;">
+                <li><strong>Liquid recovery</strong> — faster for large charges; requires liquid valve access; risk of liquid slugging the compressor</li>
+                <li><strong>Vapor recovery</strong> — slower but safer; recommended when liquid access is not available</li>
+                <li><strong>Push-pull method</strong> — simultaneously pushes vapor and pulls liquid; fastest for large systems</li>
+            </ul>
+            <div style="background:#f0f7ff;border:1px solid #bee3f8;border-radius:4px;padding:16px;margin:20px 0;">
+                <strong>Exam tip:</strong> The push-pull method is the fastest but requires TWO hoses connected simultaneously. Questions may ask why it cannot be used on systems without both liquid and vapor service valves.
+            </div>
+
+            <section style="background:#f0f7ff;border:1px solid #bee3f8;border-radius:12px;padding:24px;margin:40px 0;">
+                <h3 style="color:#1e40af;margin-bottom:12px;">Practice Type 2 Questions</h3>
+                <p>Test your knowledge with the free <a href="/type-2.html" style="color:#007acc;font-weight:600;">EPA 608 Type 2 Practice Test</a> — 25 questions on high-pressure systems, leak rates, and evacuation. Combine with <a href="/universal.html" style="color:#007acc;font-weight:600;">Universal Practice Test</a> for full exam readiness. All guides available at <a href="/study-guides.html" style="color:#007acc;font-weight:600;">EPA 608 Study Guides</a>.</p>
+            </section>
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Does Type 2 certification include Type 1?</div>
+                    <div class="faq-a">No, each certification type is separate. However, passing Core + Types 1, 2, and
+                        3 earns you the Universal certification.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What is the boiling point of high-pressure
+                        refrigerants?</div>
+                    <div class="faq-a">High-pressure refrigerants have a boiling point between -50.8°F and 50°F at
+                        atmospheric pressure.</div>
+                </div>
+            </div>
+
+            <script>
+                function toggleFaq(el) {
+                    el.parentElement.classList.toggle('active');
+                }
+            </script>
+        </article>
+    </main>
 
     <div id="footer-placeholder"></div>
-
 </body>
+
 </html>

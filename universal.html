@@ -1,1675 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EPA 608 Universal Test Practice - Complete certification covering Core + all three Types. 100 questions, comprehensive coverage, instant scoring.">
+    <title>Free EPA 608 Universal Practice Test 2026 | 100 Questions</title>
+    <meta name="description"
+        content="Take the full 100-question EPA 608 Universal practice test. Comprehensive simulation covering Core, Type 1, Type 2, and Type 3 sections for professional certification.">
     <meta name="author" content="EPA 608 Practice Test">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="EPA 608 Universal Practice Test - EPA 608 Practice Test">
-    <meta property="og:description" content="Practice the EPA 608 Universal test covering all sections. 100 expert-designed questions for complete HVAC refrigerant certification.">
-    <meta property="og:type" content="website">
-    <title>EPA 608 Universal Practice Test - EPA 608 Practice Test</title>
-    
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://epa608practicetest.net/universal.html">
-    
-    <!-- Open Graph / Facebook -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Universal Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Universal exam with our full 100-question simulation. Practice all four sections in one session with instant scoring and history tracking.">
     <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EPA 608 Universal Practice Test - EPA 608 Practice Test">
-    <meta name="twitter:description" content="Practice the EPA 608 Universal test covering all sections. 100 expert-designed questions for complete HVAC refrigerant certification.">
-    <meta name="twitter:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --color-primary: #007acc;
             --color-success: #28a745;
+            --color-error: #dc3545;
         }
-        
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font:16px/1.6 system-ui,sans-serif;color:#333;background:#fff}
-        .container{width:100%;margin:0;padding:0 20px}
-        
-        /* Header */
-        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
-        .header-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
-        .logo{font-size:24px;font-weight:bold;color:#007acc;text-decoration:none}
-        .nav-menu{display:flex;list-style:none;gap:32px}
-        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
-        .nav-menu a:hover,.nav-menu a.active{color:#007acc}
-        
-        /* Test Hero */
-        .test-hero{background:linear-gradient(135deg,#28a745,#20c997);color:#fff;padding:60px 0;text-align:center}
-        .test-hero h1{font-size:42px;font-weight:bold;margin-bottom:16px}
-        .test-hero .subtitle{font-size:20px;margin-bottom:32px;opacity:.9}
-        .test-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:900px;margin:0 auto 40px}
-        .info-card{background:rgba(255,255,255,.15);padding:20px;border-radius:8px;text-align:center}
-        .info-number{font-size:28px;font-weight:bold;margin-bottom:8px}
-        .info-label{font-size:14px;opacity:.9}
-        
-        /* Start Test Section */
-        .start-section{padding:60px 0;background:#f8f9fa;text-align:center}
-        .start-btn{background:#28a745;color:#fff;border:none;padding:20px 48px;border-radius:8px;font-size:20px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;margin-bottom:24px}
-        .start-btn:hover{background:#218838;transform:translateY(-2px);box-shadow:0 8px 25px rgba(40,167,69,.3)}
-        .test-notes{max-width:700px;margin:0 auto;color:#666;line-height:1.7}
-        
-        /* Content Sections */
-        .content-section{padding:60px 0}
-        .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:40px}
-        .content-card{background:#fff;padding:28px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:4px solid #28a745}
-        .content-card h4{font-size:18px;margin-bottom:12px;color:#333}
-        .content-card ul{margin:0;padding-left:20px}
-        .content-card li{margin-bottom:6px;line-height:1.5;color:#666;font-size:15px}
-        
-        /* Test Interface Styles */
-        .test-container{padding:40px 0;background:#f8f9fa}
-        .test-header{display:flex;align-items:center;background:#fff;padding:20px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-counter{font-weight:bold;color:#333}
-        .test-progress{flex-grow:1;background:#e9ecef;height:8px;border-radius:4px;overflow:hidden;margin:0 20px}
-        .progress-bar{background:linear-gradient(90deg,#28a745,#20c997);height:100%;width:0%;transition:width .3s ease}
-        .timer{font-size:1.2em;font-weight:bold;color:#dc3545;min-width:80px}
-        
-        .question-container{background:#fff;padding:32px;border-radius:8px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-        .question-text{font-size:20px;font-weight:600;color:#333;margin-bottom:24px;line-height:1.4}
-        .answers{list-style:none;margin:0;padding:0}
-        .answer-item{margin-bottom:12px;padding:16px;border:2px solid #e9ecef;border-radius:8px;cursor:pointer;transition:all .3s ease;background:#fff}
-        .answer-item:hover{border-color:#007acc;background:#f8f9fa}
-        .answer-item.selected{border-color:#007acc;background:#e3f2fd}
-        .answer-item.correct{background:#d4edda;border-color:#28a745;animation:correctPulse .8s ease-out}
-        .answer-item.incorrect{background:#f8d7da;border-color:#dc3545;animation:incorrectShake .6s ease-out}
-        .answer-item label{display:flex;align-items:center;font-size:16px;color:#333;cursor:pointer;width:100%}
-        .answer-item input{margin-right:12px}
-        .answer-feedback{margin-left:auto;font-weight:bold}
-        .answer-feedback.correct{color:#28a745}
-        .answer-feedback.incorrect{color:#dc3545}
-        
-        .test-navigation{display:flex;justify-content:space-between;gap:16px}
-        .nav-button{padding:12px 32px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
-        .nav-button:disabled{background:#e9ecef;color:#6c757d;cursor:not-allowed}
-        .nav-button:not(:disabled){background:#007acc;color:#fff}
-        .nav-button:not(:disabled):hover{background:#0056b3;transform:translateY(-1px)}
-        .submit-button{background:#dc3545!important}
-        .submit-button:hover{background:#c82333!important}
-        
-        .results{padding:60px 0;background:#f8f9fa;text-align:center}
-        .score-display{font-size:48px;font-weight:bold;margin:32px 0;color:#28a745}
-        .results-buttons{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
-        .history-button,.restart-button{padding:12px 24px;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .history-button{background:#17a2b8;color:#fff}
-        .restart-button{background:#28a745;color:#fff}
-        .history-button:hover{background:#138496}
-        .restart-button:hover{background:#218838}
-        
-        /* Social Share Buttons */
-        .social-share{margin-top:40px;padding-top:32px;border-top:1px solid #e9ecef}
-        .social-share p{font-size:18px;font-weight:600;color:#333;margin-bottom:16px}
-        .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .share-btn{padding:10px 20px;border:none;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .share-btn.twitter{background:#1da1f2;color:#fff}
-        .share-btn.twitter:hover{background:#0d8bd9}
-        .share-btn.facebook{background:#1877f2;color:#fff}
-        .share-btn.facebook:hover{background:#166fe5}
-        .share-btn.linkedin{background:#0077b5;color:#fff}
-        .share-btn.linkedin:hover{background:#005885}
-        .share-btn.copy-link{background:#6c757d;color:#fff}
-        .share-btn.copy-link:hover{background:#545b62}
-        
-        @keyframes correctPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(40,167,69,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,0)}}
-        @keyframes incorrectShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        
-        /* Footer */
-        footer{background:#333;color:#fff;padding:48px 0 32px}
-        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
-        .footer-section h4{font-size:18px;margin-bottom:16px;color:#fff}
-        .footer-section ul{list-style:none}
-        .footer-section a{color:#ccc;text-decoration:none;transition:color .3s}
-        .footer-section a:hover{color:#fff}
-        .footer-section li{margin-bottom:8px}
-        .footer-bottom{border-top:1px solid #555;margin-top:32px;padding-top:24px;text-align:center;color:#ccc}
-        
-        /* Responsive Design */
-        @media (max-width:768px){
-            .container{padding:0 16px}
-            .header-content{flex-direction:column;gap:16px}
-            .nav-menu{gap:20px;flex-wrap:wrap;justify-content:center}
-            .test-hero{padding:40px 0}
-            .test-hero h1{font-size:32px}
-            .test-info{grid-template-columns:repeat(2,1fr);gap:16px}
-            .start-btn{padding:16px 32px;font-size:18px}
-            .content-grid{grid-template-columns:1fr}
-            .footer-content{grid-template-columns:1fr;text-align:center}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @media (max-width:480px){
-            .test-hero h1{font-size:28px}
-            .test-info{grid-template-columns:1fr}
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .section-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .section-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            background: #f5f5f5;
+        }
+
+        .section-badge.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .section-score {
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .section-score h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .section-score .score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
         }
     </style>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KJ8X1DQ1GT');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
-    <!-- End Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
 
-    <!-- Vercel Analytics -->
-    <script defer src="https://va.vercel-scripts.com/v1/script.debug.js" data-api="_vercel/insights"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Universal Practice Test 2026",
+      "description": "100-question simulation covering Core, Type 1, Type 2, and Type 3 sections.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/universal.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many questions are on the EPA 608 Universal exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "100 questions total \u2014 25 per section (Core, Type I, Type II, Type III). Each section is\n                        scored independently and requires 70% to pass."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to pass all four sections at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Many proctors allow retakes on failed sections the same day. Some testing organizations\n                        allow you to carry passed sections and retake only the failed ones at a later date. Confirm\n                        the policy with your specific proctor before testing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Universal certification expire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. EPA Section 608 certification does not expire. Once earned, it is a permanent credential.\n                        However, staying current on AIM Act HFC phase-down requirements is recommended for field\n                        competency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I take the Universal exam online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Several EPA-approved organizations offer online proctored testing. See our guide on\n                        testing options for a current\n                        list of approved providers and formats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does Universal certification allow me to do that individual Type certs do not?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Universal certification authorizes purchase and handling of refrigerant for any system type,\n                        in any quantity. Individual certifications restrict you to the specific system types covered\n                        by that certification level only."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Universal Practice Test",
+      "url": "https://epa608practicetest.net/universal.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Universal practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
 </head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- SEO Navigation for Crawlers -->
-    <nav style="position: absolute; left: -9999px;" aria-hidden="true">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/history.html">Progress</a></li>
-            <li><a href="/core.html">Core Test</a></li>
-            <li><a href="/type-1.html">Type 1 Test</a></li>
-            <li><a href="/type-2.html">Type 2 Test</a></li>
-            <li><a href="/type-3.html">Type 3 Test</a></li>
-            <li><a href="/universal.html">Universal Test</a></li>
-            <li><a href="/review.html">Review</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="/terms.html">Terms</a></li>
-            <li><a href="/policy.html">Privacy</a></li>
-            <li><a href="/changelog.html">Changelog</a></li>
-        </ul>
-    </nav>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
 
     <script src="includes.js"></script>
     <div id="header-placeholder"></div>
 
-    <main>
-        <!-- Test Hero Section -->
-        <section class="test-hero">
-            <div class="container">
-                <h1>EPA 608 Universal Practice Test</h1>
-                <p class="subtitle">Complete certification covering Core + all three Types</p>
-                
-                <div class="test-info">
-                    <div class="info-card">
-                        <div class="info-number">100</div>
-                        <div class="info-label">Questions</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">72%</div>
-                        <div class="info-label">Each Section</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">120</div>
-                        <div class="info-label">Minutes</div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-number">4</div>
-                        <div class="info-label">Sections</div>
-                    </div>
-                </div>
-            </div>
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>Free EPA 608 Universal Practice Test (100 Questions)</h1>
+            <p>Master the full Section 608 certification with our complete 100-question practice exam. This
+                simulation includes 25 questions each for Core, Type 1, Type 2, and Type 3, precisely mirroring the
+                proctored exam experience.</p>
         </section>
 
-
-        <!-- Test Container -->
-        <section class="test-container" id="testContainer">
-            <div class="container">
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="section-nav" id="sectionIndicator">
+                    <span class="section-badge" data-cat="Core">CORE</span>
+                    <span class="section-badge" data-cat="Type I">TYPE 1</span>
+                    <span class="section-badge" data-cat="Type II">TYPE 2</span>
+                    <span class="section-badge" data-cat="Type III">TYPE 3</span>
+                </div>
                 <div class="test-header">
-                    <div class="question-counter" id="questionCounter">Question 1 of 100</div>
-                    <div class="test-progress">
-                        <div class="progress-bar" id="progressBar"></div>
+                    <div id="questionNumber">Question 1 of 100</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
                     </div>
-                    <div class="timer" id="timer">120:00</div>
+                    <div id="countdown">60:00</div>
                 </div>
 
-                <div class="question-container">
-                    <div class="question-text" id="questionText"></div>
-                    <ul class="answers" id="answersContainer"></ul>
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading full exam...</div>
+                    <div class="answers-list" id="ansList"></div>
                 </div>
 
-                <div class="test-navigation">
-                    <button class="nav-button" id="prevButton" onclick="previousQuestion()" disabled>Previous</button>
-                    <button class="nav-button" id="nextButton" onclick="nextQuestion()">Next</button>
-                    <button class="nav-button submit-button" id="submitButton" onclick="submitTest()" style="display: none;">Submit Test</button>
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Submit Entire
+                        Exam</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <h2>Universal Exam Results</h2>
+                <div class="score-circle" id="scoreValue">0%</div>
+
+                <div class="score-columns" id="breakdownScores">
+                    <div class="section-score">
+                        <h4>Core</h4>
+                        <div class="score" id="coreScore">0/25</div>
+                    </div>
+                    <div class="section-score">
+                        <h4>Type 1</h4>
+                        <div class="score" id="t1Score">0/25</div>
+                    </div>
+                    <div class="section-score">
+                        <h4>Type 2</h4>
+                        <div class="score" id="t2Score">0/25</div>
+                    </div>
+                    <div class="section-score">
+                        <h4>Type 3</h4>
+                        <div class="score" id="t3Score">0/25</div>
+                    </div>
+                </div>
+
+                <p id="feedbackText"></p>
+                <div class="results-nav">
+                    <a href="history.html" class="btn-secondary">Detailed History</a>
+                    <button class="btn-nav btn-next" onclick="location.reload()">New Simulation</button>
                 </div>
             </div>
         </section>
 
-        <!-- Results Section -->
-        <section class="results" id="results" style="display:none;">
-            <div class="container">
-                <h2>🎯 Test Results</h2>
-                <div class="score-display" id="scoreDisplay"></div>
-                <p id="certificationStatus"></p>
-                <div class="results-buttons">
-                    <button class="history-button" onclick="window.location.href='history.html'">📊 Check Your History</button>
-                    <button class="restart-button" onclick="location.reload()">🔄 Take Another Test</button>
-                </div>
-                
-                <div class="social-share">
-                    <p>Share your success:</p>
-                    <div class="share-buttons">
-                        <button class="share-btn twitter" onclick="shareOnTwitter()">🐦 Twitter</button>
-                        <button class="share-btn facebook" onclick="shareOnFacebook()">📘 Facebook</button>
-                        <button class="share-btn linkedin" onclick="shareOnLinkedIn()">💼 LinkedIn</button>
-                        <button class="share-btn copy-link" onclick="copyTestLink()">🔗 Copy Link</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <article class="content-body">
+            <h2>What is the EPA 608 Universal Certification?</h2>
+            <p>Universal certification means you have passed all four sections of the EPA 608 exam: Core, Type I,
+                Type II, and Type III. A Universal-certified technician can legally purchase refrigerant in any
+                quantity, service any system type, and work across residential, commercial, and industrial
+                environments without restriction. It is the gold standard credential for professional HVAC
+                technicians.</p>
 
-        <!-- Content Overview -->
-        <section class="content-section">
-            <div class="container">
-                <h2 class="section-title">What's Covered in Universal Test</h2>
-                <p class="section-subtitle">Complete EPA 608 certification covering all refrigerant handling scenarios</p>
-                
-                <div class="content-grid">
-                    <div class="content-card">
-                        <h4>Core (25 Questions)</h4>
-                        <ul>
-                            <li>Environmental regulations</li>
-                            <li>Refrigerant safety procedures</li>
-                            <li>Recovery and disposal methods</li>
-                            <li>Clean Air Act compliance</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Type I (25 Questions)</h4>
-                        <ul>
-                            <li>Small appliances</li>
-                            <li>Household refrigerators</li>
-                            <li>Window AC units</li>
-                            <li>Recovery procedures</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Type II (25 Questions)</h4>
-                        <ul>
-                            <li>High-pressure systems</li>
-                            <li>Commercial refrigeration</li>
-                            <li>Leak repair procedures</li>
-                            <li>System charging methods</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="content-card">
-                        <h4>Type III (25 Questions)</h4>
-                        <ul>
-                            <li>Low-pressure appliances</li>
-                            <li>Centrifugal chillers</li>
-                            <li>Evacuation procedures</li>
-                            <li>Safety precautions</li>
-                        </ul>
-                    </div>
-                </div>
+            <p>This 100-question practice test simulates the complete proctored exam by pulling 25 questions from
+                each section in sequence — matching the actual exam structure used by EPA-approved testing
+                organizations.</p>
+
+            <h2>Universal Exam Breakdown and Passing Scores</h2>
+            <p>The official proctored exam scores each section independently. You must earn 70% (18 out of 25
+                correct) in each section to receive that certification level. Passing three out of four sections
+                does not award Universal — all four must be passed, though some proctors allow section retakes on
+                the same day.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Questions</th>
+                        <th>Pass Score</th>
+                        <th>Key Focus Areas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Montreal Protocol, Clean Air Act, ODP/GWP, Recovery definitions</td>
+                    </tr>
+                    <tr>
+                        <td>Type I</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Hermetically sealed, 5lb limit, Active/Passive recovery, Piercing valves</td>
+                    </tr>
+                    <tr>
+                        <td>Type II</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Leak rates (10/20/30%), Vacuum standards, IPR, High-pressure components</td>
+                    </tr>
+                    <tr>
+                        <td>Type III</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Rupture disc (15 psi), Purge units, R-123, Chiller maintenance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Study Strategy:</strong> Master Core first — it contains foundational regulations that
+                appear across all four sections. Then study Type II (highest question volume in the field), followed
+                by Type I and Type III. A score of 80%+ on this Universal practice test correlates strongly with
+                first-attempt passes on the official proctored exam.
             </div>
-        </section>
+
+            <h2>Universal vs. Individual Type Certifications</h2>
+            <p>Individual Type certifications (Type I only, Type II only) limit the systems you can legally service
+                and the refrigerant you can purchase. Most commercial HVAC employers require Universal certification
+                because technicians routinely encounter mixed environments — a commercial building may have
+                centrifugal chillers (Type III), rooftop RTUs (Type II), and vending machines (Type I) all
+                requiring service on the same contract.</p>
+
+            <p>Once you complete this test, review your results in <a href="/history.html">Test History</a> to
+                identify weak sections. For detailed topic coverage by section, visit our
+                <a href="/study-guides.html">EPA 608 study guide hub</a>. Ready to sit the real exam? Check
+                <a href="/online-and-in-person-testing-options.html">online and in-person testing options</a> for
+                approved providers.</p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>How many questions are on the EPA 608 Universal exam?</strong>
+                    <p>100 questions total — 25 per section (Core, Type I, Type II, Type III). Each section is
+                        scored independently and requires 70% to pass.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Do I have to pass all four sections at once?</strong>
+                    <p>No. Many proctors allow retakes on failed sections the same day. Some testing organizations
+                        allow you to carry passed sections and retake only the failed ones at a later date. Confirm
+                        the policy with your specific proctor before testing.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Does Universal certification expire?</strong>
+                    <p>No. EPA Section 608 certification does not expire. Once earned, it is a permanent credential.
+                        However, staying current on AIM Act HFC phase-down requirements is recommended for field
+                        competency.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can I take the Universal exam online?</strong>
+                    <p>Yes. Several EPA-approved organizations offer online proctored testing. See our guide on
+                        <a href="/online-and-in-person-testing-options.html">testing options</a> for a current
+                        list of approved providers and formats.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What does Universal certification allow me to do that individual Type certs do not?</strong>
+                    <p>Universal certification authorizes purchase and handling of refrigerant for any system type,
+                        in any quantity. Individual certifications restrict you to the specific system types covered
+                        by that certification level only.</p>
+                </div>
+            </section>
+        </article>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script>
-        // Test state variables
-        let currentTest = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let testTimer = null;
-        let startTime = null;
-        let currentScore = 0;
-        let testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
-        const selectedTestType = 'universal';
+        const ctrl = {
+            questions: [],
+            currentIdx: 0,
+            answers: [],
+            timer: null,
+            timeLeft: 3600, // 60 minutes for Universal practice
 
-        // Complete Question Banks
-        const questionBank = {
-            core: [
-                {
-                    question: "What is the primary purpose of the EPA Section 608 regulations?",
-                    answers: [
-                        "To increase energy efficiency in HVAC systems",
-                        "To protect the ozone layer and reduce greenhouse gas emissions",
-                        "To standardize refrigerant pricing",
-                        "To regulate equipment warranties"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerant has the highest Ozone Depletion Potential (ODP)?",
-                    answers: [
-                        "R-134a",
-                        "R-410A",
-                        "CFC-12 (R-12)",
-                        "R-22"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What does GWP stand for in refrigerant terminology?",
-                    answers: [
-                        "Global Warming Potential",
-                        "Gas Weight Pressure",
-                        "General Working Protocol",
-                        "Greenhouse Weight Percentage"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "According to EPA regulations, what is required before disposing of appliances containing refrigerants?",
-                    answers: [
-                        "Only disconnecting the power supply",
-                        "Recovering the refrigerant to specified levels",
-                        "Removing all components",
-                        "Testing for leaks"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the Clean Air Act's definition of 'knowingly releasing' refrigerants?",
-                    answers: [
-                        "Only intentional releases",
-                        "Releases due to equipment failure",
-                        "Any release that could have been prevented with proper service practices",
-                        "Only releases during system charging"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which organization sets safety standards for refrigerant handling?",
-                    answers: [
-                        "EPA only",
-                        "OSHA only",
-                        "ASHRAE and others",
-                        "DOT only"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the maximum penalty for knowingly releasing refrigerants?",
-                    answers: [
-                        "$10,000 per day per violation",
-                        "$25,000 per day per violation",
-                        "$37,500 per day per violation",
-                        "$50,000 per day per violation"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Recovery equipment must be certified to which standard?",
-                    answers: [
-                        "ARI 700",
-                        "ARI 740",
-                        "ASHRAE 15",
-                        "EPA 608"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What does the term 'de minimis' refer to in EPA 608 regulations?",
-                    answers: [
-                        "Minimum recovery levels",
-                        "Small releases that are exempt from penalties",
-                        "Equipment size classifications",
-                        "Training requirements"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerants are considered HFCs?",
-                    answers: [
-                        "R-12 and R-22",
-                        "R-134a and R-410A",
-                        "R-11 and R-123",
-                        "All CFC refrigerants"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What must be done with refrigerant recovered from appliances?",
-                    answers: [
-                        "It can be immediately reused",
-                        "It must be destroyed",
-                        "It must be recycled, reclaimed, or destroyed",
-                        "It can be sold to anyone"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which phase-out schedule applies to HCFC refrigerants?",
-                    answers: [
-                        "Immediate ban",
-                        "Gradual phase-out by 2030",
-                        "No phase-out required",
-                        "Phase-out completed in 2010"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is required for technician certification?",
-                    answers: [
-                        "Only EPA 608 test",
-                        "EPA 608 test and on-job training",
-                        "EPA 608 test and yearly recertification",
-                        "State license only"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What are the main types of EPA 608 certification?",
-                    answers: [
-                        "Type I only",
-                        "Type I and Type II only",
-                        "Core, Type I, Type II, Type III, Universal",
-                        "Universal only"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which refrigerants have zero ODP?",
-                    answers: [
-                        "All CFCs",
-                        "All HCFCs",
-                        "All HFCs",
-                        "All natural refrigerants"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the definition of 'reclaim' in EPA 608?",
-                    answers: [
-                        "Simple filtering of refrigerant",
-                        "Reprocessing to ARI 700 standards",
-                        "Any cleaning process",
-                        "Storage in clean containers"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which systems require leak detection?",
-                    answers: [
-                        "Only commercial systems",
-                        "Systems with 50+ lbs of refrigerant",
-                        "All refrigeration systems",
-                        "Only industrial systems"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is considered proper recovery technique?",
-                    answers: [
-                        "Venting to atmosphere slowly",
-                        "Using certified recovery equipment",
-                        "Any collection method",
-                        "No technique required for small amounts"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which law gives EPA authority over refrigerant regulations?",
-                    answers: [
-                        "Toxic Substances Control Act",
-                        "Clean Air Act",
-                        "Safe Drinking Water Act",
-                        "Resource Conservation Act"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What happens to technicians who violate EPA 608?",
-                    answers: [
-                        "Warning only",
-                        "Fine up to $37,500 per violation",
-                        "Loss of certification only",
-                        "No penalties apply"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is required before opening appliances for repair?",
-                    answers: [
-                        "Nothing special",
-                        "Recover refrigerant to required levels",
-                        "Wait 24 hours",
-                        "Notify EPA"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerants are being phased down under EPA regulations?",
-                    answers: [
-                        "CFCs only",
-                        "HCFCs only",
-                        "HFCs only",
-                        "Both HCFCs and HFCs"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What is the EPA's definition of substantial completion?",
-                    answers: [
-                        "50% recovery",
-                        "75% recovery",
-                        "Normal operation for 30 minutes without cycling",
-                        "100% recovery"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which records must be kept for refrigerant purchases?",
-                    answers: [
-                        "None required",
-                        "Purchase receipts only",
-                        "Detailed logs with dates and quantities",
-                        "EPA notification forms"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the minimum recovery efficiency for equipment?",
-                    answers: [
-                        "70%",
-                        "80%",
-                        "85%",
-                        "90%"
-                    ],
-                    correct: 2
+            async init() {
+                try {
+                    const res = await fetch('questions.json');
+                    const data = await res.json();
+
+                    const core = data.filter(q => q.category === 'Core').slice(0, 25);
+                    const t1 = data.filter(q => q.category === 'Type I').slice(0, 25);
+                    const t2 = data.filter(q => q.category === 'Type II').slice(0, 25);
+                    const t3 = data.filter(q => q.category === 'Type III').slice(0, 25);
+
+                    this.questions = [...core, ...t1, ...t2, ...t3];
+                    this.answers = new Array(this.questions.length).fill(null);
+                    this.render();
+                    this.startTimer();
+                } catch (e) {
+                    document.getElementById('qText').innerHTML = "Error loading full exam. <button onclick='location.reload()'>Retry</button>";
                 }
-            ],
-            type1: [
-                {
-                    question: "What is the definition of a small appliance under EPA Section 608?",
-                    answers: [
-                        "Any appliance using less than 2 pounds of refrigerant",
-                        "Any appliance that is fully manufactured, charged, and hermetically sealed with 5 pounds or less of refrigerant",
-                        "Window air conditioners only",
-                        "Appliances under 1000 BTU/hr"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What recovery level is required for small appliances before disposal?",
-                    answers: [
-                        "80% of refrigerant charge",
-                        "85% of refrigerant charge",
-                        "90% of refrigerant charge",
-                        "100% of refrigerant charge"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "When is recovery NOT required for small appliances?",
-                    answers: [
-                        "When the repair cost exceeds the appliance value",
-                        "When the compressor is not functional and the system has leaked",
-                        "When the appliance is more than 10 years old",
-                        "Recovery is always required"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What type of recovery equipment is typically used for small appliances?",
-                    answers: [
-                        "System-dependent recovery only",
-                        "Self-contained recovery equipment",
-                        "Push-pull recovery method",
-                        "Any EPA-certified recovery equipment"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What is the most common reason small appliance recovery is not required?",
-                    answers: [
-                        "The appliance is too old",
-                        "The system has already leaked and the compressor is not functional",
-                        "The refrigerant charge is too small",
-                        "The appliance is being recycled"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which of the following is considered a small appliance?",
-                    answers: [
-                        "A 3-ton rooftop unit",
-                        "A household refrigerator",
-                        "A commercial ice machine",
-                        "A chiller system"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What must be done with recovered refrigerant from small appliances?",
-                    answers: [
-                        "It can be immediately reused",
-                        "It must be destroyed",
-                        "It must be reclaimed or destroyed",
-                        "It can be vented if under 2 pounds"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is required when removing refrigerant from a small appliance for repair?",
-                    answers: [
-                        "Remove 80% of the charge",
-                        "Remove 90% of the charge",
-                        "Remove all refrigerant to atmospheric pressure",
-                        "Recovery is not required for repairs"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "System-dependent recovery on small appliances involves:",
-                    answers: [
-                        "Using the system's own compressor to aid in recovery",
-                        "Depending on gravity to remove refrigerant",
-                        "Using only passive recovery methods",
-                        "Not using any recovery equipment"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What should be checked before beginning recovery on a small appliance?",
-                    answers: [
-                        "Only the refrigerant type",
-                        "The age of the appliance",
-                        "Whether the compressor is functional",
-                        "The manufacturer's warranty"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the typical refrigerant charge in small appliances?",
-                    answers: [
-                        "Less than 1 pound",
-                        "1 to 5 pounds",
-                        "5 to 10 pounds",
-                        "More than 10 pounds"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which recovery method is most common for small appliances?",
-                    answers: [
-                        "Liquid recovery only",
-                        "Vapor recovery only",
-                        "System-dependent recovery",
-                        "Push-pull liquid recovery"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What happens if refrigerant is released during small appliance service?",
-                    answers: [
-                        "No penalties apply",
-                        "Only warnings are issued",
-                        "EPA violations and fines apply",
-                        "Only manufacturers are responsible"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is required before disposing of a small appliance?",
-                    answers: [
-                        "Remove all refrigerant",
-                        "Puncture the refrigerant lines",
-                        "Remove to required recovery levels unless leaked and compressor non-functional",
-                        "No special requirements"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which tool is essential for small appliance service?",
-                    answers: [
-                        "Manifold gauges only",
-                        "EPA-certified recovery equipment",
-                        "Leak detector only",
-                        "Standard wrenches only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What must be verified before using system-dependent recovery?",
-                    answers: [
-                        "System age",
-                        "Compressor functionality",
-                        "Refrigerant type",
-                        "System size"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "How long must recovery equipment operate to achieve substantial completion?",
-                    answers: [
-                        "15 minutes",
-                        "30 minutes",
-                        "45 minutes",
-                        "Until required vacuum level is reached"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What documentation is required for small appliance refrigerant recovery?",
-                    answers: [
-                        "No documentation required",
-                        "Only disposal receipts",
-                        "Recovery logs and disposal documentation",
-                        "EPA notification only"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which small appliances commonly use R-134a?",
-                    answers: [
-                        "Old refrigerators",
-                        "Modern household refrigerators",
-                        "Window air conditioners",
-                        "Dehumidifiers only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the proper procedure for small appliance leak repair?",
-                    answers: [
-                        "Add refrigerant and ignore the leak",
-                        "Recover refrigerant, repair leak, evacuate, and recharge",
-                        "Just repair the leak",
-                        "Replace the entire appliance"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which certification is required for small appliance service?",
-                    answers: [
-                        "Type I certification",
-                        "Type II certification",
-                        "Type III certification",
-                        "Universal certification"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What happens to small appliances at end of life?",
-                    answers: [
-                        "They can be landfilled directly",
-                        "Refrigerant must be recovered before disposal",
-                        "Only metal parts need recycling",
-                        "No special handling required"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is unique about hermetically sealed systems?",
-                    answers: [
-                        "They never leak",
-                        "They cannot be repaired",
-                        "They are sealed at the factory and not intended for field service",
-                        "They use special refrigerants"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which recovery level applies when opening a small appliance for repair?",
-                    answers: [
-                        "0 psig",
-                        "10 inches Hg vacuum",
-                        "Atmospheric pressure",
-                        "No specific requirement"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What factors determine if recovery is required for small appliances?",
-                    answers: [
-                        "Age and size only",
-                        "Compressor functionality and refrigerant containment",
-                        "Brand and model",
-                        "Location and ownership"
-                    ],
-                    correct: 1
-                }
-            ],
-            type2: [
-                {
-                    question: "What defines a high-pressure appliance under EPA Section 608?",
-                    answers: [
-                        "Any system operating above 50 psi",
-                        "Systems using refrigerants with boiling points below 50°F at atmospheric pressure",
-                        "Commercial systems only",
-                        "Systems with more than 50 pounds of refrigerant"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the required recovery level for high-pressure appliances before disposal?",
-                    answers: [
-                        "10 inches Hg vacuum",
-                        "15 inches Hg vacuum",
-                        "4 inches Hg vacuum",
-                        "0 psi gauge"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What is the leak repair requirement for commercial refrigeration systems?",
-                    answers: [
-                        "Repair leaks within 30 days if annual leak rate exceeds 20%",
-                        "Repair leaks within 30 days if annual leak rate exceeds 35%",
-                        "Repair any detectable leak immediately",
-                        "No specific repair requirements"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What recovery level is required when opening a high-pressure system for major repair?",
-                    answers: [
-                        "0 psi gauge pressure",
-                        "10 inches Hg vacuum",
-                        "15 inches Hg vacuum",
-                        "4 inches Hg vacuum"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "How long can you wait to repair a leak in a comfort cooling system if the leak rate exceeds 15%?",
-                    answers: [
-                        "30 days",
-                        "60 days",
-                        "90 days",
-                        "1 year"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What is considered a major repair that requires evacuation?",
-                    answers: [
-                        "Replacing a filter drier",
-                        "Replacing or adding more than 2 pounds of refrigerant",
-                        "Replacing a TXV",
-                        "Opening the refrigerant circuit to replace a compressor"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "Which recovery method is most efficient for high-pressure systems?",
-                    answers: [
-                        "Liquid recovery only",
-                        "Vapor recovery only",
-                        "Push-pull liquid recovery",
-                        "System-dependent recovery"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What must be done before adding refrigerant to a system?",
-                    answers: [
-                        "Check for leaks only",
-                        "Evacuate the system",
-                        "Both leak check and evacuate if opened",
-                        "Nothing special is required"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the annual leak rate threshold for industrial process refrigeration?",
-                    answers: [
-                        "15%",
-                        "20%",
-                        "30%",
-                        "35%"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "When is refrigerant addition considered 'topping off'?",
-                    answers: [
-                        "Adding any amount of refrigerant",
-                        "Adding refrigerant without addressing the leak",
-                        "Adding more than 10% of system capacity",
-                        "Adding refrigerant during maintenance"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What pressure recovery level is required for high-pressure systems during disposal?",
-                    answers: [
-                        "0 psig",
-                        "10 inches Hg vacuum",
-                        "15 inches Hg vacuum",
-                        "4 inches Hg vacuum"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which systems are subject to leak repair requirements?",
-                    answers: [
-                        "All systems regardless of size",
-                        "Systems with 50+ pounds of refrigerant",
-                        "Only industrial systems",
-                        "Only new systems"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the comfort cooling leak rate threshold?",
-                    answers: [
-                        "10%",
-                        "15%",
-                        "20%",
-                        "25%"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "How often must leak inspections be performed?",
-                    answers: [
-                        "Monthly",
-                        "Quarterly",
-                        "Annually",
-                        "Only when problems occur"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What evacuation level is required before opening high-pressure systems?",
-                    answers: [
-                        "Atmospheric pressure",
-                        "0 psig",
-                        "10 inches Hg vacuum",
-                        "No evacuation required"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which refrigerants are commonly used in high-pressure systems?",
-                    answers: [
-                        "R-11 and R-123",
-                        "R-22 and R-410A",
-                        "R-134a only",
-                        "Natural refrigerants only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is required for leak repair in commercial refrigeration?",
-                    answers: [
-                        "Repair any detectable leak",
-                        "Repair if exceeding 35% annually",
-                        "No repair requirement",
-                        "Repair only major leaks"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What documentation is required for leak repairs?",
-                    answers: [
-                        "No documentation required",
-                        "Repair receipts only",
-                        "Detailed records of leak rates and repairs",
-                        "EPA notifications only"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which method provides fastest recovery for high-pressure systems?",
-                    answers: [
-                        "Vapor recovery",
-                        "Liquid recovery",
-                        "Push-pull liquid recovery",
-                        "Passive recovery"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What happens if leak repair deadlines are missed?",
-                    answers: [
-                        "Extension is automatic",
-                        "System must be mothballed or shut down",
-                        "Only warnings are issued",
-                        "No consequences"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What certification is required for high-pressure system service?",
-                    answers: [
-                        "Type I",
-                        "Type II",
-                        "Type III",
-                        "Universal only"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which systems require automatic leak detection?",
-                    answers: [
-                        "All systems",
-                        "Systems with 500+ pounds of refrigerant",
-                        "Only industrial systems",
-                        "No systems require it"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the proper sequence for system servicing?",
-                    answers: [
-                        "Recover, repair, evacuate, charge",
-                        "Repair, recover, charge",
-                        "Evacuate, repair, charge",
-                        "Charge, recover, repair"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "How is leak rate calculated?",
-                    answers: [
-                        "Monthly charge additions",
-                        "Annual refrigerant added divided by system capacity",
-                        "Total system pressure loss",
-                        "Leak detector readings"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What records must be maintained for high-pressure systems?",
-                    answers: [
-                        "None required",
-                        "Purchase receipts only",
-                        "Refrigerant inventory and leak repair records",
-                        "Equipment manuals only"
-                    ],
-                    correct: 2
-                }
-            ],
-            type3: [
-                {
-                    question: "What defines a low-pressure appliance under EPA Section 608?",
-                    answers: [
-                        "Systems operating below 50 psi",
-                        "Systems using refrigerants with boiling points at or above 50°F at atmospheric pressure",
-                        "Small residential systems",
-                        "Systems with less than 50 pounds of refrigerant"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What is the required recovery level for low-pressure appliances before disposal?",
-                    answers: [
-                        "10 inches Hg vacuum",
-                        "15 inches Hg vacuum",
-                        "25 mm Hg absolute",
-                        "29 inches Hg vacuum"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which refrigerant is commonly used in low-pressure chillers?",
-                    answers: [
-                        "R-22",
-                        "R-410A",
-                        "R-123",
-                        "R-134a"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the leak repair threshold for comfort cooling chillers?",
-                    answers: [
-                        "10% annual leak rate",
-                        "15% annual leak rate",
-                        "20% annual leak rate",
-                        "No specific threshold"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What safety precaution is most important when working with R-123?",
-                    answers: [
-                        "Use only in well-ventilated areas",
-                        "Avoid skin contact",
-                        "Monitor oxygen levels",
-                        "All of the above"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What recovery level is required when opening a low-pressure system for major repair?",
-                    answers: [
-                        "0 psi gauge",
-                        "10 inches Hg vacuum",
-                        "25 mm Hg absolute",
-                        "15 inches Hg vacuum"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the most efficient recovery method for low-pressure systems?",
-                    answers: [
-                        "Vapor recovery only",
-                        "Liquid recovery followed by vapor recovery",
-                        "System-dependent recovery",
-                        "Push-pull method"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What happens to the evaporator in a low-pressure chiller during recovery?",
-                    answers: [
-                        "It remains at normal pressure",
-                        "It goes into a vacuum",
-                        "It becomes pressurized",
-                        "Nothing changes"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Why is nitrogen often used when leak testing low-pressure systems?",
-                    answers: [
-                        "It's cheaper than refrigerant",
-                        "It's inert and safe",
-                        "It creates higher pressure for better leak detection",
-                        "All of the above"
-                    ],
-                    correct: 3
-                },
-                {
-                    question: "What is unique about purge units on low-pressure chillers?",
-                    answers: [
-                        "They remove non-condensables",
-                        "They increase system pressure",
-                        "They add refrigerant",
-                        "They are not necessary"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What pressure corresponds to 25 mm Hg absolute?",
-                    answers: [
-                        "About 1 psi",
-                        "About 0.5 psi",
-                        "About 0.3 psi",
-                        "About 2 psi"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which characteristic makes R-123 require special handling?",
-                    answers: [
-                        "High pressure",
-                        "Potential health effects with skin contact",
-                        "Flammability",
-                        "High toxicity when inhaled"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What type of equipment is typically low-pressure?",
-                    answers: [
-                        "Household refrigerators",
-                        "Centrifugal chillers",
-                        "Window air conditioners",
-                        "Automotive systems"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "How often must low-pressure systems be inspected for leaks?",
-                    answers: [
-                        "Monthly",
-                        "Quarterly",
-                        "Annually",
-                        "Only when problems occur"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the proper procedure for recovering refrigerant from low-pressure systems?",
-                    answers: [
-                        "Vapor recovery only",
-                        "Liquid first, then vapor to required level",
-                        "Any method is acceptable",
-                        "No recovery required"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What happens when air enters a low-pressure system?",
-                    answers: [
-                        "Nothing significant",
-                        "System efficiency improves",
-                        "Non-condensables cause operational problems",
-                        "Pressure increases automatically"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "Which safety equipment is essential when servicing low-pressure systems?",
-                    answers: [
-                        "Safety glasses only",
-                        "Gloves and ventilation",
-                        "Standard tools only",
-                        "No special equipment needed"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What certification is required for low-pressure appliance service?",
-                    answers: [
-                        "Type I",
-                        "Type II",
-                        "Type III",
-                        "Universal only"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What is the typical operating pressure of low-pressure chillers?",
-                    answers: [
-                        "Above atmospheric pressure",
-                        "Below atmospheric pressure (vacuum)",
-                        "At atmospheric pressure",
-                        "Varies widely"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Why do low-pressure systems require special evacuation procedures?",
-                    answers: [
-                        "They operate in vacuum",
-                        "They use special refrigerants",
-                        "They are larger systems",
-                        "They don't require special procedures"
-                    ],
-                    correct: 0
-                },
-                {
-                    question: "What is the purpose of the purge unit on centrifugal chillers?",
-                    answers: [
-                        "To add refrigerant",
-                        "To remove air and non-condensables",
-                        "To increase pressure",
-                        "To cool the system"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "Which measurement unit is used for low-pressure recovery requirements?",
-                    answers: [
-                        "psi gauge",
-                        "mm Hg absolute",
-                        "inches Hg gauge",
-                        "bar gauge"
-                    ],
-                    correct: 1
-                },
-                {
-                    question: "What must be monitored during low-pressure system service?",
-                    answers: [
-                        "Only temperature",
-                        "Only pressure",
-                        "Pressure, temperature, and air exposure",
-                        "Nothing special required"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "How are low-pressure systems typically charged?",
-                    answers: [
-                        "Vapor charging only",
-                        "Liquid charging only",
-                        "Liquid charging with final vapor top-off",
-                        "Any method works"
-                    ],
-                    correct: 2
-                },
-                {
-                    question: "What records are required for low-pressure system service?",
-                    answers: [
-                        "No records required",
-                        "Service receipts only",
-                        "Refrigerant recovery and leak repair documentation",
-                        "Equipment specifications only"
-                    ],
-                    correct: 2
-                }
-            ]
+            },
+
+            render() {
+                const q = this.questions[this.currentIdx];
+                if (!q) return;
+
+                // Update section indicators
+                document.querySelectorAll('.section-badge').forEach(b => {
+                    b.classList.toggle('active', b.dataset.cat === q.category);
+                });
+
+                document.getElementById('qText').textContent = q.question;
+                document.getElementById('questionNumber').textContent = `Question ${this.currentIdx + 1} of ${this.questions.length}`;
+                document.getElementById('progressFill').style.width = `${((this.currentIdx + 1) / this.questions.length) * 100}%`;
+
+                const list = document.getElementById('ansList');
+                list.innerHTML = '';
+                q.options.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = `answer-btn ${this.answers[this.currentIdx] === i ? 'selected' : ''}`;
+                    btn.textContent = opt;
+                    btn.onclick = () => this.select(i);
+                    list.appendChild(btn);
+                });
+
+                document.getElementById('prevBtn').disabled = this.currentIdx === 0;
+                document.getElementById('nextBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'none' : 'block';
+                document.getElementById('submitBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'block' : 'none';
+            },
+
+            select(i) {
+                this.answers[this.currentIdx] = i;
+                this.render();
+            },
+
+            next() { if (this.currentIdx < this.questions.length - 1) { this.currentIdx++; this.render(); } },
+            prev() { if (this.currentIdx > 0) { this.currentIdx--; this.render(); } },
+
+            finish() {
+                clearInterval(this.timer);
+                let scores = { 'Core': 0, 'Type I': 0, 'Type II': 0, 'Type III': 0 };
+
+                this.questions.forEach((q, i) => {
+                    if (q.options[this.answers[i]] === q.answer_text) {
+                        scores[q.category]++;
+                    }
+                });
+
+                const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+                const pct = Math.round((totalScore / 100) * 100);
+
+                document.getElementById('testView').style.display = 'none';
+                document.getElementById('resultView').style.display = 'block';
+                document.getElementById('scoreValue').textContent = `${pct}%`;
+
+                document.getElementById('coreScore').textContent = `${scores['Core']}/25`;
+                document.getElementById('t1Score').textContent = `${scores['Type I']}/25`;
+                document.getElementById('t2Score').textContent = `${scores['Type II']}/25`;
+                document.getElementById('t3Score').textContent = `${scores['Type III']}/25`;
+
+                const passedAll = Object.values(scores).every(s => s >= 18);
+                document.getElementById('feedbackText').textContent = passedAll ?
+                    "Excellent! You've passed all 4 sections and earned Universal status." :
+                    "Review the sections where you scored below 18/25.";
+
+                const history = JSON.parse(localStorage.getItem('epa608History') || '[]');
+                history.push({ type: 'universal', score: pct, breakdown: scores, date: new Date().toLocaleDateString() });
+                localStorage.setItem('epa608History', JSON.stringify(history));
+
+                window.scrollTo(0, 0);
+            },
+
+            startTimer() {
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    const m = Math.floor(this.timeLeft / 60);
+                    const s = this.timeLeft % 60;
+                    document.getElementById('countdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                    if (this.timeLeft <= 0) this.finish();
+                }, 1000);
+            }
         };
 
-        function startTest() {
-            // Show test container
-            document.getElementById('testContainer').style.display = 'block';
-            
-            // Generate test with 25 questions from each section (100 total)
-            currentTest = generateTest(['core', 'type1', 'type2', 'type3']);
-            currentQuestionIndex = 0;
-            userAnswers = new Array(currentTest.length).fill(null);
-            currentScore = 0;
-            startTime = new Date();
-            
-            // Start timer (120 minutes for Universal)
-            startTimer(120);
-            
-            // Display first question
-            displayQuestion();
-        }
-
-        function generateTest(sections) {
-            let test = [];
-            sections.forEach(section => {
-                const sectionQuestions = [...questionBank[section]];
-                
-                // Shuffle questions
-                for (let i = sectionQuestions.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [sectionQuestions[i], sectionQuestions[j]] = [sectionQuestions[j], sectionQuestions[i]];
-                }
-                
-                sectionQuestions.forEach(q => {
-                    const question = { ...q, section: section };
-                    // Shuffle answers
-                    const correctAnswer = question.answers[question.correct];
-                    for (let i = question.answers.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]];
-                    }
-                    question.correct = question.answers.indexOf(correctAnswer);
-                    test.push(question);
-                });
-            });
-            
-            return test;
-        }
-
-        function startTimer(minutes) {
-            let timeLeft = minutes * 60;
-            const timerDisplay = document.getElementById('timer');
-            
-            testTimer = setInterval(() => {
-                const mins = Math.floor(timeLeft / 60);
-                const secs = timeLeft % 60;
-                timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(testTimer);
-                    submitTest();
-                }
-                
-                timeLeft--;
-            }, 1000);
-        }
-
-        function displayQuestion() {
-            const question = currentTest[currentQuestionIndex];
-            
-            // Update question counter and progress
-            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentTest.length}`;
-            const progress = ((currentQuestionIndex + 1) / currentTest.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            
-            // Display question
-            document.getElementById('questionText').textContent = question.question;
-            
-            // Display answers
-            const answersContainer = document.getElementById('answersContainer');
-            answersContainer.innerHTML = '';
-            
-            // Check if this question was already answered
-            const isAnswered = userAnswers[currentQuestionIndex] !== null;
-            
-            question.answers.forEach((answer, index) => {
-                const li = document.createElement('li');
-                li.className = 'answer-item';
-                
-                if (isAnswered) {
-                    // Show feedback for already answered questions
-                    if (index === question.correct) {
-                        li.classList.add('correct');
-                    } else if (index === userAnswers[currentQuestionIndex]) {
-                        li.classList.add('incorrect');
-                    }
-                }
-                
-                li.innerHTML = `
-                    <label>
-                        <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''} ${isAnswered ? 'disabled' : ''}>
-                        ${answer}
-                    </label>
-                `;
-                
-                if (!isAnswered) {
-                    li.addEventListener('click', () => selectAnswer(index));
-                }
-                answersContainer.appendChild(li);
-            });
-            
-            // Update navigation buttons
-            document.getElementById('prevButton').disabled = currentQuestionIndex === 0;
-            
-            if (currentQuestionIndex === currentTest.length - 1) {
-                document.getElementById('nextButton').style.display = 'none';
-                document.getElementById('submitButton').style.display = 'block';
-            } else {
-                document.getElementById('nextButton').style.display = 'block';
-                document.getElementById('submitButton').style.display = 'none';
-            }
-        }
-
-        function selectAnswer(answerIndex) {
-            userAnswers[currentQuestionIndex] = answerIndex;
-            
-            // Update visual selection
-            document.querySelectorAll('.answer-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            document.querySelectorAll('.answer-item')[answerIndex].classList.add('selected');
-            document.querySelectorAll('input[name="answer"]')[answerIndex].checked = true;
-            
-            // Don't show feedback immediately - wait for next button click
-        }
-
-        function showAnswerFeedback(selectedAnswer) {
-            const question = currentTest[currentQuestionIndex];
-            const answerItems = document.querySelectorAll('.answer-item');
-            
-            answerItems.forEach((item, index) => {
-                const label = item.querySelector('label');
-                
-                if (index === question.correct) {
-                    setTimeout(() => {
-                        item.classList.add('correct');
-                        // Green color feedback is sufficient
-                    }, 100);
-                } else if (index === selectedAnswer) {
-                    setTimeout(() => {
-                        item.classList.add('incorrect');
-                        // Red color feedback is sufficient
-                    }, 100);
-                }
-            });
-
-            document.querySelectorAll('input[name="answer"]').forEach(radio => {
-                radio.disabled = true;
-            });
-        }
-
-        function nextQuestion() {
-            // Show feedback for current question if answered
-            if (userAnswers[currentQuestionIndex] !== null) {
-                showAnswerFeedback(userAnswers[currentQuestionIndex]);
-                
-                // Wait for animation before moving to next question
-                setTimeout(() => {
-                    if (currentQuestionIndex < currentTest.length - 1) {
-                        currentQuestionIndex++;
-                        displayQuestion();
-                    }
-                }, 1000);
-            } else {
-                // Move to next question without feedback if no answer selected
-                if (currentQuestionIndex < currentTest.length - 1) {
-                    currentQuestionIndex++;
-                    displayQuestion();
-                }
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                displayQuestion();
-            }
-        }
-
-        function submitTest() {
-            clearInterval(testTimer);
-            
-            // Calculate score
-            currentScore = 0;
-            userAnswers.forEach((answer, index) => {
-                if (answer !== null && answer === currentTest[index].correct) {
-                    currentScore++;
-                }
-            });
-            
-            calculateResults();
-        }
-
-        function calculateResults() {
-            const overallPercentage = Math.round((currentScore / currentTest.length) * 100);
-            const passed = overallPercentage >= 72;
-            
-            // Create detailed results
-            const detailedResults = currentTest.map((question, index) => {
-                const userAnswer = userAnswers[index];
-                const isCorrect = userAnswer !== null && userAnswer === question.correct;
-                
-                return {
-                    questionId: generateQuestionId(question.question, question.section),
-                    question: question.question,
-                    answers: [...question.answers],
-                    correctAnswer: question.correct,
-                    userAnswer: userAnswer,
-                    isCorrect: isCorrect,
-                    topic: mapSectionToTopic(question.section)
-                };
-            });
-            
-            // Save to history
-            const testResult = {
-                type: selectedTestType,
-                score: overallPercentage,
-                passed: passed,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                totalQuestions: currentTest.length,
-                correctAnswers: currentScore,
-                detailedResults: detailedResults
-            };
-            
-            testHistory.unshift(testResult);
-            if (testHistory.length > 20) testHistory.pop();
-            localStorage.setItem('epa608History', JSON.stringify(testHistory));
-            
-            displayResults(overallPercentage, passed);
-        }
-
-        function displayResults(score, passed) {
-            // Hide test container and show results
-            document.getElementById('testContainer').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            
-            // Display score
-            document.getElementById('scoreDisplay').textContent = score + '%';
-            document.getElementById('scoreDisplay').style.color = passed ? '#28a745' : '#dc3545';
-            
-            // Display certification status
-            const statusText = passed ? 
-                '🎉 Congratulations! You passed the Universal test!' : 
-                '📚 Keep studying! You need 72% to pass.';
-            document.getElementById('certificationStatus').textContent = statusText;
-        }
-
-        function restartTest() {
-            // Reset test state
-            currentTest = [];
-            currentQuestionIndex = 0;
-            userAnswers = [];
-            currentScore = 0;
-            
-            // Hide results and start test again
-            document.getElementById('results').style.display = 'none';
-            startTest();
-        }
-
-        // Auto-start test when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            startTest();
-        });
-        
-        // Social sharing functions
-        function shareOnTwitter() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const text = `Just scored ${score} on the EPA 608 Universal Practice Test! 🎯 Test your knowledge for free at`;
-            const url = window.location.href;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-        }
-        
-        function shareOnFacebook() {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
-        
-        function shareOnLinkedIn() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const title = `EPA 608 Universal Practice Test Result: ${score}`;
-            const summary = `Just completed the EPA 608 Universal Practice Test and scored ${score}! Great free resource for certification prep.`;
-            const url = window.location.href;
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`, '_blank');
-        }
-        
-        function copyTestLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = '#28a745';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#6c757d';
-                }, 2000);
-            }).catch(() => {
-                alert('Link copied to clipboard!');
-            });
-        }
-
-        // Utility functions
-        function generateQuestionId(questionText, section) {
-            return btoa(questionText.substring(0, 50) + section).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-        }
-
-        function mapSectionToTopic(section) {
-            const mapping = {
-                'core': 'Environmental Regulations',
-                'type1': 'Small Appliances',
-                'type2': 'High-Pressure Systems', 
-                'type3': 'Low-Pressure Systems'
-            };
-            return mapping[section] || section;
-        }
+        document.addEventListener('DOMContentLoaded', () => ctrl.init());
     </script>
 </body>
+
 </html>
