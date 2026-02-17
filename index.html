@@ -70,7 +70,8 @@
 
         .container {
             width: 100%;
-            margin: 0;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 0 20px;
         }
 
@@ -1318,6 +1319,12 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            /* Disable decorative animations on mobile (battery + scroll perf) */
+            .hero::before,
+            .announcement::before {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 36px;
             }
@@ -1326,18 +1333,56 @@
                 font-size: 18px;
             }
 
+            /* Reduce section padding — no "fullpage" feel on mobile */
+            .hero {
+                padding: 40px 0 28px;
+            }
+
+            .test-section,
+            .features,
+            .unique-features,
+            .testimonials,
+            .faq-section,
+            .stats-bar {
+                padding: 48px 0;
+            }
+
+            .section-header {
+                margin-bottom: 32px;
+            }
+
+            .features-grid,
+            .testimonial-grid {
+                margin-top: 32px;
+            }
+
+            .unique-grid {
+                margin-top: 32px;
+            }
+
+            /* Trust badges — 2×2 grid instead of 4-item column */
             .trust-badges {
-                flex-direction: column;
-                align-items: center;
-                gap: 16px;
+                display: grid;
+                grid-template-columns: repeat(2, auto);
+                justify-content: center;
+                gap: 10px;
             }
 
             .stats {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .stat-item h3 {
+                font-size: 28px;
+            }
+
+            .stat-item p {
+                font-size: 13px;
             }
 
             .section-title {
-                font-size: 32px;
+                font-size: 28px;
             }
 
             .test-grid {
@@ -1386,8 +1431,8 @@
 
             .cta-primary,
             .cta-secondary {
-                padding: 16px 32px;
-                font-size: 18px;
+                padding: 14px 28px;
+                font-size: 17px;
             }
 
             /* Unique Features Mobile */
@@ -1413,6 +1458,99 @@
 
             .live-stats-demo {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tablet — 2-column test grid */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .test-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Small phones — extra tightening */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 28px 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+                line-height: 1.25;
+            }
+
+            .hero .subtitle {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+
+            .time-message {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .trust-badge {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .cta-primary {
+                padding: 13px 24px;
+                font-size: 16px;
+                width: 100%;
+                max-width: 300px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .section-subtitle {
+                font-size: 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .stat-item h3 {
+                font-size: 22px;
+            }
+
+            .stat-item p {
+                font-size: 11px;
+            }
+
+            .test-card {
+                padding: 24px 20px;
+            }
+
+            .test-icon {
+                font-size: 36px;
+                margin-bottom: 12px;
+            }
+
+            .test-card h3 {
+                font-size: 20px;
+            }
+
+            .feature {
+                padding: 24px 20px;
+            }
+
+            .unique-feature {
+                padding: 24px 20px;
+            }
+
+            .testimonial {
+                padding: 24px 20px;
             }
         }
 
