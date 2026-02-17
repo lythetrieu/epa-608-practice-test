@@ -1,0 +1,261 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-guide",
+      "destination": "/certification-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-certification-complete-guide",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-complete-study-guide",
+      "destination": "/epa-608-complete-study-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-practice-exam-tips",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-study-for-epa-608",
+      "destination": "/how-to-study-for-epa-608.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-validity-and-expiration-rules",
+      "destination": "/certification-validity-and-expiration-rules.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/changelog",
+      "destination": "/changelog.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/core",
+      "destination": "/core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/cost-and-exam-fees-breakdown",
+      "destination": "/cost-and-exam-fees-breakdown.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/difference-between-epa-608-and-609",
+      "destination": "/difference-between-epa-608-and-609.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-cheat-sheet",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-difficulty",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-preparation",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-results",
+      "destination": "/exam-results.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-rules",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/history",
+      "destination": "/history.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-certified-step-by-step",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-and-in-person-testing-options",
+      "destination": "/online-and-in-person-testing-options.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-test",
+      "destination": "/online-and-in-person-testing-options.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/policy",
+      "destination": "/policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/review",
+      "destination": "/review.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-cheat-sheet",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-common-questions",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-core",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-exam-strategies",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-how-to-study",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-important-dates",
+      "destination": "/study-guide-important-dates.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-1",
+      "destination": "/study-guide-type-1.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-2",
+      "destination": "/study-guide-type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-3",
+      "destination": "/study-guide-type-3.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-universal",
+      "destination": "/study-guide-universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guides",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test",
+      "destination": "/test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-locations",
+      "destination": "/test-locations.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-1",
+      "destination": "/type-1.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-2",
+      "destination": "/type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-3",
+      "destination": "/type-3.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/types-and-universal-certification-guide",
+      "destination": "/types-and-universal-certification-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/universal",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-epa-608-certification",
+      "destination": "/what-is-epa-608-certification.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-how-to-study.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-exam-strategies.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-certified-step-by-step.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-test.html",
+      "destination": "/online-and-in-person-testing-options.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-preparation.html",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-cheat-sheet.html",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    }
+  ]
+}
