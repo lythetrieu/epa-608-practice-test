@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Complete EPA 608 Study Guide [2026 Edition] | EPA 608 Practice Test</title>
+    <meta name="description" content="Complete EPA 608 study guide covering all 4 certification types: Core, Type I, Type II, Type III, and Universal. Key numbers, study schedules, 2026 AIM Act updates, and free practice tests.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <link rel="canonical" href="https://epa608practicetest.net/epa-608-complete-study-guide.html">
+
+    <style>
+        :root { --blue: #007acc; --dark: #1e293b; --bg: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 16px/1.8 system-ui, sans-serif; color: #333; background: #fff; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .hero { padding: 56px 0; background: var(--bg); border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+        .hero h1 { font-size: 36px; color: var(--dark); margin-bottom: 14px; line-height: 1.2; text-align: center; }
+        .hero p { text-align: center; color: #64748b; font-size: 17px; max-width: 640px; margin: 0 auto; }
+        h2 { font-size: 26px; color: var(--dark); margin: 40px 0 14px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        h3 { font-size: 19px; color: var(--dark); margin: 26px 0 10px; }
+        p { margin-bottom: 20px; }
+        ul, ol { margin-bottom: 20px; padding-left: 26px; }
+        li { margin-bottom: 10px; }
+        .breadcrumb { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+        .breadcrumb a { color: var(--blue); text-decoration: none; }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin: 28px 0; }
+        .stat { padding: 18px 12px; background: #fff; border: 2px solid #e2e8f0; border-radius: 10px; text-align: center; }
+        .stat .n { display: block; font-size: 24px; font-weight: 800; color: var(--blue); }
+        .stat .l { font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .toc { background: var(--bg); border: 1px solid #e2e8f0; border-radius: 10px; padding: 22px 26px; margin: 28px 0; }
+        .toc h3 { font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 0; }
+        .toc ol { margin-bottom: 0; }
+        .toc li { margin-bottom: 6px; }
+        .toc a { color: var(--blue); text-decoration: none; font-size: 15px; }
+        .toc a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+        th { background: var(--dark); color: #fff; padding: 11px 14px; text-align: left; }
+        td { padding: 11px 14px; border-bottom: 1px solid #e2e8f0; }
+        tr:nth-child(even) td { background: var(--bg); }
+        .callout { background: #eff6ff; border-left: 4px solid var(--blue); padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+        .callout h3 { color: #1e40af; margin: 0 0 8px; font-size: 16px; }
+        .callout p { margin: 0; }
+        .warn { background: #fefce8; border-left: 4px solid #eab308; padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+        .warn h3 { color: #854d0e; margin: 0 0 8px; font-size: 16px; }
+        .warn p { margin: 0; }
+        .new-badge { background: #16a34a; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .steps { list-style: none; padding: 0; counter-reset: s; }
+        .steps li { counter-increment: s; display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid #e2e8f0; }
+        .steps li:last-child { border-bottom: none; }
+        .steps li::before { content: counter(s); display: flex; align-items: center; justify-content: center; min-width: 38px; height: 38px; background: var(--blue); color: #fff; border-radius: 50%; font-weight: 800; font-size: 16px; }
+        .step-body strong { display: block; font-size: 16px; color: var(--dark); margin-bottom: 5px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 24px 0; }
+        .link-card { display: block; padding: 18px; border: 2px solid #e2e8f0; border-radius: 10px; text-decoration: none; color: inherit; transition: border-color .15s; }
+        .link-card:hover { border-color: var(--blue); }
+        .link-card strong { display: block; color: var(--blue); margin-bottom: 3px; font-size: 14px; }
+        .link-card span { font-size: 13px; color: #64748b; }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 22px 0; }
+        .tool-btn { display: block; text-align: center; padding: 14px 10px; background: var(--blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; }
+        .tool-btn.dark { background: var(--dark); }
+        .faq-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+        .faq-q { padding: 16px 18px; font-weight: 700; font-size: 15px; color: var(--dark); background: var(--bg); }
+        .faq-a { padding: 14px 18px; border-top: 1px solid #e2e8f0; color: #444; line-height: 1.7; }
+        .cta { background: var(--dark); color: #fff; padding: 44px 36px; border-radius: 18px; text-align: center; margin: 56px 0; }
+        .cta h2 { color: #fff; border: none; margin: 0 0 10px; font-size: 26px; }
+        .cta p { color: #94a3b8; margin-bottom: 6px; }
+        .btn-w { display: inline-block; background: #fff; color: var(--dark); padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 800; margin-top: 18px; }
+        .schedule-table { width: 100%; }
+        @media(max-width:600px){ .hero h1{font-size:24px;} h2{font-size:21px;} .cta{padding:28px 18px;} }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Complete EPA 608 Study Guide [2026 Edition]",
+      "description": "Complete EPA 608 study guide for all 4 certification types. Key numbers, study schedules, 2026 AIM Act updates, and free practice tests.",
+      "author": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
+      "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
+      "datePublished": "2026-02-17",
+      "dateModified": "2026-02-17",
+      "mainEntityOfPage": "https://epa608practicetest.net/epa-608-complete-study-guide.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long should I study for the EPA 608 exam?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Most technicians need 1–2 weeks of focused study. With 2–3 hours per day, a 7-day plan is realistic for Core + one Type. Universal certification (all 4) typically requires 2 weeks."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the hardest section of the EPA 608 exam?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Type II (high-pressure systems) is widely considered the hardest section due to its technical depth: vacuum levels, leak rates, R-410A pressures, and system evacuation procedures."}
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to memorize refrigerant pressure charts?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. The EPA 608 exam is closed-book, so you must memorize key numbers: vacuum levels (500 microns for high-pressure), recovery rates (90%/80%), and the 5-lb threshold for small appliances."}
+        },
+        {
+          "@type": "Question",
+          "name": "Are there new questions about AIM Act refrigerants in 2026?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Updated EPA 608 exams now include questions on A2L refrigerants (R-32, R-454B, R-466A), HFC phasedown schedules, and safe handling of mildly flammable refrigerants under the AIM Act."}
+        },
+        {
+          "@type": "Question",
+          "name": "What score do I need to pass the EPA 608 exam?",
+          "acceptedAnswer": {"@type": "Answer", "text": "You need a 70% passing score — that is 18 correct out of 25 questions per section. Each section (Core, Type I, Type II, Type III) is scored separately."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I study for Universal without taking Type I, II, III separately first?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Universal certification covers all four sections (Core + Type I + II + III) in one exam sitting. You do not need to pass individual types first."}
+        },
+        {
+          "@type": "Question",
+          "name": "How many questions are on each EPA 608 section?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Each section has 25 questions. Core section is required for all certifications. You then take Type I, Type II, Type III, or all three (Universal) depending on your certification goal."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does EPA 608 certification expire?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. EPA 608 certification does not expire under current regulations. Once certified, you are certified for life — no renewal required."}
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "EPA 608 Study Schedule: 2-Week Plan",
+      "description": "A 2-week study plan to pass all EPA 608 certification sections",
+      "step": [
+        {"@type": "HowToStep", "name": "Days 1–2: Core Section", "text": "Study Clean Air Act basics, ODP/GWP concepts, refrigerant recovery rules, and AIM Act 2026 updates. Take Core practice test on Day 2."},
+        {"@type": "HowToStep", "name": "Days 3–4: Type I", "text": "Study small appliance rules: 5-lb threshold, passive vs active recovery, piercing valve requirements. Take Type I practice test on Day 4."},
+        {"@type": "HowToStep", "name": "Days 5–7: Type II", "text": "Study high-pressure systems: R-410A, vacuum levels (500 microns), leak rates (15%/35%), evacuation procedures. Type II is hardest — allocate 3 days."},
+        {"@type": "HowToStep", "name": "Days 8–9: Type III", "text": "Study low-pressure systems: R-123, 25 in Hg evacuation, purge units, 15 psi rupture disc. Take Type III practice test on Day 9."},
+        {"@type": "HowToStep", "name": "Days 10–12: Review + Weak Spots", "text": "Review all key numbers table. Retake any section where you scored below 80% on practice tests. Focus on wrong answers."},
+        {"@type": "HowToStep", "name": "Days 13–14: Full Universal Simulation", "text": "Take all 4 practice tests back-to-back. Score 80%+ on each before booking your exam."}
+      ]
+    }
+    </script>
+</head>
+<body>
+
+<nav style="background:#1e293b;padding:14px 0;">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <a href="/" style="color:#fff;font-weight:800;font-size:17px;text-decoration:none;">EPA 608 Practice Test</a>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;">
+      <a href="/core.html" style="color:#94a3b8;font-size:14px;text-decoration:none;">Core</a>
+      <a href="/type-1.html" style="color:#94a3b8;font-size:14px;text-decoration:none;">Type I</a>
+      <a href="/type-2.html" style="color:#94a3b8;font-size:14px;text-decoration:none;">Type II</a>
+      <a href="/type-3.html" style="color:#94a3b8;font-size:14px;text-decoration:none;">Type III</a>
+      <a href="/universal.html" style="color:#fff;font-size:14px;font-weight:700;text-decoration:none;">Universal</a>
+      <a href="/study-guides.html" style="color:#94a3b8;font-size:14px;text-decoration:none;">Study Guides</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/">Home</a> › <a href="/study-guides.html">Study Guides</a> › Complete EPA 608 Study Guide</p>
+    <h1>Complete EPA 608 Study Guide [2026 Edition] (EPA 608 Practice Test)</h1>
+    <p>All 4 certification types. Key numbers to memorize. 2026 AIM Act updates. Free practice tests for every section.</p>
+
+    <div class="stat-grid">
+      <div class="stat"><span class="n">4</span><span class="l">Cert Types</span></div>
+      <div class="stat"><span class="n">70%</span><span class="l">Passing Score</span></div>
+      <div class="stat"><span class="n">25</span><span class="l">Questions/Section</span></div>
+      <div class="stat"><span class="n">1–2 Wks</span><span class="l">Study Time</span></div>
+      <div class="stat"><span class="n">Free</span><span class="l">Practice Tests</span></div>
+    </div>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#how-to-use">How to Use This Study Guide</a></li>
+        <li><a href="#core">Core Section: What Every Technician Must Know</a></li>
+        <li><a href="#type-1">Type I Study Guide — Small Appliances</a></li>
+        <li><a href="#type-2">Type II Study Guide — High-Pressure Systems</a></li>
+        <li><a href="#type-3">Type III Study Guide — Low-Pressure Systems</a></li>
+        <li><a href="#universal">Universal Certification Study Path</a></li>
+        <li><a href="#numbers">Key Numbers to Memorize</a></li>
+        <li><a href="#schedule">Study Schedule Plans</a></li>
+        <li><a href="#practice">Free Practice Tests</a></li>
+        <li><a href="#faq">Frequently Asked Questions</a></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <p>This complete EPA 608 study guide covers every section you need to pass — from Core fundamentals to Type I, II, III, and Universal certification. It's the free online resource that physical study books don't offer: all types in one place, updated for 2026 AIM Act changes, with direct links to free <a href="/">EPA 608 Practice Test</a> tools for every section.</p>
+
+  <h2 id="how-to-use">How to Use This Study Guide — EPA 608 Practice Test</h2>
+
+  <p>This guide is structured to mirror the exam itself. Read each section in order, then immediately take the corresponding free practice test to test your knowledge. Don't try to memorize everything in one sitting — study one type per day and let practice tests reveal your gaps.</p>
+
+  <p><strong>Recommended approach:</strong></p>
+  <ol>
+    <li>Read a section fully — don't skim</li>
+    <li>Study the Key Numbers table for that type</li>
+    <li>Take the practice test (link at each section)</li>
+    <li>Write down every wrong answer and understand why</li>
+    <li>Retake the test the next day — aim for 80%+ before exam day</li>
+  </ol>
+
+  <div class="callout">
+    <h3>Exam format reminder</h3>
+    <p>Each section has 25 questions. You need 18 correct (70%) to pass. The exam is closed-book — everything in this guide must be memorized before you walk in.</p>
+  </div>
+
+  <h2 id="core">Core Section: What Every Technician Must Know</h2>
+
+  <p>The Core section is required for every EPA 608 certification — whether you're taking Type I alone or going for Universal. It covers federal refrigerant regulations, ozone science, and recovery rules that apply across all systems. Master Core first.</p>
+
+  <h3>Clean Air Act and Section 608 Basics</h3>
+
+  <p>The EPA 608 certification exists because of Section 608 of the Clean Air Act, which prohibits knowingly venting refrigerants into the atmosphere. The specific regulations are codified in <strong>40 CFR Part 82, Subpart F</strong>. Key legal facts the exam tests:</p>
+  <ul>
+    <li>It is illegal to knowingly vent CFC, HCFC, or HFC refrigerants — all are covered</li>
+    <li>Technicians who purchase refrigerant in containers larger than 2 lbs must be EPA 608 certified</li>
+    <li>Refrigerant must be recovered before opening or disposing of refrigerant-containing equipment</li>
+    <li>Employers cannot knowingly allow uncertified technicians to perform work that could release refrigerant</li>
+    <li>Violations can result in fines of up to $44,539 per day per violation</li>
+  </ul>
+
+  <h3>Ozone Depletion (ODP) and Global Warming Potential (GWP)</h3>
+
+  <p>The exam tests your understanding of two environmental impact metrics:</p>
+
+  <table>
+    <thead><tr><th>Metric</th><th>What it measures</th><th>Refrigerants most affected</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ODP (Ozone Depletion Potential)</strong></td><td>Harm to stratospheric ozone layer</td><td>CFCs (R-11, R-12) highest; HCFCs (R-22) moderate; HFCs = 0</td></tr>
+      <tr><td><strong>GWP (Global Warming Potential)</strong></td><td>Contribution to climate change</td><td>HFCs very high (R-410A GWP: 2,088); HFOs very low</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Key distinction:</strong> HFCs like R-410A have zero ODP (good for ozone) but very high GWP (bad for climate). This is why the AIM Act is phasing them down.</p>
+
+  <h3>Refrigerant Recovery Rules</h3>
+
+  <p>Recovery requirements vary by system pressure and equipment type. These numbers are tested directly:</p>
+  <ul>
+    <li><strong>High-pressure systems:</strong> 90% recovery required (when using recovery equipment manufactured before November 15, 1993: 80%)</li>
+    <li><strong>Low-pressure systems (chillers):</strong> 80% recovery or 25 in Hg vacuum</li>
+    <li><strong>Very high-pressure systems (&gt;400 psia):</strong> 0% (recovery not required — these systems self-purge)</li>
+    <li>Recovery equipment must be certified by an EPA-approved equipment testing organization (ETL)</li>
+    <li>Recovered refrigerant must be sent to a certified reclaimer or reused in same owner's equipment</li>
+  </ul>
+
+  <h3>2026 AIM Act and A2L Refrigerant Updates <span class="new-badge">2026</span></h3>
+
+  <p>The American Innovation and Manufacturing (AIM) Act of 2020 is now creating real changes to EPA 608 exam content. Expect questions on:</p>
+  <ul>
+    <li><strong>HFC phasedown:</strong> U.S. HFC production and consumption phased down 85% by 2036 from baseline</li>
+    <li><strong>R-410A new installations:</strong> Restricted starting January 1, 2025 for new residential and light commercial AC systems</li>
+    <li><strong>A2L refrigerants:</strong> Mildly flammable class (lower flammability limit &gt;0.10 kg/m³). Examples: R-32, R-454B, R-466A</li>
+    <li><strong>Safe handling of A2L:</strong> No open flame near leaks, enhanced ventilation, new leak detection requirements</li>
+    <li><strong>R-454B</strong> (Opteon XL41): Low GWP replacement for R-410A in new equipment</li>
+  </ul>
+
+  <div class="warn">
+    <h3>2026 exam note</h3>
+    <p>EPA-approved testing organizations updated their question banks in 2024–2025. AIM Act and A2L questions are now standard. Study this section carefully — competitors' old study materials often miss it entirely.</p>
+  </div>
+
+  <p><strong>Take the Core practice test now:</strong> <a href="/core.html">EPA 608 Core Practice Test — Free</a></p>
+
+  <h2 id="type-1">Type I Study Guide — Small Appliances</h2>
+
+  <p>Type I certification covers small appliances — equipment manufactured, charged, and hermetically sealed at the factory with 5 pounds or less of refrigerant. This is the smallest and generally easiest Type section, but the exam does test specific technical rules.</p>
+
+  <h3>What Systems Are Covered</h3>
+  <ul>
+    <li>Household refrigerators and freezers</li>
+    <li>Room air conditioners (window units)</li>
+    <li>Packaged terminal air conditioners (PTACs)</li>
+    <li>Vending machines, water coolers, drinking fountains</li>
+    <li>Dehumidifiers</li>
+  </ul>
+
+  <h3>Key Type I Rules to Memorize</h3>
+  <ul>
+    <li><strong>5 lb threshold:</strong> Small appliances contain ≤5 lbs of refrigerant (factory charge)</li>
+    <li><strong>Passive recovery:</strong> Allowed — the system's own compressor can be used to recover refrigerant without an external recovery device</li>
+    <li><strong>Active recovery:</strong> Required when the system's compressor is not operational — must use an EPA-approved recovery device</li>
+    <li><strong>Piercing valves:</strong> Once attached to a system, piercing valves must remain on the system after service</li>
+    <li><strong>Recovery target:</strong> 90% of refrigerant in the system (or 80% if recovery equipment is pre-1993)</li>
+  </ul>
+
+  <table>
+    <thead><tr><th>Scenario</th><th>Recovery Method</th></tr></thead>
+    <tbody>
+      <tr><td>Compressor is working</td><td>Passive recovery (system compressor)</td></tr>
+      <tr><td>Compressor not working</td><td>Active recovery (EPA-approved device)</td></tr>
+      <tr><td>System already fully recovered</td><td>No additional recovery needed</td></tr>
+    </tbody>
+  </table>
+
+  <p><a href="/type-1.html">Take the Type I EPA 608 Practice Test — Free</a></p>
+
+  <h2 id="type-2">Type II Study Guide — High-Pressure Systems (EPA 608 Practice Test)</h2>
+
+  <p>Type II is the most common certification — and the hardest section. High-pressure systems include all the equipment HVAC technicians work with most often: split systems, rooftop units, and the refrigerants that are transitioning under AIM Act. Allocate the most study time here.</p>
+
+  <h3>What Systems Are Covered</h3>
+  <ul>
+    <li>Residential and commercial split systems (R-410A, R-22)</li>
+    <li>Rooftop packaged units</li>
+    <li>Heat pumps</li>
+    <li>Refrigeration systems using R-134a, R-404A, R-407C</li>
+    <li>New systems using R-454B, R-32 (A2L transition refrigerants)</li>
+  </ul>
+
+  <h3>Key Type II Rules to Memorize</h3>
+  <ul>
+    <li><strong>Vacuum level target:</strong> 500 microns (or per equipment manufacturer — whichever is more stringent)</li>
+    <li><strong>Recovery rate:</strong> 90% of system refrigerant charge required</li>
+    <li><strong>Commercial leak rate:</strong> 15% per year triggers required repair</li>
+    <li><strong>Industrial leak rate:</strong> 35% per year triggers required repair</li>
+    <li><strong>R-410A operating pressures:</strong> ~400 psig high side at 95°F ambient (significantly higher than R-22 ~250 psig) — pressures matter for safe handling</li>
+    <li><strong>Nitrogen pressurizing:</strong> Use dry nitrogen for leak testing — never use oxygen or refrigerant alone</li>
+    <li><strong>System evacuation sequence:</strong> Recovery first → repair → evacuate → recharge</li>
+  </ul>
+
+  <div class="callout">
+    <h3>AIM Act impact on Type II</h3>
+    <p>R-410A is being phased out for new equipment starting January 2025. R-454B (Opteon XL41) is the primary replacement. It's an A2L refrigerant — lower GWP (466 vs 2,088 for R-410A) but mildly flammable. Type II technicians must know A2L handling rules.</p>
+  </div>
+
+  <p><a href="/type-2.html">Take the Type II EPA 608 Practice Test — Free</a></p>
+
+  <h2 id="type-3">Type III Study Guide — Low-Pressure Systems</h2>
+
+  <p>Type III covers low-pressure systems — primarily large commercial chillers found in office buildings, hospitals, and industrial facilities. These systems operate below atmospheric pressure (in a vacuum), which creates unique safety and recovery challenges different from all other refrigerant systems.</p>
+
+  <h3>What Systems Are Covered</h3>
+  <ul>
+    <li>Centrifugal chillers using R-123 or legacy R-11</li>
+    <li>Any refrigerant system with evaporator pressure below 0 psig at 40°F</li>
+    <li>Large commercial and industrial cooling plants</li>
+  </ul>
+
+  <h3>Key Type III Rules to Memorize</h3>
+  <ul>
+    <li><strong>Evacuation level:</strong> 25 inches Hg vacuum (measured on vacuum gauge, not micron gauge)</li>
+    <li><strong>Recovery rate:</strong> 80% of system refrigerant charge, or evacuate to 25 in Hg</li>
+    <li><strong>Rupture disc:</strong> 15 psi is the standard rupture disc pressure for low-pressure chiller systems</li>
+    <li><strong>Purge units:</strong> Low-pressure systems use purge units to remove non-condensables (air/moisture) — purge unit emissions must be recovered or destroyed</li>
+    <li><strong>Leak rates:</strong> Differ from high-pressure — low-pressure systems allow up to 35% per year (industrial) before mandatory repair</li>
+    <li><strong>Operating pressure:</strong> R-123 operates at -3 to -8 psig in the evaporator — below atmospheric; air can be drawn into leaks</li>
+    <li><strong>Non-condensables:</strong> The biggest hazard for low-pressure systems is air infiltration causing pressure issues and compressor damage</li>
+  </ul>
+
+  <p><a href="/type-3.html">Take the Type III EPA 608 Practice Test — Free</a></p>
+
+  <h2 id="universal">Universal Certification — EPA 608 Practice Test Study Path</h2>
+
+  <p>Universal certification means you've passed all four sections: Core, Type I, Type II, and Type III. It's the most valuable certification for commercial HVAC technicians because it lets you work on any refrigerant system without restriction. Study path for Universal follows the same sections above, but you take all sections in one sitting.</p>
+
+  <h3>Universal Study Strategy</h3>
+  <ol>
+    <li><strong>Start with Core</strong> — it's required and builds regulatory foundation for everything else</li>
+    <li><strong>Do Type II second</strong> — hardest section, needs most time, most job-relevant</li>
+    <li><strong>Do Type I third</strong> — easiest section, builds confidence</li>
+    <li><strong>Do Type III last</strong> — unique concepts, but logical once you understand recovery principles</li>
+    <li><strong>Run Universal simulations</strong> — take all 4 practice tests back-to-back to simulate the real exam day</li>
+  </ol>
+
+  <div class="callout">
+    <h3>Universal certification tip</h3>
+    <p>You do not need to pass individual Type certs before taking Universal. Universal is one exam covering all 4 sections. Most technicians find it more efficient to study all at once rather than returning multiple times for individual Types.</p>
+  </div>
+
+  <p><a href="/universal.html">Take the Universal EPA 608 Practice Test — Free</a></p>
+
+  <h2 id="numbers">Key Numbers to Memorize — EPA 608 Practice Test Cheat Reference</h2>
+
+  <p>The EPA 608 exam is closed-book. These numbers appear on the exam directly. Do not leave this page until these are in memory — they are the most commonly tested values across all sections.</p>
+
+  <table>
+    <thead><tr><th>Fact</th><th>Value</th><th>Section</th></tr></thead>
+    <tbody>
+      <tr><td>Passing score</td><td>70% (18 out of 25 questions)</td><td>All</td></tr>
+      <tr><td>Questions per section</td><td>25</td><td>All</td></tr>
+      <tr><td>Small appliance refrigerant threshold</td><td>5 lbs or less (factory charge)</td><td>Type I</td></tr>
+      <tr><td>High-pressure vacuum target</td><td>500 microns</td><td>Type II</td></tr>
+      <tr><td>Low-pressure evacuation level</td><td>25 inches Hg</td><td>Type III</td></tr>
+      <tr><td>Recovery rate — high-pressure systems</td><td>90% (80% if pre-1993 equipment)</td><td>Type II</td></tr>
+      <tr><td>Recovery rate — low-pressure systems</td><td>80% or 25 in Hg</td><td>Type III</td></tr>
+      <tr><td>Commercial leak rate trigger</td><td>15% per year</td><td>Type II</td></tr>
+      <tr><td>Industrial leak rate trigger</td><td>35% per year</td><td>Type II/III</td></tr>
+      <tr><td>Low-pressure rupture disc</td><td>15 psi</td><td>Type III</td></tr>
+      <tr><td>Max fine per violation per day</td><td>$44,539</td><td>Core</td></tr>
+      <tr><td>Refrigerant purchase minimum (cert required)</td><td>Containers &gt;2 lbs</td><td>Core</td></tr>
+      <tr><td>Certification validity</td><td>Lifetime — no expiration</td><td>All</td></tr>
+      <tr><td>R-410A GWP</td><td>2,088</td><td>Core/Type II</td></tr>
+      <tr><td>R-454B GWP (replacement for R-410A)</td><td>466</td><td>Core/Type II</td></tr>
+    </tbody>
+  </table>
+
+  <p>For a printable version of these numbers, see the <a href="/study-guide-cheat-sheet.html">EPA 608 Study Guide Cheat Sheet</a> and <a href="/epa-608-cheat-sheet.html">EPA 608 Cheat Sheet</a>.</p>
+
+  <h2 id="schedule">Study Schedule — 1-Week and 2-Week Plans</h2>
+
+  <p>Use whichever plan matches your timeline. Both assume 2–3 hours of focused study per day. If you're going for Universal, use the 2-week plan.</p>
+
+  <h3>1-Week Plan (Core + One Type)</h3>
+
+  <table class="schedule-table">
+    <thead><tr><th>Day</th><th>Focus</th><th>Practice Test</th></tr></thead>
+    <tbody>
+      <tr><td>Day 1</td><td>Core: Clean Air Act, Section 608, ODP/GWP basics</td><td>—</td></tr>
+      <tr><td>Day 2</td><td>Core: Recovery rules, AIM Act, A2L intro</td><td><a href="/core.html">Core Practice Test</a></td></tr>
+      <tr><td>Day 3</td><td>Your Type: Key rules, key numbers, system overview</td><td>—</td></tr>
+      <tr><td>Day 4</td><td>Your Type: Edge cases, leak rates, equipment rules</td><td>Take your Type test</td></tr>
+      <tr><td>Day 5</td><td>Review all wrong answers from Days 2 + 4</td><td>Retake both tests</td></tr>
+      <tr><td>Day 6</td><td>Key numbers memorization drills</td><td>Take both tests again</td></tr>
+      <tr><td>Day 7</td><td>Rest or light review only — don't cram</td><td>Final confidence check</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2-Week Plan (Universal — All 4 Sections)</h3>
+
+  <ol class="steps">
+    <li><div class="step-body"><strong>Days 1–2: Core Section</strong>Clean Air Act, ODP/GWP, recovery rules, AIM Act 2026. Take Core practice test on Day 2.</div></li>
+    <li><div class="step-body"><strong>Days 3–5: Type II (Hardest First)</strong>High-pressure systems, R-410A, vacuum levels, leak rates, A2L transition. Take Type II practice test on Day 5.</div></li>
+    <li><div class="step-body"><strong>Days 6–7: Type I</strong>Small appliances, 5-lb rule, passive vs active recovery, piercing valves. Take Type I practice test on Day 7.</div></li>
+    <li><div class="step-body"><strong>Days 8–9: Type III</strong>Low-pressure chillers, R-123, 25 in Hg, purge units, 15 psi rupture disc. Take Type III practice test on Day 9.</div></li>
+    <li><div class="step-body"><strong>Days 10–12: Review Weak Spots</strong>Identify sections where you scored below 80%. Return to those sections in this guide. Retake those practice tests.</div></li>
+    <li><div class="step-body"><strong>Days 13–14: Full Universal Simulation</strong>Take all 4 practice tests back-to-back without breaks. Score 80%+ on all 4 before booking your real exam.</div></li>
+  </ol>
+
+  <h2 id="practice">Practice Test Links — Test Your Knowledge</h2>
+
+  <p>Each section of this study guide maps directly to one of these free <a href="/">EPA 608 Practice Test</a> tools. No signup required — start immediately.</p>
+
+  <div class="tool-grid">
+    <a href="/core.html" class="tool-btn">Core Practice Test</a>
+    <a href="/type-1.html" class="tool-btn">Type I Practice Test</a>
+    <a href="/type-2.html" class="tool-btn">Type II Practice Test</a>
+    <a href="/type-3.html" class="tool-btn">Type III Practice Test</a>
+    <a href="/universal.html" class="tool-btn dark">Universal Practice Test</a>
+  </div>
+
+  <h2 id="faq">Frequently Asked Questions — EPA 608 Practice Test</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">How long should I study for the EPA 608 exam?</div>
+    <div class="faq-a">Most technicians need 1–2 weeks of focused study. With 2–3 hours per day, a 7-day plan is realistic for Core + one Type. Universal certification (all 4 sections) typically requires 2 weeks of structured preparation.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What is the hardest section of the EPA 608 exam?</div>
+    <div class="faq-a">Type II (high-pressure systems) is widely considered the hardest section. It requires technical knowledge of vacuum levels (500 microns), leak rates (15%/35%), R-410A pressure characteristics, and system evacuation sequences. Allocate at least 3 study days for Type II.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Do I need to memorize refrigerant pressure charts?</div>
+    <div class="faq-a">Yes. The EPA 608 exam is closed-book — no reference materials allowed. You must memorize key numbers: vacuum levels (500 microns for high-pressure), recovery rates (90%/80%), the 5-lb threshold for small appliances, and the 25 in Hg evacuation standard for low-pressure systems.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Are there new questions about AIM Act refrigerants in 2026?</div>
+    <div class="faq-a">Yes. Updated EPA 608 exams now include questions on A2L refrigerants (R-32, R-454B, R-466A), HFC phasedown schedules, and safe handling of mildly flammable refrigerants. Study the AIM Act section in the Core guide above — these questions appear in the Core section of all exams.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What score do I need to pass the EPA 608 exam?</div>
+    <div class="faq-a">You need a 70% passing score — that is 18 correct answers out of 25 questions per section. Each section (Core, Type I, Type II, Type III) is scored separately. You must pass Core to receive any certification.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I study for Universal without taking individual Types first?</div>
+    <div class="faq-a">Yes. Universal certification covers all four sections (Core + Type I + II + III) in a single exam. You do not need to pass individual Type certifications before attempting Universal. Most experienced technicians take Universal directly.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Does EPA 608 certification expire?</div>
+    <div class="faq-a">No. EPA 608 certification does not expire under current regulations. Once certified, you are certified for life — no renewal fees, no continuing education requirements, no re-testing.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Where can I find more study resources?</div>
+    <div class="faq-a">This site has free section-specific study guides for each certification type. See the <a href="/study-guides.html">Study Guides Hub</a> for Core, Type I, Type II, Type III, and Universal guides. The <a href="/epa-608-cheat-sheet.html">EPA 608 Cheat Sheet</a> covers all key numbers in a printable format.</div>
+  </div>
+
+  <div class="link-grid">
+    <a href="/study-guides.html" class="link-card"><strong>Study Guides Hub</strong><span>All study guides in one place</span></a>
+    <a href="/epa-608-cheat-sheet.html" class="link-card"><strong>EPA 608 Cheat Sheet</strong><span>Printable key numbers reference</span></a>
+    <a href="/epa-608-certification-complete-guide.html" class="link-card"><strong>Complete Certification Guide</strong><span>Everything about getting certified</span></a>
+    <a href="/certification-guide.html" class="link-card"><strong>Certification Guide Hub</strong><span>Costs, process, timeline</span></a>
+    <a href="/study-guide-important-dates.html" class="link-card"><strong>Important Dates & Deadlines</strong><span>2025–2026 regulatory dates</span></a>
+    <a href="/study-guide-exam-strategies.html" class="link-card"><strong>Exam Strategies</strong><span>Test-taking tactics that work</span></a>
+  </div>
+
+  <div class="cta">
+    <h2>Ready to Test Your Knowledge?</h2>
+    <p>Free practice tests for every EPA 608 section. No signup. No cost. Start immediately.</p>
+    <p style="margin:0;">Track your progress, review wrong answers, and know when you're ready to pass.</p>
+    <a href="/universal.html" class="btn-w">Start Universal Practice Test</a>
+  </div>
+
+</div>
+
+<footer style="background:#1e293b;color:#94a3b8;padding:32px 0;margin-top:40px;font-size:14px;">
+  <div class="container" style="display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;">
+    <div>
+      <strong style="color:#fff;display:block;margin-bottom:8px;">EPA 608 Practice Test</strong>
+      <p style="margin:0;max-width:320px;line-height:1.6;">Free practice tests for EPA 608 Core, Type I, Type II, Type III, and Universal certification. No signup required.</p>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;">
+      <div>
+        <strong style="color:#fff;display:block;margin-bottom:8px;">Practice Tests</strong>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <a href="/core.html" style="color:#94a3b8;text-decoration:none;">Core Test</a>
+          <a href="/type-1.html" style="color:#94a3b8;text-decoration:none;">Type I Test</a>
+          <a href="/type-2.html" style="color:#94a3b8;text-decoration:none;">Type II Test</a>
+          <a href="/type-3.html" style="color:#94a3b8;text-decoration:none;">Type III Test</a>
+          <a href="/universal.html" style="color:#94a3b8;text-decoration:none;">Universal Test</a>
+        </div>
+      </div>
+      <div>
+        <strong style="color:#fff;display:block;margin-bottom:8px;">Study Resources</strong>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <a href="/study-guides.html" style="color:#94a3b8;text-decoration:none;">Study Guides</a>
+          <a href="/certification-guide.html" style="color:#94a3b8;text-decoration:none;">Certification Guide</a>
+          <a href="/epa-608-cheat-sheet.html" style="color:#94a3b8;text-decoration:none;">Cheat Sheet</a>
+          <a href="/faq.html" style="color:#94a3b8;text-decoration:none;">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="margin-top:20px;padding-top:20px;border-top:1px solid #334155;">
+    <p style="margin:0;">© 2026 EPA 608 Practice Test · <a href="/terms.html" style="color:#64748b;text-decoration:none;">Terms</a> · <a href="/policy.html" style="color:#64748b;text-decoration:none;">Privacy</a> · <a href="/about.html" style="color:#64748b;text-decoration:none;">About</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

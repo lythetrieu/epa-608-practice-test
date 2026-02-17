@@ -4,7 +4,7 @@
   <!-- CORE: Practice Tests -->
   <url>
     <loc>https://epa608practicetest.net/</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -39,46 +39,54 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- OUTER: Study Guides Hub -->
+  <!-- HUB PAGES -->
   <url>
-    <loc>https://epa608practicetest.net/study-guides.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <loc>https://epa608practicetest.net/certification-guide.html</loc>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://epa608practicetest.net/study-guides.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- STUDY GUIDES -->
+  <url>
     <loc>https://epa608practicetest.net/study-guide-core.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/study-guide-type-1.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/study-guide-type-2.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/study-guide-type-3.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/study-guide-universal.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/study-guide-cheat-sheet.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -89,16 +97,16 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- OUTER: Certification Guide Hub -->
+  <!-- CERTIFICATION PROCESS -->
   <url>
     <loc>https://epa608practicetest.net/what-is-epa-608-certification.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://epa608practicetest.net/types-and-universal-certification-guide.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -116,7 +124,7 @@
   </url>
   <url>
     <loc>https://epa608practicetest.net/online-and-in-person-testing-options.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -127,10 +135,10 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- OUTER: Exam Logistics -->
+  <!-- EXAM LOGISTICS -->
   <url>
     <loc>https://epa608practicetest.net/exam-day.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -147,18 +155,24 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- TOOL PAGES -->
+  <!-- PILLAR ARTICLES -->
   <url>
-    <loc>https://epa608practicetest.net/history.html</loc>
+    <loc>https://epa608practicetest.net/epa-608-certification-complete-guide.html</loc>
     <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://epa608practicetest.net/review.html</loc>
+    <loc>https://epa608practicetest.net/epa-608-complete-study-guide.html</loc>
     <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://epa608practicetest.net/epa-608-practice-exam-tips.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- SUPPORT -->
@@ -181,6 +195,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://epa608practicetest.net/changelog.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://epa608practicetest.net/terms.html</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>yearly</changefreq>
@@ -192,81 +212,5 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <url>
-    <loc>https://epa608practicetest.net/changelog.html</loc>
-    <lastmod>2026-02-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.4</priority>
-  </url>
 
-
-    <url>
-        <loc>https://epa608practicetest.net/exam-difficulty.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/exam-prep.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/exam-preparation.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/exam-rules.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/how-to-get-certified-step-by-step.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/online-test.html</loc>
-        <lastmod>2026-02-16</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/study-guide-common-questions.html</loc>
-        <lastmod>2026-02-17</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/study-guide-exam-strategies.html</loc>
-        <lastmod>2026-02-17</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/study-guide-how-to-study.html</loc>
-        <lastmod>2026-02-17</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://epa608practicetest.net/epa-608-cheat-sheet.html</loc>
-        <lastmod>2026-02-17</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
 </urlset>

@@ -180,14 +180,18 @@
             padding-bottom: 8px;
         }
 
-        .content-body p { margin-bottom: 20px; }
+        .content-body p {
+            margin-bottom: 20px;
+        }
 
         .content-body ul {
             margin-bottom: 20px;
             padding-left: 24px;
         }
 
-        .content-body li { margin-bottom: 10px; }
+        .content-body li {
+            margin-bottom: 10px;
+        }
 
         .tip-box {
             background: #eff6ff;
@@ -197,7 +201,9 @@
             margin: 28px 0;
         }
 
-        .tip-box strong { color: #1e40af; }
+        .tip-box strong {
+            color: #1e40af;
+        }
 
         .data-table {
             width: 100%;
@@ -205,7 +211,8 @@
             margin: 24px 0;
         }
 
-        .data-table th, .data-table td {
+        .data-table th,
+        .data-table td {
             padding: 12px 15px;
             border: 1px solid #ddd;
             text-align: left;
@@ -235,16 +242,42 @@
         .link-card:hover {
             border-color: var(--color-primary);
             transform: translateY(-3px);
-            box-shadow: 0 8px 16px -4px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
         }
 
-        .link-card .lc-icon { font-size: 24px; display: block; margin-bottom: 8px; }
-        .link-card .lc-title { font-weight: 700; color: #1e293b; font-size: 15px; display: block; margin-bottom: 4px; }
-        .link-card .lc-desc { font-size: 13px; color: #64748b; }
+        .link-card .lc-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
 
-        .faq-section { margin-top: 48px; }
-        .faq-item { margin-bottom: 24px; }
-        .faq-item strong { display: block; font-size: 17px; margin-bottom: 6px; color: #1e293b; }
+        .link-card .lc-title {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 15px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .link-card .lc-desc {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .faq-section {
+            margin-top: 48px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 17px;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
     </style>
 
     <script type="application/ld+json">
@@ -308,8 +341,9 @@
 
     <main class="container">
         <section class="hero">
-            <h1>Complete EPA 608 Study Guide</h1>
-            <p>The Simplest Path to Success. Our modular learning platform breaks down complex regulations into
+            <h1>Complete EPA 608 Study Guide (EPA 608 Practice Test Hub)</h1>
+            <p>The <strong>EPA 608 Practice Test</strong> is your simplest path to success. Our modular learning
+                platform breaks down complex regulations into
                 bite-sized modules for the self-taught technician.</p>
         </section>
 
@@ -345,7 +379,8 @@
                 <button class="pf-btn" onclick="showPath('type1', this)">Type I</button>
                 <button class="pf-btn" onclick="showPath('type2', this)">Type II</button>
                 <button class="pf-btn" onclick="showPath('type3', this)">Type III</button>
-                <button class="pf-btn pf-btn--featured" onclick="showPath('universal', this)">Universal (All Types)</button>
+                <button class="pf-btn pf-btn--featured" onclick="showPath('universal', this)">Universal (All
+                    Types)</button>
             </div>
             <div class="pf-result" id="pfResult" style="display:none;">
                 <div class="pf-result-inner" id="pfContent"></div>
@@ -353,94 +388,147 @@
         </section>
 
         <style>
-        .path-finder { background:#f8fafc; border:1px solid #e2e8f0; border-radius:16px; padding:36px 28px; margin:32px 0; text-align:center; }
-        .pf-title { font-size:22px; color:#1e293b; margin-bottom:8px; }
-        .pf-sub { color:#64748b; font-size:15px; margin-bottom:24px; }
-        .pf-buttons { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
-        .pf-btn { padding:12px 22px; border:2px solid #e2e8f0; border-radius:8px; background:#fff; font-size:15px; font-weight:600; color:#334155; cursor:pointer; transition:all 0.2s; }
-        .pf-btn:hover { border-color:#007acc; color:#007acc; background:#eff6ff; }
-        .pf-btn.active { border-color:#007acc; background:#007acc; color:#fff; }
-        .pf-btn--featured { border-color:#6366f1; color:#6366f1; }
-        .pf-btn--featured:hover,.pf-btn--featured.active { background:#6366f1; color:#fff; border-color:#6366f1; }
-        .pf-result { margin-top:24px; text-align:left; }
-        .pf-result-inner { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; animation:fadeIn 0.3s ease; }
-        .pf-result-inner h3 { color:#1e293b; margin-bottom:12px; font-size:18px; }
-        .pf-result-inner ol { padding-left:20px; }
-        .pf-result-inner li { margin-bottom:10px; color:#334155; line-height:1.6; }
-        .pf-result-inner a { color:#007acc; font-weight:600; text-decoration:none; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-        @media(max-width:600px){ .pf-buttons{flex-direction:column} .pf-btn{width:100%} }
+            .path-finder {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 16px;
+                padding: 36px 28px;
+                margin: 32px 0;
+                text-align: center;
+            }
+
+            .pf-title {
+                font-size: 22px;
+                color: #1e293b;
+                margin-bottom: 8px;
+            }
+
+            .pf-sub {
+                color: #64748b;
+                font-size: 15px;
+                margin-bottom: 24px;
+            }
+
+            .pf-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+            }
+
+            .pf-btn {
+                padding: 12px 22px;
+                border: 2px solid #e2e8f0;
+                border-radius: 8px;
+                background: #fff;
+                font-size: 15px;
+                font-weight: 600;
+                color: #334155;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .pf-btn:hover {
+                border-color: #007acc;
+                color: #007acc;
+                background: #eff6ff;
+            }
+
+            .pf-btn.active {
+                border-color: #007acc;
+                background: #007acc;
+                color: #fff;
+            }
+
+            .pf-btn--featured {
+                border-color: #6366f1;
+                color: #6366f1;
+            }
+
+            .pf-btn--featured:hover,
+            .pf-btn--featured.active {
+                background: #6366f1;
+                color: #fff;
+                border-color: #6366f1;
+            }
+
+            .pf-result {
+                margin-top: 24px;
+                text-align: left;
+            }
+
+            .pf-result-inner {
+                background: #fff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 24px;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .pf-result-inner h3 {
+                color: #1e293b;
+                margin-bottom: 12px;
+                font-size: 18px;
+            }
+
+            .pf-result-inner ol {
+                padding-left: 20px;
+            }
+
+            .pf-result-inner li {
+                margin-bottom: 10px;
+                color: #334155;
+                line-height: 1.6;
+            }
+
+            .pf-result-inner a {
+                color: #007acc;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px)
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0)
+                }
+            }
+
+            @media(max-width:600px) {
+                .pf-buttons {
+                    flex-direction: column
+                }
+
+                .pf-btn {
+                    width: 100%
+                }
+            }
         </style>
 
         <script>
-        const pfPaths = {
-            core: { title:'Core Certification Path', steps:['Read the <a href="/study-guide-core.html">Core Study Guide</a> — regulations, ODP/GWP, recovery definitions.','Memorize the CFC → HCFC → HFC → HFO phase-out timeline and Montreal Protocol dates.','Practice with the <a href="/core.html">Core Practice Test</a> until you score 80%+.','Review the <a href="/study-guide-cheat-sheet.html">Cheat Sheet</a> for recovery vacuum levels.'] },
-            type1: { title:'Core + Type I Path (Small Appliances)', steps:['Complete the Core path above first — Core is mandatory for all certifications.','Read the <a href="/study-guide-type-1.html">Type I Study Guide</a> — 5lb limit, piercing valves, 80%/90% recovery.','Focus: Active vs Passive recovery and PTAC/vending machine use cases.','Practice with the <a href="/type-1.html">Type I Practice Test</a> until 80%+.'] },
-            type2: { title:'Core + Type II Path (High-Pressure Systems)', steps:['Complete the Core path first.','Read the <a href="/study-guide-type-2.html">Type II Study Guide</a> — leak rates (10/20/30%), vacuum standards, IPR.','Memorize the 50-pound threshold and the 3 leak rate categories.','Practice with the <a href="/type-2.html">Type II Practice Test</a> — most tested in the field.'] },
-            type3: { title:'Core + Type III Path (Low-Pressure Chillers)', steps:['Complete the Core path first.','Read the <a href="/study-guide-type-3.html">Type III Study Guide</a> — rupture disc (15 psi), purge units, R-123.','Key numbers: 15 psig rupture disc, 10 psig max test pressure, 130°F oil pre-heat.','Practice with the <a href="/type-3.html">Type III Practice Test</a>.'] },
-            universal: { title:'Universal Certification Path — All Types (Recommended)', steps:['Study sequence: Core → Type II → Type I → Type III (by exam weight).','Use the <a href="/study-guide-cheat-sheet.html">Cheat Sheet</a> as your daily revision reference.','Run the <a href="/universal.html">Universal 100-Question Practice Test</a> — target 80%+ before exam day.','Review weak areas in <a href="/review.html">Fix Your Mistakes</a> until all sections exceed 80%.'] }
-        };
-        function showPath(type, btn) {
-            document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const p = pfPaths[type];
-            document.getElementById('pfContent').innerHTML = '<h3>'+p.title+'</h3><ol>'+p.steps.map(s=>'<li>'+s+'</li>').join('')+'</ol>';
-            document.getElementById('pfResult').style.display = 'block';
-        }
+            const pfPaths = {
+                core: { title: 'Core Certification Path', steps: ['Read the <a href="/study-guide-core.html">Core Study Guide</a> — regulations, ODP/GWP, recovery definitions.', 'Memorize the CFC → HCFC → HFC → HFO phase-out timeline and Montreal Protocol dates.', 'Practice with the <a href="/core.html">Core Practice Test</a> until you score 80%+.', 'Review the <a href="/study-guide-cheat-sheet.html">Cheat Sheet</a> for recovery vacuum levels.'] },
+                type1: { title: 'Core + Type I Path (Small Appliances)', steps: ['Complete the Core path above first — Core is mandatory for all certifications.', 'Read the <a href="/study-guide-type-1.html">Type I Study Guide</a> — 5lb limit, piercing valves, 80%/90% recovery.', 'Focus: Active vs Passive recovery and PTAC/vending machine use cases.', 'Practice with the <a href="/type-1.html">Type I Practice Test</a> until 80%+.'] },
+                type2: { title: 'Core + Type II Path (High-Pressure Systems)', steps: ['Complete the Core path first.', 'Read the <a href="/study-guide-type-2.html">Type II Study Guide</a> — leak rates (10/20/30%), vacuum standards, IPR.', 'Memorize the 50-pound threshold and the 3 leak rate categories.', 'Practice with the <a href="/type-2.html">Type II Practice Test</a> — most tested in the field.'] },
+                type3: { title: 'Core + Type III Path (Low-Pressure Chillers)', steps: ['Complete the Core path first.', 'Read the <a href="/study-guide-type-3.html">Type III Study Guide</a> — rupture disc (15 psi), purge units, R-123.', 'Key numbers: 15 psig rupture disc, 10 psig max test pressure, 130°F oil pre-heat.', 'Practice with the <a href="/type-3.html">Type III Practice Test</a>.'] },
+                universal: { title: 'Universal Certification Path — All Types (Recommended)', steps: ['Study sequence: Core → Type II → Type I → Type III (by exam weight).', 'Use the <a href="/study-guide-cheat-sheet.html">Cheat Sheet</a> as your daily revision reference.', 'Run the <a href="/universal.html">Universal 100-Question Practice Test</a> — target 80%+ before exam day.', 'Review weak areas in <a href="/review.html">Fix Your Mistakes</a> until all sections exceed 80%.'] }
+            };
+            function showPath(type, btn) {
+                document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const p = pfPaths[type];
+                document.getElementById('pfContent').innerHTML = '<h3>' + p.title + '</h3><ol>' + p.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>';
+                document.getElementById('pfResult').style.display = 'block';
+            }
         </script>
 
-        <article class="content">
-            <h2>Why You Need an EPA 608 Study Guide</h2>
-            <p>Handling refrigerants without proper training is not only dangerous but carries federal penalties under
-                the <strong>Clean Air Act</strong>. Fines for non-compliance can exceed $44,000 per violation. Beyond
-                compliance, mastering Section 608 opens doors to higher-paying HVAC roles and specialized commercial
-                refrigeration work.</p>
-
-            <div class="sidebar-choice">
-                <h4>💡 Digital Mentor Tip</h4>
-                <p>Don't try to memorize everything at once. Focus on the <strong>Core</strong> first—it's the
-                    foundation for every other certificate. Once you pass Core, the technical details for Type 1, 2, and
-                    3 become much easier to visualize.</p>
-            </div>
-
-            <h2>Section-by-Section Study Breakdown</h2>
-            <p>To pass your proctored exam, you must understand the specific standards for the equipment you'll be
-                servicing. Our guide splits these into logical modules:</p>
-            <ul>
-                <li><strong>Core:</strong> Covers stratospheric ozone depletion, the Montreal Protocol, and general
-                    recovery safety.</li>
-                <li><strong>Type 1:</strong> Focuses on small appliances containing 5 lbs or less of refrigerant, such
-                    as domestic refrigerators.</li>
-                <li><strong>Type 2:</strong> Details high-pressure systems like residential split levels and commercial
-                    air conditioning.</li>
-                <li><strong>Type 3:</strong> Explains the unique vacuum requirements for low-pressure centrifugal
-                    chillers.</li>
-            </ul>
-
-            <h2>2026 Regulatory Updates (AIM Act)</h2>
-            <p>The 2026 exam landscape includes significant updates regarding the <strong>AIM Act</strong> and the
-                phasedown of high-GWP HFCs like R-410A. Technicians must now be familiar with A2L (mildly flammable)
-                refrigerant safety standards and new leak repair thresholds for industrial process refrigeration.</p>
-
-            <h2>Strategies for Passing Relevant Sections</h2>
-            <p>We recommend the <strong>"3-Pass Method"</strong>: First, read the technical brief; second, review the
-                cheat sheet for vacuum levels; third, take a targeted 25-question quiz. Studying with this hub saves an
-                average of $250 in retake fees by ensuring you're ready for the first try.</p>
-
-            <div class="grid-links">
-                <a href="/study-guide-core.html" class="grid-item">
-                    <h5>Core Technical Guide →</h5>
-                    <p>Regulations, ozone science, and safety.</p>
-                </a>
-                <a href="/study-guide-cheat-sheet.html" class="grid-item">
-                    <h5>Exam Cheat Sheet →</h5>
-                    <p>The numbers you need to memorize.</p>
-                </a>
-            </div>
-        </article>
-
         <article class="content-body">
-            <h2>Why You Need a Study Guide — Not Just Practice Tests</h2>
+            <h2>Why You Need an EPA 608 Practice Test Study Guide</h2>
             <p>Practice tests measure what you know. Study guides fill in what you don't. The EPA 608 exam covers
                 four distinct technical domains — each with its own regulatory framework, equipment types, and
                 threshold values. Attempting the proctored exam without structured preparation leads to the most
@@ -456,7 +544,7 @@
                 Pass 3 — Simulate under timed conditions with our practice tests.
             </div>
 
-            <h2>Section-by-Section Study Breakdown</h2>
+            <h2>Section-by-Section Study Breakdown — EPA 608 Practice Test</h2>
             <p>Each certification type requires different knowledge. Use the guides below to focus your preparation
                 on the sections most relevant to your work — or study all four for Universal certification.</p>
 
@@ -556,7 +644,7 @@
                 you're ready to test under exam conditions.</p>
 
             <section class="faq-section">
-                <h2>Frequently Asked Questions</h2>
+                <h2>Frequently Asked Questions — EPA 608 Practice Test</h2>
                 <div class="faq-item">
                     <strong>How long does it take to study for the EPA 608 exam?</strong>
                     <p>Most technicians with field experience pass within 1–2 weeks of focused study. Entry-level
@@ -579,7 +667,7 @@
                     <p>Type II is most commonly cited due to the volume of specific numeric thresholds — leak rates,
                         vacuum levels, and 50-pound system rules. Type III is the most specialized but has fewer
                         test-takers, so study material is less common. Our <a href="/study-guide-type-2.html">Type II
-                        study guide</a> covers all testable thresholds.</p>
+                            study guide</a> covers all testable thresholds.</p>
                 </div>
             </section>
         </article>
