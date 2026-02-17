@@ -228,7 +228,7 @@
   "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
   "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
   "datePublished": "2026-02-16",
-  "dateModified": "2026-02-16",
+  "dateModified": "2026-02-17",
   "url": "https://epa608practicetest.net/study-guide-core.html"
 }
 </script>
@@ -238,8 +238,12 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"What score is needed to pass the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"Technicians must answer at least 18 out of 25 questions correctly (70%) to pass                         the Core section."}},
-    {"@type":"Question","name":"Is the Core certification enough to buy refrigerant?","acceptedAnswer":{"@type":"Answer","text":"No, you must pass Core plus at least one Type certification (I, II, or III) to                         legally purchase regulated refrigerants."}}
+    {"@type":"Question","name":"What score is needed to pass the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"Technicians must answer at least 18 out of 25 questions correctly (70%) to pass the Core section."}},
+    {"@type":"Question","name":"Is the Core certification enough to buy refrigerant?","acceptedAnswer":{"@type":"Answer","text":"No. You must pass Core plus at least one Type certification (I, II, or III) to legally purchase regulated refrigerants in containers over 2 lbs."}},
+    {"@type":"Question","name":"What is the penalty for venting refrigerant under the Clean Air Act?","acceptedAnswer":{"@type":"Answer","text":"Knowingly venting refrigerant is a violation of the Clean Air Act Section 608. Civil penalties can reach up to $44,539 per day per violation. Criminal penalties including fines and imprisonment are also possible."}},
+    {"@type":"Question","name":"Does the Core exam cover AIM Act content in 2026?","acceptedAnswer":{"@type":"Answer","text":"Yes. As of 2026, Core exam questions include HFC phase-down schedules under the AIM Act, A2L refrigerant safety classifications (R-32, R-454B), and updated recordkeeping requirements."}},
+    {"@type":"Question","name":"What is the difference between Type I, II, III, and Universal certification?","acceptedAnswer":{"@type":"Answer","text":"Type I covers small appliances under 5 lbs. Type II covers high-pressure systems (residential AC, heat pumps). Type III covers low-pressure centrifugal systems (large chillers). Universal certification covers all three types and is the most common choice for working HVAC technicians."}},
+    {"@type":"Question","name":"What topics are hardest on the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"The most difficult Core topics are recovery level percentages by equipment type, the distinction between recover/recycle/reclaim, the specific leak rate thresholds, and refrigerant sales restriction rules. These generate the most wrong answers on first attempts."}}
   ]
 }
 </script>
@@ -524,27 +528,122 @@
                 cylinder to transport virgin refrigerant — it can only hold recovered refrigerant.
             </div>
 
-            <h2>Frequently Asked Questions — EPA 608 Practice Test</h2>
-            <div class="faq-section">
-                <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">What score is needed to pass the EPA 608 Core exam?
-                    </div>
-                    <div class="faq-a">Technicians must answer at least 18 out of 25 questions correctly (70%) to pass
-                        the Core section.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">Is the Core certification enough to buy refrigerant?
-                    </div>
-                    <div class="faq-a">No, you must pass Core plus at least one Type certification (I, II, or III) to
-                        legally purchase regulated refrigerants.</div>
-                </div>
+            <h2>Technician Certification Types: What Each Covers (EPA 608 Practice Test)</h2>
+            <p>The Core section tests your knowledge of which certification type applies to which equipment. This is a guaranteed question on every Core exam.</p>
+
+            <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
+                <thead>
+                    <tr style="background:#007acc;color:#fff;">
+                        <th style="padding:12px;text-align:left;">Certification</th>
+                        <th style="padding:12px;text-align:left;">Equipment Covered</th>
+                        <th style="padding:12px;text-align:left;">Refrigerant Charge</th>
+                        <th style="padding:12px;text-align:left;">Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type I</strong></td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Small appliances</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Under 5 lbs (factory-sealed)</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Window ACs, refrigerators, vending machines</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type II</strong></td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">High-pressure appliances</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Any size; boiling pt -50.8°F to 50°F</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Residential split systems, heat pumps, walk-in coolers</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type III</strong></td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Low-pressure appliances</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Any size; boiling pt above 50°F at atm pressure</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Centrifugal chillers (R-11, R-123)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;"><strong>Universal</strong></td>
+                        <td style="padding:10px 12px;">All of the above</td>
+                        <td style="padding:10px 12px;">Any system</td>
+                        <td style="padding:10px 12px;">Covers all residential and commercial HVAC work</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Exam tip:</strong> The Core exam is required for ALL certifications — you cannot get Type I, II, III, or Universal certification without passing Core. Think of Core as the regulatory and safety foundation; the Type sections test equipment-specific procedures.</p>
+
+            <h2>Venting Prohibition and Clean Air Act Penalties</h2>
+            <p>Section 608 of the Clean Air Act prohibits knowingly venting refrigerant to the atmosphere during maintenance, service, repair, or disposal of equipment. This is one of the most tested Core topics.</p>
+
+            <ul style="margin:16px 0 16px 20px;line-height:2.2;">
+                <li><strong>Civil penalty:</strong> Up to $44,539 per day per violation for knowingly venting refrigerant</li>
+                <li><strong>Criminal penalty:</strong> Fines and/or imprisonment for willful violations</li>
+                <li><strong>What counts as venting:</strong> Any intentional release of refrigerant to the atmosphere — including releasing small amounts to "check pressure" or "top off" a system</li>
+                <li><strong>Exceptions:</strong> De minimis releases that occur during good-faith recovery attempts are exempt (not prosecuted)</li>
+                <li><strong>MVACs:</strong> Motor vehicle air conditioning systems follow different rules (Section 609) but technicians working on MVACs still cannot knowingly vent</li>
+            </ul>
+
+            <div style="background:#fff5f5;border:1px solid #ffb3b3;border-left:4px solid #dc3545;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;">
+                <p style="margin:0;font-size:15px;color:#6b0000;"><strong>Exam trap:</strong> "Accidentally" releasing refrigerant while using equipment in good faith is exempt. "Knowingly" venting — even small amounts — is a Section 608 violation. The exam tests whether you know this distinction.</p>
             </div>
 
-            <script>
-                function toggleFaq(el) {
-                    el.parentElement.classList.toggle('active');
-                }
-            </script>
+            <h2>2026 AIM Act Updates: What the Core Exam Now Includes</h2>
+            <p>The American Innovation and Manufacturing (AIM) Act of 2020 authorized EPA to phase down HFC production and consumption. Core exam questions now cover AIM Act content. Here's what you need to know:</p>
+
+            <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
+                <thead>
+                    <tr style="background:#007acc;color:#fff;">
+                        <th style="padding:12px;text-align:left;">AIM Act Topic</th>
+                        <th style="padding:12px;text-align:left;">Key Fact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">HFC phase-down baseline</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">EPA set baseline and schedules for reducing HFC production by 85% over 15 years</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A2L refrigerant classification</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-32, R-454B, R-466A are ASHRAE A2L — mildly flammable, lower GWP than R-410A</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-410A phase-down</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">New residential AC equipment after January 1, 2025 must use lower-GWP alternatives</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Technician implications</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Recovery requirements still apply to all HFCs; proper handling of A2L refrigerants required</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>For a complete refrigerant type guide including ODP, GWP, and ASHRAE safety classes, see the <a href="/epa-608-refrigerants.html" style="color:#007acc;font-weight:600;">EPA 608 Refrigerants Guide</a>. For a breakdown of all Core exam questions and topics, see <a href="/epa-608-exam-questions.html" style="color:#007acc;font-weight:600;">what's on the EPA 608 exam</a>.</p>
+
+            <h2>Frequently Asked Questions — EPA 608 Practice Test</h2>
+            <div style="margin-top:12px;">
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What score is needed to pass the EPA 608 Core exam?</h3>
+                    <p style="margin:0;color:#555;">You must answer at least 18 out of 25 questions correctly — a 70% pass rate. The Core section has 25 multiple-choice questions and must be passed alongside whichever Type section(s) you're certifying for.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">Is the Core certification enough to buy refrigerant?</h3>
+                    <p style="margin:0;color:#555;">No. Core alone is not sufficient. You must pass Core plus at least one Type section (I, II, or III) to legally purchase regulated refrigerants in containers over 2 lbs. Core-only does not count as a full certification.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What is the penalty for venting refrigerant?</h3>
+                    <p style="margin:0;color:#555;">Knowingly venting refrigerant under Section 608 of the Clean Air Act carries civil penalties up to $44,539 per day per violation. Criminal penalties including fines and imprisonment are also possible for willful violations.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">Does the 2026 Core exam cover AIM Act content?</h3>
+                    <p style="margin:0;color:#555;">Yes. Core exam questions now include HFC phase-down schedules under the AIM Act, A2L refrigerant safety classifications (R-32, R-454B, R-466A), and updated handling requirements. Study materials written before 2023 may be missing this content.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What is the difference between Type I, II, III, and Universal?</h3>
+                    <p style="margin:0;color:#555;">Type I = small appliances under 5 lbs. Type II = high-pressure systems (residential AC, heat pumps). Type III = low-pressure centrifugal systems (large chillers). Universal covers all three and is the most common certification for working HVAC technicians.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What are the hardest topics on the Core exam?</h3>
+                    <p style="margin:0;color:#555;">The most commonly missed Core questions involve: (1) recovery level percentages by equipment type and age, (2) the recover/recycle/reclaim distinction, (3) which situations qualify as "knowing venting," and (4) refrigerant sales restriction rules. Practice these specifically with our free <a href="/core.html" style="color:#007acc;font-weight:600;">Core Practice Test</a>.</p>
+                </div>
+            </div>
 
             <section style="background:#f0f7ff;border:1px solid #bee3f8;border-radius:12px;padding:24px;margin:40px 0;">
                 <h3 style="color:#1e40af;margin-bottom:12px;">Test Your Core Knowledge</h3>
