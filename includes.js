@@ -51,6 +51,12 @@ function loadIncludes() {
                         document.head.appendChild(newScript);
                     });
                     noscripts.forEach(noscript => document.body.insertBefore(noscript, document.body.firstChild));
+                    const styles = headDiv.querySelectorAll('style');
+                    styles.forEach(style => {
+                        const newStyle = document.createElement('style');
+                        newStyle.innerHTML = style.innerHTML;
+                        document.head.appendChild(newStyle);
+                    });
                 }
                 
                 // Extract and display header section
