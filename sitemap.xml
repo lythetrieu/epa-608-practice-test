@@ -175,6 +175,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- STUDY METHOD ARTICLES -->
+  <url>
+    <loc>https://epa608practicetest.net/how-to-study-for-epa-608.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- SUPPORT -->
   <url>
     <loc>https://epa608practicetest.net/about.html</loc>
