@@ -141,8 +141,22 @@
   "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
   "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
   "datePublished": "2026-02-16",
-  "dateModified": "2026-02-16",
+  "dateModified": "2026-02-17",
   "url": "https://epa608practicetest.net/study-guide-cheat-sheet.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What numbers do I need to memorize for the EPA 608 exam?","acceptedAnswer":{"@type":"Answer","text":"The critical numbers: 70% passing score (18/25 questions). Leak rate thresholds: 10% comfort cooling, 20% commercial refrigeration, 30% industrial process. Type I recovery: 90% working compressor, 80% non-working. Type II vacuum: 4\" Hg for small HCFC systems, 10\" Hg for systems over 200 lbs. Type III rupture disc bursts at 15 psig."}},
+    {"@type":"Question","name":"What are the cylinder color codes for EPA 608?","acceptedAnswer":{"@type":"Answer","text":"Key colors: R-22 = Green, R-410A = Pink/Rose, R-134a = Light Blue, R-404A = Orange, R-32 = Blue, R-407C = Burnt Orange, R-11 = Orange (legacy). Recovery cylinders are always Gray body with Yellow top — never use recovery cylinders for virgin refrigerant."}},
+    {"@type":"Question","name":"What is the difference between recover, recycle, and reclaim?","acceptedAnswer":{"@type":"Answer","text":"Recover: Remove refrigerant from a system without testing it — done in the field. Recycle: Clean refrigerant on-site using oil separation and filtration — stays with the same owner. Reclaim: Process refrigerant to ARI 700 purity standards at an EPA-certified facility — can be resold."}},
+    {"@type":"Question","name":"What are the ASHRAE 34 safety groups for refrigerants?","acceptedAnswer":{"@type":"Answer","text":"Safety groups combine toxicity (A=low, B=high) and flammability (1=none, 2L=mildly flammable, 2=flammable, 3=highly flammable). Common classes: A1 (R-22, R-410A, R-134a) — safest. A2L (R-32, R-454B, R-466A) — mildly flammable. A3 (R-290 propane) — highly flammable."}},
+    {"@type":"Question","name":"What is the venting penalty under the Clean Air Act?","acceptedAnswer":{"@type":"Answer","text":"Knowingly venting refrigerant under Clean Air Act Section 608 carries civil penalties up to $44,539 per day per violation. Criminal penalties including fines and imprisonment are also possible for willful violations."}},
+    {"@type":"Question","name":"What date was R-22 banned and what replaces it?","acceptedAnswer":{"@type":"Answer","text":"R-22 production and import were banned as of January 1, 2020. Only reclaimed or recovered R-22 may be used to service existing equipment. R-410A was the primary replacement but is also being phased down; R-454B and R-32 (both A2L) are the next-generation replacements."}}
+  ]
 }
 </script>
 </head>
@@ -271,16 +285,70 @@
                         <td>Burst at 15 psig</td>
                     </tr>
                     <tr>
+                        <td>Max Test Pressure</td>
+                        <td>10 psig nitrogen</td>
+                    </tr>
+                    <tr>
                         <td>Purge Unit</td>
-                        <td>High-efficiency is mandatory</td>
+                        <td>High-efficiency required</td>
                     </tr>
                     <tr>
                         <td>Charge Method</td>
                         <td>Vapor phase first to prevent freeze</td>
                     </tr>
+                    <tr>
+                        <td>Common Refrigerants</td>
+                        <td>R-11 (Orange), R-123 (Gray/Yellow)</td>
+                    </tr>
                 </table>
                 <div class="fact-box red">
-                    Charging liquid into a deep vacuum can freeze the water in the chiller tubes.
+                    Charging liquid into a deep vacuum can freeze water in the chiller tubes. Always charge as vapor first.
+                </div>
+            </div>
+
+            <!-- Cylinder Colors -->
+            <div class="cheat-card">
+                <h2>Refrigerant Cylinder Colors (EPA 608 Practice Test)</h2>
+                <table class="data-table">
+                    <tr>
+                        <th>Refrigerant</th>
+                        <th>Cylinder Color</th>
+                    </tr>
+                    <tr><td>R-11</td><td>Orange</td></tr>
+                    <tr><td>R-12</td><td>White</td></tr>
+                    <tr><td>R-22</td><td>Green</td></tr>
+                    <tr><td>R-32</td><td>Blue</td></tr>
+                    <tr><td>R-123</td><td>Gray with Yellow Top</td></tr>
+                    <tr><td>R-134a</td><td>Light Blue</td></tr>
+                    <tr><td>R-404A</td><td>Orange</td></tr>
+                    <tr><td>R-407C</td><td>Burnt Orange</td></tr>
+                    <tr><td>R-410A</td><td>Pink (Rose)</td></tr>
+                    <tr><td>R-454B</td><td>Light Green</td></tr>
+                    <tr><td>Recovery cylinders</td><td>Gray body / Yellow top</td></tr>
+                </table>
+                <div class="fact-box blue">
+                    <strong>Rule:</strong> Recovery cylinders are ALWAYS gray with yellow top — never used for virgin or reclaimed refrigerant. Overfilling any cylinder beyond 80% capacity is illegal.
+                </div>
+            </div>
+
+            <!-- ASHRAE Safety Groups -->
+            <div class="cheat-card">
+                <h2>ASHRAE 34 Safety Groups (EPA 608 Practice Test)</h2>
+                <table class="data-table">
+                    <tr>
+                        <th>Class</th>
+                        <th>Meaning</th>
+                        <th>Examples</th>
+                    </tr>
+                    <tr><td><strong>A1</strong></td><td>Low toxicity, non-flammable</td><td>R-22, R-410A, R-134a, R-404A</td></tr>
+                    <tr><td><strong>A2L</strong></td><td>Low toxicity, mildly flammable</td><td>R-32, R-454B, R-466A, R-1234yf</td></tr>
+                    <tr><td><strong>A2</strong></td><td>Low toxicity, flammable</td><td>R-152a</td></tr>
+                    <tr><td><strong>A3</strong></td><td>Low toxicity, highly flammable</td><td>R-290 (propane), R-600a</td></tr>
+                    <tr><td><strong>B1</strong></td><td>High toxicity, non-flammable</td><td>R-123, R-11</td></tr>
+                    <tr><td><strong>B2L</strong></td><td>High toxicity, mildly flammable</td><td>R-717 (ammonia)</td></tr>
+                </table>
+                <div class="fact-box green">
+                    <strong>A2L Rule:</strong> A2L refrigerants need 10× more ignition energy than A3 gases. They are NOT as dangerous as propane, but still require leak detection systems.
                 </div>
             </div>
         </div>
@@ -377,12 +445,147 @@
                     strictest."</li>
                 <li><strong>15-10 Rule</strong>: Type III rupture disc = 15 psig. Max test pressure = 10 psig. Never
                     confuse them.</li>
-                <li><strong>80-90 Rule</strong>: Type I passive recovery — 80% (working), 90% (broken).</li>
+                <li><strong>80-90 Rule</strong>: Type I recovery — 90% working compressor, 80% non-working.</li>
                 <li><strong>Three Rs</strong>: Recovery (remove), Recycling (clean on-site), Reclamation (ARI 700
                     standard). Know the definitions cold.</li>
                 <li>Take the <a href="/core.html">Core Practice Test</a>, then review every wrong answer against this
                     cheat sheet. Repeat until 85%+ consistent.</li>
             </ul>
+
+            <h2 style="font-size:22px;color:#1e293b;margin:40px 0 20px;">Complete Recovery Level Requirements</h2>
+            <table class="data-table" style="font-size:14px;">
+                <thead>
+                    <tr style="background:#007acc;color:#fff;">
+                        <th style="padding:10px;">Equipment Type</th>
+                        <th style="padding:10px;">Manufactured</th>
+                        <th style="padding:10px;">Recovery Level</th>
+                        <th style="padding:10px;">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type I — Working compressor</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Any</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>90%</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Small appliances ≤5 lbs</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type I — Non-working compressor</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Any</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>80%</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Broken/hermetically sealed</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type II — HCFC, &lt;200 lbs</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Before Nov 15, 1993</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>4" Hg vacuum</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">R-22 systems, older equipment</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type II — HCFC, &lt;200 lbs</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">After Nov 15, 1993</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>4" Hg vacuum</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">R-22 small systems</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type II — HCFC, ≥200 lbs</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Before Nov 15, 1993</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>15" Hg vacuum</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Large R-22 commercial systems</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type II — HCFC, ≥200 lbs</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">After Nov 15, 1993</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>10" Hg vacuum</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Large R-22 commercial systems</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type II — Very high-pressure (R-410A)</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Any</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>0 psig</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Recover until equipment stops</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;">Type III — Low-pressure systems</td>
+                        <td style="padding:10px;">Any</td>
+                        <td style="padding:10px;"><strong>25" Hg vacuum</strong></td>
+                        <td style="padding:10px;">R-11, R-123 centrifugal chillers</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 style="font-size:22px;color:#1e293b;margin:40px 0 16px;">Common EPA 608 Exam Traps</h2>
+            <p style="color:#555;margin-bottom:16px;">These are the most commonly missed question types. Know these cold before your exam.</p>
+            <table class="data-table" style="font-size:14px;">
+                <thead>
+                    <tr style="background:#dc3545;color:#fff;">
+                        <th style="padding:10px;">The Trap</th>
+                        <th style="padding:10px;">Wrong Answer (Common)</th>
+                        <th style="padding:10px;">Correct Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#fff5f5;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type I recovery with broken compressor</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">90% (same as working)</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>80%</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">R-22 vs R-410A vacuum requirement</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Same vacuum for both</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>R-410A = 0 psig (very high-pressure category)</strong></td>
+                    </tr>
+                    <tr style="background:#fff5f5;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Recycle vs Reclaim distinction</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Recycle = same as reclaim</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>Reclaim = ARI 700 certified facility only; Recycle = field on-site</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Recovery cylinder use</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Can use for virgin refrigerant</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>Recovery cylinders = recovered refrigerant ONLY (gray/yellow)</strong></td>
+                    </tr>
+                    <tr style="background:#fff5f5;">
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Type III rupture disc vs max test pressure</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;">Confuse 15 psig and 10 psig</td>
+                        <td style="padding:10px;border-bottom:1px solid #e2e8f0;"><strong>Rupture disc = 15 psig; max nitrogen test = 10 psig</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;">A2L flammability vs A3</td>
+                        <td style="padding:10px;">A2L is as dangerous as propane</td>
+                        <td style="padding:10px;"><strong>A2L needs 10× more ignition energy than A3; not equivalent to propane</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:40px;">
+            <h2 style="font-size:22px;color:#1e293b;margin-bottom:20px;">Frequently Asked Questions</h2>
+
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">What numbers do I need to memorize for the EPA 608 exam?</h3>
+                <p style="margin:0;color:#555;">The critical numbers: 70% passing score (18/25). Leak rates: 10/20/30% by system type. Type I recovery: 90% working, 80% non-working. Type II HCFC vacuums: 4" Hg (small), 10–15" Hg (large). R-410A recovery: 0 psig. Type III vacuum: 25" Hg. Rupture disc: 15 psig. Max nitrogen test: 10 psig.</p>
+            </div>
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">What are the cylinder color codes?</h3>
+                <p style="margin:0;color:#555;">Key codes: R-22 = Green, R-410A = Pink/Rose, R-134a = Light Blue, R-404A = Orange, R-32 = Blue, R-407C = Burnt Orange, R-454B = Light Green. Recovery cylinders are always Gray body with Yellow top and may only contain recovered refrigerant.</p>
+            </div>
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">What is the difference between recover, recycle, and reclaim?</h3>
+                <p style="margin:0;color:#555;">Recover = remove refrigerant from system without processing it (field). Recycle = clean on-site using oil separation and filtration — stays with same owner. Reclaim = process to ARI 700 standards at EPA-certified facility — the only process that produces reusable-by-anyone refrigerant.</p>
+            </div>
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">What is the venting penalty under the Clean Air Act?</h3>
+                <p style="margin:0;color:#555;">Civil penalties up to $44,539 per day per violation for knowingly venting refrigerant. Criminal penalties (fines + imprisonment) are also possible. De minimis releases during good-faith recovery are exempt. Any intentional release — including "just checking pressure" — is a violation.</p>
+            </div>
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">When was R-22 phased out and what replaced it?</h3>
+                <p style="margin:0;color:#555;">R-22 production and import were banned January 1, 2020. Only reclaimed or recovered R-22 can be used for existing systems. R-410A became the main replacement but is now also being phased down under the AIM Act. R-454B and R-32 (both A2L class) are the next-generation replacements for residential AC.</p>
+            </div>
+            <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                <h3 style="font-size:17px;margin-bottom:8px;">What are ASHRAE safety groups and why do they matter?</h3>
+                <p style="margin:0;color:#555;">ASHRAE 34 safety groups rate refrigerant toxicity (A=low, B=high) and flammability (1=none, 2L=mildly flammable, 2=flammable, 3=highly flammable). They appear on EPA 608 Core and Type II exam questions. Common safe options: A1 (R-22, R-410A, R-134a). Common A2L options now in use: R-32, R-454B, R-1234yf.</p>
+            </div>
         </div>
 
         <section style="text-align:center; padding: 40px 0; border-top: 1px solid #f1f5f9;">

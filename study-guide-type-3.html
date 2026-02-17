@@ -228,7 +228,7 @@
   "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
   "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
   "datePublished": "2026-02-16",
-  "dateModified": "2026-02-16",
+  "dateModified": "2026-02-17",
   "url": "https://epa608practicetest.net/study-guide-type-3.html"
 }
 </script>
@@ -238,8 +238,12 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-,    {"@type":"Question","name":"Where does air collect in a low-pressure chiller?","acceptedAnswer":{"@type":"Answer","text":"Air and other non-condensables typically collect at the top of the condenser,                         which is the highest pressure point in the system."}}
-    {"@type":"Question","name":"Is R-123 safe to handle?","acceptedAnswer":{"@type":"Answer","text":"R-123 is a B1 safety group refrigerant, meaning it has higher toxicity.                         Technicians must use proper PPE and mechanical room sensors."}}
+    {"@type":"Question","name":"Where does air collect in a low-pressure chiller?","acceptedAnswer":{"@type":"Answer","text":"Air and other non-condensables typically collect at the top of the condenser, which is the highest-pressure point in the system. This is removed by the purge unit, which vents non-condensables while retaining refrigerant vapor."}},
+    {"@type":"Question","name":"Is R-123 safe to handle?","acceptedAnswer":{"@type":"Answer","text":"R-123 is a B1 safety group refrigerant — it has higher toxicity than most refrigerants. Technicians must wear proper PPE, use mechanical room sensors, and ensure adequate ventilation when working with R-123 centrifugal chillers."}},
+    {"@type":"Question","name":"What is the vacuum level required for Type III recovery?","acceptedAnswer":{"@type":"Answer","text":"Type III low-pressure systems require recovery to 25 inches of mercury vacuum. This is significantly deeper than Type II systems because low-pressure refrigerants operate below atmospheric pressure."}},
+    {"@type":"Question","name":"What is the difference between R-11 and R-123?","acceptedAnswer":{"@type":"Answer","text":"R-11 (CFC) was phased out in 1996 and is now illegal to produce or import. R-123 (HCFC) is its approved long-term retrofit replacement. R-123 is still used in existing centrifugal chillers but is also being gradually phased down. Both are B1 safety class (higher toxicity)."}},
+    {"@type":"Question","name":"What does a purge unit do on a low-pressure system?","acceptedAnswer":{"@type":"Answer","text":"A purge unit removes non-condensable gases (air, nitrogen) that accumulate in low-pressure systems. These gases enter through leaks because the system operates at sub-atmospheric pressure. High-efficiency purge units are required — they minimize refrigerant emissions while removing air."}},
+    {"@type":"Question","name":"Why does a Type III system operate at sub-atmospheric pressure?","acceptedAnswer":{"@type":"Answer","text":"Low-pressure refrigerants like R-11 and R-123 have boiling points above 50°F at atmospheric pressure. To achieve refrigeration effect at typical chiller conditions, the system must operate below atmospheric pressure (in a vacuum). This means air leaks IN rather than refrigerant leaking out."}}
   ]
 }
 </script>
@@ -489,25 +493,95 @@
                         style="color:#007acc;font-weight:600;">Universal Practice Test</a>. Full guide library at <a
                         href="/study-guides.html" style="color:#007acc;font-weight:600;">EPA 608 Study Guides</a>.</p>
             </section>
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-section">
-                <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">Where does air collect in a low-pressure chiller?</div>
-                    <div class="faq-a">Air and other non-condensables typically collect at the top of the condenser,
-                        which is the highest pressure point in the system.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">Is R-123 safe to handle?</div>
-                    <div class="faq-a">R-123 is a B1 safety group refrigerant, meaning it has higher toxicity.
-                        Technicians must use proper PPE and mechanical room sensors.</div>
-                </div>
+            <h2>R-11 vs R-123: Key Differences for the Type III Exam</h2>
+            <p>The Type III section specifically tests knowledge of low-pressure refrigerants — primarily R-11 and R-123. Understanding the differences is critical, as exam questions frequently ask about phase-out status, toxicity, and system compatibility.</p>
+
+            <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
+                <thead>
+                    <tr style="background:#007acc;color:#fff;">
+                        <th style="padding:12px;text-align:left;">Property</th>
+                        <th style="padding:12px;text-align:left;">R-11</th>
+                        <th style="padding:12px;text-align:left;">R-123</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Chemical family</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">CFC (chlorofluorocarbon)</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">HCFC (hydrochlorofluorocarbon)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">ODP (Ozone Depletion Potential)</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">1.0 (reference standard)</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">0.02 (much lower)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">GWP</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">4,750</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">77</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">ASHRAE safety class</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A1 (lower toxicity)</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">B1 (higher toxicity)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Phase-out status</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Banned — no new production since 1996</td>
+                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Permitted — used in existing chillers; phase-down underway</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;">Cylinder color</td>
+                        <td style="padding:10px 12px;">Orange</td>
+                        <td style="padding:10px 12px;">Gray with Yellow top</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="background:#fffbea;border:1px solid #ffd700;border-left:4px solid #ffd700;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0;">
+                <p style="margin:0;font-size:15px;color:#5a4a00;"><strong>Exam tip:</strong> R-11 is an ODP reference point (ODP = 1.0). R-123 has much lower ODP (0.02) and replaced R-11 as the approved retrofit. On the exam, know that R-123 is MORE toxic (B1 class) even though it has less ozone depletion potential.</p>
             </div>
 
-            <script>
-                function toggleFaq(el) {
-                    el.parentElement.classList.toggle('active');
-                }
-            </script>
+            <h2>Type III Exam Topics: What Gets Tested</h2>
+            <p>The Type III section is considered medium difficulty. These topics generate the most questions:</p>
+            <ul style="margin:16px 0 16px 20px;line-height:2.2;">
+                <li><strong>Sub-atmospheric operation</strong> — why low-pressure systems run in a vacuum; air leaks IN through system leaks (unlike high-pressure systems where refrigerant leaks OUT)</li>
+                <li><strong>Purge unit function and emissions</strong> — high-efficiency purge units are mandatory; they recover refrigerant vapor before venting non-condensables</li>
+                <li><strong>Recovery vacuum level</strong> — 25" Hg vacuum required for Type III recovery</li>
+                <li><strong>Rupture disc</strong> — bursts at 15 psig to protect the vessel during leak test or overpressure; max nitrogen test pressure is 10 psig</li>
+                <li><strong>R-11 vs R-123 distinction</strong> — phase-out status, ODP/GWP values, toxicity class differences</li>
+                <li><strong>Non-condensable accumulation</strong> — air collects at the condenser (highest-pressure zone) in low-pressure systems</li>
+            </ul>
+
+            <p>For a complete breakdown of Type III and all other section question topics, see <a href="/epa-608-exam-questions.html" style="color:#007acc;font-weight:600;">what's on the EPA 608 exam</a>.</p>
+
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-top:12px;">
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">Where does air collect in a low-pressure chiller?</h3>
+                    <p style="margin:0;color:#555;">Air and non-condensables collect at the top of the condenser — the highest-pressure point in the system. Because the system operates below atmospheric pressure, any leaks allow air to enter. The purge unit removes this air while recovering refrigerant vapor.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">Is R-123 safe to handle?</h3>
+                    <p style="margin:0;color:#555;">R-123 is a B1 safety group refrigerant — higher toxicity than most refrigerants. Technicians must wear proper PPE (gloves, eye protection), ensure ventilation, and monitor mechanical rooms for R-123 vapor. Despite its lower ODP compared to R-11, it requires more careful handling.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What vacuum level is required for Type III recovery?</h3>
+                    <p style="margin:0;color:#555;">Type III requires recovery to 25 inches of mercury vacuum. This is deeper than Type II requirements because low-pressure refrigerants operate below atmospheric pressure — the vacuum requirements reflect the system's normal operating conditions.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What is the difference between R-11 and R-123?</h3>
+                    <p style="margin:0;color:#555;">R-11 is a CFC with ODP = 1.0 — banned since 1996 (no new production). R-123 is its HCFC replacement with ODP = 0.02 and much lower GWP. R-123 is still in use for existing centrifugal chillers but is categorized B1 (higher toxicity) while R-11 is A1 (lower toxicity).</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What does a purge unit do?</h3>
+                    <p style="margin:0;color:#555;">A purge unit continuously removes non-condensable gases (mainly air) that infiltrate the low-pressure system through leaks. High-efficiency purge units are required — they separate refrigerant vapor from the non-condensables and vent only the air, recovering the refrigerant back to the system.</p>
+                </div>
+                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
+                    <h3 style="font-size:17px;margin-bottom:8px;">What is the rupture disc pressure for Type III systems?</h3>
+                    <p style="margin:0;color:#555;">The rupture disc on a low-pressure centrifugal chiller is designed to burst at 15 psig to relieve over-pressure. The maximum nitrogen test pressure is 10 psig — never pressurize to 15 psig or beyond during testing. Confusing these two values is a common exam error.</p>
+                </div>
+            </div>
         </article>
     </main>
 
