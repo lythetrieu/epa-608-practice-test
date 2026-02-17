@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>EPA 608 Refrigerants: Types, Codes, and What's on the Exam (2026)</title>
+    <meta name="description"
+        content="Complete guide to EPA 608 refrigerant types: CFC, HCFC, HFC, and A2L refrigerants covered on the exam. ODP, GWP values, phase-down schedules, and refrigerant handling rules explained.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <link rel="canonical" href="https://epa608practicetest.net/epa-608-refrigerants.html">
+
+    <style>
+        :root {
+            --color-primary: #007acc;
+            --color-bg: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font: 16px/1.8 system-ui, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            padding: 60px 0;
+            background: var(--color-bg);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            color: #1e293b;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            color: #64748b;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            color: #1e293b;
+            margin: 44px 0 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            color: #1e293b;
+            margin: 28px 0 12px;
+        }
+
+        .content p { margin-bottom: 20px; }
+
+        .content ul, .content ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+        }
+
+        .content li { margin-bottom: 10px; }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .class-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #fff;
+        }
+
+        .class-card .badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .badge-cfc { background: #fee2e2; color: #991b1b; }
+        .badge-hcfc { background: #fef3c7; color: #92400e; }
+        .badge-hfc { background: #dbeafe; color: #1e40af; }
+        .badge-hfo { background: #d1fae5; color: #065f46; }
+
+        .class-card h4 {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .class-card p {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid var(--color-primary);
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 28px 0;
+        }
+
+        .callout h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .callout-warning {
+            background: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 28px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            margin: 24px 0;
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 700;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: #f8fafc; }
+
+        .faq-section { margin-top: 48px; }
+
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child { border-bottom: none; }
+
+        .faq-item strong {
+            display: block;
+            font-size: 17px;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .cta-bottom {
+            background: #0f172a;
+            color: #fff;
+            padding: 48px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .cta-bottom h2 { color: #fff; border: none; margin-top: 0; }
+
+        .btn-white {
+            display: inline-block;
+            background: #fff;
+            color: #0f172a;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .inline-link {
+            color: #007acc;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .inline-link:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 25px; }
+            .content h2 { font-size: 22px; }
+            .cta-bottom { padding: 32px 20px; }
+        }
+    </style>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "EPA 608 Refrigerants: Types, Codes, and What's on the Exam (2026)",
+  "description": "Complete guide to all EPA 608 refrigerant types covered on the exam — CFC, HCFC, HFC, HFO, and A2L refrigerants. ODP and GWP values, phase-down schedules, handling rules, and exam-specific knowledge explained.",
+  "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
+  "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
+  "datePublished": "2026-02-17",
+  "dateModified": "2026-02-17",
+  "url": "https://epa608practicetest.net/epa-608-refrigerants.html"
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What refrigerants are covered on the EPA 608 exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The EPA 608 exam covers all major refrigerant classes: CFCs (R-11, R-12), HCFCs (R-22, R-123), HFCs (R-134a, R-410A, R-404A), and newer A2L refrigerants (R-32, R-454B, R-466A). The Core section focuses on environmental properties (ODP, GWP) and regulations. Type sections test specific refrigerants used in each equipment category."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between CFC, HCFC, HFC, and HFO refrigerants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CFCs (Chlorofluorocarbons) have high ODP and high GWP — fully phased out. HCFCs (Hydrochlorofluorocarbons) have lower ODP than CFCs but still ozone-depleting — being phased out. HFCs (Hydrofluorocarbons) have zero ODP but high GWP — now being phased down under the AIM Act. HFOs (Hydrofluoroolefins) have zero ODP and very low GWP — the next-generation replacements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is ODP and GWP in refrigerants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ODP (Ozone Depletion Potential) measures how much a refrigerant damages the stratospheric ozone layer relative to R-11 (which has an ODP of 1.0). GWP (Global Warming Potential) measures how much heat a refrigerant traps in the atmosphere over 100 years relative to CO2 (which has a GWP of 1). High ODP refrigerants destroy ozone. High GWP refrigerants contribute to climate change."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are A2L refrigerants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A2L refrigerants are a class of mildly flammable refrigerants defined by ASHRAE Standard 34. They have low flammability (lower than A3 refrigerants like propane) but require specific handling, ventilation, and detector requirements. Examples include R-32, R-454B, and R-466A. A2L refrigerants are the primary replacements for R-410A as part of the AIM Act HFC phase-down."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is R-410A being phased out?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. R-410A is being phased down under the AIM Act (American Innovation and Manufacturing Act of 2020). New residential HVAC equipment must transition to lower-GWP alternatives. R-454B (Opteon XL41) and R-32 are the primary A2L replacements. Existing R-410A equipment continues to operate, but new equipment production is transitioning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What refrigerant does the Type II EPA 608 exam focus on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type II covers high-pressure systems, which primarily use R-22 (now phased out from new production), R-410A (being phased down), R-32, R-454B, and R-407C. The exam tests pressure-temperature relationships, leak detection requirements, and recovery procedures for high-pressure refrigerants."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
+
+    <main class="container content">
+        <section class="hero">
+            <h1>EPA 608 Refrigerants: Types, Classifications, and What's on the Exam (EPA 608 Practice Test 2026)</h1>
+            <p>Every refrigerant class tested on the EPA 608 exam — CFC, HCFC, HFC, HFO, and A2L — with ODP/GWP values, phase-down schedules, and handling rules explained.</p>
+        </section>
+
+        <p>The <strong>EPA 608 Practice Test</strong> team explains: refrigerant knowledge is tested across every section of the EPA 608 exam, but the Core section in particular requires you to understand refrigerant classifications, environmental properties, and regulatory status. This guide covers every major <strong>EPA 608 refrigerant type</strong> you need to know, organized the way the exam tests them.</p>
+
+        <h2>The Four Major Refrigerant Classes (EPA 608 Exam Overview)</h2>
+        <p>Refrigerants are classified by their chemical composition, and each class has different environmental impacts and regulatory status. The EPA 608 exam tests all four classes.</p>
+
+        <div class="class-grid">
+            <div class="class-card">
+                <span class="badge badge-cfc">CFC</span>
+                <h4>Chlorofluorocarbons</h4>
+                <p>Contain carbon, fluorine, and chlorine. Highest ODP of all refrigerant classes. Fully phased out of production under the Montreal Protocol.</p>
+                <p><strong>Examples:</strong> R-11, R-12, R-113, R-114, R-500, R-502</p>
+                <p><strong>ODP:</strong> 0.5–1.0 | <strong>GWP:</strong> High (1,000s)</p>
+            </div>
+            <div class="class-card">
+                <span class="badge badge-hcfc">HCFC</span>
+                <h4>Hydrochlorofluorocarbons</h4>
+                <p>Contain carbon, hydrogen, fluorine, and chlorine. Lower ODP than CFCs but still ozone-depleting. Being phased out of production. The most common is R-22.</p>
+                <p><strong>Examples:</strong> R-22, R-123, R-124, R-402A, R-408A</p>
+                <p><strong>ODP:</strong> 0.02–0.12 | <strong>GWP:</strong> High (1,000s)</p>
+            </div>
+            <div class="class-card">
+                <span class="badge badge-hfc">HFC</span>
+                <h4>Hydrofluorocarbons</h4>
+                <p>Contain carbon, hydrogen, and fluorine. Zero ODP (no chlorine). However, most HFCs have high GWP and are now being phased down under the AIM Act.</p>
+                <p><strong>Examples:</strong> R-134a, R-410A, R-404A, R-407C, R-407A</p>
+                <p><strong>ODP:</strong> 0 | <strong>GWP:</strong> High (1,000–4,000)</p>
+            </div>
+            <div class="class-card">
+                <span class="badge badge-hfo">HFO / A2L</span>
+                <h4>Hydrofluoroolefins</h4>
+                <p>Fourth-generation refrigerants. Zero ODP, very low GWP. Many are classified A2L (mildly flammable). These are the primary replacements for HFCs under the AIM Act.</p>
+                <p><strong>Examples:</strong> R-32, R-454B, R-466A, R-1234yf</p>
+                <p><strong>ODP:</strong> 0 | <strong>GWP:</strong> Very low (1–700)</p>
+            </div>
+        </div>
+
+        <h2>ODP and GWP: What the Exam Tests</h2>
+        <p>The Core section of the EPA 608 exam specifically tests your knowledge of <strong>ODP (Ozone Depletion Potential)</strong> and <strong>GWP (Global Warming Potential)</strong>. These two values define why refrigerant regulations exist and what specific refrigerants are regulated.</p>
+
+        <h3>What Is ODP (Ozone Depletion Potential)?</h3>
+        <p>ODP measures how much damage a substance causes to the stratospheric ozone layer, relative to R-11 (CFC-11), which has a defined ODP of 1.0. A refrigerant with ODP 0.5 causes half as much ozone damage as R-11 per kilogram released.</p>
+        <ul>
+            <li>CFCs: ODP ranges from 0.3 (R-502) to 1.0 (R-11)</li>
+            <li>HCFCs: ODP ranges from 0.02 (R-123) to 0.12 (R-124)</li>
+            <li>HFCs: ODP = 0 (no chlorine, no ozone damage)</li>
+            <li>HFOs: ODP = 0</li>
+        </ul>
+        <p>The venting prohibition in the Clean Air Act targets substances with ODP above zero — which is why HFCs were not originally included in Section 608 recovery requirements (they have zero ODP). However, the AIM Act expanded EPA authority to include HFCs based on GWP.</p>
+
+        <h3>What Is GWP (Global Warming Potential)?</h3>
+        <p>GWP measures how much heat a substance traps in the atmosphere over 100 years, relative to CO₂ (which has a GWP of 1). A refrigerant with GWP 2,000 traps 2,000 times more heat than an equal mass of CO₂.</p>
+        <ul>
+            <li>R-22 (HCFC): GWP ~1,810</li>
+            <li>R-134a (HFC): GWP ~1,430</li>
+            <li>R-410A (HFC blend): GWP ~2,088</li>
+            <li>R-404A (HFC blend): GWP ~3,922</li>
+            <li>R-32 (HFC/A2L): GWP ~675</li>
+            <li>R-454B (A2L blend): GWP ~466</li>
+            <li>R-466A (A2L): GWP ~733</li>
+        </ul>
+
+        <div class="callout">
+            <h3>Exam Tip: Know the Direction, Not the Exact Number</h3>
+            <p>The EPA 608 exam rarely asks you to recall the exact GWP of a specific refrigerant. What it does test is the relative ranking (R-404A has higher GWP than R-410A which has higher GWP than R-32) and the class-level patterns (HFOs have very low GWP, HFCs have high GWP, CFCs have the highest GWP). Understand the direction and you'll handle the GWP questions correctly.</p>
+        </div>
+
+        <h2>Refrigerants by EPA 608 Section (Type I, II, III)</h2>
+        <p>Different certification types focus on different refrigerants based on the systems they cover:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Section</th>
+                    <th>System Type</th>
+                    <th>Primary Refrigerants Tested</th>
+                    <th>Pressure Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Type I</strong></td>
+                    <td>Small Appliances (≤ 5 lbs)</td>
+                    <td>R-12, R-134a, R-600a (isobutane), R-290 (propane)</td>
+                    <td>Moderate (hermetically sealed)</td>
+                </tr>
+                <tr>
+                    <td><strong>Type II</strong></td>
+                    <td>High-Pressure Systems</td>
+                    <td>R-22, R-410A, R-32, R-454B, R-407C, R-134a (commercial)</td>
+                    <td>Above atmospheric</td>
+                </tr>
+                <tr>
+                    <td><strong>Type III</strong></td>
+                    <td>Low-Pressure Systems</td>
+                    <td>R-11, R-113, R-123 (centrifugal chillers)</td>
+                    <td>Below atmospheric (vacuum)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Key Refrigerants You Must Know for the Exam</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Refrigerant</th>
+                    <th>Class</th>
+                    <th>ODP</th>
+                    <th>GWP (approx.)</th>
+                    <th>Status</th>
+                    <th>Used In</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>R-11</strong></td>
+                    <td>CFC</td>
+                    <td>1.0</td>
+                    <td>4,750</td>
+                    <td>Phased out</td>
+                    <td>Large centrifugal chillers (Type III)</td>
+                </tr>
+                <tr>
+                    <td><strong>R-12</strong></td>
+                    <td>CFC</td>
+                    <td>1.0</td>
+                    <td>10,900</td>
+                    <td>Phased out</td>
+                    <td>Old household refrigerators, vehicles (pre-1994)</td>
+                </tr>
+                <tr>
+                    <td><strong>R-22</strong></td>
+                    <td>HCFC</td>
+                    <td>0.05</td>
+                    <td>1,810</td>
+                    <td>New production ended 2020</td>
+                    <td>Residential AC (older systems), heat pumps</td>
+                </tr>
+                <tr>
+                    <td><strong>R-123</strong></td>
+                    <td>HCFC</td>
+                    <td>0.02</td>
+                    <td>77</td>
+                    <td>Low-pressure use; being phased out</td>
+                    <td>Centrifugal chillers (Type III)</td>
+                </tr>
+                <tr>
+                    <td><strong>R-134a</strong></td>
+                    <td>HFC</td>
+                    <td>0</td>
+                    <td>1,430</td>
+                    <td>Phase-down underway (AIM Act)</td>
+                    <td>Automotive AC (EPA 609), vending machines (Type I)</td>
+                </tr>
+                <tr>
+                    <td><strong>R-410A</strong></td>
+                    <td>HFC blend</td>
+                    <td>0</td>
+                    <td>2,088</td>
+                    <td>Phase-down; no new equipment after 2025</td>
+                    <td>Residential central AC, heat pumps (Type II)</td>
+                </tr>
+                <tr>
+                    <td><strong>R-404A</strong></td>
+                    <td>HFC blend</td>
+                    <td>0</td>
+                    <td>3,922</td>
+                    <td>Phase-down (highest GWP common blend)</td>
+                    <td>Commercial refrigeration, low-temp applications</td>
+                </tr>
+                <tr>
+                    <td><strong>R-32</strong></td>
+                    <td>HFC / A2L</td>
+                    <td>0</td>
+                    <td>675</td>
+                    <td>Active; R-410A replacement candidate</td>
+                    <td>Mini-splits, heat pumps, R-410A replacement</td>
+                </tr>
+                <tr>
+                    <td><strong>R-454B</strong></td>
+                    <td>HFO blend / A2L</td>
+                    <td>0</td>
+                    <td>466</td>
+                    <td>Primary R-410A replacement (Opteon XL41)</td>
+                    <td>New residential HVAC equipment</td>
+                </tr>
+                <tr>
+                    <td><strong>R-466A</strong></td>
+                    <td>HFC blend / A2L</td>
+                    <td>0</td>
+                    <td>733</td>
+                    <td>Non-flammable A2L alternative</td>
+                    <td>Residential HVAC (Solstice N41)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>The AIM Act and HFC Phase-Down: What the 2026 Exam Tests</h2>
+        <p>The American Innovation and Manufacturing (AIM) Act of 2020 is now directly reflected in EPA 608 exam content. Technicians taking the exam in 2026 must understand:</p>
+        <ul>
+            <li><strong>HFC phase-down mandate:</strong> An 85% reduction in HFC production and consumption by 2036, relative to the 2011–2013 baseline</li>
+            <li><strong>R-410A phase-out timeline:</strong> New residential and light commercial HVAC equipment must use lower-GWP alternatives as of January 1, 2025. Existing systems continue to operate.</li>
+            <li><strong>A2L refrigerant requirements:</strong> Next-generation replacements are predominantly A2L (mildly flammable). Technicians must understand ASHRAE 34 safety classifications and what A2L means for handling and installation</li>
+            <li><strong>Expanded EPA authority:</strong> The AIM Act gave EPA authority to regulate HFCs based on GWP, even though HFCs have zero ODP — an important distinction for the Core exam</li>
+        </ul>
+
+        <h2>ASHRAE 34 Refrigerant Safety Classifications</h2>
+        <p>The EPA 608 exam tests refrigerant safety classifications as defined in ASHRAE Standard 34. Every refrigerant is assigned a two-character designation:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>First Character (Toxicity)</th>
+                    <th>Second Character (Flammability)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>A</strong> = Lower chronic toxicity (safer)</td>
+                    <td><strong>1</strong> = Non-flammable</td>
+                </tr>
+                <tr>
+                    <td><strong>B</strong> = Higher chronic toxicity</td>
+                    <td><strong>2L</strong> = Mildly flammable (lower flammability)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>2</strong> = Flammable</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>3</strong> = Higher flammability (like propane)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Refrigerant</th>
+                    <th>ASHRAE Classification</th>
+                    <th>What It Means</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>R-410A</td>
+                    <td>A1</td>
+                    <td>Low toxicity, non-flammable — current residential standard</td>
+                </tr>
+                <tr>
+                    <td>R-32</td>
+                    <td>A2L</td>
+                    <td>Low toxicity, mildly flammable — requires A2L precautions</td>
+                </tr>
+                <tr>
+                    <td>R-454B</td>
+                    <td>A2L</td>
+                    <td>Low toxicity, mildly flammable — primary R-410A replacement</td>
+                </tr>
+                <tr>
+                    <td>R-466A</td>
+                    <td>A1</td>
+                    <td>Low toxicity, non-flammable — non-flammable A2L alternative</td>
+                </tr>
+                <tr>
+                    <td>R-22</td>
+                    <td>A1</td>
+                    <td>Low toxicity, non-flammable — legacy HCFC</td>
+                </tr>
+                <tr>
+                    <td>R-123</td>
+                    <td>B1</td>
+                    <td>Higher toxicity, non-flammable — used in Type III chillers</td>
+                </tr>
+                <tr>
+                    <td>R-600a (isobutane)</td>
+                    <td>A3</td>
+                    <td>Low toxicity, high flammability — used in household fridges (Type I)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout-warning">
+            <p><strong>A2L Exam Note:</strong> As A2L refrigerants become the industry standard for new equipment, EPA 608 exams increasingly include questions about A2L handling requirements, minimum ventilation thresholds, refrigerant detector requirements, and what precautions differ from A1 refrigerants. Our <a href="/study-guides.html" class="inline-link">2026 study guides</a> include full A2L coverage.</p>
+        </div>
+
+        <h2>Refrigerant Phase-Out Timeline (Exam Reference)</h2>
+        <p>The EPA 608 exam tests specific phase-out dates and milestones. This is the exam-relevant timeline:</p>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Event</th>
+                    <th>Refrigerant(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1996</td>
+                    <td>CFC production ended in developed nations</td>
+                    <td>R-11, R-12, R-113, R-114, R-500, R-502</td>
+                </tr>
+                <tr>
+                    <td>2003</td>
+                    <td>R-22 banned in new HVAC equipment</td>
+                    <td>R-22</td>
+                </tr>
+                <tr>
+                    <td>2020</td>
+                    <td>R-22 new production/import ended</td>
+                    <td>R-22 (reclaimed only for service)</td>
+                </tr>
+                <tr>
+                    <td>2020</td>
+                    <td>AIM Act passed — HFC phase-down begins</td>
+                    <td>All HFCs (R-410A, R-404A, R-134a, etc.)</td>
+                </tr>
+                <tr>
+                    <td>2025</td>
+                    <td>New residential HVAC cannot use R-410A</td>
+                    <td>R-410A (new equipment only)</td>
+                </tr>
+                <tr>
+                    <td>2036</td>
+                    <td>HFC phase-down target: 85% below baseline</td>
+                    <td>All HFCs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>What the EPA 608 Exam Tests About Refrigerant Handling</h2>
+        <p>Beyond classifications and environmental properties, the EPA 608 exam tests practical refrigerant handling rules that vary by refrigerant class and system type:</p>
+        <ul>
+            <li><strong>Recovery before service:</strong> You must recover refrigerant before opening any system — regardless of the refrigerant type or system size</li>
+            <li><strong>Venting prohibition:</strong> Intentional venting of CFCs, HCFCs, and HFCs is federally prohibited. A2L refrigerants with GWP above 150 are also subject to recovery requirements</li>
+            <li><strong>Recovery efficiency requirements:</strong> Specific minimum recovery percentages apply based on system type and whether equipment was manufactured before or after November 15, 1993</li>
+            <li><strong>Container handling:</strong> Full and partial refrigerant cylinders must be stored upright, away from heat sources, and in ventilated spaces</li>
+            <li><strong>Mixing refrigerants:</strong> Mixing different refrigerant types in the same recovery cylinder is prohibited — even within the same refrigerant class</li>
+            <li><strong>A2L-specific rules:</strong> A2L refrigerants require refrigerant detectors in equipment rooms, specific ventilation minimums, and technicians must be aware of minimum ignition energy differences vs. A1 refrigerants</li>
+        </ul>
+
+        <p>For the full breakdown of how refrigerant handling rules appear in exam questions, use our <a href="/core.html" class="inline-link">Core Practice Test</a> — refrigerant handling and classification questions make up a large portion of Core exam content. For study guides covering each refrigerant class in depth, see the <a href="/study-guides.html" class="inline-link">EPA 608 Study Guides</a>.</p>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions — EPA 608 Practice Test</h2>
+
+            <div class="faq-item">
+                <strong>What refrigerants are covered on the EPA 608 exam?</strong>
+                <p>The exam covers all major refrigerant classes: CFCs (R-11, R-12), HCFCs (R-22, R-123), HFCs (R-134a, R-410A, R-404A), and A2L refrigerants (R-32, R-454B, R-466A). The Core section focuses on environmental properties and regulations. Type sections test refrigerants specific to each equipment category.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>What is the difference between CFC, HCFC, HFC, and HFO?</strong>
+                <p>CFCs have highest ODP — phased out. HCFCs have lower ODP — being phased out (R-22 ended 2020). HFCs have zero ODP but high GWP — now being phased down under the AIM Act. HFOs have zero ODP and very low GWP — next-generation replacements, many classified A2L (mildly flammable).</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>What is ODP and GWP?</strong>
+                <p>ODP (Ozone Depletion Potential) measures ozone layer damage relative to R-11 (ODP = 1.0). GWP (Global Warming Potential) measures greenhouse effect over 100 years relative to CO₂ (GWP = 1). High ODP refrigerants were targeted by the Montreal Protocol. High GWP refrigerants are now targeted by the AIM Act.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>What are A2L refrigerants?</strong>
+                <p>A2L refrigerants are mildly flammable refrigerants classified per ASHRAE 34. They include R-32, R-454B, and R-466A — the primary replacements for R-410A. A2L refrigerants require specific handling: refrigerant detectors, ventilation requirements, and awareness of flammability differences from non-flammable A1 refrigerants.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>Is R-410A being phased out?</strong>
+                <p>Yes. R-410A is being phased down under the AIM Act. New residential HVAC equipment could not use R-410A as of January 1, 2025. Existing R-410A systems continue operating. R-454B and R-32 are the primary replacements for new equipment.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>What refrigerant does Type III cover?</strong>
+                <p>Type III covers low-pressure systems — primarily large centrifugal chillers. The main refrigerants are R-11, R-113, and R-123. These systems operate in vacuum (below atmospheric pressure), which is the defining characteristic that separates Type III from Type II.</p>
+            </div>
+        </section>
+
+        <section class="cta-bottom">
+            <h2>Ready to Master EPA 608 Refrigerants on the Practice Test?</h2>
+            <p>Our Core Practice Test includes extensive refrigerant classification, ODP/GWP, and handling questions — exactly the content that trips up the most test-takers. Start drilling now.</p>
+            <a href="/core.html" class="btn-white">Practice Core Refrigerant Questions →</a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+</body>
+
+</html>
