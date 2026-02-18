@@ -1584,107 +1584,84 @@ footer {
     font-style: italic;
 }
 
-/* Exam Logistics Section */
-.exam-logistics {
+/* Exam Readiness Callout */
+.exam-readiness-callout {
     background: #f8f9fa;
     padding: 80px 0;
 }
 
-.logistics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 24px;
-    margin-top: 48px;
-}
-
-.logistics-card {
+.callout-box {
+    display: flex;
+    align-items: center;
+    gap: 32px;
     background: white;
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 48px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid var(--color-primary);
 }
 
-.logistics-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+.callout-icon {
+    font-size: 64px;
+    flex-shrink: 0;
 }
 
-.logistics-icon {
-    font-size: 48px;
+.callout-content {
+    flex: 1;
+}
+
+.callout-content h2 {
+    font-size: 32px;
     margin-bottom: 16px;
-    display: block;
-}
-
-.logistics-card h3 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 12px;
     color: #333;
 }
 
-.logistics-card p {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-primary);
-    margin-bottom: 16px;
-}
-
-.logistics-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.logistics-card li {
-    padding: 8px 0;
-    padding-left: 24px;
-    position: relative;
+.callout-content p {
+    font-size: 18px;
     color: #555;
-    font-size: 15px;
     line-height: 1.6;
+    margin-bottom: 24px;
 }
 
-.logistics-card li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--color-success);
-    font-weight: bold;
-}
-
-.exam-note {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    border-left: 4px solid #ffc107;
-    padding: 24px 32px;
+.cta-secondary {
+    background: linear-gradient(135deg, var(--color-success) 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 600;
     border-radius: 8px;
-    margin-top: 48px;
-    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
 }
 
-.exam-note p {
-    margin: 0;
-    font-size: 16px;
-    color: #856404;
-    line-height: 1.6;
-}
-
-.exam-note strong {
-    color: #533f03;
+.cta-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(135deg, #20c997 0%, #17a085 100%);
 }
 
 @media (max-width: 768px) {
-    .logistics-grid {
-        grid-template-columns: 1fr;
+    .callout-box {
+        flex-direction: column;
+        padding: 32px 24px;
         gap: 20px;
+        text-align: center;
     }
 
-    .logistics-card {
-        padding: 24px 20px;
+    .callout-icon {
+        font-size: 48px;
     }
 
-    .exam-note {
-        padding: 20px 16px;
+    .callout-content h2 {
+        font-size: 24px;
+    }
+
+    .callout-content p {
+        font-size: 16px;
     }
 }
 
