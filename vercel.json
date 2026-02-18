@@ -291,6 +291,16 @@
       "source": "/epa-608-passing-score",
       "destination": "/epa-608-passing-score.html",
       "statusCode": 301
+    },
+    {
+      "source": "/study-methods",
+      "destination": "/study-methods.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/open-book",
+      "destination": "/open-book.html",
+      "statusCode": 301
     }
   ]
 }
