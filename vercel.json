@@ -256,6 +256,31 @@
       "source": "/epa-608-cheat-sheet.html",
       "destination": "/study-guide-cheat-sheet.html",
       "statusCode": 301
+    },
+    {
+      "source": "/epa-608-study-materials",
+      "destination": "/epa-608-study-materials.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-certification-requirements",
+      "destination": "/epa-608-certification-requirements.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-exam-questions",
+      "destination": "/epa-608-exam-questions.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-pass-rate",
+      "destination": "/epa-608-pass-rate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-day",
+      "destination": "/exam-day.html",
+      "statusCode": 301
     }
   ]
 }
