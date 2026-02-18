@@ -1583,3 +1583,107 @@ footer {
     color: #666;
     font-style: italic;
 }
+
+/* Exam Logistics Section */
+.exam-logistics {
+    background: #f8f9fa;
+    padding: 80px 0;
+}
+
+.logistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.logistics-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logistics-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.logistics-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.logistics-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.logistics-card p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+}
+
+.logistics-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logistics-card li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.logistics-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-success);
+    font-weight: bold;
+}
+
+.exam-note {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-left: 4px solid #ffc107;
+    padding: 24px 32px;
+    border-radius: 8px;
+    margin-top: 48px;
+    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.2);
+}
+
+.exam-note p {
+    margin: 0;
+    font-size: 16px;
+    color: #856404;
+    line-height: 1.6;
+}
+
+.exam-note strong {
+    color: #533f03;
+}
+
+@media (max-width: 768px) {
+    .logistics-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .logistics-card {
+        padding: 24px 20px;
+    }
+
+    .exam-note {
+        padding: 20px 16px;
+    }
+}
