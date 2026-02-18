@@ -290,6 +290,12 @@
 
   <!-- CERTIFICATION GUIDE -->
   <url>
+    <loc>https://epa608practicetest.net/certification-guide/how-to-get-certified.html</loc>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://epa608practicetest.net/certification-types.html</loc>
     <lastmod>2026-02-18</lastmod>
     <changefreq>monthly</changefreq>

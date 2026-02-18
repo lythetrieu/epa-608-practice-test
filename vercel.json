@@ -303,6 +303,7 @@
       "statusCode": 301
     },
     { "source": "/certification-types", "destination": "/certification-types.html", "permanent": true },
-    { "source": "/practice-vs-real", "destination": "/practice-vs-real.html", "permanent": true }
+    { "source": "/practice-vs-real", "destination": "/practice-vs-real.html", "permanent": true },
+    { "source": "/certification-guide/how-to-get-certified", "destination": "/certification-guide/how-to-get-certified.html", "permanent": true }
   ]
 }
