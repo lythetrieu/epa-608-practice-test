@@ -286,6 +286,11 @@
       "source": "/epa-608-common-mistakes",
       "destination": "/epa-608-common-mistakes.html",
       "statusCode": 301
+    },
+    {
+      "source": "/epa-608-passing-score",
+      "destination": "/epa-608-passing-score.html",
+      "statusCode": 301
     }
   ]
 }
