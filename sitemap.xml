@@ -288,4 +288,20 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- CERTIFICATION GUIDE -->
+  <url>
+    <loc>https://epa608practicetest.net/certification-types.html</loc>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- EXAM PREP -->
+  <url>
+    <loc>https://epa608practicetest.net/practice-vs-real.html</loc>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

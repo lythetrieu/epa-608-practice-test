@@ -301,6 +301,8 @@
       "source": "/open-book",
       "destination": "/open-book.html",
       "statusCode": 301
-    }
+    },
+    { "source": "/certification-types", "destination": "/certification-types.html", "permanent": true },
+    { "source": "/practice-vs-real", "destination": "/practice-vs-real.html", "permanent": true }
   ]
 }
