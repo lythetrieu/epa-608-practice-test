@@ -54,14 +54,14 @@ nav {
     position: relative;
 }
 
-/* Regular Menu Links */
+/* Regular Menu Links — φ spacing: 13px vert × 21px horiz */
 .nav-menu > li > a {
     display: block;
-    padding: 16px 24px;
+    padding: 13px 21px;
     color: #2c3e50;
     text-decoration: none;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     transition: all 0.3s ease;
     position: relative;
 }
@@ -76,16 +76,16 @@ nav {
     position: relative;
 }
 
-/* Dropdown Toggle */
+/* Dropdown Toggle — matching φ spacing */
 .dropdown-toggle {
     display: flex !important;
     align-items: center;
-    gap: 8px;
-    padding: 16px 24px;
+    gap: 6px;
+    padding: 13px 21px;
     color: #2c3e50;
     text-decoration: none;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
     background: transparent;
@@ -224,16 +224,32 @@ nav {
     transform: scale(1.2) rotate(10deg);
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive — φ scaled down */
 @media (max-width: 768px) {
+    .header-content {
+        height: 56px;
+    }
+
+    .logo {
+        flex: 0 0 auto;
+    }
+
+    .logo img {
+        height: 34px !important;
+    }
+
+    .header-content nav {
+        flex: 1;
+    }
+
     .nav-menu {
         gap: 0;
     }
 
     .nav-menu > li > a,
     .dropdown-toggle {
-        padding: 12px 16px;
-        font-size: 14px;
+        padding: 8px 13px;
+        font-size: 13px;
     }
 
     .dropdown-menu {
@@ -241,7 +257,9 @@ nav {
     }
 }
 
-/* Header Layout */
+/* Header Layout — Golden Ratio (φ = 1.618)
+   Logo 42px → header 68px (42 × φ)
+   Logo area 38.2% : Nav area 61.8% */
 header {
     position: sticky;
     top: 0;
@@ -255,13 +273,23 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 68px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo {
     text-decoration: none;
     display: flex;
     align-items: center;
+    flex: 0 0 38.2%;
+}
+
+.header-content nav {
+    flex: 0 0 61.8%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* Footer Layout */
@@ -320,7 +348,7 @@ footer {
     <div class="container">
         <div class="header-content">
             <a href="/" class="logo">
-                <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 40px; width: auto;">
+                <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 42px; width: auto;">
             </a>
             <nav>
                 <ul class="nav-menu">

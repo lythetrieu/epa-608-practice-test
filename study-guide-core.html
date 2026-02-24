@@ -1,664 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPA 608 Core Study Guide: Free 2026 Prep Notes</title>
-    <meta name="description"
-        content="Master the EPA 608 Core exam with this complete 2026 study guide. Covers Clean Air Act, Montreal Protocol, refrigerant regulations, and ozone science.">
+    <meta name="robots" content="index, follow">
+    <title>EPA 608 Core Study Guide 2026: Section 608 Law &amp; Regulations</title>
+    <meta name="description" content="Master the EPA 608 Core section. Covers Clean Air Act Section 608, venting prohibitions, civil penalties, refrigerant categories, and recovery rules.">
     <meta name="author" content="EPA 608 Practice Test">
     <link rel="canonical" href="https://epa608practicetest.net/study-guide-core.html">
-
     <style>
-        :root {
-            --color-primary: #007acc;
-            --color-success: #28a745;
-            --color-bg-alt: #f8fafc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font: 16px/1.8 system-ui, -apple-system, sans-serif;
-            color: #333;
-            background: #fff;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        #header-placeholder {
-            min-height: 70px;
-        }
-
-        .hero {
-            padding: 60px 0 40px;
-            text-align: center;
-            background: var(--color-bg-alt);
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 40px;
-        }
-
-        .hero h1 {
-            font-size: 38px;
-            color: #1e293b;
-            margin-bottom: 12px;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: #64748b;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .content-body h2 {
-            font-size: 28px;
-            color: #1e293b;
-            margin: 48px 0 20px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 8px;
-        }
-
-        .content-body h3 {
-            font-size: 22px;
-            color: #334155;
-            margin: 32px 0 16px;
-        }
-
-        .content-body p {
-            margin-bottom: 20px;
-            color: #334155;
-        }
-
-        .content-body ul {
-            margin-bottom: 24px;
-            padding-left: 24px;
-        }
-
-        .content-body li {
-            margin-bottom: 12px;
-        }
-
-        .info-box {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 24px;
-            border-radius: 8px;
-            margin: 32px 0;
-        }
-
-        .info-box h4 {
-            color: #1e40af;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        /* Mini Quiz Styles */
-        .mini-quiz {
-            background: #fff;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 60px 0;
-        }
-
-        .mini-quiz h3 {
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--color-primary);
-        }
-
-        .quiz-q {
-            margin-bottom: 25px;
-            display: none;
-        }
-
-        .quiz-q.active {
-            display: block;
-        }
-
-        .options {
-            display: grid;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .opt-btn {
-            padding: 12px 20px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            background: #fff;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-        }
-
-        .opt-btn:hover {
-            background: #f1f5f9;
-            border-color: var(--color-primary);
-        }
-
-        .opt-btn.correct {
-            background: #dcfce7;
-            border-color: #22c55e;
-            color: #166534;
-        }
-
-        .opt-btn.incorrect {
-            background: #fee2e2;
-            border-color: #ef4444;
-            color: #991b1b;
-        }
-
-        .quiz-footer {
-            margin-top: 20px;
-            text-align: center;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 20px;
-        }
-
-        .btn-primary {
-            background: var(--color-primary);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .faq-q {
-            padding: 15px 20px;
-            background: #f8fafc;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .faq-q::after {
-            content: '+';
-        }
-
-        .faq-a {
-            padding: 20px;
-            display: none;
-        }
-
-        .faq-item.active .faq-a {
-            display: block;
-        }
-
-        .faq-item.active .faq-q::after {
-            content: '−';
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 30px;
-            }
-        }
+:root { --blue: #007acc; --dark: #1e293b; --bg: #f8fafc; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 16px/1.8 system-ui, sans-serif; color: #333; background: #fff; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.hero { padding: 56px 0; background: var(--bg); border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+.hero h1 { font-size: 36px; color: var(--dark); margin-bottom: 14px; line-height: 1.2; text-align: center; }
+.hero p { text-align: center; color: #64748b; font-size: 17px; max-width: 640px; margin: 0 auto; }
+h2 { font-size: 26px; color: var(--dark); margin: 40px 0 14px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+h3 { font-size: 19px; color: var(--dark); margin: 26px 0 10px; }
+p { margin-bottom: 20px; }
+ul, ol { margin-bottom: 20px; padding-left: 26px; }
+li { margin-bottom: 10px; }
+.breadcrumb { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+.breadcrumb a { color: var(--blue); text-decoration: none; }
+table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+th { background: var(--dark); color: #fff; padding: 11px 14px; text-align: left; }
+td { padding: 11px 14px; border-bottom: 1px solid #e2e8f0; }
+tr:nth-child(even) td { background: var(--bg); }
+.callout { background: #eff6ff; border-left: 4px solid var(--blue); padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.callout h3 { color: #1e40af; margin: 0 0 8px; font-size: 16px; }
+.callout p { margin: 0; }
+.warn { background: #fefce8; border-left: 4px solid #eab308; padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.warn h3 { color: #854d0e; margin: 0 0 8px; font-size: 16px; }
+.warn p { margin: 0; }
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 22px 0; }
+.tool-btn { display: block; text-align: center; padding: 14px 10px; background: var(--blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; }
+.tool-btn.dark { background: var(--dark); }
+.faq-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.faq-q { padding: 16px 18px; font-weight: 700; font-size: 15px; color: var(--dark); background: var(--bg); }
+.faq-a { padding: 14px 18px; border-top: 1px solid #e2e8f0; color: #444; line-height: 1.7; }
+.cta { background: var(--dark); color: #fff; padding: 44px 36px; border-radius: 18px; text-align: center; margin: 56px 0; }
+.cta h2 { color: #fff; border: none; margin: 0 0 10px; font-size: 26px; }
+.cta p { color: #94a3b8; margin-bottom: 6px; }
+.btn-w { display: inline-block; background: #fff; color: var(--dark); padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 800; margin-top: 18px; }
+.highlight-col { color: #16a34a; font-weight: 700; }
+@media(max-width:600px) { .hero h1 { font-size: 24px; } h2 { font-size: 21px; } .cta { padding: 28px 18px; } }
     </style>
-
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "EPA 608 Core Study Guide: Free 2026 Prep Notes",
-  "author": {"@type": "Organization", "name": "EPA 608 Practice Test"},
-  "publisher": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"},
-  "datePublished": "2026-02-16",
-  "dateModified": "2026-02-17",
-  "url": "https://epa608practicetest.net/study-guide-core.html"
-}
-</script>
-
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type":"Question","name":"What score is needed to pass the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"Technicians must answer at least 18 out of 25 questions correctly (70%) to pass the Core section."}},
-    {"@type":"Question","name":"Is the Core certification enough to buy refrigerant?","acceptedAnswer":{"@type":"Answer","text":"No. You must pass Core plus at least one Type certification (I, II, or III) to legally purchase regulated refrigerants in containers over 2 lbs."}},
-    {"@type":"Question","name":"What is the penalty for venting refrigerant under the Clean Air Act?","acceptedAnswer":{"@type":"Answer","text":"Knowingly venting refrigerant is a violation of the Clean Air Act Section 608. Civil penalties can reach up to $44,539 per day per violation. Criminal penalties including fines and imprisonment are also possible."}},
-    {"@type":"Question","name":"Does the Core exam cover AIM Act content in 2026?","acceptedAnswer":{"@type":"Answer","text":"Yes. As of 2026, Core exam questions include HFC phase-down schedules under the AIM Act, A2L refrigerant safety classifications (R-32, R-454B), and updated recordkeeping requirements."}},
-    {"@type":"Question","name":"What is the difference between Type I, II, III, and Universal certification?","acceptedAnswer":{"@type":"Answer","text":"Type I covers small appliances under 5 lbs. Type II covers high-pressure systems (residential AC, heat pumps). Type III covers low-pressure centrifugal systems (large chillers). Universal certification covers all three types and is the most common choice for working HVAC technicians."}},
-    {"@type":"Question","name":"What topics are hardest on the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"The most difficult Core topics are recovery level percentages by equipment type, the distinction between recover/recycle/reclaim, the specific leak rate thresholds, and refrigerant sales restriction rules. These generate the most wrong answers on first attempts."}}
-  ]
-}
-</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"EPA 608 Core Study Guide: Clean Air Act, Refrigerant Law, and Venting Rules Explained","url":"https://epa608practicetest.net/study-guide-core.html","dateModified":"2026-02-22","description":"Master the EPA 608 Core section — venting prohibitions, civil penalties, refrigerant categories, and recovery rules.","mainEntity":{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is covered in the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"The Core section covers Clean Air Act Section 608, venting prohibitions (CFC/HCFC effective July 1, 1992; HFC effective November 15, 1995), civil penalties exceeding $44,539/day, refrigerant types (CFCs/HCFCs/HFCs/HFOs), and the distinction between recovery, recycling, and reclamation."}},{"@type":"Question","name":"Is the EPA 608 Core section required for all certifications?","acceptedAnswer":{"@type":"Answer","text":"Yes — EPA 608 Core is mandatory for Type I, Type II, Type III, and Universal certification. No type-specific certificate is valid without a passing Core score."}},{"@type":"Question","name":"How many questions are on the EPA 608 Core exam?","acceptedAnswer":{"@type":"Answer","text":"The Core section contains 25 questions; passing requires 18 correct (70% threshold)."}},{"@type":"Question","name":"When were HFCs added to the venting prohibition?","acceptedAnswer":{"@type":"Answer","text":"HFCs were added to the Section 608 venting prohibition on November 15, 1995 — three years after the 1992 prohibition covering CFCs and HCFCs."}}]}}]}</script>
 </head>
-
 <body>
     <script src="includes.js"></script>
     <div id="header-placeholder"></div>
-
     <main class="container">
-        <section class="hero">
-            <h1>EPA 608 Core Exam Study Guide [2026] (EPA 608 Practice Test)</h1>
-            <p><strong>EPA 608 Practice Test</strong> helps you master the foundational knowledge required for all
-                certification types, covering environmental science, regulations, and safety.</p>
-        </section>
 
-        <article class="content-body">
-            <div class="intro info-box">
-                <h4>🎯 Core Section Requirements</h4>
-                <p>The EPA 608 Core exam tests technical knowledge across four key areas through 25 multiple-choice
-                    questions. Technicians must score at least 70% (18 correct answers) on the Core section to qualify
-                    for any individual Type I, II, or III certification.</p>
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/study-guides.html">Study Guides</a> &rsaquo; Core Section Guide
+        </nav>
+
+        <div class="hero">
+            <h1>EPA 608 Core Study Guide: Clean Air Act, Refrigerant Law, and Venting Rules Explained</h1>
+            <p>Master the mandatory Core section — venting prohibitions, civil penalties, refrigerant categories, and the recovery-recycling-reclamation distinction every certification type requires.</p>
+        </div>
+
+        <p>EPA 608 Certification requires passing the Core section before any type-specific credential is issued. The Core section is mandatory for Type I, Type II, Type III, and Universal certification — no equipment-specific certificate is valid without it. Unlike the Type sections, which test equipment-specific service procedures, the Core section tests federal law: the statutory text of Clean Air Act Section 608, civil penalty amounts, refrigerant classification, and the regulatory requirements governing recovery, recycling, and reclamation.</p>
+
+        <h2>What the EPA 608 Core Section Tests</h2>
+
+        <p>The EPA 608 Core section covers Clean Air Act Section 608 law, venting prohibitions, civil penalties, refrigerant categories, and recovery obligations — all mandatory knowledge for technicians handling any refrigerant class.</p>
+
+        <p>The Core section divides into four primary topic areas:</p>
+
+        <p><strong>1. Clean Air Act Section 608 statutory requirements.</strong> The legal basis for all EPA 608 requirements. Technicians must understand what Section 608 requires, who it applies to, and which equipment it covers. The statute applies to any technician who opens a refrigerant circuit to service, maintain, repair, or dispose of equipment.</p>
+
+        <p><strong>2. Venting prohibitions and effective dates.</strong> Section 608 prohibits the intentional venting of ozone-depleting substances and their HFC substitutes. The prohibition applies during service, maintenance, repair, and disposal. Knowing the effective dates for each refrigerant class is a tested fact on the Core exam.</p>
+
+        <p><strong>3. Civil penalties.</strong> EPA enforcement authority under Section 608 includes civil penalties. The current inflation-adjusted penalty is over $44,539 per day per violation — not the $37,500 figure still cited on outdated study materials. Citizen suits are permitted — any person may report violations.</p>
+
+        <p><strong>4. Recovery, recycling, and reclamation distinctions.</strong> These three processes are frequently confused and regularly tested. The Core section requires technicians to distinguish all three, identify who performs each, and know which requires third-party certification.</p>
+
+        <h2>EPA 608 Core Section: Venting Prohibitions and Civil Penalties</h2>
+
+        <p>Section 608 of the Clean Air Act prohibits intentional venting of ozone-depleting substances and HFC substitutes, with civil penalties exceeding $44,539 per day per violation for each knowing violation under current EPA enforcement guidelines.</p>
+
+        <p>The prohibition has two effective dates that the Core exam specifically tests:</p>
+
+        <p><strong>July 1, 1992</strong> — Venting of CFCs (chlorofluorocarbons) and HCFCs (hydrochlorofluorocarbons) prohibited during service, maintenance, repair, and disposal of refrigeration and air conditioning equipment. R-12, R-22, R-11, R-113 are covered from this date.</p>
+
+        <p><strong>November 15, 1995</strong> — HFCs (hydrofluorocarbons) added to the venting prohibition. R-134a, R-410A, R-404A, R-507, and all HFC blends become covered from this date. The 1995 date is the one most often missed by technicians who memorize only one date.</p>
+
+        <p><strong>The de minimis exemption:</strong> Recovery is not required for refrigerant releases of 0.1 ounce or less. This threshold is the de minimis exemption — the only quantity-based exception to the recovery obligation. Releases above this amount require recovery equipment.</p>
+
+        <p><strong>Who can report violations:</strong> Any person — including fellow technicians, building owners, or environmental advocacy groups — may report Section 608 violations. The EPA does not require the reporter to be an inspector or agency employee. This provision is called the citizen suit provision and is frequently tested.</p>
+
+        <div class="warn">
+            <h3>Common Exam Mistake</h3>
+            <p>Many study materials still cite the outdated $37,500 civil penalty figure. The current inflation-adjusted penalty exceeds <strong>$44,539 per day per violation</strong>. Selecting $37,500 on the exam is incorrect.</p>
+        </div>
+
+        <h2>Refrigerant Categories on the Core Exam: CFCs, HCFCs, HFCs, HFOs</h2>
+
+        <p>The Core section tests refrigerant classification by ozone depletion potential (ODP) and global warming potential (GWP). Four categories appear:</p>
+
+        <p><strong>CFCs (Chlorofluorocarbons):</strong> Highest ODP; fully phased out from production in the United States. Examples: R-11, R-12, R-113. The 1987 Montreal Protocol mandated the CFC phaseout. CFCs may still exist in older equipment.</p>
+
+        <p><strong>HCFCs (Hydrochlorofluorocarbons):</strong> Lower ODP than CFCs but not zero. R-22 is the most commonly tested HCFC. R-22 new equipment production ended January 1, 2010; all R-22 production ended January 1, 2020. Reclaimed R-22 is still legal for servicing existing equipment.</p>
+
+        <p><strong>HFCs (Hydrofluorocarbons):</strong> Zero ODP but high GWP. Covered by Section 608 venting prohibition since 1995. R-410A, R-134a, R-404A are common HFCs. The AIM Act mandates HFC phasedown beginning 2025.</p>
+
+        <p><strong>HFOs (Hydrofluoroolefins):</strong> Zero or near-zero ODP and very low GWP. R-1234yf (automotive) and R-1234ze are examples. HFOs and HFO blends (A2L refrigerants like R-454B, R-32) are the next-generation replacements.</p>
+
+        <p>ESCO Institute, Mainstream Engineering, and HVAC Excellence all test Core section refrigerant classification — the question format varies by provider but the underlying facts are the same.</p>
+
+        <h2>Recovery, Recycling, and Reclamation — Key Distinctions</h2>
+
+        <p>Three processes govern how refrigerant is handled once removed from a system. The Core exam requires distinguishing all three.</p>
+
+        <p><strong>Recovery:</strong> Removing refrigerant from a system and storing it in an external container — without necessarily testing or processing the refrigerant. Any certified technician performs recovery on-site using approved recovery equipment. The recovered refrigerant does not need to meet any purity standard at the time of recovery.</p>
+
+        <p><strong>Recycling:</strong> Cleaning recovered refrigerant using oil separation and single or multiple passes through filter-driers. Recycling occurs on-site or at a facility. Recycled refrigerant meets a reduced-contaminant standard but NOT the ARI-700 purity standard required for sale as new refrigerant. Recycled refrigerant may only be returned to the original owner's equipment.</p>
+
+        <p><strong>Reclamation:</strong> Reprocessing recovered refrigerant to ARI-700 purity standards — the same standard as virgin refrigerant. Reclamation must be performed at an EPA-certified reclamation facility. Only reclaimed refrigerant may be sold to a different owner. A certified reclaimer issues the purity documentation.</p>
+
+        <p>The Core exam frequently asks which process is required before selling refrigerant (reclamation), which process can be performed on-site (recycling), and which process must be performed by a third-party EPA-certified facility (reclamation).</p>
+
+        <div class="callout">
+            <h3>Key Takeaway: The Three R's</h3>
+            <p>Recovery = remove and store (no purity standard required). Recycling = clean on-site (reduced contaminants, original owner's equipment only). Reclamation = reprocess to ARI-700 at an EPA-certified facility (required before resale to a new owner).</p>
+        </div>
+
+        <h2>The Refrigerant Lifecycle Timeline</h2>
+
+        <table class="refrigerant-lifecycle-table">
+            <thead>
+                <tr>
+                    <th>Stage</th>
+                    <th>Action</th>
+                    <th>Who Performs</th>
+                    <th>Regulatory Requirement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Production</strong></td>
+                    <td>Manufacture of virgin refrigerant</td>
+                    <td>Refrigerant manufacturer</td>
+                    <td>EPA/AIM Act production limits apply</td>
+                </tr>
+                <tr>
+                    <td><strong>Distribution</strong></td>
+                    <td>Sale and transfer of virgin/reclaimed refrigerant</td>
+                    <td>Distributors, wholesalers</td>
+                    <td>Must be sold to certified technicians or purchase-verified buyers</td>
+                </tr>
+                <tr>
+                    <td><strong>Recovery</strong></td>
+                    <td>Removal from equipment into recovery cylinder</td>
+                    <td>Any EPA 608 certified technician</td>
+                    <td>Required before opening refrigerant circuit; recovery equipment must be EPA-certified</td>
+                </tr>
+                <tr>
+                    <td><strong>Recycling</strong></td>
+                    <td>Cleaning recovered refrigerant on-site</td>
+                    <td>Certified technician at service site</td>
+                    <td>May only return to original owner's equipment; does NOT meet ARI-700 purity standard</td>
+                </tr>
+                <tr>
+                    <td><strong>Reclamation</strong></td>
+                    <td>Reprocessing to ARI-700 standard</td>
+                    <td>EPA-certified reclamation facility only</td>
+                    <td>Required before selling refrigerant to new owner; reclaimer documents purity</td>
+                </tr>
+                <tr>
+                    <td><strong>Reclamation Sale</strong></td>
+                    <td>Sale of reclaimed refrigerant</td>
+                    <td>Certified reclaimers, distributors</td>
+                    <td>Reclaimed refrigerant = legal equivalent to virgin refrigerant for all service purposes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>This visual sequence is the Core section's underlying logic: refrigerant moves from production through use, must be recovered before equipment is opened, and must be reclaimed before it can be resold — never vented at any stage.</p>
+
+        <h2>Core Section FAQ</h2>
+
+        <div class="faq-item">
+            <div class="faq-q">What is covered in the EPA 608 Core exam?</div>
+            <div class="faq-a">The Core section covers Clean Air Act Section 608 law, venting prohibitions (CFC/HCFC effective July 1, 1992; HFC effective November 15, 1995), civil penalties exceeding $44,539/day, refrigerant types (CFCs/HCFCs/HFCs/HFOs), and the distinction between recovery, recycling, and reclamation.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Is the Core section required for all EPA 608 certifications?</div>
+            <div class="faq-a">Yes — EPA 608 Core is mandatory for Type I, Type II, Type III, and Universal certification. No type-specific certificate is valid without a passing Core score.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">How many questions are on the EPA 608 Core exam?</div>
+            <div class="faq-a">The Core section contains 25 questions; passing requires 18 correct (70% threshold). Core-only certification is available but does not authorize refrigerant-contact service work at most employers.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">When were HFCs added to the venting prohibition?</div>
+            <div class="faq-a">HFCs were added November 15, 1995 — three years after the July 1, 1992 prohibition covering CFCs and HCFCs. Both dates are tested on the Core exam.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What is the de minimis exemption?</div>
+            <div class="faq-a">Recovery is not required for refrigerant releases of 0.1 ounce or less. Releases above this quantity — from any refrigerant class covered by Section 608 — require recovery before opening the refrigerant circuit.</div>
+        </div>
+
+        <h2>Practice Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-q">Q1. Under Section 608 of the Clean Air Act, which of the following actions is prohibited?<br>A) Recovering refrigerant before opening a system &nbsp;&nbsp; B) Knowingly venting refrigerant into the atmosphere during service &nbsp;&nbsp; C) Using a certified recovery machine during service &nbsp;&nbsp; D) Storing recovered refrigerant in an approved cylinder</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Section 608 prohibits the intentional venting of ozone-depleting substances and their HFC substitutes into the atmosphere during service, maintenance, repair, or disposal of equipment.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q2. What is the current EPA civil penalty for each knowing violation of Section 608?<br>A) $10,000 per day &nbsp;&nbsp; B) $25,000 per day &nbsp;&nbsp; C) $37,500 per day &nbsp;&nbsp; D) More than $44,539 per day</div>
+            <div class="faq-a"><strong>Answer: D.</strong> The current inflation-adjusted civil penalty under Section 608 exceeds $44,539 per day per violation. The commonly cited $37,500 figure is outdated — current enforcement guidelines reflect the inflation-adjusted amount.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q3. When did the Section 608 venting prohibition take effect for CFCs and HCFCs?<br>A) January 1, 1990 &nbsp;&nbsp; B) July 1, 1992 &nbsp;&nbsp; C) November 15, 1993 &nbsp;&nbsp; D) November 15, 1995</div>
+            <div class="faq-a"><strong>Answer: B.</strong> The Section 608 venting prohibition for CFCs (such as R-11 and R-12) and HCFCs (such as R-22) took effect July 1, 1992.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q4. When were HFCs added to the Section 608 venting prohibition?<br>A) July 1, 1992 &nbsp;&nbsp; B) January 1, 1993 &nbsp;&nbsp; C) November 15, 1993 &nbsp;&nbsp; D) November 15, 1995</div>
+            <div class="faq-a"><strong>Answer: D.</strong> HFCs (such as R-410A and R-134a) were added to the Section 608 venting prohibition on November 15, 1995 — three years after the prohibition covering CFCs and HCFCs.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q5. Which refrigerant category has the highest ozone depletion potential (ODP)?<br>A) HFCs &nbsp;&nbsp; B) HFOs &nbsp;&nbsp; C) HCFCs &nbsp;&nbsp; D) CFCs</div>
+            <div class="faq-a"><strong>Answer: D.</strong> CFCs (chlorofluorocarbons) such as R-11 and R-12 have the highest ODP. HCFCs have lower ODP than CFCs, HFCs have zero ODP, and HFOs have near-zero ODP.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q6. What is the de minimis exemption under Section 608?<br>A) Recovery is not required for refrigerant releases of 0.1 ounce or less &nbsp;&nbsp; B) Recovery is not required for systems with less than 5 lbs of refrigerant &nbsp;&nbsp; C) Venting is allowed when the release is less than 1 lb &nbsp;&nbsp; D) Civil penalties do not apply for first-time violations</div>
+            <div class="faq-a"><strong>Answer: A.</strong> The de minimis exemption provides that recovery is not required for refrigerant releases of 0.1 ounce or less. Any release above this quantity from a covered refrigerant class requires recovery equipment.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q7. Which process must be performed before recovered refrigerant can be sold to a new owner?<br>A) Recovery &nbsp;&nbsp; B) Recycling &nbsp;&nbsp; C) Reclamation &nbsp;&nbsp; D) Reprocessing on-site</div>
+            <div class="faq-a"><strong>Answer: C.</strong> Reclamation — reprocessing recovered refrigerant to ARI-700 purity standards at an EPA-certified reclamation facility — is required before refrigerant can be sold to a different owner. Recycled refrigerant may only be returned to the original owner's equipment.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q8. Who can report Section 608 violations to the EPA?<br>A) Only EPA inspectors &nbsp;&nbsp; B) Only certified technicians &nbsp;&nbsp; C) Only state environmental agencies &nbsp;&nbsp; D) Any person</div>
+            <div class="faq-a"><strong>Answer: D.</strong> The citizen suit provision of Section 608 allows any person to report violations. The reporter does not need to be an EPA inspector, certified technician, or government employee.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q9. Recycled refrigerant meets which purity standard?<br>A) ARI-700 — the same standard as virgin refrigerant &nbsp;&nbsp; B) A reduced-contaminant standard, but NOT ARI-700 &nbsp;&nbsp; C) No purity standard — recycling only filters oil &nbsp;&nbsp; D) The same standard as reclaimed refrigerant</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Recycled refrigerant meets a reduced-contaminant standard achieved through oil separation and filter-drier passes, but does NOT meet ARI-700 purity. Only reclaimed refrigerant meets ARI-700 and may be sold as equivalent to virgin refrigerant.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q10. Which refrigerant category has zero ozone depletion potential (ODP) but high global warming potential (GWP)?<br>A) CFCs &nbsp;&nbsp; B) HCFCs &nbsp;&nbsp; C) HFCs &nbsp;&nbsp; D) HFOs</div>
+            <div class="faq-a"><strong>Answer: C.</strong> HFCs (hydrofluorocarbons) such as R-410A, R-134a, and R-404A have zero ODP but high GWP. They are covered by the Section 608 venting prohibition since November 15, 1995, and are subject to the AIM Act phasedown beginning 2022&ndash;2025.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q11. Where must reclamation of recovered refrigerant be performed?<br>A) At the service site by the certified technician &nbsp;&nbsp; B) At any HVAC shop with filter-drier equipment &nbsp;&nbsp; C) At an EPA-certified reclamation facility &nbsp;&nbsp; D) At the refrigerant manufacturer's facility only</div>
+            <div class="faq-a"><strong>Answer: C.</strong> Reclamation must be performed at an EPA-certified reclamation facility. Only certified reclaimers can issue the purity documentation required to verify ARI-700 compliance and authorize resale.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q12. The EPA 608 Core section is required for which certification types?<br>A) Type II and Universal only &nbsp;&nbsp; B) Universal only &nbsp;&nbsp; C) Type I and Type II only &nbsp;&nbsp; D) Type I, Type II, Type III, and Universal</div>
+            <div class="faq-a"><strong>Answer: D.</strong> The Core section is mandatory for all EPA 608 certification types — Type I, Type II, Type III, and Universal. No type-specific certificate is valid without a passing Core score.</div>
+        </div>
+
+        <div class="cta">
+            <h2>Test Your Core Knowledge</h2>
+            <p>Timed questions on venting prohibitions, civil penalties, refrigerant categories, and the recovery-recycling-reclamation distinction.</p>
+            <p>Aligned with ESCO Institute, Mainstream Engineering, and HVAC Excellence exam formats.</p>
+            <div class="tool-grid" style="max-width:520px;margin:18px auto 0;">
+                <a href="/core.html" class="tool-btn">Core Practice Test</a>
+                <a href="/study-guide-universal.html" class="tool-btn dark">Universal Study Guide</a>
             </div>
+            <a href="/core.html" class="btn-w">Start Core Practice Test &rarr;</a>
+        </div>
 
-            <h2>EPA 608 Practice Test: Clean Air Act Section 608 Requirements</h2>
-            <p>Section 608 of the Clean Air Act mandates the protection of stratospheric ozone through strict
-                refrigerant handling regulations. These laws prohibit the intentional venting of ozone-depleting
-                substances and their substitutes while requiring technician certification for service work.</p>
-            <ul>
-                <li><strong>Certification Mandate:</strong> Any individual who maintains, services, or repairs equipment
-                    containing refrigerant must hold a valid Section 608 certification.</li>
-                <li><strong>Prohibition of Venting:</strong> The law makes it illegal to knowingly release CFC, HCFC,
-                    and HFC refrigerants during maintenance or disposal.</li>
-                <li><strong>Recovery Standards:</strong> Technicians must use certified recovery equipment to remove
-                    refrigerant to specified vacuum levels before opening systems.</li>
-            </ul>
-
-            <h2>Montreal Protocol (EPA 608 Practice Test Overview)</h2>
-            <p>The Montreal Protocol serves as an international treaty designed to protect the ozone layer by phasing
-                out the production of ozone-depleting substances. Signed in 1987, this agreement has led to the
-                successful elimination of CFCs and the ongoing phase-down of HCFCs and HFCs. For a complete chronological timeline of key regulatory dates, see our <a href="/study-guide-important-dates.html" style="color:#007acc;font-weight:600;">EPA 608 Important Dates Study Guide</a>.</p>
-            <div class="info-box">
-                <h4>📅 Key Regulatory Dates</h4>
-                <ul>
-                    <li><strong>1987:</strong> Signing of the Montreal Protocol.</li>
-                    <li><strong>1990:</strong> Clean Air Act amendments establishing Section 608.</li>
-                    <li><strong>1996:</strong> Production ban on CFC refrigerants in developed countries.</li>
-                    <li><strong>2020:</strong> Ban on the production and import of R-22 (HCFC-22).</li>
-                    <li><strong>2026:</strong> Implementation of new AIM Act regulations for HFC phase-downs.</li>
-                </ul>
-            </div>
-
-            <h2>Stratospheric Ozone Depletion and Environmental Impact</h2>
-            <p>Ozone molecules in the stratosphere absorb harmful ultraviolet radiation from the sun, protecting life on
-                Earth. Refrigerants containing chlorine, such as CFCs and HCFCs, reach the upper atmosphere where solar
-                radiation breaks them down.</p>
-            <p>A single chlorine atom destroys over 100,000 ozone molecules through a catalytic chain reaction. This
-                process creates the ozone hole, leading to increased rates of skin cancer, cataracts, and environmental
-                damage.</p>
-
-            <h2>Refrigerant Classifications and ASHRAE Safety Groups</h2>
-            <p>ASHRAE Standard 34 classifies refrigerants based on their toxicity and flammability. Toxicity uses
-                letters (A for lower, B for higher), while flammability uses numbers (1 for none, 2 for low, 3 for
-                high).</p>
-            <ul>
-                <li><strong>Class A1:</strong> Non-flammable and low toxicity (e.g., R-22, R-134a, R-410A).</li>
-                <li><strong>Class A2L:</strong> Mildly flammable with low toxicity (e.g., R-32, R-1234yf).</li>
-                <li><strong>Class B1:</strong> Non-flammable but higher toxicity (e.g., R-123).</li>
-            </ul>
-            <p>For a complete reference of all refrigerant types and ODP/GWP values, see our <a href="/epa-608-refrigerants.html" style="color:#007acc;font-weight:600;">EPA 608 Refrigerants Guide</a>.</p>
-
-            <h2>Section 608 Recovery Levels and Procedures</h2>
-            <p>EPA regulations specify the required vacuum levels for refrigerant recovery based on the type of
-                equipment and its charge size. Technicians must achieve these levels to ensure minimal refrigerant
-                remains in the system during service.</p>
-            <table>
-                <style>
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-bottom: 30px;
-                        font-size: 15px;
-                    }
-
-                    th {
-                        text-align: left;
-                        background: #f1f5f9;
-                        padding: 12px;
-                        border: 1px solid #e2e8f0;
-                    }
-
-                    td {
-                        padding: 12px;
-                        border: 1px solid #e2e8f0;
-                    }
-                </style>
-                <thead>
-                    <tr>
-                        <th>Equipment Type</th>
-                        <th>Required Vacuum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Small Appliances (< 5 lbs)</td>
-                        <td>90% recovery or 4" Hg vacuum</td>
-                    </tr>
-                    <tr>
-                        <td>High-Pressure Appliances (< 200 lbs)</td>
-                        <td>10" Hg vacuum</td>
-                    </tr>
-                    <tr>
-                        <td>High-Pressure Appliances (> 200 lbs)</td>
-                        <td>15" Hg vacuum</td>
-                    </tr>
-                    <tr>
-                        <td>Low-Pressure Appliances</td>
-                        <td>25 mm Hg absolute</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Mini Quiz Component -->
-            <div class="mini-quiz" id="miniQuiz">
-                <h3>Pre-Exam Knowledge Check</h3>
-                <div id="quizContainer">
-                    <!-- Q1 -->
-                    <div class="quiz-q active" data-ans="b">
-                        <p><strong>Question 1:</strong> Which international treaty regulated the phase-out of
-                            ozone-depleting substances?</p>
-                        <div class="options">
-                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) Kyoto Protocol</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) Montreal Protocol</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) Paris Agreement</button>
-                        </div>
-                    </div>
-                    <!-- Q2 -->
-                    <div class="quiz-q" data-ans="a">
-                        <p><strong>Question 2:</strong> What is the Ozone Depletion Potential (ODP) of HFC refrigerants?
-                        </p>
-                        <div class="options">
-                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) 0</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) 1.0</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) 0.5</button>
-                        </div>
-                    </div>
-                    <!-- Q3 -->
-                    <div class="quiz-q" data-ans="c">
-                        <p><strong>Question 3:</strong> How many ozone molecules can a single chlorine atom destroy?</p>
-                        <div class="options">
-                            <button class="opt-btn" onclick="checkAns(this, 'a')">A) 100</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'b')">B) 10,000</button>
-                            <button class="opt-btn" onclick="checkAns(this, 'c')">C) 100,000</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="quiz-footer">
-                    <button class="btn-primary" id="nextBtn" style="display:none;" onclick="nextQuestion()">Next
-                        Question</button>
-                    <div id="quizFinal" style="display:none;">
-                        <p>Great job! Ready for the full 25-question exam?</p>
-                        <a href="/core.html" class="btn-primary">Start Full Core Practice Test →</a>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                let currentQ = 0;
-                const questions = document.querySelectorAll('.quiz-q');
-                const nextBtn = document.getElementById('nextBtn');
-                const quizFinal = document.getElementById('quizFinal');
-
-                function checkAns(btn, choice) {
-                    const correctAns = questions[currentQ].getAttribute('data-ans');
-                    const opts = questions[currentQ].querySelectorAll('.opt-btn');
-                    opts.forEach(o => o.disabled = true);
-
-                    if (choice === correctAns) {
-                        btn.classList.add('correct');
-                    } else {
-                        btn.classList.add('incorrect');
-                        questions[currentQ].querySelector(`[onclick*="'${correctAns}'"]`).classList.add('correct');
-                    }
-                    nextBtn.style.display = 'inline-block';
-                }
-
-                function nextQuestion() {
-                    questions[currentQ].classList.remove('active');
-                    currentQ++;
-                    nextBtn.style.display = 'none';
-                    if (currentQ < questions.length) {
-                        questions[currentQ].classList.add('active');
-                    } else {
-                        quizFinal.style.display = 'block';
-                    }
-                }
-            </script>
-
-            <h2>The Three R's: Recover, Recycle, Reclaim</h2>
-            <p>The Core exam tests whether you understand the distinction between three refrigerant handling processes.
-                Confusing them is one of the most common wrong answers on the EPA 608 exam.</p>
-            <table style="width:100%;border-collapse:collapse;margin:20px 0;">
-                <thead>
-                    <tr style="background:#007acc;color:#fff;">
-                        <th style="padding:12px;text-align:left;">Process</th>
-                        <th style="padding:12px;text-align:left;">Definition</th>
-                        <th style="padding:12px;text-align:left;">Where It Happens</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Recover</strong></td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Remove refrigerant from a system
-                            in any condition without testing or processing</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Job site / field</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Recycle</strong></td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Clean refrigerant for reuse
-                            on-site using oil separation and single-pass filtration</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Field (same job)</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;"><strong>Reclaim</strong></td>
-                        <td style="padding:10px 12px;">Reprocess refrigerant to ARI 700 purity standards — requires
-                            laboratory equipment</td>
-                        <td style="padding:10px 12px;">EPA-certified facility only</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p><strong>Key exam fact:</strong> Only <strong>Reclaim</strong> restores refrigerant to virgin-equivalent
-                purity. Recycled refrigerant cannot be sold or transferred to a different owner.</p>
-
-            <h2>Refrigerant Cylinder Color Codes & Shipping Standards</h2>
-            <p>The Core section tests cylinder identification because mishandling refrigerant cylinders causes pressure
-                explosions and illegal venting. The EPA mandates specific colors under ASHRAE Standard 34.</p>
-            <table style="width:100%;border-collapse:collapse;margin:20px 0;">
-                <thead>
-                    <tr style="background:#007acc;color:#fff;">
-                        <th style="padding:12px;text-align:left;">Refrigerant</th>
-                        <th style="padding:12px;text-align:left;">Cylinder Color</th>
-                        <th style="padding:12px;text-align:left;">Safety Group</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-22</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Green</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A1</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-410A</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Pink (Rose)</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A1</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-134a</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Light Blue</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A1</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-404A</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Orange</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A1</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-32</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Blue</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A2L (mildly flammable)</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;">Recovery cylinders</td>
-                        <td style="padding:10px 12px;">Gray body / Yellow top</td>
-                        <td style="padding:10px 12px;">Universal (any refrigerant)</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p><strong>Shipping rule:</strong> Refrigerant cylinders transported by road must comply with DOT
-                regulations. Cylinders must never be filled beyond <strong>80% of capacity</strong> (liquid refrigerant
-                expands with heat). Overfilled cylinders are illegal to transport.</p>
-            <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:16px;margin:20px 0;border-radius:4px;">
-                <strong>⚠ Exam trap:</strong> Recovery cylinders are gray with a yellow top. Never use a recovery
-                cylinder to transport virgin refrigerant — it can only hold recovered refrigerant.
-            </div>
-
-            <h2>Technician Certification Types: What Each Covers (EPA 608 Practice Test)</h2>
-            <p>The Core section tests your knowledge of which certification type applies to which equipment. This is a guaranteed question on every Core exam.</p>
-
-            <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
-                <thead>
-                    <tr style="background:#007acc;color:#fff;">
-                        <th style="padding:12px;text-align:left;">Certification</th>
-                        <th style="padding:12px;text-align:left;">Equipment Covered</th>
-                        <th style="padding:12px;text-align:left;">Refrigerant Charge</th>
-                        <th style="padding:12px;text-align:left;">Examples</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type I</strong></td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Small appliances</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Under 5 lbs (factory-sealed)</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Window ACs, refrigerators, vending machines</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type II</strong></td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">High-pressure appliances</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Any size; boiling pt -50.8°F to 50°F</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Residential split systems, heat pumps, walk-in coolers</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;"><strong>Type III</strong></td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Low-pressure appliances</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Any size; boiling pt above 50°F at atm pressure</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Centrifugal chillers (R-11, R-123)</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;"><strong>Universal</strong></td>
-                        <td style="padding:10px 12px;">All of the above</td>
-                        <td style="padding:10px 12px;">Any system</td>
-                        <td style="padding:10px 12px;">Covers all residential and commercial HVAC work</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p><strong>Exam tip:</strong> The Core exam is required for ALL certifications — you cannot get Type I, II, III, or Universal certification without passing Core. Think of Core as the regulatory and safety foundation; the Type sections test equipment-specific procedures.</p>
-
-            <h2>Venting Prohibition and Clean Air Act Penalties</h2>
-            <p>Section 608 of the Clean Air Act prohibits knowingly venting refrigerant to the atmosphere during maintenance, service, repair, or disposal of equipment. This is one of the most tested Core topics.</p>
-
-            <ul style="margin:16px 0 16px 20px;line-height:2.2;">
-                <li><strong>Civil penalty:</strong> Up to $44,539 per day per violation for knowingly venting refrigerant</li>
-                <li><strong>Criminal penalty:</strong> Fines and/or imprisonment for willful violations</li>
-                <li><strong>What counts as venting:</strong> Any intentional release of refrigerant to the atmosphere — including releasing small amounts to "check pressure" or "top off" a system</li>
-                <li><strong>Exceptions:</strong> De minimis releases that occur during good-faith recovery attempts are exempt (not prosecuted)</li>
-                <li><strong>MVACs:</strong> Motor vehicle air conditioning systems follow different rules (Section 609) but technicians working on MVACs still cannot knowingly vent</li>
-            </ul>
-
-            <div style="background:#fff5f5;border:1px solid #ffb3b3;border-left:4px solid #dc3545;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;">
-                <p style="margin:0;font-size:15px;color:#6b0000;"><strong>Exam trap:</strong> "Accidentally" releasing refrigerant while using equipment in good faith is exempt. "Knowingly" venting — even small amounts — is a Section 608 violation. The exam tests whether you know this distinction.</p>
-            </div>
-
-            <h2>2026 AIM Act Updates: What the Core Exam Now Includes</h2>
-            <p>The American Innovation and Manufacturing (AIM) Act of 2020 authorized EPA to phase down HFC production and consumption. Core exam questions now cover AIM Act content. Here's what you need to know:</p>
-
-            <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
-                <thead>
-                    <tr style="background:#007acc;color:#fff;">
-                        <th style="padding:12px;text-align:left;">AIM Act Topic</th>
-                        <th style="padding:12px;text-align:left;">Key Fact</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">HFC phase-down baseline</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">EPA set baseline and schedules for reducing HFC production by 85% over 15 years</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">A2L refrigerant classification</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-32, R-454B, R-466A are ASHRAE A2L — mildly flammable, lower GWP than R-410A</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">R-410A phase-down</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">New residential AC equipment after January 1, 2025 must use lower-GWP alternatives</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Technician implications</td>
-                        <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">Recovery requirements still apply to all HFCs; proper handling of A2L refrigerants required</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>For a complete refrigerant type guide including ODP, GWP, and ASHRAE safety classes, see the <a href="/epa-608-refrigerants.html" style="color:#007acc;font-weight:600;">EPA 608 Refrigerants Guide</a>. For a breakdown of all Core exam questions and topics, see <a href="/epa-608-exam-questions.html" style="color:#007acc;font-weight:600;">what's on the EPA 608 exam</a>.</p>
-
-            <h2>Frequently Asked Questions — EPA 608 Practice Test</h2>
-            <div style="margin-top:12px;">
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">What score is needed to pass the EPA 608 Core exam?</h3>
-                    <p style="margin:0;color:#555;">You must answer at least 18 out of 25 questions correctly — a 70% pass rate. The Core section has 25 multiple-choice questions and must be passed alongside whichever Type section(s) you're certifying for.</p>
-                </div>
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">Is the Core certification enough to buy refrigerant?</h3>
-                    <p style="margin:0;color:#555;">No. Core alone is not sufficient. You must pass Core plus at least one Type section (I, II, or III) to legally purchase regulated refrigerants in containers over 2 lbs. Core-only does not count as a full certification.</p>
-                </div>
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">What is the penalty for venting refrigerant?</h3>
-                    <p style="margin:0;color:#555;">Knowingly venting refrigerant under Section 608 of the Clean Air Act carries civil penalties up to $44,539 per day per violation. Criminal penalties including fines and imprisonment are also possible for willful violations.</p>
-                </div>
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">Does the 2026 Core exam cover AIM Act content?</h3>
-                    <p style="margin:0;color:#555;">Yes. Core exam questions now include HFC phase-down schedules under the AIM Act, A2L refrigerant safety classifications (R-32, R-454B, R-466A), and updated handling requirements. Study materials written before 2023 may be missing this content.</p>
-                </div>
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">What is the difference between Type I, II, III, and Universal?</h3>
-                    <p style="margin:0;color:#555;">Type I = small appliances under 5 lbs. Type II = high-pressure systems (residential AC, heat pumps). Type III = low-pressure centrifugal systems (large chillers). Universal covers all three and is the most common certification for working HVAC technicians.</p>
-                </div>
-                <div style="border-bottom:1px solid #e2e8f0;padding:18px 0;">
-                    <h3 style="font-size:17px;margin-bottom:8px;">What are the hardest topics on the Core exam?</h3>
-                    <p style="margin:0;color:#555;">The most commonly missed Core questions involve: (1) recovery level percentages by equipment type and age, (2) the recover/recycle/reclaim distinction, (3) which situations qualify as "knowing venting," and (4) refrigerant sales restriction rules. Practice these specifically with our free <a href="/core.html" style="color:#007acc;font-weight:600;">Core Practice Test</a>.</p>
-                </div>
-            </div>
-
-            <section style="background:#f0f7ff;border:1px solid #bee3f8;border-radius:12px;padding:24px;margin:40px 0;">
-                <h3 style="color:#1e40af;margin-bottom:12px;">Test Your Core Knowledge</h3>
-                <p>Apply what you studied with the free <a href="/core.html" style="color:#007acc;font-weight:600;">EPA
-                        608 Core Practice Test</a> — 25 questions covering ozone depletion, Montreal Protocol, and
-                    refrigerant recovery. When ready for all four sections, take the <a href="/universal.html"
-                        style="color:#007acc;font-weight:600;">Universal Practice Test</a>. Browse all topic guides in
-                    the <a href="/study-guides.html" style="color:#007acc;font-weight:600;">EPA 608 Study Guides
-                        hub</a>.</p>
-            </section>
-        </article>
     </main>
-
     <div id="footer-placeholder"></div>
 </body>
-
 </html>
