@@ -1,7 +1,36 @@
 {
   "cleanUrls": false,
-  "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/practice-test",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/practice-test/",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/core/",
+      "destination": "/core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/universal/",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-2/",
+      "destination": "/type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/timed-exam/",
+      "destination": "/timed-exam.html",
+      "statusCode": 301
+    },
     {
       "source": "/index.html",
       "destination": "/",
