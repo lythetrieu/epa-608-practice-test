@@ -535,6 +535,36 @@
       "source": "/how-to-get-certified",
       "destination": "/how-to-get-certified.html",
       "statusCode": 301
+    },
+    {
+      "source": "/does-it-expire",
+      "destination": "/does-it-expire.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-strategies",
+      "destination": "/test-strategies.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-schedule",
+      "destination": "/study-schedule.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-duration",
+      "destination": "/test-duration.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-anxiety",
+      "destination": "/test-anxiety.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-day-checklist",
+      "destination": "/test-day-checklist.html",
+      "statusCode": 301
     }
   ]
 }
