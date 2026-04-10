@@ -7,6 +7,7 @@ import { z } from 'zod'
 const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
   count: z.number().int().min(1).max(100).default(25),
+  mode: z.enum(['random', 'blind-spot']).default('random'),
 })
 
 export async function POST(request: NextRequest) {
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}))
   const parsed = schema.safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
-  const { category, count } = parsed.data
+  const { category, count, mode } = parsed.data
 
   const { data: profile } = await supabase
     .from('users_profile')
@@ -39,7 +40,28 @@ export async function POST(request: NextRequest) {
   const admin = createAdminClient()
   let questionIds: string[] = []
 
-  if (category === 'Universal') {
+  if (mode === 'blind-spot') {
+    // Blind-spot mode: serve questions from user's weak subtopics
+    if (!TIER_LIMITS[tier].hasBlindSpot) {
+      return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
+    }
+
+    const { data: weakSpotData } = await admin.rpc('get_weak_spot_questions', {
+      p_user_id: user.id,
+      p_limit: count,
+    })
+    questionIds = weakSpotData?.map((q: any) => q.id) ?? []
+
+    // Fall back to random questions if no weak spots found
+    if (questionIds.length === 0) {
+      const cats = TIER_LIMITS[tier].categories
+      const perCat = Math.floor(count / cats.length)
+      for (const cat of cats) {
+        const { data } = await admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat })
+        questionIds.push(...(data?.map((q: any) => q.id) ?? []))
+      }
+    }
+  } else if (category === 'Universal') {
     const cats = TIER_LIMITS[tier].categories
     const perCat = Math.floor(count / cats.length)
     for (const cat of cats) {
@@ -61,13 +83,16 @@ export async function POST(request: NextRequest) {
   questionIds = questionIds.sort(() => Math.random() - 0.5)
 
   // Create session with server-side timer
+  // Universal = 3 hours (100 questions), others = 30 min (25 questions)
+  const sessionCategory = mode === 'blind-spot' ? 'Weak Spots' : category
+  const timeLimitSecs = category === 'Universal' ? 10800 : 1800
   const { data: session, error: sessionErr } = await supabase
     .from('test_sessions')
     .insert({
       user_id: user.id,
-      category,
+      category: sessionCategory,
       question_ids: questionIds,
-      time_limit_secs: 1800,
+      time_limit_secs: timeLimitSecs,
       total: questionIds.length,
     })
     .select('id, started_at, time_limit_secs')

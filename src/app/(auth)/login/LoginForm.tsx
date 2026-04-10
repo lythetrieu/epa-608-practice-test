@@ -66,27 +66,12 @@ export default function LoginForm() {
     router.refresh()
   }
 
-  async function handleGoogleLogin() {
-    setError(null)
+  function handleGoogleLogin() {
     setGoogleLoading(true)
-
-    // Build callback URL — carry join code through OAuth flow via `next` param
     const callbackNext = joinCode
       ? `/api/team/join-redirect?code=${joinCode}&next=${encodeURIComponent(redirectTo)}`
       : redirectTo
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext)}`,
-      },
-    })
-
-    if (error) {
-      setError(error.message)
-      setGoogleLoading(false)
-    }
-    // On success the browser is redirected by Supabase — no manual push needed.
+    window.location.href = `/api/auth/google?next=${encodeURIComponent(callbackNext)}`
   }
 
   return (

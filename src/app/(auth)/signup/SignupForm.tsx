@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
@@ -26,6 +26,10 @@ export default function SignupForm() {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [resendLoading, setResendLoading] = useState(false)
+  const [resendMessage, setResendMessage] = useState<string | null>(null)
+  const [resendError, setResendError] = useState<string | null>(null)
+  const [resendCooldown, setResendCooldown] = useState(0)
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
@@ -72,12 +76,46 @@ export default function SignupForm() {
 
   function handleGoogleSignup() {
     setGoogleLoading(true)
-    const callbackNext = joinCode
+    const next = joinCode
       ? `/api/team/join-redirect?code=${joinCode}&next=%2Fdashboard`
       : '/dashboard'
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext)}`
-    window.location.href = `${SUPABASE_URL}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectTo)}`
+    window.location.href = `/api/auth/google?next=${encodeURIComponent(next)}`
   }
+
+  useEffect(() => {
+    if (resendCooldown <= 0) return
+    const timer = setTimeout(() => setResendCooldown((c) => c - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [resendCooldown])
+
+  const handleResend = useCallback(async () => {
+    setResendLoading(true)
+    setResendMessage(null)
+    setResendError(null)
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/resend`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type: 'signup', email }),
+      })
+
+      if (!res.ok) {
+        const result = await res.json()
+        setResendError(result.msg || result.error_description || 'Failed to resend email. Please try again.')
+      } else {
+        setResendMessage('Email sent! Check your inbox.')
+        setResendCooldown(60)
+      }
+    } catch {
+      setResendError('Network error. Please try again.')
+    } finally {
+      setResendLoading(false)
+    }
+  }, [email])
 
   if (submitted) {
     return (
@@ -87,21 +125,48 @@ export default function SignupForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900">Vui lòng xác nhận email</h2>
+        <h2 className="text-xl font-bold text-gray-900">Please verify your email</h2>
         <p className="text-gray-600 text-sm">
-          Chúng tôi đã gửi link xác nhận đến <strong>{email}</strong>.
+          We sent a confirmation link to <strong>{email}</strong>.
           <br />
-          Vui lòng kiểm tra inbox (và thư mục spam) rồi click vào link để kích hoạt tài khoản.
+          Please check your inbox (and spam folder) and click the link to activate your account.
         </p>
         {joinCode && (
           <p className="text-xs text-blue-700 bg-blue-50 rounded-lg px-3 py-2">
-            Sau khi xác nhận, bạn sẽ tự động được thêm vào team.
+            After confirming, you&apos;ll be automatically added to your team.
           </p>
         )}
+
+        <div className="space-y-2 pt-2">
+          <p className="text-sm text-gray-500">Didn&apos;t receive the email?</p>
+          {resendMessage && (
+            <p className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+              {resendMessage}
+            </p>
+          )}
+          {resendError && (
+            <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+              {resendError}
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={resendLoading || resendCooldown > 0}
+            className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {resendLoading
+              ? 'Sending...'
+              : resendCooldown > 0
+                ? `Resend in ${resendCooldown}s`
+                : 'Resend confirmation email'}
+          </button>
+        </div>
+
         <p className="text-sm text-gray-500 pt-2">
-          Đã xác nhận?{' '}
+          Already confirmed?{' '}
           <Link href={joinCode ? `/login?join=${joinCode}` : '/login'} className="text-blue-800 font-medium hover:underline">
-            Đăng nhập
+            Sign in
           </Link>
         </p>
       </div>

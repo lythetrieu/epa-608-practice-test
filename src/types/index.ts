@@ -12,12 +12,12 @@ export const TIER_RANK: Record<Tier, number> = {
 
 export const TIER_LIMITS = {
   free: {
-    questionsPerDay: 10,
+    questionsPerDay: Infinity,
     categories: ['Core'] as Category[],
-    hasExplanations: false,
-    hasProgress: false,
-    hasBlindSpot: false,
-    aiQueriesPerDay: 0,
+    hasExplanations: true,
+    hasProgress: true,
+    hasBlindSpot: true,
+    aiQueriesPerDay: 5,
     hasPDF: false,
   },
   starter: {
@@ -146,6 +146,15 @@ export type SubmitAnswerResult = {
   explanation: string
 }
 
+/** Per-section score breakdown (Universal test only). */
+export type SectionScore = {
+  category: string
+  score: number
+  total: number
+  percentage: number
+  passed: boolean
+}
+
 /** Final result returned when a session is submitted. */
 export type SessionResult = {
   sessionId: string
@@ -154,6 +163,7 @@ export type SessionResult = {
   percentage: number
   results: SubmitAnswerResult[]
   passed: boolean // >= 70%
+  sectionScores?: SectionScore[]
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

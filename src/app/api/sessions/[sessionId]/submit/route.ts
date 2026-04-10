@@ -43,36 +43,65 @@ export async function POST(
   // Fetch answers from DB (service role bypasses RLS)
   const { data: questions } = await admin
     .from('questions')
-    .select('id, answer_text, explanation, source_ref')
+    .select('id, category, answer_text, explanation, source_ref')
     .in('id', questionIds)
 
   if (!questions) return NextResponse.json({ error: 'Failed to grade' }, { status: 500 })
 
+  // Check tier for feature gating
+  const { data: profile } = await supabase.from('users_profile').select('tier').eq('id', user.id).single()
+  const tier = (profile?.tier ?? 'free') as keyof typeof import('@/types').TIER_LIMITS
+  const showExplanations = true // All tiers now get explanations
+
   // Score server-side
   const results = questions.map((q: any) => ({
     questionId: q.id,
+    category: q.category as string,
     correct: answers[q.id] === q.answer_text,
     correctAnswer: q.answer_text,
-    explanation: q.explanation,
-    sourceRef: q.source_ref,
+    explanation: showExplanations ? q.explanation : '',
+    sourceRef: showExplanations ? q.source_ref : '',
     userAnswer: answers[q.id] ?? null,
   }))
 
   const score = results.filter(r => r.correct).length
   const percentage = Math.round((score / results.length) * 100)
 
+  // Universal test: per-section scoring (must pass each section at 72%)
+  let passed: boolean
+  let sectionScores: { category: string; score: number; total: number; percentage: number; passed: boolean }[] | undefined
+
+  if (session.category === 'Universal') {
+    const sections: Record<string, typeof results> = {}
+    for (const r of results) {
+      if (!sections[r.category]) sections[r.category] = []
+      sections[r.category].push(r)
+    }
+    sectionScores = Object.entries(sections).map(([cat, items]) => {
+      const sectionScore = items.filter(r => r.correct).length
+      const sectionPct = Math.round((sectionScore / items.length) * 100)
+      return { category: cat, score: sectionScore, total: items.length, percentage: sectionPct, passed: sectionPct >= 72 }
+    })
+    // Sort: Core, Type I, Type II, Type III
+    const ORDER = ['Core', 'Type I', 'Type II', 'Type III']
+    sectionScores.sort((a, b) => ORDER.indexOf(a.category) - ORDER.indexOf(b.category))
+    passed = sectionScores.every(s => s.passed)
+  } else {
+    passed = percentage >= 70
+  }
+
   // Save session result
   await supabase.from('test_sessions')
     .update({ submitted_at: new Date().toISOString(), score })
     .eq('id', session.id)
 
-  // Save progress (starter+ only)
-  const { data: profile } = await supabase.from('users_profile').select('tier').eq('id', user.id).single()
-  if (profile?.tier !== 'free') {
-    await supabase.from('user_progress').insert(
-      results.map(r => ({ user_id: user.id, question_id: r.questionId, correct: r.correct }))
-    )
-  }
+  // Save progress (all tiers — needed for blind-spot training)
+  await supabase.from('user_progress').insert(
+    results.map(r => ({ user_id: user.id, question_id: r.questionId, correct: r.correct }))
+  )
 
-  return NextResponse.json({ sessionId: session.id, score, total: results.length, percentage, passed: percentage >= 70, results })
+  // Strip internal category field from per-question results sent to client
+  const clientResults = results.map(({ category: _cat, ...rest }) => rest)
+
+  return NextResponse.json({ sessionId: session.id, score, total: results.length, percentage, passed, results: clientResults, ...(sectionScores ? { sectionScores } : {}) })
 }

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 type Team = {
   name: string
@@ -25,11 +27,15 @@ export function TeamAdminClient({
   team: Team
   members: Member[]
 }) {
+  const router = useRouter()
   const [copying, setCopying] = useState(false)
   const [regenerating, setRegenerating] = useState(false)
   const [inviteCode, setInviteCode] = useState(team.invite_code)
   const [inviteExpiry, setInviteExpiry] = useState(team.invite_code_expires_at)
   const [regenError, setRegenError] = useState<string | null>(null)
+  const [removingId, setRemovingId] = useState<string | null>(null)
+  const [confirmRemoveId, setConfirmRemoveId] = useState<string | null>(null)
+  const [removeError, setRemoveError] = useState<string | null>(null)
 
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const inviteLink = `${origin}/join/${inviteCode}`
@@ -57,6 +63,24 @@ export function TeamAdminClient({
       setRegenError(err instanceof Error ? err.message : 'Failed to regenerate link')
     } finally {
       setRegenerating(false)
+    }
+  }
+
+  const removeMember = async (userId: string) => {
+    setRemovingId(userId)
+    setRemoveError(null)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.rpc('remove_team_member', {
+        p_target_user_id: userId,
+      })
+      if (error) throw new Error(error.message)
+      setConfirmRemoveId(null)
+      router.refresh()
+    } catch (err) {
+      setRemoveError(err instanceof Error ? err.message : 'Failed to remove member')
+    } finally {
+      setRemovingId(null)
     }
   }
 
@@ -147,6 +171,7 @@ export function TeamAdminClient({
                 <th className="px-6 py-3 text-left font-medium">Email</th>
                 <th className="px-6 py-3 text-left font-medium">Joined</th>
                 <th className="px-6 py-3 text-left font-medium">Role</th>
+                <th className="px-6 py-3 text-right font-medium"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -167,10 +192,50 @@ export function TeamAdminClient({
                       {m.is_team_admin ? 'Admin' : 'Member'}
                     </span>
                   </td>
+                  <td className="px-6 py-3 text-right">
+                    {!m.is_team_admin && (
+                      <>
+                        {confirmRemoveId === m.user_id ? (
+                          <span className="inline-flex items-center gap-2">
+                            <span className="text-xs text-gray-500">Remove {m.email}?</span>
+                            <button
+                              onClick={() => removeMember(m.user_id)}
+                              disabled={removingId === m.user_id}
+                              className="text-xs font-medium text-red-600 hover:text-red-800 disabled:opacity-50"
+                            >
+                              {removingId === m.user_id ? 'Removing...' : 'Confirm'}
+                            </button>
+                            <button
+                              onClick={() => setConfirmRemoveId(null)}
+                              disabled={removingId === m.user_id}
+                              className="text-xs font-medium text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                            >
+                              Cancel
+                            </button>
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setRemoveError(null)
+                              setConfirmRemoveId(m.user_id)
+                            }}
+                            className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        )}
+        {removeError && (
+          <div className="px-6 py-3 bg-red-50 border-t border-red-100">
+            <p className="text-xs text-red-600">{removeError}</p>
+          </div>
         )}
       </div>
     </div>

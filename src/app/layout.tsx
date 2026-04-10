@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,7 +34,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans">{children}</body>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1e40af" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
+      <body className="font-sans">
+        {children}
+        <ServiceWorkerRegistration />
+      </body>
     </html>
   )
 }

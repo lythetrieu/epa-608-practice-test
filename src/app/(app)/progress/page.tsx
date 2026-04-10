@@ -31,26 +31,6 @@ export default async function ProgressPage() {
 
   const tier = (profile?.tier ?? 'free') as Tier
 
-  // Gate for free tier
-  if (tier === 'free') {
-    return (
-      <div className="p-8 flex flex-col items-center justify-center min-h-96">
-        <div className="text-5xl mb-4">📊</div>
-        <h2 className="text-xl font-bold text-gray-800 mb-2">Progress Tracking</h2>
-        <p className="text-gray-500 mb-6 text-center max-w-sm">
-          Unlock detailed progress analytics, weak-spot detection, and performance trends with
-          Starter or higher.
-        </p>
-        <Link
-          href="/pricing"
-          className="px-6 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors"
-        >
-          Upgrade to Starter — $19.99
-        </Link>
-      </div>
-    )
-  }
-
   const { data: sessions } = await supabase
     .from('test_sessions')
     .select('category, score, total, submitted_at')
@@ -84,7 +64,16 @@ export default async function ProgressPage() {
 
   return (
     <div className="p-6 sm:p-8 max-w-3xl">
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Your Progress</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-2xl font-bold text-gray-900">Your Progress</h1>
+        <Link
+          href="/progress/weak-spots"
+          className="text-sm font-medium text-blue-800 hover:underline flex items-center gap-1"
+        >
+          <span>🎯</span>
+          <span>View Weak Spots</span>
+        </Link>
+      </div>
       <p className="text-gray-500 text-sm mb-8">Track your performance across all test categories.</p>
 
       {/* Summary stats */}
