@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
 function getAppOrigin(request: NextRequest): string {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`
-  }
+  // Use stable production URL on Vercel (not deployment-specific VERCEL_URL)
+  const prodUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (prodUrl) return `https://${prodUrl}`
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
   return new URL(request.url).origin
 }
 
