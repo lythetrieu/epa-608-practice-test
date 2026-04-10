@@ -22,15 +22,23 @@ function makeRatelimit(limit: number, window: string, prefix: string) {
   let _rl: Ratelimit | null = null
   return {
     limit: async (identifier: string) => {
-      if (!_rl) {
-        _rl = new Ratelimit({
-          redis: getRedis(),
-          limiter: Ratelimit.slidingWindow(limit, window as Parameters<typeof Ratelimit.slidingWindow>[1]),
-          prefix,
-          analytics: true,
-        })
+      try {
+        if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+          return { success: true, limit, remaining: limit, reset: 0 }
+        }
+        if (!_rl) {
+          _rl = new Ratelimit({
+            redis: getRedis(),
+            limiter: Ratelimit.slidingWindow(limit, window as Parameters<typeof Ratelimit.slidingWindow>[1]),
+            prefix,
+            analytics: true,
+          })
+        }
+        return _rl.limit(identifier)
+      } catch {
+        // If Redis is down, allow the request
+        return { success: true, limit, remaining: limit, reset: 0 }
       }
-      return _rl.limit(identifier)
     },
   }
 }
