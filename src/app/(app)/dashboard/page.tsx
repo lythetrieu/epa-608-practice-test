@@ -7,6 +7,7 @@ import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Lock, Flame,
+  Play, Timer,
 } from 'lucide-react'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
@@ -218,11 +219,11 @@ export default async function DashboardPage() {
                       <span className="mt-1.5 text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">{best}%</span>
                     )}
                     <div className="flex gap-1 mt-2">
-                      <Link href={`/practice/${c.slug}`} className="text-[10px] px-2 py-1 rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
-                        \u25b6
+                      <Link href={`/practice/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
+                        <Play size={10} /> Practice
                       </Link>
-                      <Link href={`/test/${c.slug}`} className="text-[10px] px-2 py-1 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
-                        \u23f1
+                      <Link href={`/test/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
+                        <Timer size={10} /> Test
                       </Link>
                     </div>
                   </>

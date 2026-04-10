@@ -3,6 +3,9 @@ import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
 import type { Tier } from '@/types'
 
+// Never cache layout — always fetch fresh user data
+export const dynamic = 'force-dynamic'
+
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
   const {
