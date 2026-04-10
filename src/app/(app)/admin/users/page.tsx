@@ -2,7 +2,7 @@ import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { UsersAdminClient } from './UsersAdminClient'
 
-const ADMIN_EMAILS = ['thetrieu9587@gmail.com']
+// Admin check via DB (is_admin column in users_profile)
 
 type UserRow = {
   id: string
@@ -20,7 +20,8 @@ export default async function UsersAdminPage() {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) redirect('/login')
-  if (!ADMIN_EMAILS.includes(user.email ?? '')) redirect('/dashboard')
+  const { data: adminProfile } = await supabase.from('users_profile').select('is_admin').eq('id', user.id).single()
+  if (!adminProfile?.is_admin) redirect('/dashboard')
 
   const admin = createAdminClient()
 

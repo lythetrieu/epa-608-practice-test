@@ -2,7 +2,7 @@ import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 
-const ADMIN_EMAILS = ['thetrieu9587@gmail.com']
+// Admin check via DB
 
 type Session = {
   id: string
@@ -26,7 +26,8 @@ export default async function UserDetailPage({
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) redirect('/login')
-  if (!ADMIN_EMAILS.includes(user.email ?? '')) redirect('/dashboard')
+  const { data: adminCheck } = await supabase.from('users_profile').select('is_admin').eq('id', user.id).single()
+  if (!adminCheck?.is_admin) redirect('/dashboard')
 
   const admin = createAdminClient()
 

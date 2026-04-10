@@ -5,6 +5,7 @@ import { TIER_LIMITS, type Tier, type Category } from '@/types'
 import { PassPredictor } from './pass-predictor'
 import { StreakBoard } from './streak-board'
 import { OfflineSyncCard } from '@/components/OfflineSyncCard'
+import { Onboarding } from './onboarding'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; emoji: string; desc: string; paidOnly: boolean }[] = [
   { slug: 'core', label: 'Core', category: 'Core', emoji: '📝', desc: 'Refrigerant fundamentals & regulations', paidOnly: false },
@@ -102,6 +103,8 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
+      <Onboarding show={totalTests === 0} />
+
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Welcome back, {name}!</h1>

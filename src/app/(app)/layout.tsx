@@ -12,7 +12,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const { data: profile } = await supabase
     .from('users_profile')
-    .select('tier, is_team_admin, team_id')
+    .select('tier, is_team_admin, team_id, is_admin')
     .eq('id', user.id)
     .single()
 
@@ -24,6 +24,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         email={user.email ?? ''}
         tier={tier}
         isTeamAdmin={!!profile?.is_team_admin}
+        isAdmin={!!profile?.is_admin}
       />
 
       {/* Main content - add top padding on mobile for the fixed navbar */}

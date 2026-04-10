@@ -50,22 +50,25 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
 
   // Load available voices — auto-pick most human-like
   useEffect(() => {
-    const PREFERRED_VOICES = [
-      'Samantha (Enhanced)', 'Samantha', 'Daniel (Enhanced)', 'Daniel',
-      'Karen (Enhanced)', 'Karen', 'Moira (Enhanced)', 'Moira',
-      'Alex', 'Ava (Enhanced)', 'Ava',
-      'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Guy',
-      'Google US English', 'Google UK English Female',
+    // Top 5 most natural voices across platforms
+    const TOP_VOICES = [
+      'Samantha',        // macOS — most natural female
+      'Daniel',          // macOS — natural male (British)
+      'Karen',           // macOS — natural female (Australian)
+      'Microsoft Aria',  // Windows — best neural female
+      'Google US English', // Chrome — decent fallback
     ]
     const loadVoices = () => {
-      const available = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'))
-      setVoices(available)
-      if (!selectedVoice && available.length > 0) {
-        const best = PREFERRED_VOICES.reduce<SpeechSynthesisVoice | null>((found, name) => {
-          if (found) return found
-          return available.find(v => v.name.includes(name)) ?? null
-        }, null)
-        setSelectedVoice((best ?? available[0]).name)
+      const allVoices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'))
+      // Only show top voices that exist on this device, plus first fallback
+      const filtered = TOP_VOICES
+        .map(name => allVoices.find(v => v.name.includes(name)))
+        .filter(Boolean) as SpeechSynthesisVoice[]
+      // If none of the top voices exist, take the first 3 available
+      const finalVoices = filtered.length > 0 ? filtered : allVoices.slice(0, 3)
+      setVoices(finalVoices)
+      if (!selectedVoice && finalVoices.length > 0) {
+        setSelectedVoice(finalVoices[0].name)
       }
     }
     loadVoices()
