@@ -34,6 +34,8 @@ export default async function AnalyticsPage() {
     { data: activeUsers30d },
     { count: pendingReports },
     { data: aiUsageToday },
+    { count: totalAiSessions },
+    { count: aiSessionsThisWeek },
     { data: failedQuestions },
     { data: recentSignups },
     { data: recentReports },
@@ -58,8 +60,12 @@ export default async function AnalyticsPage() {
     admin.from('test_sessions').select('user_id').not('submitted_at', 'is', null).gte('submitted_at', monthAgo),
     // Pending question reports
     admin.from('question_reports').select('*', { count: 'exact', head: true }),
-    // AI queries today
+    // AI queries today (per user)
     admin.from('users_profile').select('ai_queries_today'),
+    // AI chat sessions total
+    admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }),
+    // AI chat sessions this week
+    admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
     // Most failed questions - get user_progress for incorrect answers
     admin.from('user_progress').select('question_id, correct').eq('correct', false),
     // Recent signups
@@ -157,13 +163,37 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* ═══ SECONDARY STATS ═══ */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
         <MiniStat label="Users Today" value={usersToday ?? 0} />
         <MiniStat label="Users This Week" value={usersThisWeek ?? 0} />
         <MiniStat label="Users This Month" value={usersThisMonth ?? 0} />
         <MiniStat label="Active (7d)" value={uniqueActive7d} />
         <MiniStat label="Active (30d)" value={uniqueActive30d} />
-        <MiniStat label="AI Queries Today" value={totalAiToday} />
+        <MiniStat label="Pending Reports" value={pendingReports ?? 0} />
+      </div>
+
+      {/* ═══ API / AI TOKEN USAGE ═══ */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5 mb-8">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">API &amp; AI Token Usage</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div>
+            <div className="text-2xl font-bold text-purple-600">{totalAiToday}</div>
+            <div className="text-xs text-gray-500">AI Queries Today</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-purple-600">{totalAiSessions ?? 0}</div>
+            <div className="text-xs text-gray-500">Total Chat Sessions</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-purple-600">{aiSessionsThisWeek ?? 0}</div>
+            <div className="text-xs text-gray-500">Chat Sessions (7d)</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-blue-600">~${((totalAiToday * 5000 * 0.0000005) + (totalAiToday * 1000 * 0.000002)).toFixed(2)}</div>
+            <div className="text-xs text-gray-500">Est. AI Cost Today</div>
+            <div className="text-[10px] text-gray-400">~5K in + 1K out tokens/query</div>
+          </div>
+        </div>
       </div>
 
       {/* ═══ CHARTS ROW ═══ */}

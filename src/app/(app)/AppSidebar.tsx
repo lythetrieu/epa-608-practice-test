@@ -8,7 +8,7 @@ import type { Tier } from '@/types'
 import {
   Home, FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Award, Settings,
-  Shield, Users, Lock, Search, CalendarDays, Zap,
+  Shield, Users, Lock, Search,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -99,8 +99,6 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
             <NavLink href="/progress" label="Progress" icon={<BarChart3 size={18} />} pathname={pathname} />
             <NavLink href="/progress/weak-spots" label="Weak Spots" icon={<Search size={18} />} pathname={pathname} matchPrefix="/progress/weak-spots" />
             <NavLink href="/certificate" label="Certificate" icon={<Award size={18} />} pathname={pathname} />
-            <NavLink href="/study-plan" label="Study Plan AI" icon={<CalendarDays size={18} />} pathname={pathname} locked={tier !== 'ultimate'} />
-            <NavLink href="/daily-drill" label="Daily Drill" icon={<Zap size={18} />} pathname={pathname} locked={tier !== 'ultimate'} />
           </div>
         )}
 
