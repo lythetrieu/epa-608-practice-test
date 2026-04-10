@@ -15,6 +15,12 @@ export type PlanCardData = {
   paddlePriceId?: string
 }
 
+const TIER_MAP: Record<string, string> = {
+  'Free': 'free',
+  'Starter': 'starter',
+  'Ultimate': 'ultimate',
+}
+
 function CheckIcon({ included }: { included: boolean }) {
   if (included) {
     return (
@@ -30,7 +36,12 @@ function CheckIcon({ included }: { included: boolean }) {
   )
 }
 
-export function PlanCard({ plan }: { plan: PlanCardData }) {
+export function PlanCard({ plan, currentTier, isLoggedIn }: { plan: PlanCardData; currentTier?: string | null; isLoggedIn?: boolean }) {
+  const planTier = TIER_MAP[plan.name] ?? plan.name.toLowerCase()
+  const isCurrentPlan = currentTier === planTier
+  const isDowngrade = currentTier === 'ultimate' && planTier !== 'ultimate'
+  const isUpgrade = !isCurrentPlan && !isDowngrade
+
   return (
     <div
       className={`relative flex flex-col rounded-2xl p-8 ${
@@ -43,6 +54,14 @@ export function PlanCard({ plan }: { plan: PlanCardData }) {
         <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
           <span className="inline-flex items-center rounded-full bg-green-500 px-3 py-0.5 text-xs font-semibold text-white shadow">
             Most popular
+          </span>
+        </div>
+      )}
+
+      {isCurrentPlan && (
+        <div className="absolute -top-3.5 right-4">
+          <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-3 py-0.5 text-xs font-semibold shadow">
+            Current plan
           </span>
         </div>
       )}
@@ -84,23 +103,32 @@ export function PlanCard({ plan }: { plan: PlanCardData }) {
       </ul>
 
       {/* CTA */}
-      {plan.ctaHref ? (
+      {isCurrentPlan ? (
+        <div className={`inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold ${
+          plan.highlighted ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+        }`}>
+          Your current plan
+        </div>
+      ) : plan.ctaHref ? (
         <Link
-          href={plan.ctaHref}
+          href={isLoggedIn ? '/dashboard' : plan.ctaHref}
           className={`inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors ${
             plan.highlighted
               ? 'bg-white text-blue-800 hover:bg-blue-50'
               : 'bg-blue-800 text-white hover:bg-blue-900'
           }`}
         >
-          {plan.cta}
+          {isLoggedIn ? 'Go to Dashboard' : plan.cta}
         </Link>
       ) : (
         <button
           type="button"
           onClick={() => {
+            if (!isLoggedIn) {
+              window.location.href = '/signup'
+              return
+            }
             // TODO: open Paddle.js checkout
-            // window.Paddle?.Checkout.open({ items: [{ priceId: plan.paddlePriceId }] })
             alert('Paddle checkout coming soon!')
           }}
           className={`inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors ${
@@ -109,7 +137,7 @@ export function PlanCard({ plan }: { plan: PlanCardData }) {
               : 'bg-blue-800 text-white hover:bg-blue-900'
           }`}
         >
-          {plan.cta}
+          {isLoggedIn ? `Upgrade to ${plan.name}` : plan.cta}
         </button>
       )}
     </div>

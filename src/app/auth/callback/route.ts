@@ -11,11 +11,11 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      // Redirect password recovery to the reset-password page
       if (type === 'recovery') {
         return NextResponse.redirect(`${origin}/reset-password`)
       }
-      return NextResponse.redirect(`${origin}${next}`)
+      // Redirect to welcome page (shows congrats, then auto-redirects to dashboard)
+      return NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
     }
   }
 

@@ -48,14 +48,24 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
     return !isFree
   })
 
-  // Load available voices
+  // Load available voices — auto-pick most human-like
   useEffect(() => {
+    const PREFERRED_VOICES = [
+      'Samantha (Enhanced)', 'Samantha', 'Daniel (Enhanced)', 'Daniel',
+      'Karen (Enhanced)', 'Karen', 'Moira (Enhanced)', 'Moira',
+      'Alex', 'Ava (Enhanced)', 'Ava',
+      'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Guy',
+      'Google US English', 'Google UK English Female',
+    ]
     const loadVoices = () => {
       const available = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'))
       setVoices(available)
       if (!selectedVoice && available.length > 0) {
-        const preferred = available.find(v => v.name.includes('Samantha') || v.name.includes('Google US') || v.name.includes('Daniel'))
-        setSelectedVoice((preferred ?? available[0]).name)
+        const best = PREFERRED_VOICES.reduce<SpeechSynthesisVoice | null>((found, name) => {
+          if (found) return found
+          return available.find(v => v.name.includes(name)) ?? null
+        }, null)
+        setSelectedVoice((best ?? available[0]).name)
       }
     }
     loadVoices()
@@ -212,7 +222,8 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
       }
     }
 
-    if (!abortRef.current) {
+    // Only show completion if we actually finished all questions (not paused/stopped)
+    if (!abortRef.current && playingRef.current) {
       setPhase('done')
       setStatusText('')
     }
