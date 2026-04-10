@@ -102,29 +102,38 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
       if (abortRef.current) { reject(new Error('aborted')); return }
       if (!window.speechSynthesis) { resolve(); return }
 
+      // Chrome bug: must cancel and wait before speaking again
       window.speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = speed
-      utterance.lang = 'en-US'
-      const voice = voices.find(v => v.name === selectedVoice)
-      if (voice) utterance.voice = voice
-      utterance.onend = () => { clearInterval(keepAlive); resolve() }
-      utterance.onerror = (e) => {
-        clearInterval(keepAlive)
-        if (e.error === 'canceled' || e.error === 'interrupted') {
-          reject(new Error('canceled'))
-        } else {
-          resolve() // Skip on other errors
-        }
-      }
-      window.speechSynthesis.speak(utterance)
 
-      // Chrome bug: speechSynthesis stops after ~15s. Pause/resume keeps it alive.
-      const keepAlive = setInterval(() => {
-        if (!window.speechSynthesis.speaking) { clearInterval(keepAlive); return }
-        window.speechSynthesis.pause()
-        window.speechSynthesis.resume()
-      }, 10000)
+      // Small delay after cancel to let Chrome reset (fixes "no sound after first utterance")
+      setTimeout(() => {
+        if (abortRef.current) { reject(new Error('aborted')); return }
+
+        const utterance = new SpeechSynthesisUtterance(text)
+        utterance.rate = speed
+        utterance.lang = 'en-US'
+        const voice = voices.find(v => v.name === selectedVoice)
+        if (voice) utterance.voice = voice
+
+        utterance.onend = () => { clearInterval(keepAlive); resolve() }
+        utterance.onerror = (e) => {
+          clearInterval(keepAlive)
+          if (e.error === 'canceled' || e.error === 'interrupted') {
+            reject(new Error('canceled'))
+          } else {
+            resolve()
+          }
+        }
+
+        window.speechSynthesis.speak(utterance)
+
+        // Chrome bug: speechSynthesis stops after ~15s. Pause/resume keeps it alive.
+        const keepAlive = setInterval(() => {
+          if (!window.speechSynthesis.speaking) { clearInterval(keepAlive); return }
+          window.speechSynthesis.pause()
+          window.speechSynthesis.resume()
+        }, 10000)
+      }, 100)
     })
   }, [speed, voices, selectedVoice])
 

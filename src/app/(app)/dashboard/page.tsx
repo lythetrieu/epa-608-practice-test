@@ -3,11 +3,12 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier, type Category } from '@/types'
 import { GuidedTour } from './guided-tour'
+import { OfflineSyncCard } from '@/components/OfflineSyncCard'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Lock, Flame,
-  Play, Timer,
+  Play, Timer, Download,
 } from 'lucide-react'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
@@ -243,6 +244,9 @@ export default async function DashboardPage() {
           <ToolButton href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" />
           <ToolButton href="/progress" icon={<BarChart3 size={18} />} label="Progress" />
           <ToolButton href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
+        </div>
+        <div className="mt-3">
+          <OfflineSyncCard />
         </div>
       </section>
 
