@@ -82,10 +82,15 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
 
     // Try loading immediately
     loadVoices()
-    // Also listen for async voice loading (Chrome loads voices async)
+    // Chrome loads voices async; Safari may never fire this event
     window.speechSynthesis.onvoiceschanged = loadVoices
+    // Safari fallback: retry after delays
+    const t1 = setTimeout(loadVoices, 500)
+    const t2 = setTimeout(loadVoices, 1500)
 
     return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
       if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = null
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,39 +109,64 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
       if (abortRef.current) { reject(new Error('aborted')); return }
       if (!window.speechSynthesis) { resolve(); return }
 
-      // Chrome bug: must cancel and wait before speaking again
+      // Cancel any pending speech
       window.speechSynthesis.cancel()
 
-      // Small delay after cancel to let Chrome reset (fixes "no sound after first utterance")
+      // Delay needed for both Chrome and Safari to reset after cancel
       setTimeout(() => {
         if (abortRef.current) { reject(new Error('aborted')); return }
 
         const utterance = new SpeechSynthesisUtterance(text)
         utterance.rate = speedRef.current
-        utterance.pitch = 1.0 // natural pitch
+        utterance.pitch = 1.0
+        utterance.volume = 1.0
         utterance.lang = 'en-US'
+
+        // Safari iOS: don't set voice if none available (let browser pick default)
         const voice = voices.find(v => v.name === selectedVoice)
         if (voice) utterance.voice = voice
 
-        utterance.onend = () => { clearInterval(keepAlive); resolve() }
-        utterance.onerror = (e) => {
+        let resolved = false
+        const done = () => {
+          if (resolved) return
+          resolved = true
           clearInterval(keepAlive)
+          clearTimeout(fallbackTimeout)
+          resolve()
+        }
+
+        utterance.onend = done
+        utterance.onerror = (e) => {
+          if (resolved) return
+          resolved = true
+          clearInterval(keepAlive)
+          clearTimeout(fallbackTimeout)
           if (e.error === 'canceled' || e.error === 'interrupted') {
             reject(new Error('canceled'))
           } else {
-            resolve()
+            resolve() // Skip on other errors
           }
         }
 
         window.speechSynthesis.speak(utterance)
 
+        // Safari iOS: onend sometimes never fires. Fallback timeout based on text length.
+        const estimatedDuration = (text.length / 10) * (1 / speedRef.current) * 1000 + 3000
+        const fallbackTimeout = setTimeout(() => {
+          if (!resolved && !window.speechSynthesis.speaking) {
+            done()
+          }
+        }, estimatedDuration)
+
         // Chrome bug: speechSynthesis stops after ~15s. Pause/resume keeps it alive.
-        const keepAlive = setInterval(() => {
+        // Safari: do NOT pause/resume — it breaks speech entirely on iOS
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+        const keepAlive = isSafari ? 0 as unknown as ReturnType<typeof setInterval> : setInterval(() => {
           if (!window.speechSynthesis.speaking) { clearInterval(keepAlive); return }
           window.speechSynthesis.pause()
           window.speechSynthesis.resume()
         }, 10000)
-      }, 100)
+      }, 150) // 150ms delay (Safari needs more than 100ms)
     })
   }, [speed, voices, selectedVoice])
 
