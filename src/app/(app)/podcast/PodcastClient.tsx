@@ -33,6 +33,8 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
   const [pauseDelay, setPauseDelay] = useState<PauseDelay>(5)
   const [errorMsg, setErrorMsg] = useState('')
   const [statusText, setStatusText] = useState('')
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [selectedVoice, setSelectedVoice] = useState<string>('')
 
   const abortRef = useRef(false)
   const playingRef = useRef(false)
@@ -45,6 +47,21 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
     if (c.value === 'Core') return true
     return !isFree
   })
+
+  // Load available voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const available = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'))
+      setVoices(available)
+      if (!selectedVoice && available.length > 0) {
+        const preferred = available.find(v => v.name.includes('Samantha') || v.name.includes('Google US') || v.name.includes('Daniel'))
+        setSelectedVoice((preferred ?? available[0]).name)
+      }
+    }
+    loadVoices()
+    window.speechSynthesis.onvoiceschanged = loadVoices
+    return () => { window.speechSynthesis.onvoiceschanged = null }
+  }, [selectedVoice])
 
   // Cleanup speech on unmount
   useEffect(() => {
@@ -61,6 +78,8 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
       const utterance = new SpeechSynthesisUtterance(text)
       utterance.rate = speed
       utterance.lang = 'en-US'
+      const voice = voices.find(v => v.name === selectedVoice)
+      if (voice) utterance.voice = voice
       utterance.onend = () => resolve()
       utterance.onerror = (e) => {
         if (e.error === 'canceled' || e.error === 'interrupted') {
@@ -71,7 +90,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
       }
       window.speechSynthesis.speak(utterance)
     })
-  }, [speed])
+  }, [speed, voices, selectedVoice])
 
   const wait = useCallback((seconds: number): Promise<void> => {
     return new Promise((resolve, reject) => {
@@ -347,6 +366,24 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
                 ))}
               </div>
             </div>
+
+            {/* Voice */}
+            {voices.length > 1 && (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Voice</label>
+                <select
+                  value={selectedVoice}
+                  onChange={e => setSelectedVoice(e.target.value)}
+                  className="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2 text-sm border border-gray-700"
+                >
+                  {voices.map(v => (
+                    <option key={v.name} value={v.name}>
+                      {v.name} {v.lang}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {/* Speed */}
             <div>
