@@ -64,8 +64,18 @@ export async function POST(request: NextRequest) {
     .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
     .in('id', questionIds)
 
-  // Return in shuffled order
-  const ordered = questionIds.map(id => questions?.find((q: any) => q.id === id)).filter(Boolean)
+  // Return in shuffled order with shuffled options per question
+  const ordered = questionIds.map(id => {
+    const q = questions?.find((q: any) => q.id === id)
+    if (!q) return null
+    const opts = [...(q as any).options]
+    // Fisher-Yates shuffle for options
+    for (let i = opts.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [opts[i], opts[j]] = [opts[j], opts[i]]
+    }
+    return { ...q, options: opts }
+  }).filter(Boolean)
 
   return NextResponse.json({ questions: ordered })
 }

@@ -108,8 +108,14 @@ export async function POST(request: NextRequest) {
     .select('id, category, subtopic_id, question, options, difficulty')
     .in('id', questionIds)
 
-  // Return in shuffled order
-  const ordered = questionIds.map(id => questions?.find((q: any) => q.id === id)).filter(Boolean)
+  // Return in shuffled order with shuffled options per question
+  const ordered = questionIds.map(id => {
+    const q = questions?.find((q: any) => q.id === id)
+    if (!q) return null
+    // Shuffle answer options so correct answer isn't always in the same position
+    const shuffledOptions = [...(q as any).options].sort(() => Math.random() - 0.5)
+    return { ...q, options: shuffledOptions }
+  }).filter(Boolean)
 
   return NextResponse.json({
     sessionId: session.id,
