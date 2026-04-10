@@ -15,7 +15,7 @@ type Question = {
 
 type PodcastPhase = 'idle' | 'loading' | 'playing' | 'paused' | 'done' | 'error'
 type PauseDelay = 3 | 5 | 10
-type PlaybackSpeed = 0.5 | 0.8 | 1 | 1.2
+type PlaybackSpeed = 0.4 | 0.6 | 0.8 | 1
 
 const CATEGORIES = [
   { value: 'Core', label: 'Core', slug: 'core' },
@@ -29,7 +29,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIdx, setCurrentIdx] = useState(0)
   const [category, setCategory] = useState<string>('Core')
-  const [speed, setSpeed] = useState<PlaybackSpeed>(0.8)
+  const [speed, setSpeed] = useState<PlaybackSpeed>(0.6)
   const [pauseDelay, setPauseDelay] = useState<PauseDelay>(5)
   const [errorMsg, setErrorMsg] = useState('')
   const [statusText, setStatusText] = useState('')
@@ -39,6 +39,8 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
   const abortRef = useRef(false)
   const playingRef = useRef(false)
   const resumeResolverRef = useRef<(() => void) | null>(null)
+  const speedRef = useRef(speed)
+  speedRef.current = speed
 
   const isFree = tier === 'free'
 
@@ -110,7 +112,8 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
         if (abortRef.current) { reject(new Error('aborted')); return }
 
         const utterance = new SpeechSynthesisUtterance(text)
-        utterance.rate = speed
+        utterance.rate = speedRef.current
+        utterance.pitch = 1.0 // natural pitch
         utterance.lang = 'en-US'
         const voice = voices.find(v => v.name === selectedVoice)
         if (voice) utterance.voice = voice
@@ -437,7 +440,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
                 Playback speed
               </label>
               <div className="flex gap-2">
-                {([0.5, 0.8, 1, 1.2] as PlaybackSpeed[]).map(s => (
+                {([0.4, 0.6, 0.8, 1] as PlaybackSpeed[]).map(s => (
                   <button
                     key={s}
                     onClick={() => setSpeed(s)}
@@ -589,7 +592,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
             {/* Speed adjustment while playing */}
             <div className="flex items-center justify-center gap-2">
               <span className="text-xs text-gray-500">Speed:</span>
-              {([0.5, 0.8, 1, 1.2] as PlaybackSpeed[]).map(s => (
+              {([0.4, 0.6, 0.8, 1] as PlaybackSpeed[]).map(s => (
                 <button
                   key={s}
                   onClick={() => setSpeed(s)}
