@@ -48,33 +48,46 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
     return !isFree
   })
 
-  // Load available voices — auto-pick most human-like
+  // Load available voices
   useEffect(() => {
-    // Top 5 most natural voices across platforms
-    const TOP_VOICES = [
-      'Samantha',        // macOS — most natural female
-      'Daniel',          // macOS — natural male (British)
-      'Karen',           // macOS — natural female (Australian)
-      'Microsoft Aria',  // Windows — best neural female
-      'Google US English', // Chrome — decent fallback
-    ]
+    if (typeof window === 'undefined' || !window.speechSynthesis) return
+
     const loadVoices = () => {
-      const allVoices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'))
-      // Only show top voices that exist on this device, plus first fallback
-      const filtered = TOP_VOICES
-        .map(name => allVoices.find(v => v.name.includes(name)))
+      const allVoices = window.speechSynthesis.getVoices()
+      if (allVoices.length === 0) return // Not loaded yet, wait for event
+
+      // Filter English voices
+      const enVoices = allVoices.filter(v => v.lang.startsWith('en'))
+      if (enVoices.length === 0) {
+        // Fallback: show all voices if no English found
+        setVoices(allVoices.slice(0, 5))
+        if (!selectedVoice && allVoices.length > 0) setSelectedVoice(allVoices[0].name)
+        return
+      }
+
+      // Prefer high-quality voices
+      const PREFERRED = ['Samantha', 'Daniel', 'Karen', 'Aria', 'Google US']
+      const preferred = PREFERRED
+        .map(name => enVoices.find(v => v.name.includes(name)))
         .filter(Boolean) as SpeechSynthesisVoice[]
-      // If none of the top voices exist, take the first 3 available
-      const finalVoices = filtered.length > 0 ? filtered : allVoices.slice(0, 3)
+
+      const finalVoices = preferred.length > 0 ? preferred : enVoices.slice(0, 5)
       setVoices(finalVoices)
       if (!selectedVoice && finalVoices.length > 0) {
         setSelectedVoice(finalVoices[0].name)
       }
     }
+
+    // Try loading immediately
     loadVoices()
+    // Also listen for async voice loading (Chrome loads voices async)
     window.speechSynthesis.onvoiceschanged = loadVoices
-    return () => { window.speechSynthesis.onvoiceschanged = null }
-  }, [selectedVoice])
+
+    return () => {
+      if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = null
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Cleanup speech on unmount
   useEffect(() => {
@@ -87,21 +100,31 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
   const speak = useCallback((text: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       if (abortRef.current) { reject(new Error('aborted')); return }
+      if (!window.speechSynthesis) { resolve(); return }
+
       window.speechSynthesis.cancel()
       const utterance = new SpeechSynthesisUtterance(text)
       utterance.rate = speed
       utterance.lang = 'en-US'
       const voice = voices.find(v => v.name === selectedVoice)
       if (voice) utterance.voice = voice
-      utterance.onend = () => resolve()
+      utterance.onend = () => { clearInterval(keepAlive); resolve() }
       utterance.onerror = (e) => {
+        clearInterval(keepAlive)
         if (e.error === 'canceled' || e.error === 'interrupted') {
           reject(new Error('canceled'))
         } else {
-          resolve()
+          resolve() // Skip on other errors
         }
       }
       window.speechSynthesis.speak(utterance)
+
+      // Chrome bug: speechSynthesis stops after ~15s. Pause/resume keeps it alive.
+      const keepAlive = setInterval(() => {
+        if (!window.speechSynthesis.speaking) { clearInterval(keepAlive); return }
+        window.speechSynthesis.pause()
+        window.speechSynthesis.resume()
+      }, 10000)
     })
   }, [speed, voices, selectedVoice])
 

@@ -110,6 +110,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
             <SectionHeader>Admin</SectionHeader>
             {isTeamAdmin && <NavLink href="/admin/team" label="Team Admin" icon={<Users size={18} />} pathname={pathname} />}
             {isAdmin && <NavLink href="/admin/users" label="Users" icon={<Shield size={18} />} pathname={pathname} />}
+            {isAdmin && <NavLink href="/admin/analytics" label="Analytics" icon={<BarChart3 size={18} />} pathname={pathname} />}
           </>
         )}
       </nav>
