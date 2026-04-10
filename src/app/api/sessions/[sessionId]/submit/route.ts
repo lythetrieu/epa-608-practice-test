@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+import type { Tier } from '@/types'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -50,7 +51,7 @@ export async function POST(
 
   // Check tier for feature gating
   const { data: profile } = await supabase.from('users_profile').select('tier').eq('id', user.id).single()
-  const _tier = (profile?.tier ?? 'free') as keyof typeof import('@/types').TIER_LIMITS
+  const _tier = (profile?.tier ?? 'free') as Tier
   const showExplanations = true // All tiers now get explanations
 
   // Score server-side

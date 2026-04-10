@@ -41,7 +41,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
         setPhase('active')
       })
       .catch(() => { setErrorMsg('Failed to load questions.'); setPhase('error') })
-  }, [category])
+  }, [category, mode])
 
   // Timer
   useEffect(() => {
