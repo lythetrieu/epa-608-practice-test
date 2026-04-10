@@ -2,17 +2,19 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier, type Category } from '@/types'
-import { PassPredictor } from './pass-predictor'
-import { StreakBoard } from './streak-board'
-import { OfflineSyncCard } from '@/components/OfflineSyncCard'
-import { Onboarding } from './onboarding'
+import { GuidedTour } from './guided-tour'
+import type { ReactNode } from 'react'
+import {
+  FileText, Snowflake, Wrench, Factory, Target,
+  Layers, Headphones, Bot, BarChart3, Lock, Flame,
+} from 'lucide-react'
 
-const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; emoji: string; desc: string; paidOnly: boolean }[] = [
-  { slug: 'core', label: 'Core', category: 'Core', emoji: '📝', desc: 'Refrigerant fundamentals & regulations', paidOnly: false },
-  { slug: 'type-1', label: 'Type I', category: 'Type I', emoji: '❄️', desc: 'Small appliances (under 5 lbs)', paidOnly: true },
-  { slug: 'type-2', label: 'Type II', category: 'Type II', emoji: '🔧', desc: 'High-pressure appliances', paidOnly: true },
-  { slug: 'type-3', label: 'Type III', category: 'Type III', emoji: '🏭', desc: 'Low-pressure appliances', paidOnly: true },
-  { slug: 'universal', label: 'Universal', category: 'Universal', emoji: '🎯', desc: 'All 4 sections combined (100 questions)', paidOnly: true },
+const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
+  { slug: 'core', label: 'Core', category: 'Core', icon: <FileText size={24} />, desc: 'Fundamentals & regulations', paidOnly: false },
+  { slug: 'type-1', label: 'Type I', category: 'Type I', icon: <Snowflake size={24} />, desc: 'Small appliances', paidOnly: true },
+  { slug: 'type-2', label: 'Type II', category: 'Type II', icon: <Wrench size={24} />, desc: 'High-pressure', paidOnly: true },
+  { slug: 'type-3', label: 'Type III', category: 'Type III', icon: <Factory size={24} />, desc: 'Low-pressure', paidOnly: true },
+  { slug: 'universal', label: 'Universal', category: 'Universal', icon: <Target size={24} />, desc: 'All sections combined', paidOnly: true },
 ]
 
 export default async function DashboardPage() {
@@ -42,15 +44,31 @@ export default async function DashboardPage() {
   const totalTests = allSessions?.length ?? 0
   const recentSessions = allSessions?.slice(0, 5) ?? []
 
-  // Activity dates for streak
-  const activityDates: string[] = []
+  // Streak calculation
+  let currentStreak = 0
   if (allSessions) {
     const dateSet = new Set<string>()
     for (const s of allSessions) {
       if (s.started_at) dateSet.add(s.started_at.slice(0, 10))
       if (s.submitted_at) dateSet.add(s.submitted_at.slice(0, 10))
     }
-    activityDates.push(...Array.from(dateSet).sort())
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const d = new Date(today)
+    const fmt = (dt: Date) => dt.toISOString().slice(0, 10)
+    while (dateSet.has(fmt(d))) {
+      currentStreak++
+      d.setDate(d.getDate() - 1)
+    }
+    if (currentStreak === 0) {
+      const yesterday = new Date(today)
+      yesterday.setDate(yesterday.getDate() - 1)
+      const y = new Date(yesterday)
+      while (dateSet.has(fmt(y))) {
+        currentStreak++
+        y.setDate(y.getDate() - 1)
+      }
+    }
   }
 
   // Pass Predictor
@@ -82,12 +100,11 @@ export default async function DashboardPage() {
       if (!bestScores[s.category] || pct > bestScores[s.category]) bestScores[s.category] = pct
     }
   }
-  const hasPassedAny = Object.values(bestScores).some(s => s >= 70)
 
   // Determine recommended next step
   let recommendedAction: { text: string; href: string; desc: string } | null = null
   if (totalTests === 0) {
-    recommendedAction = { text: 'Start Core Practice', href: '/practice/core', desc: 'New here? Start with practice mode — no timer, instant feedback.' }
+    recommendedAction = { text: 'Start Core Practice', href: '/practice/core', desc: 'New here? Start with practice mode \u2014 no timer, instant feedback.' }
   } else if (!bestScores['Core'] || bestScores['Core'] < 70) {
     recommendedAction = { text: 'Practice Core Again', href: '/practice/core', desc: 'Keep practicing Core until you consistently score above 70%.' }
   } else if (isFree) {
@@ -101,214 +118,175 @@ export default async function DashboardPage() {
     }
   }
 
-  return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
-      <Onboarding show={totalTests === 0} />
+  // Pass predictor color
+  const passColor = readinessScore >= 90 ? 'text-yellow-600' : readinessScore >= 70 ? 'text-green-600' : readinessScore >= 50 ? 'text-orange-500' : 'text-red-500'
+  const passBg = readinessScore >= 90 ? 'bg-yellow-50' : readinessScore >= 70 ? 'bg-green-50' : readinessScore >= 50 ? 'bg-orange-50' : 'bg-red-50'
 
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, {name}!</h1>
-        <p className="text-gray-400 text-sm mt-1">{user.email}</p>
+  return (
+    <div className="p-4 sm:p-6 max-w-5xl">
+      {totalTests === 0 && <GuidedTour />}
+
+      {/* ═══ HEADER ROW: Welcome + Pass Predictor + Streak ═══ */}
+      <div data-tour="header" className="flex items-center justify-between mb-4">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
+          <p className="text-gray-400 text-xs mt-0.5 truncate">{user.email}</p>
+        </div>
+        <div className="flex items-center gap-2 shrink-0 ml-3">
+          {/* Pass Predictor badge */}
+          {totalTests >= 3 ? (
+            <Link href="/progress" className={`${passBg} ${passColor} px-3 py-1.5 rounded-lg text-sm font-bold hover:opacity-80 transition-opacity`} title="Pass Predictor">
+              Pass: {readinessScore}%
+            </Link>
+          ) : (
+            <span className="bg-gray-100 text-gray-400 px-3 py-1.5 rounded-lg text-sm font-medium" title="Take 3+ tests to see pass prediction">
+              Pass: --
+            </span>
+          )}
+          {/* Streak badge */}
+          {currentStreak > 0 ? (
+            <span className="bg-orange-50 text-orange-600 px-2.5 py-1.5 rounded-lg text-sm font-bold inline-flex items-center gap-0.5" title={`${currentStreak} day streak`}>
+              <Flame size={16} />{currentStreak}
+            </span>
+          ) : (
+            <span className="bg-gray-100 text-gray-400 px-2.5 py-1.5 rounded-lg text-sm font-medium inline-flex items-center gap-0.5" title="Start a streak by practicing daily">
+              <Flame size={16} /> 0
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* Upgrade banner */}
+      {/* ═══ UPGRADE BANNER (free only, compact) ═══ */}
       {isFree && (
-        <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl p-5 text-white mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div>
-            <p className="font-bold text-lg">Unlock all 4 exam types</p>
-            <p className="text-blue-100 text-sm mt-0.5">One-time $19.99 — lifetime access, no subscription.</p>
+        <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-xl px-4 py-3 text-white mb-4 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="font-bold text-sm sm:text-base">Unlock all 4 exam types</p>
+            <p className="text-blue-100 text-xs">One-time $19.99 \u2014 lifetime access</p>
           </div>
-          <Link href="/pricing" className="shrink-0 px-5 py-2.5 bg-white text-blue-800 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+          <Link href="/pricing" className="shrink-0 px-4 py-2 bg-white text-blue-800 rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors">
             Upgrade
           </Link>
         </div>
       )}
 
-      {/* ═══ YOUR STUDY PATH ═══ */}
-      <section className="mb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-3">Your Study Path</h2>
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          <Link href="/flashcards" className="rounded-xl border border-gray-200 bg-white p-4 text-center hover:border-blue-300 hover:bg-blue-50/50 transition-all group">
-            <div className="text-2xl mb-1">1</div>
-            <div className="font-semibold text-sm text-gray-800 group-hover:text-blue-800">Learn</div>
-            <div className="text-xs text-gray-400 mt-1">Flashcards & Podcast</div>
-          </Link>
-          <Link href="/practice/core" className="rounded-xl border border-gray-200 bg-white p-4 text-center hover:border-green-300 hover:bg-green-50/50 transition-all group">
-            <div className="text-2xl mb-1">2</div>
-            <div className="font-semibold text-sm text-gray-800 group-hover:text-green-800">Practice</div>
-            <div className="text-xs text-gray-400 mt-1">No timer, instant feedback</div>
-          </Link>
-          <Link href="/test/core" className="rounded-xl border border-gray-200 bg-white p-4 text-center hover:border-red-300 hover:bg-red-50/50 transition-all group">
-            <div className="text-2xl mb-1">3</div>
-            <div className="font-semibold text-sm text-gray-800 group-hover:text-red-800">Test</div>
-            <div className="text-xs text-gray-400 mt-1">Timed exam simulation</div>
-          </Link>
-        </div>
-
-        {/* Recommended next step */}
-        {recommendedAction && (
-          <Link href={recommendedAction.href}
-            className="block rounded-xl border-2 border-blue-200 bg-blue-50 p-4 hover:border-blue-400 transition-all group">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs text-blue-600 font-medium uppercase tracking-wide">Recommended next step</p>
-                <p className="font-bold text-blue-900 mt-0.5">{recommendedAction.text}</p>
-                <p className="text-sm text-blue-700/70 mt-0.5">{recommendedAction.desc}</p>
-              </div>
-              <span className="text-blue-800 font-medium text-sm shrink-0 group-hover:underline">Go &rarr;</span>
+      {/* ═══ RECOMMENDED NEXT STEP (slim banner) ═══ */}
+      {recommendedAction && (
+        <Link href={recommendedAction.href}
+          className="block rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 mb-4 hover:border-blue-400 transition-all group">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <span className="text-xs text-blue-600 font-medium uppercase tracking-wide">Next step: </span>
+              <span className="font-bold text-blue-900 text-sm">{recommendedAction.text}</span>
+              <span className="text-xs text-blue-700/70 ml-2 hidden sm:inline">{recommendedAction.desc}</span>
             </div>
-          </Link>
-        )}
-      </section>
-
-      {/* ═══ READINESS ═══ */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <PassPredictor readinessScore={readinessScore} totalTests={totalTests} />
-        <StreakBoard activityDates={activityDates} />
-      </div>
-
-      {/* Certificate card */}
-      {hasPassedAny && (
-        <Link href="/certificate"
-          className="block rounded-xl border-2 border-amber-300 bg-gradient-to-r from-blue-900 to-blue-800 p-4 mb-8 hover:from-blue-800 hover:to-blue-700 transition-all group">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🏆</span>
-            <div>
-              <p className="font-semibold text-white">View Your Certificate</p>
-              <p className="text-xs text-blue-200/70">Download and share your achievement.</p>
-            </div>
-            <span className="ml-auto text-amber-300 text-sm group-hover:underline">View &rarr;</span>
+            <span className="text-blue-800 font-medium text-sm shrink-0 group-hover:underline">Go &rarr;</span>
           </div>
         </Link>
       )}
 
-      {/* ═══ EXAM SECTIONS ═══ */}
-      <section className="mb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-1">Exam Sections</h2>
-        <p className="text-sm text-gray-400 mb-4">Choose a section, then pick your study mode.</p>
-
-        <div className="space-y-3">
+      {/* ═══ EXAM SECTIONS: Horizontal cards ═══ */}
+      <section className="mb-4">
+        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Exam Sections</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
           {CATEGORIES.map(c => {
             const locked = c.paidOnly && isFree
             const best = bestScores[c.category]
             const passed = best !== undefined && best >= 70
 
-            if (locked) {
-              return (
-                <div key={c.slug} className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-4 flex items-center gap-4">
-                  <span className="text-2xl">{c.emoji}</span>
-                  <div className="flex-1">
-                    <div className="font-semibold text-gray-400">{c.label}</div>
-                    <div className="text-xs text-gray-400">{c.desc}</div>
-                  </div>
-                  <Link href="/pricing" className="text-xs text-blue-700 font-medium hover:underline">Upgrade 🔒</Link>
-                </div>
-              )
-            }
-
             return (
-              <div key={c.slug} className="rounded-xl border border-gray-200 bg-white p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{c.emoji}</span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-gray-900">{c.label}</span>
-                      {passed && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Passed {best}%</span>}
-                      {best !== undefined && !passed && <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">Best: {best}%</span>}
+              <div
+                key={c.slug}
+                data-tour={c.slug === 'core' ? 'core' : undefined}
+                className={`rounded-xl border p-3 flex flex-col items-center text-center transition-all ${
+                  locked
+                    ? 'border-dashed border-gray-200 bg-gray-50'
+                    : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-sm'
+                }`}
+              >
+                <span className="mb-1">{c.icon}</span>
+                <span className={`font-semibold text-sm ${locked ? 'text-gray-400' : 'text-gray-900'}`}>{c.label}</span>
+                <span className="text-[10px] text-gray-400 leading-tight mt-0.5">{c.desc}</span>
+
+                {/* Score or lock indicator */}
+                {locked ? (
+                  <Link href="/pricing" className="mt-2 text-[10px] text-blue-700 font-medium hover:underline inline-flex items-center gap-0.5"><Lock size={10} /> Upgrade</Link>
+                ) : (
+                  <>
+                    {passed && (
+                      <span className="mt-1.5 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">{best}% \u2713</span>
+                    )}
+                    {best !== undefined && !passed && (
+                      <span className="mt-1.5 text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">{best}%</span>
+                    )}
+                    <div className="flex gap-1 mt-2">
+                      <Link href={`/practice/${c.slug}`} className="text-[10px] px-2 py-1 rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
+                        \u25b6
+                      </Link>
+                      <Link href={`/test/${c.slug}`} className="text-[10px] px-2 py-1 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
+                        \u23f1
+                      </Link>
                     </div>
-                    <div className="text-xs text-gray-400">{c.desc}</div>
-                  </div>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  <Link href={`/flashcards`} className="text-xs px-3 py-1.5 rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors font-medium">
-                    🃏 Flashcards
-                  </Link>
-                  <Link href={`/practice/${c.slug}`} className="text-xs px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 transition-colors font-medium">
-                    📖 Practice
-                  </Link>
-                  <Link href={`/test/${c.slug}`} className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors font-medium">
-                    ⏱️ Timed Test
-                  </Link>
-                  <Link href={`/podcast`} className="text-xs px-3 py-1.5 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors font-medium">
-                    🎧 Podcast
-                  </Link>
-                </div>
+                  </>
+                )}
               </div>
             )
           })}
         </div>
       </section>
 
-      {/* ═══ STUDY TOOLS ═══ */}
-      <section className="mb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-1">Study Tools</h2>
-        <p className="text-sm text-gray-400 mb-4">Extra tools to help you prepare.</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <ToolCard href="/progress/weak-spots" icon="🎯" title="Weak Spots" desc="AI finds your weak areas" />
-          <ToolCard href="/tutor" icon="🎓" title="AI Tutor" desc={`Ask questions (${limits.aiQueriesPerDay}/day)`} />
-          <ToolCard href="/progress" icon="📊" title="Progress" desc="Scores & analytics" />
+      {/* ═══ TOOLS ROW ═══ */}
+      <section className="mb-4" data-tour="tools">
+        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Study Tools</h2>
+        <div className="flex flex-wrap gap-2">
+          <ToolButton href="/flashcards" icon={<Layers size={18} />} label="Flashcards" />
+          <ToolButton href="/podcast" icon={<Headphones size={18} />} label="Podcast" />
+          <ToolButton href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" />
+          <ToolButton href="/progress" icon={<BarChart3 size={18} />} label="Progress" />
+          <ToolButton href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
         </div>
       </section>
 
-      {/* AI queries + offline */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        {limits.aiQueriesPerDay > 0 && (
-          <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
-              <span className="font-medium text-gray-900">AI Queries</span>
-              <span className="text-gray-400 ml-2">
-                {profile?.ai_queries_today ?? 0} / {limits.aiQueriesPerDay === Infinity ? '∞' : limits.aiQueriesPerDay}
-              </span>
-            </div>
-            <span className="text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full font-medium">Daily</span>
-          </div>
-        )}
-        <OfflineSyncCard />
-      </div>
-
-      {/* ═══ RECENT TESTS ═══ */}
+      {/* ═══ RECENT TESTS (compact, 1-2 rows) ═══ */}
       <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Recent Tests</h2>
-          <Link href="/progress" className="text-sm text-blue-800 hover:underline font-medium">View all &rarr;</Link>
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Recent Tests</h2>
+          {recentSessions.length > 0 && (
+            <Link href="/progress" className="text-xs text-blue-800 hover:underline font-medium">View all &rarr;</Link>
+          )}
         </div>
         {recentSessions.length > 0 ? (
-          <div className="space-y-2">
+          <div className="flex flex-wrap gap-2">
             {recentSessions.map(s => {
               const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
               const passed = pct >= 70
               return (
-                <div key={s.id} className="bg-white rounded-xl border border-gray-200 px-5 py-4 flex items-center justify-between">
-                  <div>
-                    <span className="font-medium text-gray-800">{s.category}</span>
-                    <span className="text-sm text-gray-400 ml-3">{new Date(s.submitted_at!).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`font-bold text-lg ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
-                      {passed ? 'Pass' : 'Fail'}
-                    </span>
-                  </div>
+                <div key={s.id} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm ${
+                  passed ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+                }`}>
+                  <span className="font-medium text-gray-700 text-xs">{s.category}</span>
+                  <span className={`font-bold text-xs ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
+                  <span className={`text-[10px] ${passed ? 'text-green-500' : 'text-red-400'}`}>{passed ? '\u2713' : '\u2717'}</span>
                 </div>
               )
             })}
           </div>
         ) : (
-          <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
-            <p className="text-gray-400 text-sm">No completed tests yet. Start with Practice above!</p>
-          </div>
+          <p className="text-gray-400 text-sm">No completed tests yet. Start with Core above!</p>
         )}
       </section>
     </div>
   )
 }
 
-function ToolCard({ href, icon, title, desc }: { href: string; icon: string; title: string; desc: string }) {
+function ToolButton({ href, icon, label, dataTour }: { href: string; icon: ReactNode; label: string; dataTour?: string }) {
   return (
-    <Link href={href} className="rounded-xl border border-gray-200 bg-white p-4 hover:border-blue-300 hover:bg-blue-50/30 transition-all group">
-      <div className="text-2xl mb-2">{icon}</div>
-      <div className="font-semibold text-sm text-gray-800 group-hover:text-blue-800">{title}</div>
-      <div className="text-xs text-gray-400 mt-0.5">{desc}</div>
+    <Link
+      href={href}
+      data-tour={dataTour}
+      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/30 transition-all text-sm font-medium text-gray-700 hover:text-blue-800"
+    >
+      {icon}
+      <span>{label}</span>
     </Link>
   )
 }

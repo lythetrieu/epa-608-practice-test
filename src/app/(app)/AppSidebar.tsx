@@ -1,10 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
 import type { Tier } from '@/types'
+import {
+  Home, FileText, Snowflake, Wrench, Factory, Target,
+  Layers, Headphones, Bot, BarChart3, Award, Settings,
+  Shield, Users, Lock, Search, CalendarDays, Zap,
+} from 'lucide-react'
 
 type AppSidebarProps = {
   email: string
@@ -63,15 +68,15 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        <NavLink href="/dashboard" label="Dashboard" icon="🏠" pathname={pathname} />
+        <NavLink href="/dashboard" label="Dashboard" icon={<Home size={18} />} pathname={pathname} />
 
         {/* Sections */}
         <SectionHeader>Sections</SectionHeader>
-        <NavLink href="/test/core" label="Core" icon="📝" pathname={pathname} matchPrefix="/test/core" />
-        <NavLink href="/test/type-1" label="Type I" icon="❄️" pathname={pathname} matchPrefix="/test/type-1" locked={tier === 'free'} />
-        <NavLink href="/test/type-2" label="Type II" icon="🔧" pathname={pathname} matchPrefix="/test/type-2" locked={tier === 'free'} />
-        <NavLink href="/test/type-3" label="Type III" icon="🏭" pathname={pathname} matchPrefix="/test/type-3" locked={tier === 'free'} />
-        <NavLink href="/test/universal" label="Universal" icon="🎯" pathname={pathname} matchPrefix="/test/universal" locked={tier === 'free'} />
+        <NavLink href="/test/core" label="Core" icon={<FileText size={18} />} pathname={pathname} matchPrefix="/test/core" />
+        <NavLink href="/test/type-1" label="Type I" icon={<Snowflake size={18} />} pathname={pathname} matchPrefix="/test/type-1" locked={tier === 'free'} />
+        <NavLink href="/test/type-2" label="Type II" icon={<Wrench size={18} />} pathname={pathname} matchPrefix="/test/type-2" locked={tier === 'free'} />
+        <NavLink href="/test/type-3" label="Type III" icon={<Factory size={18} />} pathname={pathname} matchPrefix="/test/type-3" locked={tier === 'free'} />
+        <NavLink href="/test/universal" label="Universal" icon={<Target size={18} />} pathname={pathname} matchPrefix="/test/universal" locked={tier === 'free'} />
 
         {/* Collapsible Tools */}
         <button
@@ -88,12 +93,14 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         </button>
         {toolsExpanded && (
           <div className="space-y-1">
-            <NavLink href="/flashcards" label="Flashcards" icon="🃏" pathname={pathname} />
-            <NavLink href="/podcast" label="Podcast" icon="🎧" pathname={pathname} />
-            <NavLink href="/tutor" label="AI Tutor" icon="🎓" pathname={pathname} />
-            <NavLink href="/progress" label="Progress" icon="📊" pathname={pathname} />
-            <NavLink href="/progress/weak-spots" label="Weak Spots" icon="🔍" pathname={pathname} matchPrefix="/progress/weak-spots" />
-            <NavLink href="/certificate" label="Certificate" icon="🏆" pathname={pathname} />
+            <NavLink href="/flashcards" label="Flashcards" icon={<Layers size={18} />} pathname={pathname} />
+            <NavLink href="/podcast" label="Podcast" icon={<Headphones size={18} />} pathname={pathname} />
+            <NavLink href="/tutor" label="AI Tutor" icon={<Bot size={18} />} pathname={pathname} />
+            <NavLink href="/progress" label="Progress" icon={<BarChart3 size={18} />} pathname={pathname} />
+            <NavLink href="/progress/weak-spots" label="Weak Spots" icon={<Search size={18} />} pathname={pathname} matchPrefix="/progress/weak-spots" />
+            <NavLink href="/certificate" label="Certificate" icon={<Award size={18} />} pathname={pathname} />
+            <NavLink href="/study-plan" label="Study Plan AI" icon={<CalendarDays size={18} />} pathname={pathname} locked={tier !== 'ultimate'} />
+            <NavLink href="/daily-drill" label="Daily Drill" icon={<Zap size={18} />} pathname={pathname} locked={tier !== 'ultimate'} />
           </div>
         )}
 
@@ -101,8 +108,8 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         {(isTeamAdmin || isAdmin) && (
           <>
             <SectionHeader>Admin</SectionHeader>
-            {isTeamAdmin && <NavLink href="/admin/team" label="Team Admin" icon="👥" pathname={pathname} />}
-            {isAdmin && <NavLink href="/admin/users" label="Users" icon="🛡️" pathname={pathname} />}
+            {isTeamAdmin && <NavLink href="/admin/team" label="Team Admin" icon={<Users size={18} />} pathname={pathname} />}
+            {isAdmin && <NavLink href="/admin/users" label="Users" icon={<Shield size={18} />} pathname={pathname} />}
           </>
         )}
       </nav>
@@ -117,7 +124,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
             Upgrade Now
           </Link>
         )}
-        <NavLink href="/settings" label="Settings" icon="⚙️" pathname={pathname} />
+        <NavLink href="/settings" label="Settings" icon={<Settings size={18} />} pathname={pathname} />
         <form action="/auth/signout" method="post">
           <button type="submit" className="w-full text-left text-sm text-gray-400 hover:text-gray-600 px-3 py-2 transition-colors">
             Sign out
@@ -182,7 +189,7 @@ function NavLink({
 }: {
   href: string
   label: string
-  icon: string
+  icon: ReactNode
   pathname: string | null
   matchPrefix?: string
   locked?: boolean
@@ -195,7 +202,7 @@ function NavLink({
       <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 text-sm cursor-not-allowed select-none">
         <span aria-hidden>{icon}</span>
         <span>{label}</span>
-        <span className="ml-auto text-xs">🔒</span>
+        <span className="ml-auto"><Lock size={14} /></span>
       </div>
     )
   }

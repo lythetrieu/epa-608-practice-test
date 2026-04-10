@@ -91,13 +91,19 @@ export async function POST(
     passed = percentage >= 70
   }
 
-  // Save session result
-  await supabase.from('test_sessions')
+  // Save session result (use admin client to bypass RLS for reliable update)
+  const { error: updateErr } = await admin.from('test_sessions')
     .update({ submitted_at: new Date().toISOString(), score })
     .eq('id', session.id)
+    .eq('user_id', user.id)
 
-  // Save progress (all tiers — needed for blind-spot training)
-  await supabase.from('user_progress').insert(
+  if (updateErr) {
+    console.error('Failed to update session:', updateErr)
+    return NextResponse.json({ error: 'Failed to save results' }, { status: 500 })
+  }
+
+  // Save progress (use admin client for reliability)
+  await admin.from('user_progress').insert(
     results.map(r => ({ user_id: user.id, question_id: r.questionId, correct: r.correct }))
   )
 
