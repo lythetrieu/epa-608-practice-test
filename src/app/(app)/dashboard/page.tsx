@@ -8,7 +8,7 @@ import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Lock, Flame,
-  Play, Timer, Download,
+  Play, Timer,
 } from 'lucide-react'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
