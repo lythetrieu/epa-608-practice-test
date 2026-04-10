@@ -11,15 +11,15 @@ type RadarChartProps = {
   size?: number
 }
 
-export function RadarChart({ data, size = 300 }: RadarChartProps) {
+export function RadarChart({ data, size = 400 }: RadarChartProps) {
   if (data.length < 3) return null
 
   const cx = size / 2
   const cy = size / 2
-  const radius = size * 0.34 // leave room for labels
+  const radius = size * 0.28 // more room for labels
   const levels = [0.25, 0.5, 0.75, 1.0]
   const n = data.length
-  const labelRadius = radius + 28
+  const labelRadius = radius + 45
 
   function getPoint(index: number, value: number): [number, number] {
     const angle = (2 * Math.PI * index) / n - Math.PI / 2
@@ -126,15 +126,15 @@ export function RadarChart({ data, size = 300 }: RadarChartProps) {
             textAnchor={l.anchor}
             dominantBaseline="central"
             className="fill-gray-700"
-            fontSize="9"
+            fontSize="11"
             fontWeight="500"
           >
             <tspan>{l.label}</tspan>
             <tspan
               x={l.x}
-              dy="11"
-              fontSize="8"
-              fontWeight="600"
+              dy="14"
+              fontSize="11"
+              fontWeight="700"
               className="fill-blue-800"
             >
               {l.pct}%
