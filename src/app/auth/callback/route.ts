@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@supabase/ssr'
 
 function getAppOrigin(request: NextRequest): string {
-  // On Vercel, use VERCEL_URL or the request origin (not NEXT_PUBLIC_APP_URL which is baked at build)
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`
   }
@@ -17,13 +16,36 @@ export async function GET(request: NextRequest) {
   const origin = getAppOrigin(request)
 
   if (code) {
-    const supabase = await createClient()
+    // Build a response that can carry cookie mutations
+    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
+
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              request.cookies.set(name, value)
+              response.cookies.set(name, value, options as Parameters<typeof response.cookies.set>[2])
+            })
+          },
+        },
+      },
+    )
+
     const { error } = await supabase.auth.exchangeCodeForSession(code)
+
     if (!error) {
       if (type === 'recovery') {
-        return NextResponse.redirect(`${origin}/reset-password`)
+        const recoveryResponse = NextResponse.redirect(`${origin}/reset-password`)
+        response.cookies.getAll().forEach(c => recoveryResponse.cookies.set(c.name, c.value))
+        return recoveryResponse
       }
-      return NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
+      return response
     }
   }
 
