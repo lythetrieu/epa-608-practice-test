@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { PlanCard, type PlanCardData } from './PlanCard'
 
@@ -73,17 +74,25 @@ const PLANS: PlanCardData[] = [
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 export default async function PricingPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  // Quick check: if auth cookie exists, fetch user. Otherwise skip (faster for anonymous visitors).
+  const cookieStore = await cookies()
+  const hasAuthCookie = cookieStore.getAll().some(c => c.name.startsWith('sb-'))
 
+  let user: { email?: string } | null = null
   let currentTier: string | null = null
-  if (user) {
-    const { data: profile } = await supabase
-      .from('users_profile')
-      .select('tier')
-      .eq('id', user.id)
-      .single()
-    currentTier = profile?.tier ?? 'free'
+
+  if (hasAuthCookie) {
+    const supabase = await createClient()
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+    if (user) {
+      const { data: profile } = await supabase
+        .from('users_profile')
+        .select('tier')
+        .eq('id', (user as any).id)
+        .single()
+      currentTier = profile?.tier ?? 'free'
+    }
   }
 
   return (

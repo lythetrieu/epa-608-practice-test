@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import FaqAccordion from './FaqAccordion'
 
@@ -10,10 +11,15 @@ export const metadata: Metadata = {
 }
 
 export default async function FaqPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const cookieStore = await cookies()
+  const hasAuthCookie = cookieStore.getAll().some(c => c.name.startsWith('sb-'))
+
+  let user: { email?: string } | null = null
+  if (hasAuthCookie) {
+    const supabase = await createClient()
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-blue-50">
