@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { TIER_LIMITS } from '@/types'
 import { buildUserContext } from '@/lib/ai/context'
 import { z } from 'zod'

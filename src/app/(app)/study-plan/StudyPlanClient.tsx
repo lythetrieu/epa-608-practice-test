@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { SUBTOPIC_GROUPS } from '@/lib/subtopics'
 import type { Category } from '@/types'
 
 type StudyDay = {

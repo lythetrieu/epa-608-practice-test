@@ -205,7 +205,7 @@ export default function DailyDrillClient() {
 
         {/* Question review */}
         <div className="space-y-3">
-          {result.results.map((r, i) => {
+          {result.results.map((r, _i) => {
             const question = questions.find(q => q.id === r.questionId)
             return (
               <div

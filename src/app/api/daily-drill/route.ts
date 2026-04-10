@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { TIER_LIMITS } from '@/types'
-import { getSubtopicLabel } from '@/lib/subtopics'
 
 // GET — fetch 10 questions from user's weakest subtopics
 export async function GET() {

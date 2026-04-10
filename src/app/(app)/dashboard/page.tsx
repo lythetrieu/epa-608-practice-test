@@ -30,7 +30,6 @@ export default async function DashboardPage() {
 
   const tier = (profile?.tier ?? 'free') as Tier
   const isFree = tier === 'free'
-  const limits = TIER_LIMITS[tier]
   const name = user.email?.split('@')[0] ?? 'there'
 
   // All completed sessions
