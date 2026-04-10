@@ -40,7 +40,7 @@ export function PlanCard({ plan, currentTier, isLoggedIn }: { plan: PlanCardData
   const planTier = TIER_MAP[plan.name] ?? plan.name.toLowerCase()
   const isCurrentPlan = currentTier === planTier
   const isDowngrade = currentTier === 'ultimate' && planTier !== 'ultimate'
-  const isUpgrade = !isCurrentPlan && !isDowngrade
+  const _isUpgrade = !isCurrentPlan && !isDowngrade
 
   return (
     <div
