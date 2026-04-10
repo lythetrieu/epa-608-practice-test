@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /settings
+Sitemap: https://epa608practicetest.net/sitemap.xml

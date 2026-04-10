@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
+import { LocaleProvider } from '@/lib/i18n-context'
 import type { Tier } from '@/types'
 
 // Never cache layout — always fetch fresh user data
@@ -22,16 +23,18 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const tier = (profile?.tier ?? 'free') as Tier
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      <AppSidebar
-        email={user.email ?? ''}
-        tier={tier}
-        isTeamAdmin={!!profile?.is_team_admin}
-        isAdmin={!!profile?.is_admin}
-      />
+    <LocaleProvider>
+      <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950">
+        <AppSidebar
+          email={user.email ?? ''}
+          tier={tier}
+          isTeamAdmin={!!profile?.is_team_admin}
+          isAdmin={!!profile?.is_admin}
+        />
 
-      {/* Main content - add top padding on mobile for the fixed navbar */}
-      <main className="flex-1 overflow-auto pt-14 md:pt-0">{children}</main>
-    </div>
+        {/* Main content - add top padding on mobile for the fixed navbar */}
+        <main className="flex-1 overflow-auto pt-14 md:pt-0">{children}</main>
+      </div>
+    </LocaleProvider>
   )
 }
