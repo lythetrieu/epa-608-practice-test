@@ -17,7 +17,7 @@ export const TIER_LIMITS = {
     hasExplanations: true,
     hasProgress: true,
     hasBlindSpot: true,
-    aiQueriesPerDay: 5,
+    aiQueriesPerDay: 10,
     hasPDF: false,
   },
   starter: {

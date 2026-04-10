@@ -57,9 +57,15 @@ export async function middleware(request: NextRequest) {
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route))
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route))
 
-  // Unauthenticated or unconfirmed user hitting a protected route → redirect to login
+  // Unauthenticated or unconfirmed user hitting a protected route
   if (isProtected && (!user || !user.email_confirmed_at)) {
-    // If unconfirmed, sign them out first
+    // API routes: return 401 JSON (not redirect)
+    if (pathname.startsWith('/api/')) {
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
     if (user && !user.email_confirmed_at) {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/signup'

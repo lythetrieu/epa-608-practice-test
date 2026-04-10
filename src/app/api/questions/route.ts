@@ -33,6 +33,10 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
 
+  // Block categories user can't access (including Universal for free tier)
+  if (category === 'Universal' && tier === 'free') {
+    return NextResponse.json({ error: 'Upgrade required for Universal test', upgradeRequired: true }, { status: 403 })
+  }
   if (category !== 'Universal' && !canAccessCategory(tier, category)) {
     return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
   }
@@ -79,8 +83,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No questions available' }, { status: 404 })
   }
 
-  // Shuffle server-side
-  questionIds = questionIds.sort(() => Math.random() - 0.5)
+  // Fisher-Yates shuffle
+  for (let i = questionIds.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questionIds[i], questionIds[j]] = [questionIds[j], questionIds[i]]
+  }
 
   // Create session with server-side timer
   // Universal = 3 hours (100 questions), others = 30 min (25 questions)
@@ -113,7 +120,11 @@ export async function POST(request: NextRequest) {
     const q = questions?.find((q: any) => q.id === id)
     if (!q) return null
     // Shuffle answer options so correct answer isn't always in the same position
-    const shuffledOptions = [...(q as any).options].sort(() => Math.random() - 0.5)
+    const shuffledOptions = [...(q as any).options]
+    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]
+    }
     return { ...q, options: shuffledOptions }
   }).filter(Boolean)
 
