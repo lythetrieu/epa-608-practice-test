@@ -46,7 +46,7 @@ export function isTeamAdmin(profile: UserProfile): boolean {
  */
 export function getAIQueriesRemaining(profile: UserProfile): number {
   const limit = TIER_LIMITS[profile.tier].aiQueriesPerDay
-  if (limit === 0) return 0
+  if (limit <= 0) return 0
   return Math.max(0, limit - profile.ai_queries_today)
 }
 

@@ -20,7 +20,7 @@ export default async function TutorPage() {
   const tier = (profile?.tier ?? 'free') as Tier
   const limits = TIER_LIMITS[tier]
 
-  if (limits.aiQueriesPerDay === 0) {
+  if (limits.aiQueriesPerDay <= 0) {
     return (
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="max-w-md text-center">

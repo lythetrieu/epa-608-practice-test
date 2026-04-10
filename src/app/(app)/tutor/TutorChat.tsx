@@ -100,8 +100,8 @@ function renderMarkdown(text: string): string {
 }
 
 export default function TutorChat({
-  email,
-  tier,
+  email: _email,
+  tier: _tier,
   aiQueriesRemaining: initialRemaining,
 }: TutorChatProps) {
   const [messages, setMessages] = useState<Message[]>([])

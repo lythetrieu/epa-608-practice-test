@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier, type Category } from '@/types'
@@ -92,7 +92,6 @@ export default async function DashboardPage() {
   } else if (isFree) {
     recommendedAction = { text: 'Upgrade to Unlock More', href: '/pricing', desc: 'You passed Core! Upgrade to access Type I, II, III.' }
   } else {
-    const weakCat = CATEGORIES.find(c => !c.paidOnly || tier !== 'free')
     const nextUnpassed = CATEGORIES.find(c => c.category !== 'Universal' && (!bestScores[c.category] || bestScores[c.category] < 70))
     if (nextUnpassed) {
       recommendedAction = { text: `Practice ${nextUnpassed.label}`, href: `/practice/${nextUnpassed.slug}`, desc: `Focus on ${nextUnpassed.label} next to prepare for Universal.` }

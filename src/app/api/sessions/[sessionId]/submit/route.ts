@@ -50,7 +50,7 @@ export async function POST(
 
   // Check tier for feature gating
   const { data: profile } = await supabase.from('users_profile').select('tier').eq('id', user.id).single()
-  const tier = (profile?.tier ?? 'free') as keyof typeof import('@/types').TIER_LIMITS
+  const _tier = (profile?.tier ?? 'free') as keyof typeof import('@/types').TIER_LIMITS
   const showExplanations = true // All tiers now get explanations
 
   // Score server-side

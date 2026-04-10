@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as keyof typeof TIER_LIMITS
   const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
-  if (dailyLimit === 0) {
+  if (dailyLimit <= 0) {
     return NextResponse.json(
       { error: 'AI features require Starter or Ultimate plan.', upgradeRequired: true },
       { status: 403 },

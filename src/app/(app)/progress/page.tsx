@@ -29,7 +29,7 @@ export default async function ProgressPage() {
     .eq('id', user.id)
     .single()
 
-  const tier = (profile?.tier ?? 'free') as Tier
+  const _tier = (profile?.tier ?? 'free') as Tier
 
   const { data: sessions } = await supabase
     .from('test_sessions')

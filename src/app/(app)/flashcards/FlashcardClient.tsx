@@ -322,7 +322,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
   // ── Render: Active card ─────────────────────────────────────────────────
 
   const card = cards[currentIdx]
-  const total = correct + wrong
+  const _total = correct + wrong
 
   // Visual feedback intensities
   const swipeOpacity = Math.min(Math.abs(dragDelta) / 150, 1)

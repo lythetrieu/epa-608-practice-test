@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { TIER_LIMITS, type Tier, type Category } from '@/types'
 import CertificateCard from './CertificateCard'
 import Link from 'next/link'
 

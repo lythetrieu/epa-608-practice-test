@@ -41,7 +41,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
   const isFree = tier === 'free'
 
   // Accessible categories for current tier
-  const accessibleCategories = CATEGORIES.filter(c => {
+  const _accessibleCategories = CATEGORIES.filter(c => {
     if (c.value === 'Core') return true
     return !isFree
   })
