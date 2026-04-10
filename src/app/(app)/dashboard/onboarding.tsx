@@ -71,7 +71,7 @@ export function Onboarding({ show }: { show: boolean }) {
               onClick={dismiss}
               className="px-5 py-2.5 bg-blue-800 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors"
             >
-              Got it, let's start!
+              Got it, let&apos;s start!
             </Link>
           )}
         </div>
@@ -88,7 +88,7 @@ function StepWelcome() {
         Welcome to EPA 608 Practice Test!
       </h2>
       <p className="text-gray-500 text-sm mb-6">
-        Let's get you ready to pass your certification exam.
+        Let&apos;s get you ready to pass your certification exam.
       </p>
 
       <div className="flex items-center gap-3 w-full max-w-xs">
@@ -152,7 +152,7 @@ function StepProgress() {
             72%
           </text>
         </svg>
-        <p className="text-xs text-gray-400 mt-1">Shows when you're ready for the real exam</p>
+        <p className="text-xs text-gray-400 mt-1">Shows when you&apos;re ready for the real exam</p>
       </div>
     </div>
   )
