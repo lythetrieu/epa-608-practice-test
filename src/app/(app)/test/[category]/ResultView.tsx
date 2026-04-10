@@ -51,7 +51,7 @@ function ELI5Button({ questionText, correctAnswer, userAnswer }: {
         <button
           onClick={handleClick}
           disabled={state === 'loading'}
-          className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs px-4 py-2.5 min-h-[44px] rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {state === 'loading' ? (
             <>
@@ -107,7 +107,7 @@ export function ResultView({ result, category, questions }: {
             <h2 className="text-lg font-bold text-gray-900 px-5 py-4 border-b border-gray-100">Section Breakdown</h2>
             <div className="divide-y divide-gray-100">
               {sectionScores.map(s => (
-                <div key={s.category} className="flex items-center justify-between px-5 py-3">
+                <div key={s.category} className="flex items-center justify-between px-5 py-3 gap-2 flex-wrap sm:flex-nowrap">
                   <div className="flex items-center gap-2">
                     <span className={`text-lg ${s.passed ? 'text-green-600' : 'text-red-500'}`}>
                       {s.passed ? '✓' : '✗'}
@@ -166,7 +166,7 @@ export function ResultView({ result, category, questions }: {
                     </>
                   )}
                   {r.explanation && (
-                    <p className="text-sm text-gray-600 bg-white/60 rounded-lg p-3 mt-2">{r.explanation}</p>
+                    <p className="text-sm text-gray-600 bg-white/60 rounded-lg p-3 mt-2 max-h-[30vh] overflow-y-auto">{r.explanation}</p>
                   )}
                   {!r.correct && (
                     <ELI5Button

@@ -247,7 +247,7 @@ export function PracticeClient({ category }: { category: string }) {
                   key={i}
                   onClick={() => handleSelect(opt)}
                   disabled={locked}
-                  className={`w-full text-left px-3 sm:px-5 py-3 sm:py-4 rounded-xl border-2 transition-all flex gap-2 sm:gap-3 items-start text-sm sm:text-base ${btnClass} ${locked ? 'cursor-default' : 'cursor-pointer'}`}
+                  className={`w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 min-h-[48px] rounded-xl border-2 transition-all flex gap-2 sm:gap-3 items-start text-sm sm:text-base ${btnClass} ${locked ? 'cursor-default' : 'cursor-pointer'}`}
                 >
                   <span className={`font-bold text-sm mt-0.5 shrink-0 ${
                     locked && isCorrectOption ? 'text-green-600' :
@@ -317,7 +317,7 @@ export function PracticeClient({ category }: { category: string }) {
 
         <div className="flex justify-between items-center gap-2">
           {/* Mobile progress */}
-          <span className="text-xs text-gray-400 sm:hidden">
+          <span className="text-xs text-gray-400 sm:hidden whitespace-nowrap">
             {currentIdx + 1}/{questions.length}
           </span>
 

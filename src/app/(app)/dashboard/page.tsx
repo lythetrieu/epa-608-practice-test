@@ -206,7 +206,7 @@ export default async function DashboardPage() {
               >
                 <span className="mb-1">{c.icon}</span>
                 <span className={`font-semibold text-sm ${locked ? 'text-gray-400' : 'text-gray-900'}`}>{c.label}</span>
-                <span className="text-[10px] text-gray-400 leading-tight mt-0.5">{c.desc}</span>
+                <span className="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">{c.desc}</span>
 
                 {/* Score or lock indicator */}
                 {locked ? (
@@ -220,10 +220,10 @@ export default async function DashboardPage() {
                       <span className="mt-1.5 text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">{best}%</span>
                     )}
                     <div className="flex gap-1 mt-2">
-                      <Link href={`/practice/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
+                      <Link href={`/practice/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 min-h-[32px] rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
                         <Play size={10} /> Practice
                       </Link>
-                      <Link href={`/test/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
+                      <Link href={`/test/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 min-h-[32px] rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
                         <Timer size={10} /> Test
                       </Link>
                     </div>
@@ -267,9 +267,9 @@ export default async function DashboardPage() {
                 <div key={s.id} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm ${
                   passed ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
                 }`}>
-                  <span className="font-medium text-gray-700 text-xs">{s.category}</span>
-                  <span className={`font-bold text-xs ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
-                  <span className={`text-[10px] ${passed ? 'text-green-500' : 'text-red-400'}`}>{passed ? '\u2713' : '\u2717'}</span>
+                  <span className="font-medium text-gray-700 text-xs whitespace-nowrap">{s.category}</span>
+                  <span className={`font-bold text-xs whitespace-nowrap ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
+                  <span className={`text-[10px] whitespace-nowrap ${passed ? 'text-green-500' : 'text-red-400'}`}>{passed ? '\u2713' : '\u2717'}</span>
                 </div>
               )
             })}

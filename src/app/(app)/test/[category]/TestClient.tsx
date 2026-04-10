@@ -126,7 +126,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b px-4 sm:px-6 py-3 flex items-center justify-between">
+      <header className="bg-white border-b px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between">
         <div>
           <span className="text-xs sm:text-sm text-gray-500">EPA 608 — {category}</span>
           <div className="text-xs sm:text-sm font-semibold text-gray-800 mt-0.5">
@@ -150,7 +150,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
       <main className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="w-full max-w-2xl mx-auto">
           <div className="flex items-start justify-between gap-2 mb-4 sm:mb-6">
-            <p className="text-base sm:text-lg font-semibold text-gray-900 leading-relaxed">{q.question}</p>
+            <p className="text-base sm:text-lg font-semibold text-gray-900 leading-relaxed break-words">{q.question}</p>
             <ReportButton questionId={q.id} />
           </div>
 
@@ -162,7 +162,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
                 <button
                   key={i}
                   onClick={() => setAnswers(prev => ({ ...prev, [q.id]: opt }))}
-                  className={`w-full text-left px-3 sm:px-5 py-3 sm:py-4 rounded-xl border-2 transition-all flex gap-2 sm:gap-3 items-start text-sm sm:text-base
+                  className={`w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 min-h-[48px] rounded-xl border-2 transition-all flex gap-2 sm:gap-3 items-start text-sm sm:text-base
                     ${selected
                       ? 'border-blue-800 bg-blue-50 text-blue-900'
                       : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-gray-800'

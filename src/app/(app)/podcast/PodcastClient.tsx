@@ -577,7 +577,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
               {phase === 'playing' ? (
                 <button
                   onClick={handlePause}
-                  className="p-5 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
+                  className="p-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
                   aria-label="Pause"
                 >
                   <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -588,7 +588,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
               ) : (
                 <button
                   onClick={handleResume}
-                  className="p-5 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
+                  className="p-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
                   aria-label="Resume"
                 >
                   <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -626,7 +626,7 @@ export default function PodcastClient({ tier }: { tier: 'free' | 'starter' | 'ul
                 <button
                   key={s}
                   onClick={() => setSpeed(s)}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-3 py-2 min-h-[36px] rounded text-xs font-medium transition-colors ${
                     speed === s
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-800 text-gray-400 hover:bg-gray-700'

@@ -137,7 +137,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
     <>
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-100 flex items-center h-14 px-4">
-        <button onClick={() => setOpen(true)} className="p-2 -ml-2 text-gray-600 hover:text-gray-900" aria-label="Open menu">
+        <button onClick={() => setOpen(true)} className="p-2.5 -ml-2 text-gray-600 hover:text-gray-900" aria-label="Open menu">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -158,7 +158,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         ${open ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <div className="md:hidden absolute top-3 right-3">
-          <button onClick={() => setOpen(false)} className="p-1 text-gray-400 hover:text-gray-600" aria-label="Close menu">
+          <button onClick={() => setOpen(false)} className="p-1.5 text-gray-400 hover:text-gray-600" aria-label="Close menu">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -198,7 +198,7 @@ function NavLink({
 
   if (locked) {
     return (
-      <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 text-sm cursor-not-allowed select-none">
+      <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-gray-300 text-sm cursor-not-allowed select-none">
         <span aria-hidden>{icon}</span>
         <span>{label}</span>
         <span className="ml-auto"><Lock size={14} /></span>
@@ -209,7 +209,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-colors ${
         isActive
           ? 'bg-blue-50 text-blue-800 font-medium'
           : 'text-gray-600 hover:bg-blue-50 hover:text-blue-800'

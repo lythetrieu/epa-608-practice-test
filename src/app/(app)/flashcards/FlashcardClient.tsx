@@ -469,7 +469,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
               className="absolute inset-0 rounded-2xl border-4 border-green-400 bg-green-50 z-10 flex items-center justify-center pointer-events-none"
               style={{ opacity: swipeOpacity * 0.7 }}
             >
-              <span className="text-green-600 font-bold text-3xl rotate-[-15deg] border-4 border-green-500 rounded-lg px-4 py-1">
+              <span className="text-green-600 font-bold text-2xl sm:text-3xl rotate-[-15deg] border-4 border-green-500 rounded-lg px-4 py-1">
                 GOT IT
               </span>
             </div>
@@ -479,7 +479,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
               className="absolute inset-0 rounded-2xl border-4 border-orange-400 bg-orange-50 z-10 flex items-center justify-center pointer-events-none"
               style={{ opacity: swipeOpacity * 0.7 }}
             >
-              <span className="text-orange-600 font-bold text-3xl rotate-[15deg] border-4 border-orange-500 rounded-lg px-4 py-1">
+              <span className="text-orange-600 font-bold text-2xl sm:text-3xl rotate-[15deg] border-4 border-orange-500 rounded-lg px-4 py-1">
                 REVIEW
               </span>
             </div>
@@ -487,7 +487,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
 
           {/* Card face */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <div className="p-5 sm:p-6 min-h-[28rem] flex flex-col">
+            <div className="p-5 sm:p-6 min-h-[22rem] sm:min-h-[28rem] flex flex-col">
               {/* Category + difficulty badges */}
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
@@ -529,7 +529,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
                         handleSelectOption(idx)
                       }}
                       disabled={answered}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all text-left ${optionStyle}`}
+                      className={`w-full flex items-center gap-3 px-4 sm:px-6 py-3.5 sm:py-4 min-h-[48px] rounded-xl border-2 transition-all text-left ${optionStyle}`}
                     >
                       <span
                         className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
@@ -590,7 +590,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
 
                   {/* Explanation */}
                   {card.explanation && (
-                    <p className="text-xs text-gray-600 leading-relaxed px-1">{card.explanation}</p>
+                    <p className="text-sm text-gray-600 leading-relaxed px-1">{card.explanation}</p>
                   )}
                 </div>
               )}
