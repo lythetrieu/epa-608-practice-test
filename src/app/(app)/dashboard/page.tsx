@@ -8,7 +8,7 @@ import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Lock, Flame,
-  Play, Award,
+  Play, Award, BookOpen,
 } from 'lucide-react'
 import ActivityHeatmap from './ActivityHeatmap'
 
@@ -170,6 +170,20 @@ export default async function DashboardPage() {
         </Link>
       )}
 
+      {/* ═══ STUDY PATH CTA ═══ */}
+      <Link href="/learn" data-tour="learn"
+        className="block rounded-xl bg-green-600 px-4 py-3 mb-3 hover:bg-green-700 transition-colors">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="font-bold text-white text-base">{totalTests === 0 ? 'Start Learning' : 'Continue Study Path'}</p>
+            <p className="text-green-100 text-xs mt-0.5">
+              {totalTests === 0 ? 'Learn every concept step by step before testing.' : 'Master all 23 concepts with guided lessons and quizzes.'}
+            </p>
+          </div>
+          <BookOpen size={28} className="text-white shrink-0" />
+        </div>
+      </Link>
+
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 rounded-xl px-4 py-3 text-white mb-3 flex items-center justify-between gap-3">
@@ -221,6 +235,7 @@ export default async function DashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-3" data-tour="tools">
           <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Study Tools</h2>
           <div className="space-y-0.5">
+            <CompactLink href="/learn" icon={<BookOpen size={16} />} label="Study Path" />
             <CompactLink href="/flashcards" icon={<Layers size={16} />} label="Flashcards" />
             <CompactLink href="/podcast" icon={<Headphones size={16} />} label="Listen & Learn" />
             <CompactLink href="/tutor" icon={<Bot size={16} />} label="AI Helper" dataTour="ai-tutor" />

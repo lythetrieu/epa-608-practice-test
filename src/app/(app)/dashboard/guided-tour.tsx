@@ -30,10 +30,10 @@ export function GuidedTour() {
     })
 
     tour.addStep({
-      id: 'core-section',
-      title: 'Start with Core',
-      text: 'Core is required for ALL EPA 608 certifications. Start here!',
-      attachTo: { element: '[data-tour="core"]', on: 'bottom' },
+      id: 'learn-section',
+      title: 'Learn First, Then Practice',
+      text: 'Start with the Study Path — it teaches you every concept step by step with mini-quizzes. Then come back here to practice full tests.',
+      attachTo: { element: '[data-tour="learn"]', on: 'bottom' },
       buttons: [
         { text: '\u2190 Back', action: tour.back, classes: 'shepherd-button-secondary' },
         { text: 'Next \u2192', action: tour.next },

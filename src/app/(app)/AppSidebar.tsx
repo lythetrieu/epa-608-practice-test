@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
 import type { Tier } from '@/types'
 import {
-  Home, Settings, Shield, Users, BarChart3, LogOut,
+  Home, BookOpen, Settings, Shield, Users, BarChart3, LogOut,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -50,6 +50,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
       {/* Navigation — minimal */}
       <nav className="flex-1 p-4 overflow-y-auto">
         <NavLink href="/dashboard" label="Dashboard" icon={<Home size={20} />} pathname={pathname} />
+        <NavLink href="/learn" label="Learn" icon={<BookOpen size={20} />} pathname={pathname} />
 
         {/* Admin — only if applicable */}
         {(isTeamAdmin || isAdmin) && (
