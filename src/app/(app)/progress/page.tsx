@@ -49,7 +49,7 @@ export default async function ProgressPage() {
 
   // Get subtopic_id for each answered question
   const questionIds = [...new Set((progressRows ?? []).map(r => r.question_id))]
-  let questionSubtopics: Record<string, string> = {}
+  const questionSubtopics: Record<string, string> = {}
   if (questionIds.length > 0) {
     const { data: qData } = await admin
       .from('questions')
