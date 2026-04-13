@@ -61,10 +61,10 @@ function saveProgress(p: Record<string, ConceptProgress>) {
 }
 
 function getEffectiveStatus(prog: ConceptProgress): string {
-  let status = prog.status || 'pending'
+  const status = prog.status || 'pending'
   if (status === 'mastered' && prog.lastPassed) {
     const days = (Date.now() - new Date(prog.lastPassed).getTime()) / 86400000
-    if (days > 3) status = 'review'
+    if (days > 3) return 'review'
   }
   return status
 }
