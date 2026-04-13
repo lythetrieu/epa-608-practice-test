@@ -31,7 +31,7 @@ type QuizData = {
   keyNumbers: string[]
   memoryTrick: string
   examWarning: string
-  summary: string
+  facts: string[]
   questions: QuizQuestion[]
   total: number
 }
@@ -272,9 +272,21 @@ export default function StudyPathClient() {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <BookOpen size={16} className="text-blue-600" />
-                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Lesson</span>
+                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Why This Matters</span>
                   </div>
-                  <div className="text-sm text-gray-800 leading-relaxed whitespace-pre-line">{quiz.lesson}</div>
+                  <div className="text-sm text-gray-800 leading-relaxed space-y-3">
+                    {quiz.lesson.split(/\.\s+/).filter(Boolean).map((sentence, i) => {
+                      const text = sentence.trim().replace(/\.$/, '') + '.'
+                      // Highlight sentences with numbers or key terms
+                      const hasNumber = /\d/.test(text)
+                      const hasKey = /(must|never|always|critical|important|illegal|violation|required)/i.test(text)
+                      return (
+                        <p key={i} className={`${hasKey ? 'font-semibold text-blue-900' : ''} ${hasNumber ? 'bg-blue-100/50 -mx-2 px-2 py-1 rounded-lg' : ''}`}>
+                          {text}
+                        </p>
+                      )
+                    })}
+                  </div>
                 </div>
 
                 {/* Visual Diagram */}
@@ -285,6 +297,33 @@ export default function StudyPathClient() {
                       <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">Visual Guide</span>
                     </div>
                     {CONCEPT_VISUALS[activeConceptPrefix]()}
+                  </div>
+                )}
+
+                {/* Full Knowledge Base Facts */}
+                {quiz.facts && quiz.facts.length > 0 && (
+                  <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <BookOpen size={14} className="text-gray-600" />
+                      <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">
+                        All Facts for This Topic ({quiz.facts.length})
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 max-h-[350px] overflow-y-auto pr-1">
+                      {quiz.facts.map((fact, i) => {
+                        const hasNumber = /\d/.test(fact)
+                        const isKey = /(must|never|always|required|illegal|violation|prohibited)/i.test(fact)
+                        return (
+                          <li key={i} className={`text-xs leading-relaxed pl-3 py-1 rounded-md border-l-2 ${
+                            isKey ? 'border-red-400 bg-red-50 text-red-800 font-medium'
+                            : hasNumber ? 'border-blue-400 bg-blue-50 text-blue-800'
+                            : 'border-gray-300 text-gray-700'
+                          }`}>
+                            {fact}
+                          </li>
+                        )
+                      })}
+                    </ul>
                   </div>
                 )}
 
@@ -321,10 +360,6 @@ export default function StudyPathClient() {
                     <p className="text-sm text-red-800">{quiz.examWarning}</p>
                   </div>
                 )}
-              </div>
-            ) : quiz.summary ? (
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-6">
-                <p className="text-sm text-gray-700 leading-relaxed">{quiz.summary.substring(0, 500)}</p>
               </div>
             ) : null}
 

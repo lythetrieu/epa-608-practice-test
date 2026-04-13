@@ -16,8 +16,9 @@ try {
   MICRO_LESSONS = JSON.parse(raw)
 } catch { /* lessons not available */ }
 
-// Load knowledge base for fallback
+// Load knowledge base and extract facts per section
 const KNOWLEDGE_SECTIONS: Record<string, string> = {}
+const KB_FACTS: Record<string, string[]> = {} // section title → array of fact strings
 try {
   const kb = readFileSync(join(process.cwd(), 'src/lib/ai/knowledge-base.txt'), 'utf-8')
   const sections = kb.split(/\n## /)
@@ -26,9 +27,47 @@ try {
     const title = lines[0]?.replace(/^#+\s*/, '').trim().toUpperCase()
     if (title) {
       KNOWLEDGE_SECTIONS[title] = lines.slice(1).join('\n').trim()
+      KB_FACTS[title] = lines.slice(1).filter(l => l.trim().startsWith('-')).map(l => l.trim().replace(/^-\s*/, ''))
     }
   }
 } catch { /* knowledge base not available */ }
+
+// Map concept prefixes → KB section titles (many-to-many)
+const CONCEPT_TO_KB: Record<string, string[]> = {
+  'core-env': ['ENVIRONMENT & OZONE DEPLETION'],
+  'core-caa': ['CLEAN AIR ACT & EPA AUTHORITY'],
+  'core-regs': ['REGULATIONS & COMPLIANCE'],
+  'core-sub': ['REFRIGERANT SUBSTANCES & SUBSTITUTES'],
+  'core-ref': ['REFRIGERANT PROPERTIES & TOOLS'],
+  'core-3rs': ['RECOVERY, RECYCLING & RECLAMATION'],
+  'core-rec': ['RECOVERY EQUIPMENT & PROCEDURES'],
+  'core-evac': ['EVACUATION PROCEDURES & VACUUM'],
+  'core-safe': ['SAFETY & REFRIGERANT HANDLING'],
+  'core-ship': ['SHIPPING, DISPOSAL & TRANSPORT'],
+  't1-rec': ['SMALL APPLIANCE RECOVERY'],
+  't1-tech': ['SMALL APPLIANCE RECOVERY'],
+  't1-safe': ['SMALL APPLIANCE RECOVERY'],
+  't2-leak': ['HIGH-PRESSURE RECOVERY & SERVICE'],
+  't2-repair': ['HIGH-PRESSURE RECOVERY & SERVICE'],
+  't2-rec': ['HIGH-PRESSURE RECOVERY & SERVICE'],
+  't2-tech': ['HIGH-PRESSURE RECOVERY & SERVICE'],
+  't2-ref': ['HIGH-PRESSURE RECOVERY & SERVICE', 'REFRIGERANT PROPERTIES & TOOLS'],
+  't3-leak': ['LOW-PRESSURE CHILLER RECOVERY'],
+  't3-repair': ['LOW-PRESSURE CHILLER RECOVERY'],
+  't3-rec': ['LOW-PRESSURE CHILLER RECOVERY'],
+  't3-rech': ['LOW-PRESSURE CHILLER RECOVERY'],
+  't3-ref': ['LOW-PRESSURE CHILLER RECOVERY', 'REFRIGERANT PROPERTIES & TOOLS'],
+}
+
+function getFactsForConcept(prefix: string): string[] {
+  const kbSections = CONCEPT_TO_KB[prefix] || []
+  const allFacts: string[] = []
+  for (const section of kbSections) {
+    const facts = KB_FACTS[section] || []
+    allFacts.push(...facts)
+  }
+  return allFacts
+}
 
 const ipLimits = new Map<string, { count: number; reset: number }>()
 function checkLimit(ip: string): boolean {
@@ -155,26 +194,18 @@ export async function POST(request: NextRequest) {
       return { id: q.id, category: q.category, question: q.question, options: opts, difficulty: q.difficulty }
     })
 
-    // Get micro-lesson + fallback to knowledge base
+    // Get micro-lesson + ALL knowledge base facts for this concept
     const microLesson = MICRO_LESSONS[conceptPrefix]
-    let conceptSummary = ''
-    if (!microLesson) {
-      for (const [title, content] of Object.entries(KNOWLEDGE_SECTIONS)) {
-        if (title.includes(conceptInfo.title.toUpperCase().split(' ')[0])) {
-          conceptSummary = content
-          break
-        }
-      }
-    }
+    const facts = getFactsForConcept(conceptPrefix)
 
     return NextResponse.json({
       quizId,
-      concept: conceptInfo,
+      concept: { ...conceptInfo, subtopicPrefix: conceptPrefix },
       lesson: microLesson?.lesson || '',
       keyNumbers: microLesson?.keyNumbers || [],
       memoryTrick: microLesson?.memoryTrick || '',
       examWarning: microLesson?.examWarning || '',
-      summary: conceptSummary, // fallback if no lesson
+      facts, // ALL knowledge base facts for this concept
       questions: clientQuestions,
       total: clientQuestions.length,
       mode: 'study',
