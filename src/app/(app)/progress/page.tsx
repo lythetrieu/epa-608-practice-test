@@ -163,6 +163,8 @@ export default async function ProgressPage() {
           const pct = sec.totalConcepts > 0 ? Math.round((sec.mastered / sec.totalConcepts) * 100) : 0
           const coveragePct = sec.totalConcepts > 0 ? Math.round((sec.attempted / sec.totalConcepts) * 100) : 0
           const barColor = pct >= 80 ? 'bg-green-500' : pct >= 40 ? 'bg-yellow-500' : 'bg-gray-300'
+          const slugMap: Record<string, string> = { 'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2', 'Type III': 'type-3' }
+          const slug = slugMap[sec.category] || 'core'
           return (
             <div key={sec.category} className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center justify-between mb-2">
@@ -174,8 +176,12 @@ export default async function ProgressPage() {
               <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
                 <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs text-gray-400 mb-2">
                 {sec.mastered}/{sec.totalConcepts} mastered · {coveragePct}% covered
+              </div>
+              <div className="flex gap-1.5">
+                <Link href="/learn" className="text-[10px] px-2 py-1 rounded bg-blue-50 text-blue-700 font-medium hover:bg-blue-100">Learn</Link>
+                <Link href={`/test/${slug}?mode=practice`} className="text-[10px] px-2 py-1 rounded bg-green-50 text-green-700 font-medium hover:bg-green-100">Practice</Link>
               </div>
             </div>
           )
@@ -194,6 +200,7 @@ export default async function ProgressPage() {
               const statusColor = !c.attempted ? 'text-gray-400' : c.accuracy >= 80 ? 'text-green-600' : c.accuracy >= 50 ? 'text-orange-500' : 'text-red-500'
               const statusLabel = !c.attempted ? 'Not started' : c.accuracy >= 80 ? 'Mastered' : c.accuracy >= 50 ? 'Learning' : 'Weak'
               const barBg = !c.attempted ? 'bg-gray-200' : c.accuracy >= 80 ? 'bg-green-500' : c.accuracy >= 50 ? 'bg-orange-400' : 'bg-red-400'
+              const needsWork = !c.attempted || c.accuracy < 80
               return (
                 <div key={c.key} className="bg-white rounded-lg border border-gray-100 px-4 py-2.5 flex items-center gap-3">
                   <div className="flex-1 min-w-0">
@@ -202,9 +209,16 @@ export default async function ProgressPage() {
                       <div className={`h-full rounded-full ${barBg}`} style={{ width: `${c.attempted ? c.accuracy : 0}%` }} />
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <div className={`text-xs font-bold ${statusColor}`}>{c.attempted ? `${c.accuracy}%` : '—'}</div>
-                    <div className={`text-[10px] ${statusColor}`}>{statusLabel}</div>
+                  <div className="text-right shrink-0 flex items-center gap-2">
+                    <div>
+                      <div className={`text-xs font-bold ${statusColor}`}>{c.attempted ? `${c.accuracy}%` : '—'}</div>
+                      <div className={`text-[10px] ${statusColor}`}>{statusLabel}</div>
+                    </div>
+                    {needsWork && (
+                      <Link href="/learn" className="text-xs px-2 py-1 rounded-md bg-blue-50 text-blue-700 font-medium hover:bg-blue-100 shrink-0">
+                        Study
+                      </Link>
+                    )}
                   </div>
                 </div>
               )

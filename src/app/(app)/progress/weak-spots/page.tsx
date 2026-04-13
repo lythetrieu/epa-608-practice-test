@@ -194,7 +194,7 @@ export default async function WeakSpotsPage() {
                           style={{ width: `${errorPct}%` }}
                         />
                       </div>
-                      <div className="flex items-center justify-between text-xs text-gray-400">
+                      <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
                         <span>
                           {spot.correctCount}/{spot.totalAttempts} correct
                         </span>
@@ -202,6 +202,15 @@ export default async function WeakSpotsPage() {
                           Last attempted{' '}
                           {new Date(spot.lastAttempted).toLocaleDateString()}
                         </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Link href="/learn" className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100">
+                          Study This Topic
+                        </Link>
+                        <Link href={`/test/${spot.category === 'Type I' ? 'type-1' : spot.category === 'Type II' ? 'type-2' : spot.category === 'Type III' ? 'type-3' : 'core'}?mode=practice`}
+                          className="text-xs px-3 py-1.5 rounded-lg bg-green-50 text-green-700 font-medium hover:bg-green-100">
+                          Practice {spot.category}
+                        </Link>
                       </div>
                     </div>
                   )
