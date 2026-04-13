@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle } from 'lucide-react'
+import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid } from 'lucide-react'
 
 type Concept = {
   id: string
@@ -25,7 +25,7 @@ type QuizQuestion = {
 
 type QuizData = {
   quizId: string
-  concept: { id: string; title: string; category: string }
+  concept: { id: string; title: string; category: string; subtopicPrefix?: string }
   lesson: string
   keyNumbers: string[]
   memoryTrick: string
@@ -41,12 +41,13 @@ type ConceptProgress = {
   lastPassed: string | null
 }
 
+type ViewMode = 'course' | 'browse'
+
 function getProgress(): Record<string, ConceptProgress> {
   try {
     const raw = localStorage.getItem('epa608StudyPath')
     if (!raw) return {}
     const parsed = JSON.parse(raw)
-    // Migrate old string format
     for (const k of Object.keys(parsed)) {
       if (typeof parsed[k] === 'string') {
         parsed[k] = { status: parsed[k], passCount: parsed[k] === 'mastered' ? 2 : 0, lastPassed: null }
@@ -60,6 +61,12 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
+function getSavedMode(): ViewMode {
+  try {
+    return (localStorage.getItem('epa608StudyMode') as ViewMode) || 'course'
+  } catch { return 'course' }
+}
+
 function getEffectiveStatus(prog: ConceptProgress): string {
   const status = prog.status || 'pending'
   if (status === 'mastered' && prog.lastPassed) {
@@ -69,10 +76,24 @@ function getEffectiveStatus(prog: ConceptProgress): string {
   return status
 }
 
+// Status icon/color map used in both views
+function getStatusUI(status: string) {
+  const map: Record<string, { icon: React.ReactNode; color: string; bg: string; label: string }> = {
+    mastered: { icon: <Check size={16} />, color: 'text-green-600', bg: 'bg-green-50 border-green-200', label: 'Mastered' },
+    reviewed: { icon: <BookOpen size={16} />, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', label: 'Pass 1/2' },
+    weak: { icon: <AlertTriangle size={16} />, color: 'text-red-500', bg: 'bg-red-50 border-red-200', label: 'Needs Work' },
+    review: { icon: <RotateCcw size={16} />, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200', label: 'Review Due' },
+    pending: { icon: <ChevronRight size={16} />, color: 'text-gray-400', bg: 'bg-white border-gray-200', label: 'Study' },
+    locked: { icon: <Lock size={14} />, color: 'text-gray-300', bg: 'bg-gray-50 border-gray-100', label: 'Locked' },
+  }
+  return map[status] || map.pending
+}
+
 export default function StudyPathClient() {
   const [concepts, setConcepts] = useState<Concept[]>([])
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState<Record<string, ConceptProgress>>({})
+  const [mode, setMode] = useState<ViewMode>('course')
   const [activeConceptPrefix, setActiveConceptPrefix] = useState<string | null>(null)
   const [activeConceptId, setActiveConceptId] = useState<string | null>(null)
   const [quiz, setQuiz] = useState<QuizData | null>(null)
@@ -85,20 +106,29 @@ export default function StudyPathClient() {
 
   useEffect(() => {
     setProgress(getProgress())
+    setMode(getSavedMode())
     fetch('/api/public/study-path')
       .then(r => r.json())
       .then(data => { setConcepts(data.concepts || []); setLoading(false) })
       .catch(() => setLoading(false))
   }, [])
 
-  // Compute section stats
+  const switchMode = (m: ViewMode) => {
+    setMode(m)
+    localStorage.setItem('epa608StudyMode', m)
+  }
+
+  // Ordered flat list: Core → Type I → Type II → Type III
   const sections = ['Core', 'Type I', 'Type II', 'Type III']
+  const orderedConcepts: Concept[] = []
   const grouped: Record<string, Concept[]> = {}
   concepts.forEach(c => {
     if (!grouped[c.category]) grouped[c.category] = []
     grouped[c.category].push(c)
   })
+  sections.forEach(cat => { orderedConcepts.push(...(grouped[cat] || [])) })
 
+  // Stats
   let totalMastered = 0
   const sectionStats = sections.map(cat => {
     const items = grouped[cat] || []
@@ -110,18 +140,34 @@ export default function StudyPathClient() {
       else if (s === 'reviewed') inProgress++
       else if (s === 'weak' || s === 'review') weak++
     })
-    return { cat, total: items.length, mastered, inProgress, weak, pending: items.length - mastered - inProgress - weak }
+    return { cat, total: items.length, mastered, inProgress, weak }
   })
-
   const overallPct = concepts.length > 0 ? Math.round(totalMastered / concepts.length * 100) : 0
 
-  // Find next recommended concept
-  const nextConcept = concepts.find(c => {
+  // Course mode: find current lesson index (first non-mastered)
+  const currentLessonIdx = orderedConcepts.findIndex(c => {
     const p = progress[c.id]
     if (!p) return true
-    const s = getEffectiveStatus(p)
-    return s !== 'mastered'
+    return getEffectiveStatus(p) !== 'mastered'
   })
+  const currentLesson = currentLessonIdx >= 0 ? orderedConcepts[currentLessonIdx] : null
+
+  // Find next lesson after active concept (for "Next Lesson" button in results)
+  const getNextLesson = useCallback(() => {
+    if (!activeConceptId) return null
+    const idx = orderedConcepts.findIndex(c => c.id === activeConceptId)
+    // Find next non-mastered after current
+    for (let i = idx + 1; i < orderedConcepts.length; i++) {
+      const p = progress[orderedConcepts[i].id]
+      if (!p || getEffectiveStatus(p) !== 'mastered') return orderedConcepts[i]
+    }
+    // Wrap around: find any non-mastered before current
+    for (let i = 0; i < idx; i++) {
+      const p = progress[orderedConcepts[i].id]
+      if (!p || getEffectiveStatus(p) !== 'mastered') return orderedConcepts[i]
+    }
+    return null
+  }, [activeConceptId, orderedConcepts, progress])
 
   const openConcept = useCallback((prefix: string, conceptId: string) => {
     setActiveConceptPrefix(prefix)
@@ -132,8 +178,6 @@ export default function StudyPathClient() {
     setQuizIdx(0)
     setAnswers({})
     setResult(null)
-
-    // Auto-enable after 4 seconds
     setTimeout(() => setLessonReady(true), 4000)
 
     fetch('/api/public/study-path', {
@@ -195,10 +239,14 @@ export default function StudyPathClient() {
     )
   }
 
-  // === CONCEPT DETAIL MODAL ===
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CONCEPT DETAIL VIEW (lesson → quiz → result)
+  // ═══════════════════════════════════════════════════════════════════════════
   if (activeConceptPrefix && quiz) {
     const conceptProg = progress[activeConceptId!] || { status: 'pending', passCount: 0, lastPassed: null }
     const effectiveStatus = getEffectiveStatus(conceptProg)
+    const lessonNum = orderedConcepts.findIndex(c => c.id === activeConceptId) + 1
+    const nextLesson = getNextLesson()
 
     return (
       <div className="p-3 sm:p-6 max-w-2xl">
@@ -206,13 +254,18 @@ export default function StudyPathClient() {
           <ArrowLeft size={16} /> Back to Study Path
         </button>
 
-        <h1 className="text-xl font-bold text-gray-900 mb-1">{quiz.concept.title}</h1>
-        <p className="text-sm text-gray-500 mb-6">{quiz.concept.category}</p>
+        {/* Lesson number indicator */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">
+            Lesson {lessonNum} of {orderedConcepts.length}
+          </span>
+          <span className="text-xs text-gray-400">{quiz.concept.category}</span>
+        </div>
+        <h1 className="text-xl font-bold text-gray-900 mb-5">{quiz.concept.title}</h1>
 
         {/* LESSON PHASE */}
         {quizPhase === 'lesson' && (
           <>
-            {/* Micro-lesson */}
             {quiz.lesson ? (
               <div className="space-y-4 mb-6">
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
@@ -267,9 +320,7 @@ export default function StudyPathClient() {
               onClick={() => { setQuizPhase('quiz'); setQuizIdx(0) }}
               disabled={!lessonReady}
               className={`w-full py-3.5 rounded-xl font-bold text-base min-h-[52px] transition-all ${
-                lessonReady
-                  ? 'bg-blue-800 text-white hover:bg-blue-900'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                lessonReady ? 'bg-blue-800 text-white hover:bg-blue-900' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
               {lessonReady ? "I've Read This — Start Quiz" : 'Read the lesson first...'}
@@ -303,9 +354,7 @@ export default function StudyPathClient() {
                     key={i}
                     onClick={() => setAnswers(prev => ({ ...prev, [quiz.questions[quizIdx].id]: opt }))}
                     className={`w-full text-left px-4 py-3.5 rounded-xl border-2 text-sm font-medium min-h-[52px] transition-all ${
-                      selected
-                        ? 'border-blue-600 bg-blue-50 text-blue-900'
-                        : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300'
+                      selected ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300'
                     }`}
                   >
                     {opt}
@@ -363,20 +412,40 @@ export default function StudyPathClient() {
               </>
             )}
 
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col gap-3 items-center">
+              {/* Retry / Quiz 2 */}
               {effectiveStatus !== 'mastered' && (
                 <button
                   onClick={() => openConcept(activeConceptPrefix!, activeConceptId!)}
-                  className={`px-6 py-3 rounded-xl font-bold text-sm min-h-[48px] ${
+                  className={`w-full max-w-xs px-6 py-3 rounded-xl font-bold text-sm min-h-[48px] ${
                     effectiveStatus === 'reviewed' ? 'bg-blue-800 text-white' : 'bg-red-600 text-white'
                   }`}
                 >
                   {effectiveStatus === 'reviewed' ? 'Take Quiz 2' : 'Try Again'}
                 </button>
               )}
+
+              {/* Next Lesson — auto-advance in course mode */}
+              {effectiveStatus === 'mastered' && nextLesson && (
+                <button
+                  onClick={() => openConcept(nextLesson.subtopicPrefix, nextLesson.id)}
+                  className="w-full max-w-xs px-6 py-3 rounded-xl bg-green-600 text-white font-bold text-sm min-h-[48px] hover:bg-green-700 flex items-center justify-center gap-2"
+                >
+                  Next Lesson: {nextLesson.title} <ChevronRight size={18} />
+                </button>
+              )}
+
+              {/* All done! */}
+              {effectiveStatus === 'mastered' && !nextLesson && (
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 w-full max-w-xs">
+                  <p className="text-green-800 font-bold">All Concepts Mastered!</p>
+                  <p className="text-green-600 text-sm mt-1">You&apos;re ready for the real exam.</p>
+                </div>
+              )}
+
               <button onClick={closeModal}
-                className="px-6 py-3 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm min-h-[48px]">
-                Back to Path
+                className="w-full max-w-xs px-6 py-3 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm min-h-[48px]">
+                Back to Study Path
               </button>
             </div>
           </div>
@@ -385,13 +454,35 @@ export default function StudyPathClient() {
     )
   }
 
-  // === MAIN STUDY PATH VIEW ===
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MAIN VIEW
+  // ═══════════════════════════════════════════════════════════════════════════
   return (
     <div className="p-3 sm:p-6 max-w-3xl">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-gray-900 mb-1">Study Path</h1>
-        <p className="text-sm text-gray-500">Master every concept. Track your progress. Pass the exam.</p>
+      {/* Header + Mode Toggle */}
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h1 className="text-xl font-bold text-gray-900 mb-0.5">Study Path</h1>
+          <p className="text-sm text-gray-500">Master every concept. Pass the exam.</p>
+        </div>
+        <div className="flex bg-gray-100 rounded-lg p-0.5 shrink-0">
+          <button
+            onClick={() => switchMode('course')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+              mode === 'course' ? 'bg-white text-blue-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <ListOrdered size={14} /> Course
+          </button>
+          <button
+            onClick={() => switchMode('browse')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+              mode === 'browse' ? 'bg-white text-blue-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <LayoutGrid size={14} /> Browse
+          </button>
+        </div>
       </div>
 
       {/* Overall progress */}
@@ -406,7 +497,7 @@ export default function StudyPathClient() {
       </div>
 
       {/* Section cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
         {sectionStats.map(s => {
           const pct = s.total > 0 ? Math.round(s.mastered / s.total * 100) : 0
           return (
@@ -424,65 +515,127 @@ export default function StudyPathClient() {
         })}
       </div>
 
-      {/* Next recommended */}
-      {nextConcept && (
-        <button
-          onClick={() => openConcept(nextConcept.subtopicPrefix, nextConcept.id)}
-          className="w-full bg-green-600 text-white rounded-xl p-4 mb-6 hover:bg-green-700 transition-colors text-left flex items-center justify-between"
-        >
-          <div>
-            <p className="font-bold text-base">Continue: {nextConcept.title}</p>
-            <p className="text-green-100 text-xs mt-0.5">{nextConcept.category} — Tap to start learning</p>
+      {/* ═══ COURSE MODE ═══ */}
+      {mode === 'course' && (
+        <>
+          {/* Current lesson CTA */}
+          {currentLesson && (
+            <button
+              onClick={() => openConcept(currentLesson.subtopicPrefix, currentLesson.id)}
+              className="w-full bg-green-600 text-white rounded-xl p-4 mb-5 hover:bg-green-700 transition-colors text-left flex items-center justify-between"
+            >
+              <div>
+                <p className="text-xs text-green-200 font-semibold mb-0.5">
+                  Lesson {currentLessonIdx + 1} of {orderedConcepts.length}
+                </p>
+                <p className="font-bold text-base">{currentLesson.title}</p>
+                <p className="text-green-100 text-xs mt-0.5">{currentLesson.category}</p>
+              </div>
+              <ChevronRight size={24} className="shrink-0" />
+            </button>
+          )}
+
+          {!currentLesson && (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-5 mb-5 text-center">
+              <p className="text-green-800 font-bold text-lg">All 23 Concepts Mastered!</p>
+              <p className="text-green-600 text-sm mt-1">You&apos;ve completed the entire study path. Take a practice test to confirm.</p>
+            </div>
+          )}
+
+          {/* Linear concept list with step numbers */}
+          <div className="space-y-1">
+            {orderedConcepts.map((c, idx) => {
+              const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
+              const status = getEffectiveStatus(p)
+              const isCurrent = currentLesson?.id === c.id
+              const isLocked = mode === 'course' && idx > currentLessonIdx && status === 'pending' && currentLessonIdx >= 0
+              const effectiveStatus = isLocked ? 'locked' : status
+              const ui = getStatusUI(effectiveStatus)
+
+              // Section divider
+              const prevCat = idx > 0 ? orderedConcepts[idx - 1].category : null
+              const showDivider = c.category !== prevCat
+
+              return (
+                <div key={c.id}>
+                  {showDivider && (
+                    <div className="flex items-center gap-2 pt-4 pb-1.5">
+                      <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{c.category}</span>
+                      <div className="flex-1 h-px bg-gray-200" />
+                    </div>
+                  )}
+                  <button
+                    onClick={() => !isLocked && openConcept(c.subtopicPrefix, c.id)}
+                    disabled={isLocked}
+                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all min-h-[52px] ${
+                      isCurrent ? 'border-green-400 bg-green-50 ring-2 ring-green-200' : ui.bg
+                    } ${isLocked ? 'cursor-not-allowed opacity-60' : 'hover:shadow-sm'}`}
+                  >
+                    {/* Step number */}
+                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                      effectiveStatus === 'mastered' ? 'bg-green-600 text-white'
+                      : isCurrent ? 'bg-green-600 text-white'
+                      : effectiveStatus === 'locked' ? 'bg-gray-200 text-gray-400'
+                      : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      {effectiveStatus === 'mastered' ? <Check size={14} /> : idx + 1}
+                    </span>
+
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm font-medium truncate ${isLocked ? 'text-gray-400' : 'text-gray-900'}`}>{c.title}</p>
+                    </div>
+
+                    <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>
+                      {isCurrent && effectiveStatus === 'pending' ? 'Start' : ui.label}
+                    </span>
+                  </button>
+                </div>
+              )
+            })}
           </div>
-          <ChevronRight size={24} className="shrink-0" />
-        </button>
+        </>
       )}
 
-      {/* Concept list by section */}
-      {sections.map(cat => {
-        const items = grouped[cat] || []
-        if (items.length === 0) return null
-        const stats = sectionStats.find(s => s.cat === cat)!
+      {/* ═══ BROWSE MODE ═══ */}
+      {mode === 'browse' && (
+        <>
+          {sections.map(cat => {
+            const items = grouped[cat] || []
+            if (items.length === 0) return null
+            const stats = sectionStats.find(s => s.cat === cat)!
 
-        return (
-          <div key={cat} className="mb-6">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider">{cat}</h2>
-              <span className="text-xs text-gray-400">{stats.mastered}/{stats.total}</span>
-            </div>
+            return (
+              <div key={cat} className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider">{cat}</h2>
+                  <span className="text-xs text-gray-400">{stats.mastered}/{stats.total}</span>
+                </div>
+                <div className="space-y-1.5">
+                  {items.map(c => {
+                    const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
+                    const status = getEffectiveStatus(p)
+                    const ui = getStatusUI(status)
 
-            <div className="space-y-1.5">
-              {items.map(c => {
-                const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
-                const status = getEffectiveStatus(p)
-
-                const iconMap: Record<string, { icon: React.ReactNode; color: string; bg: string; label: string }> = {
-                  mastered: { icon: <Check size={16} />, color: 'text-green-600', bg: 'bg-green-50 border-green-200', label: 'Mastered' },
-                  reviewed: { icon: <BookOpen size={16} />, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', label: 'Pass 1/2' },
-                  weak: { icon: <AlertTriangle size={16} />, color: 'text-red-500', bg: 'bg-red-50 border-red-200', label: 'Needs Work' },
-                  review: { icon: <RotateCcw size={16} />, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200', label: 'Review Due' },
-                  pending: { icon: <ChevronRight size={16} />, color: 'text-gray-400', bg: 'bg-white border-gray-200', label: 'Study' },
-                }
-                const ui = iconMap[status] || iconMap.pending
-
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => openConcept(c.subtopicPrefix, c.id)}
-                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all hover:shadow-sm min-h-[52px] ${ui.bg}`}
-                  >
-                    <span className={`shrink-0 ${ui.color}`}>{ui.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{c.title}</p>
-                    </div>
-                    <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>{ui.label}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        )
-      })}
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => openConcept(c.subtopicPrefix, c.id)}
+                        className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all hover:shadow-sm min-h-[52px] ${ui.bg}`}
+                      >
+                        <span className={`shrink-0 ${ui.color}`}>{ui.icon}</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">{c.title}</p>
+                        </div>
+                        <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>{ui.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </>
+      )}
     </div>
   )
 }
