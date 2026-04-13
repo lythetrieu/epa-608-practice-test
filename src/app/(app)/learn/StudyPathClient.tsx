@@ -269,24 +269,14 @@ export default function StudyPathClient() {
           <>
             {quiz.lesson ? (
               <div className="space-y-4 mb-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
-                  <div className="flex items-center gap-2 mb-3">
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
                     <BookOpen size={16} className="text-blue-600" />
-                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Why This Matters</span>
+                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Quick Overview</span>
                   </div>
-                  <div className="text-sm text-gray-800 leading-relaxed space-y-3">
-                    {quiz.lesson.split(/\.\s+/).filter(Boolean).map((sentence, i) => {
-                      const text = sentence.trim().replace(/\.$/, '') + '.'
-                      // Highlight sentences with numbers or key terms
-                      const hasNumber = /\d/.test(text)
-                      const hasKey = /(must|never|always|critical|important|illegal|violation|required)/i.test(text)
-                      return (
-                        <p key={i} className={`${hasKey ? 'font-semibold text-blue-900' : ''} ${hasNumber ? 'bg-blue-100/50 -mx-2 px-2 py-1 rounded-lg' : ''}`}>
-                          {text}
-                        </p>
-                      )
-                    })}
-                  </div>
+                  <p className="text-sm text-gray-800 leading-relaxed">
+                    {quiz.lesson.split(/\.\s+/).slice(0, 3).join('. ').trim().replace(/\.$/, '') + '.'}
+                  </p>
                 </div>
 
                 {/* Visual Diagram */}
@@ -300,32 +290,56 @@ export default function StudyPathClient() {
                   </div>
                 )}
 
-                {/* Full Knowledge Base Facts */}
-                {quiz.facts && quiz.facts.length > 0 && (
-                  <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <BookOpen size={14} className="text-gray-600" />
-                      <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">
-                        All Facts for This Topic ({quiz.facts.length})
-                      </span>
+                {/* Exam Patterns — must-know rules & numbers */}
+                {quiz.facts && quiz.facts.length > 0 && (() => {
+                  const rules = quiz.facts.filter(f => /(must|never|always|required|illegal|violation|prohibited|cannot|only)/i.test(f))
+                  const numbers = quiz.facts.filter(f => /\d/.test(f) && !rules.includes(f))
+                  const patterns = [...rules.slice(0, 6), ...numbers.slice(0, 4)]
+                  const remaining = quiz.facts.filter(f => !patterns.includes(f))
+
+                  return (
+                    <div className="space-y-3">
+                      {patterns.length > 0 && (
+                        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <AlertCircle size={14} className="text-orange-600" />
+                            <span className="text-xs font-bold text-orange-700 uppercase tracking-wide">
+                              Exam Patterns — What They Test
+                            </span>
+                          </div>
+                          <ul className="space-y-2">
+                            {patterns.map((fact, i) => {
+                              const isRule = rules.includes(fact)
+                              return (
+                                <li key={i} className={`text-xs leading-relaxed pl-3 py-1.5 rounded-lg border-l-2 ${
+                                  isRule ? 'border-red-400 bg-red-50/70 text-red-800 font-medium' : 'border-blue-400 bg-blue-50/70 text-blue-800'
+                                }`}>
+                                  {fact}
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        </div>
+                      )}
+
+                      {remaining.length > 0 && (
+                        <details className="bg-gray-50 border border-gray-200 rounded-xl">
+                          <summary className="px-4 py-3 cursor-pointer text-xs font-bold text-gray-500 uppercase tracking-wide flex items-center gap-2 select-none">
+                            <ChevronRight size={14} className="transition-transform details-open:rotate-90" />
+                            All {quiz.facts.length} Facts (Reference)
+                          </summary>
+                          <ul className="px-4 pb-4 space-y-1.5 max-h-[300px] overflow-y-auto">
+                            {remaining.map((fact, i) => (
+                              <li key={i} className="text-xs text-gray-600 leading-relaxed pl-3 border-l-2 border-gray-200 py-0.5">
+                                {fact}
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
                     </div>
-                    <ul className="space-y-1.5 max-h-[350px] overflow-y-auto pr-1">
-                      {quiz.facts.map((fact, i) => {
-                        const hasNumber = /\d/.test(fact)
-                        const isKey = /(must|never|always|required|illegal|violation|prohibited)/i.test(fact)
-                        return (
-                          <li key={i} className={`text-xs leading-relaxed pl-3 py-1 rounded-md border-l-2 ${
-                            isKey ? 'border-red-400 bg-red-50 text-red-800 font-medium'
-                            : hasNumber ? 'border-blue-400 bg-blue-50 text-blue-800'
-                            : 'border-gray-300 text-gray-700'
-                          }`}>
-                            {fact}
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </div>
-                )}
+                  )
+                })()}
 
                 {quiz.keyNumbers.length > 0 && (
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
