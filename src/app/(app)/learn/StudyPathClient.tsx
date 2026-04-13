@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid } from 'lucide-react'
+import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid, Eye } from 'lucide-react'
+import { CONCEPT_VISUALS } from './concept-visuals'
 
 type Concept = {
   id: string
@@ -275,6 +276,17 @@ export default function StudyPathClient() {
                   </div>
                   <div className="text-sm text-gray-800 leading-relaxed whitespace-pre-line">{quiz.lesson}</div>
                 </div>
+
+                {/* Visual Diagram */}
+                {activeConceptPrefix && CONCEPT_VISUALS[activeConceptPrefix] && (
+                  <div className="bg-white border border-gray-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Eye size={14} className="text-gray-600" />
+                      <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">Visual Guide</span>
+                    </div>
+                    {CONCEPT_VISUALS[activeConceptPrefix]()}
+                  </div>
+                )}
 
                 {quiz.keyNumbers.length > 0 && (
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
