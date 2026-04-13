@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPA 608 Study Path — Master Every Concept</title>
+<meta name="description" content="Structured study path for EPA 608 certification. Master all 23 concepts with guided mini-quizzes. Track your progress to 100%.">
+<link rel="stylesheet" href="/index.css?v=3">
+<style>
+body{font-family:'Inter',-apple-system,sans-serif;background:#f8fafc;color:#0f172a;margin:0}
+.sp-header{background:#1e40af;color:#fff;padding:32px 20px;text-align:center}
+.sp-header h1{font-size:24px;font-weight:800;margin:0 0 8px}
+.sp-header p{font-size:14px;color:#93c5fd;margin:0}
+.sp-progress{max-width:600px;margin:0 auto;padding:16px 0}
+.sp-bar{height:12px;background:rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;margin-top:8px}
+.sp-fill{height:100%;background:#4ade80;border-radius:6px;transition:width 0.5s}
+.sp-stats{display:flex;justify-content:center;gap:24px;margin-top:12px;font-size:13px;color:#bfdbfe}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.section-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:600px;margin:20px auto 0}
+@media(max-width:480px){.section-grid{grid-template-columns:1fr}}
+.section-card{background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px}
+.section-card-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.section-card-pct{font-size:12px;color:#93c5fd;font-weight:600}
+.section-bar{height:8px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden}
+.section-fill{height:100%;border-radius:4px;transition:width 0.5s}
+.section-fill.green{background:#4ade80}
+.section-fill.yellow{background:#fbbf24}
+.section-fill.red{background:#f87171}
+.section-detail{font-size:11px;color:#bfdbfe;margin-top:4px;display:flex;gap:8px}
+.cat-section{margin-bottom:32px}
+.cat-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:2px solid #e2e8f0;margin-bottom:12px}
+.cat-title{font-size:14px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin:0}
+.cat-progress{display:flex;align-items:center;gap:8px}
+.cat-pbar{width:80px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.cat-pfill{height:100%;border-radius:3px;transition:width 0.4s}
+.cat-plabel{font-size:12px;font-weight:600;color:#64748b;white-space:nowrap}
+.concept-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;min-height:56px}
+.concept-card:hover{border-color:#1e40af;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.concept-card.mastered{border-color:#16a34a;background:#f0fdf4}
+.concept-card.weak{border-color:#dc2626;background:#fef2f2}
+.cc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;shrink:0}
+.cc-icon.pending{background:#f1f5f9;color:#94a3b8}
+.cc-icon.mastered{background:#dcfce7;color:#16a34a}
+.cc-icon.weak{background:#fee2e2;color:#dc2626}
+.cc-info{flex:1}
+.cc-title{font-size:15px;font-weight:600;color:#0f172a}
+.cc-cat{font-size:12px;color:#64748b}
+.cc-status{font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px}
+.cc-status.pending{background:#f1f5f9;color:#64748b}
+.cc-status.mastered{background:#dcfce7;color:#16a34a}
+.cc-status.weak{background:#fee2e2;color:#dc2626}
+#studyModal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.5)}
+.modal-content{background:#fff;max-width:700px;margin:40px auto;border-radius:16px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:24px;border-bottom:1px solid #e2e8f0}
+.modal-body{padding:24px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#64748b}
+.summary-box{background:#f0f4ff;border:1px solid #c7d2fe;border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;line-height:1.7;color:#1e293b;max-height:300px;overflow-y:auto}
+.quiz-area{margin-top:16px}
+.q-text{font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.5}
+.opt-btn{display:block;width:100%;text-align:left;padding:14px 18px;margin:6px 0;border:2px solid #e2e8f0;border-radius:12px;background:#fff;font-size:15px;cursor:pointer;transition:all 0.15s;min-height:48px}
+.opt-btn:hover{border-color:#1e40af;background:#eff6ff}
+.opt-btn.selected{border-color:#1e40af;background:#dbeafe}
+.nav-btns{display:flex;justify-content:space-between;margin-top:20px;gap:12px}
+.nav-btn{padding:12px 24px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;border:none;min-height:48px}
+.btn-next{background:#1e40af;color:#fff}
+.btn-prev{background:#f1f5f9;color:#64748b}
+.result-box{text-align:center;padding:24px}
+.result-score{font-size:48px;font-weight:800}
+.result-msg{font-size:16px;margin-top:8px}
+</style>
+</head>
+<body>
+<script src="includes.js"></script>
+<div id="header-placeholder"></div>
+
+<div class="sp-header">
+  <h1>EPA 608 Study Path</h1>
+  <p>Master every concept. Track your progress. Pass the exam.</p>
+  <div class="sp-progress">
+    <div class="sp-bar"><div class="sp-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="sp-stats">
+      <span id="masteredCount">0</span> mastered ·
+      <span id="totalConcepts">0</span> total ·
+      <span id="progressPct">0%</span> complete
+    </div>
+  </div>
+  <div class="section-grid" id="sectionGrid"></div>
+</div>
+
+<div class="container" id="conceptList">
+  <p style="text-align:center;color:#64748b;padding:40px;">Loading study path...</p>
+</div>
+
+<!-- Study Modal -->
+<div id="studyModal">
+  <div class="modal-content" style="position:relative">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-header">
+      <h2 id="modalTitle" style="font-size:20px;font-weight:700;margin:0"></h2>
+      <p id="modalCategory" style="font-size:13px;color:#64748b;margin:4px 0 0"></p>
+    </div>
+    <div class="modal-body">
+      <h3 style="font-size:14px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:8px">Key Facts</h3>
+      <div class="summary-box" id="modalSummary"></div>
+
+      <div id="readGate" style="text-align:center;padding:16px;background:#fef3c7;border:1px solid #f59e0b;border-radius:12px;margin-bottom:16px;">
+        <p style="font-size:14px;color:#92400e;font-weight:600;margin-bottom:8px;">Read the key facts above first</p>
+        <p style="font-size:12px;color:#a16207;margin-bottom:12px;">Scroll through all facts, then start the quiz.</p>
+        <button id="startQuizBtn" onclick="unlockQuiz()" style="background:#1e40af;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;min-height:48px;opacity:0.4;pointer-events:none;">I've Read the Facts — Start Quiz</button>
+      </div>
+      <div class="quiz-area" id="quizArea" style="display:none">
+        <p style="color:#64748b">Loading questions...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script>
+// Progress format: { conceptId: { status: "pending"|"reviewed"|"mastered"|"weak", passCount: 0, lastPassed: null } }
+var studyProgress = JSON.parse(localStorage.getItem('epa608StudyPath') || '{}');
+// Migrate old format (string status) to new format (object)
+Object.keys(studyProgress).forEach(function(k) {
+  if (typeof studyProgress[k] === 'string') {
+    studyProgress[k] = { status: studyProgress[k], passCount: studyProgress[k] === 'mastered' ? 2 : 0, lastPassed: null };
+  }
+});
+var allConcepts = [];
+var currentQuiz = null;
+var currentIdx = 0;
+var quizAnswers = {};
+
+// Load concepts
+fetch('/api/public/study-path').then(function(r){return r.json()}).then(function(data) {
+  allConcepts = data.concepts || [];
+  renderConceptList();
+}).catch(function() {
+  document.getElementById('conceptList').innerHTML = '<p style="text-align:center;color:#dc2626;">Failed to load. <a href="javascript:location.reload()">Retry</a></p>';
+});
+
+function getConceptStatus(c) {
+  var prog = studyProgress[c.id] || { status: 'pending', passCount: 0, lastPassed: null };
+  var status = prog.status || 'pending';
+  if (status === 'mastered' && prog.lastPassed) {
+    var daysSince = (Date.now() - new Date(prog.lastPassed).getTime()) / 86400000;
+    if (daysSince > 3) status = 'review';
+  }
+  return status;
+}
+
+function renderConceptList() {
+  var grouped = {};
+  allConcepts.forEach(function(c) {
+    if (!grouped[c.category]) grouped[c.category] = [];
+    grouped[c.category].push(c);
+  });
+
+  var mastered = 0;
+  var html = '';
+  var order = ['Core', 'Type I', 'Type II', 'Type III'];
+  var sectionStats = {};
+
+  order.forEach(function(cat) {
+    var concepts = grouped[cat] || [];
+    if (concepts.length === 0) return;
+
+    // Calculate section stats
+    var catMastered = 0, catInProgress = 0, catWeak = 0;
+    concepts.forEach(function(c) {
+      var status = getConceptStatus(c);
+      if (status === 'mastered') { catMastered++; mastered++; }
+      else if (status === 'reviewed') catInProgress++;
+      else if (status === 'weak' || status === 'review') catWeak++;
+    });
+    sectionStats[cat] = { mastered: catMastered, inProgress: catInProgress, weak: catWeak, total: concepts.length };
+
+    var catPct = concepts.length > 0 ? Math.round(catMastered / concepts.length * 100) : 0;
+    var barColor = catPct >= 80 ? '#16a34a' : catPct >= 40 ? '#f59e0b' : '#94a3b8';
+
+    html += '<div class="cat-section">';
+    html += '<div class="cat-header">';
+    html += '<div class="cat-title">' + cat + ' (' + concepts.length + ' concepts)</div>';
+    html += '<div class="cat-progress">';
+    html += '<div class="cat-pbar"><div class="cat-pfill" style="width:' + catPct + '%;background:' + barColor + '"></div></div>';
+    html += '<span class="cat-plabel">' + catMastered + '/' + concepts.length + '</span>';
+    html += '</div></div>';
+
+    concepts.forEach(function(c) {
+      var status = getConceptStatus(c);
+      var iconClass = status === 'mastered' ? 'mastered' : (status === 'weak' || status === 'review') ? 'weak' : 'pending';
+      var icon = status === 'mastered' ? '✓' : status === 'review' ? '↻' : status === 'reviewed' ? '½' : status === 'weak' ? '!' : '→';
+      var statusLabel = status === 'mastered' ? 'Mastered' : status === 'review' ? 'Review Due' : status === 'reviewed' ? 'Pass 1/2' : status === 'weak' ? 'Needs Work' : 'Study';
+
+      html += '<div class="concept-card ' + iconClass + '" onclick="openConcept(\'' + c.subtopicPrefix + '\',\'' + c.id + '\')">';
+      html += '<div class="cc-icon ' + iconClass + '">' + icon + '</div>';
+      html += '<div class="cc-info"><div class="cc-title">' + c.title + '</div>';
+      html += '<div class="cc-cat">' + cat + '</div></div>';
+      html += '<span class="cc-status ' + iconClass + '">' + statusLabel + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('conceptList').innerHTML = html;
+
+  // Render section overview cards in header
+  var gridHtml = '';
+  order.forEach(function(cat) {
+    var s = sectionStats[cat];
+    if (!s) return;
+    var pct = s.total > 0 ? Math.round(s.mastered / s.total * 100) : 0;
+    var fillClass = pct >= 80 ? 'green' : pct >= 30 ? 'yellow' : 'red';
+    if (s.mastered === 0 && s.inProgress === 0 && s.weak === 0) fillClass = 'red';
+
+    gridHtml += '<div class="section-card">';
+    gridHtml += '<div class="section-card-title"><span>' + cat + '</span><span class="section-card-pct">' + pct + '%</span></div>';
+    gridHtml += '<div class="section-bar"><div class="section-fill ' + fillClass + '" style="width:' + pct + '%"></div></div>';
+    gridHtml += '<div class="section-detail">';
+    gridHtml += '<span>' + s.mastered + ' mastered</span>';
+    if (s.inProgress > 0) gridHtml += '<span>' + s.inProgress + ' in progress</span>';
+    if (s.weak > 0) gridHtml += '<span>' + s.weak + ' weak</span>';
+    var pending = s.total - s.mastered - s.inProgress - s.weak;
+    if (pending > 0) gridHtml += '<span>' + pending + ' pending</span>';
+    gridHtml += '</div></div>';
+  });
+  document.getElementById('sectionGrid').innerHTML = gridHtml;
+
+  // Update overall stats
+  document.getElementById('masteredCount').textContent = mastered;
+  document.getElementById('totalConcepts').textContent = allConcepts.length;
+  var pct = allConcepts.length > 0 ? Math.round(mastered / allConcepts.length * 100) : 0;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function openConcept(prefix, conceptId) {
+  document.getElementById('studyModal').style.display = 'block';
+  document.getElementById('quizArea').innerHTML = '<p style="color:#64748b">Loading...</p>';
+
+  fetch('/api/public/study-path', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({conceptPrefix: prefix, count: 5})
+  }).then(function(r){return r.json()}).then(function(data) {
+    document.getElementById('modalTitle').textContent = data.concept.title;
+    document.getElementById('modalCategory').textContent = data.concept.category;
+
+    // Reset gate
+    document.getElementById('readGate').style.display = 'block';
+    document.getElementById('quizArea').style.display = 'none';
+    var btn = document.getElementById('startQuizBtn');
+    btn.style.opacity = '0.4';
+    btn.style.pointerEvents = 'none';
+
+    // Show teaching lesson (not just facts)
+    var lessonHtml = '';
+
+    if (data.lesson) {
+      // Real micro-lesson
+      lessonHtml += '<div style="font-size:15px;line-height:1.8;color:#1e293b;">';
+      lessonHtml += data.lesson.replace(/\n/g, '<br>');
+      lessonHtml += '</div>';
+
+      // Key numbers
+      if (data.keyNumbers && data.keyNumbers.length > 0) {
+        lessonHtml += '<div style="margin-top:16px;padding:12px;background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;">';
+        lessonHtml += '<p style="font-size:12px;font-weight:700;color:#92400e;text-transform:uppercase;margin-bottom:6px;">Numbers to Remember</p>';
+        data.keyNumbers.forEach(function(n) {
+          lessonHtml += '<span style="display:inline-block;padding:3px 10px;margin:2px;background:#fff;border:1px solid #fbbf24;border-radius:6px;font-size:13px;font-weight:600;color:#92400e;">' + n + '</span>';
+        });
+        lessonHtml += '</div>';
+      }
+
+      // Memory trick
+      if (data.memoryTrick) {
+        lessonHtml += '<div style="margin-top:12px;padding:12px;background:#eff6ff;border:1px solid #93c5fd;border-radius:10px;">';
+        lessonHtml += '<p style="font-size:12px;font-weight:700;color:#1e40af;text-transform:uppercase;margin-bottom:4px;">Memory Trick</p>';
+        lessonHtml += '<p style="font-size:14px;color:#1e3a8a;font-weight:600;">' + data.memoryTrick + '</p>';
+        lessonHtml += '</div>';
+      }
+
+      // Exam warning
+      if (data.examWarning) {
+        lessonHtml += '<div style="margin-top:12px;padding:12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;">';
+        lessonHtml += '<p style="font-size:12px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:4px;">Exam Trap</p>';
+        lessonHtml += '<p style="font-size:14px;color:#991b1b;">' + data.examWarning + '</p>';
+        lessonHtml += '</div>';
+      }
+    } else {
+      // Fallback to raw facts
+      var summary = data.summary || 'Study material for ' + data.concept.title;
+      var facts = summary.split('\n').filter(function(l){return l.trim().startsWith('-')});
+      lessonHtml = '<ul style="margin:0;padding-left:20px;">';
+      facts.forEach(function(f) {
+        lessonHtml += '<li style="margin-bottom:6px;">' + f.replace(/^-\s*/, '') + '</li>';
+      });
+      if (facts.length === 0) lessonHtml += '<li>' + summary.substring(0, 500) + '</li>';
+      lessonHtml += '</ul>';
+    }
+
+    document.getElementById('modalSummary').innerHTML = lessonHtml;
+
+    // Setup quiz
+    currentQuiz = data;
+    currentIdx = 0;
+    quizAnswers = {};
+    window._currentConceptId = conceptId;
+    renderQuizQuestion();
+  }).catch(function() {
+    document.getElementById('quizArea').innerHTML = '<p style="color:#dc2626">Failed to load quiz.</p>';
+  });
+}
+
+function renderQuizQuestion() {
+  if (!currentQuiz || currentIdx >= currentQuiz.questions.length) {
+    finishQuiz();
+    return;
+  }
+  var q = currentQuiz.questions[currentIdx];
+  var selected = quizAnswers[q.id] || null;
+
+  var html = '<div class="q-text">Q' + (currentIdx+1) + '/' + currentQuiz.total + ': ' + q.question + '</div>';
+  q.options.forEach(function(opt) {
+    var cls = selected === opt ? ' selected' : '';
+    html += '<button class="opt-btn' + cls + '" onclick="selectAnswer(\'' + q.id + '\',this.textContent)">' + opt + '</button>';
+  });
+
+  html += '<div class="nav-btns">';
+  if (currentIdx > 0) html += '<button class="nav-btn btn-prev" onclick="prevQ()">← Back</button>';
+  else html += '<div></div>';
+
+  if (currentIdx < currentQuiz.total - 1) {
+    html += '<button class="nav-btn btn-next" onclick="nextQ()">Next →</button>';
+  } else {
+    html += '<button class="nav-btn btn-next" onclick="finishQuiz()" style="background:#16a34a">Submit</button>';
+  }
+  html += '</div>';
+
+  document.getElementById('quizArea').innerHTML = html;
+}
+
+function selectAnswer(qId, answer) {
+  quizAnswers[qId] = answer;
+  renderQuizQuestion();
+}
+function nextQ() { currentIdx++; renderQuizQuestion(); }
+function prevQ() { currentIdx--; renderQuizQuestion(); }
+
+function finishQuiz() {
+  if (!currentQuiz) return;
+  document.getElementById('quizArea').innerHTML = '<p style="color:#64748b;text-align:center">Scoring...</p>';
+
+  fetch('/api/public/score', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({quizId: currentQuiz.quizId, answers: quizAnswers})
+  }).then(function(r){return r.json()}).then(function(data) {
+    var pct = data.percentage;
+    var passed = pct >= 80;
+    var conceptId = window._currentConceptId;
+    var prog = studyProgress[conceptId] || { status: 'pending', passCount: 0, lastPassed: null };
+
+    if (passed) {
+      prog.passCount = (prog.passCount || 0) + 1;
+      prog.lastPassed = new Date().toISOString();
+      if (prog.passCount >= 2) {
+        prog.status = 'mastered';
+      } else {
+        prog.status = 'reviewed'; // pass 1 of 2
+      }
+    } else {
+      prog.status = 'weak';
+      prog.passCount = 0; // reset on fail
+    }
+
+    studyProgress[conceptId] = prog;
+    localStorage.setItem('epa608StudyPath', JSON.stringify(studyProgress));
+
+    var html = '<div class="result-box">';
+    html += '<div class="result-score" style="color:' + (passed ? '#16a34a' : '#dc2626') + '">' + pct + '%</div>';
+
+    if (prog.status === 'mastered') {
+      html += '<div class="result-msg" style="color:#16a34a;font-weight:700;">Concept Mastered! (2/2 passes)</div>';
+      html += '<p style="font-size:13px;color:#64748b;margin-top:8px;">This concept will be reviewed in 3 days to confirm retention.</p>';
+    } else if (prog.status === 'reviewed') {
+      html += '<div class="result-msg" style="color:#1e40af;font-weight:700;">Pass 1 of 2 — Take quiz again with new questions to master.</div>';
+      html += '<p style="font-size:13px;color:#64748b;margin-top:8px;">You need to pass twice (with different questions) to confirm understanding.</p>';
+    } else {
+      html += '<div class="result-msg" style="color:#dc2626;">Need 80% to pass. Review the key facts and try again.</div>';
+    }
+
+    html += '<div style="margin-top:16px">';
+    if (prog.status !== 'mastered') {
+      html += '<button class="nav-btn btn-next" onclick="openConcept(\'' + currentQuiz.concept.subtopicPrefix + '\',\'' + conceptId + '\')" style="background:' + (prog.status === 'reviewed' ? '#1e40af' : '#dc2626') + ';color:#fff;margin-right:8px">' + (prog.status === 'reviewed' ? 'Take Quiz 2' : 'Try Again') + '</button>';
+    }
+    html += '<button class="nav-btn btn-prev" onclick="closeModal()">Back to Path</button>';
+    html += '</div></div>';
+
+    document.getElementById('quizArea').innerHTML = html;
+  }).catch(function() {
+    document.getElementById('quizArea').innerHTML = '<p style="color:#dc2626">Scoring failed. Try again.</p>';
+  });
+}
+
+// Scroll detection — enable quiz button after reading
+document.getElementById('modalSummary').addEventListener('scroll', function() {
+  var el = this;
+  // Check if scrolled to bottom (or content fits without scroll)
+  if (el.scrollHeight <= el.clientHeight || el.scrollTop + el.clientHeight >= el.scrollHeight - 20) {
+    var btn = document.getElementById('startQuizBtn');
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+  }
+});
+// Also enable after 5 seconds (for short summaries that don't need scroll)
+setTimeout(function() {
+  var btn = document.getElementById('startQuizBtn');
+  if (btn) { btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+}, 5000);
+
+function unlockQuiz() {
+  document.getElementById('readGate').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  renderQuizQuestion();
+}
+
+function closeModal() {
+  document.getElementById('studyModal').style.display = 'none';
+  renderConceptList();
+}
+</script>
+</body>
+</html>

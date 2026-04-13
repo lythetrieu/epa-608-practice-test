@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPA 608 Type 3 Practice Test | Free Low-Pressure</title>
+    <meta name="description"
+        content="Take the free EPA 608 Type 3 practice test. 25 questions covering centrifugal chillers, rupture discs, purge units, and low-pressure safety standards.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/type-3.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Type 3 Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Type 3 exam with 25 expert-designed questions. Practice centrifugal chiller maintenance and low-pressure recovery rules.">
+    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --color-primary: #1e40af;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border: 2px solid #feb2b2;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+        }
+
+        .warning-box h4 {
+            color: #c53030;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
+    </script>
+
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Type 3 Practice Test 2026",
+      "description": "25 questions covering centrifugal chillers, rupture discs, and low-pressure safety.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/type-3.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What refrigerants do low-pressure systems use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Primarily R-123 (active) and R-11 (fully phased out). Both are HCFCs that operate below\n                        atmospheric pressure, which is what classifies a system as \"low-pressure\" under Section 608."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a purge unit on a centrifugal chiller?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A purge unit continuously removes non-condensable gases (mainly air) that infiltrate the chiller\n                        shell through the sub-atmospheric operating pressure. High purge rates indicate a system leak\n                        that must be investigated."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the rupture disc pressure rating on a low-pressure system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "15 psig. Pressure testing must never exceed 10 psig to maintain a safety margin below the\n                        rupture threshold. This is a directly tested fact on the Type III exam."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why must oil be heated before chiller startup?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oil must reach a minimum of 130\u00b0F before startup to prevent refrigerant-diluted oil from\n                        slugging the compressor bearings. Slugging causes immediate bearing damage and potential\n                        catastrophic failure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can water be used to test for leaks on a low-pressure system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Nitrogen gas is the correct leak test medium. Water introduces moisture contamination.\n                        Low-pressure systems are particularly sensitive to moisture because the sub-atmospheric\n                        operation creates ideal conditions for ice formation and acid formation."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Type III Practice Test",
+      "url": "https://epa608practicetest.net/type-3.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Type III practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
+</head>
+
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>EPA 608 Practice Test — Type 3 Exam (Free)</h1>
+            <p>The <strong>EPA 608 Practice Test</strong> Type 3 section tests 25 questions on low-pressure appliances,
+                primarily centrifugal chillers
+                used in large buildings. This test focuses on specialized equipment like purge units and the unique
+                safety hazards of low-pressure refrigerants like R-11 and R-123.</p>
+        </section>
+
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="test-header">
+                    <div id="questionNumber">Question 1 of 25</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div id="countdown">30:00</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
+                </div>
+
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <p class="text-2xl font-bold text-center mb-4">Test Results</p>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div id="resultDetails"></div>
+                <div class="results-nav">
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
+                </div>
+                <div id="signupCTA" style="margin-top:24px;padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;">
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:4px;">Want detailed explanations, AI tutor &amp; progress tracking?</p>
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:16px;">Unlock the Full EPA 608 Platform — Free</p>
+                    <a href="/signup" style="display:inline-block;padding:12px 32px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Create Free Account →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">25 questions per test · Explanations · AI Tutor · Progress Tracking · Certificates</p>
+                </div>
+            </div>
+            <div class="results-section" id="limitView" style="display:none;">
+                <p style="color:#1e40af;font-size:24px;font-weight:bold;text-align:center;margin-bottom:16px;">Daily Limit Reached</p>
+                <p style="margin:16px 0;color:#555;">You've used all 3 free practice tests for today.</p>
+                <div style="padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;margin-top:20px;">
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:8px;">Get Unlimited Access — Free</p>
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:16px;">25 questions · Detailed explanations · AI Tutor · Progress tracking · Certificates</p>
+                    <a href="/signup" style="display:inline-block;padding:14px 36px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Sign Up Free →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">No credit card required</p>
+                </div>
+                <p style="margin-top:16px;color:#999;font-size:13px;">Free tests reset every 24 hours.</p>
+            </div>
+        </section>
+
+        <article class="content-body">
+            <h2>What the EPA 608 Type III Certification Covers</h2>
+            <p>Type III certification covers low-pressure appliances — systems that operate at or below atmospheric
+                pressure. The primary equipment type is the centrifugal chiller, found in the basement mechanical
+                rooms of large commercial buildings, hospitals, and universities. Common refrigerants include R-11
+                (phased out) and R-123, which operates at sub-atmospheric pressures, meaning air and moisture are
+                drawn <em>in</em> rather than refrigerant leaking <em>out</em>.</p>
+
+            <p>Type III is the most specialized of the three Type certifications. The exam tests:</p>
+            <ul>
+                <li><strong>Low-Pressure System Safety</strong> — Because these systems run in a vacuum, air
+                    infiltration is the primary contamination concern. Purge units continuously remove non-condensables
+                    (air, nitrogen) from the chiller shell.</li>
+                <li><strong>Rupture Disc and Relief Devices</strong> — EPA regulations specify maximum test pressures
+                    and rupture disc ratings to prevent catastrophic failure on low-pressure equipment.</li>
+                <li><strong>Chiller Maintenance Procedures</strong> — Including oil heating (minimum 130°F before
+                    startup), water circulation to prevent tube freezing, and ASHRAE Standard 15 alarm requirements.
+                </li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Safety Critical:</strong> The rupture disc on a low-pressure system is rated to burst at
+                15 psig. Never pressure-test a low-pressure chiller above 10 psig — exceeding this risks rupture
+                disc failure and emergency refrigerant release.
+            </div>
+
+            <h2>Low-Pressure System Safety and Equipment</h2>
+            <p>Because low-pressure systems operate in a vacuum, technicians must approach maintenance procedures
+                differently from high-pressure work. Key thresholds the Type III exam tests directly:</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th>Significance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rupture disc burst rating</td>
+                        <td>15 psig</td>
+                        <td>Maximum allowable system pressure before disc bursts</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum leak test pressure</td>
+                        <td>10 psig</td>
+                        <td>EPA limit — never exceed during pressure testing</td>
+                    </tr>
+                    <tr>
+                        <td>Oil pre-heat temperature</td>
+                        <td>130°F minimum</td>
+                        <td>Required before chiller startup to prevent slugging</td>
+                    </tr>
+                    <tr>
+                        <td>Leak rate threshold (50+ lb systems)</td>
+                        <td>10–30% annually</td>
+                        <td>Varies by system category (same as Type II categories)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Chiller Leak Repair and Recovery Procedures</h2>
+            <p>Water-cooled centrifugal chillers use water circulation through the condenser and evaporator tubes.
+                During maintenance or recovery, technicians must keep water flowing to prevent tube freezing —
+                especially critical during refrigerant recovery when evaporator temperatures drop. Purge unit
+                operation logs must be maintained per EPA regulations, as excessive purge cycles indicate a leak
+                requiring immediate repair.</p>
+
+            <p>Type III technicians work on some of the highest-paying specialized roles in commercial HVAC. After
+                this practice test, take the <a href="/universal.html">Universal practice test</a> for full exam
+                simulation, or review the <a href="/study-guide-cheat-sheet.html">EPA 608 cheat sheet</a> for all
+                critical thresholds in one place.</p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>What refrigerants do low-pressure systems use?</strong>
+                    <p>Primarily R-123 (active) and R-11 (fully phased out). Both are HCFCs that operate below
+                        atmospheric pressure, which is what classifies a system as "low-pressure" under Section 608.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is a purge unit on a centrifugal chiller?</strong>
+                    <p>A purge unit continuously removes non-condensable gases (mainly air) that infiltrate the chiller
+                        shell through the sub-atmospheric operating pressure. High purge rates indicate a system leak
+                        that must be investigated.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the rupture disc pressure rating on a low-pressure system?</strong>
+                    <p>15 psig. Pressure testing must never exceed 10 psig to maintain a safety margin below the
+                        rupture threshold. This is a directly tested fact on the Type III exam.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Why must oil be heated before chiller startup?</strong>
+                    <p>Oil must reach a minimum of 130°F before startup to prevent refrigerant-diluted oil from
+                        slugging the compressor bearings. Slugging causes immediate bearing damage and potential
+                        catastrophic failure.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can water be used to test for leaks on a low-pressure system?</strong>
+                    <p>No. Nitrogen gas is the correct leak test medium. Water introduces moisture contamination.
+                        Low-pressure systems are particularly sensitive to moisture because the sub-atmospheric
+                        operation creates ideal conditions for ice formation and acid formation.</p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="test-engine-v3.js"></script>
+    <script>
+        initTestEngine({
+            category: 'Type III',
+            historyKey: 'type3',
+            passMsg: "Pass! You have a strong grasp of Low-Pressure chiller systems.",
+            failMsg: "Focus on rupture disc limits (15 psi) and purge unit function."
+        });
+    </script>
+</body>
+
+</html>

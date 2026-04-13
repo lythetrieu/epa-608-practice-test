@@ -74,7 +74,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
     }
   }, [sessionId, answers, phase, submitting])
 
-  // Keyboard shortcuts: Enter/→ = next, ← = prev, 1-4 = select answer
+  // Keyboard shortcuts
   useEffect(() => {
     if (phase !== 'active') return
     function handleKey(e: KeyboardEvent) {
@@ -101,6 +101,8 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
 
   const formatTime = (s: number) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
   const q = questions[currentIdx]
+  const answeredCount = Object.keys(answers).length
+  const isUniversal = category === 'Universal'
 
   if (phase === 'loading') return (
     <div className="min-h-screen flex items-center justify-center">
@@ -124,37 +126,56 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   if (result) return <ResultView result={result} category={category} questions={questions} />
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between">
-        <div>
-          <span className="text-xs sm:text-sm text-gray-500">EPA 608 — {category}</span>
-          <div className="text-xs sm:text-sm font-semibold text-gray-800 mt-0.5">
-            Question {currentIdx + 1} / {questions.length}
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      {/* ═══ COMPACT HEADER: Category + Question Counter + Timer ═══ */}
+      <header className="bg-white border-b px-3 sm:px-6 py-2.5 shrink-0">
+        <div className="flex items-center justify-between gap-2">
+          {/* Left: category + question number */}
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-sm font-semibold text-gray-600 uppercase tracking-wider shrink-0">{category}</span>
+            <span className="text-base font-bold text-gray-900">
+              {currentIdx + 1}<span className="text-gray-500 font-normal">/{questions.length}</span>
+            </span>
+          </div>
+
+          {/* Center: answered count */}
+          <div className="text-sm text-gray-600 hidden sm:block">
+            {answeredCount}/{questions.length} answered
+          </div>
+
+          {/* Right: timer */}
+          <div className={`text-base font-mono font-bold tabular-nums shrink-0 ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
+            {formatTime(timeLeft)}
           </div>
         </div>
-        <div className={`text-base sm:text-lg font-mono font-bold ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
-          {formatTime(timeLeft)}
+
+        {/* Progress bar */}
+        <div className="h-1 bg-gray-100 rounded-full mt-2 -mb-0.5">
+          <div
+            className="h-full bg-blue-800 rounded-full transition-all duration-300"
+            style={{ width: `${(answeredCount / questions.length) * 100}%` }}
+          />
         </div>
       </header>
 
-      {/* Progress bar */}
-      <div className="h-1 bg-gray-200">
-        <div
-          className="h-full bg-blue-800 transition-all duration-300"
-          style={{ width: `${((currentIdx + 1) / questions.length) * 100}%` }}
-        />
-      </div>
+      {/* ═══ SECTION INDICATOR (Universal only — single line) ═══ */}
+      {isUniversal && q.category && (
+        <div className="bg-gray-50 border-b px-4 py-1.5 shrink-0">
+          <p className="text-xs text-gray-500 text-center font-medium">
+            Section: <span className="text-gray-800 font-bold">{q.category}</span>
+          </p>
+        </div>
+      )}
 
-      {/* Question — scrollable area, top-aligned to prevent layout jump */}
+      {/* ═══ QUESTION ═══ */}
       <main className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="w-full max-w-2xl mx-auto">
           <div className="flex items-start justify-between gap-2 mb-4 sm:mb-6">
-            <p className="text-base sm:text-lg font-semibold text-gray-900 leading-relaxed break-words">{q.question}</p>
+            <p className="text-lg sm:text-xl font-semibold text-gray-900 leading-relaxed break-words">{q.question}</p>
             <ReportButton questionId={q.id} />
           </div>
 
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-2.5 sm:space-y-3">
             {q.options.map((opt, i) => {
               const letter = ['A', 'B', 'C', 'D'][i]
               const selected = answers[q.id] === opt
@@ -162,13 +183,13 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
                 <button
                   key={i}
                   onClick={() => setAnswers(prev => ({ ...prev, [q.id]: opt }))}
-                  className={`w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 min-h-[48px] rounded-xl border-2 transition-all flex gap-2 sm:gap-3 items-start text-sm sm:text-base
+                  className={`w-full text-left px-5 py-4 min-h-[56px] rounded-xl border-2 transition-all flex gap-3 items-start text-base
                     ${selected
                       ? 'border-blue-800 bg-blue-50 text-blue-900'
                       : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-gray-800'
                     }`}
                 >
-                  <span className={`font-bold text-sm mt-0.5 shrink-0 ${selected ? 'text-blue-800' : 'text-gray-400'}`}>{letter}.</span>
+                  <span className={`font-bold text-base mt-0.5 shrink-0 ${selected ? 'text-blue-800' : 'text-gray-500'}`}>{letter}.</span>
                   <span>{opt}</span>
                 </button>
               )
@@ -177,45 +198,30 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
         </div>
       </main>
 
-      {/* Navigation — fixed bottom */}
-      <footer className="bg-white border-t px-3 sm:px-6 py-3 sm:py-4">
-        {/* Question numbers — scrollable on mobile, hidden on very small screens */}
-        <div className="overflow-x-auto pb-2 mb-2 hidden sm:block">
-          <div className="flex gap-1.5 justify-center min-w-min">
-            {questions.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIdx(i)}
-                className={`w-7 h-7 rounded text-xs font-medium shrink-0 ${
-                  i === currentIdx ? 'bg-blue-800 text-white' :
-                  answers[questions[i].id] ? 'bg-green-100 text-green-700' :
-                  'bg-gray-100 text-gray-500'}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Nav buttons */}
-        <div className="flex justify-between items-center gap-2">
+      {/* ═══ FOOTER: Compact — just nav buttons + progress ═══ */}
+      <footer className="bg-white border-t px-3 sm:px-6 py-2.5 shrink-0" style={{ paddingBottom: 'max(10px, env(safe-area-inset-bottom))' }}>
+        <div className="flex justify-between items-center gap-3 max-w-2xl mx-auto">
           <button
             onClick={() => setCurrentIdx(i => Math.max(0, i - 1))}
             disabled={currentIdx === 0}
-            className="px-3 sm:px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 disabled:opacity-30 hover:bg-gray-50 text-sm sm:text-base"
+            className="px-4 py-2.5 min-h-[48px] min-w-[72px] border border-gray-300 rounded-xl text-gray-700 disabled:opacity-30 hover:bg-gray-50 text-base font-medium"
           >
             ← Prev
           </button>
 
-          {/* Mobile: show question counter */}
-          <span className="text-xs text-gray-400 sm:hidden">
-            {Object.keys(answers).length}/{questions.length} answered
-          </span>
+          {/* Center: progress info */}
+          <div className="flex-1 text-center min-w-0">
+            <p className="text-sm font-bold text-gray-800">{answeredCount}/{questions.length} answered</p>
+            {/* Mini progress bar */}
+            <div className="h-1.5 bg-gray-200 rounded-full mt-1 mx-auto max-w-[200px]">
+              <div className="h-full bg-green-500 rounded-full transition-all" style={{ width: `${(answeredCount / questions.length) * 100}%` }} />
+            </div>
+          </div>
 
           {currentIdx < questions.length - 1 ? (
             <button
               onClick={() => setCurrentIdx(i => i + 1)}
-              className="px-3 sm:px-5 py-2.5 bg-blue-800 text-white rounded-lg hover:bg-blue-900 text-sm sm:text-base"
+              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-blue-800 text-white rounded-xl hover:bg-blue-900 text-base font-medium"
             >
               Next →
             </button>
@@ -223,9 +229,9 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="px-3 sm:px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-green-600 text-white rounded-xl hover:bg-green-700 font-bold disabled:opacity-50 text-base"
             >
-              {submitting ? 'Submitting...' : 'Submit'}
+              {submitting ? '...' : 'Submit'}
             </button>
           )}
         </div>
@@ -233,3 +239,4 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
     </div>
   )
 }
+

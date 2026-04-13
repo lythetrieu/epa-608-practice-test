@@ -31,6 +31,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
+  // Also update users_profile.display_name
+  await supabase
+    .from('users_profile')
+    .update({ display_name: displayName.trim() })
+    .eq('id', user.id)
+
   return NextResponse.json({ success: true })
 }
 

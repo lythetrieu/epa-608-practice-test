@@ -24,21 +24,12 @@ export const metadata: Metadata = {
     description:
       'Free EPA 608 practice tests for HVAC technicians. Core, Type I, Type II, Type III, and Universal exams. Track your progress and pass on your first try.',
     url: 'https://epa608practicetest.net',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'EPA 608 Practice Test - Free HVAC Certification Prep',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'EPA 608 Practice Test | Free HVAC Certification Prep',
     description:
       'Free EPA 608 practice tests for HVAC technicians. Core, Type I, Type II, Type III, and Universal exams.',
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,

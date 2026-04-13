@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
-import type { Tier } from '@/types'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -49,10 +48,7 @@ export async function POST(
 
   if (!questions) return NextResponse.json({ error: 'Failed to grade' }, { status: 500 })
 
-  // Check tier for feature gating
-  const { data: profile } = await supabase.from('users_profile').select('tier').eq('id', user.id).single()
-  const _tier = (profile?.tier ?? 'free') as Tier
-  const showExplanations = true // All tiers now get explanations
+  const showExplanations = true // All tiers get explanations
 
   // Score server-side
   const results = questions.map((q: any) => ({
@@ -81,14 +77,18 @@ export async function POST(
     sectionScores = Object.entries(sections).map(([cat, items]) => {
       const sectionScore = items.filter(r => r.correct).length
       const sectionPct = Math.round((sectionScore / items.length) * 100)
-      return { category: cat, score: sectionScore, total: items.length, percentage: sectionPct, passed: sectionPct >= 72 }
+      // Type I is open-book: requires 84% (21/25). All others: 70% (18/25)
+      const passThreshold = cat === 'Type I' ? 84 : 70
+      return { category: cat, score: sectionScore, total: items.length, percentage: sectionPct, passed: sectionPct >= passThreshold }
     })
     // Sort: Core, Type I, Type II, Type III
     const ORDER = ['Core', 'Type I', 'Type II', 'Type III']
     sectionScores.sort((a, b) => ORDER.indexOf(a.category) - ORDER.indexOf(b.category))
     passed = sectionScores.every(s => s.passed)
   } else {
-    passed = percentage >= 70
+    // Type I requires 84% (open-book), others 70%
+    const passThreshold = session.category === 'Type I' ? 84 : 70
+    passed = percentage >= passThreshold
   }
 
   // Save session result (use admin client to bypass RLS for reliable update)
@@ -107,8 +107,39 @@ export async function POST(
     results.map(r => ({ user_id: user.id, question_id: r.questionId, correct: r.correct }))
   )
 
+  // Auto-issue certificate if passed
+  let newCertificate: { cert_id: string; tier: string } | null = null
+  if (passed) {
+    // Get display name (fallback to email prefix)
+    const { data: profileData } = await supabase
+      .from('users_profile')
+      .select('display_name, email')
+      .eq('id', user.id)
+      .single()
+    const certName = profileData?.display_name || profileData?.email?.split('@')[0] || 'Student'
+
+    const { data: certResult } = await admin.rpc('issue_certificate', {
+      p_user_id: user.id,
+      p_user_name: certName,
+      p_category: session.category,
+      p_score: percentage,
+      p_total_questions: results.length,
+      p_correct_answers: score,
+      p_session_id: session.id,
+    })
+
+    if (certResult?.issued) {
+      newCertificate = { cert_id: certResult.cert_id, tier: certResult.tier }
+    }
+  }
+
   // Strip internal category field from per-question results sent to client
   const clientResults = results.map(({ category: _cat, ...rest }) => rest)
 
-  return NextResponse.json({ sessionId: session.id, score, total: results.length, percentage, passed, results: clientResults, ...(sectionScores ? { sectionScores } : {}) })
+  return NextResponse.json({
+    sessionId: session.id, score, total: results.length, percentage, passed,
+    results: clientResults,
+    ...(sectionScores ? { sectionScores } : {}),
+    ...(newCertificate ? { newCertificate } : {}),
+  })
 }

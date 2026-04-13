@@ -96,7 +96,7 @@ export function ResultView({ result, category, questions }: {
           <div className="text-2xl font-semibold mb-1">{passed ? '🎉 Passed!' : '❌ Not Passed'}</div>
           <div className="text-white/80">
             {score} / {total} correct
-            {sectionScores ? ' — must pass each section at 72%' : ' — passing score is 70%'}
+            {sectionScores ? ' — 70% per section (Type I: 84%)' : ' — passing score is 70%'}
           </div>
           {!passed && <p className="mt-3 text-white/70 text-sm">Keep practicing! Review the explanations below.</p>}
         </div>

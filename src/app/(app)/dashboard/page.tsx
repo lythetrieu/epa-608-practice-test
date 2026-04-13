@@ -8,8 +8,9 @@ import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Lock, Flame,
-  Play, Timer,
+  Play, Award,
 } from 'lucide-react'
+import ActivityHeatmap from './ActivityHeatmap'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
   { slug: 'core', label: 'Core', category: 'Core', icon: <FileText size={24} />, desc: 'Fundamentals & regulations', paidOnly: false },
@@ -102,18 +103,29 @@ export default async function DashboardPage() {
     }
   }
 
+  // Activity heatmap data (tests per day for the last year)
+  const activityData: Record<string, number> = {}
+  if (allSessions) {
+    for (const s of allSessions) {
+      if (s.submitted_at) {
+        const day = s.submitted_at.slice(0, 10)
+        activityData[day] = (activityData[day] || 0) + 1
+      }
+    }
+  }
+
   // Determine recommended next step
   let recommendedAction: { text: string; href: string; desc: string } | null = null
   if (totalTests === 0) {
-    recommendedAction = { text: 'Start Core Practice', href: '/practice/core', desc: 'New here? Start with practice mode \u2014 no timer, instant feedback.' }
+    recommendedAction = { text: 'Start Core Practice', href: '/test/core?mode=practice', desc: 'New here? Start with practice mode — no timer, instant feedback.' }
   } else if (!bestScores['Core'] || bestScores['Core'] < 70) {
-    recommendedAction = { text: 'Practice Core Again', href: '/practice/core', desc: 'Keep practicing Core until you consistently score above 70%.' }
+    recommendedAction = { text: 'Practice Core Again', href: '/test/core?mode=practice', desc: 'Keep practicing Core until you consistently score above 70%.' }
   } else if (isFree) {
     recommendedAction = { text: 'Upgrade to Unlock More', href: '/pricing', desc: 'You passed Core! Upgrade to access Type I, II, III.' }
   } else {
     const nextUnpassed = CATEGORIES.find(c => c.category !== 'Universal' && (!bestScores[c.category] || bestScores[c.category] < 70))
     if (nextUnpassed) {
-      recommendedAction = { text: `Practice ${nextUnpassed.label}`, href: `/practice/${nextUnpassed.slug}`, desc: `Focus on ${nextUnpassed.label} next to prepare for Universal.` }
+      recommendedAction = { text: `Practice ${nextUnpassed.label}`, href: `/test/${nextUnpassed.slug}?mode=practice`, desc: `Focus on ${nextUnpassed.label} next to prepare for Universal.` }
     } else {
       recommendedAction = { text: 'Take Universal Test', href: '/test/universal', desc: 'You\'ve passed all sections! Try the full Universal exam.' }
     }
@@ -124,173 +136,142 @@ export default async function DashboardPage() {
   const passBg = readinessScore >= 90 ? 'bg-yellow-50' : readinessScore >= 70 ? 'bg-green-50' : readinessScore >= 50 ? 'bg-orange-50' : 'bg-red-50'
 
   return (
-    <div className="p-4 sm:p-6 max-w-5xl">
+    <div className="p-3 sm:p-5 max-w-6xl">
       {totalTests === 0 && <GuidedTour />}
 
-      {/* ═══ HEADER ROW: Welcome + Pass Predictor + Streak ═══ */}
-      <div data-tour="header" className="flex items-center justify-between mb-4">
-        <div className="min-w-0">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
-          <p className="text-gray-400 text-xs mt-0.5 truncate">{user.email}</p>
-        </div>
+      {/* ═══ ROW 1: Header + Quick Start ═══ */}
+      <div className="flex items-center justify-between mb-3" data-tour="header">
+        <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
         <div className="flex items-center gap-2 shrink-0 ml-3">
-          {/* Pass Predictor badge */}
-          {totalTests >= 3 ? (
-            <Link href="/progress" className={`${passBg} ${passColor} px-3 py-1.5 rounded-lg text-sm font-bold hover:opacity-80 transition-opacity`} title="Pass Predictor">
-              Pass: {readinessScore}%
+          {totalTests >= 3 && (
+            <Link href="/progress" className={`${passBg} ${passColor} px-2.5 py-1.5 rounded-lg text-xs font-bold`}>
+              {readinessScore}%
             </Link>
-          ) : (
-            <span className="bg-gray-100 text-gray-400 px-3 py-1.5 rounded-lg text-sm font-medium" title="Take 3+ tests to see pass prediction">
-              Pass: --
-            </span>
           )}
-          {/* Streak badge */}
-          {currentStreak > 0 ? (
-            <span className="bg-orange-50 text-orange-600 px-2.5 py-1.5 rounded-lg text-sm font-bold inline-flex items-center gap-0.5" title={`${currentStreak} day streak`}>
-              <Flame size={16} />{currentStreak}
-            </span>
-          ) : (
-            <span className="bg-gray-100 text-gray-400 px-2.5 py-1.5 rounded-lg text-sm font-medium inline-flex items-center gap-0.5" title="Start a streak by practicing daily">
-              <Flame size={16} /> 0
+          {currentStreak > 0 && (
+            <span className="bg-orange-50 text-orange-600 px-2.5 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1">
+              <Flame size={14} />{currentStreak}
             </span>
           )}
         </div>
       </div>
 
-      {/* ═══ UPGRADE BANNER (free only, compact) ═══ */}
-      {isFree && (
-        <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-xl px-4 py-3 text-white mb-4 flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <p className="font-bold text-sm sm:text-base">Unlock all 4 exam types</p>
-            <p className="text-blue-100 text-xs">One-time $19.99 \u2014 lifetime access</p>
+      {/* ═══ QUICK START ═══ */}
+      {recommendedAction && (
+        <Link href={recommendedAction.href} data-tour="core"
+          className="block rounded-xl bg-blue-800 px-4 py-3 mb-3 hover:bg-blue-900 transition-colors">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="font-bold text-white text-base">{recommendedAction.text}</p>
+              <p className="text-blue-200 text-xs mt-0.5">{recommendedAction.desc}</p>
+            </div>
+            <Play size={28} className="text-white shrink-0" />
           </div>
-          <Link href="/pricing" className="shrink-0 px-4 py-2 bg-white text-blue-800 rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors">
+        </Link>
+      )}
+
+      {/* ═══ UPGRADE (free only, compact) ═══ */}
+      {isFree && (
+        <div className="bg-gradient-to-r from-blue-700 to-blue-500 rounded-xl px-4 py-3 text-white mb-3 flex items-center justify-between gap-3">
+          <div>
+            <p className="font-bold text-sm">Unlock all 4 exam types</p>
+            <p className="text-blue-100 text-xs">$19.99 one-time — lifetime access</p>
+          </div>
+          <Link href="/pricing" className="shrink-0 px-4 py-2 bg-white text-blue-800 rounded-lg font-bold text-xs min-h-[40px] inline-flex items-center">
             Upgrade
           </Link>
         </div>
       )}
 
-      {/* ═══ RECOMMENDED NEXT STEP (slim banner) ═══ */}
-      {recommendedAction && (
-        <Link href={recommendedAction.href}
-          className="block rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 mb-4 hover:border-blue-400 transition-all group">
-          <div className="flex items-center justify-between gap-2">
-            <div className="min-w-0">
-              <span className="text-xs text-blue-600 font-medium uppercase tracking-wide">Next step: </span>
-              <span className="font-bold text-blue-900 text-sm">{recommendedAction.text}</span>
-              <span className="text-xs text-blue-700/70 ml-2 hidden sm:inline">{recommendedAction.desc}</span>
-            </div>
-            <span className="text-blue-800 font-medium text-sm shrink-0 group-hover:underline">Go &rarr;</span>
-          </div>
-        </Link>
-      )}
-
-      {/* ═══ EXAM SECTIONS: Horizontal cards ═══ */}
-      <section className="mb-4">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Exam Sections</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
+      {/* ═══ PRACTICE (full width, horizontal scroll on mobile) ═══ */}
+      <section className="mb-3">
+        <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Practice</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {CATEGORIES.map(c => {
             const locked = c.paidOnly && isFree
             const best = bestScores[c.category]
             const passed = best !== undefined && best >= 70
-
             return (
-              <div
+              <Link
                 key={c.slug}
-                data-tour={c.slug === 'core' ? 'core' : undefined}
-                className={`rounded-xl border p-3 flex flex-col items-center text-center transition-all ${
+                href={locked ? '/pricing' : `/test/${c.slug}`}
+                className={`flex flex-col items-center p-3 rounded-xl text-center transition-all min-h-[80px] justify-center ${
                   locked
-                    ? 'border-dashed border-gray-200 bg-gray-50'
-                    : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-sm'
+                    ? 'bg-gray-50 border border-dashed border-gray-300'
+                    : 'bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm'
                 }`}
               >
-                <span className="mb-1">{c.icon}</span>
-                <span className={`font-semibold text-sm ${locked ? 'text-gray-400' : 'text-gray-900'}`}>{c.label}</span>
-                <span className="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">{c.desc}</span>
-
-                {/* Score or lock indicator */}
-                {locked ? (
-                  <Link href="/pricing" className="mt-2 text-[10px] text-blue-700 font-medium hover:underline inline-flex items-center gap-0.5"><Lock size={10} /> Upgrade</Link>
-                ) : (
-                  <>
-                    {passed && (
-                      <span className="mt-1.5 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">{best}% \u2713</span>
-                    )}
-                    {best !== undefined && !passed && (
-                      <span className="mt-1.5 text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">{best}%</span>
-                    )}
-                    <div className="flex gap-1 mt-2">
-                      <Link href={`/practice/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 min-h-[32px] rounded-md bg-green-50 text-green-700 hover:bg-green-100 font-medium" title="Practice">
-                        <Play size={10} /> Practice
-                      </Link>
-                      <Link href={`/test/${c.slug}`} className="inline-flex items-center gap-1 text-[10px] px-2 py-1 min-h-[32px] rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium" title="Timed Test">
-                        <Timer size={10} /> Test
-                      </Link>
-                    </div>
-                  </>
+                <span className={`mb-1 ${locked ? 'text-gray-300' : ''}`}>{c.icon}</span>
+                <span className={`font-bold text-sm ${locked ? 'text-gray-400' : 'text-gray-900'}`}>{c.label}</span>
+                {locked && <Lock size={12} className="text-gray-400 mt-1" />}
+                {!locked && best !== undefined && (
+                  <span className={`text-xs font-bold mt-1 px-2 py-0.5 rounded-full ${passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                    {best}%
+                  </span>
                 )}
-              </div>
+              </Link>
             )
           })}
         </div>
       </section>
 
-      {/* ═══ TOOLS ROW ═══ */}
-      <section className="mb-4" data-tour="tools">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Study Tools</h2>
-        <div className="flex flex-wrap gap-2">
-          <ToolButton href="/flashcards" icon={<Layers size={18} />} label="Flashcards" />
-          <ToolButton href="/podcast" icon={<Headphones size={18} />} label="Podcast" />
-          <ToolButton href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" />
-          <ToolButton href="/progress" icon={<BarChart3 size={18} />} label="Progress" />
-          <ToolButton href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
-        </div>
-        <div className="mt-3">
-          <OfflineSyncCard />
-        </div>
-      </section>
-
-      {/* ═══ RECENT TESTS (compact, 1-2 rows) ═══ */}
-      <section>
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Recent Tests</h2>
-          {recentSessions.length > 0 && (
-            <Link href="/progress" className="text-xs text-blue-800 hover:underline font-medium">View all &rarr;</Link>
-          )}
-        </div>
-        {recentSessions.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {recentSessions.map(s => {
-              const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
-              const passed = pct >= 70
-              return (
-                <div key={s.id} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm ${
-                  passed ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
-                }`}>
-                  <span className="font-medium text-gray-700 text-xs whitespace-nowrap">{s.category}</span>
-                  <span className={`font-bold text-xs whitespace-nowrap ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
-                  <span className={`text-[10px] whitespace-nowrap ${passed ? 'text-green-500' : 'text-red-400'}`}>{passed ? '\u2713' : '\u2717'}</span>
-                </div>
-              )
-            })}
+      {/* ═══ STUDY TOOLS + MY RESULTS (side by side) ═══ */}
+      <div className="grid grid-cols-2 gap-2 mb-3">
+        {/* Study Tools */}
+        <div className="bg-white rounded-xl border border-gray-200 p-3" data-tour="tools">
+          <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Study Tools</h2>
+          <div className="space-y-0.5">
+            <CompactLink href="/flashcards" icon={<Layers size={16} />} label="Flashcards" />
+            <CompactLink href="/podcast" icon={<Headphones size={16} />} label="Listen & Learn" />
+            <CompactLink href="/tutor" icon={<Bot size={16} />} label="AI Helper" dataTour="ai-tutor" />
           </div>
-        ) : (
-          <p className="text-gray-400 text-sm">No completed tests yet. Start with Core above!</p>
-        )}
-      </section>
+        </div>
+
+        {/* My Results */}
+        <div className="bg-white rounded-xl border border-gray-200 p-3">
+          <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">My Results</h2>
+          <div className="space-y-0.5">
+            <CompactLink href="/progress" icon={<BarChart3 size={16} />} label="Progress" />
+            <CompactLink href="/progress/weak-spots" icon={<Target size={16} />} label="Weak Areas" />
+            <CompactLink href="/certificate" icon={<Award size={16} />} label="Certificates" />
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ RECENT TESTS (inline, compact) ═══ */}
+      {recentSessions.length > 0 && (
+        <div className="flex items-center gap-2 mb-3 overflow-x-auto">
+          <span className="text-xs font-bold text-gray-500 uppercase shrink-0">Recent:</span>
+          {recentSessions.map(s => {
+            const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
+            const passed = pct >= 70
+            return (
+              <span key={s.id} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium shrink-0 ${
+                passed ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+              }`}>
+                {s.category} {pct}%
+              </span>
+            )
+          })}
+          <Link href="/progress" className="text-xs text-blue-700 shrink-0 hover:underline">All →</Link>
+        </div>
+      )}
+
+      {/* ═══ HEATMAP + OFFLINE ═══ */}
+      <ActivityHeatmap activityData={activityData} />
+      <div className="mt-3">
+        <OfflineSyncCard />
+      </div>
     </div>
   )
 }
 
-function ToolButton({ href, icon, label, dataTour }: { href: string; icon: ReactNode; label: string; dataTour?: string }) {
+function CompactLink({ href, icon, label, dataTour }: { href: string; icon: ReactNode; label: string; dataTour?: string }) {
   return (
-    <Link
-      href={href}
-      data-tour={dataTour}
-      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/30 transition-all text-sm font-medium text-gray-700 hover:text-blue-800"
-    >
-      {icon}
-      <span>{label}</span>
+    <Link href={href} data-tour={dataTour}
+      className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium text-gray-700 hover:text-blue-800 min-h-[40px]">
+      <span className="text-gray-500 shrink-0">{icon}</span>
+      <span className="truncate">{label}</span>
     </Link>
   )
 }

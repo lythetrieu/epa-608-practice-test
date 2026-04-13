@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+     2 <html lang="en">
+     3 <head>
+     4     <meta charset="UTF-8">
+     5     <meta name="viewport" content="width=device-width,
+       initial-scale=1.0">
+     6     <title>EPT Master - The AI-Powered EPA 608 Mastery
+       System</title>
+     7     <style>
+     8         :root {
+     9             --primary: #003366; /* Deep Navy - Trust */
+    10             --secondary: #ff6600; /* Neon Orange - Action */
+    11             --accent: #00cc66; /* Green - Ready status */
+    12             --light: #f4f7f9;
+    13             --dark: #1a1a1a;
+    14             --white: #ffffff;
+    15         }
+    16
+    17         * { margin: 0; padding: 0; box-sizing: border-box;
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       }
+    18         body { background-color: var(--light); color:
+       var(--dark); line-height: 1.6; }
+    19
+    20         /* Navigation */
+    21         nav { background: var(--primary); padding: 15px 5%;
+       display: flex; justify-content: space-between; align-items:
+       center; position: sticky; top: 0; z-index: 1000; }
+    22         .logo { color: var(--white); font-weight: bold;
+       font-size: 24px; letter-spacing: 1px; }
+    23         .nav-btn { background: var(--secondary); color:
+       var(--white); padding: 10px 20px; text-decoration: none;
+       border-radius: 5px; font-weight: bold; font-size: 14px; }
+    24
+    25         /* Hero Section */
+    26         header { padding: 60px 5%; background:
+       linear-gradient(rgba(0,51,102,0.9), rgba(0,51,102,0.9)),
+       url('https://images.unsplash.com/photo-1581094288338-2314dddb7
+       ecb?auto=format&fit=crop&q=80&w=2070'); background-size:
+       cover; color: var(--white); text-align: center; }
+    27         h1 { font-size: 3rem; margin-bottom: 20px;
+       line-height: 1.2; }
+    28         .highlight { color: var(--secondary); }
+    29         .sub-headline { font-size: 1.25rem; margin-bottom:
+       30px; max-width: 800px; margin-left: auto; margin-right: auto;
+       opacity: 0.9; }
+    30         .cta-container { margin-top: 20px; }
+    31         .main-cta { background: var(--secondary); color:
+       var(--white); padding: 20px 40px; font-size: 1.5rem;
+       text-decoration: none; border-radius: 50px; font-weight: bold;
+       display: inline-block; box-shadow: 0 10px 20px
+       rgba(0,0,0,0.2); transition: transform 0.3s; }
+    32         .main-cta:hover { transform: scale(1.05); }
+    33         .trust-badge { margin-top: 20px; font-size: 0.9rem;
+       color: var(--accent); font-weight: bold; }
+    34
+    35         /* AI Sentinel Feed */
+    36         .live-feed { background: #000; color: var(--accent);
+       padding: 10px; font-family: monospace; font-size: 14px;
+       border-bottom: 2px solid var(--accent); }
+    37         .feed-dot { height: 10px; width: 10px;
+       background-color: var(--accent); border-radius: 50%; display:
+       inline-block; margin-right: 10px; animation: blink 1s
+       infinite; }
+    38         @keyframes blink { 0% { opacity: 1; } 50% { opacity:
+       0; } 100% { opacity: 1; } }
+    39
+    40         /* Pain Points */
+    41         .section { padding: 80px 5%; }
+    42         .container { max-width: 1100px; margin: 0 auto; }
+    43         .section-title { text-align: center; margin-bottom:
+       50px; font-size: 2.2rem; }
+    44         .pain-grid { display: grid; grid-template-columns:
+       repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    45         .pain-card { background: var(--white); padding: 30px;
+       border-radius: 10px; border-left: 5px solid #ff3333;
+       box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    46         .pain-card h3 { margin-bottom: 15px; color: #cc0000; }
+    47
+    48         /* Features / Solutions */
+    49         .features { background: var(--white); }
+    50         .feature-item { display: flex; align-items: center;
+       margin-bottom: 60px; flex-wrap: wrap; }
+    51         .feature-item:nth-child(even) { flex-direction:
+       row-reverse; }
+    52         .feature-img { flex: 1; min-width: 300px; padding:
+       20px; }
+    53         .feature-img img { width: 100%; border-radius: 15px;
+       box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    54         .feature-text { flex: 1; min-width: 300px; padding:
+       40px; }
+    55         .feature-text h2 { font-size: 2rem; margin-bottom:
+       20px; color: var(--primary); }
+    56         .feature-tag { display: inline-block; background:
+       var(--accent); color: var(--white); padding: 5px 15px;
+       border-radius: 20px; font-size: 12px; margin-bottom: 10px;
+       text-transform: uppercase; font-weight: bold; }
+    57
+    58         /* Value Stack */
+    59         .stack-box { background: var(--primary); color:
+       var(--white); padding: 50px; border-radius: 20px; text-align:
+       center; margin-top: 50px; }
+    60         .stack-list { text-align: left; max-width: 600px;
+       margin: 30px auto; }
+    61         .stack-item { display: flex; justify-content:
+       space-between; border-bottom: 1px solid rgba(255,255,255,0.1);
+       padding: 10px 0; }
+    62         .stack-total { font-size: 1.5rem; margin-top: 20px;
+       font-weight: bold; color: var(--secondary); }
+    63         .final-price { font-size: 3rem; margin: 20px 0; }
+    64
+    65         /* Pricing Table */
+    66         .pricing-grid { display: flex; justify-content:
+       center; gap: 20px; flex-wrap: wrap; margin-top: 50px; }
+    67         .price-card { background: var(--white); padding: 40px;
+       border-radius: 15px; width: 340px; text-align: center;
+       box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid
+       #ddd; }
+    68         .price-card.featured { transform: scale(1.05); border:
+       3px solid var(--secondary); position: relative; }
+    69         .price-card.featured .badge { position: absolute; top:
+       -15px; left: 50%; transform: translateX(-50%); background:
+       var(--secondary); color: var(--white); padding: 5px 20px;
+       border-radius: 20px; font-weight: bold; font-size: 14px; }
+    70         .price-card h4 { font-size: 1.5rem; margin-bottom:
+       20px; }
+    71         .price-card .price { font-size: 2.5rem; font-weight:
+       bold; margin-bottom: 20px; }
+    72         .price-card ul { list-style: none; text-align: left;
+       margin-bottom: 30px; font-size: 14px; }
+    73         .price-card li { margin-bottom: 10px; }
+    74         .price-card li::before { content: '✓ '; color:
+       var(--accent); font-weight: bold; }
+    75         .btn-price { display: block; background:
+       var(--primary); color: var(--white); padding: 15px;
+       text-decoration: none; border-radius: 5px; font-weight: bold;
+       }
+    76         .featured .btn-price { background: var(--secondary); }
+    77
+    78         /* Guarantee */
+    79         .guarantee { background: #fdf2e9; text-align: center;
+       border: 2px dashed var(--secondary); padding: 40px;
+       border-radius: 15px; margin-top: 80px; }
+    80         .guarantee img { width: 100px; margin-bottom: 20px; }
+    81
+    82         /* Footer */
+    83         footer { background: var(--primary); color:
+       var(--white); padding: 40px 5%; text-align: center; font-size:
+       14px; }
+    84
+    85         @media (max-width: 768px) {
+    86             h1 { font-size: 2.2rem; }
+    87             .main-cta { width: 100%; font-size: 1.2rem; }
+    88             .feature-text { padding: 20px; }
+    89             .price-card.featured { transform: scale(1);
+       margin-top: 30px; }
+    90         }
+    91     </style>
+    92 </head>
+    93 <body>
+    94
+    95     <nav>
+    96         <div class="logo">EPT MASTER</div>
+    97         <a href="#pricing" class="nav-btn">GET ACCESS NOW</a>
+    98     </nav>
+    99
+   100     <!-- LIVE AI FEED -->
+   101     <div class="live-feed">
+   102         <div class="container">
+   103             <span class="feed-dot"></span> 
+   104             <span id="feed-text">SENTINEL AI: Scanning Reddit
+       r/HVAC for new 2026 exam questions... Done. 3 New questions
+       added.</span>
+   105         </div>
+   106     </div>
+   107
+   108     <!-- HERO -->
+   109     <header>
+   110         <div class="container">
+   111             <h1>Stop Failing Your EPA 608 Exam with <span
+       class="highlight">Outdated Study Guides</span></h1>
+   112             <p class="sub-headline">The only 2026 AI-Powered
+       system that scans Reddit, YouTube, and the EPA site for the
+       exact questions you'll see in the room tomorrow. No 200-page
+       books. No wasted work time.</p>
+   113             <div class="cta-container">
+   114                 <a href="#pricing" class="main-cta">START YOUR
+       ACCESS TODAY</a>
+   115             </div>
+   116             <div class="trust-badge">98% First-Time Pass Rate
+       | Updated for A2L (R-454B/R-32)</div>
+   117         </div>
+   118     </header>
+   119
+   120     <!-- PAIN POINTS -->
+   121     <section class="section">
+   122         <div class="container">
+   123             <h2 class="section-title">Why Most Technicians
+       Fail (Even After Studying)</h2>
+   124             <div class="pain-grid">
+   125                 <div class="pain-card">
+   126                     <h3>Old Content</h3>
+   127                     <p>EPA updated the rules for 2026. Most
+       "free" apps are still using questions from 2018. If you study
+       old info, you will fail the A2L section.</p>
+   128                 </div>
+   129                 <div class="pain-card">
+   130                     <h3>Zero Time</h3>
+   131                     <p>You work 50+ hours. You don't have time
+       to sit at a desk. App store tests are boring and keep you
+       glued to a small screen.</p>
+   132                 </div>
+   133                 <div class="pain-card">
+   134                     <h3>The $80 Penalty</h3>
+   135                     <p>Retaking the exam costs $25-$80 and a
+       missed day of work. Studying the wrong way is literally
+       costing you money.</p>
+   136                 </div>
+   137             </div>
+   138         </div>
+   139     </section>
+   140
+   141     <!-- SOLUTIONS / FEATURES -->
+   142     <section class="section features">
+   143         <div class="container">
+   144             
+   145             <div class="feature-item">
+   146                 <div class="feature-text">
+   147                     <span class="feature-tag">REAL-TIME
+       INTELLIGENCE</span>
+   148                     <h2>Sentinel AI: Your 24/7 Exam Radar</h2>
+   149                     <p>Our AI doesn't sleep. It scans
+       technician forums and EPA updates every hour to find the
+       newest "tricky" questions. When the exam changes, EPT Master
+       changes instantly. You're never studying outdated
+       material.</p>
+   150                 </div>
+   151                 <div class="feature-img">
+   152                     <img
+       src="https://images.unsplash.com/photo-1551288049-bbdac8626ad1
+       ?auto=format&fit=crop&q=80&w=2070" alt="Sentinel AI
+       Dashboard">
+   153                 </div>
+   154             </div>
+   155
+   156             <div class="feature-item">
+   157                 <div class="feature-text">
+   158                     <span class="feature-tag">HANDS-FREE
+       LEARNING</span>
+   159                     <h2>Study While You Drive with Voice
+       AI</h2>
+   160                     <p>Turn your commute into a certification
+       class. Our AI Mentor reads questions to you and listens to
+       your answers. Get a 30-minute study session done while driving
+       to your next job call.</p>
+   161                 </div>
+   162                 <div class="feature-img">
+   163                     <img
+       src="https://images.unsplash.com/photo-1516733725897-1aa73b87c
+       8e8?auto=format&fit=crop&q=80&w=2070" alt="Technician
+       driving">
+   164                 </div>
+   165             </div>
+   166
+   167             <div class="feature-item">
+   168                 <div class="feature-text">
+   169                     <span class="feature-tag">ZERO
+       WASTE</span>
+   170                     <h2>AI Smart Coach: Learn Only What You
+       Miss</h2>
+   171                     <p>Why study things you already know? Our
+       AI identifies your "Weak Spots" and builds a custom drill for
+       you. Cut your study time by 70% by focusing only on the gaps
+       in your knowledge.</p>
+   172                 </div>
+   173                 <div class="feature-img">
+   174                     <img
+       src="https://images.unsplash.com/photo-1599658880436-c61792e70
+       672?auto=format&fit=crop&q=80&w=2070" alt="AI Coaching">
+   175                 </div>
+   176             </div>
+   177
+   178         </div>
+   179     </section>
+   180
+   181     <!-- VALUE STACK -->
+   182     <section class="section">
+   183         <div class="container stack-box">
+   184             <h2>The "Pass on Your Next Attempt" Mastery
+       System</h2>
+   185             <p>Here is everything you get when you start
+       today:</p>
+   186             <div class="stack-list">
+   187                 <div class="stack-item"><span>EPT Master Full
+       2026 Question Bank</span> <span>$97 Value</span></div>
+   188                 <div class="stack-item"><span>AI Sentinel
+       Real-Time Update Feed</span> <span>$47 Value</span></div>
+   189                 <div class="stack-item"><span>Hands-Free Voice
+       AI Training Module</span> <span>$37 Value</span></div>
+   190                 <div class="stack-item"><span>The Ultimate
+       2026 A2L Cheat Sheet (PDF)</span> <span>$27 Value</span></div>
+   191                 <div class="stack-item"><span>Pass Guarantee
+       Insurance</span> <span>Priceless</span></div>
+   192                 <div class="stack-total">TOTAL VALUE:
+       $208+</div>
+   193             </div>
+   194             <p>Get all of this for one tiny payment of:</p>
+   195             <div class="final-price">$29.99</div>
+   196             <a href="#pricing" class="main-cta">YES! GIVE ME
+       ACCESS</a>
+   197         </div>
+   198     </section>
+   199
+   200     <!-- PRICING TABLE -->
+   201     <section id="pricing" class="section">
+   202         <div class="container">
+   203             <h2 class="section-title">Ready to be Universal
+       Certified?</h2>
+   204             <div class="pricing-grid">
+   205                 
+   206                 <div class="price-card">
+   207                     <h4>FREE BITS</h4>
+   208                     <div class="price">$0</div>
+   209                     <ul>
+   210                         <li>50 "Hot" Questions for 2026</li>
+   211                         <li>Basic AI Explanations</li>
+   212                         <li>1 Mock Exam Attempt</li>
+   213                         <li>Sentinel Live Feed Access</li>
+   214                     </ul>
+   215                     <a href="#" class="btn-price">TRY FOR
+       FREE</a>
+   216                 </div>
+   217
+   218                 <div class="price-card featured">
+   219                     <div class="badge">BEST VALUE</div>
+   220                     <h4>PASS MASTER</h4>
+   221                     <div class="price">$29.99</div>
+   222                     <ul>
+   223                         <li><strong>Unlimited</strong> 2026
+       Questions</li>
+   224                         <li><strong>AI Sentinel</strong> Live
+       Data Integration</li>
+   225                         <li><strong>Hands-Free</strong> Voice
+       AI Mentor</li>
+   226                         <li><strong>AI Smart Coach</strong>
+       Weak-Spot Finder</li>
+   227                         <li><strong>PDF Bonus:</strong>
+       Ultimate Cheat Sheet</li>
+   228                         <li><strong>PDF Bonus:</strong> Master
+       Mock Exams</li>
+   229                         <li><strong>Pass Insurance
+       Guarantee</strong></li>
+   230                     </ul>
+   231                     <a href="#" class="btn-price">GET PASS
+       MASTER NOW</a>
+   232                 </div>
+   233
+   234                 <div class="price-card">
+   235                     <h4>BASIC</h4>
+   236                     <div class="price">$19.99</div>
+   237                     <ul>
+   238                         <li>Full 1000+ Question Bank</li>
+   239                         <li>Basic AI Explanations</li>
+   240                         <li>No Ads / Lifetime Access</li>
+   241                         <li>Progress Tracking</li>
+   242                     </ul>
+   243                     <a href="#" class="btn-price">GO BASIC</a>
+   244                 </div>
+   245
+   246             </div>
+   247
+   248             <!-- GUARANTEE -->
+   249             <div class="guarantee">
+   250                 <img
+       src="https://cdn-icons-png.flaticon.com/512/1000/1000948.png"
+       alt="Guarantee Badge">
+   251                 <h3>The "Pass or It's Free" Double
+       Guarantee</h3>
+   252                 <p>If you complete our AI-recommended path and
+       don't pass your EPA 608 exam, we will refund 100% of your
+       money. No questions asked. We take all the risk because we
+       know the system works. Period.</p>
+   253             </div>
+   254         </div>
+   255     </section>
+   256
+   257     <footer>
+   258         <p>&copy; 2026 EPT MASTER - Professional EPA 608 Study
+       System. This site is not affiliated with the US EPA.</p>
+   259     </footer>
+   260
+   261     <script>
+   262         // Fake dynamic feed updates
+   263         const messages = [
+   264             "SENTINEL AI: Scanning Reddit r/HVAC... Found new
+       leak rate question. Updated.",
+   265             "SENTINEL AI: Analyzing 2026 A2L Regulatory
+       updates... Core section synced.",
+   266             "SENTINEL AI: 124 Technicians passed their exam in
+       the last 24 hours.",
+   267             "SENTINEL AI: New mock exam generated for
+       High-Pressure systems."
+   268         ];
+   269         let i = 0;
+   270         setInterval(() => {
+   271             document.getElementById('feed-text').innerText =
+       messages[i];
+   272             i = (i + 1) % messages.length;
+   273         }, 5000);
+   274     </script>
+   275 </body>
+   276 </html>

@@ -1,188 +1,142 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { cookies } from 'next/headers'
-import { createClient } from '@/lib/supabase/server'
-import { PlanCard, type PlanCardData } from './PlanCard'
+import { Check, X } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Pricing | EPA 608 Practice Test',
+  title: 'EPA 608 Practice Test Pricing — Free Practice + Pro $18.99',
   description:
-    'Simple one-time pricing for EPA 608 certification prep. Free plan available. Starter and Ultimate lifetime access options.',
+    'Free EPA 608 practice: 25 questions, all sections, spider chart diagnosis. Pro $18.99 one-time: unlimited AI, blind-spot training, offline, certificates, pass guarantee.',
 }
 
-// ─── Plan data ───────────────────────────────────────────────────────────────
-
-const PLANS: PlanCardData[] = [
-  {
-    name: 'Free',
-    price: '$0',
-    priceNote: 'forever',
-    description: 'Full experience with Core category — no credit card, no limits.',
-    features: [
-      { text: 'Core category (full access)', included: true },
-      { text: 'Unlimited practice questions', included: true },
-      { text: 'Detailed answer explanations', included: true },
-      { text: 'Progress tracking & analytics', included: true },
-      { text: 'Blind-spot training mode', included: true },
-      { text: 'AI tutor (5 queries/day)', included: true },
-      { text: 'All 4 categories (I, II, III)', included: false },
-      { text: 'PDF study guide download', included: false },
-      { text: 'AI tutor (20+ queries/day)', included: false },
-    ],
-    cta: 'Get started free',
-    ctaHref: '/signup',
-  },
-  {
-    name: 'Starter',
-    price: '$19.99',
-    priceNote: 'one-time, lifetime access',
-    description: 'Everything you need to pass the EPA 608 on your first try.',
-    highlighted: true,
-    features: [
-      { text: 'All 4 categories (Core, I, II, III)', included: true },
-      { text: 'Unlimited questions per day', included: true },
-      { text: 'Detailed answer explanations', included: true },
-      { text: 'Progress tracking & analytics', included: true },
-      { text: 'Blind-spot training mode', included: true },
-      { text: 'PDF study guide download', included: true },
-      { text: 'AI tutor (20 queries/day)', included: true },
-      { text: 'AI tutor (100 queries/day)', included: false },
-      { text: 'Pass guarantee', included: false },
-    ],
-    cta: 'Buy Starter — $19.99',
-  },
-  {
-    name: 'Ultimate',
-    price: '$29.99',
-    priceNote: 'one-time, lifetime access',
-    description: 'Maximum AI support and a pass guarantee — or your money back.',
-    features: [
-      { text: 'Everything in Starter', included: true },
-      { text: 'AI tutor (100 queries/day)', included: true },
-      { text: 'Pass guarantee (or full refund)', included: true },
-      { text: 'Priority email support', included: true },
-      { text: 'Early access to new features', included: true },
-      { text: 'All 4 categories (Core, I, II, III)', included: true },
-      { text: 'Unlimited questions per day', included: true },
-      { text: 'Progress tracking & analytics', included: true },
-      { text: 'PDF study guide download', included: true },
-    ],
-    cta: 'Buy Ultimate — $29.99',
-  },
-]
-
-// ─── Page ───────────────────────────────────────────────────────────────────
-
-export default async function PricingPage() {
-  // Quick check: if auth cookie exists, fetch user. Otherwise skip (faster for anonymous visitors).
-  const cookieStore = await cookies()
-  const hasAuthCookie = cookieStore.getAll().some(c => c.name.startsWith('sb-'))
-
-  let user: { email?: string } | null = null
-  let currentTier: string | null = null
-
-  if (hasAuthCookie) {
-    const supabase = await createClient()
-    const { data } = await supabase.auth.getUser()
-    user = data.user
-    if (user) {
-      const { data: profile } = await supabase
-        .from('users_profile')
-        .select('tier')
-        .eq('id', (user as any).id)
-        .single()
-      currentTier = profile?.tier ?? 'free'
-    }
-  }
-
+export default function PricingPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       {/* Nav */}
       <nav className="border-b border-gray-100 bg-white sticky top-0 z-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
-          <Link href={user ? '/dashboard' : '/'} className="text-lg font-bold text-blue-800">
-            EPA 608 Practice Test
-          </Link>
-          <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                <span className="text-sm text-gray-500">{user.email}</span>
-                <Link href="/dashboard" className="inline-flex items-center justify-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-900 transition-colors">
-                  Dashboard
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">
-                  Sign in
-                </Link>
-                <Link href="/signup" className="inline-flex items-center justify-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-900 transition-colors">
-                  Get started free
-                </Link>
-              </>
-            )}
+          <Link href="/" className="text-lg font-bold text-blue-800">EPA 608 Practice Test</Link>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 px-3 py-2">Practice Free</Link>
+            <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900 px-3 py-2">Sign In</Link>
           </div>
         </div>
       </nav>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 space-y-16">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-gray-900">
-            Simple, one-time pricing
-          </h1>
-          <p className="mt-4 text-lg text-gray-500">
-            No subscriptions. No recurring fees. Pay once, study forever.
+      {/* Hero */}
+      <section className="mx-auto max-w-4xl px-4 pt-16 pb-12 text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+          You already know where you&apos;re weak.<br />
+          <span className="text-blue-800">Now fix it.</span>
+        </h1>
+        <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          Free practice shows your weak spots. Pro gives you the tools to fix them — and a guarantee you&apos;ll pass.
+        </p>
+      </section>
+
+      {/* Pricing Cards */}
+      <section className="mx-auto max-w-4xl px-4 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+
+          {/* FREE */}
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Free</h2>
+            <div className="mt-2">
+              <span className="text-4xl font-bold text-gray-900">$0</span>
+              <span className="text-gray-500 ml-2">forever</span>
+            </div>
+            <p className="mt-3 text-sm text-gray-600">Best free EPA 608 practice on the market. No signup needed.</p>
+
+            <div className="mt-6 space-y-3">
+              <Feature included text="25 questions per test" />
+              <Feature included text="All 5 sections (Core, I, II, III, Universal)" />
+              <Feature included text="Unlimited tests" />
+              <Feature included text="Explanations when wrong" />
+              <Feature included text="Weak-spot diagnosis (spider chart)" />
+              <Feature included text="AI Study Helper (3/day)" />
+              <Feature included={false} text="Blind-spot targeted training" />
+              <Feature included={false} text="Unlimited AI help" />
+              <Feature included={false} text="Flashcards & audio study" />
+              <Feature included={false} text="Offline mode" />
+              <Feature included={false} text="Certificates" />
+              <Feature included={false} text="Pass guarantee" />
+            </div>
+
+            <Link href="/" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] border-2 border-gray-200 text-gray-700 rounded-xl font-semibold text-base hover:bg-gray-50 transition-colors">
+              Start Practicing Free
+            </Link>
+          </div>
+
+          {/* PRO */}
+          <div className="bg-white rounded-2xl border-2 border-blue-800 p-6 sm:p-8 relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-800 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+              Most Popular
+            </div>
+            <h2 className="text-sm font-bold text-blue-800 uppercase tracking-wider">Pro</h2>
+            <div className="mt-2">
+              <span className="text-4xl font-bold text-gray-900">$18.99</span>
+              <span className="text-gray-500 ml-2">one-time, lifetime</span>
+            </div>
+            <p className="mt-3 text-sm text-gray-600">Everything Free + tools to make sure you pass. Money-back guarantee.</p>
+
+            <div className="mt-6 space-y-3">
+              <Feature included text="Everything in Free" />
+              <Feature included text="Blind-spot targeted training" bold />
+              <Feature included text="Unlimited AI Study Helper" bold />
+              <Feature included text="Flashcards (all sections)" />
+              <Feature included text="Listen & Learn (audio study)" />
+              <Feature included text="Offline mode" />
+              <Feature included text="Certificates (4 tiers)" />
+              <Feature included text="Progress tracking (cross-device)" />
+              <Feature included text="Activity heatmap" />
+              <Feature included text="Pass guarantee — full refund" bold />
+            </div>
+
+            <Link href="/signup" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
+              Get Pro — $18.99
+            </Link>
+            <p className="mt-3 text-center text-xs text-gray-500">Less than 1 hour of HVAC technician pay. Lifetime access.</p>
+          </div>
+        </div>
+
+        {/* Social proof */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-gray-500">
+            SkillCat charges $10/month (recurring). We charge $18.99 once (lifetime).
           </p>
         </div>
 
-        {/* Pricing cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          {PLANS.map((plan) => (
-            <PlanCard key={plan.name} plan={plan} currentTier={currentTier} isLoggedIn={!!user} />
-          ))}
+        {/* Pass Guarantee */}
+        <div className="mt-12 max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-2xl p-6 sm:p-8 text-center">
+          <h3 className="text-xl font-bold text-blue-900 mb-3">Pass Guarantee</h3>
+          <p className="text-sm text-blue-800 leading-relaxed">
+            Complete 10+ practice tests scoring 70%+. Take the real EPA 608 exam within 90 days.
+            If you don&apos;t pass on your first attempt, send us your score report — we refund 100%. No questions asked.
+          </p>
         </div>
 
-        {/* Business / Team tier */}
-        <section className="rounded-2xl border border-gray-200 bg-white p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900">Business / Team</h2>
-            <p className="mt-1 text-gray-500 text-sm max-w-lg">
-              Training 5 or more technicians? Get volume pricing, centralised team management,
-              seat assignment, and admin reporting. Contact us for a custom quote.
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="shrink-0 inline-flex items-center justify-center rounded-lg border border-blue-800 px-6 py-3 text-sm font-semibold text-blue-800 hover:bg-blue-50 transition-colors"
-          >
-            Contact us
+        {/* Enterprise */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-600 mb-2">Training a team of HVAC technicians?</p>
+          <Link href="/contact.html" className="text-blue-800 font-semibold hover:underline">
+            Contact us for enterprise pricing →
           </Link>
-        </section>
-
-        {/* Trust signals */}
-        <section className="text-center space-y-3">
-          <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-            Why thousands of HVAC techs choose us
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-            {[
-              '500+ verified questions',
-              'Built from 2023–2024 exam content',
-              'No subscription — pay once',
-              'Pass guarantee on Ultimate',
-              '100% data private — stays on your device',
-            ].map((point) => (
-              <span key={point} className="flex items-center gap-1.5">
-                <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                {point}
-              </span>
-            ))}
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
+  )
+}
+
+function Feature({ included, text, bold }: { included: boolean; text: string; bold?: boolean }) {
+  return (
+    <div className="flex items-start gap-3">
+      {included ? (
+        <Check size={18} className="text-green-600 shrink-0 mt-0.5" />
+      ) : (
+        <X size={18} className="text-gray-300 shrink-0 mt-0.5" />
+      )}
+      <span className={`text-sm ${included ? (bold ? 'text-gray-900 font-semibold' : 'text-gray-700') : 'text-gray-400'}`}>
+        {text}
+      </span>
+    </div>
   )
 }

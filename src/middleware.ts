@@ -1,3 +1,4 @@
+// Middleware v3 — guest AI endpoint bypass
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -54,6 +55,11 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
+  // Public endpoints — skip all auth checks
+  if (pathname === '/api/ai/guest-chat' || pathname.startsWith('/api/public/')) {
+    return NextResponse.next()
+  }
+
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route))
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route))
 
@@ -97,6 +103,6 @@ export const config = {
      * - favicon.ico
      * - Common image extensions
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js|json|html|txt|xml|ico)$).*)',
   ],
 }

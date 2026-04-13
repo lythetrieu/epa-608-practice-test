@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free EPA 608 Universal Practice Test 2026 | 100 Questions</title>
+    <meta name="description" content="Free 100-question EPA 608 Universal practice test. Full simulation covering Core, Type I, Type II, and Type III sections with instant scoring.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/universal.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Universal Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Universal exam with our full 100-question simulation. Practice all four sections in one session with instant scoring and history tracking.">
+    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --color-primary: #1e40af;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .section-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .section-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            background: #f5f5f5;
+        }
+
+        .section-badge.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .section-score {
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .section-score h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .section-score .score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
+    </script>
+
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Universal Practice Test 2026",
+      "description": "100-question simulation covering Core, Type 1, Type 2, and Type 3 sections.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/universal.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many questions are on the EPA 608 Universal exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "100 questions total \u2014 25 per section (Core, Type I, Type II, Type III). Each section is\n                        scored independently and requires 70% to pass."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to pass all four sections at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Many proctors allow retakes on failed sections the same day. Some testing organizations\n                        allow you to carry passed sections and retake only the failed ones at a later date. Confirm\n                        the policy with your specific proctor before testing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Universal certification expire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. EPA Section 608 certification does not expire. Once earned, it is a permanent credential.\n                        However, staying current on AIM Act HFC phase-down requirements is recommended for field\n                        competency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I take the Universal exam online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Several EPA-approved organizations offer online proctored testing. See our guide on\n                        testing options for a current\n                        list of approved providers and formats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does Universal certification allow me to do that individual Type certs do not?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Universal certification authorizes purchase and handling of refrigerant for any system type,\n                        in any quantity. Individual certifications restrict you to the specific system types covered\n                        by that certification level only."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Universal Practice Test",
+      "url": "https://epa608practicetest.net/universal.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Universal practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
+</head>
+
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>EPA 608 Practice Test — Universal Exam (Free)</h1>
+            <p>Master the full <strong>EPA 608 Practice Test</strong> certification with our complete 100-question
+                practice exam. This
+                simulation includes 25 questions each for Core, Type 1, Type 2, and Type 3, precisely mirroring the
+                proctored exam experience.</p>
+        </section>
+
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="section-nav" id="sectionIndicator">
+                    <span class="section-badge" data-cat="Core">CORE</span>
+                    <span class="section-badge" data-cat="Type I">TYPE 1</span>
+                    <span class="section-badge" data-cat="Type II">TYPE 2</span>
+                    <span class="section-badge" data-cat="Type III">TYPE 3</span>
+                </div>
+                <div class="test-header">
+                    <div id="questionNumber">Question 1 of 25</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div id="countdown">30:00</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading full exam...</div>
+                    <div class="answers-list" id="ansList"></div>
+                </div>
+
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Submit Entire
+                        Exam</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <p class="text-2xl font-bold text-center mb-4">Universal Exam Results</p>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div id="resultDetails"></div>
+                <div class="results-nav">
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
+                </div>
+                <div id="signupCTA" style="margin-top:24px;padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;">
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:4px;">Want the full 100-question Universal simulation?</p>
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:16px;">Unlock the Full EPA 608 Platform — Free</p>
+                    <a href="/signup" style="display:inline-block;padding:12px 32px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Create Free Account →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">100-question Universal test · Per-section scoring · AI Tutor · Certificates</p>
+                </div>
+            </div>
+            <div class="results-section" id="limitView" style="display:none;">
+                <p style="color:#1e40af;font-size:24px;font-weight:bold;text-align:center;margin-bottom:16px;">Daily Limit Reached</p>
+                <p style="margin:16px 0;color:#555;">You've used all 3 free practice tests for today.</p>
+                <div style="padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;margin-top:20px;">
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:8px;">Get Unlimited Access — Free</p>
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:16px;">100 questions · Per-section scoring · AI Tutor · Progress tracking · Certificates</p>
+                    <a href="/signup" style="display:inline-block;padding:14px 36px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Sign Up Free →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">No credit card required</p>
+                </div>
+                <p style="margin-top:16px;color:#999;font-size:13px;">Free tests reset every 24 hours.</p>
+            </div>
+        </section>
+
+        <article class="content-body">
+            <h2>What is the EPA 608 Universal Certification?</h2>
+            <p>Universal certification means you have passed all four sections of the EPA 608 exam: Core, Type I,
+                Type II, and Type III. A Universal-certified technician can legally purchase refrigerant in any
+                quantity, service any system type, and work across residential, commercial, and industrial
+                environments without restriction. It is the gold standard credential for professional HVAC
+                technicians.</p>
+
+            <p>This 100-question practice test simulates the complete proctored exam by pulling 25 questions from
+                each section in sequence — matching the actual exam structure used by EPA-approved testing
+                organizations.</p>
+
+            <h2>Universal Exam Breakdown and Passing Scores</h2>
+            <p>The official proctored exam scores each section independently. You must earn 70% (18 out of 25
+                correct) in each section to receive that certification level. Passing three out of four sections
+                does not award Universal — all four must be passed, though some proctors allow section retakes on
+                the same day.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Questions</th>
+                        <th>Pass Score</th>
+                        <th>Key Focus Areas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Montreal Protocol, Clean Air Act, ODP/GWP, Recovery definitions</td>
+                    </tr>
+                    <tr>
+                        <td>Type I</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Hermetically sealed, 5lb limit, Active/Passive recovery, Piercing valves</td>
+                    </tr>
+                    <tr>
+                        <td>Type II</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Leak rates (10/20/30%), Vacuum standards, IPR, High-pressure components</td>
+                    </tr>
+                    <tr>
+                        <td>Type III</td>
+                        <td>25</td>
+                        <td>18/25 (70%)</td>
+                        <td>Rupture disc (15 psi), Purge units, R-123, Chiller maintenance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Study Strategy:</strong> Master Core first — it contains foundational regulations that
+                appear across all four sections. Then study Type II (highest question volume in the field), followed
+                by Type I and Type III. A score of 80%+ on this Universal practice test correlates strongly with
+                first-attempt passes on the official proctored exam.
+            </div>
+
+            <h2>Universal vs. Individual Type Certifications</h2>
+            <p>Individual Type certifications (Type I only, Type II only) limit the systems you can legally service
+                and the refrigerant you can purchase. Most commercial HVAC employers require Universal certification
+                because technicians routinely encounter mixed environments — a commercial building may have
+                centrifugal chillers (Type III), rooftop RTUs (Type II), and vending machines (Type I) all
+                requiring service on the same contract.</p>
+
+            <p>Once you complete this test, review your results in <a href="/history.html">Test History</a> to
+                identify weak sections. For detailed topic coverage by section, visit our
+                <a href="/study-guides.html">EPA 608 study guide hub</a>. Ready to sit the real exam? Check
+                <a href="/epa-608-online-test.html">online and in-person testing options</a> for
+                approved providers.
+            </p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>How many questions are on the EPA 608 Universal exam?</strong>
+                    <p>100 questions total — 25 per section (Core, Type I, Type II, Type III). Each section is
+                        scored independently and requires 70% to pass.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Do I have to pass all four sections at once?</strong>
+                    <p>No. Many proctors allow retakes on failed sections the same day. Some testing organizations
+                        allow you to carry passed sections and retake only the failed ones at a later date. Confirm
+                        the policy with your specific proctor before testing.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Does Universal certification expire?</strong>
+                    <p>No. EPA Section 608 certification does not expire. Once earned, it is a permanent credential.
+                        However, staying current on AIM Act HFC phase-down requirements is recommended for field
+                        competency.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can I take the Universal exam online?</strong>
+                    <p>Yes. Several EPA-approved organizations offer online proctored testing. See our guide on
+                        <a href="/epa-608-online-test.html">testing options</a> for a current
+                        list of approved providers and formats.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <strong>What does Universal certification allow me to do that individual Type certs do not?</strong>
+                    <p>Universal certification authorizes purchase and handling of refrigerant for any system type,
+                        in any quantity. Individual certifications restrict you to the specific system types covered
+                        by that certification level only.</p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="test-engine-v3.js"></script>
+    <script>
+        initTestEngine({
+            category: 'Universal',
+            historyKey: 'universal',
+            passMsg: "Nice work! You got a taste of all 4 sections.",
+            failMsg: "Keep practicing each section individually to improve."
+        });
+    </script>
+</body>
+
+</html>

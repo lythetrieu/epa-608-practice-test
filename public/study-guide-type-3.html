@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>EPA 608 Type 3 Study Guide: Low-Pressure Chillers</title>
+    <meta name="description" content="EPA 608 Type III study guide covering low-pressure chillers, vacuum operation, purge units, and the 25 mm Hg recovery standard.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <link rel="canonical" href="https://epa608practicetest.net/study-guide-type-3.html">
+    <style>
+:root { --blue: #1e40af; --dark: #1e293b; --bg: #f8fafc; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 16px/1.8 system-ui, sans-serif; color: #333; background: #fff; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.hero { padding: 56px 0; background: var(--bg); border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+.hero h1 { font-size: 36px; color: var(--dark); margin-bottom: 14px; line-height: 1.2; text-align: center; }
+.hero p { text-align: center; color: #64748b; font-size: 17px; max-width: 640px; margin: 0 auto; }
+h2 { font-size: 26px; color: var(--dark); margin: 40px 0 14px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+h3 { font-size: 19px; color: var(--dark); margin: 26px 0 10px; }
+p { margin-bottom: 20px; }
+ul, ol { margin-bottom: 20px; padding-left: 26px; }
+li { margin-bottom: 10px; }
+.breadcrumb { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+.breadcrumb a { color: var(--blue); text-decoration: none; }
+table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+th { background: var(--dark); color: #fff; padding: 11px 14px; text-align: left; }
+td { padding: 11px 14px; border-bottom: 1px solid #e2e8f0; }
+tr:nth-child(even) td { background: var(--bg); }
+.callout { background: #eff6ff; border-left: 4px solid var(--blue); padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.callout h3 { color: #1e40af; margin: 0 0 8px; font-size: 16px; }
+.callout p { margin: 0; }
+.warn { background: #fefce8; border-left: 4px solid #eab308; padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.warn h3 { color: #854d0e; margin: 0 0 8px; font-size: 16px; }
+.warn p { margin: 0; }
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 22px 0; }
+.tool-btn { display: block; text-align: center; padding: 14px 10px; background: var(--blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; }
+.tool-btn.dark { background: var(--dark); }
+.faq-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.faq-q { padding: 16px 18px; font-weight: 700; font-size: 15px; color: var(--dark); background: var(--bg); }
+.faq-a { padding: 14px 18px; border-top: 1px solid #e2e8f0; color: #444; line-height: 1.7; }
+.cta { background: var(--dark); color: #fff; padding: 44px 36px; border-radius: 18px; text-align: center; margin: 56px 0; }
+.cta h2 { color: #fff; border: none; margin: 0 0 10px; font-size: 26px; }
+.cta p { color: #94a3b8; margin-bottom: 6px; }
+.btn-w { display: inline-block; background: #fff; color: var(--dark); padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 800; margin-top: 18px; }
+.highlight-col { color: #16a34a; font-weight: 700; }
+@media(max-width:600px) { .hero h1 { font-size: 24px; } h2 { font-size: 21px; } .cta { padding: 28px 18px; } }
+    </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"EPA 608 Type 3 Study Guide: Low-Pressure Chillers, Vacuum Operation, and Recovery Rules","url":"https://epa608practicetest.net/study-guide-type-3.html","dateModified":"2026-02-22","description":"Study guide for EPA 608 Type III certification — low-pressure centrifugal chillers, vacuum operation physics, 25 mm Hg recovery standard, purge units, and the freezing risk during liquid refrigerant charging.","mainEntity":{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is an EPA Type 3 certification?","acceptedAnswer":{"@type":"Answer","text":"EPA 608 Type III certification authorizes technicians to service low-pressure appliances — primarily large centrifugal chillers using refrigerants like R-11, R-113, R-123, and R-1233zd that operate below atmospheric pressure in vacuum conditions."}},{"@type":"Question","name":"Is Type III required for residential HVAC?","acceptedAnswer":{"@type":"Answer","text":"No — EPA 608 Type III certification is not required for residential HVAC work; residential systems use high-pressure refrigerants (R-410A, R-32, R-454B) covered by Type II. Type III applies exclusively to large commercial and industrial centrifugal chillers."}},{"@type":"Question","name":"What does a purge unit do in a chiller?","acceptedAnswer":{"@type":"Answer","text":"A purge unit removes non-condensable gases — primarily air and moisture — that infiltrate low-pressure chiller systems through leaks. Because low-pressure systems operate below atmospheric pressure, air enters rather than refrigerant escaping; the purge unit extracts these gases from the top of the condenser."}},{"@type":"Question","name":"Why can't you use refrigerant to pressure-test a low-pressure system?","acceptedAnswer":{"@type":"Answer","text":"Pressurizing a low-pressure system with refrigerant vapor would push refrigerant out through any leaks — constituting intentional venting, which is prohibited under Section 608. Dry nitrogen at 0 psig is the approved leak test medium for low-pressure systems."}}]}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "EPA 608 Type III Study Guide", "description": "Study guide for EPA 608 Type III section covering low-pressure chillers, purge units, and vacuum operation", "educationalLevel": "professional", "learningResourceType": "Study Guide", "teaches": "EPA Section 608 Refrigerant Handling Certification", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "EPA 608 Practice Test", "url": "https://epa608practicetest.net"}}</script>
+</head>
+<body>
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
+    <main class="container">
+
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/study-guides.html">Study Guides</a> &rsaquo; Type III Study Guide
+        </nav>
+
+        <div class="hero">
+            <h1>EPA 608 Type 3 Study Guide: Low-Pressure Chillers, Vacuum Operation, and Recovery Rules</h1>
+            <p>Master Type III certification — the counter-intuitive physics of vacuum operation, 25 mm Hg absolute recovery, purge unit mechanics, and the freezing risk that competitors' guides miss.</p>
+        </div>
+
+        <p>EPA 608 Type III certification covers a specialized equipment category that most HVAC technicians never encounter in residential work — large centrifugal chillers operating in vacuum conditions. Type III is the least common certification type, but its physics are the most counter-intuitive. Low-pressure systems operate below atmospheric pressure, air leaks into them rather than refrigerant leaking out, and recovery is measured in absolute vacuum depth rather than inches Hg. If you service large commercial or industrial centrifugal chillers, Type III certification is your required credential.</p>
+
+        <h2>What EPA 608 Type III Certification Covers</h2>
+
+        <p>EPA 608 Type III certification authorizes technicians to service low-pressure appliances — systems that operate below atmospheric pressure — under Section 608 of the Clean Air Act. The primary equipment category is the large centrifugal chiller: a water-cooled refrigeration machine that cools chilled water for commercial building HVAC distribution, industrial process cooling, or data center temperature control.</p>
+
+        <p>Centrifugal chillers are large commercial and industrial machines. A typical building centrifugal chiller might contain 1,000 to 2,000 lbs of refrigerant — far larger than any Type I or Type II equipment. Their size, operating physics, and refrigerant requirements are fundamentally different from anything in the residential market, which is why they have their own certification type.</p>
+
+        <p>The Type III section contains 25 questions; passing requires 18 correct answers (70%). Type III is taken in addition to the Core section — both must pass for Type III certification.</p>
+
+        <h2>Why Low-Pressure Systems Operate in Vacuum</h2>
+
+        <p>The defining characteristic of Type III equipment is vacuum operation — the refrigerant circuit operates below atmospheric pressure. Understanding why requires understanding the refrigerant's thermodynamic properties, specifically its boiling point.</p>
+
+        <p><strong>The boiling point relationship:</strong> A refrigerant boils (evaporates) at a temperature determined by the surrounding pressure. At higher pressure, the boiling point is higher. At lower pressure, the boiling point is lower. This relationship is the foundation of all refrigeration — but in low-pressure systems, it produces counter-intuitive operating conditions.</p>
+
+        <p><strong>R-11 as the example:</strong> R-11 (trichlorofluoromethane) has an atmospheric boiling point of 74.7&deg;F (23.7&deg;C). At sea-level atmospheric pressure (14.7 psia), R-11 boils at 74.7&deg;F. For a chiller to use R-11 as a refrigerant in a 44&deg;F evaporator (typical chilled water supply temperature), the evaporator must operate at a pressure lower than atmospheric — the lower pressure drops the boiling point to 44&deg;F.</p>
+
+        <p>At the temperatures required for chilled water production, low-pressure refrigerants must operate in vacuum conditions. The evaporator of a centrifugal chiller using R-11 or R-123 is under vacuum throughout normal operation.</p>
+
+        <p><strong>The consequence of vacuum operation:</strong> In a high-pressure system, a leak means refrigerant escapes to the outside. In a low-pressure system, a leak means outside air enters the refrigerant circuit. This inverted leak direction is the source of the purge unit requirement — the machine doesn't lose refrigerant through leaks, it gains non-condensable gases (air and moisture).</p>
+
+        <div class="callout">
+            <h3>Key Physics: Vacuum Inverts Everything</h3>
+            <p>High-pressure systems: leaks push refrigerant out. Low-pressure systems: leaks draw air in. This single fact explains the purge unit, the leak test procedure, and why recovery is measured in absolute pressure rather than gauge vacuum.</p>
+        </div>
+
+        <h2>Recovery Standards for Low-Pressure Systems: 25 mm Hg Absolute</h2>
+
+        <p>Low-pressure system recovery is measured in absolute pressure — millimeters of mercury absolute (mm Hg absolute) — rather than the vacuum gauge readings (inches Hg) used for high-pressure systems. The distinction is important for exam purposes.</p>
+
+        <p><strong>The 25 mm Hg absolute standard:</strong> Recovery from low-pressure equipment manufactured after November 15, 1993 must achieve 25 mm Hg absolute pressure. This means the recovered system must be at a very deep vacuum — only 25 mm Hg of absolute pressure remains in the circuit, versus atmospheric pressure of 760 mm Hg.</p>
+
+        <p><strong>For equipment manufactured before November 15, 1993:</strong> The standard is 0 psig (atmospheric pressure). Pre-1993 low-pressure equipment may be recovered to atmospheric pressure — a significantly lower bar than the 25 mm Hg absolute requirement for modern equipment.</p>
+
+        <p><strong>Why absolute pressure matters:</strong> In vacuum systems, describing pressure as a gauge reading (which compares to atmospheric) becomes imprecise. Absolute pressure measurement (from a true zero — complete vacuum) is more accurate and more meaningful for very deep vacuum conditions. 25 mm Hg absolute is approximately 29.6 inches Hg vacuum — a very deep vacuum that cannot be verified with basic gauge sets.</p>
+
+        <p><strong>Recovery equipment for low-pressure systems:</strong> Because achieving 25 mm Hg absolute requires specialized equipment, low-pressure system recovery uses dedicated refrigerant recovery machines designed for vacuum operation. The recovery machine must be rated for low-pressure refrigerant recovery — standard high-pressure recovery equipment is not appropriate.</p>
+
+        <h2>Purge Units: Removing Air and Moisture from Chillers</h2>
+
+        <p>The purge unit is a standard component of centrifugal chiller systems and is heavily tested on the Type III exam. Its function — and its location within the chiller — are both tested.</p>
+
+        <p><strong>What a purge unit does:</strong> A purge unit removes non-condensable gases, primarily air and moisture, that have entered the low-pressure chiller system through leaks. Because the system operates in vacuum, any breach draws atmospheric air inward. Air and moisture in the refrigerant circuit reduce heat transfer efficiency, increase operating pressures in the condenser, and promote corrosion.</p>
+
+        <p><strong>Where the purge unit draws from:</strong> The purge unit suction point is at the <strong>top of the condenser</strong>, not the bottom. The reason is thermodynamic: non-condensable gases (air and moisture vapor) are lighter than refrigerant vapor and accumulate at the highest point in the condenser. Refrigerant vapor condenses and falls to the bottom of the condenser as liquid; air and moisture rise and collect at the top. The purge unit extracts from the top of the condenser to selectively remove the non-condensable gases while returning refrigerant vapor to the system.</p>
+
+        <p><strong>Why location matters on the exam:</strong> The Type III exam specifically asks where the purge unit connects. Technicians unfamiliar with centrifugal chillers often assume the purge pulls from the evaporator or from the bottom of the condenser — both wrong. The correct answer is the top of the condenser, based on the gas-density separation principle.</p>
+
+        <p><strong>Purge unit operation cycle:</strong> The purge unit compresses the mixture of non-condensable gases and refrigerant vapor drawn from the condenser top. Refrigerant condenses and is returned to the system. Non-condensable gases (primarily air and nitrogen) are vented to the atmosphere. Modern purge units monitor and minimize refrigerant loss during this vent cycle — refrigerant vented during purge unit operation is considered incidental and not a Section 608 violation provided the purge unit meets EPA requirements.</p>
+
+        <h2>The Freezing Risk: Why Liquid Charging Destroys Chiller Tubes</h2>
+
+        <p>The freezing risk during liquid refrigerant charging is among the most unique and most tested Type III facts — and is absent from most competitor study materials. Understanding the mechanism is essential for both the exam and actual chiller service.</p>
+
+        <p><strong>The mechanism:</strong> Low-pressure refrigerants have high atmospheric boiling points. R-11 boils at 74.7&deg;F and R-123 boils at 82.2&deg;F at atmospheric pressure. When liquid R-11 or R-123 is introduced into a chiller evaporator that still contains residual water (from incomplete dehydration or from a humid environment), the refrigerant absorbs heat from the surrounding water as it vaporizes.</p>
+
+        <p>At the low-pressure conditions inside the evaporator, the refrigerant evaporates at temperatures far below 32&deg;F. The rapid heat absorption can freeze residual water — forming ice within the chiller tube bundle.</p>
+
+        <p><strong>The consequence:</strong> Ice expands as it forms. Chiller tube bundles are precision-machined copper or copper-alloy tubes. Ice formation inside or immediately around the tubes generates mechanical stress. If the ice forms in a confined space within the tube bundle, tube rupture can occur — a catastrophic failure that requires tube replacement or re-tubing of the entire bundle, one of the most expensive service events in commercial HVAC.</p>
+
+        <p><strong>The Type III exam implication:</strong> The exam tests why liquid refrigerant should not be charged into a low-pressure chiller evaporator without ensuring the system is free of residual moisture. The correct charging method for low-pressure systems introduces refrigerant in vapor form to avoid the freezing event. The exam question format is typically: "What is the risk of charging liquid refrigerant into a low-pressure chiller evaporator?" — answer: freezing of residual water, potentially causing tube rupture.</p>
+
+        <div class="warn">
+            <h3>Never Charge Liquid Refrigerant into a Low-Pressure Chiller Evaporator</h3>
+            <p>Liquid refrigerant entering an evaporator with residual moisture vaporizes rapidly at sub-zero temperatures, freezing the water and potentially rupturing the tube bundle. Always charge low-pressure chillers with refrigerant in vapor form.</p>
+        </div>
+
+        <h2>Low-Pressure Refrigerants: R-11, R-123, and R-1233zd</h2>
+
+        <table class="refrigerant-comparison-table">
+            <thead>
+                <tr>
+                    <th>Refrigerant</th>
+                    <th>ODP</th>
+                    <th>GWP</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>R-11 (CFC-11)</strong></td>
+                    <td>1.0</td>
+                    <td>4,750</td>
+                    <td>Phased out (1996, Montreal Protocol)</td>
+                    <td>Original centrifugal chiller refrigerant; no new production; reclaimed only</td>
+                </tr>
+                <tr>
+                    <td><strong>R-123 (HCFC-123)</strong></td>
+                    <td>0.02</td>
+                    <td>77</td>
+                    <td>HCFC phaseout underway; production ends 2030 in developed nations</td>
+                    <td>Primary R-11 replacement; much lower ODP; still in wide service</td>
+                </tr>
+                <tr>
+                    <td><strong>R-1233zd (HFO)</strong></td>
+                    <td>~0</td>
+                    <td>1</td>
+                    <td>Active; HFO-generation replacement</td>
+                    <td>Next-generation; near-zero ODP and very low GWP; replacing R-123 in new equipment</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>R-11 (CFC-11):</strong> The original low-pressure chiller refrigerant. R-11 has an ODP of 1.0 — the reference value against which all other refrigerants are measured. R-11 was fully phased out from production under the Montreal Protocol (1996 in developed countries). Existing equipment may still contain R-11; only reclaimed R-11 is available for service use. The Type III exam tests R-11's ODP value and its status as the phased-out baseline refrigerant.</p>
+
+        <p><strong>R-123 (HCFC-123):</strong> The primary replacement for R-11 in centrifugal chillers. R-123 has an ODP of 0.02 — 50 times lower than R-11 — and a GWP of 77. R-123 is an HCFC and is subject to HCFC phaseout; production will end in developed nations by 2030. Millions of operating centrifugal chillers use R-123, making it the dominant current low-pressure refrigerant in the field. Technicians servicing R-123 chillers need Type III certification.</p>
+
+        <p><strong>R-1233zd (HFO-1233zd):</strong> The next-generation low-pressure refrigerant. R-1233zd has near-zero ODP and a GWP of approximately 1 — negligible climate impact compared to both R-11 and R-123. New centrifugal chillers being manufactured today increasingly specify R-1233zd. As R-123 production winds down, R-1233zd is the primary replacement in new centrifugal chiller equipment.</p>
+
+        <h2>Type III FAQ</h2>
+
+        <div class="faq-item">
+            <div class="faq-q">What is an EPA Type 3 certification?</div>
+            <div class="faq-a">EPA 608 Type III certification authorizes technicians to service low-pressure appliances — primarily large commercial and industrial centrifugal chillers using refrigerants such as R-11, R-113, R-123, and R-1233zd that operate below atmospheric pressure in vacuum conditions.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Is Type III required for residential HVAC?</div>
+            <div class="faq-a">No — EPA 608 Type III certification is not required for residential HVAC. Residential systems use high-pressure refrigerants (R-410A, R-32, R-454B) covered by Type II. Type III applies exclusively to large commercial and industrial centrifugal chillers operating in vacuum.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">How many questions are on the Type III EPA 608 exam?</div>
+            <div class="faq-a">The Type III section contains 25 questions; passing requires 18 correct (70%). Type III is taken in addition to the Core section — both must pass for Type III certification.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What is the hardest EPA 608 section?</div>
+            <div class="faq-a">Most technicians find the Core section challenging because it tests federal law; Type III is considered the most technically difficult equipment section because centrifugal chillers are uncommon and vacuum operation physics is counter-intuitive for technicians used to high-pressure systems.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What does a purge unit do in a chiller?</div>
+            <div class="faq-a">A purge unit removes non-condensable gases — primarily air and moisture — from low-pressure chiller systems. Because low-pressure systems operate below atmospheric pressure, air infiltrates through leaks. The purge unit extracts non-condensables from the top of the condenser, where lighter gases accumulate.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Why can't you use refrigerant to pressure-test a low-pressure system?</div>
+            <div class="faq-a">Pressurizing a low-pressure system with refrigerant vapor would force refrigerant out through any leaks — constituting intentional venting, prohibited under Section 608. The approved leak test medium for low-pressure systems is dry nitrogen at 0 psig.</div>
+        </div>
+
+        <h2>Practice Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-q">Q1. EPA 608 Type III certification covers which type of equipment?<br>A) Small appliances with 5 lbs or less of refrigerant &nbsp;&nbsp; B) High-pressure residential split systems and commercial refrigeration &nbsp;&nbsp; C) Low-pressure centrifugal chillers operating below atmospheric pressure &nbsp;&nbsp; D) All appliances using CFC refrigerants</div>
+            <div class="faq-a"><strong>Answer: C.</strong> EPA 608 Type III certification covers low-pressure appliances — primarily large commercial and industrial centrifugal chillers that operate below atmospheric pressure (in vacuum conditions) using refrigerants such as R-11, R-123, and R-1233zd.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q2. Why do low-pressure chiller systems operate in vacuum?<br>A) To prevent refrigerant from escaping through leaks &nbsp;&nbsp; B) Because their refrigerants have boiling points above room temperature and must be kept at reduced pressure to evaporate at chiller temperatures &nbsp;&nbsp; C) To meet EPA recovery requirements &nbsp;&nbsp; D) Because the compressor cannot generate positive pressure</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Low-pressure refrigerants like R-11 (boiling point 74.7&deg;F at atmospheric pressure) must be kept at pressures below atmospheric so they evaporate at chilled water supply temperatures (typically 44&deg;F). The evaporator operates at vacuum to achieve the required refrigerant evaporation temperature.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q3. What is the recovery standard for low-pressure systems manufactured after November 15, 1993?<br>A) 10 inches Hg vacuum &nbsp;&nbsp; B) 15 inches Hg vacuum &nbsp;&nbsp; C) 0 psig (atmospheric pressure) &nbsp;&nbsp; D) 25 mm Hg absolute pressure</div>
+            <div class="faq-a"><strong>Answer: D.</strong> Recovery from low-pressure systems manufactured after November 15, 1993 must reach 25 mm Hg absolute pressure — a very deep vacuum. This is measured in absolute pressure units, not gauge vacuum readings.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q4. When performing a leak test on a low-pressure chiller system, what medium should be used?<br>A) Refrigerant vapor pressurized to 10 psig &nbsp;&nbsp; B) Dry nitrogen pressurized to 0 psig &nbsp;&nbsp; C) Compressed air pressurized to 5 psig &nbsp;&nbsp; D) R-123 vapor at atmospheric pressure</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Dry nitrogen at 0 psig is the approved leak test medium for low-pressure systems. Using refrigerant vapor would push refrigerant out through any leaks, constituting intentional venting prohibited under Section 608.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q5. What is the ozone depletion potential (ODP) of R-11?<br>A) 0.0 &nbsp;&nbsp; B) 0.02 &nbsp;&nbsp; C) 0.5 &nbsp;&nbsp; D) 1.0</div>
+            <div class="faq-a"><strong>Answer: D.</strong> R-11 (CFC-11) has an ODP of 1.0 — it is the reference refrigerant against which all other refrigerants' ODP values are measured. R-11 was fully phased out from production under the Montreal Protocol.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q6. Which refrigerant replaced R-11 as the primary low-pressure chiller refrigerant?<br>A) R-22 &nbsp;&nbsp; B) R-134a &nbsp;&nbsp; C) R-123 &nbsp;&nbsp; D) R-410A</div>
+            <div class="faq-a"><strong>Answer: C.</strong> R-123 (HCFC-123) replaced R-11 in most centrifugal chiller applications. R-123 has an ODP of 0.02 (versus R-11's ODP of 1.0) and is the dominant current low-pressure refrigerant in the field.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q7. What is the ODP of R-123?<br>A) 0.0 &nbsp;&nbsp; B) 0.02 &nbsp;&nbsp; C) 0.5 &nbsp;&nbsp; D) 1.0</div>
+            <div class="faq-a"><strong>Answer: B.</strong> R-123 has an ODP of 0.02 — significantly lower than R-11's ODP of 1.0. R-123 is an HCFC subject to phaseout, with production ending in developed nations by 2030.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q8. When a leak occurs in a low-pressure chiller system, what typically enters the system?<br>A) Refrigerant escapes to the outside atmosphere &nbsp;&nbsp; B) Air and moisture enter the system through the leak &nbsp;&nbsp; C) Oil migrates from the compressor &nbsp;&nbsp; D) Water from the cooling tower enters the refrigerant circuit</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Because low-pressure chillers operate below atmospheric pressure (in vacuum), a leak draws outside air and moisture into the system rather than allowing refrigerant to escape. This is the opposite of high-pressure system behavior.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q9. What does a purge unit in a centrifugal chiller system do?<br>A) Removes refrigerant from the system before service &nbsp;&nbsp; B) Adds refrigerant charge to maintain proper operating pressure &nbsp;&nbsp; C) Removes non-condensable gases (air and moisture) that infiltrate the system &nbsp;&nbsp; D) Controls the chiller compressor speed</div>
+            <div class="faq-a"><strong>Answer: C.</strong> A purge unit removes non-condensable gases — primarily air and moisture — that infiltrate low-pressure chiller systems through leaks. Air and moisture in the refrigerant circuit reduce heat transfer efficiency and increase condenser pressure.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q10. Where does the purge unit draw non-condensable gases from in a centrifugal chiller?<br>A) From the bottom of the evaporator &nbsp;&nbsp; B) From the compressor suction line &nbsp;&nbsp; C) From the top of the condenser &nbsp;&nbsp; D) From the expansion valve inlet</div>
+            <div class="faq-a"><strong>Answer: C.</strong> The purge unit draws from the top of the condenser because non-condensable gases (air and moisture vapor) are lighter than refrigerant vapor and accumulate at the highest point in the condenser. This location allows the purge unit to extract gases while returning refrigerant vapor to the system.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q11. What is the atmospheric boiling point of R-11?<br>A) 32&deg;F &nbsp;&nbsp; B) 44&deg;F &nbsp;&nbsp; C) 74.7&deg;F &nbsp;&nbsp; D) 100&deg;F</div>
+            <div class="faq-a"><strong>Answer: C.</strong> R-11 has an atmospheric boiling point of 74.7&deg;F (23.7&deg;C). This high boiling point — above room temperature — is why R-11 systems must operate in vacuum to evaporate at the temperatures required for chilled water production.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q12. Why is liquid refrigerant charging into a low-pressure chiller evaporator potentially dangerous?<br>A) Liquid refrigerant can damage the compressor impeller &nbsp;&nbsp; B) The refrigerant may react with the chilled water chemically &nbsp;&nbsp; C) Rapid vaporization of liquid refrigerant can freeze residual water in the chiller tubes, potentially causing tube rupture &nbsp;&nbsp; D) Liquid refrigerant increases system pressure above safe limits</div>
+            <div class="faq-a"><strong>Answer: C.</strong> When liquid R-11 or R-123 is introduced into a chiller evaporator containing residual water, the refrigerant's rapid vaporization at low pressure absorbs heat quickly enough to freeze the water. Ice formation in chiller tubes generates mechanical stress that can rupture the tubes — one of the most costly service errors in low-pressure chiller service.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q13. Why is it prohibited to use refrigerant vapor to pressurize a low-pressure system for leak testing?<br>A) Refrigerant vapor damages pressure gauges &nbsp;&nbsp; B) Pressurizing would force refrigerant out through leaks, constituting intentional venting under Section 608 &nbsp;&nbsp; C) Refrigerant vapor reacts with nitrogen in air &nbsp;&nbsp; D) Pressurizing voids the chiller warranty</div>
+            <div class="faq-a"><strong>Answer: B.</strong> Section 608 prohibits intentional venting of refrigerant. Pressurizing a vacuum-operating system with refrigerant vapor would force refrigerant out through any existing leaks — constituting venting. Dry nitrogen at 0 psig is the approved alternative that creates a testable pressure differential without using refrigerant.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q14. How many questions are on the EPA 608 Type III section, and what score is required to pass?<br>A) 25 questions; 15 correct (60%) &nbsp;&nbsp; B) 25 questions; 18 correct (70%) &nbsp;&nbsp; C) 50 questions; 35 correct (70%) &nbsp;&nbsp; D) 30 questions; 21 correct (70%)</div>
+            <div class="faq-a"><strong>Answer: B.</strong> The EPA 608 Type III section contains 25 questions; passing requires 18 correct answers (70%). Type III must be taken in addition to the Core section — both must pass for Type III certification.</div>
+        </div>
+
+        <div class="callout" style="margin-top:2rem;">
+<strong>Continue Your Study Path</strong>
+<p>Type III covers low-pressure chillers. Also study <a href="/study-guide-type-1.html">Type I small appliances</a>, <a href="/study-guide-type-2.html">Type II high-pressure systems</a>, or see the <a href="/study-guide-universal.html">Universal certification study guide</a>.</p>
+</div>
+
+        <div class="cta">
+            <h2>Practice Type III Questions</h2>
+            <p>Timed questions covering the 25 mm Hg recovery standard, purge unit mechanics, vacuum operation physics, and low-pressure refrigerant classification.</p>
+            <p>Aligned with ESCO Institute, Mainstream Engineering, and HVAC Excellence exam formats.</p>
+            <div class="tool-grid" style="max-width:520px;margin:18px auto 0;">
+                <a href="/type-3.html" class="tool-btn">Type III Practice Test</a>
+                <a href="/study-guide-core.html" class="tool-btn dark">Core Study Guide</a>
+            </div>
+            <a href="/type-3.html" class="btn-w">Start Type III Practice Test &rarr;</a>
+        </div>
+
+    </main>
+    <div id="footer-placeholder"></div>
+</body>
+</html>

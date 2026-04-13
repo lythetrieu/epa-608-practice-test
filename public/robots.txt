@@ -1,7 +1,56 @@
 User-agent: *
 Allow: /
+
+# Static content pages (SEO)
+Allow: /core.html
+Allow: /type-1.html
+Allow: /type-2.html
+Allow: /type-3.html
+Allow: /universal.html
+Allow: /study-guide-core.html
+Allow: /study-guide-type-1.html
+Allow: /study-guide-type-2.html
+Allow: /study-guide-type-3.html
+Allow: /study-guide-universal.html
+Allow: /study-guides.html
+Allow: /exam-prep.html
+Allow: /faq.html
+Allow: /about.html
+Allow: /contact.html
+
+# SaaS public pages (indexable)
+Allow: /pricing
+Allow: /signup
+Allow: /login
+Allow: /cert/
+
+# SaaS protected pages (block)
 Disallow: /api/
 Disallow: /admin/
 Disallow: /auth/
 Disallow: /settings
+Disallow: /dashboard
+Disallow: /test/
+Disallow: /practice/
+Disallow: /progress/
+Allow: /flashcards.html
+Disallow: /flashcards
+Disallow: /podcast
+Disallow: /tutor
+Disallow: /welcome
+Disallow: /certificate
+
+# System files
+Disallow: /favicon.html
+Disallow: /tracking.html
+Disallow: /*.tmp
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Assets
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+
 Sitemap: https://epa608practicetest.net/sitemap.xml

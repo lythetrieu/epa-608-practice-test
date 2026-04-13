@@ -420,9 +420,9 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
           </span>
         </div>
         <div className="flex items-center gap-3 text-sm">
-          <span className="text-green-600 font-semibold">{correct} &#10003;</span>
+          <span className="text-green-600 font-semibold">{correct} ✓</span>
           <span className="text-gray-300">|</span>
-          <span className="text-red-500 font-semibold">{wrong} &#10007;</span>
+          <span className="text-red-500 font-semibold">{wrong} ✗</span>
         </div>
       </header>
 
@@ -438,12 +438,12 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
       <div className="flex-1 flex items-center justify-center p-4 overflow-hidden relative">
         {/* Stack effect: background cards */}
         {currentIdx + 2 < cards.length && (
-          <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '24rem' }}>
+          <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '100%' }}>
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[28rem] transform scale-[0.92] translate-y-4 opacity-40" />
           </div>
         )}
         {currentIdx + 1 < cards.length && (
-          <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '24rem' }}>
+          <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '100%' }}>
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[28rem] transform scale-[0.96] translate-y-2 opacity-60" />
           </div>
         )}
@@ -487,7 +487,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
 
           {/* Card face */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <div className="p-5 sm:p-6 min-h-[22rem] sm:min-h-[28rem] flex flex-col">
+            <div className="p-5 sm:p-6 min-h-[18rem] sm:min-h-[24rem] flex flex-col">
               {/* Category + difficulty badges */}
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">

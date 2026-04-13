@@ -1,7 +1,9 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import type { Tier } from '@/types'
+import type { Tier, Category } from '@/types'
+import { SUBTOPIC_GROUPS } from '@/lib/subtopics'
+import { SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
 
 type SessionRow = {
   category: string
@@ -37,6 +39,62 @@ export default async function ProgressPage() {
     .eq('user_id', user.id)
     .not('submitted_at', 'is', null)
     .order('submitted_at', { ascending: false })
+
+  // Fetch per-question progress for concept coverage
+  const admin = createAdminClient()
+  const { data: progressRows } = await supabase
+    .from('user_progress')
+    .select('question_id, correct')
+    .eq('user_id', user.id)
+
+  // Get subtopic_id for each answered question
+  const questionIds = [...new Set((progressRows ?? []).map(r => r.question_id))]
+  let questionSubtopics: Record<string, string> = {}
+  if (questionIds.length > 0) {
+    const { data: qData } = await admin
+      .from('questions')
+      .select('id, subtopic_id')
+      .in('id', questionIds)
+    if (qData) {
+      for (const q of qData) {
+        if (q.subtopic_id) questionSubtopics[q.id] = q.subtopic_id
+      }
+    }
+  }
+
+  // Build concept-level coverage from user_progress
+  const conceptStats: Record<string, { correct: number; total: number }> = {}
+  for (const row of (progressRows ?? [])) {
+    const subtopicId = questionSubtopics[row.question_id]
+    if (!subtopicId) continue
+    const prefix = subtopicId.replace(/-\d+(\.\d+)?$/, '')
+    if (!conceptStats[prefix]) conceptStats[prefix] = { correct: 0, total: 0 }
+    conceptStats[prefix].total++
+    if (row.correct) conceptStats[prefix].correct++
+  }
+
+  // Group concepts by section (Core, Type I, II, III)
+  const sectionOrder: Category[] = ['Core', 'Type I', 'Type II', 'Type III']
+  type ConceptDetail = { key: string; title: string; accuracy: number; attempted: boolean; total: number }
+  type SectionData = { category: Category; concepts: ConceptDetail[]; mastered: number; attempted: number; totalConcepts: number }
+  const sectionCoverage: SectionData[] = sectionOrder.map(cat => {
+    const groups = SUBTOPIC_GROUPS.filter(g => g.category === cat)
+    const concepts: ConceptDetail[] = groups.map(g => {
+      const stats = conceptStats[g.key]
+      const accuracy = stats && stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0
+      const conceptInfo = SUBTOPIC_TO_CONCEPT[g.key]
+      return {
+        key: g.key,
+        title: conceptInfo?.title ?? g.label,
+        accuracy,
+        attempted: !!stats && stats.total > 0,
+        total: stats?.total ?? 0,
+      }
+    })
+    const mastered = concepts.filter(c => c.attempted && c.accuracy >= 80).length
+    const attempted = concepts.filter(c => c.attempted).length
+    return { category: cat, concepts, mastered, attempted, totalConcepts: concepts.length }
+  })
 
   // Aggregate by category
   const byCategory: Record<string, CategoryStats> = {}
@@ -95,6 +153,65 @@ export default async function ProgressPage() {
           <div className="text-sm text-gray-500 mt-1">Tests Passed</div>
         </div>
       </div>
+
+      {/* ═══ SECTION COVERAGE ═══ */}
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Knowledge Coverage</h2>
+
+      {/* Section overview cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        {sectionCoverage.map(sec => {
+          const pct = sec.totalConcepts > 0 ? Math.round((sec.mastered / sec.totalConcepts) * 100) : 0
+          const coveragePct = sec.totalConcepts > 0 ? Math.round((sec.attempted / sec.totalConcepts) * 100) : 0
+          const barColor = pct >= 80 ? 'bg-green-500' : pct >= 40 ? 'bg-yellow-500' : 'bg-gray-300'
+          return (
+            <div key={sec.category} className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-bold text-gray-800">{sec.category}</span>
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                  pct >= 80 ? 'bg-green-100 text-green-700' : pct >= 40 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-500'
+                }`}>{pct}%</span>
+              </div>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
+                <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
+              </div>
+              <div className="text-xs text-gray-400">
+                {sec.mastered}/{sec.totalConcepts} mastered · {coveragePct}% covered
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Per-concept detail within each section */}
+      {sectionCoverage.map(sec => (
+        <div key={sec.category} className="mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">{sec.category}</h3>
+            <span className="text-xs text-gray-400">{sec.mastered}/{sec.totalConcepts} mastered</span>
+          </div>
+          <div className="space-y-1.5">
+            {sec.concepts.map(c => {
+              const statusColor = !c.attempted ? 'text-gray-400' : c.accuracy >= 80 ? 'text-green-600' : c.accuracy >= 50 ? 'text-orange-500' : 'text-red-500'
+              const statusLabel = !c.attempted ? 'Not started' : c.accuracy >= 80 ? 'Mastered' : c.accuracy >= 50 ? 'Learning' : 'Weak'
+              const barBg = !c.attempted ? 'bg-gray-200' : c.accuracy >= 80 ? 'bg-green-500' : c.accuracy >= 50 ? 'bg-orange-400' : 'bg-red-400'
+              return (
+                <div key={c.key} className="bg-white rounded-lg border border-gray-100 px-4 py-2.5 flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-gray-800 truncate">{c.title}</div>
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mt-1.5 max-w-48">
+                      <div className={`h-full rounded-full ${barBg}`} style={{ width: `${c.attempted ? c.accuracy : 0}%` }} />
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className={`text-xs font-bold ${statusColor}`}>{c.attempted ? `${c.accuracy}%` : '—'}</div>
+                    <div className={`text-[10px] ${statusColor}`}>{statusLabel}</div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      ))}
 
       {/* Per-category breakdown */}
       {Object.keys(byCategory).length > 0 && (

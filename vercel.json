@@ -1,0 +1,590 @@
+{
+  "cleanUrls": false,
+  "headers": [
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/test-engine.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/index.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/practice-test",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/practice-test/",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/core/",
+      "destination": "/core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/universal/",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-2/",
+      "destination": "/type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/timed-exam/",
+      "destination": "/timed-exam.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/core",
+      "destination": "/core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-1",
+      "destination": "/type-1.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-2",
+      "destination": "/type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/type-3",
+      "destination": "/type-3.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/universal",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/timed-exam",
+      "destination": "/timed-exam.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mini-quiz",
+      "destination": "/mini-quiz.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-online-test",
+      "destination": "/epa-608-online-test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/practice-test-with-answers",
+      "destination": "/practice-test-with-answers.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/questions-answers-pdf",
+      "destination": "/questions-answers-pdf.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/history",
+      "destination": "/history.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/policy",
+      "destination": "/policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy",
+      "destination": "/policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/review",
+      "destination": "/review.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/changelog",
+      "destination": "/changelog.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guides",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-prep",
+      "destination": "/exam-prep.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-certification-complete-guide",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/aim-act-changes",
+      "destination": "/aim-act-changes.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-types",
+      "destination": "/certification-types.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/cost-and-exam-fees",
+      "destination": "/cost-and-exam-fees.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/difference-between-epa-608-and-609",
+      "destination": "/difference-between-epa-608-and-609.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-complete-study-guide",
+      "destination": "/epa-608-complete-study-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-practice-exam-tips",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-day",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-results",
+      "destination": "/exam-results.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-rules",
+      "destination": "/exam-rules.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-study-for-epa-608",
+      "destination": "/how-to-study-for-epa-608.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/hvac-students",
+      "destination": "/hvac-students.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/pass-rate",
+      "destination": "/pass-rate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/practice-vs-real",
+      "destination": "/practice-vs-real.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-cheat-sheet",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-core",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-1",
+      "destination": "/study-guide-type-1.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-2",
+      "destination": "/study-guide-type-2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-type-3",
+      "destination": "/study-guide-type-3.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-universal",
+      "destination": "/study-guide-universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-locations",
+      "destination": "/test-locations.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/aim-act-hfc-phasedown",
+      "destination": "/aim-act-changes.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/aim-act-hfc-phasedown.html",
+      "destination": "/aim-act-changes.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-guide",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-guide.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-validity-and-expiration-rules",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/certification-validity-and-expiration-rules.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/cost-and-exam-fees-breakdown",
+      "destination": "/cost-and-exam-fees.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/cost-and-exam-fees-breakdown.html",
+      "destination": "/cost-and-exam-fees.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-certification-requirements",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-certification-requirements.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-cheat-sheet",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-cheat-sheet.html",
+      "destination": "/study-guide-cheat-sheet.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-common-mistakes",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-common-mistakes.html",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-exam-questions",
+      "destination": "/practice-test-with-answers.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-exam-questions.html",
+      "destination": "/practice-test-with-answers.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-pass-rate",
+      "destination": "/pass-rate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-pass-rate.html",
+      "destination": "/pass-rate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-passing-score",
+      "destination": "/epa-608-passing-score.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-refrigerants",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-refrigerants.html",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-study-materials",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-study-materials.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-vs-nate",
+      "destination": "/difference-between-epa-608-and-609.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-vs-nate.html",
+      "destination": "/difference-between-epa-608-and-609.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-difficulty",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-difficulty.html",
+      "destination": "/epa-608-practice-exam-tips.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-preparation",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-preparation.html",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-certified-step-by-step",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-certified-step-by-step.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-and-in-person-testing-options",
+      "destination": "/epa-608-online-test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-and-in-person-testing-options.html",
+      "destination": "/epa-608-online-test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-test",
+      "destination": "/epa-608-online-test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/online-test.html",
+      "destination": "/epa-608-online-test.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/open-book",
+      "destination": "/exam-rules.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/open-book.html",
+      "destination": "/exam-rules.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/refrigerant-leak-detection-repair",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/refrigerant-leak-detection-repair.html",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/refrigerant-recovery-recycling-reclamation",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/refrigerant-recovery-recycling-reclamation.html",
+      "destination": "/study-guide-core.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-common-questions",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-common-questions.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-exam-strategies",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-exam-strategies.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-how-to-study",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-how-to-study.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-important-dates",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-guide-important-dates.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-methods",
+      "destination": "/how-to-study-for-epa-608.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-methods.html",
+      "destination": "/how-to-study-for-epa-608.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/types-and-universal-certification-guide",
+      "destination": "/certification-types.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/types-and-universal-certification-guide.html",
+      "destination": "/certification-types.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-epa-608-certification",
+      "destination": "/what-is-epa-608-certification.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-certified",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/does-it-expire",
+      "destination": "/does-it-expire.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-strategies",
+      "destination": "/test-strategies.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-schedule",
+      "destination": "/study-schedule.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-duration",
+      "destination": "/test-duration.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-anxiety",
+      "destination": "/test-anxiety.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-day-checklist",
+      "destination": "/test-day-checklist.html",
+      "statusCode": 301
+    }
+  ]
+}

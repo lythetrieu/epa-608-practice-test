@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPA 608 Type 2 Practice Test | Free High-Pressure</title>
+    <meta name="description"
+        content="Take the free EPA 608 Type 2 practice test. 25 questions covering high-pressure system recovery, leak repair rates (10%, 20%, 30%), and vacuum standards.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/type-2.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Type 2 Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Type 2 exam with 25 expert-designed questions. Practice leak repair requirements for systems with 50+ pounds of refrigerant.">
+    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --color-primary: #1e40af;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KJ8X1DQ1GT');
+    </script>
+
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "Free EPA 608 Type 2 Practice Test 2026",
+      "description": "25 questions covering high-pressure system recovery, leak repair rates, and vacuum standards.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/type-2.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What systems fall under Type II certification?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "High-pressure and medium-pressure systems including residential central AC, heat pumps, and\n                        commercial refrigeration racks. Any refrigerant with a boiling point above -50\u00b0C at atmospheric\n                        pressure is classified as high or medium pressure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the leak rate threshold for comfort cooling systems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding\n                        this threshold must be repaired within 30 days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does IPR stand for in EPA 608?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due\n                        to the complexity and continuous operation requirements of industrial processes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can nitrogen be used to test for leaks in a Type II system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and\n                        before recharging. Never use oxygen or air \u2014 they create combustion risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a shallow vacuum versus a deep vacuum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300\u2013500\n                        microns) removes moisture and confirms system integrity before recharging. Type II tests both\n                        procedures and their respective equipment requirements."
+      }
+    }
+  ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Type II Practice Test",
+      "url": "https://epa608practicetest.net/type-2.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "description": "Free interactive EPA 608 Type II practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    }
+    </script>
+</head>
+
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+    <script src="includes.js"></script>
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <section class="quiz-hero">
+            <h1>EPA 608 Practice Test — Type 2 Exam (Free)</h1>
+            <p>The <strong>EPA 608 Practice Test</strong> Type 2 section tests 25 questions on high-pressure systems
+                including central air
+                conditioners, heat pumps, and commercial refrigeration racks. This test measures your ability to handle
+                leak repair requirements for systems with 50+ pounds of refrigerant.</p>
+        </section>
+
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="test-header">
+                    <div id="questionNumber">Question 1 of 25</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div id="countdown">30:00</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
+                </div>
+
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <p class="text-2xl font-bold text-center mb-4">Test Results</p>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div id="resultDetails"></div>
+                <div class="results-nav">
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
+                </div>
+                <div id="signupCTA" style="margin-top:24px;padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;">
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:4px;">Want detailed explanations, AI tutor &amp; progress tracking?</p>
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:16px;">Unlock the Full EPA 608 Platform — Free</p>
+                    <a href="/signup" style="display:inline-block;padding:12px 32px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Create Free Account →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">25 questions per test · Explanations · AI Tutor · Progress Tracking · Certificates</p>
+                </div>
+            </div>
+            <div class="results-section" id="limitView" style="display:none;">
+                <p style="color:#1e40af;font-size:24px;font-weight:bold;text-align:center;margin-bottom:16px;">Daily Limit Reached</p>
+                <p style="margin:16px 0;color:#555;">You've used all 3 free practice tests for today.</p>
+                <div style="padding:24px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:16px;text-align:center;margin-top:20px;">
+                    <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:8px;">Get Unlimited Access — Free</p>
+                    <p style="color:#93c5fd;font-size:14px;margin-bottom:16px;">25 questions · Detailed explanations · AI Tutor · Progress tracking · Certificates</p>
+                    <a href="/signup" style="display:inline-block;padding:14px 36px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;">Sign Up Free →</a>
+                    <p style="color:#93c5fd;font-size:12px;margin-top:12px;">No credit card required</p>
+                </div>
+                <p style="margin-top:16px;color:#999;font-size:13px;">Free tests reset every 24 hours.</p>
+            </div>
+        </section>
+
+        <article class="content-body">
+            <h2>Understanding EPA 608 Type II Scope</h2>
+            <p>Type II certification covers high-pressure and medium-pressure systems — the most common appliances
+                HVAC technicians encounter in the field. This includes residential central air conditioners, heat
+                pumps, commercial refrigeration racks, and refrigerated warehouses. Any system using a refrigerant with
+                a boiling point above -50°C at atmospheric pressure falls under Type II jurisdiction.</p>
+
+            <p>The Type II exam focuses on three high-value technical areas:</p>
+            <ul>
+                <li><strong>Leak Repair Requirements</strong> — Systems with more than 50 pounds of refrigerant are
+                    subject to mandatory leak repair thresholds. The threshold varies by system category.</li>
+                <li><strong>Recovery Vacuum Standards</strong> — Evacuation depth requirements (in inches of mercury)
+                    differ based on refrigerant type and whether recovery equipment was manufactured before or after
+                    November 15, 1993.</li>
+                <li><strong>High-Pressure System Components</strong> — Receivers, accumulators, moisture-indicating
+                    sight glasses, oil separators, and relief valves are all testable entities.</li>
+            </ul>
+
+            <h2>Leak Repair Requirements for Systems Over 50 Pounds</h2>
+            <p>Under Section 608, systems containing more than 50 pounds of refrigerant that leak above the annual
+                threshold must be repaired within 30 days, or within 120 days with an approved retrofit or retirement
+                plan. Leak rates are calculated as a percentage of the total system charge per year.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>System Category</th>
+                        <th>Annual Leak Rate Threshold</th>
+                        <th>Example Systems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Comfort Cooling</td>
+                        <td>10%</td>
+                        <td>Central AC, chillers for buildings</td>
+                    </tr>
+                    <tr>
+                        <td>Commercial Refrigeration</td>
+                        <td>20%</td>
+                        <td>Grocery store racks, walk-in coolers</td>
+                    </tr>
+                    <tr>
+                        <td>Industrial Process Refrigeration (IPR)</td>
+                        <td>30%</td>
+                        <td>Food processing, chemical plants</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Field Note:</strong> Grocery store refrigeration racks often blend Commercial and IPR
+                categories. Always verify the system classification before calculating the applicable leak rate
+                threshold on the job.
+            </div>
+
+            <h2>Recovery Vacuum Standards for High-Pressure Systems</h2>
+            <p>Recovery depth requirements are measured in inches of mercury (in. Hg) vacuum. Equipment manufactured
+                after November 15, 1993 must meet the higher post-1993 standard. For most HFC refrigerants (R-410A,
+                R-32) in systems under 200 pounds, the recovery standard requires pulling to 0 psig. Systems over 200
+                pounds require a deeper vacuum pull to 4 in. Hg. The Type II exam tests these thresholds directly —
+                memorize them alongside the leak rate table above.</p>
+
+            <p>After completing this practice test, take the <a href="/type-1.html">Type I practice test</a> or the <a
+                    href="/universal.html">EPA 608 Universal practice
+                    test</a> to simulate the full 100-question exam. Review the
+                <a href="/study-guide-cheat-sheet.html">EPA 608 cheat sheet</a> for a consolidated table of all vacuum
+                levels by refrigerant and system size.
+            </p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>What systems fall under Type II certification?</strong>
+                    <p>High-pressure and medium-pressure systems including residential central AC, heat pumps, and
+                        commercial refrigeration racks. Any refrigerant with a boiling point above -50°C at atmospheric
+                        pressure is classified as high or medium pressure.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the leak rate threshold for comfort cooling systems?</strong>
+                    <p>10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding
+                        this threshold must be repaired within 30 days.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What does IPR stand for in EPA 608?</strong>
+                    <p>Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due
+                        to the complexity and continuous operation requirements of industrial processes.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can nitrogen be used to test for leaks in a Type II system?</strong>
+                    <p>Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and
+                        before recharging. Never use oxygen or air — they create combustion risk.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is a shallow vacuum versus a deep vacuum?</strong>
+                    <p>A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300–500
+                        microns) removes moisture and confirms system integrity before recharging. Type II tests both
+                        procedures and their respective equipment requirements.</p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="test-engine-v3.js"></script>
+    <script>
+        initTestEngine({
+            category: 'Type II',
+            historyKey: 'type2',
+            passMsg: "Pass! You've mastered the High-Pressure Type II requirements.",
+            failMsg: "Focus on leak repair percentages (10/20/30%) and vacuum recovery levels."
+        });
+    </script>
+</body>
+
+</html>
