@@ -63,10 +63,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/practice-vs-real.html`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/hvac-students.html`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
-    // SaaS public pages
-    { url: `${baseUrl}/pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/signup`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/login`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    // Study tools
+    { url: `${baseUrl}/study-path.html`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
 
     // Support pages
     { url: `${baseUrl}/faq.html`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },

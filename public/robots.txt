@@ -14,35 +14,34 @@ Allow: /study-guide-type-3.html
 Allow: /study-guide-universal.html
 Allow: /study-guides.html
 Allow: /exam-prep.html
+Allow: /study-path.html
 Allow: /faq.html
 Allow: /about.html
 Allow: /contact.html
+Allow: /flashcards.html
 
-# SaaS public pages (indexable)
-Allow: /pricing
-Allow: /signup
-Allow: /login
-Allow: /cert/
-
-# SaaS protected pages (block)
+# Block all SaaS/auth pages
 Disallow: /api/
 Disallow: /admin/
 Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+Disallow: /pricing
 Disallow: /settings
 Disallow: /dashboard
 Disallow: /test/
 Disallow: /practice/
 Disallow: /progress/
-Allow: /flashcards.html
+Disallow: /learn
 Disallow: /flashcards
 Disallow: /podcast
 Disallow: /tutor
 Disallow: /welcome
 Disallow: /certificate
+Disallow: /cert/
 
 # System files
 Disallow: /favicon.html
-Disallow: /tracking.html
 Disallow: /*.tmp
 Disallow: /.git/
 Disallow: /node_modules/
@@ -52,5 +51,6 @@ Allow: /*.css
 Allow: /*.js
 Allow: /*.png
 Allow: /*.jpg
+Allow: /*.svg
 
 Sitemap: https://epa608practicetest.net/sitemap.xml
