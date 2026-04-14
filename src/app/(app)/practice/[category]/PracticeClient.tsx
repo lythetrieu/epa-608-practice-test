@@ -48,6 +48,43 @@ function ELI5Button({ questionText, correctAnswer }: { questionText: string; cor
   )
 }
 
+function PatternExplanation({ text }: { text: string }) {
+  // Split into sentences and format as scannable bullets
+  const sentences = text
+    .split(/\.\s+/)
+    .map(s => s.trim().replace(/\.$/, ''))
+    .filter(s => s.length > 10)
+
+  if (sentences.length <= 1) {
+    return <p className="text-sm text-gray-700">{text}</p>
+  }
+
+  return (
+    <ul className="space-y-1.5">
+      {sentences.slice(0, 4).map((s, i) => {
+        const hasNumber = /\d/.test(s)
+        const isRule = /(must|never|always|cannot|required|illegal|only|not allowed)/i.test(s)
+        // Bold key terms inline
+        const formatted = s.replace(
+          /(\b\d[\d,.]*\s*(%|psig|degrees?|°F|lbs?|psi|microns?|years?|days?)\b)/gi,
+          '**$1**'
+        )
+        return (
+          <li key={i} className={`text-xs leading-relaxed pl-3 border-l-2 py-0.5 ${
+            isRule ? 'border-red-400 text-red-800 font-medium'
+            : hasNumber ? 'border-blue-400 text-blue-800'
+            : 'border-gray-300 text-gray-700'
+          }`}>
+            {formatted.split('**').map((part, j) =>
+              j % 2 === 1 ? <strong key={j} className="font-bold">{part}</strong> : <span key={j}>{part}</span>
+            )}.
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 type PracticeQuestion = {
   id: string
   category: string
@@ -238,6 +275,11 @@ export function PracticeClient({ category }: { category: string }) {
     const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0
     const passed = percentage >= 70
 
+    // Save Core pass status for soft gate
+    if (category === 'Core' && passed) {
+      try { localStorage.setItem('epa608CorePass', JSON.stringify({ passed: true, score: percentage, date: new Date().toISOString() })) } catch {}
+    }
+
     // Compute weak areas from wrong answers
     const weakMap: Record<string, { count: number; total: number }> = {}
     questions.forEach(qu => {
@@ -340,7 +382,9 @@ export function PracticeClient({ category }: { category: string }) {
                         Correct: <span className="font-medium">{w.correctAnswer}</span>
                       </p>
                       {w.explanation && (
-                        <p className="text-xs text-gray-600 bg-gray-50 rounded-lg p-3">{w.explanation}</p>
+                        <div className="bg-gray-50 rounded-lg p-3">
+                          <PatternExplanation text={w.explanation} />
+                        </div>
                       )}
                       <ELI5Button questionText={w.question} correctAnswer={w.correctAnswer} />
                     </div>
@@ -437,7 +481,7 @@ export function PracticeClient({ category }: { category: string }) {
                   Correct answer: <span className="font-semibold">{q.answer_text}</span>
                 </p>
               )}
-              {q.explanation && <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>}
+              {q.explanation && <PatternExplanation text={q.explanation} />}
               {!isCorrect && <ELI5Button questionText={q.question} correctAnswer={q.answer_text} />}
             </div>
           )}
