@@ -33,7 +33,8 @@ Disallow: /test/
 Disallow: /practice/
 Disallow: /progress/
 Disallow: /learn
-Disallow: /flashcards
+Disallow: /flashcards/
+Allow: /flashcards.html
 Disallow: /podcast
 Disallow: /tutor
 Disallow: /welcome
