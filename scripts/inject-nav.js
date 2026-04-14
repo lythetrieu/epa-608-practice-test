@@ -25,10 +25,6 @@ const footerSrc = fs.readFileSync(path.join(PUBLIC, 'footer.html'), 'utf-8')
 const headerMatch = headerSrc.match(/<!-- Header -->[\s\S]*$/)
 const headerHTML = headerMatch ? headerMatch[0].trim() : ''
 
-// Extract head content (favicon, gtag, styles) to inject into <head>
-const headMatch = headerSrc.match(/<!-- Favicon -->[\s\S]*?(?=<!-- Header -->)/)
-const headContent = headMatch ? headMatch[0].trim() : ''
-
 const footerHTML = footerSrc.trim()
 
 // Skip these files
@@ -78,9 +74,11 @@ for (const file of files) {
     }
   }
 
-  // Inject head content (favicon, gtag, styles) if not already present
-  if (headContent && !html.includes('<!-- Favicon -->')) {
-    html = html.replace('</head>', `\n${headContent}\n</head>`)
+  // Remove previously injected head content (favicon, gtag, GTM, Vercel, noscript)
+  // that was added by older versions of this script
+  const oldHeadContentRegex = /\n?<!-- Favicon -->[\s\S]*?(?=<style>|<\/head>)/
+  if (oldHeadContentRegex.test(html)) {
+    html = html.replace(oldHeadContentRegex, '\n')
     changed = true
   }
 
