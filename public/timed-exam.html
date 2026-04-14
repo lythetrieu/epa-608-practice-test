@@ -59,10 +59,405 @@ tr:nth-child(even) td { background: var(--bg); }
 @media(max-width:600px) { .hero h1 { font-size: 24px; } h2 { font-size: 21px; } .cta { padding: 28px 18px; } .timer-display { font-size: 36px; } }
     </style>
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"EPA 608 Timed Practice Exam: Simulate Real Exam Conditions","url":"https://epa608practicetest.net/timed-exam.html","dateModified":"2026-02-22","description":"Timed EPA 608 practice exam simulating real test conditions — 25 randomized questions per section with countdown timer and scoring.","mainEntity":{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long is the EPA 608 exam?","acceptedAnswer":{"@type":"Answer","text":"Each section contains 25 questions. Most providers allow 2-4 hours for the Universal 100-question exam. A pace of 1 minute per question completes each section in 25 minutes, leaving time for review."}},{"@type":"Question","name":"Is the EPA 608 test timed?","acceptedAnswer":{"@type":"Answer","text":"Yes — the proctored EPA 608 exam is conducted within a time window set by the certifying provider. Practicing with a timer before your exam significantly reduces pace-anxiety on exam day."}},{"@type":"Question","name":"What is a good time management strategy for EPA 608?","acceptedAnswer":{"@type":"Answer","text":"Allocate approximately 1 minute per question. For a 25-question section, this leaves 10-15 minutes for review after answering all questions on a 45-minute timer. Skip uncertain questions and return after completing confident answers."}}]}}]}</script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Vercel Analytics -->
+<script defer src="https://va.vercel-scripts.com/v1/script.debug.js" data-api="_vercel/insights"></script>
+
+<!-- GTM Noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<style>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navigation Container */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu > li {
+    position: relative;
+}
+
+/* Regular Menu Links — φ spacing: 13px vert × 21px horiz */
+.nav-menu > li > a {
+    display: block;
+    padding: 13px 21px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-menu > li > a:hover {
+    color: #1e40af;
+    background-color: rgba(0, 122, 204, 0.05);
+}
+
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown Toggle — matching φ spacing */
+.dropdown-toggle {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 21px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+}
+
+.dropdown-toggle::after {
+    content: "▼";
+    font-size: 10px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Dropdown Hover State */
+.dropdown:hover > .dropdown-toggle {
+    color: #1e40af;
+    background-color: rgba(0, 122, 204, 0.05);
+}
+
+.dropdown:hover > .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+    min-width: 240px;
+    padding: 12px 0;
+    margin-top: 4px;
+    list-style: none;
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-menu {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Dropdown Arrow Pointer */
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu li {
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Staggered Animation */
+.dropdown:hover .dropdown-menu li:nth-child(1) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(2) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.2s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(3) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(4) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.4s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(5) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.5s;
+}
+
+/* Dropdown Links */
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Icons for Menu Items */
+.dropdown-menu a::before {
+    content: "🏆";
+    font-size: 18px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dropdown-menu li:nth-child(2) a::before { content: "📘"; }
+.dropdown-menu li:nth-child(3) a::before { content: "📦"; }
+.dropdown-menu li:nth-child(4) a::before { content: "🏗️"; }
+.dropdown-menu li:nth-child(5) a::before { content: "❄️"; }
+
+/* Extra staggered animations for dropdowns */
+.dropdown:hover .dropdown-menu li:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
+.dropdown:hover .dropdown-menu li:nth-child(7) { opacity: 1; transform: translateX(0); transition-delay: 0.7s; }
+
+/* Hover Effect on Dropdown Items */
+.dropdown-menu a:hover {
+    background: linear-gradient(90deg, rgba(0, 122, 204, 0.08) 0%, rgba(0, 122, 204, 0.04) 100%);
+    color: #1e40af;
+    padding-left: 24px;
+}
+
+.dropdown-menu a:hover::before {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Mobile Responsive — φ scaled down */
+@media (max-width: 768px) {
+    .header-content {
+        height: 56px;
+    }
+
+    .logo {
+        flex: 0 0 auto;
+    }
+
+    .logo img {
+        height: 34px !important;
+    }
+
+    .header-content nav {
+        flex: 1;
+    }
+
+    .nav-menu {
+        gap: 0;
+    }
+
+    .nav-menu > li > a,
+    .dropdown-toggle {
+        padding: 8px 13px;
+        font-size: 13px;
+    }
+
+    .dropdown-menu {
+        min-width: 200px;
+    }
+}
+
+/* Header Layout — Golden Ratio (φ = 1.618)
+   Logo 42px → header 68px (42 × φ)
+   Logo area 38.2% : Nav area 61.8% */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 68px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex: 0 0 38.2%;
+}
+
+.header-content nav {
+    flex: 0 0 61.8%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Footer Layout */
+footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 60px 0 40px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h4 {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.footer-section ul li a:hover {
+    color: #1e40af;
+}
+
+.footer-bottom {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 24px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+</style>
 </head>
 <body>
     <script src="includes.js"></script>
-    <div id="header-placeholder"></div>
+    <div id="header-placeholder">
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 42px; width: auto;">
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Practice Tests</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/universal.html">Universal Practice Test</a></li>
+                            <li><a href="/core.html">Core Practice Test</a></li>
+                            <li><a href="/type-1.html">Type I Practice Test</a></li>
+                            <li><a href="/type-2.html">Type II Practice Test</a></li>
+                            <li><a href="/type-3.html">Type III Practice Test</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Study</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/study-guides.html">Study Guides Hub</a></li>
+                            <li><a href="/study-path.html">Study Path</a></li>
+                            <li><a href="/flashcards.html">Flashcards</a></li>
+                            <li><a href="/epa-608-complete-study-guide.html">Complete Guide</a></li>
+                            <li><a href="/study-schedule.html">Study Schedule</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Exam Prep</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
+                            <li><a href="/test-strategies.html">Test Strategies</a></li>
+                            <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                            <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
+                            <li><a href="/does-it-expire.html">Does Cert Expire?</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+</div>
     <main class="container">
         <div class="breadcrumb"><a href="/">Home</a> › <a href="/exam-prep.html">Exam Prep</a> › EPA 608 Timed Practice Exam</div>
         <section class="hero">
@@ -212,7 +607,100 @@ tr:nth-child(even) td { background: var(--bg); }
             </div>
         </div>
     </main>
-    <div id="footer-placeholder"></div>
+    <div id="footer-placeholder">
+<!-- Footer -->
+<footer>
+    <div class="container">
+
+        <!-- Footer CTA — Practice Tests -->
+        <div style="background:#1e40af;border-radius:12px;padding:32px 24px;text-align:center;margin-bottom:40px;">
+            <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:6px;">Start Your Free 2026 Practice Test
+            </p>
+            <p style="color:rgba(255,255,255,0.85);font-size:14px;margin-bottom:20px;">Join 12,000+ technicians who
+                passed using our simplified prep tools.</p>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+                <a href="/universal.html"
+                    style="background:#28a745;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Universal
+                    Simulation</a>
+                <a href="/core.html"
+                    style="background:#fff;color:#1e40af;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Core
+                    Section</a>
+                <a href="/study-guides.html"
+                    style="background:rgba(255,255,255,0.15);color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;border:1px solid #fff;">Study
+                    Guides</a>
+            </div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Practice Tests</h4>
+                <ul>
+                    <li><a href="/universal.html">Universal Test</a></li>
+                    <li><a href="/core.html">Core Section</a></li>
+                    <li><a href="/type-1.html">Type I (Small App)</a></li>
+                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
+                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
+                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Study Resources</h4>
+                <ul>
+                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
+                    <li><a href="/study-path.html">Study Path</a></li>
+                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
+                    <li><a href="/flashcards.html">Flashcards</a></li>
+                    <li><a href="/study-schedule.html">Study Schedule</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Exam Prep</h4>
+                <ul>
+                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
+                    <li><a href="/test-strategies.html">Test Strategies</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
+                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
+                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Certification Info</h4>
+                <ul>
+                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/certification-types.html">Certification Types</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
+                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
+                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
+                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="/about.html">Our Story</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                    <li><a href="/changelog.html">Changelog</a></li>
+                    <li><a href="/policy.html">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms of Use</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
+        </div>
+    </div>
+</footer>
+</div>
 
     <script>
     (function() {
