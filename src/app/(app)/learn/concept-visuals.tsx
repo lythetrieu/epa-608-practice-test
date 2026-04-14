@@ -47,26 +47,68 @@ function CompareTable({ headers, rows }: { headers: string[]; rows: string[][] }
 
 function CoreEnv({}: VisualProps) {
   return (
-    <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">How CFCs Destroy Ozone</p>
-      <div className="flex items-center gap-2 flex-wrap justify-center">
-        <Box label="CFC Released" sub="R-12, R-11" color="bg-red-50 border-red-200 text-red-700" />
-        <Arrow />
-        <Box label="UV Breaks CFC" sub="Releases Chlorine" color="bg-orange-50 border-orange-200 text-orange-700" />
-        <Arrow />
-        <Box label="Cl + O₃ → ClO + O₂" sub="Destroys ozone" color="bg-red-50 border-red-300 text-red-800" />
-        <Arrow />
-        <Box label="1 Cl atom" sub="Destroys 100,000 O₃" color="bg-red-100 border-red-300 text-red-900" />
+    <div className="text-[11px] leading-tight">
+      {/* Row 1: The destruction cycle — single line */}
+      <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg p-2.5 mb-2">
+        <div className="flex items-center gap-1 justify-center flex-wrap">
+          <span className="font-bold text-red-700 bg-red-100 px-1.5 py-0.5 rounded">CFC/HCFC</span>
+          <span className="text-gray-400">→ UV →</span>
+          <span className="font-bold text-orange-700 bg-orange-100 px-1.5 py-0.5 rounded">Cl free</span>
+          <span className="text-gray-400">→</span>
+          <span className="font-bold text-red-800 bg-red-100 px-1.5 py-0.5 rounded">Cl + O₃ = ClO + O₂</span>
+          <span className="text-gray-400">→</span>
+          <span className="font-bold text-red-900 bg-red-200 px-1.5 py-0.5 rounded">repeats forever</span>
+        </div>
+        <div className="text-center mt-1.5 text-red-700 font-bold">
+          1 Cl atom → <span className="text-red-900 text-sm">100,000</span> O₃ destroyed · lives <span className="text-red-900 text-sm">120 years</span>
+        </div>
       </div>
-      <CompareTable
-        headers={['Type', 'ODP', 'GWP', 'Example', 'Status']}
-        rows={[
-          ['CFC', 'High (1.0)', 'High', 'R-12, R-11', 'Banned'],
-          ['HCFC', 'Low (0.05)', 'Medium', 'R-22', 'Phase-out 2030'],
-          ['HFC', 'Zero', 'High', 'R-410A, R-134a', 'AIM Act phase-down'],
-          ['Natural', 'Zero', 'Low', 'R-290, R-744', 'Growing use'],
-        ]}
-      />
+
+      {/* Row 2: 4-column refrigerant type comparison */}
+      <div className="grid grid-cols-4 gap-1 mb-2">
+        <div className="bg-red-100 border border-red-300 rounded-lg p-1.5 text-center">
+          <div className="font-black text-red-800">CFC</div>
+          <div className="text-red-700">ODP = 1</div>
+          <div className="text-red-600">R-12, R-11</div>
+          <div className="font-bold text-red-900 bg-red-200 rounded px-1 mt-0.5">BANNED</div>
+        </div>
+        <div className="bg-orange-50 border border-orange-300 rounded-lg p-1.5 text-center">
+          <div className="font-black text-orange-800">HCFC</div>
+          <div className="text-orange-700">ODP = 0.05</div>
+          <div className="text-orange-600">R-22</div>
+          <div className="font-bold text-orange-900 bg-orange-200 rounded px-1 mt-0.5">2030</div>
+        </div>
+        <div className="bg-blue-50 border border-blue-300 rounded-lg p-1.5 text-center">
+          <div className="font-black text-blue-800">HFC</div>
+          <div className="text-blue-700">ODP = 0</div>
+          <div className="text-blue-600">R-410A</div>
+          <div className="font-bold text-blue-900 bg-blue-200 rounded px-1 mt-0.5">AIM Act</div>
+        </div>
+        <div className="bg-green-50 border border-green-300 rounded-lg p-1.5 text-center">
+          <div className="font-black text-green-800">Natural</div>
+          <div className="text-green-700">ODP = 0</div>
+          <div className="text-green-600">R-290</div>
+          <div className="font-bold text-green-900 bg-green-200 rounded px-1 mt-0.5">OK</div>
+        </div>
+      </div>
+
+      {/* Row 3: Two key distinctions side by side */}
+      <div className="grid grid-cols-2 gap-1.5">
+        {/* ODP vs GWP */}
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-2">
+          <div className="font-bold text-purple-800 mb-1">ODP ≠ GWP</div>
+          <div className="text-purple-700">ODP = ozone kill (Cl)</div>
+          <div className="text-purple-700">GWP = warming</div>
+          <div className="text-purple-900 font-bold mt-0.5">HFC: ODP=0 but GWP high!</div>
+        </div>
+        {/* Health + key facts */}
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-2">
+          <div className="font-bold text-gray-800 mb-1">Exam Facts</div>
+          <div className="text-gray-700">☠️ #1 = skin cancer</div>
+          <div className="text-gray-700">🌋 NOT volcanoes — NASA</div>
+          <div className="text-gray-700">💧 CFCs can&apos;t dissolve in rain</div>
+        </div>
+      </div>
     </div>
   )
 }
