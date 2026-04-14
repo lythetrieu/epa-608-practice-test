@@ -5,9 +5,9 @@ type VisualProps = { className?: string }
 
 function Box({ label, sub, color }: { label: string; sub?: string; color: string }) {
   return (
-    <div className={`px-3 py-2 rounded-lg text-center text-xs font-bold border ${color}`}>
+    <div className={`px-3 py-2 rounded-lg text-center text-sm font-bold border ${color}`}>
       <div>{label}</div>
-      {sub && <div className="font-normal text-[10px] mt-0.5 opacity-80">{sub}</div>}
+      {sub && <div className="font-normal text-xs mt-0.5 opacity-80">{sub}</div>}
     </div>
   )
 }
@@ -19,11 +19,11 @@ function Arrow() {
 function CompareTable({ headers, rows }: { headers: string[]; rows: string[][] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xs border-collapse">
+      <table className="w-full text-sm border-collapse">
         <thead>
           <tr>
             {headers.map((h, i) => (
-              <th key={i} className="bg-gray-100 text-gray-700 font-bold px-3 py-2 text-left border-b border-gray-200">{h}</th>
+              <th key={i} className="bg-gray-100 text-gray-700 font-bold px-3 py-2.5 text-left border-b border-gray-200">{h}</th>
             ))}
           </tr>
         </thead>
@@ -31,7 +31,7 @@ function CompareTable({ headers, rows }: { headers: string[]; rows: string[][] }
           {rows.map((row, i) => (
             <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
               {row.map((cell, j) => (
-                <td key={j} className="px-3 py-2 border-b border-gray-100 text-gray-700">{cell}</td>
+                <td key={j} className="px-3 py-2.5 border-b border-gray-100 text-gray-700">{cell}</td>
               ))}
             </tr>
           ))}
@@ -47,7 +47,7 @@ function CompareTable({ headers, rows }: { headers: string[]; rows: string[][] }
 
 function CoreEnv({}: VisualProps) {
   return (
-    <div className="text-[11px] leading-tight">
+    <div className="text-sm leading-snug">
       {/* Row 1: The destruction cycle — single line */}
       <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg p-2.5 mb-2">
         <div className="flex items-center gap-1 justify-center flex-wrap">
@@ -59,54 +59,52 @@ function CoreEnv({}: VisualProps) {
           <span className="text-gray-400">→</span>
           <span className="font-bold text-red-900 bg-red-200 px-1.5 py-0.5 rounded">repeats forever</span>
         </div>
-        <div className="text-center mt-1.5 text-red-700 font-bold">
-          1 Cl atom → <span className="text-red-900 text-sm">100,000</span> O₃ destroyed · lives <span className="text-red-900 text-sm">120 years</span>
+        <div className="text-center mt-2 text-red-700 font-bold text-sm">
+          1 Cl atom → <span className="text-red-900 text-base font-black">100,000</span> O₃ destroyed · lives <span className="text-red-900 text-base font-black">120 years</span>
         </div>
       </div>
 
       {/* Row 2: 4-column refrigerant type comparison */}
-      <div className="grid grid-cols-4 gap-1 mb-2">
-        <div className="bg-red-100 border border-red-300 rounded-lg p-1.5 text-center">
-          <div className="font-black text-red-800">CFC</div>
+      <div className="grid grid-cols-2 gap-2 mb-2">
+        <div className="bg-red-100 border border-red-300 rounded-lg p-3 text-center">
+          <div className="font-black text-red-800 text-base">CFC</div>
           <div className="text-red-700">ODP = 1</div>
           <div className="text-red-600">R-12, R-11</div>
-          <div className="font-bold text-red-900 bg-red-200 rounded px-1 mt-0.5">BANNED</div>
+          <div className="font-bold text-red-900 bg-red-200 rounded px-2 py-0.5 mt-1 inline-block">BANNED</div>
         </div>
-        <div className="bg-orange-50 border border-orange-300 rounded-lg p-1.5 text-center">
-          <div className="font-black text-orange-800">HCFC</div>
+        <div className="bg-orange-50 border border-orange-300 rounded-lg p-3 text-center">
+          <div className="font-black text-orange-800 text-base">HCFC</div>
           <div className="text-orange-700">ODP = 0.05</div>
           <div className="text-orange-600">R-22</div>
-          <div className="font-bold text-orange-900 bg-orange-200 rounded px-1 mt-0.5">2030</div>
+          <div className="font-bold text-orange-900 bg-orange-200 rounded px-2 py-0.5 mt-1 inline-block">Phase-out 2030</div>
         </div>
-        <div className="bg-blue-50 border border-blue-300 rounded-lg p-1.5 text-center">
-          <div className="font-black text-blue-800">HFC</div>
+        <div className="bg-blue-50 border border-blue-300 rounded-lg p-3 text-center">
+          <div className="font-black text-blue-800 text-base">HFC</div>
           <div className="text-blue-700">ODP = 0</div>
-          <div className="text-blue-600">R-410A</div>
-          <div className="font-bold text-blue-900 bg-blue-200 rounded px-1 mt-0.5">AIM Act</div>
+          <div className="text-blue-600">R-410A, R-134a</div>
+          <div className="font-bold text-blue-900 bg-blue-200 rounded px-2 py-0.5 mt-1 inline-block">AIM Act</div>
         </div>
-        <div className="bg-green-50 border border-green-300 rounded-lg p-1.5 text-center">
-          <div className="font-black text-green-800">Natural</div>
+        <div className="bg-green-50 border border-green-300 rounded-lg p-3 text-center">
+          <div className="font-black text-green-800 text-base">Natural</div>
           <div className="text-green-700">ODP = 0</div>
-          <div className="text-green-600">R-290</div>
-          <div className="font-bold text-green-900 bg-green-200 rounded px-1 mt-0.5">OK</div>
+          <div className="text-green-600">R-290, R-744</div>
+          <div className="font-bold text-green-900 bg-green-200 rounded px-2 py-0.5 mt-1 inline-block">Growing</div>
         </div>
       </div>
 
       {/* Row 3: Two key distinctions side by side */}
-      <div className="grid grid-cols-2 gap-1.5">
-        {/* ODP vs GWP */}
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-2">
-          <div className="font-bold text-purple-800 mb-1">ODP ≠ GWP</div>
-          <div className="text-purple-700">ODP = ozone kill (Cl)</div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+          <div className="font-bold text-purple-800 text-sm mb-1">ODP ≠ GWP</div>
+          <div className="text-purple-700">ODP = ozone kill</div>
           <div className="text-purple-700">GWP = warming</div>
-          <div className="text-purple-900 font-bold mt-0.5">HFC: ODP=0 but GWP high!</div>
+          <div className="text-purple-900 font-bold mt-1">HFC: ODP=0 but GWP high!</div>
         </div>
-        {/* Health + key facts */}
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-2">
-          <div className="font-bold text-gray-800 mb-1">Exam Facts</div>
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+          <div className="font-bold text-gray-800 text-sm mb-1">Exam Facts</div>
           <div className="text-gray-700">☠️ #1 = skin cancer</div>
-          <div className="text-gray-700">🌋 NOT volcanoes — NASA</div>
-          <div className="text-gray-700">💧 CFCs can&apos;t dissolve in rain</div>
+          <div className="text-gray-700">🌋 NOT volcanoes</div>
+          <div className="text-gray-700">💧 CFCs can&apos;t rain out</div>
         </div>
       </div>
     </div>
@@ -116,7 +114,7 @@ function CoreEnv({}: VisualProps) {
 function CoreCaa({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Clean Air Act Enforcement Chain</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Clean Air Act Enforcement Chain</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="Congress" sub="Writes law" color="bg-blue-50 border-blue-200 text-blue-700" />
         <Arrow />
@@ -125,7 +123,7 @@ function CoreCaa({}: VisualProps) {
         <Box label="Technicians" sub="Must be certified" color="bg-green-50 border-green-200 text-green-700" />
       </div>
       <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
-        <p className="text-xs font-bold text-red-700">Violation Penalties</p>
+        <p className="text-sm font-bold text-red-700">Violation Penalties</p>
         <p className="text-2xl font-black text-red-600 mt-1">Up to $44,539/day</p>
         <p className="text-[10px] text-red-500 mt-1">Per violation + possible criminal charges</p>
       </div>
@@ -136,7 +134,7 @@ function CoreCaa({}: VisualProps) {
 function CoreRegs({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Certification Types</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Certification Types</p>
       <CompareTable
         headers={['Type', 'Covers', 'Examples']}
         rows={[
@@ -147,8 +145,8 @@ function CoreRegs({}: VisualProps) {
         ]}
       />
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-amber-700">Key Rule: Venting is ILLEGAL</p>
-        <p className="text-xs text-amber-600 mt-1">Knowingly venting refrigerant = violation. Only de minimis releases during service are allowed.</p>
+        <p className="text-sm font-bold text-amber-700">Key Rule: Venting is ILLEGAL</p>
+        <p className="text-sm text-amber-600 mt-1">Knowingly venting refrigerant = violation. Only de minimis releases during service are allowed.</p>
       </div>
     </div>
   )
@@ -157,7 +155,7 @@ function CoreRegs({}: VisualProps) {
 function CoreSub({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">SNAP Program — Safe Substitutes</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">SNAP Program — Safe Substitutes</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="Old Refrigerant" sub="R-12 (CFC)" color="bg-red-50 border-red-200 text-red-700" />
         <Arrow />
@@ -181,7 +179,7 @@ function CoreSub({}: VisualProps) {
 function CoreRef({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Refrigeration Cycle</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Refrigeration Cycle</p>
       <div className="grid grid-cols-2 gap-2">
         <Box label="Compressor" sub="Low → High pressure" color="bg-red-50 border-red-200 text-red-700" />
         <Box label="Condenser" sub="Hot gas → liquid (rejects heat)" color="bg-orange-50 border-orange-200 text-orange-700" />
@@ -198,7 +196,7 @@ function CoreRef({}: VisualProps) {
 function Core3rs({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Recovery vs Recycling vs Reclamation</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Recovery vs Recycling vs Reclamation</p>
       <CompareTable
         headers={['Process', 'What Happens', 'Who Does It', 'Standard']}
         rows={[
@@ -208,8 +206,8 @@ function Core3rs({}: VisualProps) {
         ]}
       />
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-blue-700">Key: Only reclamation can make refrigerant &ldquo;like new&rdquo;</p>
-        <p className="text-xs text-blue-600 mt-1">Reclaimed refrigerant meets ARI-700 purity standard. Recycled does not.</p>
+        <p className="text-sm font-bold text-blue-700">Key: Only reclamation can make refrigerant &ldquo;like new&rdquo;</p>
+        <p className="text-sm text-blue-600 mt-1">Reclaimed refrigerant meets ARI-700 purity standard. Recycled does not.</p>
       </div>
     </div>
   )
@@ -218,7 +216,7 @@ function Core3rs({}: VisualProps) {
 function CoreRec({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Recovery Equipment</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Recovery Equipment</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="System" sub="Contains refrigerant" color="bg-gray-50 border-gray-200 text-gray-700" />
         <Arrow />
@@ -226,7 +224,7 @@ function CoreRec({}: VisualProps) {
         <Arrow />
         <Box label="Recovery Tank" sub="Gray body, yellow top" color="bg-yellow-50 border-yellow-200 text-yellow-700" />
       </div>
-      <div className="grid grid-cols-2 gap-2 text-xs">
+      <div className="grid grid-cols-2 gap-2 text-sm">
         <div className="bg-green-50 border border-green-200 rounded-lg p-2 text-center">
           <p className="font-bold text-green-700">Self-Contained</p>
           <p className="text-green-600">Has own compressor</p>
@@ -245,7 +243,7 @@ function CoreRec({}: VisualProps) {
 function CoreEvac({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Evacuation Levels</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Evacuation Levels</p>
       <CompareTable
         headers={['System', 'Mfg Before 11/15/93', 'Mfg After 11/15/93']}
         rows={[
@@ -256,8 +254,8 @@ function CoreEvac({}: VisualProps) {
         ]}
       />
       <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-purple-700">Micron Gauge = Most Accurate</p>
-        <p className="text-xs text-purple-600 mt-1">Always use a micron gauge to verify deep vacuum. Compound gauges are NOT accurate enough.</p>
+        <p className="text-sm font-bold text-purple-700">Micron Gauge = Most Accurate</p>
+        <p className="text-sm text-purple-600 mt-1">Always use a micron gauge to verify deep vacuum. Compound gauges are NOT accurate enough.</p>
       </div>
     </div>
   )
@@ -266,24 +264,24 @@ function CoreEvac({}: VisualProps) {
 function CoreSafe({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Safety Essentials</p>
-      <div className="grid grid-cols-3 gap-2 text-xs text-center">
+      <p className="text-sm font-bold text-gray-500 uppercase">Safety Essentials</p>
+      <div className="grid grid-cols-3 gap-2 text-sm text-center">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-2">
-          <p className="text-2xl mb-1">🥽</p>
+          <p className="text-3xl mb-1">🥽</p>
           <p className="font-bold text-blue-700">Safety Goggles</p>
         </div>
         <div className="bg-green-50 border border-green-200 rounded-lg p-2">
-          <p className="text-2xl mb-1">🧤</p>
+          <p className="text-3xl mb-1">🧤</p>
           <p className="font-bold text-green-700">Gloves</p>
         </div>
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-2">
-          <p className="text-2xl mb-1">💨</p>
+          <p className="text-3xl mb-1">💨</p>
           <p className="font-bold text-orange-700">Ventilation</p>
         </div>
       </div>
       <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-red-700">Refrigerant Exposure Dangers</p>
-        <p className="text-xs text-red-600 mt-1">Oxygen displacement → suffocation. Frostbite on skin contact. Never use open flame near refrigerants — phosgene gas is deadly.</p>
+        <p className="text-sm font-bold text-red-700">Refrigerant Exposure Dangers</p>
+        <p className="text-sm text-red-600 mt-1">Oxygen displacement → suffocation. Frostbite on skin contact. Never use open flame near refrigerants — phosgene gas is deadly.</p>
       </div>
     </div>
   )
@@ -292,8 +290,8 @@ function CoreSafe({}: VisualProps) {
 function CoreShip({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Cylinder Types</p>
-      <div className="grid grid-cols-2 gap-2 text-xs text-center">
+      <p className="text-sm font-bold text-gray-500 uppercase">Cylinder Types</p>
+      <div className="grid grid-cols-2 gap-2 text-sm text-center">
         <div className="bg-gray-100 border border-gray-300 rounded-lg p-2">
           <div className="w-8 h-12 mx-auto rounded-lg bg-gray-400 border-t-4 border-yellow-400 mb-1" />
           <p className="font-bold text-gray-700">Recovery Tank</p>
@@ -306,8 +304,8 @@ function CoreShip({}: VisualProps) {
         </div>
       </div>
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-amber-700">DOT Rules</p>
-        <p className="text-xs text-amber-600 mt-1">Never fill recovery tank above 80% capacity. Must pass hydrostatic test every 5 years. Label with refrigerant type.</p>
+        <p className="text-sm font-bold text-amber-700">DOT Rules</p>
+        <p className="text-sm text-amber-600 mt-1">Never fill recovery tank above 80% capacity. Must pass hydrostatic test every 5 years. Label with refrigerant type.</p>
       </div>
     </div>
   )
@@ -320,7 +318,7 @@ function CoreShip({}: VisualProps) {
 function T1Rec({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Small Appliance Recovery Requirements</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Small Appliance Recovery Requirements</p>
       <CompareTable
         headers={['Method', 'Capture Rate', 'When to Use']}
         rows={[
@@ -329,8 +327,8 @@ function T1Rec({}: VisualProps) {
         ]}
       />
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-blue-700">Small Appliance = 5 lbs or less refrigerant</p>
-        <p className="text-xs text-blue-600 mt-1">Examples: Household fridge, window AC, PTAC, dehumidifier, vending machine</p>
+        <p className="text-sm font-bold text-blue-700">Small Appliance = 5 lbs or less refrigerant</p>
+        <p className="text-sm text-blue-600 mt-1">Examples: Household fridge, window AC, PTAC, dehumidifier, vending machine</p>
       </div>
     </div>
   )
@@ -339,7 +337,7 @@ function T1Rec({}: VisualProps) {
 function T1Tech({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Sealed System Access</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Sealed System Access</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="Pierce Valve" sub="Temporary access" color="bg-blue-50 border-blue-200 text-blue-700" />
         <Arrow />
@@ -354,7 +352,7 @@ function T1Tech({}: VisualProps) {
 function T1Safe({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Flammable Refrigerants (A2L / A3)</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Flammable Refrigerants (A2L / A3)</p>
       <CompareTable
         headers={['Class', 'Flammability', 'Examples']}
         rows={[
@@ -364,7 +362,7 @@ function T1Safe({}: VisualProps) {
         ]}
       />
       <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-red-700">R-290 (Propane): No sparks, no open flame, ventilate area</p>
+        <p className="text-sm font-bold text-red-700">R-290 (Propane): No sparks, no open flame, ventilate area</p>
       </div>
     </div>
   )
@@ -377,7 +375,7 @@ function T1Safe({}: VisualProps) {
 function T2Leak({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Leak Rate Thresholds</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Leak Rate Thresholds</p>
       <CompareTable
         headers={['Equipment', 'Trigger Rate', 'Action Required']}
         rows={[
@@ -387,7 +385,7 @@ function T2Leak({}: VisualProps) {
         ]}
       />
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-blue-700">Leak Rate Formula</p>
+        <p className="text-sm font-bold text-blue-700">Leak Rate Formula</p>
         <p className="text-sm text-blue-800 font-mono mt-1">Rate = (Refrigerant Added ÷ Full Charge) × 100</p>
       </div>
     </div>
@@ -397,7 +395,7 @@ function T2Leak({}: VisualProps) {
 function T2Repair({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Leak Repair Timeline</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Leak Repair Timeline</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="Leak Found" sub="Day 0" color="bg-red-50 border-red-200 text-red-700" />
         <Arrow />
@@ -412,7 +410,7 @@ function T2Repair({}: VisualProps) {
 function T2Rec({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">High-Pressure Recovery</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">High-Pressure Recovery</p>
       <CompareTable
         headers={['Charge Size', 'Before 11/15/93', 'After 11/15/93']}
         rows={[
@@ -427,8 +425,8 @@ function T2Rec({}: VisualProps) {
 function T2Tech({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Charging Methods</p>
-      <div className="grid grid-cols-2 gap-2 text-xs">
+      <p className="text-sm font-bold text-gray-500 uppercase">Charging Methods</p>
+      <div className="grid grid-cols-2 gap-2 text-sm">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
           <p className="font-bold text-blue-700">Subcooling</p>
           <p className="text-blue-600 mt-1">Used with TXV</p>
@@ -447,7 +445,7 @@ function T2Tech({}: VisualProps) {
 function T2Ref({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Common High-Pressure Refrigerants</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Common High-Pressure Refrigerants</p>
       <CompareTable
         headers={['Refrigerant', 'Type', 'Replaces', 'Pressure']}
         rows={[
@@ -468,13 +466,13 @@ function T2Ref({}: VisualProps) {
 function T3Leak({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Low-Pressure Leak Detection</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Low-Pressure Leak Detection</p>
       <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-purple-700">Low-pressure systems operate BELOW atmospheric pressure</p>
-        <p className="text-xs text-purple-600 mt-1">Leaks pull AIR IN (not refrigerant out). The purge unit removes non-condensables.</p>
+        <p className="text-sm font-bold text-purple-700">Low-pressure systems operate BELOW atmospheric pressure</p>
+        <p className="text-sm text-purple-600 mt-1">Leaks pull AIR IN (not refrigerant out). The purge unit removes non-condensables.</p>
       </div>
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-amber-700">High purge unit runtime = leak present</p>
+        <p className="text-sm font-bold text-amber-700">High purge unit runtime = leak present</p>
       </div>
     </div>
   )
@@ -483,11 +481,11 @@ function T3Leak({}: VisualProps) {
 function T3Repair({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Chiller Repair Triggers</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Chiller Repair Triggers</p>
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
-        <p className="text-xs font-bold text-blue-700">Commercial Refrigeration/Industrial</p>
+        <p className="text-sm font-bold text-blue-700">Commercial Refrigeration/Industrial</p>
         <p className="text-3xl font-black text-blue-800 mt-1">30% / year</p>
-        <p className="text-xs text-blue-600 mt-1">Repair or retrofit/replace plan within 30 days</p>
+        <p className="text-sm text-blue-600 mt-1">Repair or retrofit/replace plan within 30 days</p>
       </div>
     </div>
   )
@@ -496,7 +494,7 @@ function T3Repair({}: VisualProps) {
 function T3Rec({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Low-Pressure Recovery</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Low-Pressure Recovery</p>
       <CompareTable
         headers={['Equipment Age', 'Required Level']}
         rows={[
@@ -505,8 +503,8 @@ function T3Rec({}: VisualProps) {
         ]}
       />
       <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-red-700">Never use the chiller as a recovery vessel</p>
-        <p className="text-xs text-red-600 mt-1">Pressurizing a low-pressure system risks rupture.</p>
+        <p className="text-sm font-bold text-red-700">Never use the chiller as a recovery vessel</p>
+        <p className="text-sm text-red-600 mt-1">Pressurizing a low-pressure system risks rupture.</p>
       </div>
     </div>
   )
@@ -515,15 +513,15 @@ function T3Rec({}: VisualProps) {
 function T3Rech({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Charging Low-Pressure Systems</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Charging Low-Pressure Systems</p>
       <div className="flex items-center gap-2 flex-wrap justify-center">
         <Box label="Charge as VAPOR" sub="Into evaporator" color="bg-cyan-50 border-cyan-200 text-cyan-700" />
         <Arrow />
         <Box label="Then Liquid" sub="Once pressure stabilizes" color="bg-blue-50 border-blue-200 text-blue-700" />
       </div>
       <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-red-700">NEVER charge liquid into evaporator directly</p>
-        <p className="text-xs text-red-600 mt-1">Liquid refrigerant can freeze tubes and cause damage (flash-freeze).</p>
+        <p className="text-sm font-bold text-red-700">NEVER charge liquid into evaporator directly</p>
+        <p className="text-sm text-red-600 mt-1">Liquid refrigerant can freeze tubes and cause damage (flash-freeze).</p>
       </div>
     </div>
   )
@@ -532,7 +530,7 @@ function T3Rech({}: VisualProps) {
 function T3Ref({}: VisualProps) {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-bold text-gray-500 uppercase">Low-Pressure Refrigerants</p>
+      <p className="text-sm font-bold text-gray-500 uppercase">Low-Pressure Refrigerants</p>
       <CompareTable
         headers={['Refrigerant', 'Type', 'Boiling Point', 'Key Fact']}
         rows={[
@@ -542,7 +540,7 @@ function T3Ref({}: VisualProps) {
         ]}
       />
       <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-        <p className="text-xs font-bold text-purple-700">Both R-11 and R-123 operate below atmospheric pressure at normal temps</p>
+        <p className="text-sm font-bold text-purple-700">Both R-11 and R-123 operate below atmospheric pressure at normal temps</p>
       </div>
     </div>
   )
