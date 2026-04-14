@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid, Eye } from 'lucide-react'
+import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid } from 'lucide-react'
 import { CONCEPT_VISUALS } from './concept-visuals'
 
 type Concept = {
@@ -267,115 +267,40 @@ export default function StudyPathClient() {
         {/* LESSON PHASE */}
         {quizPhase === 'lesson' && (
           <>
-            {quiz.lesson ? (
-              <div className="space-y-4 mb-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <BookOpen size={16} className="text-blue-600" />
-                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Quick Overview</span>
-                  </div>
-                  <p className="text-sm text-gray-800 leading-relaxed">
-                    {quiz.lesson.split(/\.\s+/).slice(0, 3).join('. ').trim().replace(/\.$/, '') + '.'}
-                  </p>
+            <div className="space-y-3 mb-5">
+              {/* 1. Visual — the main teaching tool */}
+              {activeConceptPrefix && CONCEPT_VISUALS[activeConceptPrefix] && (
+                <div className="bg-white border border-gray-200 rounded-xl p-4">
+                  {CONCEPT_VISUALS[activeConceptPrefix]()}
                 </div>
+              )}
 
-                {/* Visual Diagram */}
-                {activeConceptPrefix && CONCEPT_VISUALS[activeConceptPrefix] && (
-                  <div className="bg-white border border-gray-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Eye size={14} className="text-gray-600" />
-                      <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">Visual Guide</span>
-                    </div>
-                    {CONCEPT_VISUALS[activeConceptPrefix]()}
+              {/* 2. Three quick bullets: number + trick + trap */}
+              <div className="space-y-2">
+                {quiz.memoryTrick && (
+                  <div className="flex items-start gap-2.5 bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3">
+                    <Lightbulb size={16} className="text-indigo-600 shrink-0 mt-0.5" />
+                    <p className="text-sm text-indigo-800 font-medium leading-snug">{quiz.memoryTrick}</p>
                   </div>
                 )}
-
-                {/* Exam Patterns — must-know rules & numbers */}
-                {quiz.facts && quiz.facts.length > 0 && (() => {
-                  const rules = quiz.facts.filter(f => /(must|never|always|required|illegal|violation|prohibited|cannot|only)/i.test(f))
-                  const numbers = quiz.facts.filter(f => /\d/.test(f) && !rules.includes(f))
-                  const patterns = [...rules.slice(0, 6), ...numbers.slice(0, 4)]
-                  const remaining = quiz.facts.filter(f => !patterns.includes(f))
-
-                  return (
-                    <div className="space-y-3">
-                      {patterns.length > 0 && (
-                        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                          <div className="flex items-center gap-2 mb-3">
-                            <AlertCircle size={14} className="text-orange-600" />
-                            <span className="text-xs font-bold text-orange-700 uppercase tracking-wide">
-                              Exam Patterns — What They Test
-                            </span>
-                          </div>
-                          <ul className="space-y-2">
-                            {patterns.map((fact, i) => {
-                              const isRule = rules.includes(fact)
-                              return (
-                                <li key={i} className={`text-xs leading-relaxed pl-3 py-1.5 rounded-lg border-l-2 ${
-                                  isRule ? 'border-red-400 bg-red-50/70 text-red-800 font-medium' : 'border-blue-400 bg-blue-50/70 text-blue-800'
-                                }`}>
-                                  {fact}
-                                </li>
-                              )
-                            })}
-                          </ul>
-                        </div>
-                      )}
-
-                      {remaining.length > 0 && (
-                        <details className="bg-gray-50 border border-gray-200 rounded-xl">
-                          <summary className="px-4 py-3 cursor-pointer text-xs font-bold text-gray-500 uppercase tracking-wide flex items-center gap-2 select-none">
-                            <ChevronRight size={14} className="transition-transform details-open:rotate-90" />
-                            All {quiz.facts.length} Facts (Reference)
-                          </summary>
-                          <ul className="px-4 pb-4 space-y-1.5 max-h-[300px] overflow-y-auto">
-                            {remaining.map((fact, i) => (
-                              <li key={i} className="text-xs text-gray-600 leading-relaxed pl-3 border-l-2 border-gray-200 py-0.5">
-                                {fact}
-                              </li>
-                            ))}
-                          </ul>
-                        </details>
-                      )}
-                    </div>
-                  )
-                })()}
-
+                {quiz.examWarning && (
+                  <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                    <AlertCircle size={16} className="text-red-600 shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-800 leading-snug">{quiz.examWarning}</p>
+                  </div>
+                )}
                 {quiz.keyNumbers.length > 0 && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Brain size={14} className="text-amber-600" />
-                      <span className="text-xs font-bold text-amber-700 uppercase tracking-wide">Numbers to Remember</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                    <Brain size={16} className="text-amber-600 shrink-0 mt-0.5" />
+                    <div className="flex flex-wrap gap-1.5">
                       {quiz.keyNumbers.map((n, i) => (
-                        <span key={i} className="px-3 py-1 bg-white border border-amber-300 rounded-lg text-sm font-semibold text-amber-800">{n}</span>
+                        <span key={i} className="px-2 py-0.5 bg-white border border-amber-300 rounded text-xs font-bold text-amber-800">{n}</span>
                       ))}
                     </div>
                   </div>
                 )}
-
-                {quiz.memoryTrick && (
-                  <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb size={14} className="text-indigo-600" />
-                      <span className="text-xs font-bold text-indigo-700 uppercase tracking-wide">Memory Trick</span>
-                    </div>
-                    <p className="text-sm text-indigo-800 font-medium">{quiz.memoryTrick}</p>
-                  </div>
-                )}
-
-                {quiz.examWarning && (
-                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertCircle size={14} className="text-red-600" />
-                      <span className="text-xs font-bold text-red-700 uppercase tracking-wide">Exam Trap</span>
-                    </div>
-                    <p className="text-sm text-red-800">{quiz.examWarning}</p>
-                  </div>
-                )}
               </div>
-            ) : null}
+            </div>
 
             <button
               onClick={() => { setQuizPhase('quiz'); setQuizIdx(0) }}
@@ -384,7 +309,7 @@ export default function StudyPathClient() {
                 lessonReady ? 'bg-blue-800 text-white hover:bg-blue-900' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
-              {lessonReady ? "I've Read This — Start Quiz" : 'Read the lesson first...'}
+              {lessonReady ? "Start Quiz" : 'Reading...'}
             </button>
           </>
         )}
