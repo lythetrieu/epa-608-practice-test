@@ -79,6 +79,8 @@
         .dropdown-menu .menu-label { padding:6px 12px 4px; font-size:11px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:.06em; display:block; }
         .nav-cta { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:#e85d04; color:#fff!important; text-decoration:none; font-weight:600; font-size:14px; border-radius:8px; transition:background .15s,transform .1s; white-space:nowrap; flex-shrink:0; }
         .nav-cta:hover { background:#c94e02!important; transform:translateY(-1px); }
+        .nav-pricing { font-weight:700; color:#003087!important; }
+        .nav-pricing:hover { background:#eef3ff; color:#003087!important; }
         .nav-signin { display:inline-flex; align-items:center; padding:8px 14px; color:#475569; text-decoration:none; font-weight:500; font-size:14px; border-radius:8px; transition:background .15s,color .15s; white-space:nowrap; flex-shrink:0; }
         .nav-signin:hover { background:#f1f5f9; color:#003087; }
         .nav-signup { display:inline-flex; align-items:center; padding:8px 16px; background:#fff; color:#003087!important; border:1.5px solid #003087; text-decoration:none; font-weight:600; font-size:14px; border-radius:8px; transition:background .15s,color .15s; white-space:nowrap; flex-shrink:0; }
@@ -770,50 +772,28 @@
         </a>
         <nav>
             <ul class="nav-menu">
-                <!-- Practice Tests dropdown -->
                 <li class="dropdown">
                     <button class="dropdown-toggle">Practice Tests</button>
                     <ul class="dropdown-menu">
                         <div class="dropdown-menu-inner">
-                        <li class="menu-label">Choose Exam Type</li>
-                        <li><a href="/universal.html">🎓 Universal — All Sections</a></li>
+                        <li><a href="/universal.html">Universal — All Sections</a></li>
                         <li class="divider"></li>
-                        <li><a href="/core.html">📝 Core — Regulations</a></li>
-                        <li><a href="/type-1.html">❄️ Type I — Small Appliances</a></li>
-                        <li><a href="/type-2.html">🔧 Type II — High Pressure</a></li>
-                        <li><a href="/type-3.html">🏭 Type III — Low Pressure</a></li>
+                        <li><a href="/core.html">Core — Regulations</a></li>
+                        <li><a href="/type-1.html">Type I — Small Appliances</a></li>
+                        <li><a href="/type-2.html">Type II — High Pressure</a></li>
+                        <li><a href="/type-3.html">Type III — Low Pressure</a></li>
                         </div>
                     </ul>
                 </li>
-
-                <!-- Study Tools dropdown -->
-                <li class="dropdown">
-                    <button class="dropdown-toggle">Study Tools</button>
-                    <ul class="dropdown-menu">
-                        <div class="dropdown-menu-inner">
-                        <li class="menu-label">Learn Smarter</li>
-                        <li><a href="/tutor.html">🤖 AI Tutor</a></li>
-                        <li><a href="/flashcards.html">🃏 Flashcards</a></li>
-                        <li><a href="/weak-spots.html">🎯 Weak Spots</a></li>
-                        </div>
-                    </ul>
-                </li>
-
-                <!-- My Progress -->
                 <li><a href="/progress.html">My Progress</a></li>
-
-                <!-- Pricing -->
-                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/history.html">History</a></li>
+                <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
             </ul>
         </nav>
 
-        <!-- Auth / CTA buttons -->
         <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <!-- Default: not logged in -->
             <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin">Sign In</a>
-            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up Free</a>
-            <a href="/pricing.html" class="nav-cta" id="nav-btn-gopro">⚡ Go Pro</a>
-            <!-- Logged-in state (hidden by default, shown by JS) -->
+            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up</a>
             <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
         </div>
     </div>
@@ -831,7 +811,6 @@
         // Show dashboard button, hide sign in/up/gopro
         document.getElementById('nav-btn-signin').style.display = 'none';
         document.getElementById('nav-btn-signup').style.display = 'none';
-        document.getElementById('nav-btn-gopro').style.display = 'none';
         document.getElementById('nav-btn-dashboard').style.display = 'inline-flex';
     } catch(e) {}
 })();
