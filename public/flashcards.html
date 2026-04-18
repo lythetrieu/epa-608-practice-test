@@ -156,215 +156,15 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ── Header ── */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 64px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    gap: 16px;
-}
-
-.logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.logo img { height: 38px; width: auto; }
 
 /* ── Nav ── */
-nav { display: flex; align-items: center; }
-
-.nav-menu {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2px;
-}
-
-.nav-menu > li { position: relative; }
-
-.nav-menu > li > a {
-    display: block;
-    padding: 10px 14px;
-    color: #374151;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-}
-
-.nav-menu > li > a:hover { background: #f1f5f9; color: #007acc; }
 
 /* ── Dropdown ── */
-.dropdown { position: relative; }
-
-.dropdown-toggle {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 14px;
-    color: #374151;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    background: transparent;
-    border: none;
-    white-space: nowrap;
-}
-
-.dropdown-toggle::after {
-    content: "▾";
-    font-size: 12px;
-    opacity: 0.5;
-    transition: transform 0.2s;
-}
-
-.dropdown.open > .dropdown-toggle {
-    background: #f1f5f9;
-    color: #007acc;
-}
-
-.dropdown.open > .dropdown-toggle::after { transform: rotate(180deg); }
-
-/* Dropdown panel — no gap, padding bridges hover area */
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding-top: 8px; /* hover bridge — do not remove */
-    list-style: none;
-    display: none;
-    z-index: 200;
-    min-width: 210px;
-}
-
-.dropdown-menu-inner {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid #f1f5f9;
-    padding: 6px;
-}
-
-.dropdown.open .dropdown-menu { display: block; }
-
-.dropdown-menu li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    color: #374151;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-}
-
-.dropdown-menu li a:hover { background: #f0f9ff; color: #007acc; }
-
-.dropdown-menu .divider {
-    height: 1px;
-    background: #f1f5f9;
-    margin: 4px 4px;
-}
-
-.dropdown-menu .menu-label {
-    padding: 6px 12px 4px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
 
 /* ── CTA Button ── */
-.nav-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 18px;
-    background: #007acc;
-    color: #fff !important;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s, transform 0.1s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.nav-cta:hover { background: #0066a3 !important; color: #fff !important; transform: translateY(-1px); }
-.nav-pricing { font-weight:700; color:#003087!important; }
-.nav-pricing:hover { background:#eef3ff; color:#003087!important; }
 
 /* ── Auth buttons ── */
-.nav-signin {
-    display: inline-flex; align-items: center;
-    padding: 8px 14px;
-    color: #475569;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.nav-signin:hover { background: #f1f5f9; color: #007acc; }
-.nav-signup {
-    display: inline-flex; align-items: center;
-    padding: 8px 16px;
-    background: #fff;
-    color: #007acc !important;
-    border: 1.5px solid #007acc;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.nav-signup:hover { background: #007acc; color: #fff !important; }
-.nav-dashboard {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 8px 16px;
-    background: #16a34a;
-    color: #fff !important;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.nav-dashboard:hover { background: #15803d !important; }
 @media (max-width: 768px) {
-    .nav-signin { display: none; }
-    .nav-signup, .nav-dashboard { padding: 7px 12px; font-size: 13px; }
 }
 
 /* ── Footer ── */
@@ -452,91 +252,22 @@ footer {
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .header-content { height: 56px; padding: 0 16px; }
-    .logo img { height: 32px; }
-    .nav-menu > li > a, .dropdown-toggle { padding: 8px 10px; font-size: 13px; }
-    .nav-cta { padding: 7px 14px; font-size: 13px; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     .footer-brand { grid-column: 1 / -1; }
 }
 
 @media (max-width: 480px) {
-    .nav-menu { gap: 0; }
     .footer-grid { grid-template-columns: 1fr; }
 }
 </style>
+    <link rel="stylesheet" href="/site.css">
 </head>
 <body>
 <!-- Header -->
-<header>
-    <div class="header-content">
-        <a href="/" class="logo">
-            <img src="logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
-        </a>
-        <nav>
-            <ul class="nav-menu">
-                <li class="dropdown">
-                    <button class="dropdown-toggle">Practice Tests</button>
-                    <ul class="dropdown-menu">
-                        <div class="dropdown-menu-inner">
-                        <li><a href="/universal.html">Universal — All Sections</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/core.html">Core — Regulations</a></li>
-                        <li><a href="/type-1.html">Type I — Small Appliances</a></li>
-                        <li><a href="/type-2.html">Type II — High Pressure</a></li>
-                        <li><a href="/type-3.html">Type III — Low Pressure</a></li>
-                        </div>
-                    </ul>
-                </li>
-                <li><a href="/progress.html">My Progress</a></li>
-                <li><a href="/history.html">History</a></li>
-                <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
-            </ul>
-        </nav>
+<div id="header-placeholder"></div>
 
-        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin">Sign In</a>
-            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up</a>
-            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
-        </div>
-    </div>
-</header>
 
-<script>
-(function() {
-    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
-    try {
-        var raw = localStorage.getItem(KEY);
-        if (!raw) return;
-        var session = JSON.parse(raw);
-        var token = session?.access_token || session?.[0]?.access_token;
-        if (!token) return;
-        // Show dashboard button, hide sign in/up/gopro
-        document.getElementById('nav-btn-signin').style.display = 'none';
-        document.getElementById('nav-btn-signup').style.display = 'none';
-        document.getElementById('nav-btn-dashboard').style.display = 'inline-flex';
-    } catch(e) {}
-})();
-</script>
-<script>
-(function(){
-    var timers={};
-    document.querySelectorAll('.dropdown').forEach(function(dd,idx){
-        dd.addEventListener('mouseenter',function(){
-            clearTimeout(timers[idx]);
-            document.querySelectorAll('.dropdown').forEach(function(o){o.classList.remove('open');});
-            dd.classList.add('open');
-        });
-        dd.addEventListener('mouseleave',function(){
-            timers[idx]=setTimeout(function(){dd.classList.remove('open');},180);
-        });
-    });
-    document.addEventListener('click',function(e){
-        if(!e.target.closest||!e.target.closest('.dropdown'))
-            document.querySelectorAll('.dropdown').forEach(function(dd){dd.classList.remove('open');});
-    });
-})();
-</script>
+
 
 <div id="app">
   <!-- SELECT -->

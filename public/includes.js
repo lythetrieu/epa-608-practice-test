@@ -154,13 +154,5 @@ function loadIncludes() {
 document.addEventListener('DOMContentLoaded', function() {
     loadGTM();
     loadVercelAnalytics();
-    // Header is now inlined — only load footer
-    var footerPlaceholder = document.getElementById('footer-placeholder');
-    if (footerPlaceholder) {
-        var pathPrefix = window.location.pathname.includes('/blog/') ? '../' : '';
-        fetch(pathPrefix + 'footer.html')
-            .then(function(r){ return r.text(); })
-            .then(function(data){ footerPlaceholder.innerHTML = data; })
-            .catch(function(){});
-    }
+    loadIncludes();
 });

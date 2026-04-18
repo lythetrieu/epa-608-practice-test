@@ -151,3 +151,6 @@ footer {
     .nav-menu { gap: 0; }
     .footer-grid { grid-template-columns: 1fr; }
 }
+
+.nav-pricing { font-weight: 700; color: #003087 !important; }
+.nav-pricing:hover { background: #eef3ff; color: #003087 !important; }
