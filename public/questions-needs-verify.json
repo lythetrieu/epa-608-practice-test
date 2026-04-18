@@ -1,0 +1,782 @@
+[
+  {
+    "category": "Core",
+    "question": "Which part of the atmosphere contains the ozone layer?",
+    "options": [
+      "Stratosphere",
+      "Troposphere",
+      "Mesosphere",
+      "Exosphere"
+    ],
+    "answer_text": "Stratosphere",
+    "id": "legacy-core-0011",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which type of refrigerant does not deplete ozone but contributes to global warming?",
+    "options": [
+      "HFCs",
+      "CFCs",
+      "HCFCs",
+      "Halons"
+    ],
+    "answer_text": "HFCs",
+    "id": "legacy-core-0012",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which gas is released when CFCs break down ozone?",
+    "options": [
+      "Chlorine",
+      "Nitrogen",
+      "Oxygen",
+      "Carbon dioxide"
+    ],
+    "answer_text": "Chlorine",
+    "id": "legacy-core-0013",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "What is the purpose of recovery and recycling refrigerants?",
+    "options": [
+      "Prevent release into the atmosphere",
+      "Increase cooling speed",
+      "Decrease system size",
+      "Raise operating pressure"
+    ],
+    "answer_text": "Prevent release into the atmosphere",
+    "id": "legacy-core-0014",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which tool is used to detect refrigerant leaks electronically?",
+    "options": [
+      "Electronic leak detector",
+      "Manifold gauge set",
+      "Vacuum pump",
+      "Refrigerant scale"
+    ],
+    "answer_text": "Electronic leak detector",
+    "id": "legacy-core-0015",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "How should refrigerant cylinders be stored?",
+    "options": [
+      "Upright and secured",
+      "Laying on their side",
+      "In direct sunlight",
+      "On wet surfaces"
+    ],
+    "answer_text": "Upright and secured",
+    "id": "legacy-core-0016",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which law grants the EPA authority to regulate refrigerants?",
+    "options": [
+      "Clean Air Act",
+      "Clean Water Act",
+      "Toxic Substances Control Act",
+      "Resource Conservation Act"
+    ],
+    "answer_text": "Clean Air Act",
+    "id": "legacy-core-0017",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which refrigerant family replaced many CFCs due to lower ODP but still contains chlorine?",
+    "options": [
+      "HCFCs",
+      "HFCs",
+      "Hydrocarbons",
+      "Ammonia"
+    ],
+    "answer_text": "HCFCs",
+    "id": "legacy-core-0018",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "What does GWP stand for?",
+    "options": [
+      "Global Warming Potential",
+      "Gas Weight Pressure",
+      "General Work Procedure",
+      "Greenhouse Waste Prevention"
+    ],
+    "answer_text": "Global Warming Potential",
+    "id": "legacy-core-0019",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Which natural refrigerant is non-toxic and non-flammable?",
+    "options": [
+      "CO2 (R-744)",
+      "Ammonia",
+      "Propane",
+      "Isobutane"
+    ],
+    "answer_text": "CO2 (R-744)",
+    "id": "legacy-core-0020",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 21: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A21",
+      "Option B21",
+      "Option C21",
+      "Option D21"
+    ],
+    "answer_text": "Option A21",
+    "id": "legacy-core-0021",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 22: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A22",
+      "Option B22",
+      "Option C22",
+      "Option D22"
+    ],
+    "answer_text": "Option A22",
+    "id": "legacy-core-0022",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 23: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A23",
+      "Option B23",
+      "Option C23",
+      "Option D23"
+    ],
+    "answer_text": "Option A23",
+    "id": "legacy-core-0023",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 24: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A24",
+      "Option B24",
+      "Option C24",
+      "Option D24"
+    ],
+    "answer_text": "Option A24",
+    "id": "legacy-core-0024",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 25: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A25",
+      "Option B25",
+      "Option C25",
+      "Option D25"
+    ],
+    "answer_text": "Option A25",
+    "id": "legacy-core-0025",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 26: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A26",
+      "Option B26",
+      "Option C26",
+      "Option D26"
+    ],
+    "answer_text": "Option A26",
+    "id": "legacy-core-0026",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 27: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A27",
+      "Option B27",
+      "Option C27",
+      "Option D27"
+    ],
+    "answer_text": "Option A27",
+    "id": "legacy-core-0027",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 28: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A28",
+      "Option B28",
+      "Option C28",
+      "Option D28"
+    ],
+    "answer_text": "Option A28",
+    "id": "legacy-core-0028",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 29: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A29",
+      "Option B29",
+      "Option C29",
+      "Option D29"
+    ],
+    "answer_text": "Option A29",
+    "id": "legacy-core-0029",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 30: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A30",
+      "Option B30",
+      "Option C30",
+      "Option D30"
+    ],
+    "answer_text": "Option A30",
+    "id": "legacy-core-0030",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 31: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A31",
+      "Option B31",
+      "Option C31",
+      "Option D31"
+    ],
+    "answer_text": "Option A31",
+    "id": "legacy-core-0031",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 32: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A32",
+      "Option B32",
+      "Option C32",
+      "Option D32"
+    ],
+    "answer_text": "Option A32",
+    "id": "legacy-core-0032",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 33: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A33",
+      "Option B33",
+      "Option C33",
+      "Option D33"
+    ],
+    "answer_text": "Option A33",
+    "id": "legacy-core-0033",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 34: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A34",
+      "Option B34",
+      "Option C34",
+      "Option D34"
+    ],
+    "answer_text": "Option A34",
+    "id": "legacy-core-0034",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 35: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A35",
+      "Option B35",
+      "Option C35",
+      "Option D35"
+    ],
+    "answer_text": "Option A35",
+    "id": "legacy-core-0035",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 36: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A36",
+      "Option B36",
+      "Option C36",
+      "Option D36"
+    ],
+    "answer_text": "Option A36",
+    "id": "legacy-core-0036",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 37: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A37",
+      "Option B37",
+      "Option C37",
+      "Option D37"
+    ],
+    "answer_text": "Option A37",
+    "id": "legacy-core-0037",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 38: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A38",
+      "Option B38",
+      "Option C38",
+      "Option D38"
+    ],
+    "answer_text": "Option A38",
+    "id": "legacy-core-0038",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 39: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A39",
+      "Option B39",
+      "Option C39",
+      "Option D39"
+    ],
+    "answer_text": "Option A39",
+    "id": "legacy-core-0039",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 40: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A40",
+      "Option B40",
+      "Option C40",
+      "Option D40"
+    ],
+    "answer_text": "Option A40",
+    "id": "legacy-core-0040",
+    "source": "legacy-pdf",
+    "source_doc": "EPA608CertificationExamPrep20252026HVACMasteryGuide-1.pdf",
+    "verified": false,
+    "trust_level": "medium",
+    "needs_review": false,
+    "explanation": "",
+    "source_ref": "",
+    "subtopic_id": null,
+    "difficulty": null,
+    "tags": [
+      "core"
+    ],
+    "is_a2l": false,
+    "last_updated": "2026-04"
+  }
+]

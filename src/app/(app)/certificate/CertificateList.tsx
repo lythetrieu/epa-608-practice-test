@@ -73,7 +73,7 @@ export default function CertificateList({ certificates }: { certificates: Certif
                 <span className="font-semibold text-gray-900 text-sm truncate">
                   {cert.category}
                 </span>
-                <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${meta.color} ${meta.bg} border ${meta.border}`}>
+                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${meta.color} ${meta.bg} border ${meta.border}`}>
                   {meta.label}
                 </span>
               </div>

@@ -1,8 +1,84 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
 import { ReportButton } from './ReportButton'
+
+function ShareButtons({ percentage, category }: { percentage: number; category: string }) {
+  const text = `I scored ${percentage}% on the EPA 608 ${category} Practice Test! Free HVAC certification prep:`
+  const url = 'https://epa608practicetest.net'
+  const encoded = encodeURIComponent(text)
+  const encodedUrl = encodeURIComponent(url)
+  const [copied, setCopied] = useState(false)
+
+  function copyLink() {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-5 mb-8">
+      <p className="text-sm font-semibold text-gray-700 mb-3">Share your result</p>
+      <div className="flex flex-wrap gap-2">
+        <a href={`https://twitter.com/intent/tweet?text=${encoded}&url=${encodedUrl}`}
+          target="_blank" rel="noopener"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors min-h-[44px]">
+          𝕏 Share on X
+        </a>
+        <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encoded}`}
+          target="_blank" rel="noopener"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#1877f2] text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors min-h-[44px]">
+          Facebook
+        </a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+          target="_blank" rel="noopener"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#0a66c2] text-white text-sm font-medium rounded-lg hover:bg-blue-800 transition-colors min-h-[44px]">
+          LinkedIn
+        </a>
+        <button onClick={copyLink}
+          className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]">
+          {copied ? '✓ Copied!' : '🔗 Copy link'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function SharePopup({ percentage, category, onClose }: { percentage: number; category: string; onClose: () => void }) {
+  const text = `I just scored ${percentage}% on the EPA 608 ${category} Practice Test! 🎉 Try it free:`
+  const url = 'https://epa608practicetest.net'
+  const encoded = encodeURIComponent(text)
+  const encodedUrl = encodeURIComponent(url)
+
+  return (
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="text-center mb-4">
+          <div className="text-4xl mb-2">🎉</div>
+          <h3 className="text-xl font-bold text-gray-900">Great score!</h3>
+          <p className="text-gray-500 text-sm mt-1">Help other HVAC techs find this free resource</p>
+        </div>
+        <div className="space-y-2 mb-4">
+          <a href={`https://twitter.com/intent/tweet?text=${encoded}&url=${encodedUrl}`}
+            target="_blank" rel="noopener" onClick={onClose}
+            className="flex items-center justify-center gap-2 w-full py-3 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors">
+            Share on 𝕏 Twitter
+          </a>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encoded}`}
+            target="_blank" rel="noopener" onClick={onClose}
+            className="flex items-center justify-center gap-2 w-full py-3 bg-[#1877f2] text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors">
+            Share on Facebook
+          </a>
+        </div>
+        <button onClick={onClose} className="w-full text-sm text-gray-400 hover:text-gray-600 py-2">
+          Maybe later
+        </button>
+      </div>
+    </div>
+  )
+}
 
 const SLUG_MAP: Record<string, string> = {
   'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2',
@@ -83,17 +159,26 @@ export function ResultView({ result, category, questions }: {
 }) {
   const { score, total, percentage, passed, results, sectionScores } = result
   const slug = SLUG_MAP[category] ?? category.toLowerCase()
+  const [showPopup, setShowPopup] = useState(false)
+
+  useEffect(() => {
+    if (percentage >= 70) {
+      const timer = setTimeout(() => setShowPopup(true), 2500)
+      return () => clearTimeout(timer)
+    }
+  }, [percentage])
 
   const questionTextMap = new Map(questions.map(q => [q.id, q.question]))
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-10 px-3 sm:px-4">
+      {showPopup && <SharePopup percentage={percentage} category={category} onClose={() => setShowPopup(false)} />}
       <div className="max-w-2xl mx-auto">
 
         {/* Score card */}
-        <div className={`rounded-2xl p-8 text-center mb-8 ${passed ? 'bg-green-600' : 'bg-red-500'} text-white`}>
-          <div className="text-6xl font-bold mb-2">{percentage}%</div>
-          <div className="text-2xl font-semibold mb-1">{passed ? '🎉 Passed!' : '❌ Not Passed'}</div>
+        <div className={`rounded-2xl p-5 sm:p-8 text-center mb-4 sm:mb-8 ${passed ? 'bg-green-600' : 'bg-red-500'} text-white`}>
+          <div className="text-5xl sm:text-6xl font-bold mb-2">{percentage}%</div>
+          <div className="text-xl sm:text-2xl font-semibold mb-1">{passed ? '🎉 Passed!' : '❌ Not Passed'}</div>
           <div className="text-white/80">
             {score} / {total} correct
             {sectionScores ? ' — 70% per section (Type I: 84%)' : ' — passing score is 70%'}
@@ -130,6 +215,9 @@ export function ResultView({ result, category, questions }: {
             )}
           </div>
         )}
+
+        {/* Share buttons */}
+        <ShareButtons percentage={percentage} category={category} />
 
         {/* Action buttons */}
         <div className="flex gap-3 mb-8">

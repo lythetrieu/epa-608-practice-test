@@ -120,7 +120,7 @@ export function StreakBoard({ activityDates }: { activityDates: string[] }) {
             {dayLabels.map((label, i) => (
               <div
                 key={i}
-                className="w-6 h-3 flex items-center justify-end pr-1 text-[9px] text-gray-400 leading-none"
+                className="w-6 h-3 flex items-center justify-end pr-1 text-xs text-gray-400 leading-none"
               >
                 {label}
               </div>
@@ -157,7 +157,7 @@ export function StreakBoard({ activityDates }: { activityDates: string[] }) {
             ? `${new Date(hoveredDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}`
             : 'Last 90 days'}
         </div>
-        <div className="flex items-center gap-1 text-[10px] text-gray-400">
+        <div className="flex items-center gap-1 text-xs text-gray-400">
           <span>Less</span>
           <div className="w-3 h-3 rounded-sm bg-gray-100" />
           <div className="w-3 h-3 rounded-sm bg-green-500" />

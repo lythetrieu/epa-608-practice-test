@@ -6,8 +6,8 @@ import Link from 'next/link'
 import { Award, ArrowLeft } from 'lucide-react'
 
 export const metadata = {
-  title: 'Your Certificates | EPA 608 Practice Test',
-  description: 'View and share your EPA 608 certificates.',
+  title: 'Your Achievement Badges | EPA 608 Practice Test',
+  description: 'View and share your EPA 608 achievement badges.',
 }
 
 type Certificate = {
@@ -54,13 +54,13 @@ export default async function CertificatePage() {
         <div className="bg-white rounded-2xl border border-gray-200 p-10 text-center">
           <Award className="w-14 h-14 text-gray-300 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-3">
-            Earn Your First Certificate
+            Earn Your First Achievement Badge
           </h1>
           <p className="text-gray-500 mb-2">
-            Score 70% or higher on any test to unlock your first certificate.
+            Score 70% or higher on any test to unlock your first badge.
           </p>
           <p className="text-gray-400 text-sm mb-2">
-            4 tiers available:
+            4 badge tiers available:
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-8">
             <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-medium border border-amber-200">70%+ Bronze</span>
@@ -83,9 +83,9 @@ export default async function CertificatePage() {
   return (
     <div className="p-6 sm:p-8 max-w-4xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Your Certificates</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Your Achievement Badges</h1>
         <p className="text-gray-500 text-sm mt-1">
-          {certificates.length} certificate{certificates.length !== 1 ? 's' : ''} earned. Share your achievements!
+          {certificates.length} badge{certificates.length !== 1 ? 's' : ''} earned. Share your achievements!
         </p>
       </div>
 

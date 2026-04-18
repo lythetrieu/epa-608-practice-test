@@ -1,2108 +1,626 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPA 608 Test History - EPA 608 Practice Test</title>
-    <meta name="description"
-        content="View your EPA 608 practice test history, track progress, and analyze performance with detailed statistics and score tracking.">
-    <meta name="author" content="EPA 608 Practice Test">
-    <meta name="robots" content="noindex, follow">
-
-    <link rel="canonical" href="https://epa608practicetest.net/history.html">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="EPA 608 Test History - EPA 608 Practice Test">
-    <meta property="og:description"
-        content="Track your EPA 608 certification practice test progress with detailed history and performance analytics.">
-    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EPA 608 Test History - EPA 608 Practice Test">
-    <meta name="twitter:description"
-        content="Track your EPA 608 certification practice test progress with detailed history and performance analytics.">
-    <meta name="twitter:image" content="https://epa608practicetest.net/images/og-image.jpg">
-    <style>
-        :root {
-            --color-primary: #1e40af;
-            --color-success: #28a745;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-
-        body {
-            font: 16px/1.6 system-ui, sans-serif;
-            color: #333;
-            background: #fff
-        }
-
-        .container {
-            width: 100%;
-            margin: 0;
-            padding: 0 20px
-        }
-
-        /* Header */
-        header {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
-            position: sticky;
-            top: 0;
-            z-index: 100
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--color-primary);
-            text-decoration: none
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 32px
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color .3s
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: var(--color-primary)
-        }
-
-        /* History Container */
-        .history-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            margin-top: 20px
-        }
-
-        .history-header {
-            background: var(--color-primary);
-            color: #fff;
-            padding: 24px;
-            text-align: center
-        }
-
-        .history-header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #fff
-        }
-
-        .user-info {
-            font-size: 14px;
-            opacity: .9
-        }
-
-        .history-main {
-            padding: 24px
-        }
-
-        .nav-btn {
-            background: var(--color-success);
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0 8px
-        }
-
-        .nav-btn:hover {
-            background: #218838;
-            text-decoration: none;
-            color: #fff
-        }
-
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px
-        }
-
-        .stat-card {
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 24px;
-            text-align: center
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--color-primary);
-            margin-bottom: 8px
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #666
-        }
-
-        h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: #333;
-            border-bottom: 2px solid var(--color-primary);
-            padding-bottom: 8px
-        }
-
-        .no-history {
-            text-align: center;
-            padding: 48px;
-            color: #666
-        }
-
-        .no-history p {
-            font-size: 18px;
-            margin-bottom: 16px
-        }
-
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .1)
-        }
-
-        .history-table th,
-        .history-table td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0
-        }
-
-        .history-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #555
-        }
-
-        .history-table tbody tr:hover {
-            background: #f8f9fa
-        }
-
-        .score-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: bold
-        }
-
-        .score-excellent {
-            background: #d4edda;
-            color: #155724
-        }
-
-        .score-good {
-            background: #d1ecf1;
-            color: #0c5460
-        }
-
-        .score-fair {
-            background: #fff3cd;
-            color: #856404
-        }
-
-        .score-poor {
-            background: #f8d7da;
-            color: #721c24
-        }
-
-        .date-time {
-            font-size: 14px;
-            color: #666
-        }
-
-        .actions {
-            text-align: center;
-            margin-top: 32px
-        }
-
-        .clear-btn {
-            background: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer
-        }
-
-        .clear-btn:hover {
-            background: #c82333
-        }
-
-        .export-btn {
-            background: #6c757d;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-right: 16px
-        }
-
-        .export-btn:hover {
-            background: #545b62
-        }
-
-        /* Footer */
-        footer {
-            background: #333;
-            color: #fff;
-            padding: 48px 0 32px;
-            margin-top: 40px
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #fff
-        }
-
-        .footer-section ul {
-            list-style: none
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color .3s
-        }
-
-        .footer-section a:hover {
-            color: #fff
-        }
-
-        .footer-section li {
-            margin-bottom: 8px
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #555;
-            margin-top: 32px;
-            padding-top: 24px;
-            text-align: center;
-            color: #ccc
-        }
-
-        @media (max-width:768px) {
-            .container {
-                padding: 0 16px
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 16px
-            }
-
-            .nav-menu {
-                gap: 20px
-            }
-
-            .history-container {
-                margin: 20px 16px
-            }
-
-            .history-header {
-                padding: 16px
-            }
-
-            .history-header h1 {
-                font-size: 20px
-            }
-
-            .history-main {
-                padding: 16px
-            }
-
-            .stats-summary {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 8px
-            }
-
-            .stat-card {
-                padding: 16px
-            }
-
-            .stat-number {
-                font-size: 24px
-            }
-
-            .history-table {
-                font-size: 14px
-            }
-
-            .history-table th,
-            .history-table td {
-                padding: 8px
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center
-            }
-        }
-
-        /* Weak Topics Review Styles */
-        .review-section {
-            margin-top: 32px;
-            padding: 24px;
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px
-        }
-
-        .review-section h3 {
-            color: #856404;
-            margin-bottom: 16px;
-            font-size: 20px
-        }
-
-        .weak-topics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px
-        }
-
-        .weak-topic-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #dc3545;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
-        }
-
-        .weak-topic-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-            text-transform: uppercase
-        }
-
-        .weak-topic-score {
-            font-size: 28px;
-            font-weight: bold;
-            color: #dc3545;
-            margin-bottom: 4px
-        }
-
-        .weak-topic-label {
-            font-size: 12px;
-            color: #666
-        }
-
-        .review-button {
-            background: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%
-        }
-
-        .review-button:hover {
-            background: #c82333
-        }
-
-        .review-info {
-            color: #856404;
-            margin-bottom: 16px;
-            font-size: 14px
-        }
-
-        .no-weak-topics {
-            text-align: center;
-            padding: 32px;
-            color: #28a745;
-            font-size: 18px
-        }
-
-        .no-weak-topics .success-icon {
-            font-size: 48px;
-            margin-bottom: 16px
-        }
-
-        /* Pagination Styles */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin: 20px 0;
-            padding: 16px
-        }
-
-        .page-btn {
-            background: #1e40af;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s
-        }
-
-        .page-btn:hover:not(:disabled) {
-            background: #005a9e
-        }
-
-        .page-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed
-        }
-
-        .page-info {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500
-        }
-
-        @media (max-width:480px) {
-            .nav-btn {
-                padding: 8px 12px;
-                font-size: 13px
-            }
-
-            .history-table th,
-            .history-table td {
-                padding: 6px;
-                font-size: 13px
-            }
-
-            .actions button {
-                display: block;
-                width: 100%;
-                margin: 8px 0
-            }
-
-            .pagination {
-                flex-direction: column;
-                gap: 12px
-            }
-
-            .page-btn {
-                padding: 10px 20px
-            }
-        }
-    </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-KJ8X1DQ1GT');
-    </script>
-
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-KTLNXJKN');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Vercel Analytics -->
-    <script defer src="https://va.vercel-scripts.com/v1/script.debug.js" data-api="_vercel/insights"></script>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>My Progress — EPA 608 Practice Test</title>
+<meta name="description" content="Track your EPA 608 practice test progress, scores, and performance by category.">
+<link rel="canonical" href="https://epa608practicetest.net/history.html">
 <style>
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+.page{max-width:720px;margin:0 auto;padding:32px 20px 60px}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px}
+.page-header h1{font-size:24px;font-weight:800;color:#0f172a}
+.page-sub{font-size:14px;color:#64748b;margin-bottom:28px}
 
-/* Navigation Container */
-nav {
-    display: flex;
-    align-items: center;
-}
+/* ─── Stats ─── */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+.stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;text-align:center}
+.stat-num{font-size:32px;font-weight:900;line-height:1}
+.stat-num.blue{color:#1d4ed8}
+.stat-num.green{color:#16a34a}
+.stat-num.orange{color:#f97316}
+.stat-label{font-size:13px;color:#64748b;margin-top:6px}
 
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+/* ─── Section heading ─── */
+.section-title{font-size:17px;font-weight:700;color:#0f172a;margin:28px 0 12px;display:flex;align-items:center;justify-content:space-between}
+.section-title a{font-size:13px;font-weight:600;color:#1d4ed8;text-decoration:none}
+.section-title a:hover{text-decoration:underline}
 
-.nav-menu > li {
-    position: relative;
-}
+/* ─── Category cards ─── */
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:24px}
+.cat-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px}
+.cat-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cat-name{font-size:14px;font-weight:700;color:#0f172a}
+.cat-pct{font-size:14px;font-weight:800}
+.cat-pct.good{color:#16a34a}
+.cat-pct.warn{color:#f97316}
+.cat-pct.bad{color:#ef4444}
+.cat-pct.none{color:#94a3b8}
+.prog-bar{height:8px;background:#f1f5f9;border-radius:20px;overflow:hidden;margin-bottom:6px}
+.prog-fill{height:100%;border-radius:20px;transition:width .5s ease}
+.prog-fill.good{background:#22c55e}
+.prog-fill.warn{background:#f97316}
+.prog-fill.bad{background:#ef4444}
+.prog-fill.none{background:#e2e8f0;width:0!important}
+.cat-meta{font-size:12px;color:#94a3b8}
+.cat-actions{display:flex;gap:6px;margin-top:8px}
+.cat-act-btn{font-size:11px;padding:4px 10px;border-radius:6px;text-decoration:none;font-weight:600}
+.cat-act-btn.blue{background:#eff6ff;color:#1d4ed8}
+.cat-act-btn.blue:hover{background:#dbeafe}
 
-/* Regular Menu Links — φ spacing: 13px vert × 21px horiz */
-.nav-menu > li > a {
-    display: block;
-    padding: 13px 21px;
-    color: #2c3e50;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    position: relative;
-}
+/* ─── Session list ─── */
+.session-list{display:flex;flex-direction:column;gap:6px}
+.session-row{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.session-left{}
+.session-cat{font-size:14px;font-weight:600;color:#0f172a}
+.session-date{font-size:12px;color:#94a3b8;margin-top:2px}
+.session-right{display:flex;align-items:center;gap:8px}
+.session-pct{font-size:14px;font-weight:800}
+.session-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px}
+.session-badge.pass{background:#dcfce7;color:#16a34a}
+.session-badge.fail{background:#fee2e2;color:#dc2626}
 
-.nav-menu > li > a:hover {
-    color: #1e40af;
-    background-color: rgba(0, 122, 204, 0.05);
-}
+/* ─── Empty ─── */
+.empty-box{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:48px 24px;text-align:center}
+.empty-box p{color:#94a3b8;font-size:14px;margin-bottom:16px}
+.empty-box a{display:inline-block;padding:10px 24px;background:#1d4ed8;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px}
 
-/* Dropdown Container */
-.dropdown {
-    position: relative;
-}
+/* ─── Clear btn ─── */
+.clear-btn{background:none;border:1px solid #fca5a5;color:#ef4444;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.clear-btn:hover{background:#fee2e2}
 
-/* Dropdown Toggle — matching φ spacing */
-.dropdown-toggle {
-    display: flex !important;
-    align-items: center;
-    gap: 6px;
-    padding: 13px 21px;
-    color: #2c3e50;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: transparent;
-    border: none;
-}
+@media(max-width:480px){.stats-grid{grid-template-columns:repeat(3,1fr)}.cat-grid{grid-template-columns:1fr}}
+</style>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-.dropdown-toggle::after {
-    content: "▼";
-    font-size: 10px;
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Dropdown Hover State */
-.dropdown:hover > .dropdown-toggle {
-    color: #1e40af;
-    background-color: rgba(0, 122, 204, 0.05);
-}
-
-.dropdown:hover > .dropdown-toggle::after {
-    transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-    position: absolute !important;
-    top: 100%;
-    left: 0;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
-    min-width: 240px;
-    padding: 12px 0;
-    margin-top: 4px;
-    list-style: none;
-    display: none !important;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 1000;
-}
-
-/* Show Dropdown on Hover */
-.dropdown:hover .dropdown-menu {
-    display: block !important;
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
-
-/* Dropdown Arrow Pointer */
-.dropdown-menu::before {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 30px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #ffffff;
-}
-
-/* Dropdown Menu Items */
-.dropdown-menu li {
-    margin: 0;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Staggered Animation */
-.dropdown:hover .dropdown-menu li:nth-child(1) {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.1s;
-}
-
-.dropdown:hover .dropdown-menu li:nth-child(2) {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.2s;
-}
-
-.dropdown:hover .dropdown-menu li:nth-child(3) {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.3s;
-}
-
-.dropdown:hover .dropdown-menu li:nth-child(4) {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.4s;
-}
-
-.dropdown:hover .dropdown-menu li:nth-child(5) {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.5s;
-}
-
-/* Dropdown Links */
-.dropdown-menu a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    color: #2c3e50;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-/* Icons for Menu Items */
-.dropdown-menu a::before {
-    content: "🏆";
-    font-size: 18px;
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.dropdown-menu li:nth-child(2) a::before { content: "📘"; }
-.dropdown-menu li:nth-child(3) a::before { content: "📦"; }
-.dropdown-menu li:nth-child(4) a::before { content: "🏗️"; }
-.dropdown-menu li:nth-child(5) a::before { content: "❄️"; }
-
-/* Extra staggered animations for dropdowns */
-.dropdown:hover .dropdown-menu li:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
-.dropdown:hover .dropdown-menu li:nth-child(7) { opacity: 1; transform: translateX(0); transition-delay: 0.7s; }
-
-/* Hover Effect on Dropdown Items */
-.dropdown-menu a:hover {
-    background: linear-gradient(90deg, rgba(0, 122, 204, 0.08) 0%, rgba(0, 122, 204, 0.04) 100%);
-    color: #1e40af;
-    padding-left: 24px;
-}
-
-.dropdown-menu a:hover::before {
-    transform: scale(1.2) rotate(10deg);
-}
-
-/* Mobile Responsive — φ scaled down */
-@media (max-width: 768px) {
-    .header-content {
-        height: 56px;
-    }
-
-    .logo {
-        flex: 0 0 auto;
-    }
-
-    .logo img {
-        height: 34px !important;
-    }
-
-    .header-content nav {
-        flex: 1;
-    }
-
-    .nav-menu {
-        gap: 0;
-    }
-
-    .nav-menu > li > a,
-    .dropdown-toggle {
-        padding: 8px 13px;
-        font-size: 13px;
-    }
-
-    .dropdown-menu {
-        min-width: 200px;
-    }
-}
-
-/* Header Layout — Golden Ratio (φ = 1.618)
-   Logo 42px → header 68px (42 × φ)
-   Logo area 38.2% : Nav area 61.8% */
+/* ── Header ── */
 header {
     position: sticky;
     top: 0;
     z-index: 100;
     background: #fff;
     border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 68px;
+    height: 64px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    gap: 16px;
 }
 
 .logo {
     text-decoration: none;
     display: flex;
     align-items: center;
-    flex: 0 0 38.2%;
+    flex-shrink: 0;
 }
 
-.header-content nav {
-    flex: 0 0 61.8%;
+.logo img { height: 38px; width: auto; }
+
+/* ── Nav ── */
+nav { display: flex; align-items: center; }
+
+.nav-menu {
     display: flex;
-    justify-content: flex-end;
-}
-
-/* Footer Layout */
-footer {
-    background: #f8fafc;
-    border-top: 1px solid #e2e8f0;
-    padding: 60px 0 40px;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-section h4 {
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 16px;
-    font-size: 16px;
-}
-
-.footer-section ul {
+    align-items: center;
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    gap: 2px;
 }
 
-.footer-section ul li {
-    margin-bottom: 10px;
+.nav-menu > li { position: relative; }
+
+.nav-menu > li > a {
+    display: block;
+    padding: 10px 14px;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
 }
 
-.footer-section ul li a {
+.nav-menu > li > a:hover { background: #f1f5f9; color: #007acc; }
+
+/* ── Dropdown ── */
+.dropdown { position: relative; }
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 14px;
+    color: #374151;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    background: transparent;
+    border: none;
+    white-space: nowrap;
+}
+
+.dropdown-toggle::after {
+    content: "▾";
+    font-size: 12px;
+    opacity: 0.5;
+    transition: transform 0.2s;
+}
+
+.dropdown.open > .dropdown-toggle {
+    background: #f1f5f9;
+    color: #007acc;
+}
+
+.dropdown.open > .dropdown-toggle::after { transform: rotate(180deg); }
+
+/* Dropdown panel — no gap, padding bridges hover area */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 8px; /* hover bridge — do not remove */
+    list-style: none;
+    display: none;
+    z-index: 200;
+    min-width: 210px;
+}
+
+.dropdown-menu-inner {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #f1f5f9;
+    padding: 6px;
+}
+
+.dropdown.open .dropdown-menu { display: block; }
+
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a:hover { background: #f0f9ff; color: #007acc; }
+
+.dropdown-menu .divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 4px 4px;
+}
+
+.dropdown-menu .menu-label {
+    padding: 6px 12px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ── CTA Button ── */
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background: #007acc;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-cta:hover { background: #0066a3 !important; color: #fff !important; transform: translateY(-1px); }
+
+/* ── Auth buttons ── */
+.nav-signin {
+    display: inline-flex; align-items: center;
+    padding: 8px 14px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-signin:hover { background: #f1f5f9; color: #007acc; }
+.nav-signup {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px;
+    background: #fff;
+    color: #007acc !important;
+    border: 1.5px solid #007acc;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-signup:hover { background: #007acc; color: #fff !important; }
+.nav-dashboard {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 16px;
+    background: #16a34a;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-dashboard:hover { background: #15803d !important; }
+@media (max-width: 768px) {
+    .nav-signin { display: none; }
+    .nav-signup, .nav-dashboard { padding: 7px 12px; font-size: 13px; }
+}
+
+/* ── Footer ── */
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 0 32px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 12px 0 20px;
+    max-width: 260px;
+}
+
+.footer-brand .footer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.footer-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(0,122,204,0.15);
+    color: #38bdf8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer-col h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+
+.footer-col ul li { margin-bottom: 8px; }
+
+.footer-col ul li a {
     color: #64748b;
     text-decoration: none;
-    font-size: 15px;
-    transition: color 0.2s;
+    font-size: 14px;
+    transition: color 0.15s;
+    line-height: 1.4;
+    display: block;
 }
 
-.footer-section ul li a:hover {
-    color: #1e40af;
-}
+.footer-col ul li a:hover { color: #38bdf8; }
 
 .footer-bottom {
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #1e293b;
     padding-top: 24px;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-bottom p { font-size: 13px; color: #475569; }
+
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 13px; }
+.footer-bottom a:hover { color: #94a3b8; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .header-content { height: 56px; padding: 0 16px; }
+    .logo img { height: 32px; }
+    .nav-menu > li > a, .dropdown-toggle { padding: 8px 10px; font-size: 13px; }
+    .nav-cta { padding: 7px 14px; font-size: 13px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+    .nav-menu { gap: 0; }
+    .footer-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
-
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTLNXJKN" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <script src="includes.js"></script>
-    <div id="header-placeholder">
 <!-- Header -->
 <header>
-    <div class="container">
-        <div class="header-content">
-            <a href="/" class="logo">
-                <img src="logo.svg" alt="EPA 608 Practice Test" style="height: 42px; width: auto;">
-            </a>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="/">Home</a></li>
-                    <li class="dropdown">
-                        <button class="dropdown-toggle">Practice Tests</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/universal.html">Universal Practice Test</a></li>
-                            <li><a href="/core.html">Core Practice Test</a></li>
-                            <li><a href="/type-1.html">Type I Practice Test</a></li>
-                            <li><a href="/type-2.html">Type II Practice Test</a></li>
-                            <li><a href="/type-3.html">Type III Practice Test</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <button class="dropdown-toggle">Study</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                            <li><a href="/study-path.html">Study Path</a></li>
-                            <li><a href="/flashcards.html">Flashcards</a></li>
-                            <li><a href="/epa-608-complete-study-guide.html">Complete Guide</a></li>
-                            <li><a href="/study-schedule.html">Study Schedule</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <button class="dropdown-toggle">Exam Prep</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                            <li><a href="/test-strategies.html">Test Strategies</a></li>
-                            <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                            <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                            <li><a href="/does-it-expire.html">Does Cert Expire?</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <button class="dropdown-toggle">Certification</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/what-is-epa-608-certification.html">What is EPA 608?</a></li>
-                            <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                            <li><a href="/certification-types.html">Certification Types</a></li>
-                            <li><a href="/cost-and-exam-fees.html">Cost & Fees</a></li>
-                            <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <img src="logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <!-- Practice Tests dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-toggle">Practice Tests</button>
+                    <ul class="dropdown-menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Choose Exam Type</li>
+                        <li><a href="/universal.html">🎓 Universal — All Sections</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/core.html">📝 Core — Regulations</a></li>
+                        <li><a href="/type-1.html">❄️ Type I — Small Appliances</a></li>
+                        <li><a href="/type-2.html">🔧 Type II — High Pressure</a></li>
+                        <li><a href="/type-3.html">🏭 Type III — Low Pressure</a></li>
+                        </div>
+                    </ul>
+                </li>
+
+                <!-- Study Tools dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-toggle">Study Tools</button>
+                    <ul class="dropdown-menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Learn Smarter</li>
+                        <li><a href="/tutor.html">🤖 AI Tutor</a></li>
+                        <li><a href="/flashcards.html">🃏 Flashcards</a></li>
+                        <li><a href="/weak-spots.html">🎯 Weak Spots</a></li>
+                        </div>
+                    </ul>
+                </li>
+
+                <!-- My Progress -->
+                <li><a href="/progress.html">My Progress</a></li>
+
+                <!-- Pricing -->
+                <li><a href="/pricing.html">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Auth / CTA buttons -->
+        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <!-- Default: not logged in -->
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin">Sign In</a>
+            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up Free</a>
+            <a href="/pricing.html" class="nav-cta" id="nav-btn-gopro">⚡ Go Pro</a>
+            <!-- Logged-in state (hidden by default, shown by JS) -->
+            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
         </div>
     </div>
 </header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
-    </div>
-</header>
-</div>
 
-    <div class="container">
-        <div class="history-container">
-            <div class="history-header">
-                <h1>EPA 608 Test History</h1>
-                <div class="user-info" id="userInfo">Loading...</div>
-            </div>
+<script>
+(function() {
+    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+    try {
+        var raw = localStorage.getItem(KEY);
+        if (!raw) return;
+        var session = JSON.parse(raw);
+        var token = session?.access_token || session?.[0]?.access_token;
+        if (!token) return;
+        // Show dashboard button, hide sign in/up/gopro
+        document.getElementById('nav-btn-signin').style.display = 'none';
+        document.getElementById('nav-btn-signup').style.display = 'none';
+        document.getElementById('nav-btn-gopro').style.display = 'none';
+        document.getElementById('nav-btn-dashboard').style.display = 'inline-flex';
+    } catch(e) {}
+})();
+</script>
+<script>
+(function(){
+    var timers={};
+    document.querySelectorAll('.dropdown').forEach(function(dd,idx){
+        dd.addEventListener('mouseenter',function(){
+            clearTimeout(timers[idx]);
+            document.querySelectorAll('.dropdown').forEach(function(o){o.classList.remove('open');});
+            dd.classList.add('open');
+        });
+        dd.addEventListener('mouseleave',function(){
+            timers[idx]=setTimeout(function(){dd.classList.remove('open');},180);
+        });
+    });
+    document.addEventListener('click',function(e){
+        if(!e.target.closest||!e.target.closest('.dropdown'))
+            document.querySelectorAll('.dropdown').forEach(function(dd){dd.classList.remove('open');});
+    });
+})();
+</script>
 
-            <main class="history-main">
+<div class="page">
+  <div class="page-header">
+    <h1>My Progress</h1>
+    <button class="clear-btn" onclick="clearHistory()">Clear History</button>
+  </div>
+  <p class="page-sub">Track your performance across all test categories.</p>
 
-                <section id="statsSection" class="stats-summary" aria-labelledby="stats-heading">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalTests">0</div>
-                        <div class="stat-label">Total Tests Taken</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="avgScore">0%</div>
-                        <div class="stat-label">Average Score</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="bestScore">0%</div>
-                        <div class="stat-label">Best Score</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="lastScore">N/A</div>
-                        <div class="stat-label">Last Score</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="passRate">0%</div>
-                        <div class="stat-label">Pass Rate</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="recentStreak">0</div>
-                        <div class="stat-label">Current Streak</div>
-                    </div>
-                </section>
+  <!-- Summary stats -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num blue" id="stat-total">0</div><div class="stat-label">Total Tests</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-avg" style="color:#94a3b8">—</div><div class="stat-label">Avg Score</div></div>
+    <div class="stat-card"><div class="stat-num green" id="stat-pass">0</div><div class="stat-label">Tests Passed</div></div>
+  </div>
 
-                <!-- Spider Chart — Weak Areas from History -->
-                <div id="historySpider" style="margin:16px 0;padding:20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;display:none;">
-                    <h2 style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:16px;">Your Weak Spots</h2>
-                    <div id="historySpiderContent"></div>
-                    <div style="margin-top:20px;padding:16px;background:#1e40af;border-radius:12px;text-align:center;">
-                        <p style="color:#93c5fd;font-size:13px;margin-bottom:6px;">Fix these with targeted training + unlimited AI</p>
-                        <a href="/study-path.html" style="display:inline-block;background:#fff;color:#1e40af;padding:12px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">Study Path — Free</a>
-                    </div>
-                </div>
-                <script>
-                (function() {
-                    var history = JSON.parse(localStorage.getItem('epa608History') || '[]');
-                    if (history.length < 2) return;
-                    var weakCounts = {};
-                    history.forEach(function(h) {
-                        if (h.weak && Array.isArray(h.weak)) {
-                            h.weak.forEach(function(t) { weakCounts[t] = (weakCounts[t] || 0) + 1; });
-                        }
-                    });
-                    var topics = Object.keys(weakCounts);
-                    if (topics.length === 0) return;
-                    topics.sort(function(a, b) { return weakCounts[b] - weakCounts[a]; });
-                    var html = '';
-                    topics.slice(0, 8).forEach(function(topic) {
-                        var count = weakCounts[topic];
-                        var pct = Math.round((count / weakCounts[topics[0]]) * 100);
-                        html += '<div style="margin-bottom:8px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;">' +
-                            '<span style="color:#991b1b;font-weight:600;">\u26A0 ' + topic + '</span>' +
-                            '<span style="color:#991b1b;font-weight:700;">Failed ' + count + 'x</span></div>' +
-                            '<div style="height:8px;background:#fee2e2;border-radius:4px;overflow:hidden;">' +
-                            '<div style="height:100%;width:' + pct + '%;background:#dc2626;border-radius:4px;"></div></div></div>';
-                    });
-                    html += '<p style="font-size:12px;color:#64748b;margin-top:12px;">Based on ' + history.length + ' tests.</p>';
-                    document.getElementById('historySpiderContent').innerHTML = html;
-                    document.getElementById('historySpider').style.display = 'block';
-                })();
-                </script>
+  <!-- By Category -->
+  <div class="section-title">By Category</div>
+  <div class="cat-grid" id="cat-grid"></div>
 
-                <!-- Areas for Improvement Section -->
-                <section class="review-section" id="areasSection" style="display:none">
-                    <h3>📊 Areas for Improvement</h3>
-                    <div class="review-info" id="areasInfo"></div>
-                    <div class="weak-topics-grid" id="weakTopicsGrid"></div>
-                </section>
-
-                <!-- Simple Review Section -->
-                <section class="review-section" id="simpleReviewSection"
-                    style="display:none; background:#e8f5e8; border-color:#28a745;">
-                    <h3>🎯 Wrong Answer Review</h3>
-                    <div class="review-info" id="wrongAnswersInfo"></div>
-                    <button class="review-button" onclick="startSimpleReview()" id="simpleReviewBtn">📝 Review Wrong
-                        Answers</button>
-                </section>
-
-                <article class="history-section" aria-labelledby="history-heading">
-                    <h2 id="history-heading">Test Attempts</h2>
-
-                    <section id="noHistory" class="no-history" style="display:none">
-                        <p>No test history found.</p>
-                        <p>Take your first practice test to see your results here!</p>
-                        <a href="/" class="nav-btn">Start Practice Test</a>
-                    </section>
-
-                    <div id="historyContent">
-                        <table class="history-table" id="historyTable" style="display:none" role="table"
-                            aria-labelledby="history-heading">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Test Type</th>
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Score</th>
-                                    <th scope="col">Result</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <nav class="pagination" id="paginationSection" style="display:none"
-                        aria-label="Test history pagination">
-                        <button type="button" class="page-btn" id="prevPage" onclick="changePage(-1)" disabled>←
-                            Previous</button>
-                        <span class="page-info" id="pageInfo">Page 1 of 1</span>
-                        <button type="button" class="page-btn" id="nextPage" onclick="changePage(1)" disabled>Next
-                            →</button>
-                    </nav>
-
-                    <nav class="actions" id="actionsSection" style="display:none" aria-label="History actions">
-                        <button type="button" class="export-btn" onclick="exportHistory()">Export Data</button>
-                        <button type="button" class="clear-btn" onclick="clearHistory()">Clear History</button>
-                    </nav>
-                </article>
-            </main>
-        </div>
-    </div>
-
-    <div id="footer-placeholder">
-<!-- Footer -->
-<footer>
-    <div class="container">
-
-        <!-- Footer CTA — Practice Tests -->
-        <div style="background:#1e40af;border-radius:12px;padding:32px 24px;text-align:center;margin-bottom:40px;">
-            <p style="color:#fff;font-size:20px;font-weight:700;margin-bottom:6px;">Start Your Free 2026 Practice Test
-            </p>
-            <p style="color:rgba(255,255,255,0.85);font-size:14px;margin-bottom:20px;">Join 12,000+ technicians who
-                passed using our simplified prep tools.</p>
-            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
-                <a href="/universal.html"
-                    style="background:#28a745;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Universal
-                    Simulation</a>
-                <a href="/core.html"
-                    style="background:#fff;color:#1e40af;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Core
-                    Section</a>
-                <a href="/study-guides.html"
-                    style="background:rgba(255,255,255,0.15);color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;border:1px solid #fff;">Study
-                    Guides</a>
-            </div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
-</div>
-        </div>
-
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Practice Tests</h4>
-                <ul>
-                    <li><a href="/universal.html">Universal Test</a></li>
-                    <li><a href="/core.html">Core Section</a></li>
-                    <li><a href="/type-1.html">Type I (Small App)</a></li>
-                    <li><a href="/type-2.html">Type II (High-Press)</a></li>
-                    <li><a href="/type-3.html">Type III (Low-Press)</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam Simulation</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Study Resources</h4>
-                <ul>
-                    <li><a href="/study-guides.html">Study Guides Hub</a></li>
-                    <li><a href="/study-path.html">Study Path</a></li>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
-                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
-                    <li><a href="/flashcards.html">Flashcards</a></li>
-                    <li><a href="/study-schedule.html">Study Schedule</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Exam Prep</h4>
-                <ul>
-                    <li><a href="/exam-prep.html">Exam Prep Hub</a></li>
-                    <li><a href="/test-strategies.html">Test Strategies</a></li>
-                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
-                    <li><a href="/exam-day.html">Exam Day Guide</a></li>
-                    <li><a href="/test-anxiety.html">Test Anxiety Tips</a></li>
-                    <li><a href="/test-duration.html">Test Duration & Format</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Certification Info</h4>
-                <ul>
-                    <li><a href="/what-is-epa-608-certification.html">What is Section 608?</a></li>
-                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
-                    <li><a href="/certification-types.html">Certification Types</a></li>
-                    <li><a href="/cost-and-exam-fees.html">Cost & Exam Fees</a></li>
-                    <li><a href="/does-it-expire.html">Does It Expire?</a></li>
-                    <li><a href="/epa-608-online-test.html">Where to Take Test</a></li>
-                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
-                    <li><a href="/pass-rate.html">Pass Rate Statistics</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="/about.html">Our Story</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                    <li><a href="/changelog.html">Changelog</a></li>
-                    <li><a href="/policy.html">Privacy Policy</a></li>
-                    <li><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 EPA 608 Practice Test. Forever free for the HVAC community.</p>
-        </div>
-    </div>
-</footer>
+  <!-- Session history -->
+  <div class="section-title">
+    <span>Session History</span>
+    <a href="/review.html">Fix My Mistakes →</a>
+  </div>
+  <div id="session-area"></div>
 </div>
 
-    <script>
-        let userID = null;
-        let userHistory = [];
-        let currentPage = 1;
-        const itemsPerPage = 20;
-
-        function initializeHistoryPage() {
-            // Use the same data structure as our test page
-            userHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
-
-            if (userHistory.length === 0) {
-                document.getElementById('userInfo').textContent = 'Take your first test to see your progress';
-                showNoHistory();
-                return;
-            }
-
-            document.getElementById('userInfo').textContent = `${userHistory.length} test${userHistory.length === 1 ? '' : 's'} completed`;
-            displayStats();
-            displayHistory();
-            displayWeakTopicsReview(); // Add weak topics analysis
-            document.getElementById('actionsSection').style.display = 'block';
-        }
-
-        function loadTestHistory() {
-            // This function is now handled in initializeHistoryPage
-            initializeHistoryPage();
-        }
-
-        function showNoHistory() {
-            document.getElementById('noHistory').style.display = 'block';
-            document.getElementById('historyTable').style.display = 'none';
-            document.getElementById('actionsSection').style.display = 'none';
-        }
-
-        function displayStats() {
-            const totalTests = userHistory.length;
-            const scores = userHistory.map(test => test.score);
-            const avgScore = totalTests > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / totalTests) : 0;
-            const bestScore = totalTests > 0 ? Math.max(...scores) : 0;
-            const lastScore = totalTests > 0 ? userHistory[0].score : 'N/A';
-
-            // Calculate pass rate (72% or higher)
-            const passedTests = userHistory.filter(test => test.passed).length;
-            const passRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
-
-            // Calculate current streak (consecutive passes from most recent)
-            let currentStreak = 0;
-            for (let i = 0; i < userHistory.length; i++) {
-                if (userHistory[i].passed) {
-                    currentStreak++;
-                } else {
-                    break;
-                }
-            }
-
-            document.getElementById('totalTests').textContent = totalTests;
-            document.getElementById('avgScore').textContent = avgScore + '%';
-            document.getElementById('bestScore').textContent = bestScore + '%';
-            document.getElementById('lastScore').textContent = lastScore + '%';
-            document.getElementById('passRate').textContent = passRate + '%';
-            document.getElementById('recentStreak').textContent = currentStreak;
-        }
-
-        function displayHistory() {
-            const tbody = document.getElementById('historyTableBody');
-            tbody.innerHTML = '';
-
-            // Calculate pagination
-            const totalItems = userHistory.length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-
-            // Get items for current page
-            const pageItems = userHistory.slice(startIndex, endIndex);
-
-            pageItems.forEach((test, index) => {
-                const row = document.createElement('tr');
-                const testNumber = totalItems - (startIndex + index);
-
-                const formattedDate = test.date;
-                const formattedTime = test.time;
-
-                const scoreClass = getScoreClass(test.score);
-                const resultBadge = test.passed ?
-                    '<span class="score-badge score-excellent">PASS</span>' :
-                    '<span class="score-badge score-poor">FAIL</span>';
-
-                row.innerHTML = `
-                    <td><strong>#${testNumber}</strong></td>
-                    <td><strong>${test.type.toUpperCase()}</strong></td>
-                    <td class="date-time">${formattedDate}<br><small>${formattedTime}</small></td>
-                    <td><span class="score-badge ${scoreClass}">${test.score}%</span></td>
-                    <td>${resultBadge}</td>
-                `;
-
-                tbody.appendChild(row);
-            });
-
-            document.getElementById('historyTable').style.display = 'table';
-            updatePagination(totalPages);
-        }
-
-        function updatePagination(totalPages) {
-            const paginationSection = document.getElementById('paginationSection');
-            const prevButton = document.getElementById('prevPage');
-            const nextButton = document.getElementById('nextPage');
-            const pageInfo = document.getElementById('pageInfo');
-
-            if (totalPages <= 1) {
-                paginationSection.style.display = 'none';
-                return;
-            }
-
-            paginationSection.style.display = 'flex';
-            prevButton.disabled = currentPage === 1;
-            nextButton.disabled = currentPage === totalPages;
-            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-        }
-
-        function changePage(direction) {
-            const totalPages = Math.ceil(userHistory.length / itemsPerPage);
-            const newPage = currentPage + direction;
-
-            if (newPage >= 1 && newPage <= totalPages) {
-                currentPage = newPage;
-                displayHistory();
-            }
-        }
-
-        function getScoreClass(score) {
-            if (score >= 90) return 'score-excellent';
-            if (score >= 72) return 'score-good';
-            if (score >= 60) return 'score-fair';
-            return 'score-poor';
-        }
-
-        function exportHistory() {
-            if (userHistory.length === 0) {
-                alert('No history to export');
-                return;
-            }
-
-            const exportData = {
-                userID: userID,
-                exportDate: new Date().toISOString(),
-                testHistory: userHistory.map((test, index) => ({
-                    testNumber: userHistory.length - index,
-                    date: test.date,
-                    score: test.score,
-                    totalQuestions: test.totalQuestions,
-                    percentage: test.percentage,
-                    userAnswers: test.userAnswers
-                }))
-            };
-
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `epa608-test-history-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-        }
-
-        function clearHistory() {
-            if (userHistory.length === 0) {
-                alert('No history to clear');
-                return;
-            }
-
-            const confirmClear = confirm(
-                `Are you sure you want to clear all ${userHistory.length} test attempts? This action cannot be undone.`
-            );
-
-            if (confirmClear) {
-                localStorage.removeItem('epa608History');
-                userHistory = [];
-                showNoHistory();
-
-                document.getElementById('totalTests').textContent = '0';
-                document.getElementById('avgScore').textContent = '0%';
-                document.getElementById('bestScore').textContent = '0%';
-                document.getElementById('lastScore').textContent = 'N/A';
-                document.getElementById('passRate').textContent = '0%';
-                document.getElementById('recentStreak').textContent = '0';
-
-                alert('Test history cleared successfully.');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeHistoryPage);
-
-        /**
-         * Analyze test history to find weak topics
-         * @param {Array} testHistory - Array of test results
-         * @returns {Array} - Array of weak topics with accuracy rates
-         */
-        function analyzeWeakTopics(testHistory) {
-            if (!Array.isArray(testHistory) || testHistory.length === 0) {
-                return [];
-            }
-
-            // Mock topic mapping based on test types (in production, use actual question-level data)
-            const topicMapping = {
-                'core': ['Environmental Regulations', 'Refrigerant Safety', 'Recovery Procedures'],
-                'type1': ['Small Appliances', 'Recovery Requirements', 'Leak Detection'],
-                'type2': ['High-Pressure Systems', 'Leak Repair', 'Charging Procedures'],
-                'type3': ['Low-Pressure Chillers', 'Evacuation Methods', 'Safety Precautions'],
-                'universal': ['Environmental Regulations', 'Small Appliances', 'High-Pressure Systems', 'Low-Pressure Chillers']
-            };
-
-            // Calculate accuracy by test type/topic
-            const topicStats = {};
-
-            testHistory.forEach(test => {
-                const topics = topicMapping[test.type] || [test.type.charAt(0).toUpperCase() + test.type.slice(1)];
-
-                topics.forEach(topic => {
-                    if (!topicStats[topic]) {
-                        topicStats[topic] = { correct: 0, total: 0 };
-                    }
-
-                    // Simulate question-level data based on overall test score
-                    const questionsPerTopic = test.type === 'universal' ? 10 : 8;
-                    const topicScore = test.score + (Math.random() - 0.5) * 20; // Add some variation
-                    const correctAnswers = Math.round((Math.max(0, Math.min(100, topicScore)) / 100) * questionsPerTopic);
-
-                    topicStats[topic].total += questionsPerTopic;
-                    topicStats[topic].correct += correctAnswers;
-                });
-            });
-
-            // Calculate accuracy rates and filter
-            const topicsWithAccuracy = Object.entries(topicStats)
-                .map(([topic, stats]) => ({
-                    topic,
-                    accuracy: Math.round((stats.correct / stats.total) * 100),
-                    totalQuestions: stats.total,
-                    correctAnswers: stats.correct
-                }))
-                .filter(topic => topic.accuracy < 75) // Exclude topics with ≥75% accuracy
-                .sort((a, b) => a.accuracy - b.accuracy); // Sort from lowest to highest
-
-            return topicsWithAccuracy.slice(0, 3); // Return top 3 weakest
-        }
-
-        /**
-         * Display weak topics analysis section
-         */
-        function displayWeakTopicsReview() {
-            const weakTopics = analyzeWeakTopics(userHistory);
-            const hasWrongAnswers = checkForWrongAnswersInHistory();
-
-            // Handle Areas for Improvement section
-            displayAreasForImprovement(weakTopics);
-
-            // Handle Simple Review section  
-            displaySimpleReviewSection(hasWrongAnswers);
-        }
-
-        function displayAreasForImprovement(weakTopics) {
-            const areasSection = document.getElementById('areasSection');
-            const areasInfo = document.getElementById('areasInfo');
-            const weakTopicsGrid = document.getElementById('weakTopicsGrid');
-
-            if (weakTopics.length === 0) {
-                areasSection.style.display = 'block';
-                areasSection.style.background = '#d4edda';
-                areasSection.style.borderColor = '#c3e6cb';
-
-                areasInfo.innerHTML = '';
-                weakTopicsGrid.innerHTML = `
-                    <div class="no-weak-topics" style="grid-column: 1/-1;">
-                        <div class="success-icon">🎉</div>
-                        <div><strong>Excellent Performance!</strong></div>
-                        <div>All your topic areas show strong performance (≥75% accuracy)</div>
-                    </div>
-                `;
-                return;
-            }
-
-            // Show weak topics analysis
-            areasSection.style.display = 'block';
-            areasSection.style.background = '#fff3cd';
-            areasSection.style.borderColor = '#ffeaa7';
-
-            areasInfo.innerHTML = `Found ${weakTopics.length} topic area${weakTopics.length === 1 ? '' : 's'} that need improvement (below 75% accuracy):`;
-
-            weakTopicsGrid.innerHTML = weakTopics.map(topic => `
-                <div class="weak-topic-card">
-                    <div class="weak-topic-title">${topic.topic}</div>
-                    <div class="weak-topic-score">${topic.accuracy}%</div>
-                    <div class="weak-topic-label">Accuracy Rate</div>
-                    <div class="weak-topic-label">${topic.correctAnswers}/${topic.totalQuestions} correct</div>
-                </div>
-            `).join('');
-        }
-
-        function displaySimpleReviewSection(hasWrongAnswers) {
-            const simpleReviewSection = document.getElementById('simpleReviewSection');
-            const wrongAnswersInfo = document.getElementById('wrongAnswersInfo');
-            const simpleReviewBtn = document.getElementById('simpleReviewBtn');
-
-            if (!hasWrongAnswers) {
-                // Don't show the simple review section if no wrong answers
-                simpleReviewSection.style.display = 'none';
-                return;
-            }
-
-            // Count total wrong answers and mastered questions
-            const testHistory = JSON.parse(localStorage.getItem('epa608History') || '[]');
-            const masteredQuestions = new Set(JSON.parse(localStorage.getItem('masteredQuestions') || '[]'));
-
-            let totalWrongAnswers = 0;
-            let questionsToReview = 0;
-
-            testHistory.forEach(test => {
-                if (test.detailedResults && Array.isArray(test.detailedResults)) {
-                    test.detailedResults.forEach(result => {
-                        if (!result.isCorrect) {
-                            totalWrongAnswers++;
-                            // Check if this question is not mastered
-                            const questionId = result.questionId || btoa(result.question.substring(0, 50) + result.topic).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-                            if (!masteredQuestions.has(questionId)) {
-                                questionsToReview++;
-                            }
-                        }
-                    });
-                }
-            });
-
-            if (questionsToReview === 0) {
-                // All questions have been mastered
-                simpleReviewSection.style.display = 'block';
-                simpleReviewSection.style.background = '#d4edda';
-                simpleReviewSection.style.borderColor = '#c3e6cb';
-                wrongAnswersInfo.innerHTML = `🎉 <strong>Amazing!</strong> You've mastered all ${totalWrongAnswers} previously wrong questions! No more review needed.`;
-                simpleReviewBtn.style.display = 'none';
-                return;
-            }
-
-            // Show simple review section with progress
-            simpleReviewSection.style.display = 'block';
-            const masteredCount = totalWrongAnswers - questionsToReview;
-            let progressText = `You have <strong>${questionsToReview} question${questionsToReview === 1 ? '' : 's'}</strong> left to review`;
-
-            if (masteredCount > 0) {
-                progressText += ` <span style="color: #28a745;">(${masteredCount} already mastered! 🎯)</span>`;
-            }
-
-            wrongAnswersInfo.innerHTML = progressText;
-            simpleReviewBtn.style.display = 'block';
-        }
-
-        /**
-         * Check if there are actual wrong answers in the test history
-         * @returns {boolean} True if wrong answers exist, false otherwise
-         */
-        function checkForWrongAnswersInHistory() {
-            if (!Array.isArray(userHistory) || userHistory.length === 0) {
-                return false;
-            }
-
-            // Check for detailed results with wrong answers
-            for (let test of userHistory) {
-                if (test.detailedResults && Array.isArray(test.detailedResults)) {
-                    for (let result of test.detailedResults) {
-                        if (!result.isCorrect) {
-                            return true; // Found at least one wrong answer
-                        }
-                    }
-                }
-
-                // Alternative check: if test score is less than 100%, there were wrong answers
-                if (test.score && test.score < 100) {
-                    return true;
-                }
-            }
-
-            return false; // No wrong answers found
-        }
-
-        /**
-         * Start simple review of wrong answers only
-         */
-        function startSimpleReview() {
-            // Check if there are any wrong answers to review
-            const hasWrongAnswers = checkForWrongAnswersInHistory();
-
-            if (!hasWrongAnswers) {
-                alert('Great job! No wrong answers found to review.');
-                return;
-            }
-
-            // Clear any previous review data and go directly to review page
-            localStorage.removeItem('reviewTopics');
-            localStorage.setItem('reviewMode', 'simple');
-
-            // Navigate to simple review page
-            window.location.href = 'review.html';
-        }
-    </script>
+<div id="footer-placeholder"></div>
+<script src="includes.js"></script>
+<script>
+var HISTORY_KEY='epa608_history';
+var CATS=[
+  {key:'Core',label:'Core',icon:'📝',href:'/core.html'},
+  {key:'Type I',label:'Type I',icon:'❄️',href:'/type-1.html'},
+  {key:'Type II',label:'Type II',icon:'🔧',href:'/type-2.html'},
+  {key:'Type III',label:'Type III',icon:'🏭',href:'/type-3.html'},
+];
+
+function loadHistory(){
+  try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}
+  catch(e){return [];}
+}
+
+function getColor(pct){
+  if(pct===null||pct===undefined)return'none';
+  if(pct>=70)return'good';
+  if(pct>=50)return'warn';
+  return'bad';
+}
+
+function fmtDate(d){
+  try{
+    var dt=new Date(d);
+    return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }catch(e){return d||'';}
+}
+
+function render(){
+  var history=loadHistory();
+  var completed=history.filter(function(h){return h.score!=null;});
+
+  // Stats
+  document.getElementById('stat-total').textContent=completed.length;
+  if(completed.length){
+    var avgPct=Math.round(completed.reduce(function(acc,h){
+      return acc+(typeof h.score==='number'?h.score:parseFloat(h.score)||0);
+    },0)/completed.length);
+    var avg=document.getElementById('stat-avg');
+    avg.textContent=avgPct+'%';
+    avg.className='stat-num '+(avgPct>=70?'green':'orange');
+    document.getElementById('stat-pass').textContent=
+      completed.filter(function(h){return (parseFloat(h.score)||0)>=70;}).length;
+  }
+
+  // By category
+  var bycat={};
+  CATS.forEach(function(c){bycat[c.key]={attempts:0,total:0,count:0};});
+  completed.forEach(function(h){
+    var k=h.category||h.type;
+    if(!bycat[k])return;
+    bycat[k].total+=(parseFloat(h.score)||0);
+    bycat[k].count++;
+    bycat[k].attempts++;
+  });
+
+  var catHtml='';
+  CATS.forEach(function(cat){
+    var s=bycat[cat.key];
+    var pct=s.count?Math.round(s.total/s.count):null;
+    var cl=getColor(pct);
+    catHtml+='<div class="cat-card">'
+      +'<div class="cat-card-header">'
+      +'<span class="cat-name">'+cat.icon+' '+cat.label+'</span>'
+      +'<span class="cat-pct '+(cl==='none'?'none':cl)+'">'+( pct!=null?pct+'%':'—')+'</span>'
+      +'</div>'
+      +'<div class="prog-bar"><div class="prog-fill '+cl+'" style="width:'+(pct||0)+'%"></div></div>'
+      +'<div class="cat-meta">'+(s.count?s.count+' attempt'+(s.count!==1?'s':''):'No tests yet')+'</div>'
+      +'<div class="cat-actions">'
+      +'<a class="cat-act-btn blue" href="'+cat.href+'">Practice</a>'
+      +'</div>'
+      +'</div>';
+  });
+  document.getElementById('cat-grid').innerHTML=catHtml;
+
+  // Session list
+  var sessionArea=document.getElementById('session-area');
+  if(!completed.length){
+    sessionArea.innerHTML='<div class="empty-box">'
+      +'<p>No completed sessions yet. Take a practice test to see your progress here.</p>'
+      +'<a href="/">Start a Test</a>'
+      +'</div>';
+    return;
+  }
+
+  var sorted=completed.slice().reverse();
+  var html='<div class="session-list">';
+  sorted.forEach(function(h){
+    var pct=parseFloat(h.score)||0;
+    var pass=pct>=70;
+    var cl=pass?'good':'bad';
+    html+='<div class="session-row">'
+      +'<div class="session-left">'
+      +'<div class="session-cat">'+(h.category||h.type||'Practice')+'</div>'
+      +'<div class="session-date">'+fmtDate(h.date)+(h.time?' · '+h.time:'')+(h.total?' · '+h.total+' questions':'')+'</div>'
+      +'</div>'
+      +'<div class="session-right">'
+      +'<span class="session-pct" style="color:'+(pass?'#16a34a':'#ef4444')+'">'+Math.round(pct)+'%</span>'
+      +'<span class="session-badge '+(pass?'pass':'fail')+'">'+(pass?'Pass':'Fail')+'</span>'
+      +'</div></div>';
+  });
+  html+='</div>';
+  sessionArea.innerHTML=html;
+}
+
+function clearHistory(){
+  if(!confirm('Delete all test history? This cannot be undone.'))return;
+  localStorage.removeItem(HISTORY_KEY);
+  render();
+}
+
+render();
+</script>
 </body>
-
 </html>

@@ -31,14 +31,20 @@ export default async function ProgressPage() {
     .eq('id', user.id)
     .single()
 
-  const _tier = (profile?.tier ?? 'free') as Tier
+  const tier = (profile?.tier ?? 'free') as Tier
+  const isPro = tier !== 'free'
 
-  const { data: sessions } = await supabase
+  const sessionQuery = supabase
     .from('test_sessions')
     .select('category, score, total, submitted_at')
     .eq('user_id', user.id)
     .not('submitted_at', 'is', null)
     .order('submitted_at', { ascending: false })
+
+  // Free tier: last 5 tests only
+  if (!isPro) sessionQuery.limit(5)
+
+  const { data: sessions } = await sessionQuery
 
   // Fetch per-question progress for concept coverage
   const admin = createAdminClient()
@@ -121,7 +127,7 @@ export default async function ProgressPage() {
   ).length ?? 0
 
   return (
-    <div className="p-6 sm:p-8 max-w-3xl">
+    <div className="p-3 sm:p-6 lg:p-8 max-w-3xl">
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-2xl font-bold text-gray-900">Your Progress</h1>
         <Link
@@ -135,22 +141,20 @@ export default async function ProgressPage() {
       <p className="text-gray-500 text-sm mb-8">Track your performance across all test categories.</p>
 
       {/* Summary stats */}
-      <div className="grid grid-cols-3 gap-4 mb-10">
-        <div className="bg-white rounded-xl border border-gray-200 p-5 text-center">
-          <div className="text-3xl font-bold text-blue-800">{totalSessions}</div>
-          <div className="text-sm text-gray-500 mt-1">Total Tests</div>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8 sm:mb-10">
+        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
+          <div className="text-2xl sm:text-3xl font-bold text-blue-800">{totalSessions}</div>
+          <div className="text-xs sm:text-sm text-gray-500 mt-1">Total Tests</div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-5 text-center">
-          <div
-            className={`text-3xl font-bold ${overallScore >= 70 ? 'text-green-600' : 'text-orange-500'}`}
-          >
+        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
+          <div className={`text-2xl sm:text-3xl font-bold ${overallScore >= 70 ? 'text-green-600' : 'text-orange-500'}`}>
             {overallScore}%
           </div>
-          <div className="text-sm text-gray-500 mt-1">Avg Score</div>
+          <div className="text-xs sm:text-sm text-gray-500 mt-1">Avg Score</div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-5 text-center">
-          <div className="text-3xl font-bold text-green-600">{passCount}</div>
-          <div className="text-sm text-gray-500 mt-1">Tests Passed</div>
+        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
+          <div className="text-2xl sm:text-3xl font-bold text-green-600">{passCount}</div>
+          <div className="text-xs sm:text-sm text-gray-500 mt-1">Tests Passed</div>
         </div>
       </div>
 
@@ -180,8 +184,8 @@ export default async function ProgressPage() {
                 {sec.mastered}/{sec.totalConcepts} mastered · {coveragePct}% covered
               </div>
               <div className="flex gap-1.5">
-                <Link href="/learn" className="text-[10px] px-2 py-1 rounded bg-blue-50 text-blue-700 font-medium hover:bg-blue-100">Learn</Link>
-                <Link href={`/test/${slug}?mode=practice`} className="text-[10px] px-2 py-1 rounded bg-green-50 text-green-700 font-medium hover:bg-green-100">Practice</Link>
+                <Link href="/learn" className="text-xs px-2 py-1 rounded bg-blue-50 text-blue-700 font-medium hover:bg-blue-100">Study</Link>
+                <Link href={`/test/${slug}?mode=practice`} className="text-xs px-2 py-1 rounded bg-green-50 text-green-700 font-medium hover:bg-green-100">Practice</Link>
               </div>
             </div>
           )
@@ -212,7 +216,7 @@ export default async function ProgressPage() {
                   <div className="text-right shrink-0 flex items-center gap-2">
                     <div>
                       <div className={`text-xs font-bold ${statusColor}`}>{c.attempted ? `${c.accuracy}%` : '—'}</div>
-                      <div className={`text-[10px] ${statusColor}`}>{statusLabel}</div>
+                      <div className={`text-xs ${statusColor}`}>{statusLabel}</div>
                     </div>
                     {needsWork && (
                       <Link href="/learn" className="text-xs px-2 py-1 rounded-md bg-blue-50 text-blue-700 font-medium hover:bg-blue-100 shrink-0">

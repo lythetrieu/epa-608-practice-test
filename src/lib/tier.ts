@@ -63,8 +63,8 @@ export function getQuestionLimit(tier: Tier): number {
 export function getTierLabel(tier: Tier): string {
   const labels: Record<Tier, string> = {
     free: 'Free',
-    starter: 'Starter',
-    ultimate: 'Ultimate',
+    starter: 'Pro',
+    ultimate: 'Pro',
   }
   return labels[tier]
 }

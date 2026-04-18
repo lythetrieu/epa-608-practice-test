@@ -439,12 +439,12 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
         {/* Stack effect: background cards */}
         {currentIdx + 2 < cards.length && (
           <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '100%' }}>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[28rem] transform scale-[0.92] translate-y-4 opacity-40" />
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-64 sm:h-[28rem] transform scale-[0.92] translate-y-4 opacity-40" />
           </div>
         )}
         {currentIdx + 1 < cards.length && (
           <div className="absolute w-full max-w-sm mx-auto" style={{ maxWidth: '100%' }}>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[28rem] transform scale-[0.96] translate-y-2 opacity-60" />
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-64 sm:h-[28rem] transform scale-[0.96] translate-y-2 opacity-60" />
           </div>
         )}
 
@@ -487,7 +487,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
 
           {/* Card face */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <div className="p-5 sm:p-6 min-h-[18rem] sm:min-h-[24rem] flex flex-col">
+            <div className="p-4 sm:p-6 min-h-[14rem] sm:min-h-[24rem] flex flex-col">
               {/* Category + difficulty badges */}
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">

@@ -4,7 +4,38 @@
  * - 3 attempts per day per category
  * - Fisher-Yates shuffle for questions + options
  * - No explanations (signup CTA instead)
+ * - Questions fetched from Supabase (866 questions), fallback to questions.json
  */
+
+var SUPABASE_URL = 'https://sequvmxgtmbirnixeril.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_n0BnJRIVt7eVtekR-B0FnA_7NtQA4g_';
+
+function fetchFromSupabase(category) {
+    var select = 'id,category,question,options,answer_text';
+    var base = SUPABASE_URL + '/rest/v1/questions?select=' + select;
+    var filter = category === 'Universal'
+        ? '&question=not.like.True or False*&limit=500'
+        : '&category=eq.' + encodeURIComponent(category) + '&question=not.like.True or False*&limit=500';
+    return fetch(base + filter, {
+        headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        }
+    }).then(function(res) {
+        if (!res.ok) throw new Error('Supabase error');
+        return res.json();
+    });
+}
+
+function fetchQuestions(category) {
+    return fetchFromSupabase(category).then(function(data) {
+        if (!data || data.length === 0) throw new Error('No data');
+        return data;
+    }).catch(function() {
+        // Fallback to local questions.json
+        return fetch('questions.json').then(function(res) { return res.json(); });
+    });
+}
 
 // Fisher-Yates shuffle
 function shuffle(arr) {
@@ -38,8 +69,8 @@ function initTestEngine(config) {
     var HISTORY_KEY = config.historyKey;     // 'core', 'type1', etc.
     var PASS_MSG = config.passMsg;
     var FAIL_MSG = config.failMsg;
-    var QUESTIONS_PER_TEST = 25;
-    var TIME_LIMIT = 1800; // 30 min
+    var QUESTIONS_PER_TEST = CATEGORY === 'Universal' ? 100 : 25;
+    var TIME_LIMIT = CATEGORY === 'Universal' ? 6000 : 1800; // Universal: 100min, others: 30min
 
     var ctrl = {
         questions: [],
@@ -50,16 +81,18 @@ function initTestEngine(config) {
         timeLeft: TIME_LIMIT,
 
         init: function() {
+            // No daily limit — unlimited practice
+
             var self = this;
-            fetch('questions.json').then(function(res) { return res.json(); }).then(function(data) {
+            fetchQuestions(CATEGORY).then(function(data) {
                 var pool;
                 if (CATEGORY === 'Universal') {
-                    // Universal: pick from all categories proportionally
+                    // Universal: 100 questions proportionally across all categories
                     var cats = [
-                        { name: 'Core', n: 3 },
-                        { name: 'Type I', n: 2 },
-                        { name: 'Type II', n: 3 },
-                        { name: 'Type III', n: 2 }
+                        { name: 'Core', n: 30 },
+                        { name: 'Type I', n: 20 },
+                        { name: 'Type II', n: 25 },
+                        { name: 'Type III', n: 25 }
                     ];
                     var picked = [];
                     cats.forEach(function(c) {
@@ -85,8 +118,22 @@ function initTestEngine(config) {
                     return opts;
                 });
                 self.answers = new Array(self.questions.length).fill(null);
+                self.startedAt = Date.now();
                 self.render();
                 self.startTimer();
+
+                // Ensure anon ID exists before any tracking calls
+                try {
+                    if (!localStorage.getItem('epa608_anon_id')) {
+                        localStorage.setItem('epa608_anon_id',
+                            'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
+                    }
+                    fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
+                    }).catch(function(){});
+                } catch(e) {}
             }).catch(function() {
                 document.getElementById('qText').innerHTML = 'Error loading questions. <button onclick="location.reload()">Retry</button>';
             });
@@ -128,24 +175,26 @@ function initTestEngine(config) {
             clearInterval(this.timer);
             var score = 0;
             var details = [];
-            var subtopicStats = {};
             var self = this;
-
             this.questions.forEach(function(q, i) {
                 var opts = self.shuffledOptions[i];
                 var userAnswer = self.answers[i] !== null ? opts[self.answers[i]] : null;
-                var correct = userAnswer === q.answer_text;
-                if (correct) score++;
-                details.push({ question: q.question, correct: correct });
-
-                // Track subtopic accuracy for spider chart
-                var topic = q.subtopic_id ? q.subtopic_id.replace(/-\d+(\.\d+)?$/, '') : 'general';
-                if (!subtopicStats[topic]) subtopicStats[topic] = { correct: 0, total: 0 };
-                subtopicStats[topic].total++;
-                if (correct) subtopicStats[topic].correct++;
+                var isCorrect = userAnswer !== null && userAnswer.trim() === (q.answer_text || '').trim();
+                if (isCorrect) score++;
+                details.push({
+                    questionId: q.id || null,
+                    question: q.question,
+                    answers: opts,
+                    correctAnswer: opts.indexOf(q.answer_text),
+                    userAnswerIndex: self.answers[i],
+                    isCorrect: isCorrect,
+                    topic: q.subtopic_id || q.category || CATEGORY
+                });
             });
 
             var pct = Math.round((score / this.questions.length) * 100);
+            var attemptCount = recordAttempt(CATEGORY);
+            var remaining = 3 - attemptCount;
 
             document.getElementById('testView').style.display = 'none';
             document.getElementById('resultView').style.display = 'block';
@@ -154,86 +203,130 @@ function initTestEngine(config) {
                 ? PASS_MSG + ' You scored ' + score + '/' + this.questions.length + '.'
                 : FAIL_MSG + ' You scored ' + score + '/' + this.questions.length + '.';
 
-            // Build spider chart + weak areas (DIAGNOSIS)
-            var topics = Object.keys(subtopicStats);
-            var weakAreas = [];
-            var strongAreas = [];
-            topics.forEach(function(t) {
-                var s = subtopicStats[t];
-                var acc = Math.round((s.correct / s.total) * 100);
-                var label = t.replace('core-', '').replace('t1-', '').replace('t2-', '').replace('t3-', '').replace(/-/g, ' ');
-                label = label.charAt(0).toUpperCase() + label.slice(1);
-                if (acc < 60) weakAreas.push({ label: label, acc: acc });
-                else strongAreas.push({ label: label, acc: acc });
-            });
-            weakAreas.sort(function(a, b) { return a.acc - b.acc; });
-
+            // Result details — HVAC-friendly: large text, clear pass/fail per question
+            var wrongCount = details.filter(function(d){return !d.isCorrect;}).length;
             var html = '';
 
-            // Spider chart visualization (bar chart style for simplicity)
-            if (topics.length >= 3) {
-                html += '<div style="margin:20px 0;padding:20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">';
-                html += '<h3 style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:16px;">Your Weak Spots</h3>';
-
-                // Weak areas (red)
-                if (weakAreas.length > 0) {
-                    weakAreas.forEach(function(w) {
-                        html += '<div style="margin-bottom:8px;">';
-                        html += '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;">';
-                        html += '<span style="color:#991b1b;font-weight:600;">\u26A0 ' + w.label + '</span>';
-                        html += '<span style="color:#991b1b;font-weight:700;">' + w.acc + '%</span></div>';
-                        html += '<div style="height:8px;background:#fee2e2;border-radius:4px;overflow:hidden;">';
-                        html += '<div style="height:100%;width:' + w.acc + '%;background:#dc2626;border-radius:4px;"></div></div></div>';
-                    });
-                    html += '<p style="font-size:13px;color:#64748b;margin-top:12px;">You\'ll likely fail the real exam on these topics.</p>';
-                } else {
-                    html += '<p style="font-size:14px;color:#16a34a;font-weight:600;">No major weak spots found. Looking good!</p>';
-                }
-
-                // Strong areas (green, compact)
-                if (strongAreas.length > 0) {
-                    html += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;">';
-                    html += '<p style="font-size:12px;color:#64748b;margin-bottom:6px;">Strong areas:</p>';
-                    strongAreas.forEach(function(s) {
-                        html += '<span style="display:inline-block;padding:3px 10px;margin:2px;background:#f0fdf4;color:#166534;border-radius:6px;font-size:12px;font-weight:500;">' + s.label + ' ' + s.acc + '%</span>';
-                    });
-                    html += '</div>';
-                }
-
-                // CURE CTA
-                html += '<div style="margin-top:20px;padding:16px;background:#1e40af;border-radius:12px;text-align:center;">';
-                html += '<p style="color:#93c5fd;font-size:13px;margin-bottom:6px;">Fix your weak spots before exam day</p>';
-                html += '<a href="/pricing" style="display:inline-block;background:#fff;color:#1e40af;padding:12px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;min-height:48px;">Get Pro — $18.99 (Pass Guarantee)</a>';
-                html += '<p style="color:#93c5fd;font-size:11px;margin-top:8px;">Targeted training + Unlimited AI + Certificates</p>';
-                html += '</div>';
-
-                html += '</div>';
+            // Summary bar
+            if (wrongCount > 0) {
+                html += '<div style="margin-top:20px;padding:14px 18px;background:#fef2f2;border:2px solid #fecaca;border-radius:12px;display:flex;align-items:center;gap:12px">'
+                    + '<span style="font-size:28px">⚠️</span>'
+                    + '<div><div style="font-size:17px;font-weight:800;color:#991b1b">' + wrongCount + ' question' + (wrongCount!==1?'s':'') + ' to review</div>'
+                    + '<div style="font-size:14px;color:#b91c1c;margin-top:2px">Study these before your next attempt</div></div>'
+                    + '</div>';
+            } else {
+                html += '<div style="margin-top:20px;padding:14px 18px;background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;display:flex;align-items:center;gap:12px">'
+                    + '<span style="font-size:28px">🎉</span>'
+                    + '<div style="font-size:17px;font-weight:800;color:#166534">Perfect score — all answers correct!</div>'
+                    + '</div>';
             }
 
-            // Question results with Ask AI
-            html += '<div style="margin-top:16px;text-align:left;">';
+            html += '<div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">';
             details.forEach(function(d, i) {
-                var qShort = d.question.substring(0, 80) + (d.question.length > 80 ? '...' : '');
-                html += '<div style="padding:10px 14px;margin:4px 0;border-radius:10px;font-size:14px;background:' +
-                    (d.correct ? '#f0fdf4;color:#166534' : '#fef2f2;color:#991b1b') + '">' +
-                    (d.correct ? '\u2713' : '\u2717') + ' Q' + (i + 1) + ': ' + qShort +
-                    (d.correct ? '' : ' <button onclick="askGuestAI(\'' + d.question.replace(/'/g, "\\'").replace(/"/g, "&quot;") + '\')" style="background:#1e40af;color:#fff;border:none;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;margin-left:8px;">Ask AI</button>') +
-                    '</div>';
+                var correct = d.isCorrect;
+                if (correct) {
+                    // Correct — compact green row
+                    html += '<div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px">';
+                    html += '<span style="font-size:22px;line-height:1;flex-shrink:0;margin-top:1px">✅</span>';
+                    html += '<div style="font-size:16px;font-weight:600;color:#166534;line-height:1.4">Q' + (i+1) + '. ' + d.question + '</div>';
+                    html += '</div>';
+                } else {
+                    var yourAns = d.userAnswerIndex !== null && d.userAnswerIndex >= 0 ? d.answers[d.userAnswerIndex] : 'Skipped';
+                    var corrAns = d.correctAnswer >= 0 ? d.answers[d.correctAnswer] : '—';
+                    // Wrong — expanded red card with full detail
+                    html += '<div style="background:#fff5f5;border:2px solid #fca5a5;border-radius:12px;padding:16px 18px">';
+                    html += '<div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px">';
+                    html += '<span style="font-size:22px;line-height:1;flex-shrink:0;margin-top:2px">❌</span>';
+                    html += '<div style="font-size:17px;font-weight:700;color:#7f1d1d;line-height:1.4">Q' + (i+1) + '. ' + d.question + '</div>';
+                    html += '</div>';
+                    html += '<div style="background:#fff;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">';
+                    html += '<div style="display:flex;align-items:baseline;gap-x:8px;gap:8px">'
+                        + '<span style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Your answer</span>'
+                        + '<span style="font-size:15px;font-weight:600;color:#dc2626">' + yourAns + '</span>'
+                        + '</div>';
+                    html += '<div style="display:flex;align-items:baseline;gap:8px">'
+                        + '<span style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Correct</span>'
+                        + '<span style="font-size:15px;font-weight:700;color:#16a34a">' + corrAns + '</span>'
+                        + '</div>';
+                    if (d.explanation) {
+                        html += '<div style="margin-top:4px;padding-top:10px;border-top:1px solid #f1f5f9;font-size:14px;color:#475569;line-height:1.6">'
+                            + '<span style="font-weight:700;color:#0f172a">Why: </span>' + d.explanation + '</div>';
+                    }
+                    html += '</div></div>';
+                }
             });
             html += '</div>';
 
-            // AI answer container
-            html += '<div id="guestAiAnswer" style="display:none;margin-top:16px;padding:16px;background:#f0f4ff;border:1px solid #c7d2fe;border-radius:12px;">' +
-                '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;"><span style="font-size:14px;">🤖</span><span style="font-size:12px;font-weight:600;color:#4338ca;">AI Study Helper</span>' +
-                '<span id="guestAiRemaining" style="margin-left:auto;font-size:11px;color:#6b7280;"></span></div>' +
-                '<div id="guestAiText" style="font-size:14px;color:#1e293b;line-height:1.6;"></div></div>';
-
             document.getElementById('resultDetails').innerHTML = html;
 
-            // Save history with subtopic data
+            // Social share buttons
+            var shareText = 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! Free HVAC certification prep:';
+            var shareUrl = 'https://epa608practicetest.net';
+            var shareHtml = '<div style="margin-top:20px;padding:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">'
+                + '<div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:12px">Share your result</div>'
+                + '<div style="display:flex;flex-wrap:wrap;gap:8px">'
+                + '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#000;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;min-height:44px">𝕏 Share on X</a>'
+                + '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#1877f2;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;min-height:44px">Facebook</a>'
+                + '<button onclick="navigator.clipboard.writeText(\'' + shareUrl + '\').then(function(){this.textContent=\'✓ Copied!\';}.bind(this))" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#fff;color:#374151;border:1.5px solid #d1d5db;font-size:14px;font-weight:600;border-radius:8px;cursor:pointer;min-height:44px">🔗 Copy link</button>'
+                + '</div></div>';
+
+            var shareContainer = document.getElementById('shareButtons');
+            if (shareContainer) shareContainer.innerHTML = shareHtml;
+
+            // Show popup: passed ≥70% OR every 3rd test attempt
+            var totalTests = parseInt(localStorage.getItem('epa608TotalTests') || '0') + 1;
+            localStorage.setItem('epa608TotalTests', totalTests);
+            var alreadyShared = localStorage.getItem('epa608Shared') === '1';
+            var shouldShowPopup = !alreadyShared && (pct >= 70 || totalTests % 3 === 0);
+
+            if (shouldShowPopup) {
+                var twitterLink = document.getElementById('popupTwitter');
+                var facebookLink = document.getElementById('popupFacebook');
+                var popupText = pct >= 70
+                    ? 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! 🎉 Try it free:'
+                    : 'Studying for the EPA 608 HVAC exam? This free practice test is really helpful:';
+                if (twitterLink) twitterLink.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(popupText) + '&url=' + encodeURIComponent(shareUrl);
+                if (facebookLink) facebookLink.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(popupText);
+                setTimeout(function() {
+                    var popup = document.getElementById('sharePopup');
+                    if (popup) {
+                        popup.style.display = 'flex';
+                        // Mark as shown so it doesn't spam every session
+                        localStorage.setItem('epa608Shared', '1');
+                    }
+                }, 2500);
+            }
+
+            // Save history with detailed results for review.html
             var history = JSON.parse(localStorage.getItem('epa608History') || '[]');
-            history.push({ type: HISTORY_KEY, score: pct, weak: weakAreas.map(function(w){return w.label}), date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString() });
+            history.push({
+                type: HISTORY_KEY,
+                category: CATEGORY,
+                score: pct,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                detailedResults: details
+            });
             localStorage.setItem('epa608History', JSON.stringify(history));
+
+            // ── Anonymous session tracking ──────────────────────────────
+            (function() {
+                try {
+                    var anonId = localStorage.getItem('epa608_anon_id') || null;
+                    var timeSpent = this.startedAt ? Math.round((Date.now() - this.startedAt) / 1000) : null;
+                    fetch('https://epa608practicetest.net/api/anonymous-sessions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            anonymous_id: anonId,
+                            category: CATEGORY,
+                            score: score,
+                            total: this.questions.length,
+                            time_spent: timeSpent,
+                        })
+                    }).catch(function(){});
+                } catch(e) {}
+            }).call(this);
 
             window.scrollTo(0, 0);
         },
@@ -244,7 +337,9 @@ function initTestEngine(config) {
                 self.timeLeft--;
                 var m = Math.floor(self.timeLeft / 60);
                 var s = self.timeLeft % 60;
-                document.getElementById('countdown').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+                var el = document.getElementById('countdown');
+                el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+                if (self.timeLeft <= 60) el.style.color = '#dc2626';
                 if (self.timeLeft <= 0) self.finish();
             }, 1000);
         }
@@ -253,70 +348,4 @@ function initTestEngine(config) {
     // Expose globally for onclick handlers
     window.ctrl = ctrl;
     document.addEventListener('DOMContentLoaded', function() { ctrl.init(); });
-}
-
-// Guest AI Chat — 10 free questions/day, no signup
-function askGuestAI(question) {
-    var answerDiv = document.getElementById('guestAiAnswer');
-    var textDiv = document.getElementById('guestAiText');
-    var remainingSpan = document.getElementById('guestAiRemaining');
-    if (!answerDiv || !textDiv) return;
-
-    answerDiv.style.display = 'block';
-    textDiv.innerHTML = '<span style="color:#6b7280;">Thinking...</span>';
-    answerDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    fetch('/api/ai/guest-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Why is this the correct answer? Explain simply: ' + question })
-    }).then(function(res) {
-        var remaining = res.headers.get('X-AI-Remaining');
-        if (remaining !== null && remainingSpan) {
-            remainingSpan.textContent = remaining + ' AI questions left today';
-        }
-
-        if (!res.ok) {
-            return res.json().then(function(data) {
-                if (data.upgradeRequired) {
-                    textDiv.innerHTML = '<p style="margin-bottom:8px;">You\'ve used all 10 free AI questions today.</p>' +
-                        '<a href="/pricing" style="display:inline-block;padding:8px 20px;background:#1e40af;color:#fff;border-radius:8px;font-weight:600;text-decoration:none;">Get Pro — Unlimited AI Help</a>';
-                } else {
-                    textDiv.textContent = data.error || 'Something went wrong.';
-                }
-            });
-        }
-
-        // Stream response
-        var reader = res.body.getReader();
-        var decoder = new TextDecoder();
-        var buffer = '';
-        var fullText = '';
-        textDiv.textContent = '';
-
-        function read() {
-            reader.read().then(function(result) {
-                if (result.done) return;
-                buffer += decoder.decode(result.value, { stream: true });
-                var lines = buffer.split('\n');
-                buffer = lines.pop() || '';
-                lines.forEach(function(line) {
-                    if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-                        try {
-                            var json = JSON.parse(line.slice(6));
-                            var content = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
-                            if (content) {
-                                fullText += content;
-                                textDiv.textContent = fullText;
-                            }
-                        } catch(e) {}
-                    }
-                });
-                read();
-            });
-        }
-        read();
-    }).catch(function() {
-        textDiv.textContent = 'Could not connect to AI. Check your internet connection.';
-    });
 }

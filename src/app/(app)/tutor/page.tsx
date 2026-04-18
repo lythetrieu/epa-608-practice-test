@@ -39,7 +39,7 @@ export default async function TutorPage() {
             </p>
           </div>
           <Link
-            href="/pricing"
+            href="https://epa608practicetest.net/checkout.html"
             className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-bold hover:bg-blue-900 transition-colors"
           >
             Upgrade Now

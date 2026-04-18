@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier, type Category } from '@/types'
 import { GuidedTour } from './guided-tour'
-import { OfflineSyncCard } from '@/components/OfflineSyncCard'
+import { Onboarding } from './onboarding'
+import { ProActivatedBanner } from './pro-activated-banner'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
@@ -138,6 +139,8 @@ export default async function DashboardPage() {
   return (
     <div className="p-3 sm:p-5 max-w-6xl">
       {totalTests === 0 && <GuidedTour />}
+      <Onboarding show={totalTests === 0} />
+      <ProActivatedBanner isPro={!isFree && !!profile?.lifetime_access} />
 
       {/* ═══ ROW 1: Header + Quick Start ═══ */}
       <div className="flex items-center justify-between mb-3" data-tour="header">
@@ -159,11 +162,11 @@ export default async function DashboardPage() {
       {/* ═══ QUICK START ═══ */}
       {recommendedAction && (
         <Link href={recommendedAction.href} data-tour="core"
-          className="block rounded-xl bg-blue-800 px-4 py-3 mb-3 hover:bg-blue-900 transition-colors">
+          className="block rounded-xl px-4 py-3 mb-3 hover:opacity-90 transition-opacity" style={{background:'#003087'}}>
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="font-bold text-white text-base">{recommendedAction.text}</p>
-              <p className="text-blue-200 text-xs mt-0.5">{recommendedAction.desc}</p>
+              <p className="text-blue-100 text-xs mt-0.5">{recommendedAction.desc}</p>
             </div>
             <Play size={28} className="text-white shrink-0" />
           </div>
@@ -186,12 +189,12 @@ export default async function DashboardPage() {
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
-        <div className="bg-gradient-to-r from-blue-700 to-blue-500 rounded-xl px-4 py-3 text-white mb-3 flex items-center justify-between gap-3">
+        <div className="rounded-xl px-4 py-3 text-white mb-3 flex items-center justify-between gap-3" style={{background:'linear-gradient(to right, #003087, #0077b6)'}}>
           <div>
-            <p className="font-bold text-sm">Unlock all 4 exam types</p>
-            <p className="text-blue-100 text-xs">$19.99 one-time — lifetime access</p>
+            <p className="font-bold text-sm">Unlock Pro features</p>
+            <p className="text-blue-100 text-xs">$14.99 one-time — lifetime access</p>
           </div>
-          <Link href="/pricing" className="shrink-0 px-4 py-2 bg-white text-blue-800 rounded-lg font-bold text-xs min-h-[40px] inline-flex items-center">
+          <Link href="https://epa608practicetest.net/checkout.html" className="shrink-0 px-4 py-2 bg-white rounded-lg font-bold text-xs min-h-[40px] inline-flex items-center" style={{color:'#003087'}}>
             Upgrade
           </Link>
         </div>
@@ -208,7 +211,7 @@ export default async function DashboardPage() {
             return (
               <Link
                 key={c.slug}
-                href={locked ? '/pricing' : `/test/${c.slug}`}
+                href={locked ? 'https://epa608practicetest.net/checkout.html' : `/test/${c.slug}`}
                 className={`flex flex-col items-center p-3 rounded-xl text-center transition-all min-h-[80px] justify-center ${
                   locked
                     ? 'bg-gray-50 border border-dashed border-gray-300'
@@ -237,8 +240,9 @@ export default async function DashboardPage() {
           <div className="space-y-0.5">
             <CompactLink href="/learn" icon={<BookOpen size={16} />} label="Study Path" />
             <CompactLink href="/flashcards" icon={<Layers size={16} />} label="Flashcards" />
-            <CompactLink href="/podcast" icon={<Headphones size={16} />} label="Listen & Learn" />
             <CompactLink href="/tutor" icon={<Bot size={16} />} label="AI Helper" dataTour="ai-tutor" />
+            <ComingSoonLink icon={<Headphones size={16} />} label="Podcast Mode" eta="Q2" />
+            <ComingSoonLink icon={<Target size={16} />} label="Study Schedule" eta="Q2" />
           </div>
         </div>
 
@@ -248,7 +252,7 @@ export default async function DashboardPage() {
           <div className="space-y-0.5">
             <CompactLink href="/progress" icon={<BarChart3 size={16} />} label="Progress" />
             <CompactLink href="/progress/weak-spots" icon={<Target size={16} />} label="Weak Areas" />
-            <CompactLink href="/certificate" icon={<Award size={16} />} label="Certificates" />
+            <CompactLink href="/certificate" icon={<Award size={16} />} label="Achievement Badges" />
           </div>
         </div>
       </div>
@@ -272,11 +276,8 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {/* ═══ HEATMAP + OFFLINE ═══ */}
+      {/* ═══ HEATMAP ═══ */}
       <ActivityHeatmap activityData={activityData} />
-      <div className="mt-3">
-        <OfflineSyncCard />
-      </div>
     </div>
   )
 }
@@ -288,5 +289,15 @@ function CompactLink({ href, icon, label, dataTour }: { href: string; icon: Reac
       <span className="text-gray-500 shrink-0">{icon}</span>
       <span className="truncate">{label}</span>
     </Link>
+  )
+}
+
+function ComingSoonLink({ icon, label, eta }: { icon: ReactNode; label: string; eta: string }) {
+  return (
+    <div className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm font-medium text-gray-400 min-h-[40px] cursor-default select-none">
+      <span className="text-gray-300 shrink-0">{icon}</span>
+      <span className="truncate">{label}</span>
+      <span className="ml-auto text-xs font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-200 shrink-0">{eta}</span>
+    </div>
   )
 }

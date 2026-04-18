@@ -19,8 +19,9 @@ const GoogleIcon = () => (
 export default function SignupForm() {
   const searchParams = useSearchParams()
   const joinCode = searchParams.get('join')
+  const emailParam = searchParams.get('email') ?? ''
 
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(emailParam)
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -175,6 +176,11 @@ export default function SignupForm() {
 
   return (
     <>
+      {emailParam && !joinCode && (
+        <div className="rounded-xl px-4 py-3 text-sm text-white mb-6 text-center font-medium" style={{background:'#003087'}}>
+          🎉 Your Pro purchase is saved! Sign up with <strong>{emailParam}</strong> to activate it instantly.
+        </div>
+      )}
       {joinCode && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800 mb-6 text-center">
           Create a free account to join your team and get instant access.

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPT Master | The 2026 EPA 608 Intelligence System</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --blue: #2563eb;
+            --blue-light: #dbeafe;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+
+        /* Navigation */
+        nav { background: var(--white); padding: 1.25rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 900; font-size: 1.5rem; color: var(--primary); letter-spacing: -0.05em; }
+        .nav-cta { background: var(--blue); color: var(--white); padding: 0.6rem 1.2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        /* AI Sentinel Feed - Live Atmosphere */
+        .sentinel-bar { background: #000; color: var(--accent); padding: 0.75rem 5%; font-family: 'Courier New', monospace; font-size: 0.85rem; border-bottom: 2px solid var(--accent); overflow: hidden; white-space: nowrap; }
+        .blink { animation: blinker 1s linear infinite; font-weight: bold; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Hero Section */
+        header { padding: 6rem 5% 4rem; text-align: center; background: radial-gradient(circle at top right, #f1f5f9, #ffffff); }
+        .alert-tag { display: inline-block; background: #fee2e2; color: #991b1b; padding: 0.4rem 1rem; border-radius: 2rem; font-size: 0.85rem; font-weight: 800; margin-bottom: 2rem; border: 1px solid #fecaca; }
+        h1 { font-size: 4rem; font-weight: 900; line-height: 1; letter-spacing: -0.06em; color: var(--text-dark); margin-bottom: 1.5rem; }
+        h1 span { color: var(--blue); }
+        .hero-desc { max-width: 850px; margin: 0 auto 3rem; font-size: 1.35rem; color: #64748b; font-weight: 400; }
+        .hero-btns { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+        .btn { padding: 1.25rem 2.5rem; border-radius: 0.75rem; font-weight: 800; text-decoration: none; transition: 0.3s; font-size: 1.1rem; }
+        .btn-blue { background: var(--blue); color: var(--white); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2); }
+        .btn-white { background: var(--white); color: var(--text-dark); border: 2px solid #e2e8f0; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.1); }
+
+        /* Section Styling */
+        .section { padding: 8rem 5%; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .tag { text-transform: uppercase; color: var(--blue); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.1em; display: block; margin-bottom: 1rem; }
+        h2 { font-size: 3rem; font-weight: 900; color: var(--text-dark); letter-spacing: -0.04em; margin-bottom: 1.5rem; line-height: 1.1; }
+
+        /* The Gap / Pain Points */
+        .pain-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .pain-list { list-style: none; }
+        .pain-item { margin-bottom: 2.5rem; padding-left: 3rem; position: relative; }
+        .pain-item::before { content: "✕"; position: absolute; left: 0; top: 0; color: var(--danger); font-size: 1.5rem; font-weight: 900; }
+        .pain-item h3 { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .insight-box { background: #fff1f2; padding: 2.5rem; border-radius: 1.5rem; border-left: 8px solid var(--danger); }
+        .insight-box h4 { color: #991b1b; font-weight: 900; margin-bottom: 1rem; }
+
+        /* Comparison Table */
+        .comparison-wrapper { background: var(--white); border-radius: 2rem; padding: 4rem; margin-top: 4rem; box-shadow: 0 40px 60px -15px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 1.5rem; font-size: 1.2rem; border-bottom: 2px solid #f1f5f9; }
+        td { padding: 1.5rem; border-bottom: 1px solid #f1f5f9; font-size: 1.1rem; }
+        .check-yes { color: var(--accent); font-weight: 900; }
+        .check-no { color: #cbd5e1; }
+        .col-us { background: #eff6ff; border-radius: 1rem 1rem 0 0; color: var(--blue); font-weight: 800; text-align: center; }
+        .td-us { background: #f8fafc; text-align: center; font-weight: 700; color: var(--text-dark); }
+
+        /* Features - Deep Dive */
+        .feature-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; }
+        .f-card { background: var(--white); padding: 3rem; border-radius: 2rem; border: 1px solid #f1f5f9; transition: 0.4s; }
+        .f-card:hover { border-color: var(--blue); transform: translateY(-10px); }
+        .f-icon { font-size: 3rem; margin-bottom: 2rem; }
+        .f-card h3 { font-size: 1.75rem; font-weight: 900; color: var(--text-dark); margin-bottom: 1rem; }
+
+        /* The 2026 Regulatory Gap Highlight */
+        .gap-section { background: var(--primary); color: var(--white); border-radius: 3rem; padding: 5rem; text-align: center; position: relative; overflow: hidden; }
+        .gap-section h2 { color: var(--white); }
+        .gap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+        .gap-box { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1.5rem; }
+        .gap-box h4 { font-size: 1.25rem; color: var(--accent); margin-bottom: 1rem; }
+
+        /* Pricing */
+        .price-wrapper { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 4rem; }
+        .price-card { background: var(--white); padding: 4rem 3rem; border-radius: 2.5rem; width: 380px; position: relative; border: 1px solid #e2e8f0; }
+        .price-card.best { border: 4px solid var(--blue); box-shadow: 0 40px 80px -20px rgba(37, 99, 235, 0.15); }
+        .best-tag { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--blue); color: var(--white); padding: 0.5rem 2rem; border-radius: 2rem; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
+        .price-val { font-size: 4rem; font-weight: 900; color: var(--text-dark); margin: 1.5rem 0; }
+        .price-val span { font-size: 1.2rem; color: #64748b; font-weight: 400; }
+        .price-list { list-style: none; margin-bottom: 3rem; }
+        .price-list li { margin-bottom: 1rem; font-weight: 500; display: flex; align-items: center; }
+        .price-list li::before { content: "✓"; color: var(--accent); margin-right: 1rem; font-weight: 900; }
+
+        /* Guarantee Section */
+        .guarantee { text-align: center; max-width: 800px; margin: 6rem auto 0; }
+        .g-icon { font-size: 5rem; margin-bottom: 2rem; }
+        .g-text { font-size: 1.2rem; color: #475569; }
+
+        footer { background: var(--primary); color: #94a3b8; padding: 6rem 5% 3rem; text-align: center; }
+        .footer-logo { color: var(--white); font-weight: 900; font-size: 2rem; margin-bottom: 2rem; display: block; }
+        .footer-disclaimer { font-size: 0.75rem; max-width: 800px; margin: 3rem auto 0; line-height: 1.8; border-top: 1px solid #1e293b; padding-top: 2rem; }
+
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            .pain-container { grid-template-columns: 1fr; }
+            .gap-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">EPT MASTER</div>
+        <a href="#pricing" class="nav-cta">GET FULL ACCESS</a>
+    </nav>
+
+    <div class="sentinel-bar">
+        <span class="blink">● LIVE SENTINEL AI:</span> Scanning Reddit r/HVAC, YouTube Comments, and EPA.gov... <span id="feed-update">Updated 3 new questions regarding R-454B leak thresholds.</span>
+    </div>
+
+    <header>
+        <div class="container">
+            <span class="alert-tag">CRITICAL UPDATE: 2026 REGULATORY SHIFT</span>
+            <h1>The End of <span>"Study Guides"</span>. <br>The Start of Intelligence.</h1>
+            <p class="hero-desc">Stop memorizing 2020 answer keys. EPT Master is the only system powered by <strong>Sentinel AI</strong>—scanning the internet 24/7 to catch new exam patterns before you walk into the room.</p>
+            <div class="hero-btns">
+                <a href="#pricing" class="btn btn-blue">Start Now — Pass First Time</a>
+                <a href="#gap" class="btn btn-white">Why old apps fail in 2026</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- THE PAIN / THE INSIGHT -->
+    <section class="section">
+        <div class="container pain-container">
+            <div>
+                <span class="tag">The Problem</span>
+                <h2>Why 40% of Technicians fail the 2026 EPA Exam.</h2>
+                <ul class="pain-list">
+                    <li class="pain-item">
+                        <h3>Outdated Question Banks</h3>
+                        <p>Most 4.9-star apps on the App Store haven't updated their core data since 2021. They are teaching you laws that no longer exist.</p>
+                    </li>
+                    <li class="pain-item">
+                        <h3>The A2L Confusion</h3>
+                        <p>R-454B and R-32 are here. The exam now tests for mildly flammable refrigerants. If your study guide doesn't cover A2L safety, you're toast.</p>
+                    </li>
+                    <li class="pain-item">
+                        <h3>"Desk-Bound" Burnout</h3>
+                        <p>You work 10-hour days. Sitting at a desk to study is impossible. You need a system that fits into your truck, not your living room.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="insight-box">
+                <h4>INSIGHT: The $2,500 Risk</h4>
+                <p>It's not just the $80 retake fee. Failing the EPA 608 means <strong>missed promotions</strong>, <strong>lower hourly pay</strong>, and the legal risk of <strong>$44,539 fines</strong> per day for handling refrigerants without a license. <br><br><strong>Don't gamble with your career on a "free" app.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE GAP ANALYSIS -->
+    <section id="gap" class="section" style="background: #fff;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <span class="tag">Comparison</span>
+                <h2>Us vs. The Old Way</h2>
+            </div>
+            
+            <div class="comparison-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Old Apps / PDF Guides</th>
+                            <th class="col-us">EPT Master (2026)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Real-Time Sentinel Radar</td>
+                            <td class="check-no">Manual Updates (Months)</td>
+                            <td class="td-us check-yes">Live Sync (Hourly)</td>
+                        </tr>
+                        <tr>
+                            <td>A2L / R-454B Readiness</td>
+                            <td class="check-no">Incomplete / Outdated</td>
+                            <td class="td-us check-yes">100% Verified Content</td>
+                        </tr>
+                        <tr>
+                            <td>Hands-Free Voice Mode</td>
+                            <td class="check-no">None (Screen Only)</td>
+                            <td class="td-us check-yes">Study While Driving</td>
+                        </tr>
+                        <tr>
+                            <td>AI Weak-Spot Doctor</td>
+                            <td class="check-no">Random Question Rotation</td>
+                            <td class="td-us check-yes">Personalized Drill Path</td>
+                        </tr>
+                        <tr>
+                            <td>Pass Insurance Guarantee</td>
+                            <td class="check-no">No Accountability</td>
+                            <td class="td-us check-yes">Pass or It's Free</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEEP DIVE FEATURES -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align:center;">
+                <span class="tag">Technology</span>
+                <h2>Built for the Modern Technician.</h2>
+            </div>
+            
+            <div class="feature-showcase">
+                <div class="f-card">
+                    <div class="f-icon">📡</div>
+                    <h3>Sentinel AI Radar</h3>
+                    <p>Our AI scans Reddit, YouTube, and EPA newsrooms 24/7. When a technician in Florida reports a new question type, our bank updates within the hour. You're never behind.</p>
+                </div>
+                <div class="f-card">
+                    <div class="f-icon">🎙️</div>
+                    <h3>Truck-Office Voice Mode</h3>
+                    <p>Turn your commute into a classroom. AI reads the questions, listens to your verbal answer, and gives instant feedback. 100% hands-free study while you drive to your next call.</p>
+                </div>
+                <div class="f-card">
+                    <div class="f-icon">🧪</div>
+                    <h3>Smart Diagnostics</h3>
+                    <p>Our algorithm identifies exactly which sections (Core, Type I, II, or III) are dragging you down. It builds a custom 15-minute drill to fix your weakest link, saving you 10+ hours of useless study.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGULATORY GAP -->
+    <section class="section">
+        <div class="container gap-section">
+            <span class="tag" style="color: var(--accent);">The 2026 Shift</span>
+            <h2>Why Everything Changed on Jan 1, 2025.</h2>
+            <p style="font-size: 1.25rem; opacity: 0.8; max-width: 800px; margin: 0 auto 3rem;">The AIM Act has entered its most aggressive phase. The exam bank has been overhauled to prioritize A2L safety and HFC phasedown schedules.</p>
+            <div class="gap-grid">
+                <div class="gap-box">
+                    <h4>A2L Flammability</h4>
+                    <p>New questions on spark-free tools and flammability limits (LFL).</p>
+                </div>
+                <div class="gap-box">
+                    <h4>New Leak Thresholds</h4>
+                    <p>Updated requirements for commercial vs. residential systems.</p>
+                </div>
+                <div class="gap-box">
+                    <h4>R-410A Phasedown</h4>
+                    <p>The total manufacturing ban and its impact on recovery standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING - THE GRAND SLAM -->
+    <section id="pricing" class="section">
+        <div class="container">
+            <div style="text-align:center;">
+                <span class="tag">Pricing</span>
+                <h2>Invest in Your Career.</h2>
+            </div>
+            
+            <div class="price-wrapper">
+                
+                <div class="price-card">
+                    <div class="price-name">BASIC</div>
+                    <div class="price-val">$14.99<span>/one-time</span></div>
+                    <ul class="price-list">
+                        <li>1,000+ Verified Questions</li>
+                        <li>Full Explanations (AI-Verify)</li>
+                        <li>Core, Type I, II, III, Universal</li>
+                        <li>Lifetime Access</li>
+                    </ul>
+                    <a href="#" class="btn btn-white" style="display:block; text-align:center;">Get Basic</a>
+                </div>
+
+                <div class="price-card best">
+                    <div class="best-tag">Most Popular</div>
+                    <div class="price-name">PASS MASTER</div>
+                    <div class="price-val">$29.99<span>/one-time</span></div>
+                    <ul class="price-list">
+                        <li><strong>AI Sentinel</strong> Live Radar Feed</li>
+                        <li><strong>Hands-Free</strong> Voice Mentor Mode</li>
+                        <li><strong>Smart Coach</strong> Weak-Spot Drills</li>
+                        <li><strong>PDF Bonus:</strong> Ultimate Cheat Sheet</li>
+                        <li><strong>PDF Bonus:</strong> Master Mock Exams</li>
+                        <li><strong>Pass Insurance Guarantee</strong></li>
+                    </ul>
+                    <a href="#" class="btn btn-blue" style="display:block; text-align:center;">Get Full Access Now</a>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-name">FREE</div>
+                    <div class="price-val">$0<span>/forever</span></div>
+                    <ul class="price-list">
+                        <li>50 "Hot" Questions for 2026</li>
+                        <li>Sentinel AI Live Feed</li>
+                        <li>1 Mock Exam Attempt</li>
+                        <li>Basic Analytics</li>
+                    </ul>
+                    <a href="#" class="btn btn-white" style="display:block; text-align:center;">Try for Free</a>
+                </div>
+
+            </div>
+
+            <div class="guarantee">
+                <div class="g-icon">🛡️</div>
+                <h3>The "Pass or It's Free" Double Guarantee</h3>
+                <p class="g-text">If you complete our AI-recommended path and don't pass your EPA 608 exam, we'll refund 100% of your money. **And you keep all the PDFs.** We take the risk because we know the Sentinel AI system is the most accurate on the planet.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <span class="footer-logo">EPT MASTER</span>
+            <p>Modern certification prep for the HVAC-R industry. Powered by AI, built for technicians.</p>
+            <div style="margin-top: 2rem;">
+                <a href="#" style="color:#94a3b8; margin: 0 1rem; text-decoration:none;">Privacy Policy</a>
+                <a href="#" style="color:#94a3b8; margin: 0 1rem; text-decoration:none;">Terms of Service</a>
+                <a href="#" style="color:#94a3b8; margin: 0 1rem; text-decoration:none;">Contact Support</a>
+            </div>
+            <p class="footer-disclaimer">© 2026 EPT Master. We are a private training platform. Not affiliated with or endorsed by the U.S. Environmental Protection Agency (EPA). We recommend taking your final proctored exam through an EPA-approved provider.</p>
+        </div>
+    </footer>
+
+    <script>
+        const updates = [
+            "Updated 3 new questions regarding R-454B leak thresholds.",
+            "Analyzing Reddit r/HVAC... Found pattern on recovery cylinder safety.",
+            "142 technicians passed their exam in the last 24 hours.",
+            "Sentinel Sync: New A2L flammability questions added to Bank.",
+            "Comparing EPA Section 608 official site... No changes detected."
+        ];
+        let i = 0;
+        setInterval(() => {
+            i = (i + 1) % updates.length;
+            document.getElementById('feed-update').innerText = updates[i];
+        }, 5000);
+    </script>
+</body>
+</html>

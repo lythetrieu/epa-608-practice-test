@@ -11,18 +11,18 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#1e40af', // blue-800
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+          DEFAULT: '#003087', // HVAC Navy (Carrier/ESCO standard)
+          50: '#eef3ff',
+          100: '#d9e4ff',
+          200: '#b3c8ff',
+          300: '#7da2ff',
+          400: '#4a73ff',
+          500: '#1a45ff',
+          600: '#0033e6',
+          700: '#0029cc',
+          800: '#003087',
+          900: '#001d57',
+          950: '#000f2e',
         },
         accent: {
           DEFAULT: '#16a34a', // green-600

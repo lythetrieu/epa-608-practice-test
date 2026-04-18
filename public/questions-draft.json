@@ -1,0 +1,1100 @@
+[
+  {
+    "id": "generated-ref51-001",
+    "subtopic_id": "core-ref-5.1",
+    "category": "Core",
+    "question": "In a standard refrigeration cycle, what is the state of the refrigerant as it enters the evaporator?",
+    "options": [
+      "High-pressure, high-temperature vapor",
+      "Low-pressure liquid and flash gas mixture",
+      "High-pressure subcooled liquid",
+      "Low-pressure superheated vapor"
+    ],
+    "answer_text": "Low-pressure liquid and flash gas mixture",
+    "explanation": "After passing through the expansion device (TXV or metering device), high-pressure liquid refrigerant experiences a sudden pressure drop, causing some of it to flash into vapor. The resulting low-pressure liquid/flash gas mixture enters the evaporator where it absorbs heat and fully vaporizes. This is a fundamental principle covered in the ASHRAE Refrigeration Handbook and the 40 CFR Part 82 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-ref51-002",
+    "subtopic_id": "core-ref-5.1",
+    "category": "Core",
+    "question": "What happens to refrigerant vapor as it passes through the compressor in a refrigeration cycle?",
+    "options": [
+      "It condenses into a liquid at low pressure",
+      "It is compressed into high-pressure, high-temperature vapor",
+      "It expands and drops in temperature",
+      "It absorbs heat from the conditioned space"
+    ],
+    "answer_text": "It is compressed into high-pressure, high-temperature vapor",
+    "explanation": "The compressor is the heart of the refrigeration cycle. It draws in low-pressure superheated vapor from the evaporator and compresses it, raising both pressure and temperature significantly, producing high-pressure, high-temperature discharge vapor. This vapor then travels to the condenser. Source: ASHRAE Refrigeration Handbook; 40 CFR Part 82 technician study guide.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-ref51-003",
+    "subtopic_id": "core-ref-5.1",
+    "category": "Core",
+    "question": "Which of the following best describes the condition of refrigerant leaving the condenser in a properly operating system?",
+    "options": [
+      "Low-pressure superheated vapor",
+      "Low-pressure liquid at saturation temperature",
+      "High-pressure subcooled liquid",
+      "High-pressure flash gas mixture"
+    ],
+    "answer_text": "High-pressure subcooled liquid",
+    "explanation": "In the condenser, high-pressure vapor rejects its heat to the surrounding air or water and condenses into a liquid. In a properly operating system, the refrigerant is further cooled below its saturation temperature (subcooled) before leaving the condenser. Subcooling ensures 100% liquid enters the expansion device and improves system efficiency. Source: ASHRAE Refrigeration Handbook; 40 CFR Part 82 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-ref51-004",
+    "subtopic_id": "core-ref-5.1",
+    "category": "Core",
+    "question": "The term 'superheat' in the context of refrigeration refers to which condition?",
+    "options": [
+      "Liquid refrigerant cooled below its saturation temperature",
+      "Vapor refrigerant heated above its saturation temperature",
+      "The temperature difference across the condenser coil",
+      "The pressure increase caused by the compressor"
+    ],
+    "answer_text": "Vapor refrigerant heated above its saturation temperature",
+    "explanation": "Superheat is the condition where refrigerant vapor has been heated beyond its saturation (boiling) temperature at a given pressure. Measuring superheat at the evaporator outlet confirms that the refrigerant has fully vaporized before reaching the compressor, which protects the compressor from liquid slugging. Source: ASHRAE Refrigeration Handbook; 40 CFR Part 82 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-ref51-005",
+    "subtopic_id": "core-ref-5.1",
+    "category": "Core",
+    "question": "In a refrigeration cycle, at which component does the refrigerant absorb heat and change from a liquid to a vapor?",
+    "options": [
+      "Compressor",
+      "Condenser",
+      "Expansion device",
+      "Evaporator"
+    ],
+    "answer_text": "Evaporator",
+    "explanation": "The evaporator is located on the low-pressure side of the refrigeration system. Low-pressure liquid refrigerant (and flash gas) enters the evaporator, absorbs heat from the surrounding environment or conditioned space, and vaporizes (boils). This heat absorption is the actual refrigerating effect. The process occurs at low pressure and low temperature. Source: ASHRAE Refrigeration Handbook; 40 CFR Part 82 technician study guide.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs62-001",
+    "subtopic_id": "core-3rs-6.2",
+    "category": "Core",
+    "question": "Which of the following best describes the process of refrigerant recycling as defined under EPA regulations?",
+    "options": [
+      "Returning refrigerant to AHRI 700 purity standards for resale",
+      "Cleaning refrigerant on-site using oil separators and filter-driers to reduce contaminants",
+      "Simply removing refrigerant from a system without any cleaning",
+      "Sending refrigerant to a certified facility for laboratory analysis and purification"
+    ],
+    "answer_text": "Cleaning refrigerant on-site using oil separators and filter-driers to reduce contaminants",
+    "explanation": "Under 40 CFR §82.152, recycling is defined as cleaning refrigerant for reuse without meeting the purity requirements of AHRI 700. Recycling is performed on-site using equipment equipped with oil separators and filter-driers. This distinguishes it from reclaiming, which requires off-site certified facilities and must meet AHRI 700-2016 standards.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs62-002",
+    "subtopic_id": "core-3rs-6.2",
+    "category": "Core",
+    "question": "After recycling refrigerant on-site, to whom may the recycled refrigerant legally be transferred?",
+    "options": [
+      "Any EPA-certified technician",
+      "Only the same person or company that owns the system from which it was recovered",
+      "Any HVAC contractor with a valid EPA Section 608 certification",
+      "Any purchaser, provided the refrigerant passes a purity field test"
+    ],
+    "answer_text": "Only the same person or company that owns the system from which it was recovered",
+    "explanation": "Per 40 CFR §82.152, recycled refrigerant may only be used in systems owned by the same person or entity from which it was recovered. Recycled refrigerant cannot be resold or transferred to a third party because it has not been certified to meet AHRI 700-2016 purity standards. Resale requires reclaiming by an EPA-certified reclaimer.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs62-003",
+    "subtopic_id": "core-3rs-6.2",
+    "category": "Core",
+    "question": "Does recycled refrigerant need to meet AHRI 700 purity standards before being reused?",
+    "options": [
+      "Yes, all reused refrigerant must meet AHRI 700 standards",
+      "No, recycled refrigerant does not need to meet AHRI 700 — that standard applies only to reclaimed refrigerant",
+      "Yes, but only if the refrigerant is used in a system owned by a different company",
+      "No, recycled refrigerant requires no cleaning at all before reuse"
+    ],
+    "answer_text": "No, recycled refrigerant does not need to meet AHRI 700 — that standard applies only to reclaimed refrigerant",
+    "explanation": "AHRI 700-2016 is the purity standard for reclaimed refrigerant — refrigerant that has been processed at a certified off-site facility and will be resold. Recycled refrigerant, by contrast, is cleaned on-site for same-owner reuse and is not required to meet AHRI 700 specifications. Source: 40 CFR §82.152.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs62-004",
+    "subtopic_id": "core-3rs-6.2",
+    "category": "Core",
+    "question": "What certification requirement applies to refrigerant recycling equipment used by technicians?",
+    "options": [
+      "Recycling equipment must be certified by an EPA-approved third-party organization",
+      "No certification is required as long as the equipment has a filter-drier",
+      "Recycling equipment must be registered directly with AHRI",
+      "Technicians may use any oil separator and filter-drier combination without certification"
+    ],
+    "answer_text": "Recycling equipment must be certified by an EPA-approved third-party organization",
+    "explanation": "Under EPA regulations, refrigerant recycling equipment must be tested and certified by an EPA-approved third-party organization (such as UL or AHRI) to ensure it adequately reduces contaminants. This certification ensures the equipment can properly separate oil and moisture from the refrigerant. Source: 40 CFR §82.152.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs62-005",
+    "subtopic_id": "core-3rs-6.2",
+    "category": "Core",
+    "question": "Which of the following correctly distinguishes recycling from recovering refrigerant?",
+    "options": [
+      "Recovering cleans the refrigerant; recycling simply removes it from the system",
+      "Recovering removes refrigerant from the system without cleaning; recycling cleans it on-site for same-owner reuse",
+      "Recycling and recovering are interchangeable terms under EPA regulations",
+      "Recovering refrigerant always requires a certified off-site reclaim facility"
+    ],
+    "answer_text": "Recovering removes refrigerant from the system without cleaning; recycling cleans it on-site for same-owner reuse",
+    "explanation": "Under 40 CFR §82.152, the three R's are distinct: Recovery = removing refrigerant from a system without necessarily testing or processing it; Recycling = cleaning refrigerant on-site (oil separator, filter-drier) for reuse by the same owner; Reclaiming = processing to AHRI 700-2016 purity at a certified facility for resale. Each represents an increasing level of purification.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs63-001",
+    "subtopic_id": "core-3rs-6.3",
+    "category": "Core",
+    "question": "What purity standard must refrigerant meet before it can be legally resold to a third party?",
+    "options": [
+      "ASHRAE Standard 15 refrigerant quality specifications",
+      "AHRI 700-2016 purity standard, achieved through reclaiming at a certified facility",
+      "Any level of purity achievable through on-site recycling",
+      "DOT HMR purity guidelines for compressed gases"
+    ],
+    "answer_text": "AHRI 700-2016 purity standard, achieved through reclaiming at a certified facility",
+    "explanation": "Per 40 CFR §82.152 and §82.164, only refrigerant that has been reclaimed to meet AHRI 700-2016 purity standards may be resold to a new owner. Reclaiming must be performed at an EPA-certified off-site facility. AHRI 700-2016 defines acceptable levels of moisture, acidity, high-boiling residues, particulates, and non-condensable gases.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.164",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs63-002",
+    "subtopic_id": "core-3rs-6.3",
+    "category": "Core",
+    "question": "Where must refrigerant reclaiming be performed under EPA Section 608 regulations?",
+    "options": [
+      "On-site at the system location using portable reclaiming equipment",
+      "At any HVAC service facility that has a filter-drier and oil separator",
+      "At an EPA-certified off-site reclaiming facility",
+      "At any facility approved by the state environmental agency"
+    ],
+    "answer_text": "At an EPA-certified off-site reclaiming facility",
+    "explanation": "Refrigerant reclaiming cannot be performed on-site. Under 40 CFR §82.164, reclaimers must be registered with the EPA and operate at certified facilities capable of processing refrigerant to AHRI 700-2016 standards. The refrigerant must be sent off-site to these registered reclaimers. This distinguishes reclaiming from recycling, which occurs on-site.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.164",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs63-003",
+    "subtopic_id": "core-3rs-6.3",
+    "category": "Core",
+    "question": "What is the result of properly reclaimed refrigerant in terms of quality?",
+    "options": [
+      "It is acceptable for use in the same system but not for resale",
+      "It meets AHRI 700-2016 specifications and is indistinguishable from virgin refrigerant",
+      "It contains slightly more moisture than virgin refrigerant but is suitable for older equipment",
+      "It must be blended with virgin refrigerant before being suitable for resale"
+    ],
+    "answer_text": "It meets AHRI 700-2016 specifications and is indistinguishable from virgin refrigerant",
+    "explanation": "Reclaimed refrigerant that meets AHRI 700-2016 is returned to 'like-new' or virgin quality. The AHRI 700 standard specifies maximum allowable levels of moisture, acid, high-boiling residues, particulates, and non-condensable gases. Refrigerant meeting these specifications is legally equivalent to virgin refrigerant and may be resold to any purchaser. Source: 40 CFR §82.152; 40 CFR §82.164.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.164",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs63-004",
+    "subtopic_id": "core-3rs-6.3",
+    "category": "Core",
+    "question": "Which regulatory requirement applies specifically to entities that reclaim refrigerant for resale?",
+    "options": [
+      "Reclaimers must hold an EPA Section 608 Type I technician certification",
+      "Reclaimers must be registered with the EPA",
+      "Reclaimers must obtain annual AHRI audits of their recycling equipment",
+      "Reclaimers must submit monthly purity reports to the state environmental agency"
+    ],
+    "answer_text": "Reclaimers must be registered with the EPA",
+    "explanation": "Under 40 CFR §82.164, entities that reclaim refrigerant and sell it must register with the EPA. This registration requirement ensures accountability and that only legitimate certified facilities process refrigerant to AHRI 700-2016 standards. Unregistered entities may not legally reclaim refrigerant for resale.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.164",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-3rs63-005",
+    "subtopic_id": "core-3rs-6.3",
+    "category": "Core",
+    "question": "A technician recovers refrigerant from a system and wants to sell it to another contractor. What must happen to the refrigerant first?",
+    "options": [
+      "The refrigerant must be recycled on-site using a certified oil separator and filter-drier",
+      "The refrigerant must be sent to an EPA-registered reclaimer and processed to AHRI 700-2016 standards",
+      "The technician must simply test the refrigerant's purity with field instruments before resale",
+      "No additional processing is required as long as the refrigerant came from a single-component system"
+    ],
+    "answer_text": "The refrigerant must be sent to an EPA-registered reclaimer and processed to AHRI 700-2016 standards",
+    "explanation": "Recovered refrigerant cannot be resold to a third party without first being reclaimed to AHRI 700-2016 purity standards by an EPA-registered reclaimer. On-site recycling is insufficient for resale — it only qualifies the refrigerant for reuse by the same owner. Source: 40 CFR §82.152; 40 CFR §82.164.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.164",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-rec72-001",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "Which recovery method is significantly faster and should be used whenever system conditions allow?",
+    "options": [
+      "Vapor recovery from the high-pressure side only",
+      "Liquid recovery before switching to vapor recovery",
+      "Vapor recovery from both high- and low-pressure sides simultaneously",
+      "Push-pull vapor recovery using two machines in parallel"
+    ],
+    "answer_text": "Liquid recovery before switching to vapor recovery",
+    "explanation": "Recovering refrigerant in its liquid state is significantly faster than vapor recovery because liquid refrigerant is much denser — a given volume of liquid contains far more refrigerant mass than the same volume of vapor. Technicians should recover liquid first (often from the liquid line service valve or receiver) before switching to vapor recovery. Source: EPA 608 technician study guide; ASHRAE refrigeration fundamentals.",
+    "difficulty": "easy",
+    "source_ref": "EPA 608 Technician Study Guide; ASHRAE Refrigeration Fundamentals",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-rec72-002",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "How does cooling the recovery cylinder affect the speed of refrigerant recovery?",
+    "options": [
+      "It slows recovery by increasing the pressure inside the cylinder",
+      "It has no significant effect on recovery speed",
+      "It speeds recovery by lowering pressure in the cylinder, increasing the pressure differential that drives refrigerant flow",
+      "It speeds recovery only when combined with heating the system being recovered"
+    ],
+    "answer_text": "It speeds recovery by lowering pressure in the cylinder, increasing the pressure differential that drives refrigerant flow",
+    "explanation": "Cooling the recovery cylinder (e.g., with ice or cold water) lowers the temperature of the refrigerant inside it, which reduces the cylinder's internal pressure. This increases the pressure differential between the system being recovered and the recovery cylinder, drawing refrigerant more rapidly into the cylinder through increased condensation rate. Source: EPA 608 technician study guide; ASHRAE refrigeration fundamentals.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide; ASHRAE Refrigeration Fundamentals",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-rec72-003",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "Which of the following factors would SLOW the speed of refrigerant recovery from a system?",
+    "options": [
+      "Using short, large-diameter hoses",
+      "Warming the refrigerant system being recovered",
+      "Using long, small-diameter hoses between the system and recovery machine",
+      "Cooling the recovery cylinder with ice water"
+    ],
+    "answer_text": "Using long, small-diameter hoses between the system and recovery machine",
+    "explanation": "Long hose runs create additional pressure drop (friction loss) between the system and the recovery machine, reducing the flow of refrigerant. Small-diameter hoses compound this effect by restricting flow. Both factors reduce the efficiency of recovery. To maximize speed, technicians should use the shortest, largest-diameter hoses practical. Source: EPA 608 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-rec72-004",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "What happens to the efficiency of a recovery machine as the suction pressure of the system being recovered drops toward a vacuum?",
+    "options": [
+      "Efficiency increases because vapor flows more freely at low pressure",
+      "Efficiency remains constant regardless of suction pressure",
+      "Efficiency decreases because the machine must work harder to pull vapor at very low pressures",
+      "Efficiency doubles due to increased compression ratio"
+    ],
+    "answer_text": "Efficiency decreases because the machine must work harder to pull vapor at very low pressures",
+    "explanation": "As system pressure drops during recovery, the recovery machine must operate against an increasing compression ratio to move refrigerant vapor. At very low suction pressures (near vacuum), the mass flow rate of refrigerant decreases significantly, making recovery much slower per unit of time. This is why warming the system — to maintain higher pressures — helps maintain recovery speed. Source: EPA 608 technician study guide; ASHRAE refrigeration fundamentals.",
+    "difficulty": "hard",
+    "source_ref": "EPA 608 Technician Study Guide; ASHRAE Refrigeration Fundamentals",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-rec72-005",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "A technician wants to speed up vapor recovery from a large system. Which action would be most effective?",
+    "options": [
+      "Adding a larger filter-drier to the recovery hose",
+      "Gently warming the system to raise refrigerant pressure",
+      "Switching from a certified recovery machine to a simpler vacuum pump",
+      "Opening all system service valves to equalize pressure throughout the system"
+    ],
+    "answer_text": "Gently warming the system to raise refrigerant pressure",
+    "explanation": "System pressure is the primary driver of recovery speed. Gently warming the system (e.g., using warm water on the low side or operating the system briefly) raises the refrigerant pressure, which increases the pressure differential between the system and recovery cylinder. This drives refrigerant into the recovery machine more rapidly. Warming should be done cautiously and only by qualified technicians. Source: EPA 608 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe92-001",
+    "subtopic_id": "core-safe-9.2",
+    "category": "Core",
+    "question": "What is the standard color code for a DOT-approved refrigerant recovery cylinder?",
+    "options": [
+      "All yellow body with a black top",
+      "All gray body and top",
+      "Gray body with a yellow top",
+      "White body with a green top"
+    ],
+    "answer_text": "Gray body with a yellow top",
+    "explanation": "DOT and ARI (now AHRI) standards specify that refrigerant recovery cylinders must have a gray body with a yellow top (collar). This distinctive color combination distinguishes recovery cylinders from refrigerant supply cylinders and disposable cylinders, reducing the risk of confusion or accidental misuse in the field.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.156(f); ARI/AHRI Recovery Cylinder Standard",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe92-002",
+    "subtopic_id": "core-safe-9.2",
+    "category": "Core",
+    "question": "What is the maximum fill level allowed for a refrigerant recovery cylinder under EPA regulations?",
+    "options": [
+      "70% of the cylinder's total weight capacity",
+      "80% of the cylinder's total weight capacity",
+      "90% of the cylinder's total weight capacity",
+      "100% of the cylinder's total weight capacity, provided the cylinder is DOT-approved"
+    ],
+    "answer_text": "80% of the cylinder's total weight capacity",
+    "explanation": "Per 40 CFR §82.156(f), recovery cylinders must never be filled beyond 80% of their total capacity by weight. This limit provides an expansion space (ullage) that prevents hydrostatic pressure buildup if the cylinder is exposed to elevated temperatures, which could cause the cylinder to rupture or the pressure relief valve to open.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.156(f)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe92-003",
+    "subtopic_id": "core-safe-9.2",
+    "category": "Core",
+    "question": "How frequently must DOT-approved refrigerant recovery cylinders undergo hydrostatic testing?",
+    "options": [
+      "Every year",
+      "Every 3 years",
+      "Every 5 years",
+      "Every 10 years"
+    ],
+    "answer_text": "Every 5 years",
+    "explanation": "Under DOT Hazardous Materials Regulations (HMR) 49 CFR §180.209, DOT-approved recovery cylinders must undergo hydrostatic retesting every 5 years to verify their structural integrity. A cylinder that has not been tested within the required interval must be removed from service. The test date is stamped on the cylinder collar.",
+    "difficulty": "medium",
+    "source_ref": "DOT HMR 49 CFR §180.209; 40 CFR §82.156(f)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe92-004",
+    "subtopic_id": "core-safe-9.2",
+    "category": "Core",
+    "question": "Which type of cylinder is prohibited from being used for refrigerant recovery under EPA regulations?",
+    "options": [
+      "DOT-approved recovery cylinders with gray body and yellow top",
+      "Recovery cylinders that have passed hydrostatic testing within the past 5 years",
+      "Disposable (single-use) refrigerant cylinders",
+      "Recovery cylinders filled to 75% of their capacity"
+    ],
+    "answer_text": "Disposable (single-use) refrigerant cylinders",
+    "explanation": "Disposable refrigerant cylinders (also called single-use or non-refillable cylinders) are strictly prohibited from being used as recovery cylinders. These cylinders are not designed to withstand the pressures and stresses of recovery operations or refilling, and using them creates a serious explosion hazard. Only DOT-approved, refillable recovery cylinders with the gray body/yellow top color code may be used. Source: 40 CFR §82.156(f).",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.156(f)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe95-001",
+    "subtopic_id": "core-safe-9.5",
+    "category": "Core",
+    "question": "What is the correct first aid treatment for skin contact with liquid refrigerant?",
+    "options": [
+      "Rub the affected area vigorously to restore circulation",
+      "Apply direct heat or a heating pad to warm the frozen tissue quickly",
+      "Flush the affected area with lukewarm water and do not rub the skin",
+      "Apply ice to the area to prevent further temperature changes"
+    ],
+    "answer_text": "Flush the affected area with lukewarm water and do not rub the skin",
+    "explanation": "Liquid refrigerant contact with skin causes frostbite due to rapid evaporation and extreme cold. The correct first aid is to gently flush the area with lukewarm (not hot) water to slowly rewarm the tissue. Rubbing is prohibited because frozen tissue is fragile and rubbing causes additional mechanical damage. Applying heat directly or using heating pads risks burns on insensate frozen skin. Source: SDS for specific refrigerant; NIOSH guidelines.",
+    "difficulty": "medium",
+    "source_ref": "Refrigerant SDS; NIOSH Guidelines; ASHRAE 15",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe95-002",
+    "subtopic_id": "core-safe-9.5",
+    "category": "Core",
+    "question": "What is the primary health risk of refrigerant vapor in a poorly ventilated enclosed space?",
+    "options": [
+      "Chemical burns to the respiratory tract from acidic decomposition products",
+      "Oxygen displacement leading to asphyxiation",
+      "Explosive ignition of A1-class refrigerant vapors",
+      "Immediate cardiac arrest even at low concentrations"
+    ],
+    "answer_text": "Oxygen displacement leading to asphyxiation",
+    "explanation": "Refrigerant vapors are heavier than air and can accumulate in low-lying areas and enclosed spaces, displacing oxygen. This oxygen displacement creates an asphyxiation hazard — affected persons may lose consciousness without warning before they can recognize the danger. ASHRAE Standard 15 requires oxygen sensors (or refrigerant detectors with audible alarms) in machinery rooms to alert personnel to dangerous concentrations. Source: ASHRAE 15; NIOSH guidelines.",
+    "difficulty": "medium",
+    "source_ref": "ASHRAE Standard 15; NIOSH Guidelines",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe95-003",
+    "subtopic_id": "core-safe-9.5",
+    "category": "Core",
+    "question": "What is the recommended first aid for refrigerant vapor or liquid contact with the eyes?",
+    "options": [
+      "Apply a dry sterile bandage and seek medical attention within 24 hours",
+      "Flush the eyes with clean water for at least 15 minutes and seek medical attention",
+      "Use a neutralizing eye wash solution specifically formulated for chemical exposure",
+      "Do not flush with water — use only saline solution approved by an ophthalmologist"
+    ],
+    "answer_text": "Flush the eyes with clean water for at least 15 minutes and seek medical attention",
+    "explanation": "Eye contact with refrigerant (liquid or high-concentration vapor) requires immediate irrigation with clean water for a minimum of 15 minutes to remove the refrigerant and prevent corneal damage from freezing or chemical irritation. After flushing, the person should receive prompt medical evaluation. This protocol is consistent with standard SDS first aid guidance and NIOSH recommendations for all refrigerant types.",
+    "difficulty": "easy",
+    "source_ref": "Refrigerant SDS; NIOSH Guidelines",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe95-004",
+    "subtopic_id": "core-safe-9.5",
+    "category": "Core",
+    "question": "What physiological effect can exposure to high concentrations of refrigerant vapor cause, beyond simple asphyxiation?",
+    "options": [
+      "Permanent liver damage from refrigerant metabolites",
+      "Cardiac sensitization, which can lead to irregular heartbeat or cardiac arrest",
+      "Immediate skin necrosis due to chemical reactivity with tissue",
+      "Spontaneous combustion of body fat in contact with A1-class refrigerants"
+    ],
+    "answer_text": "Cardiac sensitization, which can lead to irregular heartbeat or cardiac arrest",
+    "explanation": "In addition to asphyxiation from oxygen displacement, high concentrations of refrigerant vapors can cause cardiac sensitization — a condition where the heart muscle becomes abnormally sensitive to adrenaline (epinephrine), potentially triggering fatal irregular heartbeats (arrhythmias). If refrigerant exposure is suspected, the person should be moved to fresh air immediately, kept calm to minimize adrenaline release, and monitored for cardiac symptoms. Source: Refrigerant SDS; NIOSH guidelines.",
+    "difficulty": "hard",
+    "source_ref": "Refrigerant SDS; NIOSH Guidelines; ASHRAE 15",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe93-001",
+    "subtopic_id": "core-safe-9.3",
+    "category": "Core",
+    "question": "Why must a pressure regulator always be used when pressurizing a refrigeration system with nitrogen for leak testing?",
+    "options": [
+      "Nitrogen reacts with refrigerant oil and requires controlled delivery pressure to prevent chemical reactions",
+      "Nitrogen cylinder pressure of approximately 2,200 psig would destroy system components without pressure regulation",
+      "A regulator is only required when using nitrogen with trace refrigerant; pure nitrogen does not require one",
+      "Regulators are required by AHRI but not by EPA or DOT regulations for nitrogen use"
+    ],
+    "answer_text": "Nitrogen cylinder pressure of approximately 2,200 psig would destroy system components without pressure regulation",
+    "explanation": "A full nitrogen cylinder contains gas at approximately 2,200 psig (at 70°F), which far exceeds the design pressure of any refrigeration system component. Without a pressure regulator, this pressure would immediately rupture the system, creating a severe explosion and shrapnel hazard. A pressure regulator reduces nitrogen pressure to the safe test pressure specified for the system (typically no more than the system's rated low-side or high-side pressure). Source: EPA 608 technician study guide; industry safety standards.",
+    "difficulty": "easy",
+    "source_ref": "EPA 608 Technician Study Guide; Industry Safety Standards",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe93-002",
+    "subtopic_id": "core-safe-9.3",
+    "category": "Core",
+    "question": "Why is oxygen strictly prohibited from being used to pressure test refrigeration systems?",
+    "options": [
+      "Oxygen is too expensive and difficult to obtain compared to nitrogen",
+      "Oxygen reacts with refrigerant oil under pressure and can cause an explosion",
+      "Oxygen corrodes copper tubing and system components more rapidly than nitrogen",
+      "Oxygen is too dense and would not reveal small leaks effectively"
+    ],
+    "answer_text": "Oxygen reacts with refrigerant oil under pressure and can cause an explosion",
+    "explanation": "Oxygen combined with refrigerant compressor oil under high pressure creates conditions that can lead to a violent explosion or fire — essentially the same principle as an oxygen-enriched atmosphere in contact with hydrocarbons. Even small amounts of oxygen can ignite compressor oil under these conditions. Nitrogen is the correct choice for pressure testing because it is inert, will not react with oils or refrigerants, and is readily available. NEVER use oxygen, air (which contains oxygen), or any flammable gas for pressure testing. Source: EPA 608 technician study guide; industry safety standards.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide; Industry Safety Standards",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-safe93-003",
+    "subtopic_id": "core-safe-9.3",
+    "category": "Core",
+    "question": "When performing a nitrogen leak test and wanting to use an electronic leak detector, what may be added to the nitrogen charge?",
+    "options": [
+      "A small amount of compressed air to create a detectable oxygen-nitrogen mixture",
+      "A trace amount of HCFC-22 to give the electronic leak detector a detectable refrigerant signal",
+      "A liquid dye marker that vaporizes and triggers electronic sensors",
+      "A small amount of R-410A since it has a stronger electronic detector signal than HCFC-22"
+    ],
+    "answer_text": "A trace amount of HCFC-22 to give the electronic leak detector a detectable refrigerant signal",
+    "explanation": "Electronic leak detectors are designed to sense refrigerant molecules, not nitrogen. When using nitrogen for pressure testing and wanting the sensitivity advantage of an electronic detector, technicians may add a small (trace) amount of HCFC-22 (R-22) to the nitrogen charge. The refrigerant tracer provides the detectable signal for the electronic detector while the nitrogen provides the safe pressurizing medium. The regulator is still required regardless. Source: EPA 608 technician study guide.",
+    "difficulty": "hard",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-001",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "What is the preferred gas for leak testing a refrigeration system?",
+    "options": [
+      "A. Dry nitrogen",
+      "B. Oxygen",
+      "C. Carbon dioxide",
+      "D. Pure HCFC-22"
+    ],
+    "answer_text": "A. Dry nitrogen",
+    "explanation": "Dry nitrogen is the preferred leak test gas because it is inert, will not react with compressor oil or moisture, and is safe to use at high pressure. Per 40 CFR §82.154, refrigerants cannot be vented, making pure refrigerant unsuitable for pressurizing systems during leak tests.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-002",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "Why is oxygen prohibited as a leak test gas in refrigeration systems?",
+    "options": [
+      "A. Oxygen is too expensive for field use",
+      "B. Oxygen reacts with compressor oil and can cause an explosion",
+      "C. Oxygen condenses inside the system at low temperatures",
+      "D. Oxygen cannot be detected by electronic leak detectors"
+    ],
+    "answer_text": "B. Oxygen reacts with compressor oil and can cause an explosion",
+    "explanation": "Oxygen must never be used to pressurize a refrigeration system because oxygen combined with compressor oil creates an explosion hazard. This is a fundamental safety rule in the refrigeration industry. Dry nitrogen is the safe alternative.",
+    "difficulty": "easy",
+    "source_ref": "Industry best practice; EPA 608 technician study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-003",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "A technician wants to use nitrogen with a trace amount of HCFC-22 for leak testing. Which detection method is compatible with this mixture?",
+    "options": [
+      "A. Ultrasonic detector only",
+      "B. Halide torch or electronic detector with chlorine-sensitive sensors",
+      "C. UV dye inspection only",
+      "D. Soap bubbles only"
+    ],
+    "answer_text": "B. Halide torch or electronic detector with chlorine-sensitive sensors",
+    "explanation": "When nitrogen is mixed with a trace amount of HCFC-22, the trace refrigerant acts as a tracer gas. A halide torch reacts to chlorine compounds in HCFC-22, and electronic detectors with chlorine-sensitive sensors can detect this trace amount, allowing the technician to locate the leak.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-004",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "When connecting a nitrogen cylinder for leak testing, which safety device is always required?",
+    "options": [
+      "A. A pressure relief valve on the system only",
+      "B. A pressure regulator on the nitrogen cylinder",
+      "C. An oil separator between the cylinder and the system",
+      "D. A check valve on the discharge port"
+    ],
+    "answer_text": "B. A pressure regulator on the nitrogen cylinder",
+    "explanation": "Nitrogen cylinders are pressurized to approximately 2,200 psig. A pressure regulator is mandatory to reduce cylinder pressure to a safe test pressure before introducing nitrogen into the refrigeration system. Failure to use a regulator risks catastrophic over-pressurization.",
+    "difficulty": "easy",
+    "source_ref": "Industry best practice; EPA 608 technician study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-005",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "A technician proposes using pure HCFC-22 to pressurize a system to test for leaks. Which statement correctly describes why this is not acceptable under EPA regulations?",
+    "options": [
+      "A. HCFC-22 is too expensive to use for leak testing",
+      "B. Pure refrigerant cannot be used because any release during testing constitutes an illegal venting violation under 40 CFR §82.154",
+      "C. HCFC-22 pressure is too low to reveal small leaks",
+      "D. Pure refrigerant is acceptable as long as the technician recovers it immediately after the test"
+    ],
+    "answer_text": "B. Pure refrigerant cannot be used because any release during testing constitutes an illegal venting violation under 40 CFR §82.154",
+    "explanation": "Using pure refrigerant to pressurize a system for leak testing is prohibited because any refrigerant that escapes during the test is considered venting, which violates 40 CFR §82.154. Nitrogen or nitrogen/trace refrigerant mixtures are the approved alternatives.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l11-006",
+    "subtopic_id": "t2-leak-1.1",
+    "category": "Type II",
+    "question": "Compared to using pure refrigerant for pressurization, why is dry nitrogen preferred for leak testing refrigeration systems?",
+    "options": [
+      "A. Nitrogen is detectable by halide torches without any trace refrigerant",
+      "B. Nitrogen is inert, does not react with oil or moisture, is safe at high pressure, and its release does not violate EPA venting regulations",
+      "C. Nitrogen is cheaper and available at most hardware stores",
+      "D. Nitrogen provides higher test pressures than refrigerant alone"
+    ],
+    "answer_text": "B. Nitrogen is inert, does not react with oil or moisture, is safe at high pressure, and its release does not violate EPA venting regulations",
+    "explanation": "Dry nitrogen is preferred for multiple reasons: it is chemically inert so it will not react with compressor oil or system moisture, it is safe to use at high pressure, and unlike refrigerants, releasing nitrogen during a leak test does not constitute a venting violation under 40 CFR §82.154.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l13-001",
+    "subtopic_id": "t2-leak-1.3",
+    "category": "Type II",
+    "question": "Why does EPA regulations prohibit using pure refrigerant to pressurize a system during leak testing?",
+    "options": [
+      "A. Pure refrigerant provides inaccurate pressure readings",
+      "B. Any refrigerant released during the test violates the venting prohibition under 40 CFR §82.154(a)",
+      "C. Pure refrigerant cannot reach pressures high enough for leak detection",
+      "D. Pure refrigerant reacts with leak detection soap to create a hazardous foam"
+    ],
+    "answer_text": "B. Any refrigerant released during the test violates the venting prohibition under 40 CFR §82.154(a)",
+    "explanation": "Under 40 CFR §82.154(a), knowingly venting refrigerant into the atmosphere is prohibited. If pure refrigerant is used to pressurize a system and any escapes during the leak test, this constitutes illegal venting. This is why nitrogen or nitrogen/trace refrigerant blends must be used instead.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154(a)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l13-002",
+    "subtopic_id": "t2-leak-1.3",
+    "category": "Type II",
+    "question": "Which of the following represents an acceptable exception when using refrigerant during leak testing?",
+    "options": [
+      "A. Pure refrigerant at pressures below 150 psig",
+      "B. Pure refrigerant if the technician is Section 608 certified",
+      "C. A trace amount of refrigerant mixed with nitrogen used as a tracer gas",
+      "D. Pure refrigerant if the leak is repaired immediately afterward"
+    ],
+    "answer_text": "C. A trace amount of refrigerant mixed with nitrogen used as a tracer gas",
+    "explanation": "The only acceptable use of refrigerant during leak testing is as a trace amount mixed with nitrogen. The nitrogen carries the pressure while the trace refrigerant allows detection with a halide torch or refrigerant-sensitive electronic detector. Pure refrigerant alone remains prohibited regardless of pressure level or technician certification.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154(a)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l13-003",
+    "subtopic_id": "t2-leak-1.3",
+    "category": "Type II",
+    "question": "A technician leak tests a system by pressurizing it with pure R-410A and some refrigerant escapes from the leak point. What violation has occurred?",
+    "options": [
+      "A. No violation — leak testing is exempt from the venting prohibition",
+      "B. A venting violation under 40 CFR §82.154(a) because refrigerant was released to atmosphere",
+      "C. A minor infraction only if more than 5 lbs were released",
+      "D. A violation only if the system is a commercial refrigeration appliance"
+    ],
+    "answer_text": "B. A venting violation under 40 CFR §82.154(a) because refrigerant was released to atmosphere",
+    "explanation": "Leak testing is not exempt from the venting prohibition. Any release of pure refrigerant into the atmosphere, including during a leak test, violates 40 CFR §82.154(a). The technician should have used dry nitrogen or a nitrogen/trace refrigerant mixture to avoid this violation.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.154(a)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l13-004",
+    "subtopic_id": "t2-leak-1.3",
+    "category": "Type II",
+    "question": "Which leak detection methods do NOT require pressurizing a system with refrigerant?",
+    "options": [
+      "A. Halide torch and fluorescent dye only",
+      "B. Electronic detectors, UV dye, and soap bubbles — none require refrigerant pressurization",
+      "C. Ultrasonic detectors require refrigerant pressurization",
+      "D. Soap bubbles require pure refrigerant to create visible bubbles"
+    ],
+    "answer_text": "B. Electronic detectors, UV dye, and soap bubbles — none require refrigerant pressurization",
+    "explanation": "Electronic leak detectors, UV fluorescent dye inspection, and soap bubble testing can all be performed without pressurizing the system with pure refrigerant. These methods can detect leaks from refrigerant already present in the system or identify leak points through visual inspection, avoiding any potential venting violations.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154(a); industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2l13-005",
+    "subtopic_id": "t2-leak-1.3",
+    "category": "Type II",
+    "question": "Under EPA regulations, which statement about using refrigerant for leak testing is correct?",
+    "options": [
+      "A. Pure refrigerant may be used for leak testing if the system is fully recovered afterward",
+      "B. Pure refrigerant may never be used to pressurize a system for leak testing because releases are venting violations",
+      "C. Refrigerant may be used for leak testing on systems under 50 lbs charge",
+      "D. Refrigerant may be used for leak testing outdoors where ventilation prevents accumulation"
+    ],
+    "answer_text": "B. Pure refrigerant may never be used to pressurize a system for leak testing because releases are venting violations",
+    "explanation": "40 CFR §82.154(a) prohibits the venting of refrigerants, with no exception for leak testing. Regardless of system size, location, or subsequent recovery, using pure refrigerant to pressurize a system for leak testing is prohibited because any release during the test constitutes illegal venting.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154(a)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r23-001",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "What is the annual leak rate threshold that triggers mandatory repair for industrial process refrigeration systems?",
+    "options": [
+      "A. 10% per year",
+      "B. 15% per year",
+      "C. 30% per year",
+      "D. 35% per year"
+    ],
+    "answer_text": "C. 30% per year",
+    "explanation": "Under 40 CFR §82.157(a)(3), industrial process refrigeration systems must be repaired when the annual leak rate exceeds 30% of the system's full charge. This is the highest threshold among the three appliance categories — commercial refrigeration and comfort cooling both have a 20% threshold.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.157(a)(3)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r23-002",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "A manufacturing plant has an industrial process refrigeration system with a 500 lb refrigerant charge. The system has leaked 160 lbs over the past year. Is a mandatory repair required?",
+    "options": [
+      "A. No — 160 lbs is below the 30% threshold of 150 lbs",
+      "B. Yes — 160 lbs is 32% of 500 lbs, which exceeds the 30% industrial process threshold",
+      "C. No — industrial process refrigeration systems are exempt from leak rate thresholds",
+      "D. Yes — any leak above 100 lbs triggers mandatory repair regardless of system size"
+    ],
+    "answer_text": "B. Yes — 160 lbs is 32% of 500 lbs, which exceeds the 30% industrial process threshold",
+    "explanation": "Calculating the leak rate: 160 lbs ÷ 500 lbs = 32%. Since 32% exceeds the 30% annual threshold for industrial process refrigeration under 40 CFR §82.157(a)(3), mandatory repair is required. Note that 30% of 500 lbs = 150 lbs, so any loss above 150 lbs triggers the requirement.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.157(a)(3)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r23-003",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "Which type of refrigeration equipment qualifies as 'industrial process refrigeration' under EPA regulations?",
+    "options": [
+      "A. Refrigeration used in supermarket food storage cases",
+      "B. Refrigeration used in office building comfort cooling",
+      "C. Refrigeration integrated into manufacturing or industrial processes",
+      "D. Any refrigeration system with more than 200 lbs of refrigerant charge"
+    ],
+    "answer_text": "C. Refrigeration integrated into manufacturing or industrial processes",
+    "explanation": "Industrial process refrigeration refers to refrigeration equipment used as part of a manufacturing or industrial process, such as chemical plant cooling, petrochemical processing, or industrial food production. It is distinct from comfort cooling (HVAC) and commercial refrigeration (food storage in retail settings).",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.157(a)(3)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r23-004",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "How many days does the owner of an industrial process refrigeration system have to complete repairs once the leak rate threshold is exceeded?",
+    "options": [
+      "A. 30 days",
+      "B. 60 days",
+      "C. 90 days",
+      "D. 120 days"
+    ],
+    "answer_text": "D. 120 days",
+    "explanation": "Under 40 CFR §82.157(b)(2), industrial process refrigeration systems are allowed 120 days to complete repairs after exceeding the leak rate threshold. This compares favorably to the 30-day repair deadline for comfort cooling and commercial refrigeration appliances, recognizing the complexity of industrial system repairs.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.157(b)(2)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r23-005",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "An industrial process refrigeration system has a 1,000 lb charge. How many pounds of refrigerant loss per year would trigger the mandatory repair requirement?",
+    "options": [
+      "A. More than 100 lbs",
+      "B. More than 150 lbs",
+      "C. More than 200 lbs",
+      "D. More than 300 lbs"
+    ],
+    "answer_text": "D. More than 300 lbs",
+    "explanation": "The mandatory repair threshold for industrial process refrigeration is 30% annually per 40 CFR §82.157(a)(3). For a 1,000 lb system, 30% = 300 lbs. Any loss exceeding 300 lbs per year requires the owner to initiate repairs. If the loss is exactly 300 lbs (30%), no violation has occurred yet.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.157(a)(3)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2t41-001",
+    "subtopic_id": "t2-tech-4.1",
+    "category": "Type II",
+    "question": "When recovering refrigerant from a large system, what is the correct sequence of recovery?",
+    "options": [
+      "A. Recover vapor first, then liquid",
+      "B. Recover liquid first through the liquid service valve, then recover remaining vapor",
+      "C. Recover both liquid and vapor simultaneously through both service valves",
+      "D. Recover vapor only — liquid will evaporate and be captured automatically"
+    ],
+    "answer_text": "B. Recover liquid first through the liquid service valve, then recover remaining vapor",
+    "explanation": "For large systems, technicians should always recover liquid refrigerant first through the liquid service valve because liquid recovery is much faster than vapor recovery — liquid refrigerant contains far more mass per unit volume. After the bulk liquid is removed, switch to vapor recovery to capture the remaining refrigerant.",
+    "difficulty": "easy",
+    "source_ref": "EPA 608 technician study guide; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2t41-002",
+    "subtopic_id": "t2-tech-4.1",
+    "category": "Type II",
+    "question": "Why is recovering liquid refrigerant first significantly faster than starting with vapor recovery?",
+    "options": [
+      "A. Liquid refrigerant flows faster because it is at a higher temperature",
+      "B. Liquid refrigerant contains much more mass per unit volume than vapor, so more refrigerant is captured per unit time",
+      "C. Vapor recovery requires the compressor to run at a higher speed",
+      "D. Liquid recovery uses the system condenser which is more efficient"
+    ],
+    "answer_text": "B. Liquid refrigerant contains much more mass per unit volume than vapor, so more refrigerant is captured per unit time",
+    "explanation": "Liquid refrigerant is much denser than vapor — the same volume of liquid holds far more refrigerant mass. By recovering liquid first, a technician can remove the bulk of the refrigerant charge quickly. Vapor recovery is significantly slower and is used only to capture the remaining low-density refrigerant vapor.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 technician study guide; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2t41-003",
+    "subtopic_id": "t2-tech-4.1",
+    "category": "Type II",
+    "question": "What damage can occur if a technician attempts to recover liquid refrigerant through the vapor port of a recovery machine?",
+    "options": [
+      "A. The recovery cylinder can overfill with vapor",
+      "B. Liquid slugging can damage or destroy the recovery machine compressor",
+      "C. The refrigerant will flash to vapor before reaching the recovery machine",
+      "D. The recovery machine filter-drier will become saturated"
+    ],
+    "answer_text": "B. Liquid slugging can damage or destroy the recovery machine compressor",
+    "explanation": "Recovery machine compressors are designed to handle refrigerant vapor, not liquid. If liquid refrigerant enters the compressor through the vapor port, liquid slugging occurs — the incompressible liquid causes severe mechanical stress that can bend connecting rods or crack valve plates, causing catastrophic compressor failure.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 technician study guide; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2t41-004",
+    "subtopic_id": "t2-tech-4.1",
+    "category": "Type II",
+    "question": "What is the push-pull recovery method used for large systems?",
+    "options": [
+      "A. Alternating between the high-side and low-side service valves to push refrigerant through the system",
+      "B. Connecting the recovery machine vapor inlet to the system liquid port so the machine pulls liquid while pushing it into the recovery cylinder",
+      "C. Using two recovery machines simultaneously — one on each service valve",
+      "D. Pushing nitrogen through the system while pulling refrigerant out through a separate port"
+    ],
+    "answer_text": "B. Connecting the recovery machine vapor inlet to the system liquid port so the machine pulls liquid while pushing it into the recovery cylinder",
+    "explanation": "The push-pull method connects the recovery machine's vapor inlet to the system's liquid port. The machine's compressor draws liquid refrigerant from the system and discharges it into the recovery cylinder. This technique dramatically speeds up liquid recovery by taking advantage of liquid density and the recovery machine's pumping capacity.",
+    "difficulty": "hard",
+    "source_ref": "EPA 608 technician study guide; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2t41-005",
+    "subtopic_id": "t2-tech-4.1",
+    "category": "Type II",
+    "question": "After completing liquid recovery from a large refrigeration system, what is the technician's next step?",
+    "options": [
+      "A. Disconnect all hoses — liquid recovery alone satisfies EPA requirements",
+      "B. Purge the system with nitrogen to remove all remaining refrigerant",
+      "C. Switch to vapor recovery mode to remove the remaining refrigerant vapor",
+      "D. Open all service valves to allow any remaining liquid to evaporate naturally"
+    ],
+    "answer_text": "C. Switch to vapor recovery mode to remove the remaining refrigerant vapor",
+    "explanation": "Liquid recovery removes the bulk of the refrigerant charge, but refrigerant vapor remains in the system. The technician must then switch to vapor recovery to capture this remaining vapor until the required recovery vacuum level is achieved. Disconnecting after only liquid recovery would leave refrigerant in the system, violating EPA recovery requirements.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 technician study guide; industry best practice",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r52-001",
+    "subtopic_id": "t2-ref-5.2",
+    "category": "Type II",
+    "question": "Which components are located on the high-pressure side of a refrigeration system?",
+    "options": [
+      "A. Suction line, evaporator, and accumulator",
+      "B. Discharge line, condenser, liquid line, and receiver",
+      "C. Evaporator, suction line, and metering device",
+      "D. Compressor crankcase and oil separator only"
+    ],
+    "answer_text": "B. Discharge line, condenser, liquid line, and receiver",
+    "explanation": "The high-pressure side of a refrigeration system includes all components from the compressor discharge to the inlet of the metering device: the discharge line, condenser, liquid line, and receiver. These components operate at condensing pressure. The compressor divides the system — its suction side is low pressure and its discharge side is high pressure.",
+    "difficulty": "easy",
+    "source_ref": "ASHRAE refrigeration fundamentals; EPA 608 study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r52-002",
+    "subtopic_id": "t2-ref-5.2",
+    "category": "Type II",
+    "question": "What is the function of the high-pressure cutout switch in a refrigeration system?",
+    "options": [
+      "A. It reduces refrigerant pressure before it enters the evaporator",
+      "B. It protects the compressor by shutting it off when discharge pressure becomes excessively high",
+      "C. It prevents refrigerant from entering the high-pressure side of the system",
+      "D. It regulates suction pressure to maintain proper evaporator temperature"
+    ],
+    "answer_text": "B. It protects the compressor by shutting it off when discharge pressure becomes excessively high",
+    "explanation": "The high-pressure cutout switch monitors the discharge pressure on the high side of the system. If discharge pressure rises above a safe threshold, the switch opens and shuts the compressor off to prevent damage from over-pressurization. This is a critical safety device on the high-pressure side of the system.",
+    "difficulty": "medium",
+    "source_ref": "ASHRAE refrigeration fundamentals; EPA 608 study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r52-003",
+    "subtopic_id": "t2-ref-5.2",
+    "category": "Type II",
+    "question": "Which component serves as the dividing point between the high-pressure and low-pressure sides of a refrigeration system?",
+    "options": [
+      "A. The condenser",
+      "B. The receiver",
+      "C. The compressor",
+      "D. The liquid line solenoid valve"
+    ],
+    "answer_text": "C. The compressor",
+    "explanation": "The compressor is the component that divides the refrigeration system into high-pressure and low-pressure sides. The suction side of the compressor (and all components upstream of it — evaporator, accumulator, suction line) is the low-pressure side. The discharge side (and all components downstream — discharge line, condenser, receiver, liquid line) is the high-pressure side.",
+    "difficulty": "easy",
+    "source_ref": "ASHRAE refrigeration fundamentals; EPA 608 study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r52-004",
+    "subtopic_id": "t2-ref-5.2",
+    "category": "Type II",
+    "question": "Which of the following components is located on the LOW-pressure side of a refrigeration system?",
+    "options": [
+      "A. Receiver",
+      "B. Condenser",
+      "C. Liquid line",
+      "D. Accumulator"
+    ],
+    "answer_text": "D. Accumulator",
+    "explanation": "The accumulator is located on the low-pressure side of the system, in the suction line between the evaporator and the compressor. It prevents liquid refrigerant slugs from entering the compressor. The receiver, condenser, and liquid line are all on the high-pressure side of the system.",
+    "difficulty": "medium",
+    "source_ref": "ASHRAE refrigeration fundamentals; EPA 608 study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2r52-005",
+    "subtopic_id": "t2-ref-5.2",
+    "category": "Type II",
+    "question": "At what pressure does the high-pressure side of a refrigeration system operate?",
+    "options": [
+      "A. Evaporating pressure",
+      "B. Atmospheric pressure",
+      "C. Condensing pressure",
+      "D. Critical pressure of the refrigerant"
+    ],
+    "answer_text": "C. Condensing pressure",
+    "explanation": "The high-pressure side of a refrigeration system operates at condensing pressure — the pressure at which the refrigerant condenses from vapor to liquid in the condenser. This pressure corresponds to the condensing temperature of the refrigerant and is always higher than the evaporating pressure on the low-pressure side.",
+    "difficulty": "medium",
+    "source_ref": "ASHRAE refrigeration fundamentals; EPA 608 study guide",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2rc32-001",
+    "subtopic_id": "t2-rec-3.2",
+    "category": "Type II",
+    "question": "What is the maximum refrigerant charge allowed when using system-dependent recovery equipment?",
+    "options": [
+      "A. 5 lbs",
+      "B. 10 lbs",
+      "C. 15 lbs",
+      "D. 25 lbs"
+    ],
+    "answer_text": "C. 15 lbs",
+    "explanation": "Under 40 CFR §82.158(b), system-dependent recovery equipment may only be used on appliances with 15 lbs or less of refrigerant charge. For systems with more than 15 lbs, self-contained recovery equipment with its own motor and compressor must be used.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2rc32-002",
+    "subtopic_id": "t2-rec-3.2",
+    "category": "Type II",
+    "question": "What is the defining characteristic of system-dependent recovery equipment?",
+    "options": [
+      "A. It has its own self-contained motor and compressor for independent operation",
+      "B. It uses the appliance's own compressor to assist in the refrigerant recovery process",
+      "C. It can only be used on systems with HFC refrigerants",
+      "D. It requires connection to an external power source above 240 volts"
+    ],
+    "answer_text": "B. It uses the appliance's own compressor to assist in the refrigerant recovery process",
+    "explanation": "System-dependent recovery equipment relies on the appliance's own compressor to move refrigerant into the recovery cylinder. Because it has no independent motor or compressor, it can only be used when the system compressor is functional and is limited to systems with 15 lbs or less of refrigerant per 40 CFR §82.158(b).",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2rc32-003",
+    "subtopic_id": "t2-rec-3.2",
+    "category": "Type II",
+    "question": "A technician is servicing a rooftop commercial refrigeration unit with an 18 lb refrigerant charge. Which type of recovery equipment must be used?",
+    "options": [
+      "A. System-dependent recovery equipment — any charge size is acceptable",
+      "B. System-dependent recovery equipment — 18 lbs is close enough to the 15 lb limit",
+      "C. Self-contained recovery equipment — required for systems with more than 15 lbs",
+      "D. Either type may be used — the technician's preference controls"
+    ],
+    "answer_text": "C. Self-contained recovery equipment — required for systems with more than 15 lbs",
+    "explanation": "At 18 lbs, this system exceeds the 15 lb threshold for system-dependent equipment established by 40 CFR §82.158(b). The technician must use self-contained recovery equipment, which has its own motor and compressor and can operate independently of the system being serviced.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-t2rc32-004",
+    "subtopic_id": "t2-rec-3.2",
+    "category": "Type II",
+    "question": "What is a key limitation of system-dependent recovery equipment compared to self-contained equipment?",
+    "options": [
+      "A. System-dependent equipment cannot achieve the required recovery vacuum levels",
+      "B. System-dependent equipment only works when the appliance's own compressor is operational",
+      "C. System-dependent equipment is prohibited for use with HFC refrigerants",
+      "D. System-dependent equipment requires a special EPA permit to operate"
+    ],
+    "answer_text": "B. System-dependent equipment only works when the appliance's own compressor is operational",
+    "explanation": "Because system-dependent recovery equipment relies on the appliance's compressor to move refrigerant, it cannot be used if the system compressor has failed or is otherwise inoperable. Self-contained recovery equipment has its own motor and compressor, allowing recovery regardless of the condition of the appliance's compressor.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  }
+]

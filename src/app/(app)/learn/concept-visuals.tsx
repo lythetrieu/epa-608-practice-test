@@ -125,7 +125,7 @@ function CoreCaa({}: VisualProps) {
       <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
         <p className="text-sm font-bold text-red-700">Violation Penalties</p>
         <p className="text-2xl font-black text-red-600 mt-1">Up to $44,539/day</p>
-        <p className="text-[10px] text-red-500 mt-1">Per violation + possible criminal charges</p>
+        <p className="text-xs text-red-500 mt-1">Per violation + possible criminal charges</p>
       </div>
     </div>
   )

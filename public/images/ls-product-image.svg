@@ -1,0 +1,91 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2d5e"/>
+      <stop offset="100%" style="stop-color:#1a4fa0"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.03"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1400" cy="150" r="300" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="80"/>
+  <circle cx="200" cy="1050" r="250" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="60"/>
+  <circle cx="1400" cy="150" r="180" fill="rgba(255,255,255,0.03)"/>
+
+  <!-- Badge top -->
+  <rect x="640" y="130" width="320" height="52" rx="26" fill="rgba(255,255,255,0.12)"/>
+  <text x="800" y="163" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="700" fill="rgba(255,255,255,0.9)" text-anchor="middle" letter-spacing="3">EPA 608 CERTIFICATION</text>
+
+  <!-- Main icon — gauge -->
+  <g transform="translate(800,340)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="110" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+    <!-- Gauge arc background -->
+    <path d="M -85 25 A 90 90 0 0 1 85 25" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="10" stroke-linecap="round"/>
+    <!-- Gauge arc fill (70% = pass) -->
+    <path d="M -85 25 A 90 90 0 0 1 55 -62" fill="none" stroke="#4ade80" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+    <!-- Tick marks -->
+    <line x1="-90" y1="0" x2="-75" y2="0" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" transform="rotate(-30)"/>
+    <line x1="-90" y1="0" x2="-75" y2="0" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" transform="rotate(0)"/>
+    <line x1="-90" y1="0" x2="-75" y2="0" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" transform="rotate(30)"/>
+    <line x1="-90" y1="0" x2="-75" y2="0" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" transform="rotate(60)"/>
+    <!-- Needle -->
+    <line x1="0" y1="0" x2="68" y2="-55" stroke="#facc15" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="14" fill="#1a4fa0" stroke="#facc15" stroke-width="4"/>
+    <!-- Score -->
+    <text x="0" y="55" font-family="system-ui,-apple-system,sans-serif" font-size="32" font-weight="800" fill="#4ade80" text-anchor="middle">PASS</text>
+  </g>
+
+  <!-- Main title -->
+  <text x="800" y="530" font-family="system-ui,-apple-system,sans-serif" font-size="88" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="-2">EPA 608 Pro</text>
+  <text x="800" y="610" font-family="system-ui,-apple-system,sans-serif" font-size="36" font-weight="400" fill="rgba(255,255,255,0.65)" text-anchor="middle">Practice Test — Lifetime Access</text>
+
+  <!-- Divider -->
+  <line x1="600" y1="660" x2="1000" y2="660" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- Feature cards row -->
+  <g transform="translate(160,710)">
+    <!-- Card 1 -->
+    <rect x="0" y="0" width="300" height="130" rx="16" fill="url(#card)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="150" y="52" font-family="system-ui,-apple-system,sans-serif" font-size="34" text-anchor="middle">📚</text>
+    <text x="150" y="88" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">1,000+ Questions</text>
+    <text x="150" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="17" fill="rgba(255,255,255,0.55)" text-anchor="middle">Full question bank</text>
+
+    <!-- Card 2 -->
+    <rect x="330" y="0" width="300" height="130" rx="16" fill="url(#card)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="480" y="52" font-family="system-ui,-apple-system,sans-serif" font-size="34" text-anchor="middle">🤖</text>
+    <text x="480" y="88" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">AI Tutor</text>
+    <text x="480" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="17" fill="rgba(255,255,255,0.55)" text-anchor="middle">1,000 questions/day</text>
+
+    <!-- Card 3 -->
+    <rect x="660" y="0" width="300" height="130" rx="16" fill="url(#card)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="810" y="52" font-family="system-ui,-apple-system,sans-serif" font-size="34" text-anchor="middle">🎯</text>
+    <text x="810" y="88" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">Weak Spot Drill</text>
+    <text x="810" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="17" fill="rgba(255,255,255,0.55)" text-anchor="middle">AI-powered targeting</text>
+
+    <!-- Card 4 -->
+    <rect x="990" y="0" width="300" height="130" rx="16" fill="url(#card)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="1140" y="52" font-family="system-ui,-apple-system,sans-serif" font-size="34" text-anchor="middle">🏆</text>
+    <text x="1140" y="88" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">Badges &amp; Progress</text>
+    <text x="1140" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="17" fill="rgba(255,255,255,0.55)" text-anchor="middle">Track every session</text>
+  </g>
+
+  <!-- Price + CTA -->
+  <rect x="550" y="900" width="500" height="120" rx="20" fill="#facc15"/>
+  <text x="800" y="952" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" fill="#0f2d5e" text-anchor="middle">One-time payment</text>
+  <text x="800" y="1000" font-family="system-ui,-apple-system,sans-serif" font-size="52" font-weight="900" fill="#0f2d5e" text-anchor="middle">$14.99 — Lifetime</text>
+
+  <!-- Bottom tagline -->
+  <text x="800" y="1090" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="rgba(255,255,255,0.4)" text-anchor="middle">epa608practicetest.net</text>
+</svg>

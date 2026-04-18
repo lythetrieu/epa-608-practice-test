@@ -26,10 +26,16 @@ export async function POST(request: NextRequest) {
   if (!profile) return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
 
   const tier = profile.tier as keyof typeof TIER_LIMITS
+  if (!TIER_LIMITS[tier].hasExplanations) {
+    return NextResponse.json(
+      { error: 'Full explanations are a Pro feature. Upgrade to unlock.', upgradeRequired: true },
+      { status: 403 },
+    )
+  }
   const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
   if (dailyLimit <= 0) {
     return NextResponse.json(
-      { error: 'AI features require Starter or Ultimate plan.', upgradeRequired: true },
+      { error: 'You have reached your daily AI limit. Upgrade for more.', upgradeRequired: true },
       { status: 403 },
     )
   }

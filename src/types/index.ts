@@ -13,30 +13,39 @@ export const TIER_RANK: Record<Tier, number> = {
 export const TIER_LIMITS = {
   free: {
     questionsPerDay: Infinity,
-    categories: ['Core'] as Category[],
-    hasExplanations: true,
-    hasProgress: true,
-    hasBlindSpot: true,
-    aiQueriesPerDay: 10,
+    categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
+    hasExplanations: false,      // Pro only — matches pricing page
+    hasProgress: true,           // basic history
+    hasProgressLimit: 5,         // last 5 tests only
+    hasBlindSpot: false,         // Pro only — matches pricing page
+    hasRadarChart: false,        // Pro only
+    aiQueriesPerDay: 10,         // 10 AI questions/day for free
     hasPDF: false,
+    hasCertificate: false,
   },
   starter: {
     questionsPerDay: Infinity,
-    categories: ['Core', 'Type I', 'Type II', 'Type III'] as Category[],
+    categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
+    hasProgressLimit: Infinity,  // unlimited history
     hasBlindSpot: true,
-    aiQueriesPerDay: 20,
+    hasRadarChart: true,
+    aiQueriesPerDay: 1000,       // 1000 AI questions/day for Pro
     hasPDF: true,
+    hasCertificate: true,
   },
   ultimate: {
     questionsPerDay: Infinity,
-    categories: ['Core', 'Type I', 'Type II', 'Type III'] as Category[],
+    categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
+    hasProgressLimit: Infinity,
     hasBlindSpot: true,
-    aiQueriesPerDay: 100,
+    hasRadarChart: true,
+    aiQueriesPerDay: 1000,
     hasPDF: true,
+    hasCertificate: true,
   },
 } as const
 

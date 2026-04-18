@@ -495,7 +495,7 @@ export default function StudyPathClient() {
               <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all ${pct >= 80 ? 'bg-green-500' : pct > 0 ? 'bg-amber-400' : 'bg-gray-200'}`} style={{ width: `${pct}%` }} />
               </div>
-              <div className="text-[10px] text-gray-400 mt-1">{s.mastered}/{s.total} mastered</div>
+              <div className="text-xs text-gray-400 mt-1">{s.mastered}/{s.total} mastered</div>
             </div>
           )
         })}
@@ -534,8 +534,7 @@ export default function StudyPathClient() {
               const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
               const status = getEffectiveStatus(p)
               const isCurrent = currentLesson?.id === c.id
-              const isLocked = mode === 'course' && idx > currentLessonIdx && status === 'pending' && currentLessonIdx >= 0
-              const effectiveStatus = isLocked ? 'locked' : status
+              const effectiveStatus = status
               const ui = getStatusUI(effectiveStatus)
 
               // Section divider
@@ -551,11 +550,10 @@ export default function StudyPathClient() {
                     </div>
                   )}
                   <button
-                    onClick={() => !isLocked && openConcept(c.subtopicPrefix, c.id)}
-                    disabled={isLocked}
-                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all min-h-[52px] ${
+                    onClick={() => openConcept(c.subtopicPrefix, c.id)}
+                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all min-h-[52px] hover:shadow-sm ${
                       isCurrent ? 'border-green-400 bg-green-50 ring-2 ring-green-200' : ui.bg
-                    } ${isLocked ? 'cursor-not-allowed opacity-60' : 'hover:shadow-sm'}`}
+                    }`}
                   >
                     {/* Step number */}
                     <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
@@ -568,7 +566,7 @@ export default function StudyPathClient() {
                     </span>
 
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-medium truncate ${isLocked ? 'text-gray-400' : 'text-gray-900'}`}>{c.title}</p>
+                      <p className="text-sm font-medium truncate text-gray-900">{c.title}</p>
                     </div>
 
                     <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>

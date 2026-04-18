@@ -126,7 +126,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   if (result) return <ResultView result={result} category={category} questions={questions} />
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+    <div className="h-[calc(100vh-3.5rem)] md:h-screen bg-gray-50 flex flex-col overflow-hidden">
       {/* ═══ COMPACT HEADER: Category + Question Counter + Timer ═══ */}
       <header className="bg-white border-b px-3 sm:px-6 py-2.5 shrink-0">
         <div className="flex items-center justify-between gap-2">

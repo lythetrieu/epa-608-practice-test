@@ -24,7 +24,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <LocaleProvider>
-      <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950">
+      <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950 overflow-x-hidden">
         <AppSidebar
           email={user.email ?? ''}
           tier={tier}

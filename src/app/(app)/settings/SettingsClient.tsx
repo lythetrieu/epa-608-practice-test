@@ -264,15 +264,15 @@ export default function SettingsClient({
         </section>
       )}
 
-      {/* Plan / Subscription */}
+      {/* Plan / Billing */}
       <section className="bg-white border border-gray-200 rounded-xl p-5">
-        <h2 className="text-base font-bold text-gray-900 mb-4">Plan</h2>
+        <h2 className="text-base font-bold text-gray-900 mb-4">Plan &amp; Billing</h2>
         <div className="flex items-center gap-3 mb-4">
           <span className={`text-sm px-3 py-1 rounded-full font-semibold ${tierColors[tier]}`}>
             {getTierLabel(tier)}
           </span>
           {lifetimeAccess && (
-            <span className="text-xs text-green-600 font-medium">Lifetime Access</span>
+            <span className="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Lifetime</span>
           )}
         </div>
 
@@ -287,22 +287,35 @@ export default function SettingsClient({
           </div>
         )}
 
+        {lifetimeAccess && (
+          <div className="rounded-lg bg-green-50 border border-green-200 p-4 mb-4 space-y-1.5">
+            <p className="text-sm font-semibold text-green-800">Pro Lifetime Access</p>
+            <p className="text-xs text-green-700">Paid via PayPal · One-time purchase · No recurring charges</p>
+            <p className="text-xs text-green-600">
+              Receipt was sent to your PayPal email.{' '}
+              <a href="https://www.paypal.com/myaccount/activity" target="_blank" rel="noopener noreferrer"
+                className="underline hover:text-green-800">
+                View in PayPal
+              </a>
+            </p>
+          </div>
+        )}
+
         {tier === 'free' && (
           <Link
-            href="/pricing"
+            href="https://epa608practicetest.net/checkout.html"
             className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
           >
-            Upgrade to Starter
+            Upgrade to Pro
           </Link>
         )}
 
         {tier !== 'free' && !lifetimeAccess && (
           <p className="text-sm text-gray-500">
-            Manage your subscription from the{' '}
-            <Link href="/pricing" className="text-blue-700 hover:underline">
-              pricing page
-            </Link>
-            .
+            Need help with billing?{' '}
+            <a href="mailto:support@epa608practicetest.net" className="text-blue-700 hover:underline">
+              Contact support
+            </a>
           </p>
         )}
       </section>

@@ -1,0 +1,28 @@
+{
+  "name": "epa608-question-bank",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "qb:coverage":  "tsx question-bank/pipeline.ts --coverage",
+    "qb:watch":     "tsx question-bank/pipeline.ts --watch",
+    "qb:validate":  "tsx question-bank/pipeline.ts --validate",
+    "qb:generate":  "tsx question-bank/pipeline.ts",
+    "qb:core":      "tsx question-bank/pipeline.ts --category=Core",
+    "qb:type1":     "tsx question-bank/pipeline.ts --category='Type I'",
+    "qb:type2":     "tsx question-bank/pipeline.ts --category='Type II'",
+    "qb:type3":     "tsx question-bank/pipeline.ts --category='Type III'",
+    "qb:promote":      "tsx question-bank/pipeline.ts --promote",
+    "qb:deep-verify":  "tsx question-bank/pipeline.ts --deep-verify",
+    "qb:export-verify": "tsx question-bank/export-for-verify.ts",
+    "qb:stats":        "tsx question-bank/bank-stats.ts",
+    "qb:migrate":      "tsx question-bank/migrate-legacy.ts",
+    "qb:fetch":        "tsx question-bank/source-builder.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0"
+  }
+}

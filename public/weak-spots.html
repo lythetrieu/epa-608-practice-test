@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Weak Spots — EPA 608 Practice Test</title>
+<meta name="description" content="See your weakest topics and drill them with targeted practice questions.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+.page{max-width:700px;margin:0 auto;padding:32px 20px 80px}
+
+/* header row */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px}
+.page-header h1{font-size:24px;font-weight:800}
+.page-sub{font-size:14px;color:#64748b;margin-bottom:28px}
+
+/* ── Report phase ── */
+.empty-box{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:56px 24px;text-align:center}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-box h3{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:8px}
+.empty-box p{font-size:14px;color:#64748b;margin-bottom:20px;max-width:380px;margin-left:auto;margin-right:auto}
+.empty-box a{display:inline-block;padding:10px 24px;background:#1d4ed8;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px}
+
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin-bottom:10px}
+.spot-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin-bottom:8px}
+.spot-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.spot-name{font-size:14px;font-weight:600;color:#0f172a}
+.spot-pct{font-size:14px;font-weight:800}
+.spot-pct.high{color:#ef4444}
+.spot-pct.mid{color:#f97316}
+.spot-pct.low{color:#22c55e}
+.spot-bar{height:6px;background:#f1f5f9;border-radius:20px;overflow:hidden;margin-bottom:6px}
+.spot-bar-fill{height:100%;border-radius:20px}
+.spot-bar-fill.high{background:#ef4444}
+.spot-bar-fill.mid{background:#f97316}
+.spot-bar-fill.low{background:#22c55e}
+.spot-meta{font-size:12px;color:#94a3b8}
+.cat-section{margin-bottom:20px}
+.cat-title{font-size:13px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f1f5f9}
+
+.loading-box{text-align:center;padding:56px 24px}
+.spinner{width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#1d4ed8;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Header ── */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 16px;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo img { height: 38px; width: auto; }
+
+/* ── Nav ── */
+nav { display: flex; align-items: center; }
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+}
+
+.nav-menu > li { position: relative; }
+
+.nav-menu > li > a {
+    display: block;
+    padding: 10px 14px;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.nav-menu > li > a:hover { background: #f1f5f9; color: #007acc; }
+
+/* ── Dropdown ── */
+.dropdown { position: relative; }
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 14px;
+    color: #374151;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    background: transparent;
+    border: none;
+    white-space: nowrap;
+}
+
+.dropdown-toggle::after {
+    content: "▾";
+    font-size: 12px;
+    opacity: 0.5;
+    transition: transform 0.2s;
+}
+
+.dropdown.open > .dropdown-toggle {
+    background: #f1f5f9;
+    color: #007acc;
+}
+
+.dropdown.open > .dropdown-toggle::after { transform: rotate(180deg); }
+
+/* Dropdown panel — no gap, padding bridges hover area */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 8px; /* hover bridge — do not remove */
+    list-style: none;
+    display: none;
+    z-index: 200;
+    min-width: 210px;
+}
+
+.dropdown-menu-inner {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #f1f5f9;
+    padding: 6px;
+}
+
+.dropdown.open .dropdown-menu { display: block; }
+
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a:hover { background: #f0f9ff; color: #007acc; }
+
+.dropdown-menu .divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 4px 4px;
+}
+
+.dropdown-menu .menu-label {
+    padding: 6px 12px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ── CTA Button ── */
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background: #007acc;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-cta:hover { background: #0066a3 !important; color: #fff !important; transform: translateY(-1px); }
+
+/* ── Auth buttons ── */
+.nav-signin {
+    display: inline-flex; align-items: center;
+    padding: 8px 14px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-signin:hover { background: #f1f5f9; color: #007acc; }
+.nav-signup {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px;
+    background: #fff;
+    color: #007acc !important;
+    border: 1.5px solid #007acc;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-signup:hover { background: #007acc; color: #fff !important; }
+.nav-dashboard {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 16px;
+    background: #16a34a;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-dashboard:hover { background: #15803d !important; }
+@media (max-width: 768px) {
+    .nav-signin { display: none; }
+    .nav-signup, .nav-dashboard { padding: 7px 12px; font-size: 13px; }
+}
+
+/* ── Footer ── */
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 0 32px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 12px 0 20px;
+    max-width: 260px;
+}
+
+.footer-brand .footer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.footer-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(0,122,204,0.15);
+    color: #38bdf8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer-col h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+
+.footer-col ul li { margin-bottom: 8px; }
+
+.footer-col ul li a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+    line-height: 1.4;
+    display: block;
+}
+
+.footer-col ul li a:hover { color: #38bdf8; }
+
+.footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-bottom p { font-size: 13px; color: #475569; }
+
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 13px; }
+.footer-bottom a:hover { color: #94a3b8; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .header-content { height: 56px; padding: 0 16px; }
+    .logo img { height: 32px; }
+    .nav-menu > li > a, .dropdown-toggle { padding: 8px 10px; font-size: 13px; }
+    .nav-cta { padding: 7px 14px; font-size: 13px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+    .nav-menu { gap: 0; }
+    .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <img src="logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <!-- Practice Tests dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-toggle">Practice Tests</button>
+                    <ul class="dropdown-menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Choose Exam Type</li>
+                        <li><a href="/universal.html">🎓 Universal — All Sections</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/core.html">📝 Core — Regulations</a></li>
+                        <li><a href="/type-1.html">❄️ Type I — Small Appliances</a></li>
+                        <li><a href="/type-2.html">🔧 Type II — High Pressure</a></li>
+                        <li><a href="/type-3.html">🏭 Type III — Low Pressure</a></li>
+                        </div>
+                    </ul>
+                </li>
+
+                <!-- Study Tools dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-toggle">Study Tools</button>
+                    <ul class="dropdown-menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Learn Smarter</li>
+                        <li><a href="/tutor.html">🤖 AI Tutor</a></li>
+                        <li><a href="/flashcards.html">🃏 Flashcards</a></li>
+                        <li><a href="/weak-spots.html">🎯 Weak Spots</a></li>
+                        </div>
+                    </ul>
+                </li>
+
+                <!-- My Progress -->
+                <li><a href="/progress.html">My Progress</a></li>
+
+                <!-- Pricing -->
+                <li><a href="/pricing.html">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Auth / CTA buttons -->
+        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <!-- Default: not logged in -->
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin">Sign In</a>
+            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up Free</a>
+            <a href="/pricing.html" class="nav-cta" id="nav-btn-gopro">⚡ Go Pro</a>
+            <!-- Logged-in state (hidden by default, shown by JS) -->
+            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
+        </div>
+    </div>
+</header>
+
+<script>
+(function() {
+    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+    try {
+        var raw = localStorage.getItem(KEY);
+        if (!raw) return;
+        var session = JSON.parse(raw);
+        var token = session?.access_token || session?.[0]?.access_token;
+        if (!token) return;
+        // Show dashboard button, hide sign in/up/gopro
+        document.getElementById('nav-btn-signin').style.display = 'none';
+        document.getElementById('nav-btn-signup').style.display = 'none';
+        document.getElementById('nav-btn-gopro').style.display = 'none';
+        document.getElementById('nav-btn-dashboard').style.display = 'inline-flex';
+    } catch(e) {}
+})();
+</script>
+<script>
+(function(){
+    var timers={};
+    document.querySelectorAll('.dropdown').forEach(function(dd,idx){
+        dd.addEventListener('mouseenter',function(){
+            clearTimeout(timers[idx]);
+            document.querySelectorAll('.dropdown').forEach(function(o){o.classList.remove('open');});
+            dd.classList.add('open');
+        });
+        dd.addEventListener('mouseleave',function(){
+            timers[idx]=setTimeout(function(){dd.classList.remove('open');},180);
+        });
+    });
+    document.addEventListener('click',function(e){
+        if(!e.target.closest||!e.target.closest('.dropdown'))
+            document.querySelectorAll('.dropdown').forEach(function(dd){dd.classList.remove('open');});
+    });
+})();
+</script>
+
+<div class="page">
+  <div class="page-header">
+    <h1>🎯 Weak Spots</h1>
+    <a href="/progress.html" style="font-size:13px;color:#1d4ed8;text-decoration:none;font-weight:600">← My Progress</a>
+  </div>
+  <p class="page-sub">Subtopics where you struggle most, ranked by error rate.</p>
+
+  <!-- REPORT -->
+  <div id="report-wrap">
+    <div id="report-loading" class="loading-box">
+      <div class="spinner"></div>
+      <p style="font-size:14px;color:#64748b">Analyzing your history...</p>
+    </div>
+    <div id="report-content" style="display:none"></div>
+  </div>
+
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="includes.js"></script>
+<script>
+var HISTORY_KEY='epa608History';
+
+var WS=(function(){
+  var spots=[];
+  var drillCategories=[];
+
+  // ── Analyze localStorage history ──────────────────────────────
+  function analyze(){
+    var history=[];
+    try{history=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}catch(e){}
+
+    // Collect all wrong questions across all sessions
+    var catStats={};  // {category: {wrong:0, total:0}}
+    history.forEach(function(h){
+      var details=h.detailedResults||[];
+      details.forEach(function(d){
+        var cat=d.topic||h.category||h.type||'Core';
+        if(!catStats[cat])catStats[cat]={wrong:0,total:0};
+        catStats[cat].total++;
+        if(!d.isCorrect)catStats[cat].wrong++;
+      });
+    });
+
+    var result=[];
+    Object.keys(catStats).forEach(function(cat){
+      var s=catStats[cat];
+      if(s.total>=2){
+        result.push({
+          category:cat,
+          label:cat,
+          errorPct:Math.round(s.wrong/s.total*100),
+          wrongCount:s.wrong,
+          totalCount:s.total
+        });
+      }
+    });
+
+    // Sort by error rate desc
+    result.sort(function(a,b){return b.errorPct-a.errorPct;});
+    spots=result;
+    return result;
+  }
+
+  // ── Render report ──────────────────────────────────────────────
+  function renderReport(){
+    document.getElementById('report-loading').style.display='none';
+    var content=document.getElementById('report-content');
+    content.style.display='block';
+
+    if(!spots.length){
+      content.innerHTML='<div class="empty-box">'
+        +'<div class="empty-icon">📋</div>'
+        +'<h3>No weak spots detected yet</h3>'
+        +'<p>Take a few practice tests first. We need at least 2 attempts per topic to identify weak areas.</p>'
+        +'<a href="/">Start a Practice Test</a>'
+        +'</div>';
+      return;
+    }
+
+    // Categorize by section
+    var bySection={'Core':[],'Type I':[],'Type II':[],'Type III':[],'Other':[]};
+    spots.forEach(function(s){
+      var k=s.category;
+      if(!bySection[k])k='Other';
+      bySection[k].push(s);
+    });
+
+    // Weak categories to drill (error rate > 20% OR any wrong answers)
+    var weakCats=spots.filter(function(s){return s.wrongCount>0;}).map(function(s){return s.category;});
+    drillCategories=[...new Set(weakCats)].slice(0,3); // top 3 weakest
+
+    var html='';
+
+    ['Core','Type I','Type II','Type III','Other'].forEach(function(sec){
+      var items=bySection[sec];
+      if(!items||!items.length)return;
+      html+='<div class="cat-section"><div class="cat-title">'+sec+'</div>';
+      items.forEach(function(s){
+        var cl=s.errorPct>50?'high':s.errorPct>=30?'mid':'low';
+        html+='<div class="spot-card">'
+          +'<div class="spot-header">'
+          +'<span class="spot-name">'+s.label+'</span>'
+          +'<span class="spot-pct '+cl+'">'+s.errorPct+'% errors</span>'
+          +'</div>'
+          +'<div class="spot-bar"><div class="spot-bar-fill '+cl+'" style="width:'+s.errorPct+'%"></div></div>'
+          +'<div class="spot-meta">'+s.wrongCount+' wrong / '+s.totalCount+' answered</div>'
+          +'</div>';
+      });
+      html+='</div>';
+    });
+
+
+    content.innerHTML=html;
+  }
+
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+  setTimeout(function(){analyze();renderReport();},100);
+
+  return{};
+})();
+</script>
+</body>
+</html>

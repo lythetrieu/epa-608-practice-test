@@ -41,6 +41,8 @@ export default async function AnalyticsPage() {
     { data: recentReports },
     { data: dailySignupData },
     { data: dailyTestData },
+    { data: recentAiSessions },
+    { data: topAiUsers },
   ] = await Promise.all([
     // Total users
     admin.from('users_profile').select('*', { count: 'exact', head: true }),
@@ -76,6 +78,34 @@ export default async function AnalyticsPage() {
     admin.from('users_profile').select('created_at').gte('created_at', new Date(now.getTime() - 14 * 86400000).toISOString()),
     // Daily tests (last 14 days)
     admin.from('test_sessions').select('submitted_at').not('submitted_at', 'is', null).gte('submitted_at', new Date(now.getTime() - 14 * 86400000).toISOString()),
+    // Recent AI chat sessions with user email
+    admin.from('ai_chat_sessions')
+      .select('id, user_id, title, messages, created_at, updated_at')
+      .order('updated_at', { ascending: false })
+      .limit(20),
+    // Top AI users (join with users_profile)
+    admin.from('users_profile')
+      .select('id, email, ai_queries_today, tier')
+      .gt('ai_queries_today', 0)
+      .order('ai_queries_today', { ascending: false })
+      .limit(10),
+  ])
+
+  // ── Anonymous sessions ──
+  const [
+    { count: totalAnonSessions },
+    { count: anonSessionsToday },
+    { data: recentAnonSessions },
+    { data: anonByCategory },
+    { data: allAnonIds },
+    { count: totalAnonStarts },
+  ] = await Promise.all([
+    admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }),
+    admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }).gte('submitted_at', todayStart),
+    admin.from('anonymous_sessions').select('anonymous_id, category, score, total, submitted_at, city, time_spent').order('submitted_at', { ascending: false }).limit(20),
+    admin.from('anonymous_sessions').select('category, score, total').gte('submitted_at', monthAgo),
+    admin.from('anonymous_sessions').select('anonymous_id'),
+    admin.from('anonymous_starts').select('*', { count: 'exact', head: true }),
   ])
 
   // ── Calculate metrics ──
@@ -97,7 +127,24 @@ export default async function AnalyticsPage() {
   const uniqueActive7d = new Set(activeUsers7d?.map((r: { user_id: string }) => r.user_id)).size
   const uniqueActive30d = new Set(activeUsers30d?.map((r: { user_id: string }) => r.user_id)).size
 
+  // Anonymous metrics
+  const uniqueAnonUsers = new Set(allAnonIds?.map((r: { anonymous_id: string }) => r.anonymous_id)).size
+  const completionRate = totalAnonStarts && totalAnonStarts > 0
+    ? Math.round(((totalAnonSessions ?? 0) / totalAnonStarts) * 100)
+    : null
+  const anonAvgScore = anonByCategory && anonByCategory.length > 0
+    ? Math.round(anonByCategory.reduce((sum: number, s: { score: number; total: number }) => sum + (s.score / s.total) * 100, 0) / anonByCategory.length)
+    : 0
+  const anonPassRate = anonByCategory && anonByCategory.length > 0
+    ? Math.round(anonByCategory.filter((s: { score: number; total: number }) => (s.score / s.total) >= 0.7).length / anonByCategory.length * 100)
+    : 0
+
+  type AiSession = { id: string; user_id: string; title: string; messages: unknown[]; created_at: string; updated_at: string }
+  type TopAiUser = { id: string; email: string; ai_queries_today: number; tier: string }
+
   const totalAiToday = aiUsageToday?.reduce((sum: number, r: { ai_queries_today: number }) => sum + (r.ai_queries_today || 0), 0) ?? 0
+  const aiUsersWithQueriesCount = aiUsageToday?.filter((r: { ai_queries_today: number }) => (r.ai_queries_today || 0) > 0).length ?? 0
+  const avgQueriesPerUser = aiUsersWithQueriesCount > 0 ? (totalAiToday / aiUsersWithQueriesCount).toFixed(1) : '0'
 
   // Top 5 most-failed questions
   const failMap: Record<string, number> = {}
@@ -175,7 +222,7 @@ export default async function AnalyticsPage() {
       {/* ═══ API / AI TOKEN USAGE ═══ */}
       <div className="bg-white rounded-xl border border-gray-200 p-5 mb-8">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">API &amp; AI Token Usage</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <div>
             <div className="text-2xl font-bold text-purple-600">{totalAiToday}</div>
             <div className="text-xs text-gray-500">AI Queries Today</div>
@@ -191,7 +238,12 @@ export default async function AnalyticsPage() {
           <div>
             <div className="text-2xl font-bold text-blue-600">~${((totalAiToday * 5000 * 0.0000005) + (totalAiToday * 1000 * 0.000002)).toFixed(2)}</div>
             <div className="text-xs text-gray-500">Est. AI Cost Today</div>
-            <div className="text-[10px] text-gray-400">~5K in + 1K out tokens/query</div>
+            <div className="text-xs text-gray-400">~5K in + 1K out tokens/query</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-indigo-600">{avgQueriesPerUser}</div>
+            <div className="text-xs text-gray-500">Avg Queries/User Today</div>
+            <div className="text-xs text-gray-400">{aiUsersWithQueriesCount} active users</div>
           </div>
         </div>
       </div>
@@ -312,6 +364,59 @@ export default async function AnalyticsPage() {
           )}
         </div>
 
+        {/* Guest (Anonymous) Sessions */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 lg:col-span-2">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Guest Sessions (No Account)</h3>
+            <div className="flex gap-4">
+              <span className="text-xs text-gray-400">Total: <span className="font-semibold text-gray-700">{totalAnonSessions ?? 0}</span></span>
+              <span className="text-xs text-gray-400">Today: <span className="font-semibold text-indigo-600">{anonSessionsToday ?? 0}</span></span>
+              <span className="text-xs text-gray-400">Unique guests: <span className="font-semibold text-gray-700">{uniqueAnonUsers}</span></span>
+              <span className="text-xs text-gray-400">Avg: <span className="font-semibold text-gray-700">{anonAvgScore}%</span></span>
+              <span className="text-xs text-gray-400">Pass: <span className="font-semibold text-green-600">{anonPassRate}%</span></span>
+              {completionRate !== null && (
+                <span className="text-xs text-gray-400">Completion: <span className="font-semibold text-amber-600">{completionRate}%</span></span>
+              )}
+            </div>
+          </div>
+          {recentAnonSessions && recentAnonSessions.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-gray-400 text-xs">
+                    <th className="pb-2 font-medium">Guest ID</th>
+                    <th className="pb-2 font-medium">Category</th>
+                    <th className="pb-2 font-medium">Score</th>
+                    <th className="pb-2 font-medium">Time</th>
+                    <th className="pb-2 font-medium">City</th>
+                    <th className="pb-2 font-medium">When</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {recentAnonSessions.map((s: { anonymous_id: string; category: string; score: number; total: number; submitted_at: string; city: string | null; time_spent: number | null }) => {
+                    const pct = Math.round((s.score / s.total) * 100)
+                    const mins = s.time_spent ? `${Math.floor(s.time_spent / 60)}m ${s.time_spent % 60}s` : '—'
+                    return (
+                      <tr key={s.anonymous_id + s.submitted_at}>
+                        <td className="py-1.5 text-gray-500 font-mono text-xs">{s.anonymous_id.slice(0, 12)}…</td>
+                        <td className="py-1.5 text-gray-700 capitalize">{s.category}</td>
+                        <td className="py-1.5">
+                          <span className={`text-xs font-semibold ${pct >= 70 ? 'text-green-600' : 'text-red-500'}`}>{s.score}/{s.total} ({pct}%)</span>
+                        </td>
+                        <td className="py-1.5 text-gray-400 text-xs">{mins}</td>
+                        <td className="py-1.5 text-gray-400 text-xs">{s.city ?? '—'}</td>
+                        <td className="py-1.5 text-gray-400 text-xs whitespace-nowrap">{formatDate(s.submitted_at)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">No guest sessions yet.</p>
+          )}
+        </div>
+
         {/* Recent Reports */}
         <div className="bg-white rounded-xl border border-gray-200 p-5 lg:col-span-2">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Recent Question Reports</h3>
@@ -338,6 +443,80 @@ export default async function AnalyticsPage() {
             </div>
           ) : (
             <p className="text-sm text-gray-400">No reports submitted.</p>
+          )}
+        </div>
+      </div>
+
+      {/* ═══ AI TUTOR — RECENT SESSIONS ═══ */}
+      <h2 className="text-lg font-bold text-gray-800 mt-10 mb-4">AI Tutor — Recent Sessions</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        {/* Recent AI Conversations */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 lg:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Recent AI Conversations (last 20)</h3>
+          {recentAiSessions && recentAiSessions.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-gray-400 text-xs">
+                    <th className="pb-2 font-medium">User</th>
+                    <th className="pb-2 font-medium">First Question</th>
+                    <th className="pb-2 font-medium">Messages</th>
+                    <th className="pb-2 font-medium">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {(recentAiSessions as AiSession[]).map((session) => {
+                    const msgCount = Array.isArray(session.messages) ? session.messages.length : 0
+                    const title = session.title ? (session.title.length > 80 ? session.title.slice(0, 80) + '…' : session.title) : '—'
+                    return (
+                      <tr key={session.id}>
+                        <td className="py-1.5 text-gray-500 font-mono text-xs">{session.user_id.slice(0, 8)}…</td>
+                        <td className="py-1.5 text-gray-700 max-w-[400px] truncate" title={session.title}>{title}</td>
+                        <td className="py-1.5 text-center">
+                          <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full">{msgCount}</span>
+                        </td>
+                        <td className="py-1.5 text-gray-400 text-xs whitespace-nowrap">{formatDate(session.updated_at)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">No AI sessions yet.</p>
+          )}
+        </div>
+
+        {/* Top AI Users Today */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 lg:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Top AI Users Today</h3>
+          {topAiUsers && topAiUsers.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-gray-400 text-xs">
+                    <th className="pb-2 font-medium">Email</th>
+                    <th className="pb-2 font-medium">Queries Today</th>
+                    <th className="pb-2 font-medium">Tier</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {(topAiUsers as TopAiUser[]).map((u) => (
+                    <tr key={u.id}>
+                      <td className="py-1.5 text-gray-700 truncate max-w-[240px]">{u.email}</td>
+                      <td className="py-1.5">
+                        <span className="text-sm font-bold text-indigo-600">{u.ai_queries_today}</span>
+                      </td>
+                      <td className="py-1.5">
+                        <TierBadge tier={u.tier} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">No AI queries today.</p>
           )}
         </div>
       </div>
@@ -373,7 +552,7 @@ function MiniStat({ label, value }: { label: string; value: number }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-3 text-center">
       <p className="text-2xl font-bold text-gray-900">{value}</p>
-      <p className="text-[10px] text-gray-400 uppercase tracking-wide font-medium mt-0.5">{label}</p>
+      <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mt-0.5">{label}</p>
     </div>
   )
 }

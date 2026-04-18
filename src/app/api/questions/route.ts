@@ -33,10 +33,7 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
 
-  // Block categories user can't access (including Universal for free tier)
-  if (category === 'Universal' && tier === 'free') {
-    return NextResponse.json({ error: 'Upgrade required for Universal test', upgradeRequired: true }, { status: 403 })
-  }
+  // All categories open for all tiers (Universal included)
   if (category !== 'Universal' && !canAccessCategory(tier, category)) {
     return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
   }

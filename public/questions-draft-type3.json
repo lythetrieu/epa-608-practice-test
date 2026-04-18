@@ -1,0 +1,1294 @@
+[
+  {
+    "id": "t3-leak-1.1-atm-001",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "Why do low-pressure centrifugal chillers using R-11 or R-123 operate at sub-atmospheric (below 0 psig) pressure?",
+    "options": [
+      "Because refrigerant boiling points are above typical chiller evaporating temperatures",
+      "Because low-pressure refrigerants are denser than air",
+      "Because sub-atmospheric operation improves compressor efficiency",
+      "Because the Montreal Protocol requires sub-atmospheric operation"
+    ],
+    "answer_text": "Because refrigerant boiling points are above typical chiller evaporating temperatures",
+    "explanation": "R-11 boils at 74.7°F and R-123 boils at 82.1°F at atmospheric pressure. Because chiller evaporators typically operate at 35–45°F, the refrigerant must be held at sub-atmospheric pressure (partial vacuum) to boil at those lower temperatures. This means the evaporator runs below 0 psig.",
+    "source_ref": "40 CFR §82.152 (low-pressure appliance definition); ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.1-atm-002",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "Which of the following refrigerants operates at sub-atmospheric pressure in a typical centrifugal chiller evaporator?",
+    "options": [
+      "R-22",
+      "R-410A",
+      "R-11",
+      "R-134a"
+    ],
+    "answer_text": "R-11",
+    "explanation": "R-11 (trichlorofluoromethane) has a boiling point of 74.7°F at atmospheric pressure. Chiller evaporators operate at 35–45°F, well below R-11's boiling point, so the evaporator pressure must be below atmospheric — a partial vacuum. R-22 and R-410A are high-pressure refrigerants that operate well above atmospheric in evaporators.",
+    "source_ref": "40 CFR §82.152; ASHRAE Refrigerant Safety Group A1 data",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.1-atm-003",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "In a low-pressure centrifugal chiller, what happens if a leak develops in the evaporator shell?",
+    "options": [
+      "Refrigerant leaks out into the atmosphere",
+      "Air and moisture leak into the refrigerant system",
+      "High-pressure refrigerant gas floods the machine room",
+      "The condenser pressure drops below atmospheric"
+    ],
+    "answer_text": "Air and moisture leak into the refrigerant system",
+    "explanation": "Because low-pressure chillers (R-11, R-123) operate at sub-atmospheric pressure in the evaporator, any leak allows outside air and moisture to be drawn INTO the system. This is the opposite of high-pressure systems, where refrigerant leaks out. Air contamination reduces efficiency and can cause acid formation with moisture.",
+    "source_ref": "40 CFR §82.152; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.1-atm-004",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "What is the approximate evaporator pressure range for a low-pressure centrifugal chiller using R-123?",
+    "options": [
+      "150–250 psig",
+      "70–80 psig",
+      "10–20 psig",
+      "Below 0 psig (sub-atmospheric / vacuum)"
+    ],
+    "answer_text": "Below 0 psig (sub-atmospheric / vacuum)",
+    "explanation": "R-123 has a boiling point of 82.1°F at atmospheric pressure. At chiller evaporating temperatures of 35–45°F, R-123 must operate well below atmospheric — typically around 3–6 in Hg vacuum (sub-atmospheric). This is why these chillers are called 'low-pressure' systems.",
+    "source_ref": "40 CFR §82.152; ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.1-atm-005",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "A technician notices noncondensable gases accumulating in a centrifugal chiller using R-11. What does this most likely indicate?",
+    "options": [
+      "Refrigerant overcharge",
+      "Air has leaked into the sub-atmospheric system",
+      "Refrigerant has decomposed at high temperature",
+      "The condenser is operating at too high a pressure"
+    ],
+    "answer_text": "Air has leaked into the sub-atmospheric system",
+    "explanation": "Low-pressure chillers operate in vacuum in the evaporator. Any leak allows atmospheric air (a noncondensable gas) to enter. Noncondensables accumulate in the condenser, raise head pressure, and reduce efficiency. Purge units are installed on these chillers specifically to remove noncondensable gases.",
+    "source_ref": "40 CFR §82.152; EPA 608 exam — Type III section",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.1-atm-006",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.1",
+    "question": "What device is commonly installed on low-pressure centrifugal chillers to deal with the unique hazard of their sub-atmospheric operation?",
+    "options": [
+      "High-pressure relief valve",
+      "Purge unit",
+      "Check valve on suction line",
+      "Two-stage economizer"
+    ],
+    "answer_text": "Purge unit",
+    "explanation": "Because low-pressure chillers operate in vacuum, air leaks into the system. A purge unit continuously removes noncondensable gases (primarily air) from the refrigerant circuit. Purge units vent small amounts of refrigerant along with the air, which is why their emissions are regulated under 40 CFR §82.156.",
+    "source_ref": "40 CFR §82.156; 40 CFR §82.152",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-001",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "What is the preferred method for leak testing a low-pressure centrifugal chiller?",
+    "options": [
+      "Pressurize with dry nitrogen to 150 psig",
+      "Raise chilled water temperature to push refrigerant pressure above atmospheric",
+      "Connect a high-pressure refrigerant cylinder to the evaporator",
+      "Apply soap bubbles under vacuum"
+    ],
+    "answer_text": "Raise chilled water temperature to push refrigerant pressure above atmospheric",
+    "explanation": "The preferred leak test method for low-pressure chillers is to raise the chiller water temperature (using hot water or by disabling cooling) to increase refrigerant pressure until it exceeds atmospheric. This allows the use of electronic leak detectors or soap bubbles on the outside of the shell. Pressurizing with nitrogen or high-pressure refrigerant risks exceeding design test pressure.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-002",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "Why is hot water pressurization used to leak test low-pressure chillers rather than pressurizing with nitrogen?",
+    "options": [
+      "Nitrogen reacts with R-11 refrigerant",
+      "The chiller shell cannot hold positive pressure from nitrogen",
+      "Raising refrigerant temperature is safer and avoids over-pressurization",
+      "Hot water prevents moisture from entering during testing"
+    ],
+    "answer_text": "Raising refrigerant temperature is safer and avoids over-pressurization",
+    "explanation": "Low-pressure chiller shells are designed for low-pressure operation. Pressurizing with nitrogen could easily exceed design test pressure and cause mechanical damage. By raising the chilled water temperature to heat the refrigerant, the refrigerant pressure rises naturally and safely above atmospheric, allowing leak detection without over-pressurization risk.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III study material",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-003",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "When performing a hot water leak test on a centrifugal chiller, what is the technician trying to achieve?",
+    "options": [
+      "Cool the refrigerant to condense any moisture",
+      "Raise refrigerant pressure above atmospheric so leaks can be detected externally",
+      "Heat the oil to remove dissolved refrigerant before testing",
+      "Bring the chiller to full load before shutdown"
+    ],
+    "answer_text": "Raise refrigerant pressure above atmospheric so leaks can be detected externally",
+    "explanation": "In normal operation, the low-pressure chiller evaporator is at vacuum — leaks draw air in rather than pushing refrigerant out, making external detection difficult. By raising chiller water temperature, the refrigerant pressure increases above atmospheric, allowing refrigerant to escape through any leaks and be detected with a leak detector or soap solution.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III content",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-004",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "A technician needs to locate a refrigerant leak on an R-123 centrifugal chiller that is currently at sub-atmospheric pressure. What is the correct first step?",
+    "options": [
+      "Connect a nitrogen cylinder and pressurize to 50 psig",
+      "Pump down the chiller to deep vacuum and apply leak detector",
+      "Raise the chilled water temperature to bring refrigerant pressure above atmospheric",
+      "Evacuate the chiller completely and check with a vacuum gauge"
+    ],
+    "answer_text": "Raise the chilled water temperature to bring refrigerant pressure above atmospheric",
+    "explanation": "The preferred leak test for low-pressure chillers is the hot water method: raise chilled water temperature so refrigerant pressure exceeds atmospheric. This makes refrigerant flow outward through leaks, enabling detection. Nitrogen pressurization risks damaging the low-pressure shell, and deep vacuum makes refrigerant flow inward (away from detectors).",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-005",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "Which leak detection tool is appropriate for finding leaks on a low-pressure centrifugal chiller after hot water pressurization?",
+    "options": [
+      "Electronic halogen leak detector or soap bubbles",
+      "High-pressure nitrogen sniffer",
+      "Manifold gauge set at 500 psig",
+      "Ultrasonic detector only — electronic detectors don't work on R-123"
+    ],
+    "answer_text": "Electronic halogen leak detector or soap bubbles",
+    "explanation": "After hot water pressurization brings refrigerant pressure above atmospheric, standard electronic halogen leak detectors or soap bubble solution can be used on the chiller shell, fittings, and joints. Electronic detectors are sensitive to R-11 and R-123 vapors. Soap bubbles visually confirm leak locations.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.2-hw-006",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.2",
+    "question": "What precaution must be taken during hot water pressurization leak testing of a centrifugal chiller?",
+    "options": [
+      "Wear acid-resistant gloves when handling R-11",
+      "Do not exceed the chiller's design test pressure",
+      "Vent all refrigerant before applying hot water",
+      "Only test when outdoor temperature is above 70°F"
+    ],
+    "answer_text": "Do not exceed the chiller's design test pressure",
+    "explanation": "Low-pressure chiller shells have a relatively low design test pressure (often around 10 psig or less). During hot water pressurization, refrigerant temperature and pressure must be monitored carefully to ensure design test pressure is never exceeded. Over-pressurization can damage the shell, gaskets, and fittings.",
+    "source_ref": "40 CFR §82.156; ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.3-maxp-001",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.3",
+    "question": "What is the general maximum pressure limit for leak testing low-pressure centrifugal chillers?",
+    "options": [
+      "500 psig",
+      "150 psig",
+      "50 psig",
+      "The chiller's design test pressure (typically around 10 psig or less)"
+    ],
+    "answer_text": "The chiller's design test pressure (typically around 10 psig or less)",
+    "explanation": "Low-pressure chillers are designed for sub-atmospheric operation and have low design test pressures — often 10 psig or less depending on manufacturer specifications. Exceeding design test pressure during leak testing risks mechanical failure. This is why the preferred hot water method raises pressure gradually and stays within design limits.",
+    "source_ref": "40 CFR §82.156; ASHRAE Handbook — Refrigeration; manufacturer service manuals",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.3-maxp-002",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.3",
+    "question": "Why is it dangerous to pressurize a low-pressure chiller shell with nitrogen to high pressures?",
+    "options": [
+      "Nitrogen reacts with R-123 and creates toxic byproducts",
+      "The shell is designed for vacuum and low pressure, not high positive pressure",
+      "Nitrogen prevents the refrigerant from boiling during the test",
+      "High-pressure nitrogen will freeze the chilled water circuit"
+    ],
+    "answer_text": "The shell is designed for vacuum and low pressure, not high positive pressure",
+    "explanation": "Low-pressure chiller shells (evaporator barrels) are engineered to withstand the sub-atmospheric internal pressures and modest positive pressures up to design test pressure. They are NOT designed for high positive pressures used in high-pressure system leak testing. Applying excessive positive pressure can rupture seals, damage tube sheets, or cause structural failure.",
+    "source_ref": "40 CFR §82.156; ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.3-maxp-003",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.3",
+    "question": "During hot water pressurization of an R-11 chiller for leak testing, what should the technician monitor to avoid over-pressurization?",
+    "options": [
+      "The condenser water flow rate",
+      "The chiller refrigerant pressure gauge and manufacturer's design test pressure",
+      "The ambient temperature outside the building",
+      "The voltage draw of the purge unit"
+    ],
+    "answer_text": "The chiller refrigerant pressure gauge and manufacturer's design test pressure",
+    "explanation": "As chilled water temperature rises during the hot water test, refrigerant pressure increases. The technician must watch the refrigerant pressure gauge and stop heating before reaching the manufacturer's design test pressure limit. Exceeding this limit risks damage to the low-pressure shell, tube-to-tube-sheet joints, and relief devices.",
+    "source_ref": "40 CFR §82.156; manufacturer service manuals for low-pressure chillers",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.3-maxp-004",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.3",
+    "question": "When using nitrogen to pressure test a low-pressure chiller, which statement is correct?",
+    "options": [
+      "Nitrogen can be used at any pressure since it is non-flammable",
+      "Nitrogen pressure must not exceed the chiller's design test pressure",
+      "Nitrogen should be used at 150 psig to ensure all leaks are found",
+      "Nitrogen testing is not allowed on any refrigeration system"
+    ],
+    "answer_text": "Nitrogen pressure must not exceed the chiller's design test pressure",
+    "explanation": "If nitrogen is used for pressure testing a low-pressure chiller (rather than the preferred hot water method), pressure must never exceed the manufacturer's design test pressure. For low-pressure systems this is typically much lower than the 150–300 psig used for high-pressure systems. The low-pressure shell cannot safely contain high positive pressures.",
+    "source_ref": "40 CFR §82.156; ASHRAE Standard 15",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.3-maxp-005",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.3",
+    "question": "What is a key safety concern unique to high-pressure nitrogen leak testing of low-pressure chiller shells compared to high-pressure systems?",
+    "options": [
+      "Nitrogen can cause refrigerant to decompose at high concentrations",
+      "Low-pressure chiller shells have a much lower design test pressure and can be damaged at pressures acceptable for high-pressure systems",
+      "Nitrogen molecules are too small to detect leaks in vacuum-rated fittings",
+      "High-pressure nitrogen prevents accurate reading of sub-atmospheric gauges"
+    ],
+    "answer_text": "Low-pressure chiller shells have a much lower design test pressure and can be damaged at pressures acceptable for high-pressure systems",
+    "explanation": "A high-pressure R-410A system might be leak tested at 150+ psig with nitrogen. Applying the same pressure to a low-pressure chiller shell (designed for vacuum and perhaps 10 psig positive) would cause catastrophic damage. This is the fundamental reason hot water pressurization is preferred — it self-limits pressure based on refrigerant thermodynamics.",
+    "source_ref": "40 CFR §82.156; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-001",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "What is the most common sign that air has leaked into a low-pressure centrifugal chiller?",
+    "options": [
+      "Low condenser pressure and high suction pressure",
+      "Elevated condenser pressure with noncondensable gases present",
+      "Frost formation on the compressor housing",
+      "Oil becoming clear and watery"
+    ],
+    "answer_text": "Elevated condenser pressure with noncondensable gases present",
+    "explanation": "Air that leaks into a sub-atmospheric chiller accumulates in the condenser as a noncondensable gas. This raises condenser head pressure above what the refrigerant saturation pressure should be at the condenser water temperature. The purge unit is triggered more frequently. The temperature-pressure relationship no longer matches refrigerant tables.",
+    "source_ref": "40 CFR §82.152; ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-002",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "A technician observes that a centrifugal chiller's condenser pressure is higher than expected for the current condenser water temperature. What should be suspected?",
+    "options": [
+      "Refrigerant overcharge",
+      "Air or noncondensable gas contamination from a leak",
+      "Low refrigerant charge",
+      "Compressor valve failure"
+    ],
+    "answer_text": "Air or noncondensable gas contamination from a leak",
+    "explanation": "In a low-pressure chiller, if condenser pressure is higher than the saturation pressure at the condenser water temperature, noncondensable gases (typically air from a leak) are present. Air does not condense and occupies condenser space, reducing heat transfer and raising pressure. This is a key diagnostic indicator of leaks in sub-atmospheric systems.",
+    "source_ref": "40 CFR §82.152; ASHRAE Handbook — Refrigeration",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-003",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "What is the effect of moisture entering a low-pressure chiller through a leak?",
+    "options": [
+      "Moisture improves heat transfer efficiency",
+      "Moisture freezes in the evaporator and blocks refrigerant flow",
+      "Moisture combines with R-11 or R-123 to form acids, damaging the system",
+      "Moisture causes refrigerant pressure to drop below design minimum"
+    ],
+    "answer_text": "Moisture combines with R-11 or R-123 to form acids, damaging the system",
+    "explanation": "When moisture enters a chiller containing R-11 or R-123, it reacts with the refrigerant to form hydrochloric and hydrofluoric acids. These acids attack copper and steel components, degrade oil, and contaminate the refrigerant circuit. Acid damage can destroy compressor bearings, motor windings, and seals. Acid testing of the oil and refrigerant should be part of routine chiller maintenance.",
+    "source_ref": "40 CFR §82.152; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-004",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "How does a purge unit on a low-pressure centrifugal chiller address the problem of air ingestion?",
+    "options": [
+      "It filters moisture from the refrigerant circuit",
+      "It removes noncondensable gases (primarily air) from the refrigerant circuit and vents them",
+      "It recirculates refrigerant to prevent air from reaching the condenser",
+      "It pressurizes the evaporator above atmospheric to prevent air ingress"
+    ],
+    "answer_text": "It removes noncondensable gases (primarily air) from the refrigerant circuit and vents them",
+    "explanation": "A purge unit draws refrigerant-air mixture from the condenser, separates the refrigerant (condensing it back), and vents the air (noncondensables) to the atmosphere. Because small amounts of refrigerant are vented with the air, purge units are a regulated source of emissions under 40 CFR §82.156. High-efficiency purge units recover more refrigerant before venting.",
+    "source_ref": "40 CFR §82.156; 40 CFR §82.152",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-005",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "Increased purge unit runtime on a centrifugal chiller is an indicator of what condition?",
+    "options": [
+      "Refrigerant overcharge requiring recovery",
+      "Air or noncondensable gas entering through a system leak",
+      "Normal operation during hot weather",
+      "Compressor approaching end of life"
+    ],
+    "answer_text": "Air or noncondensable gas entering through a system leak",
+    "explanation": "Purge unit runtime should be minimal in a tight, leak-free chiller. If the purge unit runs frequently or continuously, it indicates that air is entering through a leak in the sub-atmospheric evaporator or connected piping. Increased purge runtime is a primary diagnostic sign of leaks in low-pressure systems and triggers leak inspection requirements.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-leak-1.4-air-006",
+    "category": "Type III",
+    "subtopic_id": "t3-leak-1.4",
+    "question": "Which symptom is UNIQUE to low-pressure chiller leaks compared to leaks in high-pressure systems?",
+    "options": [
+      "Refrigerant odor near the equipment",
+      "Air and moisture leaking INTO the system rather than refrigerant leaking out",
+      "Loss of cooling capacity over time",
+      "Oil discoloration from refrigerant dilution"
+    ],
+    "answer_text": "Air and moisture leaking INTO the system rather than refrigerant leaking out",
+    "explanation": "In high-pressure systems, leaks result in refrigerant escaping outward. In low-pressure (sub-atmospheric) chillers, the internal pressure is lower than atmospheric, so leaks cause air and moisture to be drawn INTO the system. This reversal is the most distinctive characteristic of low-pressure chiller leaks and drives the unique service procedures (hot water testing, purge units).",
+    "source_ref": "40 CFR §82.152; EPA 608 Type III exam",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-001",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "What is the annual leak rate threshold that triggers mandatory leak repair for a comfort cooling centrifugal chiller containing R-123?",
+    "options": [
+      "10%",
+      "15%",
+      "20%",
+      "30%"
+    ],
+    "answer_text": "20%",
+    "explanation": "Under 40 CFR §82.157(b), comfort cooling appliances with full charge greater than 50 lbs have a mandatory leak repair trigger of 20% annual leak rate. Low-pressure centrifugal chillers used for comfort cooling (HVAC) fall into this category. Once the 20% threshold is exceeded in a rolling 12-month period, repairs must begin within 30 days.",
+    "source_ref": "40 CFR §82.157(b)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-002",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "For an industrial process centrifugal chiller using R-11 with a 500 lb charge, what is the leak rate threshold requiring mandatory repair?",
+    "options": [
+      "10%",
+      "20%",
+      "30%",
+      "35%"
+    ],
+    "answer_text": "30%",
+    "explanation": "Under 40 CFR §82.157(b), industrial process refrigeration (IPR) equipment has a higher leak repair threshold of 30% per year (compared to 20% for comfort cooling). If the chiller is classified as industrial process use (not HVAC), the 30% annual threshold applies. The technician must verify the equipment's use classification.",
+    "source_ref": "40 CFR §82.157(b)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-003",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "Within how many days must leak repairs begin after a centrifugal chiller exceeds the applicable leak rate threshold?",
+    "options": [
+      "10 days",
+      "30 days",
+      "60 days",
+      "90 days"
+    ],
+    "answer_text": "30 days",
+    "explanation": "Under 40 CFR §82.157(d), when a comfort cooling or industrial process appliance exceeds its leak rate threshold, the owner or operator must repair the leaks within 30 days of discovery. Extensions may be granted in limited circumstances, but the initial obligation is to begin repairs within 30 days.",
+    "source_ref": "40 CFR §82.157(d)",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-004",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "A building owner has a 400 lb R-123 chiller used for office HVAC. In the past 12 months, 85 lbs have leaked and been recovered. Must the owner repair the leaks?",
+    "options": [
+      "No — 85 lbs is less than 100 lbs, so the threshold is not reached",
+      "No — R-123 has a low GWP so leak repair is not required",
+      "Yes — 85/400 = 21.25% exceeds the 20% comfort cooling threshold",
+      "Yes — any leak from a chiller requires immediate repair regardless of rate"
+    ],
+    "answer_text": "Yes — 85/400 = 21.25% exceeds the 20% comfort cooling threshold",
+    "explanation": "The comfort cooling leak repair threshold is 20% per year (40 CFR §82.157(b)). 85 lbs leaked from a 400 lb charge = 21.25% annual leak rate, which exceeds 20%. The owner must initiate repairs within 30 days. The threshold is based on percentage of full charge, not absolute pounds.",
+    "source_ref": "40 CFR §82.157(b),(d)",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-005",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "What record must be kept when a low-pressure chiller's refrigerant leak rate is calculated?",
+    "options": [
+      "Only the date refrigerant was purchased",
+      "Amount of refrigerant added in each service visit over a rolling 12-month period",
+      "Technician's personal license number only",
+      "Daily purge unit running time only"
+    ],
+    "answer_text": "Amount of refrigerant added in each service visit over a rolling 12-month period",
+    "explanation": "Under 40 CFR §82.157 and §82.166, owners of appliances with full charge >50 lbs must keep records of refrigerant added at each service. Leak rate is calculated from the total refrigerant added over a rolling 12-month period divided by the full charge. These records must be maintained for 3 years.",
+    "source_ref": "40 CFR §82.157; 40 CFR §82.166",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-repair-2.1-thr-006",
+    "category": "Type III",
+    "subtopic_id": "t3-repair-2.1",
+    "question": "Which of the following best describes the leak repair threshold for comfort cooling vs. industrial process low-pressure chillers?",
+    "options": [
+      "Comfort cooling: 30% / Industrial: 20%",
+      "Comfort cooling: 20% / Industrial: 30%",
+      "Both require repair at 15%",
+      "Both require repair at 25%"
+    ],
+    "answer_text": "Comfort cooling: 20% / Industrial: 30%",
+    "explanation": "40 CFR §82.157(b) establishes different thresholds based on equipment use: comfort cooling (HVAC) appliances must repair leaks when the annual rate reaches 20%, while industrial process refrigeration appliances have a higher threshold of 30%. Low-pressure centrifugal chillers used for building HVAC are comfort cooling; those in manufacturing or chemical processing may qualify as industrial process.",
+    "source_ref": "40 CFR §82.157(b)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "What is the required evacuation level for a low-pressure centrifugal chiller manufactured after November 15, 1993, before opening it for major service?",
+    "options": [
+      "0 psig (atmospheric pressure)",
+      "10 in Hg vacuum",
+      "25 mm Hg absolute",
+      "500 microns absolute"
+    ],
+    "answer_text": "25 mm Hg absolute",
+    "explanation": "Under 40 CFR §82.156(a)(2)(v), low-pressure appliances manufactured after November 15, 1993 must be evacuated to 25 mm Hg absolute pressure before opening for major service. This equals approximately 29 in Hg vacuum — a very deep vacuum. This is different from high-pressure systems and requires special low-pressure vacuum gauges.",
+    "source_ref": "40 CFR §82.156(a)(2)(v)",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "Why is the evacuation standard for post-1993 low-pressure chillers expressed in mm Hg absolute rather than in Hg vacuum?",
+    "options": [
+      "mm Hg is the metric unit required by the Montreal Protocol",
+      "Because the required vacuum level (25 mm Hg absolute) is beyond the range of standard in Hg vacuum gauges calibrated to 30 in Hg maximum",
+      "In Hg vacuum is only used for high-pressure systems",
+      "EPA regulations use mm Hg to match European HVAC standards"
+    ],
+    "answer_text": "Because the required vacuum level (25 mm Hg absolute) is beyond the range of standard in Hg vacuum gauges calibrated to 30 in Hg maximum",
+    "explanation": "25 mm Hg absolute ≈ 0.98 in Hg absolute, or approximately 29 in Hg vacuum. Standard manifold gauges read 0–30 in Hg vacuum; near 29–30 in Hg the scale is highly compressed and inaccurate. Absolute pressure gauges (Torr gauges or electronic vacuum transducers) are used to verify 25 mm Hg absolute, which represents a much deeper vacuum than standard high-pressure system requirements.",
+    "source_ref": "40 CFR §82.156(a)(2)(v); EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "A post-1993 R-123 centrifugal chiller must be opened for major service. At what pressure must recovery be completed before opening?",
+    "options": [
+      "150 psig positive pressure",
+      "0 psig (atmospheric)",
+      "25 mm Hg absolute",
+      "4 in Hg vacuum"
+    ],
+    "answer_text": "25 mm Hg absolute",
+    "explanation": "Per 40 CFR §82.156(a)(2)(v), post-November 15, 1993 low-pressure appliances must be evacuated to 25 mm Hg absolute before major service. R-123 chillers fall under this requirement. The very deep vacuum (25 mm Hg absolute ≈ 29 in Hg vacuum) ensures maximum refrigerant recovery before the system is opened.",
+    "source_ref": "40 CFR §82.156(a)(2)(v)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "Which vacuum gauge is most suitable for verifying the 25 mm Hg absolute evacuation requirement for post-1993 low-pressure chillers?",
+    "options": [
+      "Standard compound manifold gauge (reads 0–30 in Hg vacuum)",
+      "Electronic absolute pressure transducer or Torr gauge",
+      "Bourdon tube gauge calibrated to 500 psig",
+      "Humidity sensor / wet bulb thermometer"
+    ],
+    "answer_text": "Electronic absolute pressure transducer or Torr gauge",
+    "explanation": "Standard compound manifold gauges are inaccurate at near-perfect vacuums; the 0–30 in Hg scale cannot reliably distinguish 25 mm Hg from 50 mm Hg. Electronic micron gauges or Torr gauges measure absolute pressure in fine increments suitable for the 25 mm Hg requirement. These instruments are essential for low-pressure chiller service.",
+    "source_ref": "40 CFR §82.156(a)(2)(v); EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "How does the post-1993 low-pressure chiller evacuation standard of 25 mm Hg absolute compare to the post-1993 high-pressure system evacuation standard?",
+    "options": [
+      "25 mm Hg absolute is a shallower vacuum than required for high-pressure systems",
+      "25 mm Hg absolute is a much deeper vacuum than the 4 in Hg vacuum required for systems 200–500 lbs",
+      "Both require the same 25 mm Hg absolute",
+      "High-pressure systems must reach 10 mm Hg absolute, which is deeper"
+    ],
+    "answer_text": "25 mm Hg absolute is a much deeper vacuum than the 4 in Hg vacuum required for systems 200–500 lbs",
+    "explanation": "Post-1993 high-pressure systems (200–500 lbs) must be evacuated to 4 in Hg vacuum (≈101 mm Hg absolute). Post-1993 low-pressure chillers must reach 25 mm Hg absolute — about four times deeper in vacuum than 4 in Hg. The stricter low-pressure requirement reflects both the larger refrigerant volumes in chillers and the unique recovery challenges of low-pressure systems.",
+    "source_ref": "40 CFR §82.156(a)(2)(iv),(v)",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-006",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "What type of recovery equipment is needed to achieve 25 mm Hg absolute from a low-pressure centrifugal chiller?",
+    "options": [
+      "Any standard recovery machine rated for high-pressure refrigerants",
+      "Recovery equipment specifically rated and designed for low-pressure refrigerant recovery",
+      "A simple vacuum pump connected to the suction service valve",
+      "An air compressor to push refrigerant out through the discharge port"
+    ],
+    "answer_text": "Recovery equipment specifically rated and designed for low-pressure refrigerant recovery",
+    "explanation": "Low-pressure chiller refrigerant recovery requires specialized equipment designed for sub-atmospheric refrigerants. The recovery machine must be capable of drawing the system to 25 mm Hg absolute, which requires equipment rated for low-pressure operation. Standard high-pressure recovery machines may not achieve this vacuum level or may not be rated for refrigerants like R-11 and R-123.",
+    "source_ref": "40 CFR §82.156(a)(2)(v); 40 CFR §82.158",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-007",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "For post-1993 low-pressure appliances, which of the following correctly describes the recovery requirement?",
+    "options": [
+      "Evacuate to 0 psig before opening for service",
+      "Recover 90% of refrigerant before opening for service",
+      "Evacuate to 25 mm Hg absolute before opening for major service",
+      "Remove refrigerant only when the system pressure is above 15 psig"
+    ],
+    "answer_text": "Evacuate to 25 mm Hg absolute before opening for major service",
+    "explanation": "40 CFR §82.156(a)(2)(v) specifies that technicians must evacuate low-pressure appliances manufactured after November 15, 1993 to 25 mm Hg absolute before major service. This pressure-based standard (not a percentage) ensures maximum refrigerant recovery from the large-volume chiller before the system is opened to the atmosphere.",
+    "source_ref": "40 CFR §82.156(a)(2)(v)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.1-evac-008",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.1",
+    "question": "25 mm Hg absolute is approximately equivalent to which of the following?",
+    "options": [
+      "25 psig positive pressure",
+      "0 psig (atmospheric)",
+      "Approximately 29 in Hg vacuum (near-perfect vacuum)",
+      "Approximately 15 in Hg vacuum"
+    ],
+    "answer_text": "Approximately 29 in Hg vacuum (near-perfect vacuum)",
+    "explanation": "Standard atmospheric pressure is 760 mm Hg absolute (= 29.92 in Hg absolute = 0 psig). 25 mm Hg absolute is 25/760 = 3.3% of atmospheric pressure. Converting: 760 mm Hg - 25 mm Hg = 735 mm Hg vacuum = 735/25.4 ≈ 28.9 in Hg vacuum. So 25 mm Hg absolute ≈ 29 in Hg vacuum — very close to perfect vacuum.",
+    "source_ref": "40 CFR §82.156(a)(2)(v); EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.2-pre93-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.2",
+    "question": "What is the recovery standard for low-pressure appliances manufactured BEFORE November 15, 1993?",
+    "options": [
+      "25 mm Hg absolute",
+      "4 in Hg vacuum",
+      "0 psig (atmospheric pressure)",
+      "80% of refrigerant by weight"
+    ],
+    "answer_text": "0 psig (atmospheric pressure)",
+    "explanation": "Under 40 CFR §82.156(a)(2)(vi), low-pressure appliances manufactured before November 15, 1993 have a less stringent recovery requirement: the system must be evacuated to 0 psig (atmospheric pressure) before service. This is much less rigorous than the 25 mm Hg absolute required for post-1993 low-pressure appliances.",
+    "source_ref": "40 CFR §82.156(a)(2)(vi)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.2-pre93-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.2",
+    "question": "Why does the EPA set a less stringent recovery level for pre-1993 low-pressure chillers compared to post-1993 models?",
+    "options": [
+      "Pre-1993 chillers use non-ozone-depleting refrigerants",
+      "Pre-1993 recovery equipment was unable to reach the deep vacuum required for newer standards",
+      "Pre-1993 chillers are smaller and contain less refrigerant",
+      "The 0 psig standard captures more refrigerant than 25 mm Hg absolute"
+    ],
+    "answer_text": "Pre-1993 recovery equipment was unable to reach the deep vacuum required for newer standards",
+    "explanation": "The November 15, 1993 date corresponds to when EPA recovery equipment certification requirements took effect. Pre-1993 recovery machines may not have been capable of achieving 25 mm Hg absolute. EPA set the 0 psig standard for pre-1993 appliances as a practical, achievable level with equipment available at the time of original service.",
+    "source_ref": "40 CFR §82.156(a)(2)(vi); EPA 608 exam context",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.2-pre93-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.2",
+    "question": "A technician is servicing an R-11 centrifugal chiller installed in 1988. What recovery level must be achieved before opening the system for major service?",
+    "options": [
+      "25 mm Hg absolute",
+      "4 in Hg vacuum",
+      "0 psig",
+      "10 in Hg vacuum"
+    ],
+    "answer_text": "0 psig",
+    "explanation": "A chiller installed in 1988 was manufactured before November 15, 1993, so it falls under the pre-1993 recovery standard for low-pressure appliances. Per 40 CFR §82.156(a)(2)(vi), the recovery requirement is 0 psig (atmospheric). The less stringent 0 psig standard applies to pre-1993 low-pressure equipment.",
+    "source_ref": "40 CFR §82.156(a)(2)(vi)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.2-pre93-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.2",
+    "question": "Compare the pre-1993 and post-1993 low-pressure chiller recovery standards: which requires deeper vacuum?",
+    "options": [
+      "Pre-1993 (0 psig) requires deeper vacuum",
+      "Post-1993 (25 mm Hg absolute) requires deeper vacuum",
+      "Both standards require the same vacuum level",
+      "Neither requires vacuum — low-pressure systems always operate above atmospheric"
+    ],
+    "answer_text": "Post-1993 (25 mm Hg absolute) requires deeper vacuum",
+    "explanation": "0 psig is atmospheric pressure — no vacuum required for pre-1993 low-pressure appliances. 25 mm Hg absolute is approximately 29 in Hg vacuum — an extremely deep vacuum. Post-1993 equipment must be brought to a much lower absolute pressure (deeper vacuum) than pre-1993 equipment, reflecting improved recovery technology and tighter environmental standards.",
+    "source_ref": "40 CFR §82.156(a)(2)(v),(vi)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.2-pre93-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.2",
+    "question": "When servicing a pre-1993 R-123 chiller, what does the 0 psig recovery standard mean in practical terms?",
+    "options": [
+      "Recovery is complete when the gauge reads exactly 0 psig and the system is at atmospheric pressure",
+      "The technician must pull a 0 micron vacuum before opening",
+      "Recovery is complete at 0 in Hg vacuum (29.92 in Hg absolute)",
+      "The technician must recover exactly 0 lbs before opening"
+    ],
+    "answer_text": "Recovery is complete when the gauge reads exactly 0 psig and the system is at atmospheric pressure",
+    "explanation": "For pre-1993 low-pressure appliances, the requirement is to reduce system pressure to 0 psig (atmospheric) before opening. Since these chillers operate at sub-atmospheric pressure in normal operation, the recovery machine brings the system UP to 0 psig from sub-atmospheric. At 0 psig, most refrigerant has been removed and the system is at ambient pressure.",
+    "source_ref": "40 CFR §82.156(a)(2)(vi)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.3-oil-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.3",
+    "question": "What minimum oil temperature must be maintained during refrigerant recovery from a low-pressure centrifugal chiller?",
+    "options": [
+      "70°F",
+      "100°F",
+      "130°F",
+      "180°F"
+    ],
+    "answer_text": "130°F",
+    "explanation": "During recovery from a low-pressure chiller, the compressor oil must be heated to a minimum of 130°F. R-11 and R-123 dissolve readily in compressor oil. Heating the oil drives the dissolved refrigerant out, improving recovery efficiency. Without oil heating, significant refrigerant remains dissolved in the oil and cannot be recovered.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.3-oil-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.3",
+    "question": "Why must compressor oil be heated during refrigerant recovery from a low-pressure centrifugal chiller?",
+    "options": [
+      "Hot oil lubricates the recovery machine better than cold oil",
+      "R-11 and R-123 dissolve in oil; heating drives the refrigerant out for recovery",
+      "Cold oil freezes the recovery machine during deep vacuum operations",
+      "Oil must reach 130°F to maintain proper viscosity during purging"
+    ],
+    "answer_text": "R-11 and R-123 dissolve in oil; heating drives the refrigerant out for recovery",
+    "explanation": "Low-pressure refrigerants (R-11, R-123) are highly soluble in compressor oil. At ambient temperature, a large fraction of the refrigerant charge may be dissolved in the oil and cannot be drawn out by vacuum alone. Heating the oil to 130°F reduces solubility, releasing dissolved refrigerant as vapor that the recovery machine can then capture.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.3-oil-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.3",
+    "question": "If a technician recovers refrigerant from a low-pressure chiller without heating the oil, what is the likely result?",
+    "options": [
+      "The recovery is completed faster at lower oil temperature",
+      "Incomplete recovery — significant refrigerant remains dissolved in the cool oil",
+      "The refrigerant decomposes and cannot be reclaimed",
+      "The system freezes and cannot be opened"
+    ],
+    "answer_text": "Incomplete recovery — significant refrigerant remains dissolved in the cool oil",
+    "explanation": "Without oil heating, dissolved refrigerant remains trapped in the compressor oil. When the technician opens the system, this dissolved refrigerant off-gasses into the machine room — releasing refrigerant that was not recovered. This violates the venting prohibition under 40 CFR §82.154 and results in avoidable refrigerant emissions.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.3-oil-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.3",
+    "question": "How is the compressor oil typically heated during low-pressure chiller refrigerant recovery?",
+    "options": [
+      "By running the chiller compressor at full load during recovery",
+      "Using electric oil heaters built into or attached to the chiller sump",
+      "Circulating hot condenser water through the oil sump",
+      "Applying a heat gun to the compressor housing exterior"
+    ],
+    "answer_text": "Using electric oil heaters built into or attached to the chiller sump",
+    "explanation": "Low-pressure centrifugal chillers are typically equipped with electric oil heaters (sump heaters) that maintain oil temperature. During refrigerant recovery, these heaters raise oil temperature to at least 130°F to drive refrigerant out of solution. The 130°F minimum is part of proper recovery procedure for low-pressure systems.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.3-oil-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.3",
+    "question": "What is the purpose of the 130°F minimum oil temperature requirement specific to low-pressure chiller refrigerant recovery?",
+    "options": [
+      "To prevent oil freezing during the evacuation process",
+      "To maximize refrigerant recovery by releasing refrigerant dissolved in the oil",
+      "To sterilize the oil before adding fresh refrigerant charge",
+      "To prevent moisture from condensing in the oil during recovery"
+    ],
+    "answer_text": "To maximize refrigerant recovery by releasing refrigerant dissolved in the oil",
+    "explanation": "The 130°F oil temperature requirement is unique to low-pressure chiller recovery (not required for high-pressure systems) because low-pressure refrigerants (R-11, R-123) have high oil solubility. Maintaining 130°F throughout recovery ensures dissolved refrigerant is continuously driven out and captured, rather than released when the system is later opened.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.4-water-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.4",
+    "question": "Why must chilled water continue circulating through the evaporator during low-pressure chiller refrigerant recovery?",
+    "options": [
+      "To maintain condenser pressure during recovery",
+      "To prevent the evaporator tubes from freezing when deep vacuum lowers refrigerant temperature",
+      "To keep the oil heater from overheating",
+      "To allow the recovery machine to use water as a heat sink"
+    ],
+    "answer_text": "To prevent the evaporator tubes from freezing when deep vacuum lowers refrigerant temperature",
+    "explanation": "As a low-pressure chiller is evacuated to 25 mm Hg absolute, the remaining refrigerant at very low pressure has an extremely low boiling point — potentially below 32°F. If chilled water is not circulating, it can freeze inside the evaporator tubes, causing tube rupture and serious equipment damage. Circulating warm water keeps tube temperatures above freezing during the deep evacuation.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.4-water-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.4",
+    "question": "What can happen to the evaporator tubes of a centrifugal chiller if chilled water stops circulating during deep vacuum recovery?",
+    "options": [
+      "The tubes will corrode from oxygen exposure",
+      "The tubes may freeze and rupture due to low refrigerant temperature at deep vacuum",
+      "The oil will migrate into the evaporator tubes",
+      "The compressor will overheat and trip off"
+    ],
+    "answer_text": "The tubes may freeze and rupture due to low refrigerant temperature at deep vacuum",
+    "explanation": "At 25 mm Hg absolute, the remaining refrigerant boils at a very low temperature. Without warm circulating water, the evaporator water can freeze. Water expands approximately 9% when freezing, generating enough force to rupture copper or steel tubes. This is why water circulation during deep vacuum recovery is mandatory on low-pressure chillers — tube freeze is a catastrophic and expensive failure.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.4-water-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.4",
+    "question": "Which two special requirements apply during refrigerant recovery from a post-1993 low-pressure centrifugal chiller?",
+    "options": [
+      "Use nitrogen purge and drain oil before recovery",
+      "Heat oil to 130°F minimum AND keep chilled water circulating to prevent tube freeze",
+      "Disconnect purge unit and seal condenser water flow",
+      "Remove all refrigerant by venting first, then vacuum"
+    ],
+    "answer_text": "Heat oil to 130°F minimum AND keep chilled water circulating to prevent tube freeze",
+    "explanation": "Low-pressure chiller recovery has two unique procedural requirements: (1) heat oil to at least 130°F to release dissolved refrigerant, and (2) maintain chilled water circulation through the evaporator to prevent tube freeze during deep vacuum recovery. Both are critical safety and compliance steps specific to low-pressure chiller service.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.4-water-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.4",
+    "question": "A technician is evacuating an R-123 chiller to 25 mm Hg absolute and does not check the chilled water pump. What risk does this create?",
+    "options": [
+      "The chilled water will boil and damage the pump",
+      "The evaporator tubes may freeze, expand, and rupture",
+      "The recovery machine may pull refrigerant through the water circuit",
+      "The deep vacuum will prevent refrigerant from condensing in the recovery cylinder"
+    ],
+    "answer_text": "The evaporator tubes may freeze, expand, and rupture",
+    "explanation": "If the chilled water pump is off during deep vacuum recovery, stagnant water in the evaporator will freeze as the refrigerant temperature drops well below 32°F at 25 mm Hg absolute. Frozen water expands, rupturing the evaporator tubes — potentially causing thousands of dollars in damage and refrigerant loss. Verifying chilled water circulation is a mandatory step before beginning deep vacuum recovery on low-pressure chillers.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rec-3.4-water-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rec-3.4",
+    "question": "What is the correct procedure regarding chilled water flow during recovery from a low-pressure centrifugal chiller?",
+    "options": [
+      "Stop water flow to prevent moisture contamination during deep vacuum",
+      "Maintain chilled water circulation throughout recovery to prevent tube freeze",
+      "Drain all chilled water before beginning recovery",
+      "Reduce water flow to 50% to slow the recovery process"
+    ],
+    "answer_text": "Maintain chilled water circulation throughout recovery to prevent tube freeze",
+    "explanation": "Chilled water must continue circulating through the evaporator barrel throughout the entire recovery process. The circulating water provides heat input that keeps tube temperatures above freezing even as refrigerant pressure and temperature drop to very low levels during deep vacuum recovery to 25 mm Hg absolute.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "When recharging a low-pressure centrifugal chiller, what is the correct order for adding refrigerant?",
+    "options": [
+      "Liquid first, then vapor",
+      "Vapor first, then liquid",
+      "Always add as liquid only — never vapor",
+      "Always add as vapor only — never liquid"
+    ],
+    "answer_text": "Vapor first, then liquid",
+    "explanation": "When recharging a low-pressure chiller, refrigerant vapor is added first. This gradually raises system pressure and prevents the rapid flash-cooling that occurs when liquid refrigerant enters a deep vacuum, which could damage copper evaporator tubes. After sufficient vapor has been added to raise pressure, liquid refrigerant can be introduced more safely.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "Why is liquid refrigerant added LAST when recharging a low-pressure centrifugal chiller?",
+    "options": [
+      "Liquid refrigerant is more expensive and should be used sparingly",
+      "Adding liquid to a deep vacuum causes rapid flash-evaporation that can freeze and damage copper evaporator tubes",
+      "The chiller compressor cannot pump liquid and must have vapor first to prime",
+      "Liquid refrigerant contaminates the oil if added before vapor"
+    ],
+    "answer_text": "Adding liquid to a deep vacuum causes rapid flash-evaporation that can freeze and damage copper evaporator tubes",
+    "explanation": "If liquid R-11 or R-123 is added to a chiller at deep vacuum, it flash-evaporates violently, rapidly absorbing heat and dropping temperatures to well below freezing at the point of introduction. This can freeze water in the evaporator tubes, causing rupture. Adding vapor first raises system pressure before liquid is introduced, preventing this flash-freezing hazard.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "Which of the following correctly explains why low-pressure chiller recharging uses vapor-first protocol?",
+    "options": [
+      "Vapor is cheaper to purchase than liquid refrigerant",
+      "Vapor first prevents flash evaporation damage to evaporator tubes when system is at deep vacuum",
+      "Liquid refrigerant cannot pass through the vapor service valve",
+      "Vapor-first prevents oil foaming during recharge"
+    ],
+    "answer_text": "Vapor first prevents flash evaporation damage to evaporator tubes when system is at deep vacuum",
+    "explanation": "After deep vacuum recovery to 25 mm Hg absolute, introducing liquid refrigerant directly into the near-perfect vacuum environment would cause violent flash evaporation, with refrigerant boiling at extremely low temperatures. This can freeze evaporator tube water and rupture tubes. Vapor introduction gradually brings system pressure up before liquid is added safely.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "A technician is preparing to recharge an R-123 chiller after a major service. The system is at 25 mm Hg absolute. What is the first step in recharging?",
+    "options": [
+      "Connect a liquid refrigerant cylinder and open the liquid valve fully",
+      "Add refrigerant vapor first to raise system pressure before introducing liquid",
+      "Start the compressor to pull refrigerant in from the cylinder",
+      "Add 10% of the charge as liquid, then start the compressor to mix it"
+    ],
+    "answer_text": "Add refrigerant vapor first to raise system pressure before introducing liquid",
+    "explanation": "With the chiller at 25 mm Hg absolute (deep vacuum), the first refrigerant added must be in vapor phase. This raises the system pressure gradually and safely. Once pressure has risen sufficiently, liquid refrigerant can be added. Starting the compressor before adequate refrigerant charge is in the system is not appropriate at this stage.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "Which material in the evaporator makes freeze damage most likely if liquid refrigerant is introduced to a low-pressure chiller at deep vacuum?",
+    "options": [
+      "Steel compressor housing",
+      "Copper evaporator tubes containing water",
+      "Aluminum oil sump",
+      "Brass service valve bodies"
+    ],
+    "answer_text": "Copper evaporator tubes containing water",
+    "explanation": "Low-pressure chillers use copper or copper-alloy tubes in the evaporator, through which chilled water flows. If liquid refrigerant flashes violently in the shell surrounding these tubes, water inside the tubes freezes. Since water expands about 9% upon freezing, the resulting pressure ruptures the thin-wall copper tubes. This is the specific damage mechanism that vapor-first recharging is designed to prevent.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.1-vap-006",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.1",
+    "question": "What combination of events at the same time as recharging would increase the risk of tube freeze when recharging a low-pressure chiller?",
+    "options": [
+      "Adding refrigerant vapor while oil heaters are on",
+      "Adding liquid refrigerant rapidly to a deep-vacuum system with chilled water pump off",
+      "Charging slowly with vapor while running chilled water pump",
+      "Adding refrigerant at ambient temperature with cooling tower in operation"
+    ],
+    "answer_text": "Adding liquid refrigerant rapidly to a deep-vacuum system with chilled water pump off",
+    "explanation": "The highest tube-freeze risk occurs when (1) liquid refrigerant is introduced (rather than vapor), (2) the system is at deep vacuum (maximum flash potential), and (3) the chilled water pump is off (no warm water to prevent freezing). All three conditions together create the worst-case scenario for tube freeze and rupture.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.2-valve-001",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.2",
+    "question": "Through which valve is refrigerant charged into a low-pressure centrifugal chiller?",
+    "options": [
+      "Discharge service valve on the high side",
+      "Evaporator (suction) service valve",
+      "Liquid line service valve between condenser and expansion device",
+      "Oil return valve on the purge unit"
+    ],
+    "answer_text": "Evaporator (suction) service valve",
+    "explanation": "Low-pressure centrifugal chillers are recharged through the evaporator (suction) service valve. Since the system operates at sub-atmospheric pressure on the suction side, refrigerant can flow in from atmospheric-pressure supply cylinders without a transfer pump. Charging through the evaporator valve is standard procedure for low-pressure systems.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.2-valve-002",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.2",
+    "question": "Why is refrigerant charged into a low-pressure chiller through the evaporator service valve rather than the condenser (high) side?",
+    "options": [
+      "The condenser operates at too high a temperature for refrigerant to enter",
+      "The evaporator is at sub-atmospheric pressure, so atmospheric-pressure refrigerant flows in naturally",
+      "The condenser service valve is welded shut on low-pressure chillers",
+      "High-side charging would contaminate the oil with refrigerant"
+    ],
+    "answer_text": "The evaporator is at sub-atmospheric pressure, so atmospheric-pressure refrigerant flows in naturally",
+    "explanation": "Because the low-pressure chiller evaporator operates at sub-atmospheric pressure (vacuum), refrigerant in supply cylinders at atmospheric pressure will naturally flow into the evaporator when the service valve is opened. No transfer pump or pressurization is needed for the initial charge; the pressure differential drives the flow from the higher-pressure supply cylinder into the vacuum system.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.2-valve-003",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.2",
+    "question": "What is the correct sequence for recharging a low-pressure centrifugal chiller through the evaporator service valve?",
+    "options": [
+      "Open liquid valve immediately, add full charge at once",
+      "Add vapor through evaporator valve first to raise pressure, then switch to liquid",
+      "Pressurize with nitrogen to 10 psig before adding refrigerant",
+      "Charge only when chiller is running at full load"
+    ],
+    "answer_text": "Add vapor through evaporator valve first to raise pressure, then switch to liquid",
+    "explanation": "The correct sequence is: (1) connect refrigerant supply cylinder to the evaporator service valve, (2) open vapor valve to add refrigerant vapor and raise system pressure, (3) once pressure has risen adequately, liquid refrigerant can be added to complete the charge. This sequence prevents the tube-freeze hazard of adding liquid to a deep-vacuum system.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam content",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.2-valve-004",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.2",
+    "question": "After completing major service and recharging a low-pressure centrifugal chiller, what system should be verified as operational before starting the machine?",
+    "options": [
+      "High-pressure cutout switch at 500 psig",
+      "Purge unit for noncondensable gas removal",
+      "Subcooling valve at the liquid line",
+      "Suction accumulator bypass"
+    ],
+    "answer_text": "Purge unit for noncondensable gas removal",
+    "explanation": "After major service and recharge, some air (noncondensable gas) may have entered the low-pressure chiller during opening. The purge unit must be operational to remove this air from the system. A fully charged, tight chiller with a functioning purge unit will achieve optimal performance. Verifying purge unit operation is a critical post-service step unique to low-pressure systems.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-rech-4.2-valve-005",
+    "category": "Type III",
+    "subtopic_id": "t3-rech-4.2",
+    "question": "Which statement correctly describes refrigerant charging for a low-pressure versus high-pressure refrigeration system?",
+    "options": [
+      "Both systems charge liquid through the high-pressure side",
+      "Low-pressure systems charge through the evaporator valve using pressure differential; high-pressure systems typically charge liquid on the high side",
+      "High-pressure systems charge vapor only; low-pressure systems charge liquid only",
+      "Both systems require a transfer pump to move refrigerant from cylinder to system"
+    ],
+    "answer_text": "Low-pressure systems charge through the evaporator valve using pressure differential; high-pressure systems typically charge liquid on the high side",
+    "explanation": "Low-pressure chillers charge through the evaporator (suction) side because the sub-atmospheric system pressure is lower than the supply cylinder pressure, enabling natural flow. High-pressure systems (R-22, R-410A, etc.) typically charge liquid refrigerant on the high side (liquid service valve) or vapor on the low side. The sub-atmospheric operation of low-pressure systems makes the evaporator the practical charging point.",
+    "source_ref": "40 CFR §82.156; EPA 608 Type III exam",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-001",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "What is the ozone depletion potential (ODP) of R-11?",
+    "options": [
+      "0.0",
+      "0.05",
+      "0.50",
+      "1.0"
+    ],
+    "answer_text": "1.0",
+    "explanation": "R-11 (trichlorofluoromethane, CFC-11) has an ODP of 1.0. R-11 is the reference substance for the ODP scale — all other refrigerants' ODP values are measured relative to R-11. As a CFC with three chlorine atoms, R-11 is highly ozone-depleting and was phased out under the Montreal Protocol.",
+    "source_ref": "40 CFR Part 82 Appendix A to Subpart A; Montreal Protocol Annex A Group I",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-002",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "What is the safety group classification of R-123 (HCFC-123)?",
+    "options": [
+      "A1 (low toxicity, non-flammable)",
+      "A2L (low toxicity, mildly flammable)",
+      "B1 (higher toxicity, non-flammable)",
+      "B2 (higher toxicity, flammable)"
+    ],
+    "answer_text": "B1 (higher toxicity, non-flammable)",
+    "explanation": "R-123 (HCFC-123) is classified B1 by ASHRAE Standard 34 — 'B' indicates higher toxicity (TWA ≤ 400 ppm), and '1' indicates non-flammable. This toxicity classification means technicians must use proper ventilation and monitor refrigerant concentrations when working with R-123. Its TWA is 10 ppm — much lower than R-11's 1,000 ppm — making R-123 more acutely toxic.",
+    "source_ref": "ASHRAE Standard 34; ASHRAE Refrigerant Safety Group",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-003",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "What is the ozone depletion potential (ODP) of R-123?",
+    "options": [
+      "1.0",
+      "0.50",
+      "0.02",
+      "0.0"
+    ],
+    "answer_text": "0.02",
+    "explanation": "R-123 (HCFC-123) has an ODP of 0.02 — much lower than R-11's ODP of 1.0. R-123 contains both chlorine and fluorine but has fewer chlorine atoms and higher hydrogen content, reducing its ozone-depleting potential. This is one reason R-123 was developed as a transitional replacement for R-11 in centrifugal chillers.",
+    "source_ref": "40 CFR Part 82 Appendix A to Subpart A; Montreal Protocol Annex C Group I",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-004",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "Which refrigerant is the ODP reference standard with an ODP value defined as 1.0?",
+    "options": [
+      "R-12",
+      "R-22",
+      "R-11",
+      "R-502"
+    ],
+    "answer_text": "R-11",
+    "explanation": "R-11 (CFC-11, trichlorofluoromethane) is the reference substance for the ozone depletion potential (ODP) scale, defined as ODP = 1.0. All other refrigerants' ozone-depleting potential is expressed relative to R-11. R-11 is a Class I ODS under the Clean Air Act and the Montreal Protocol, with production banned in the US.",
+    "source_ref": "40 CFR Part 82 Appendix A to Subpart A; Montreal Protocol Annex A Group I",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-005",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "Both R-11 and R-123 are used in low-pressure centrifugal chillers. Which statement correctly compares their environmental properties?",
+    "options": [
+      "R-11 and R-123 have identical ODP values of 1.0",
+      "R-11 (ODP 1.0) is far more ozone-depleting than R-123 (ODP 0.02)",
+      "R-123 (ODP 1.5) is more ozone-depleting than R-11 (ODP 0.5)",
+      "Neither R-11 nor R-123 depletes the ozone layer"
+    ],
+    "answer_text": "R-11 (ODP 1.0) is far more ozone-depleting than R-123 (ODP 0.02)",
+    "explanation": "R-11 is a CFC with ODP = 1.0 (the reference value). R-123 is an HCFC with ODP = 0.02 — 50 times less ozone-depleting than R-11. R-123 was developed as a lower-ODP transitional replacement for R-11 in centrifugal chillers. Both are regulated under the Clean Air Act as ozone-depleting substances, but R-11 is Class I and R-123 is Class II.",
+    "source_ref": "40 CFR Part 82 Appendix A to Subpart A; 40 CFR §82.3",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-006",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "R-11 is classified as a Class I ozone-depleting substance under the Clean Air Act. What does this classification mean for technicians?",
+    "options": [
+      "R-11 can be purchased and used freely with no restrictions",
+      "R-11 production is banned; existing supplies are controlled; venting is prohibited",
+      "R-11 is only restricted during summer months due to ozone sensitivity",
+      "Class I means R-11 is safe for residential use only"
+    ],
+    "answer_text": "R-11 production is banned; existing supplies are controlled; venting is prohibited",
+    "explanation": "Class I ODSs under the Clean Air Act (42 U.S.C. §7671) include CFCs and HCFCs with ODP ≥ 0.2. R-11 (ODP 1.0) is Class I: US production was banned, purchase/sale of recovered/reclaimed R-11 is controlled, and venting is prohibited under 40 CFR §82.154. Technicians need EPA 608 certification to purchase R-11 and must recover it during service.",
+    "source_ref": "40 CFR §82.154; 42 U.S.C. §7671; Clean Air Act Title VI",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-007",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "What chemical family does R-11 belong to, and why does this give it an ODP of 1.0?",
+    "options": [
+      "HFC — contains no chlorine, but has a high ODP due to bromine",
+      "CFC — contains three chlorine atoms that catalytically destroy ozone in the stratosphere",
+      "HCFC — contains hydrogen which lowers its atmospheric lifetime",
+      "HC — contains only carbon and hydrogen with high reactivity"
+    ],
+    "answer_text": "CFC — contains three chlorine atoms that catalytically destroy ozone in the stratosphere",
+    "explanation": "R-11 (CFC-11, CCl₃F) is a chlorofluorocarbon. Its three chlorine atoms are released when UV radiation breaks the C-Cl bonds in the stratosphere. Each chlorine atom catalytically destroys thousands of ozone molecules. CFCs also have long atmospheric lifetimes (50+ years for R-11), allowing them to accumulate in the stratosphere. This combination of chlorine content and atmospheric persistence gives R-11 an ODP of 1.0.",
+    "source_ref": "40 CFR Part 82; Montreal Protocol Annex A; UNEP ODS information",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.1-props-008",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.1",
+    "question": "What safety precaution is especially important when working with R-123 compared to R-11 in confined spaces?",
+    "options": [
+      "R-123 is flammable at normal temperatures and requires no-ignition precautions",
+      "R-123 has a much lower allowable exposure limit (10 ppm TWA vs 1,000 ppm for R-11) and requires enhanced ventilation",
+      "R-123 is an asphyxiant that displaces oxygen more rapidly than R-11",
+      "R-123 requires full-face respirator whereas R-11 only requires a dust mask"
+    ],
+    "answer_text": "R-123 has a much lower allowable exposure limit (10 ppm TWA vs 1,000 ppm for R-11) and requires enhanced ventilation",
+    "explanation": "R-123's ASHRAE B safety classification reflects higher toxicity: its allowable exposure limit is approximately 10 ppm TWA (ACGIH TLV). R-11 has a much higher TWA of 1,000 ppm (ASHRAE A1 classification). This means R-123 poses a greater inhalation hazard at lower concentrations, requiring better ventilation and potentially refrigerant monitors in machine rooms containing R-123 chillers.",
+    "source_ref": "ASHRAE Standard 34; ASHRAE Standard 15; EPA 608 Type III exam",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.2-bp-001",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.2",
+    "question": "What is the atmospheric boiling point of R-11?",
+    "options": [
+      "-41.4°F",
+      "14.9°F",
+      "74.7°F",
+      "120°F"
+    ],
+    "answer_text": "74.7°F",
+    "explanation": "R-11 (CFC-11) boils at 74.7°F at atmospheric pressure (14.696 psia). This high boiling point (above room temperature) means that at typical chiller evaporating temperatures (35–45°F), R-11 must be held at sub-atmospheric pressure to boil. This is the physical property that makes R-11 and similar refrigerants 'low-pressure' refrigerants used in centrifugal chillers.",
+    "source_ref": "ASHRAE Refrigerant Data; 40 CFR §82.152",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.2-bp-002",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.2",
+    "question": "What is the atmospheric boiling point of R-123?",
+    "options": [
+      "-15°F",
+      "14.9°F",
+      "82.1°F",
+      "110°F"
+    ],
+    "answer_text": "82.1°F",
+    "explanation": "R-123 (HCFC-123) boils at 82.1°F at atmospheric pressure. Like R-11, this boiling point is above typical chiller evaporating temperatures (35–45°F), requiring sub-atmospheric operation in the evaporator. R-123's boiling point is slightly higher than R-11's (74.7°F), making R-123 also suitable as a low-pressure chiller refrigerant.",
+    "source_ref": "ASHRAE Refrigerant Data; 40 CFR §82.152",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.2-bp-003",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.2",
+    "question": "Why is R-11's boiling point of 74.7°F significant for centrifugal chiller operation?",
+    "options": [
+      "It allows R-11 to boil at normal condenser temperatures without need for a metering device",
+      "At chiller evaporating temperatures below 74.7°F, R-11 must be below atmospheric pressure to boil, creating sub-atmospheric operation",
+      "R-11 can only be used in chillers operating above 74.7°F ambient temperature",
+      "The 74.7°F boiling point makes R-11 compatible with all compressor types"
+    ],
+    "answer_text": "At chiller evaporating temperatures below 74.7°F, R-11 must be below atmospheric pressure to boil, creating sub-atmospheric operation",
+    "explanation": "To produce chilled water at 45°F leaving temperature, the evaporating refrigerant must be colder — approximately 35–40°F. Since R-11 normally boils at 74.7°F at atmospheric pressure, the pressure in the evaporator must be reduced below atmospheric to lower R-11's boiling point to 35–40°F. This is the direct thermodynamic reason for sub-atmospheric (vacuum) evaporator operation in R-11 chillers.",
+    "source_ref": "ASHRAE Refrigerant Data; 40 CFR §82.152; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.2-bp-004",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.2",
+    "question": "R-410A has a boiling point of -61.9°F at atmospheric pressure. How does this compare to R-11 (74.7°F boiling point) in terms of operating pressure?",
+    "options": [
+      "R-410A and R-11 would operate at similar pressures in a chiller",
+      "R-410A requires high positive pressure to operate at chiller temperatures; R-11 requires sub-atmospheric pressure",
+      "R-11 requires higher pressure than R-410A because it has a higher boiling point",
+      "Both refrigerants operate at sub-atmospheric pressure in chiller evaporators"
+    ],
+    "answer_text": "R-410A requires high positive pressure to operate at chiller temperatures; R-11 requires sub-atmospheric pressure",
+    "explanation": "R-410A boils at -61.9°F at atmospheric pressure. To keep R-410A boiling at 35–40°F (chiller evaporating temperature), the pressure must be INCREASED above atmospheric to raise its boiling point — this is why R-410A systems operate at 200+ psig. Conversely, R-11 (boiling at 74.7°F at atmospheric) must have its pressure DECREASED below atmospheric to achieve the same 35–40°F evaporating temperature.",
+    "source_ref": "ASHRAE Refrigerant Data; ASHRAE Handbook — Refrigeration",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t3-ref-5.2-bp-005",
+    "category": "Type III",
+    "subtopic_id": "t3-ref-5.2",
+    "question": "Which of the following refrigerant boiling point values correctly explains why low-pressure chillers operate in vacuum?",
+    "options": [
+      "R-11 boils at -40°F at atmospheric pressure, requiring vacuum to raise boiling point",
+      "R-11 boils at 74.7°F at atmospheric pressure, requiring vacuum to lower boiling point to chiller evaporating temperature",
+      "R-123 boils at 14°F at atmospheric, which is below chiller evaporating temperature",
+      "Low-pressure chillers use refrigerants with boiling points below -100°F requiring positive pressure"
+    ],
+    "answer_text": "R-11 boils at 74.7°F at atmospheric pressure, requiring vacuum to lower boiling point to chiller evaporating temperature",
+    "explanation": "Pressure and boiling point are directly related: lower pressure → lower boiling point. R-11's normal boiling point is 74.7°F — too high for chiller evaporating temperatures of 35–45°F. By pulling the evaporator below atmospheric pressure (vacuum), the boiling point of R-11 drops to match the required evaporating temperature. This is the fundamental thermodynamic principle behind low-pressure chiller operation.",
+    "source_ref": "ASHRAE Refrigerant Data; ASHRAE Handbook — Refrigeration; 40 CFR §82.152",
+    "difficulty": "medium",
+    "verified": true
+  }
+]

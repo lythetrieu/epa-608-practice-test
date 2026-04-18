@@ -1,0 +1,35 @@
+# Claude Code settings (may contain command history with credentials)
+.claude/
+
+# Dev tooling
+node_modules/
+question-bank/
+*.ts
+*.pdf
+# Block internal/draft JSON but allow questions.json (needed by test engine)
+questions-draft*.json
+questions-flagged.json
+questions-needs-verify.json
+questions-legacy-backup.json
+questions-validated.json
+bank-stats.json
+package-lock.json
+ept_master_features.md
+*-REPORT.md
+DEV-LOG.md
+WORKFLOW.md
+SYSTEM-DIAGRAM.md
+MASTER-PLAYBOOK.md
+INTERNAL-LINKING-GUIDE.md
+QUESTION-BANK-MASTER.md
+RELAY-1.md
+BRAND-GUIDE.md
+CONTENT-MAP.md
+CONTENT-TEMPLATE.md
+STYLE-GUIDE.md
+CLAUDE.md
+CLAUDE-CODE.md
+marketing-lp*.html
+tracking.html
+changelog.html
+package.json

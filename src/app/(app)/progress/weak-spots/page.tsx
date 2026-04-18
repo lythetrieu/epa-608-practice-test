@@ -52,10 +52,10 @@ export default async function WeakSpotsPage() {
           Unlock AI-powered weak spot detection and targeted practice with Starter or higher.
         </p>
         <Link
-          href="/pricing"
+          href="https://epa608practicetest.net/checkout.html"
           className="px-6 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors"
         >
-          Upgrade to Starter — $19.99
+          Upgrade to Pro — $14.99
         </Link>
       </div>
     )

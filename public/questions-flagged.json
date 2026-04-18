@@ -1,0 +1,132 @@
+[
+  {
+    "id": "generated-rec72-003",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "Which of the following factors would SLOW the speed of refrigerant recovery from a system?",
+    "options": [
+      "Using short, large-diameter hoses",
+      "Warming the refrigerant system being recovered",
+      "Using long, small-diameter hoses between the system and recovery machine",
+      "Cooling the recovery cylinder with ice water"
+    ],
+    "answer_text": "Using long, small-diameter hoses between the system and recovery machine",
+    "explanation": "Long hose runs create additional pressure drop (friction loss) between the system and the recovery machine, reducing the flow of refrigerant. Small-diameter hoses compound this effect by restricting flow. Both factors reduce the efficiency of recovery. To maximize speed, technicians should use the shortest, largest-diameter hoses practical. Source: EPA 608 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high",
+    "_structureErrors": [],
+    "_structureWarnings": [
+      "source_ref \"EPA 608 Technician Study Guide\" is vague — needs specific citation"
+    ],
+    "_factErrors": [],
+    "_factWarnings": [],
+    "_sourceWarnings": [],
+    "_status": "warn"
+  },
+  {
+    "id": "generated-rec72-005",
+    "subtopic_id": "core-rec-7.2",
+    "category": "Core",
+    "question": "A technician wants to speed up vapor recovery from a large system. Which action would be most effective?",
+    "options": [
+      "Adding a larger filter-drier to the recovery hose",
+      "Gently warming the system to raise refrigerant pressure",
+      "Switching from a certified recovery machine to a simpler vacuum pump",
+      "Opening all system service valves to equalize pressure throughout the system"
+    ],
+    "answer_text": "Gently warming the system to raise refrigerant pressure",
+    "explanation": "System pressure is the primary driver of recovery speed. Gently warming the system (e.g., using warm water on the low side or operating the system briefly) raises the refrigerant pressure, which increases the pressure differential between the system and recovery cylinder. This drives refrigerant into the recovery machine more rapidly. Warming should be done cautiously and only by qualified technicians. Source: EPA 608 technician study guide.",
+    "difficulty": "medium",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high",
+    "_structureErrors": [],
+    "_structureWarnings": [
+      "source_ref \"EPA 608 Technician Study Guide\" is vague — needs specific citation"
+    ],
+    "_factErrors": [],
+    "_factWarnings": [],
+    "_sourceWarnings": [],
+    "_status": "warn"
+  },
+  {
+    "id": "generated-safe95-003",
+    "subtopic_id": "core-safe-9.5",
+    "category": "Core",
+    "question": "What is the recommended first aid for refrigerant vapor or liquid contact with the eyes?",
+    "options": [
+      "Apply a dry sterile bandage and seek medical attention within 24 hours",
+      "Flush the eyes with clean water for at least 15 minutes and seek medical attention",
+      "Use a neutralizing eye wash solution specifically formulated for chemical exposure",
+      "Do not flush with water — use only saline solution approved by an ophthalmologist"
+    ],
+    "answer_text": "Flush the eyes with clean water for at least 15 minutes and seek medical attention",
+    "explanation": "Eye contact with refrigerant (liquid or high-concentration vapor) requires immediate irrigation with clean water for a minimum of 15 minutes to remove the refrigerant and prevent corneal damage from freezing or chemical irritation. After flushing, the person should receive prompt medical evaluation. This protocol is consistent with standard SDS first aid guidance and NIOSH recommendations for all refrigerant types.",
+    "difficulty": "easy",
+    "source_ref": "Refrigerant SDS; NIOSH Guidelines",
+    "verified": false,
+    "trust_level": "high",
+    "_structureErrors": [],
+    "_structureWarnings": [
+      "source_ref \"Refrigerant SDS; NIOSH Guidelines\" is vague — needs specific citation"
+    ],
+    "_factErrors": [],
+    "_factWarnings": [],
+    "_sourceWarnings": [],
+    "_status": "warn"
+  },
+  {
+    "id": "generated-safe93-003",
+    "subtopic_id": "core-safe-9.3",
+    "category": "Core",
+    "question": "When performing a nitrogen leak test and wanting to use an electronic leak detector, what may be added to the nitrogen charge?",
+    "options": [
+      "A small amount of compressed air to create a detectable oxygen-nitrogen mixture",
+      "A trace amount of HCFC-22 to give the electronic leak detector a detectable refrigerant signal",
+      "A liquid dye marker that vaporizes and triggers electronic sensors",
+      "A small amount of R-410A since it has a stronger electronic detector signal than HCFC-22"
+    ],
+    "answer_text": "A trace amount of HCFC-22 to give the electronic leak detector a detectable refrigerant signal",
+    "explanation": "Electronic leak detectors are designed to sense refrigerant molecules, not nitrogen. When using nitrogen for pressure testing and wanting the sensitivity advantage of an electronic detector, technicians may add a small (trace) amount of HCFC-22 (R-22) to the nitrogen charge. The refrigerant tracer provides the detectable signal for the electronic detector while the nitrogen provides the safe pressurizing medium. The regulator is still required regardless. Source: EPA 608 technician study guide.",
+    "difficulty": "hard",
+    "source_ref": "EPA 608 Technician Study Guide",
+    "verified": false,
+    "trust_level": "high",
+    "_structureErrors": [],
+    "_structureWarnings": [
+      "source_ref \"EPA 608 Technician Study Guide\" is vague — needs specific citation"
+    ],
+    "_factErrors": [],
+    "_factWarnings": [],
+    "_sourceWarnings": [],
+    "_status": "warn"
+  },
+  {
+    "id": "generated-t2r23-002",
+    "subtopic_id": "t2-repair-2.3",
+    "category": "Type II",
+    "question": "A manufacturing plant has an industrial process refrigeration system with a 500 lb refrigerant charge. The system has leaked 160 lbs over the past year. Is a mandatory repair required?",
+    "options": [
+      "A. No — 160 lbs is below the 30% threshold of 150 lbs",
+      "B. Yes — 160 lbs is 32% of 500 lbs, which exceeds the 30% industrial process threshold",
+      "C. No — industrial process refrigeration systems are exempt from leak rate thresholds",
+      "D. Yes — any leak above 100 lbs triggers mandatory repair regardless of system size"
+    ],
+    "answer_text": "B. Yes — 160 lbs is 32% of 500 lbs, which exceeds the 30% industrial process threshold",
+    "explanation": "Calculating the leak rate: 160 lbs ÷ 500 lbs = 32%. Since 32% exceeds the 30% annual threshold for industrial process refrigeration under 40 CFR §82.157(a)(3), mandatory repair is required. Note that 30% of 500 lbs = 150 lbs, so any loss above 150 lbs triggers the requirement.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.157(a)(3)",
+    "verified": false,
+    "trust_level": "high",
+    "_structureErrors": [],
+    "_structureWarnings": [],
+    "_factErrors": [],
+    "_factWarnings": [
+      "Contains potentially wrong value \"50 lbs\" — correct value: 15 lbs (post-Jan 2026) (leak threshold when discussing 2026)"
+    ],
+    "_sourceWarnings": [],
+    "_status": "warn"
+  }
+]
