@@ -14,7 +14,7 @@ export const TIER_LIMITS = {
   free: {
     questionsPerDay: Infinity,
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
-    hasExplanations: false,      // Pro only — matches pricing page
+    hasExplanations: true,       // All tiers get explanations
     hasProgress: true,           // basic history
     hasProgressLimit: 5,         // last 5 tests only
     hasBlindSpot: false,         // Pro only — matches pricing page

@@ -169,7 +169,7 @@ function StepAI() {
         Stuck on a question? Ask our AI Tutor for a clear explanation.
       </p>
       <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800">
-        You get <span className="font-semibold">5 free AI queries</span> per day &mdash; use them when you need them.
+        You get <span className="font-semibold">10 free AI queries</span> per day &mdash; use them when you need them.
       </div>
     </div>
   )

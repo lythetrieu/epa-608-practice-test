@@ -3,9 +3,9 @@ import Link from 'next/link'
 import { Check, X } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'EPA 608 Practice Test Pricing — Free Practice + Pro $18.99',
+  title: 'EPA 608 Practice Test Pricing — Free Practice + Pro $14.99',
   description:
-    'Free EPA 608 practice: 25 questions, all sections, spider chart diagnosis. Pro $18.99 one-time: unlimited AI, blind-spot training, offline, certificates, pass guarantee.',
+    'Free EPA 608 practice: 25 questions, all sections, 10 AI queries/day. Pro $14.99 one-time lifetime: unlimited AI, blind-spot training, offline, certificates, pass guarantee.',
 }
 
 export default function PricingPage() {
@@ -52,7 +52,7 @@ export default function PricingPage() {
               <Feature included text="Unlimited tests" />
               <Feature included text="Explanations when wrong" />
               <Feature included text="Weak-spot diagnosis (spider chart)" />
-              <Feature included text="AI Study Helper (3/day)" />
+              <Feature included text="AI Study Helper (10/day)" />
               <Feature included={false} text="Blind-spot targeted training" />
               <Feature included={false} text="Unlimited AI help" />
               <Feature included={false} text="Flashcards & audio study" />
@@ -73,7 +73,7 @@ export default function PricingPage() {
             </div>
             <h2 className="text-sm font-bold text-blue-800 uppercase tracking-wider">Pro</h2>
             <div className="mt-2">
-              <span className="text-4xl font-bold text-gray-900">$18.99</span>
+              <span className="text-4xl font-bold text-gray-900">$14.99</span>
               <span className="text-gray-500 ml-2">one-time, lifetime</span>
             </div>
             <p className="mt-3 text-sm text-gray-600">Everything Free + tools to make sure you pass. Money-back guarantee.</p>
@@ -92,16 +92,16 @@ export default function PricingPage() {
             </div>
 
             <Link href="/signup" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
-              Get Pro — $18.99
+              Get Pro — $14.99
             </Link>
-            <p className="mt-3 text-center text-xs text-gray-500">Less than 1 hour of HVAC technician pay. Lifetime access.</p>
+            <p className="mt-3 text-center text-xs text-gray-500">Less than a coffee run. Lifetime access.</p>
           </div>
         </div>
 
         {/* Social proof */}
         <div className="mt-12 text-center">
           <p className="text-sm text-gray-500">
-            SkillCat charges $10/month (recurring). We charge $18.99 once (lifetime).
+            SkillCat charges $10/month (recurring). We charge $14.99 once (lifetime).
           </p>
         </div>
 
