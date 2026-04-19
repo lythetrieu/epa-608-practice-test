@@ -42,24 +42,7 @@ export default async function WeakSpotsPage() {
     .single()
 
   const tier = (profile?.tier ?? 'free') as Tier
-
-  if (!TIER_LIMITS[tier].hasBlindSpot) {
-    return (
-      <div className="p-8 flex flex-col items-center justify-center min-h-96">
-        <div className="text-5xl mb-4">🎯</div>
-        <h2 className="text-xl font-bold text-gray-800 mb-2">Weak Spot Training</h2>
-        <p className="text-gray-500 mb-6 text-center max-w-sm">
-          Unlock AI-powered weak spot detection and targeted practice with Starter or higher.
-        </p>
-        <Link
-          href="https://epa608practicetest.net/checkout.html"
-          className="px-6 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors"
-        >
-          Upgrade to Pro — $14.99
-        </Link>
-      </div>
-    )
-  }
+  const isPro = TIER_LIMITS[tier].hasBlindSpot
 
   const admin = createAdminClient()
   const { data: spots } = await admin.rpc('get_blind_spots', {
@@ -137,14 +120,29 @@ export default async function WeakSpotsPage() {
         </div>
       ) : (
         <>
-          {/* CTA */}
-          <Link
-            href="/test/weak-spots"
-            className="mb-8 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors text-center"
-          >
-            <span>🎯</span>
-            <span>Start Weak Spot Test</span>
-          </Link>
+          {/* Drill CTA — Pro only */}
+          {isPro ? (
+            <Link
+              href="/test/weak-spots"
+              className="mb-8 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors text-center"
+            >
+              <span>🎯</span>
+              <span>Start Weak Spot Drill</span>
+            </Link>
+          ) : (
+            <div className="mb-8 bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-blue-900">Weak Spot Drill — Pro only</p>
+                <p className="text-xs text-blue-700 mt-0.5">Auto-builds a test targeting exactly your weak subtopics above.</p>
+              </div>
+              <Link
+                href="https://epa608practicetest.net/checkout.html"
+                className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+              >
+                Upgrade — $14.99
+              </Link>
+            </div>
+          )}
 
           {/* Proficiency Radar Chart */}
           {radarData.length >= 3 && (

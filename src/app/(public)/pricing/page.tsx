@@ -44,21 +44,21 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$0</span>
               <span className="text-gray-500 ml-2">forever</span>
             </div>
-            <p className="mt-3 text-sm text-gray-600">Best free EPA 608 practice on the market. No signup needed.</p>
+            <p className="mt-3 text-sm text-gray-600">Everything you need to practice. No signup required — or sign up to sync across devices.</p>
 
             <div className="mt-6 space-y-3">
-              <Feature included text="25 questions per test" />
               <Feature included text="All 5 sections (Core, I, II, III, Universal)" />
-              <Feature included text="Unlimited tests" />
-              <Feature included text="Explanations when wrong" />
-              <Feature included text="Weak-spot diagnosis (spider chart)" />
+              <Feature included text="Unlimited tests & attempts" />
+              <Feature included text="Explanations on every wrong answer" />
+              <Feature included text="Weak-spot chart & topic breakdown" />
+              <Feature included text="Full session history" />
               <Feature included text="AI Study Helper (10/day)" />
-              <Feature included={false} text="Blind-spot targeted training" />
-              <Feature included={false} text="Unlimited AI help" />
-              <Feature included={false} text="Flashcards & audio study" />
-              <Feature included={false} text="Offline mode" />
-              <Feature included={false} text="Certificates" />
-              <Feature included={false} text="Pass guarantee" />
+              <Feature included text="Flashcards (all sections)" />
+              <Feature included text="Signup = sync history across devices" />
+              <Feature included={false} text="Blind-spot drill (auto-targeted test)" />
+              <Feature included={false} text="Unlimited AI" />
+              <Feature included={false} text="Certificate of completion" />
+              <Feature included={false} text="Pass guarantee — full refund" />
             </div>
 
             <Link href="/" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] border-2 border-gray-200 text-gray-700 rounded-xl font-semibold text-base hover:bg-gray-50 transition-colors">
@@ -76,25 +76,20 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$14.99</span>
               <span className="text-gray-500 ml-2">one-time, lifetime</span>
             </div>
-            <p className="mt-3 text-sm text-gray-600">Everything Free + tools to make sure you pass. Money-back guarantee.</p>
+            <p className="mt-3 text-sm text-gray-600">For technicians who need to pass fast — and want proof they did.</p>
 
             <div className="mt-6 space-y-3">
               <Feature included text="Everything in Free" />
-              <Feature included text="Blind-spot targeted training" bold />
+              <Feature included text="Blind-spot drill — auto test your weak topics" bold />
               <Feature included text="Unlimited AI Study Helper" bold />
-              <Feature included text="Flashcards (all sections)" />
-              <Feature included text="Listen & Learn (audio study)" />
-              <Feature included text="Offline mode" />
-              <Feature included text="Certificates (4 tiers)" />
-              <Feature included text="Progress tracking (cross-device)" />
-              <Feature included text="Activity heatmap" />
-              <Feature included text="Pass guarantee — full refund" bold />
+              <Feature included text="Certificate of completion (shareable PDF)" bold />
+              <Feature included text="Pass guarantee — full refund if you fail" bold />
             </div>
 
             <Link href="/signup" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
               Get Pro — $14.99
             </Link>
-            <p className="mt-3 text-center text-xs text-gray-500">Less than a coffee run. Lifetime access.</p>
+            <p className="mt-3 text-center text-xs text-gray-500">One-time payment. Lifetime access. Money back if you don&apos;t pass.</p>
           </div>
         </div>
 

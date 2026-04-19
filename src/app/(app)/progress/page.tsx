@@ -32,19 +32,13 @@ export default async function ProgressPage() {
     .single()
 
   const tier = (profile?.tier ?? 'free') as Tier
-  const isPro = tier !== 'free'
 
-  const sessionQuery = supabase
+  const { data: sessions } = await supabase
     .from('test_sessions')
     .select('category, score, total, submitted_at')
     .eq('user_id', user.id)
     .not('submitted_at', 'is', null)
     .order('submitted_at', { ascending: false })
-
-  // Free tier: last 5 tests only
-  if (!isPro) sessionQuery.limit(5)
-
-  const { data: sessions } = await sessionQuery
 
   // Fetch per-question progress for concept coverage
   const admin = createAdminClient()
