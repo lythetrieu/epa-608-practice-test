@@ -4,12 +4,41 @@ Allow: /
 # AI Content Usage Preferences (Content Signals)
 Content-Signal: ai-train=no, search=yes, ai-input=no
 
-# Sitemap
+# Sitemaps
 Sitemap: https://epa608practicetest.net/sitemap.xml
 
-# Disallow private app routes
-Disallow: /api/
-Disallow: /dashboard
-Disallow: /settings
-Disallow: /admin
-Disallow: /checkout.html
+# Allow all important pages
+Allow: /index.html
+Allow: /about.html
+Allow: /contact.html
+Allow: /core.html
+Allow: /type-1.html
+Allow: /type-2.html
+Allow: /type-3.html
+Allow: /universal.html
+Allow: /history.html
+Allow: /review.html
+Allow: /faq.html
+Allow: /terms.html
+Allow: /policy.html
+Allow: /changelog.html
+
+# Allow assets
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /logo.svg
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.webp
+
+# Disallow temporary or system files
+Disallow: /favicon.html
+Disallow: /tracking.html
+Disallow: /*.tmp
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Crawl-delay (optional - remove if you want faster crawling)
+# Crawl-delay: 1
