@@ -116,9 +116,22 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
 
   const mainRef = useRef<HTMLElement>(null)
 
-  // Scroll question area back to top on every question change
-  useEffect(() => {
+  // Reset ALL scroll containers to top on question change.
+  // The layout's outer <main> (overflow-auto) is the real scroll culprit on mobile —
+  // scrolling mainRef alone isn't enough.
+  function scrollToTop() {
     mainRef.current?.scrollTo({ top: 0, behavior: 'instant' })
+    // Walk up DOM and reset any ancestor that has scrolled
+    let el: HTMLElement | null = mainRef.current?.parentElement ?? null
+    while (el) {
+      if (el.scrollTop > 0) el.scrollTop = 0
+      el = el.parentElement
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  useEffect(() => {
+    scrollToTop()
   }, [currentIdx])
 
   const formatTime = (s: number) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
@@ -148,7 +161,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   if (result) return <ResultView result={result} category={category} questions={questions} onRetake={handleRetake} />
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] md:h-screen bg-gray-50 flex flex-col overflow-hidden">
+    <div className="h-[calc(100dvh-3.5rem)] md:h-dvh bg-gray-50 flex flex-col overflow-hidden">
       {/* ═══ COMPACT HEADER: Category + Question Counter + Timer ═══ */}
       <header className="bg-white border-b px-3 sm:px-6 py-2.5 shrink-0">
         <div className="flex items-center justify-between gap-2">
@@ -204,7 +217,12 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
               return (
                 <button
                   key={i}
-                  onClick={() => setAnswers(prev => ({ ...prev, [q.id]: opt }))}
+                  onClick={() => {
+                    setAnswers(prev => ({ ...prev, [q.id]: opt }))
+                    // Blur immediately so mobile browser doesn't scroll to focused button
+                    ;(document.activeElement as HTMLElement)?.blur()
+                    scrollToTop()
+                  }}
                   className={`w-full text-left px-5 py-4 min-h-[56px] rounded-xl border-2 transition-all flex gap-3 items-start text-base
                     ${selected
                       ? 'border-blue-800 bg-blue-50 text-blue-900'
