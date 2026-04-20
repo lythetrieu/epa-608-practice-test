@@ -223,33 +223,6 @@ export function ResultView({ result, category, questions }: {
           {!passed && <p className="mt-3 text-white/70 text-sm">Keep practicing! Review the explanations below.</p>}
         </div>
 
-        {/* Gentle Pro hint — only after 2+ fails, dismissible */}
-        {showHint && (
-          <div className="mb-4 sm:mb-6 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-3">
-            <span className="text-lg mt-0.5">💡</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-amber-900">
-                {failCount} fails on {category} — might be a pattern
-              </p>
-              <p className="text-xs text-amber-700 mt-0.5">
-                Blind Spot Drill auto-builds a test from your exact weak subtopics. Often fixes recurring fails in 1–2 sessions.
-              </p>
-              <Link
-                href="https://epa608practicetest.net/checkout.html"
-                className="inline-block mt-2 text-xs font-semibold text-amber-900 underline underline-offset-2 hover:text-amber-700"
-              >
-                See Pro — $14.99 one-time →
-              </Link>
-            </div>
-            <button
-              onClick={dismiss}
-              className="text-amber-400 hover:text-amber-600 text-lg leading-none shrink-0 mt-0.5"
-              aria-label="Dismiss"
-            >
-              ×
-            </button>
-          </div>
-        )}
 
         {/* Universal per-section breakdown */}
         {sectionScores && (
@@ -285,7 +258,7 @@ export function ResultView({ result, category, questions }: {
         <ShareButtons percentage={percentage} category={category} />
 
         {/* Action buttons */}
-        <div className="flex gap-3 mb-8">
+        <div className="flex gap-3 mb-1">
           <button
             onClick={() => window.location.href = `/test/${slug}`}
             className="flex-1 text-center px-5 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900">
@@ -296,6 +269,23 @@ export function ResultView({ result, category, questions }: {
             Dashboard
           </Link>
         </div>
+
+        {/* Inline fail hint — no popup, beside action area */}
+        {showHint ? (
+          <div className="flex items-center gap-2 mb-8 px-1 py-2">
+            <span className="text-amber-500 text-sm shrink-0">⚠</span>
+            <p className="text-xs text-gray-500 flex-1">
+              Failed {failCount}× on {category} — still not sure what&apos;s blocking you?{' '}
+              <Link href="https://epa608practicetest.net/checkout.html"
+                className="text-blue-700 font-medium hover:underline">
+                Blind Spot Drill targets your exact weak subtopics
+              </Link>
+            </p>
+            <button onClick={dismiss} className="text-gray-300 hover:text-gray-500 text-base leading-none shrink-0" aria-label="Dismiss">×</button>
+          </div>
+        ) : (
+          <div className="mb-8" />
+        )}
 
         {/* Question review */}
         <h2 className="text-lg font-bold text-gray-900 mb-4">Review Answers</h2>
