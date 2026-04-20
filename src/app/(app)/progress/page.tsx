@@ -1,7 +1,7 @@
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import type { Tier, Category } from '@/types'
+import type { Category } from '@/types'
 import { SUBTOPIC_GROUPS } from '@/lib/subtopics'
 import { SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
 
@@ -18,14 +18,6 @@ export default async function ProgressPage() {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) redirect('/login?redirect=/progress')
-
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier')
-    .eq('id', user.id)
-    .single()
-
-  const tier = (profile?.tier ?? 'free') as Tier
 
   const { data: sessions } = await supabase
     .from('test_sessions')

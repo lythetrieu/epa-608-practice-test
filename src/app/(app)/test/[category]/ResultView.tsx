@@ -116,11 +116,6 @@ function SharePopup({ percentage, category, onClose }: { percentage: number; cat
   )
 }
 
-const SLUG_MAP: Record<string, string> = {
-  'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2',
-  'Type III': 'type-3', 'Universal': 'universal',
-}
-
 function ELI5Button({ questionText, correctAnswer, userAnswer }: {
   questionText: string
   correctAnswer: string
@@ -195,7 +190,6 @@ export function ResultView({ result, category, questions, onRetake }: {
   onRetake: () => void
 }) {
   const { score, total, percentage, passed, results, sectionScores } = result
-  const slug = SLUG_MAP[category] ?? category.toLowerCase()
   const [showPopup, setShowPopup] = useState(false)
   const { showHint, failCount, dismiss } = useFailStreak(category, passed)
 
