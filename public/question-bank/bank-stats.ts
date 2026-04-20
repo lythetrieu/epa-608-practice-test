@@ -9,7 +9,7 @@
  */
 
 import { readFileSync, writeFileSync } from 'fs'
-import { TOPIC_MAP } from './topic-map'
+import { TOPIC_MAP } from './topic-map.ts'
 
 type RawQuestion = {
   category: string

@@ -154,10 +154,25 @@
         .rel-title{font-size:13px;font-weight:700;color:#1e293b}
 
         /* ── Footer ── */
-        .site-footer{background:#0f172a;color:rgba(255,255,255,.6);padding:36px 20px;margin-top:64px;text-align:center;font-size:13px}
-        .site-footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 8px}
-        .site-footer a:hover{color:#fff}
-        .footer-logo{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px}
+        footer{background:#0f172a;color:#94a3b8;padding:56px 0 32px}
+        .footer-inner{max-width:1200px;margin:0 auto;padding:0 20px}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+        .footer-brand p{font-size:14px;line-height:1.7;color:#64748b;margin:12px 0 20px;max-width:260px}
+        .footer-brand .footer-logo{font-size:16px;font-weight:700;color:#f1f5f9}
+        .footer-badge{display:inline-block;padding:5px 12px;background:rgba(0,48,135,.15);color:#38bdf8;border-radius:20px;font-size:12px;font-weight:600}
+        .footer-col h5{font-size:13px;font-weight:700;color:#f1f5f9;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+        .footer-col ul{list-style:none;padding:0;margin:0}
+        .footer-col ul li{margin-bottom:8px}
+        .footer-col ul li a{color:#64748b;text-decoration:none;font-size:14px;transition:color .15s;line-height:1.4;display:block}
+        .footer-col ul li a:hover{color:#38bdf8}
+        .footer-bottom{border-top:1px solid #1e293b;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .footer-bottom p{font-size:13px;color:#475569}
+        .footer-bottom a{color:#475569;text-decoration:none;font-size:13px}
+        .footer-bottom a:hover{color:#94a3b8}
+        .footer-hub{font-weight:600;color:#94a3b8!important}
+        .footer-hub:hover{color:#38bdf8!important}
+        @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}.footer-brand{grid-column:1/-1}footer{padding:40px 0 28px}}
+        @media(max-width:480px){.footer-grid{grid-template-columns:1fr;gap:24px}}
     </style>
 </head>
 <body>
@@ -662,20 +677,81 @@
 
     </div>
 </div>
+<!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
 
-<footer class="site-footer">
-    <div class="footer-logo">EPA 608 Practice Test</div>
-    <p style="margin-bottom:12px">Free practice tests for HVAC technicians — sourced from ESCO Group & SkillCat.</p>
-    <div>
-        <a href="/">Home</a>
-        <a href="/universal.html">Practice Tests</a>
-        <a href="/study-guides.html">Study Guides</a>
-        <a href="/pricing.html">Pricing</a>
-        <a href="/about.html">About</a>
-        <a href="/policy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-logo">EPA 608 Practice Test</div>
+                <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
+                <span class="footer-badge">Forever Free for HVAC Community</span>
+            </div>
+
+            <!-- Practice Tests -->
+            <div class="footer-col">
+                <h5>Practice Tests</h5>
+                <ul>
+                    <li><a href="/universal.html">Universal</a></li>
+                    <li><a href="/core.html">Core</a></li>
+                    <li><a href="/type-1.html">Type I</a></li>
+                    <li><a href="/type-2.html">Type II</a></li>
+                    <li><a href="/type-3.html">Type III</a></li>
+                    <li><a href="/timed-exam.html">Timed Exam</a></li>
+                    <li><a href="/review.html">Fix My Mistakes</a></li>
+                </ul>
+            </div>
+
+            <!-- Study Resources -->
+            <div class="footer-col">
+                <h5>Study Resources</h5>
+                <ul>
+                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
+                    <li><a href="/flashcards.html">Flashcards</a></li>
+                    <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Certification Cost</a></li>
+                    <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
+                </ul>
+            </div>
+
+            <!-- Exam Prep -->
+            <div class="footer-col">
+                <h5>Exam Prep</h5>
+                <ul>
+                    <li><a href="/how-to-study-for-epa-608.html">How to Study</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate</a></li>
+                    <li><a href="/test-duration.html">Exam Duration</a></li>
+                </ul>
+            </div>
+
+            <!-- Tools & Info -->
+            <div class="footer-col">
+                <h5>Tools &amp; Info</h5>
+                <ul>
+                    <li><a href="/tutor.html">AI Study Helper</a></li>
+                    <li><a href="/weak-spots.html">Weak Spot Drill</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA608PracticeTest.net — Free forever for the HVAC community.</p>
+            <div style="display:flex;gap:16px;">
+                <a href="/policy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </div>
     </div>
-    <p style="margin-top:16px;font-size:12px">&copy; 2026 EPA608PracticeTest.net</p>
 </footer>
 
 </body>

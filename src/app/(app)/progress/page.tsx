@@ -99,9 +99,6 @@ export default async function ProgressPage() {
       </div>
       <p className="text-gray-500 text-sm mb-8">How well you&apos;ve mastered each concept area — green = ready, orange/red = needs work.</p>
 
-      {/* ═══ SECTION COVERAGE ═══ */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Knowledge Coverage</h2>
-
       {/* Section overview cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         {sectionCoverage.map(sec => {

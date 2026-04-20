@@ -16,6 +16,11 @@ type CategoryStats = {
   passes: number
 }
 
+const SLUG_MAP: Record<string, string> = {
+  'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2',
+  'Type III': 'type-3', 'Universal': 'universal',
+}
+
 export default async function HistoryPage() {
   const supabase = await createClient()
   const {
@@ -51,14 +56,19 @@ export default async function HistoryPage() {
     if (pct >= 70) byCategory[s.category].passes++
   })
 
-  // Group sessions by month for timeline
-  const grouped: Record<string, SessionRow[]> = {}
+  // Group sessions by month for timeline (ISO key = YYYY-MM for stable sorting)
+  const groupedRaw: Record<string, { label: string; sessions: SessionRow[] }> = {}
   rows.forEach(s => {
     const d = new Date(s.submitted_at!)
-    const key = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-    if (!grouped[key]) grouped[key] = []
-    grouped[key].push(s)
+    const isoKey = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`
+    const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+    if (!groupedRaw[isoKey]) groupedRaw[isoKey] = { label, sessions: [] }
+    groupedRaw[isoKey].sessions.push(s)
   })
+  // Sort months newest-first
+  const grouped = Object.entries(groupedRaw)
+    .sort(([a], [b]) => b.localeCompare(a))
+    .map(([, v]) => v)
 
   const CATEGORY_ORDER = ['Core', 'Type I', 'Type II', 'Type III', 'Universal']
   const orderedCategories = CATEGORY_ORDER.filter(c => byCategory[c])
@@ -139,10 +149,10 @@ export default async function HistoryPage() {
           {/* Timeline grouped by month */}
           <h2 className="text-base font-semibold text-gray-700 mb-4">All Sessions</h2>
           <div className="space-y-6">
-            {Object.entries(grouped).map(([month, monthSessions]) => (
-              <div key={month}>
+            {grouped.map(({ label, sessions: monthSessions }) => (
+              <div key={label}>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{month}</span>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{label}</span>
                   <div className="flex-1 h-px bg-gray-100" />
                   <span className="text-xs text-gray-400">{monthSessions.length} test{monthSessions.length !== 1 ? 's' : ''}</span>
                 </div>
@@ -151,10 +161,6 @@ export default async function HistoryPage() {
                     const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
                     const passed = pct >= 70
                     const date = new Date(s.submitted_at!)
-                    const SLUG_MAP: Record<string, string> = {
-                      'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2',
-                      'Type III': 'type-3', 'Universal': 'universal',
-                    }
                     const slug = SLUG_MAP[s.category] ?? 'core'
                     return (
                       <div key={i} className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex items-center justify-between gap-3">
@@ -163,7 +169,7 @@ export default async function HistoryPage() {
                           <div className="min-w-0">
                             <span className="text-sm font-medium text-gray-800">{s.category}</span>
                             <span className="text-xs text-gray-400 ml-2">
-                              {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })}
                               {' · '}
                               {s.score}/{s.total} correct
                             </span>
