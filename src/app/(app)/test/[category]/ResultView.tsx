@@ -188,10 +188,11 @@ function ELI5Button({ questionText, correctAnswer, userAnswer }: {
   )
 }
 
-export function ResultView({ result, category, questions }: {
+export function ResultView({ result, category, questions, onRetake }: {
   result: SessionResult
   category: string
   questions: QuestionPublic[]
+  onRetake: () => void
 }) {
   const { score, total, percentage, passed, results, sectionScores } = result
   const slug = SLUG_MAP[category] ?? category.toLowerCase()
@@ -260,7 +261,7 @@ export function ResultView({ result, category, questions }: {
         {/* Action buttons */}
         <div className="flex gap-3 mb-1">
           <button
-            onClick={() => window.location.href = `/test/${slug}`}
+            onClick={onRetake}
             className="flex-1 text-center px-5 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900">
             Retake Test
           </button>

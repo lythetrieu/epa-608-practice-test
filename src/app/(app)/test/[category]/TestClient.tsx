@@ -16,6 +16,21 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   const [result, setResult] = useState<SessionResult | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [retakeKey, setRetakeKey] = useState(0)
+
+  function handleRetake() {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    setResult(null)
+    setPhase('loading')
+    setSessionId(null)
+    setQuestions([])
+    setAnswers({})
+    setCurrentIdx(0)
+    setTimeLeft(1800)
+    setErrorMsg('')
+    setSubmitting(false)
+    setRetakeKey(k => k + 1)
+  }
 
   // Load questions
   useEffect(() => {
@@ -41,7 +56,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
         setPhase('active')
       })
       .catch(() => { setErrorMsg('Failed to load questions.'); setPhase('error') })
-  }, [category, mode])
+  }, [category, mode, retakeKey])
 
   // Timer
   useEffect(() => {
@@ -123,7 +138,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
     </div>
   )
 
-  if (result) return <ResultView result={result} category={category} questions={questions} />
+  if (result) return <ResultView result={result} category={category} questions={questions} onRetake={handleRetake} />
 
   return (
     <div className="h-[calc(100vh-3.5rem)] md:h-screen bg-gray-50 flex flex-col overflow-hidden">
