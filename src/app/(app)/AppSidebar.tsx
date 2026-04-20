@@ -67,7 +67,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         {/* Study */}
         <SectionLabel>Study</SectionLabel>
         <NavItem href="/learn"      icon={<BookOpen size={17} />} label="Study Path"  pathname={pathname} />
-        <NavItem href="/flashcards" icon={<Layers size={17} />}   label="Flashcards"  pathname={pathname} />
+        <NavItem href="/flashcards" icon={<Layers size={17} />}   label="Flashcards"  pathname={pathname} badge={!isPro ? 'Pro' : undefined} />
         <NavItem href="/tutor"      icon={<Bot size={17} />}      label="AI Tutor"    pathname={pathname} badge={!isPro ? 'Pro' : undefined} />
 
         {/* Practice */}
