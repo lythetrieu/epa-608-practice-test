@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import type { QuestionPublic, SessionResult } from '@/types'
 import { ResultView } from './ResultView'
 import { ReportButton } from './ReportButton'
@@ -114,6 +114,13 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
     return () => window.removeEventListener('keydown', handleKey)
   }, [phase, currentIdx, questions, answers])
 
+  const mainRef = useRef<HTMLElement>(null)
+
+  // Scroll question area back to top on every question change
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0, behavior: 'instant' })
+  }, [currentIdx])
+
   const formatTime = (s: number) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
   const q = questions[currentIdx]
   const answeredCount = Object.keys(answers).length
@@ -183,7 +190,7 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
       )}
 
       {/* ═══ QUESTION ═══ */}
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+      <main ref={mainRef} className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="w-full max-w-2xl mx-auto">
           <div className="flex items-start justify-between gap-2 mb-4 sm:mb-6">
             <p className="text-lg sm:text-xl font-semibold text-gray-900 leading-relaxed break-words">{q.question}</p>
