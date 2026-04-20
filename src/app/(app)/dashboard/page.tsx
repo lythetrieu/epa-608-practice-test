@@ -8,17 +8,17 @@ import { ProActivatedBanner } from './pro-activated-banner'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
-  Layers, Headphones, Bot, BarChart3, Lock, Flame,
+  Layers, Headphones, Bot, BarChart3, Flame,
   Play, Award, BookOpen,
 } from 'lucide-react'
 import ActivityHeatmap from './ActivityHeatmap'
 
-const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string; paidOnly: boolean }[] = [
-  { slug: 'core', label: 'Core', category: 'Core', icon: <FileText size={24} />, desc: 'Fundamentals & regulations', paidOnly: false },
-  { slug: 'type-1', label: 'Type I', category: 'Type I', icon: <Snowflake size={24} />, desc: 'Small appliances', paidOnly: true },
-  { slug: 'type-2', label: 'Type II', category: 'Type II', icon: <Wrench size={24} />, desc: 'High-pressure', paidOnly: true },
-  { slug: 'type-3', label: 'Type III', category: 'Type III', icon: <Factory size={24} />, desc: 'Low-pressure', paidOnly: true },
-  { slug: 'universal', label: 'Universal', category: 'Universal', icon: <Target size={24} />, desc: 'All sections combined', paidOnly: true },
+const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode; desc: string }[] = [
+  { slug: 'core',      label: 'Core',      category: 'Core',      icon: <FileText size={24} />, desc: 'Fundamentals & regulations' },
+  { slug: 'type-1',   label: 'Type I',    category: 'Type I',    icon: <Snowflake size={24} />, desc: 'Small appliances' },
+  { slug: 'type-2',   label: 'Type II',   category: 'Type II',   icon: <Wrench size={24} />,    desc: 'High-pressure' },
+  { slug: 'type-3',   label: 'Type III',  category: 'Type III',  icon: <Factory size={24} />,   desc: 'Low-pressure' },
+  { slug: 'universal',label: 'Universal', category: 'Universal', icon: <Target size={24} />,    desc: 'All sections combined' },
 ]
 
 export default async function DashboardPage() {
@@ -121,8 +121,6 @@ export default async function DashboardPage() {
     recommendedAction = { text: 'Start Core Practice', href: '/test/core?mode=practice', desc: 'New here? Start with practice mode — no timer, instant feedback.' }
   } else if (!bestScores['Core'] || bestScores['Core'] < 70) {
     recommendedAction = { text: 'Practice Core Again', href: '/test/core?mode=practice', desc: 'Keep practicing Core until you consistently score above 70%.' }
-  } else if (isFree) {
-    recommendedAction = { text: 'Upgrade to Unlock More', href: '/pricing', desc: 'You passed Core! Upgrade to access Type I, II, III.' }
   } else {
     const nextUnpassed = CATEGORIES.find(c => c.category !== 'Universal' && (!bestScores[c.category] || bestScores[c.category] < 70))
     if (nextUnpassed) {
@@ -205,23 +203,17 @@ export default async function DashboardPage() {
         <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Practice</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {CATEGORIES.map(c => {
-            const locked = c.paidOnly && isFree
             const best = bestScores[c.category]
             const passed = best !== undefined && best >= 70
             return (
               <Link
                 key={c.slug}
-                href={locked ? 'https://epa608practicetest.net/checkout.html' : `/test/${c.slug}`}
-                className={`flex flex-col items-center p-3 rounded-xl text-center transition-all min-h-[80px] justify-center ${
-                  locked
-                    ? 'bg-gray-50 border border-dashed border-gray-300'
-                    : 'bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm'
-                }`}
+                href={`/test/${c.slug}`}
+                className="flex flex-col items-center p-3 rounded-xl text-center transition-all min-h-[80px] justify-center bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm"
               >
-                <span className={`mb-1 ${locked ? 'text-gray-300' : ''}`}>{c.icon}</span>
-                <span className={`font-bold text-sm ${locked ? 'text-gray-400' : 'text-gray-900'}`}>{c.label}</span>
-                {locked && <Lock size={12} className="text-gray-400 mt-1" />}
-                {!locked && best !== undefined && (
+                <span className="mb-1">{c.icon}</span>
+                <span className="font-bold text-sm text-gray-900">{c.label}</span>
+                {best !== undefined && (
                   <span className={`text-xs font-bold mt-1 px-2 py-0.5 rounded-full ${passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
                     {best}%
                   </span>

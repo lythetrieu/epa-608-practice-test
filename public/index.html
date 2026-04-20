@@ -530,24 +530,7 @@
       margin-top: 18px; line-height: 1.7;
     }
 
-    /* ── FOOTER ── */
-    #site-footer {
-      background: var(--lk); border-top: 1px solid var(--lb1);
-    }
-    .footer-inner {
-      max-width: 1120px; margin: 0 auto; padding: 24px 28px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 14px;
-    }
-    .footer-copy {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--lt3);
-    }
-    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-    .footer-links a {
-      font-size: 12.5px; color: var(--lt3); text-decoration: none;
-      transition: color .15s;
-    }
-    .footer-links a:hover { color: var(--lt2); }
+    
 
     /* ── UTIL ── */
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
@@ -1889,19 +1872,96 @@ document.addEventListener('click', function() {
 <!-- ═══════════════════════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════════════════════ -->
-<footer id="site-footer">
-  <div class="footer-inner">
-    <span class="footer-copy">© 2026 EPA 608 Practice Test. All rights reserved.</span>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/study-guides.html">Study Guides</a>
-      <a href="/exam-prep.html">Exam Prep Guide</a>
-      <a href="/certification-types.html">Certification Types</a>
-      <a href="/faq.html">FAQ</a>
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/policy.html">Privacy</a>
-    </nav>
-  </div>
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr;">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-logo">EPA 608 Practice Test</div>
+                <p>Free AI-powered practice tests for HVAC technicians. Study smarter, pass faster.</p>
+                <span class="footer-badge">Forever Free for HVAC Community</span>
+            </div>
+
+            <!-- Column 1: Practice Tests -->
+            <div class="footer-col">
+                <h5>Practice Tests</h5>
+                <ul>
+                    <li><a href="/universal.html">Universal — All Sections</a></li>
+                    <li><a href="/core.html">Core — Regulations &amp; Safety</a></li>
+                    <li><a href="/type-1.html">Type I — Small Appliance Recovery</a></li>
+                    <li><a href="/type-2.html">Type II — High-Pressure Systems</a></li>
+                    <li><a href="/type-3.html">Type III — Low-Pressure Chillers</a></li>
+                    <li><a href="/review.html">Fix My Mistakes</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 2: Study Guides -->
+            <div class="footer-col">
+                <h5>Study Guides</h5>
+                <ul>
+                    <li><a href="/study-guides.html" class="footer-hub">Study Guides Hub</a></li>
+                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">EPA 608 Cheat Sheet</a></li>
+                    <li><a href="/study-guide-core.html">Core Section Guide</a></li>
+                    <li><a href="/study-guide-type-1.html">Type I Study Guide</a></li>
+                    <li><a href="/study-guide-type-2.html">Type II Study Guide</a></li>
+                    <li><a href="/study-guide-type-3.html">Type III Study Guide</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Certification Guide -->
+            <div class="footer-col">
+                <h5>Certification Guide</h5>
+                <ul>
+                    <li><a href="/epa-608-certification-complete-guide.html" class="footer-hub">Certification Guide</a></li>
+                    <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Certification Cost</a></li>
+                    <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
+                    <li><a href="/certification-types.html">Certification Types</a></li>
+                    <li><a href="/aim-act-changes.html">AIM Act &amp; HFC Changes</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Exam Prep -->
+            <div class="footer-col">
+                <h5>Exam Prep</h5>
+                <ul>
+                    <li><a href="/exam-prep.html" class="footer-hub">Exam Prep Hub</a></li>
+                    <li><a href="/how-to-study-for-epa-608.html">How to Study</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/epa-608-passing-score.html">What Score to Pass?</a></li>
+                    <li><a href="/test-strategies.html">Test Strategies</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate &amp; Difficulty</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Tools & Support -->
+            <div class="footer-col">
+                <h5>Tools &amp; Support</h5>
+                <ul>
+                    <li><a href="/tutor.html">AI Study Helper</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/policy.html">Privacy</a></li>
+                    <li><a href="/terms.html">Terms</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA608PracticeTest.net — Free forever for the HVAC community.</p>
+            <div style="display:flex;gap:16px;">
+                <a href="/policy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <script>

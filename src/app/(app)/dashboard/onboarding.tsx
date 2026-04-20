@@ -67,7 +67,7 @@ export function Onboarding({ show }: { show: boolean }) {
             </button>
           ) : (
             <Link
-              href="/practice/core"
+              href="/test/core"
               onClick={dismiss}
               className="px-5 py-2.5 bg-blue-800 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors"
             >

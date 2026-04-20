@@ -95,6 +95,38 @@ export function ResultView({ result, category, questions, onRetake }: {
           </div>
         )}
 
+        {/* ── Next step CTA ── */}
+        {(() => {
+          const NEXT_MAP: Record<string, string> = {
+            'Core': '/test/type-1', 'Type I': '/test/type-2',
+            'Type II': '/test/type-3', 'Type III': '/test/universal',
+          }
+          const nextHref = NEXT_MAP[category]
+          const nextLabel = NEXT_MAP[category]?.replace('/test/', '').replace('-', ' ').replace(/^\w/, c => c.toUpperCase())
+          if (passed && nextHref) {
+            return (
+              <Link href={nextHref}
+                className="block text-center py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors">
+                Next: {nextLabel} →
+              </Link>
+            )
+          }
+          if (!passed) {
+            const SLUG_MAP: Record<string, string> = {
+              'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2', 'Type III': 'type-3', 'Universal': 'universal'
+            }
+            const guideSlug = SLUG_MAP[category] ?? 'core'
+            return (
+              <Link href={`https://epa608practicetest.net/study-guide-${guideSlug}.html`}
+                target="_blank" rel="noopener"
+                className="block text-center py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors">
+                Study {category} Guide before retaking →
+              </Link>
+            )
+          }
+          return null
+        })()}
+
         {/* ── Actions ── */}
         <div className="flex gap-3">
           <button
