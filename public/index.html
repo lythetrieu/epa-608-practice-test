@@ -251,39 +251,46 @@
     }
 
     /* ── CERT SELECT ── */
-    #cert-select { background: var(--lk); padding: 72px 28px; }
+    #cert-select { background: #f1f5f9; padding: 72px 28px; }
     .cert-head { text-align: center; max-width: 700px; margin: 0 auto 40px; }
     .cert-head .section-h2 { font-size: clamp(26px, 3vw, 36px); color: var(--ltext); margin-bottom: 14px; }
     .cert-head .section-lead { font-size: 17px; font-weight: 300; color: var(--lt2); }
     .cert-grid {
       max-width: 1120px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
     }
     @media (max-width: 860px) { .cert-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 560px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
     .test-card {
-      background: var(--lk); border: 1px solid var(--lb1); border-radius: var(--r);
-      padding: 20px 18px; text-decoration: none;
+      background: #fff; border: 2px solid var(--lb1); border-radius: var(--r);
+      padding: 24px 20px; text-decoration: none;
       display: flex; flex-direction: column; gap: 10px;
       position: relative; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(15,31,61,.06);
       transition: transform .2s, border-color .2s, box-shadow .2s;
     }
     .test-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, var(--or), var(--gold));
       opacity: 0; transition: opacity .2s;
     }
-    .test-card:hover { transform: translateY(-3px); border-color: var(--or); box-shadow: 0 8px 28px rgba(249,115,22,.12); }
+    .test-card:hover { transform: translateY(-4px); border-color: var(--or); box-shadow: 0 10px 32px rgba(249,115,22,.15); }
     .test-card:hover::before { opacity: 1; }
     .test-card:hover .card-arrow { color: var(--or); transform: translateX(4px); }
+    .test-card.card-featured { border-color: var(--or); box-shadow: 0 4px 20px rgba(249,115,22,.15); }
+    .test-card.card-featured::before { opacity: 1; }
     .card-type {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600;
-      color: var(--or); text-transform: uppercase; letter-spacing: .1em;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+      color: var(--or); text-transform: uppercase; letter-spacing: .12em;
     }
-    .card-name { font-size: 14px; font-weight: 600; color: var(--ltext); line-height: 1.3; }
+    .card-name { font-size: 15px; font-weight: 700; color: var(--ltext); line-height: 1.3; }
     .card-meta {
       font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--lt3);
       margin-top: auto;
+    }
+    .card-cta {
+      margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--or);
+      display: flex; align-items: center; gap: 4px;
     }
     .card-arrow {
       color: var(--lt3); transition: color .2s, transform .2s;
@@ -1340,41 +1347,31 @@ document.addEventListener('click', function() {
       <span class="card-type">Core</span>
       <span class="card-name">Core Section</span>
       <span class="card-meta">25 Q · 70% pass · Proctored</span>
-      <span class="card-arrow" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
+      <span class="card-cta">Start Free →</span>
     </a>
     <a href="/type-1.html" class="test-card">
       <span class="card-type">Type I</span>
       <span class="card-name">Type I — Small Appliances</span>
       <span class="card-meta">25 Q · 84% pass · Open book</span>
-      <span class="card-arrow" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
+      <span class="card-cta">Start Free →</span>
     </a>
     <a href="/type-2.html" class="test-card">
       <span class="card-type">Type II</span>
       <span class="card-name">Type II — High Pressure</span>
       <span class="card-meta">25 Q · 70% pass · Open book</span>
-      <span class="card-arrow" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
+      <span class="card-cta">Start Free →</span>
     </a>
     <a href="/type-3.html" class="test-card">
       <span class="card-type">Type III</span>
       <span class="card-name">Type III — Low Pressure</span>
       <span class="card-meta">25 Q · 70% pass · Open book</span>
-      <span class="card-arrow" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
+      <span class="card-cta">Start Free →</span>
     </a>
-    <a href="/universal.html" class="test-card">
-      <span class="card-type">Universal</span>
-      <span class="card-name">Universal — All Sections</span>
+    <a href="/universal.html" class="test-card card-featured">
+      <span class="card-type">★ Most Popular</span>
+      <span class="card-name">Universal — All 4 Sections</span>
       <span class="card-meta">100 Q · All types combined</span>
-      <span class="card-arrow" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
+      <span class="card-cta">Start Free →</span>
     </a>
   </div>
 </section>
