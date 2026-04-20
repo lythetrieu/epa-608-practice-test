@@ -876,12 +876,9 @@ document.addEventListener('click', function() {
   <div class="section-title">By Category</div>
   <div class="cat-grid" id="cat-grid"></div>
 
-  <!-- Session history -->
-  <div class="section-title">
-    <span>Session History</span>
-    <a href="/review.html">Fix My Mistakes →</a>
+  <div style="text-align:right;margin-top:8px">
+    <a href="/history.html" style="font-size:13px;color:#003087;text-decoration:none;font-weight:600;">View full history →</a>
   </div>
-  <div id="session-area"></div>
 </div>
 
 <!-- Footer -->
@@ -1111,34 +1108,13 @@ function render(){
   });
   document.getElementById('cat-grid').innerHTML=catHtml;
 
-  // Session list
-  var sessionArea=document.getElementById('session-area');
+  // Show empty state if no data
   if(!completed.length){
-    sessionArea.innerHTML='<div class="empty-box">'
+    document.getElementById('cat-grid').innerHTML='<div class="empty-box" style="grid-column:1/-1">'
       +'<p>No completed sessions yet. Take a practice test to see your progress here.</p>'
       +'<a href="/">Start a Test</a>'
       +'</div>';
-    return;
   }
-
-  var sorted=completed.slice().reverse();
-  var html='<div class="session-list">';
-  sorted.forEach(function(h){
-    var pct=parseFloat(h.score)||0;
-    var pass=pct>=70;
-    var cl=pass?'good':'bad';
-    html+='<div class="session-row">'
-      +'<div class="session-left">'
-      +'<div class="session-cat">'+(h.category||h.type||'Practice')+'</div>'
-      +'<div class="session-date">'+fmtDate(h.date)+(h.time?' · '+h.time:'')+(h.total?' · '+h.total+' questions':'')+'</div>'
-      +'</div>'
-      +'<div class="session-right">'
-      +'<span class="session-pct" style="color:'+(pass?'#16a34a':'#ef4444')+'">'+Math.round(pct)+'%</span>'
-      +'<span class="session-badge '+(pass?'pass':'fail')+'">'+(pass?'Pass':'Fail')+'</span>'
-      +'</div></div>';
-  });
-  html+='</div>';
-  sessionArea.innerHTML=html;
 }
 
 function clearHistory(){

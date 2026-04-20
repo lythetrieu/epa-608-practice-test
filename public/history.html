@@ -847,10 +847,10 @@ document.addEventListener('click', function() {
 
 <div class="page">
   <div class="page-header">
-    <h1>My Progress</h1>
+    <h1>Test History</h1>
     <button class="clear-btn" onclick="clearHistory()">Clear History</button>
   </div>
-  <p class="page-sub">Track your performance across all test categories.</p>
+  <p class="page-sub">Every test you've completed — scores and dates at a glance.</p>
 
   <!-- Summary stats -->
   <div class="stats-grid">
@@ -859,14 +859,10 @@ document.addEventListener('click', function() {
     <div class="stat-card"><div class="stat-num green" id="stat-pass">0</div><div class="stat-label">Tests Passed</div></div>
   </div>
 
-  <!-- By Category -->
-  <div class="section-title">By Category</div>
-  <div class="cat-grid" id="cat-grid"></div>
-
   <!-- Session history -->
-  <div class="section-title">
-    <span>Session History</span>
-    <a href="/review.html">Fix My Mistakes →</a>
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+    <span>All Sessions</span>
+    <a href="/progress.html" style="font-size:13px;color:#003087;text-decoration:none;font-weight:600;">← Performance Overview</a>
   </div>
   <div id="session-area"></div>
 </div>
@@ -949,7 +945,7 @@ document.addEventListener('click', function() {
 </footer>
 <script src="includes.js"></script>
 <script>
-var HISTORY_KEY='epa608_history';
+var HISTORY_KEY='epa608History';
 var CATS=[
   {key:'Core',label:'Core',icon:'📝',href:'/core.html'},
   {key:'Type I',label:'Type I',icon:'❄️',href:'/type-1.html'},
@@ -994,35 +990,6 @@ function render(){
   }
 
   // By category
-  var bycat={};
-  CATS.forEach(function(c){bycat[c.key]={attempts:0,total:0,count:0};});
-  completed.forEach(function(h){
-    var k=h.category||h.type;
-    if(!bycat[k])return;
-    bycat[k].total+=(parseFloat(h.score)||0);
-    bycat[k].count++;
-    bycat[k].attempts++;
-  });
-
-  var catHtml='';
-  CATS.forEach(function(cat){
-    var s=bycat[cat.key];
-    var pct=s.count?Math.round(s.total/s.count):null;
-    var cl=getColor(pct);
-    catHtml+='<div class="cat-card">'
-      +'<div class="cat-card-header">'
-      +'<span class="cat-name">'+cat.icon+' '+cat.label+'</span>'
-      +'<span class="cat-pct '+(cl==='none'?'none':cl)+'">'+( pct!=null?pct+'%':'—')+'</span>'
-      +'</div>'
-      +'<div class="prog-bar"><div class="prog-fill '+cl+'" style="width:'+(pct||0)+'%"></div></div>'
-      +'<div class="cat-meta">'+(s.count?s.count+' attempt'+(s.count!==1?'s':''):'No tests yet')+'</div>'
-      +'<div class="cat-actions">'
-      +'<a class="cat-act-btn blue" href="'+cat.href+'">Practice</a>'
-      +'</div>'
-      +'</div>';
-  });
-  document.getElementById('cat-grid').innerHTML=catHtml;
-
   // Session list
   var sessionArea=document.getElementById('session-area');
   if(!completed.length){
