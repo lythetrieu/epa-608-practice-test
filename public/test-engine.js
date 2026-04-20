@@ -331,16 +331,13 @@ function initTestEngine(config) {
           html += '</div></div>';
         });
 
-        // Study links per category
-        html += '<div style="margin-top:14px;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:8px">Where to study next</div>';
-        html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px">';
+        // Study links per category — guide only (flashcards = Pro)
+        html += '<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px">';
         catsSorted.forEach(function(cat) {
           var links = STUDY_LINKS[cat];
           if (links) {
             html += '<a href="' + links.guide + '" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">'
               + '📖 ' + cat + ' Study Guide</a>';
-            html += '<a href="' + links.flash + '" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#f0fdf4;color:#166534;border:1.5px solid #bbf7d0;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">'
-              + '🃏 Flashcards</a>';
           }
         });
         html += '</div>';
@@ -361,17 +358,14 @@ function initTestEngine(config) {
 
       document.getElementById('resultDetails').innerHTML = html;
 
-      // Share buttons
+      // Share — single discreet link injected into score area
       var shareText = 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! Free HVAC certification prep:';
-      var shareUrl = 'https://epa608practicetest.net';
-      var shareHtml = '<div style="margin-top:16px;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">'
-        + '<div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:10px">Share your result</div>'
-        + '<div style="display:flex;flex-wrap:wrap;gap:8px">'
-        + '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 14px;background:#000;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;min-height:40px">𝕏 Twitter</a>'
-        + '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 14px;background:#1877f2;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;min-height:40px">Facebook</a>'
-        + '</div></div>';
       var shareContainer = document.getElementById('shareButtons');
-      if (shareContainer) shareContainer.innerHTML = shareHtml;
+      if (shareContainer) {
+        shareContainer.innerHTML = '<a href="https://twitter.com/intent/tweet?text='
+          + encodeURIComponent(shareText) + '&url=' + encodeURIComponent('https://epa608practicetest.net')
+          + '" target="_blank" rel="noopener" style="font-size:12px;color:rgba(255,255,255,0.6);text-decoration:underline">Share on X</a>';
+      }
 
       // Signup nudge (cookie user) — already injected by HTML, just show/hide
       var nudge = document.getElementById('signup-nudge');
