@@ -8,7 +8,7 @@ import type { Tier } from '@/types'
 import {
   LayoutDashboard, BookOpen, Layers, Bot, BarChart3, Target,
   Award, Settings, LogOut, Shield, Users, ChevronRight,
-  Snowflake, Wrench, Factory, FileText, Zap, Menu, X,
+  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, History,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -99,8 +99,9 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
 
         {/* Results */}
         <SectionLabel>Results</SectionLabel>
-        <NavItem href="/progress"            icon={<BarChart3 size={17} />} label="Progress"   pathname={pathname} />
-        <NavItem href="/progress/weak-spots" icon={<Target size={17} />}    label="Weak Areas"  pathname={pathname} />
+        <NavItem href="/progress"            icon={<BarChart3 size={17} />} label="Coverage"    pathname={pathname} />
+        <NavItem href="/progress/weak-spots" icon={<Target size={17} />}    label="Weak Spots"  pathname={pathname} />
+        <NavItem href="/history"             icon={<History size={17} />}   label="History"     pathname={pathname} />
         <NavItem href="/certificate"         icon={<Award size={17} />}     label="Badges"      pathname={pathname} />
 
         {/* Admin */}

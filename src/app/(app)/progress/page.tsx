@@ -12,12 +12,6 @@ type SessionRow = {
   submitted_at: string | null
 }
 
-type CategoryStats = {
-  attempts: number
-  totalScore: number
-  totalQ: number
-}
-
 export default async function ProgressPage() {
   const supabase = await createClient()
   const {
@@ -96,61 +90,22 @@ export default async function ProgressPage() {
     return { category: cat, concepts, mastered, attempted, totalConcepts: concepts.length }
   })
 
-  // Aggregate by category
-  const byCategory: Record<string, CategoryStats> = {}
-  sessions?.forEach((s: SessionRow) => {
-    if (!byCategory[s.category]) {
-      byCategory[s.category] = { attempts: 0, totalScore: 0, totalQ: 0 }
-    }
-    byCategory[s.category].attempts++
-    byCategory[s.category].totalScore += s.score ?? 0
-    byCategory[s.category].totalQ += s.total
-  })
-
   const totalSessions = sessions?.length ?? 0
-  const overallScore =
-    totalSessions > 0
-      ? Math.round(
-          (sessions!.reduce((acc, s) => acc + (s.score ?? 0), 0) /
-            sessions!.reduce((acc, s) => acc + s.total, 0)) *
-            100,
-        )
-      : 0
-  const passCount = sessions?.filter(
-    (s) => s.score !== null && Math.round((s.score / s.total) * 100) >= 70,
-  ).length ?? 0
+  const recentSessions = sessions?.slice(0, 3) ?? []
 
   return (
     <div className="p-3 sm:p-6 lg:p-8 max-w-3xl">
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-2xl font-bold text-gray-900">Your Progress</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Knowledge Coverage</h1>
         <Link
           href="/progress/weak-spots"
           className="text-sm font-medium text-blue-800 hover:underline flex items-center gap-1"
         >
           <span>🎯</span>
-          <span>View Weak Spots</span>
+          <span>Weak Spots</span>
         </Link>
       </div>
-      <p className="text-gray-500 text-sm mb-8">Track your performance across all test categories.</p>
-
-      {/* Summary stats */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8 sm:mb-10">
-        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
-          <div className="text-2xl sm:text-3xl font-bold text-blue-800">{totalSessions}</div>
-          <div className="text-xs sm:text-sm text-gray-500 mt-1">Total Tests</div>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
-          <div className={`text-2xl sm:text-3xl font-bold ${overallScore >= 70 ? 'text-green-600' : 'text-orange-500'}`}>
-            {overallScore}%
-          </div>
-          <div className="text-xs sm:text-sm text-gray-500 mt-1">Avg Score</div>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-3 sm:p-5 text-center">
-          <div className="text-2xl sm:text-3xl font-bold text-green-600">{passCount}</div>
-          <div className="text-xs sm:text-sm text-gray-500 mt-1">Tests Passed</div>
-        </div>
-      </div>
+      <p className="text-gray-500 text-sm mb-8">How well you&apos;ve mastered each concept area — green = ready, orange/red = needs work.</p>
 
       {/* ═══ SECTION COVERAGE ═══ */}
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Knowledge Coverage</h2>
@@ -225,80 +180,44 @@ export default async function ProgressPage() {
         </div>
       ))}
 
-      {/* Per-category breakdown */}
-      {Object.keys(byCategory).length > 0 && (
-        <>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">By Category</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            {Object.entries(byCategory).map(([cat, stats]) => {
-              const avg = Math.round((stats.totalScore / stats.totalQ) * 100)
-              const good = avg >= 70
-              return (
-                <div key={cat} className="bg-white rounded-xl border border-gray-200 p-5">
-                  <div className="font-semibold text-gray-800 mb-1">{cat}</div>
-                  <div
-                    className={`text-3xl font-bold mb-1 ${good ? 'text-green-600' : 'text-orange-500'}`}
-                  >
-                    {avg}%
-                  </div>
-                  <div className="text-sm text-gray-400 mb-3">
-                    {stats.attempts} attempt{stats.attempts !== 1 ? 's' : ''}
-                  </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all ${good ? 'bg-green-500' : 'bg-orange-400'}`}
-                      style={{ width: `${avg}%` }}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </>
-      )}
-
-      {/* Full session history */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Session History</h2>
+      {/* Recent tests — compact, link to full history */}
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-semibold text-gray-700">Recent Tests</h2>
+        <Link href="/history" className="text-xs text-blue-700 hover:underline font-medium">
+          Full history →
+        </Link>
+      </div>
       {totalSessions === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
-          <p className="text-gray-400 text-sm">No completed sessions yet.</p>
-          <Link href="/dashboard" className="mt-3 inline-block text-sm text-blue-800 hover:underline">
-            Start a test →
-          </Link>
+        <div className="bg-white rounded-xl border border-gray-100 p-6 text-center mb-8">
+          <p className="text-gray-400 text-sm">No tests yet — <Link href="/dashboard" className="text-blue-700 hover:underline">start one</Link></p>
         </div>
       ) : (
-        <div className="space-y-2">
-          {sessions?.map((s: SessionRow, i: number) => {
+        <div className="space-y-1.5 mb-8">
+          {recentSessions.map((s: SessionRow, i: number) => {
             const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
             const passed = pct >= 70
             return (
-              <div
-                key={i}
-                className="bg-white rounded-lg border border-gray-200 px-5 py-3.5 flex items-center justify-between"
-              >
+              <div key={i} className="bg-white rounded-lg border border-gray-200 px-4 py-2.5 flex items-center justify-between">
                 <div>
                   <span className="text-sm font-medium text-gray-800">{s.category}</span>
-                  <span className="text-xs text-gray-400 ml-3">
+                  <span className="text-xs text-gray-400 ml-2">
                     {new Date(s.submitted_at!).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span
-                    className={`text-sm font-bold ${passed ? 'text-green-600' : 'text-red-500'}`}
-                  >
-                    {pct}%
-                  </span>
-                  <span
-                    className={`text-xs px-1.5 py-0.5 rounded font-medium ${
-                      passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
-                    }`}
-                  >
+                  <span className={`text-sm font-bold ${passed ? 'text-green-600' : 'text-red-500'}`}>{pct}%</span>
+                  <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
                     {passed ? 'Pass' : 'Fail'}
                   </span>
                 </div>
               </div>
             )
           })}
+          {totalSessions > 3 && (
+            <Link href="/history" className="block text-center text-xs text-gray-400 hover:text-blue-700 pt-1">
+              +{totalSessions - 3} more sessions →
+            </Link>
+          )}
         </div>
       )}
     </div>
