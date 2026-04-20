@@ -1,351 +1,422 @@
 /**
- * EPA 608 Practice Test Engine (Free Demo)
- * - 10 questions per test
- * - 3 attempts per day per category
- * - Fisher-Yates shuffle for questions + options
- * - No explanations (signup CTA instead)
- * - Questions fetched from Supabase (866 questions), fallback to questions.json
+ * EPA 608 Practice Test Engine v2
+ * - Immediate feedback per question (select → reveal → next)
+ * - Explanations shown inline after each answer
+ * - Result screen: weak area analysis + study links + gentle Pro hint
  */
 
 var SUPABASE_URL = 'https://sequvmxgtmbirnixeril.supabase.co';
 var SUPABASE_ANON_KEY = 'sb_publishable_n0BnJRIVt7eVtekR-B0FnA_7NtQA4g_';
 
+var TOPIC_LABELS = {
+  'core-env':'Environmental Impact & Ozone','core-caa':'Clean Air Act Regulations',
+  'core-regs':'EPA Regulations & Compliance','core-sub':'Refrigerant Substitutes',
+  'core-ref':'Refrigerant Types','core-3rs':'Recovery, Recycling & Reclamation',
+  'core-rec':'Recovery Equipment','core-evac':'System Evacuation',
+  'core-safe':'Safety & Handling','core-ship':'Shipping & Storage',
+  't1-tech':'Type I Techniques','t1-rec':'Type I Recovery','t1-safe':'Type I Safety',
+  't2-ref':'Type II Refrigerants','t2-leak':'Leak Detection','t2-tech':'Type II Techniques',
+  't2-rec':'Type II Recovery','t2-repair':'System Repair',
+  't3-ref':'Type III Refrigerants','t3-rech':'Type III Recharge',
+  't3-rec':'Type III Recovery','t3-leak':'Type III Leak Detection','t3-repair':'Type III Repair'
+};
+
+var STUDY_LINKS = {
+  'Core':    { guide: '/study-guide-core.html',    practice: '/core.html',    flash: '/flashcards.html' },
+  'Type I':  { guide: '/study-guide-type-1.html',  practice: '/type-1.html',  flash: '/flashcards.html' },
+  'Type II': { guide: '/study-guide-type-2.html',  practice: '/type-2.html',  flash: '/flashcards.html' },
+  'Type III':{ guide: '/study-guide-type-3.html',  practice: '/type-3.html',  flash: '/flashcards.html' }
+};
+
+function getTopicLabel(subtopicId) {
+  if (!subtopicId) return null;
+  var prefix = subtopicId.replace(/-[\d.]+$/, '');
+  return TOPIC_LABELS[prefix] || null;
+}
+
 function fetchFromSupabase(category) {
-    var select = 'id,category,question,options,answer_text';
-    var base = SUPABASE_URL + '/rest/v1/questions?select=' + select;
-    var filter = category === 'Universal'
-        ? '&question=not.like.True or False*&limit=500'
-        : '&category=eq.' + encodeURIComponent(category) + '&question=not.like.True or False*&limit=500';
-    return fetch(base + filter, {
-        headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-        }
-    }).then(function(res) {
-        if (!res.ok) throw new Error('Supabase error');
-        return res.json();
-    });
+  var select = 'id,category,question,options,answer_text,explanation,subtopic_id';
+  var base = SUPABASE_URL + '/rest/v1/questions?select=' + select;
+  var filter = category === 'Universal'
+    ? '&question=not.like.True or False*&limit=500'
+    : '&category=eq.' + encodeURIComponent(category) + '&question=not.like.True or False*&limit=500';
+  return fetch(base + filter, {
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+  }).then(function(res) {
+    if (!res.ok) throw new Error('Supabase error');
+    return res.json();
+  });
 }
 
 function fetchQuestions(category) {
-    return fetchFromSupabase(category).then(function(data) {
-        if (!data || data.length === 0) throw new Error('No data');
-        return data;
-    }).catch(function() {
-        // Fallback to local questions.json
-        return fetch('questions.json').then(function(res) { return res.json(); });
-    });
+  return fetchFromSupabase(category).catch(function() {
+    return fetch('questions.json').then(function(res) { return res.json(); });
+  });
 }
 
-// Fisher-Yates shuffle
 function shuffle(arr) {
-    for (var i = arr.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
-    }
-    return arr;
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
 }
 
-// Daily attempt limiter
-function checkDailyLimit(category) {
-    var key = 'epa608_daily_' + category.replace(/\s+/g, '');
-    var data = JSON.parse(localStorage.getItem(key) || '{}');
-    var today = new Date().toDateString();
-    if (data.date !== today) return { allowed: true, count: 0 };
-    return { allowed: data.count < 3, count: data.count };
-}
 function recordAttempt(category) {
-    var key = 'epa608_daily_' + category.replace(/\s+/g, '');
-    var today = new Date().toDateString();
-    var data = JSON.parse(localStorage.getItem(key) || '{}');
-    if (data.date !== today) { data.date = today; data.count = 0; }
-    data.count++;
-    localStorage.setItem(key, JSON.stringify(data));
-    return data.count;
+  var key = 'epa608_daily_' + category.replace(/\s+/g, '');
+  var today = new Date().toDateString();
+  var data = JSON.parse(localStorage.getItem(key) || '{}');
+  if (data.date !== today) { data.date = today; data.count = 0; }
+  data.count++;
+  localStorage.setItem(key, JSON.stringify(data));
+  return data.count;
+}
+
+function isLoggedIn() {
+  try {
+    var raw = localStorage.getItem('sb-sequvmxgtmbirnixeril-auth-token');
+    return !!(raw && JSON.parse(raw)?.access_token);
+  } catch(e) { return false; }
 }
 
 function initTestEngine(config) {
-    var CATEGORY = config.category;         // 'Core', 'Type I', etc.
-    var HISTORY_KEY = config.historyKey;     // 'core', 'type1', etc.
-    var PASS_MSG = config.passMsg;
-    var FAIL_MSG = config.failMsg;
-    var QUESTIONS_PER_TEST = CATEGORY === 'Universal' ? 100 : 25;
-    var TIME_LIMIT = CATEGORY === 'Universal' ? 6000 : 1800; // Universal: 100min, others: 30min
+  var CATEGORY = config.category;
+  var HISTORY_KEY = config.historyKey;
+  var PASS_MSG = config.passMsg;
+  var FAIL_MSG = config.failMsg;
+  var QUESTIONS_PER_TEST = CATEGORY === 'Universal' ? 100 : 25;
+  var TIME_LIMIT = CATEGORY === 'Universal' ? 6000 : 1800;
 
-    var ctrl = {
-        questions: [],
-        shuffledOptions: [],
-        currentIdx: 0,
-        answers: [],
-        timer: null,
-        timeLeft: TIME_LIMIT,
+  // Inject inline explanation div after answer list
+  var ansList = document.getElementById('ansList');
+  if (ansList && !document.getElementById('inlineExplanation')) {
+    var expDiv = document.createElement('div');
+    expDiv.id = 'inlineExplanation';
+    expDiv.style.display = 'none';
+    ansList.parentNode.insertBefore(expDiv, ansList.nextSibling);
+  }
 
-        init: function() {
-            // No daily limit — unlimited practice
+  var ctrl = {
+    questions: [],
+    shuffledOptions: [],
+    currentIdx: 0,
+    answers: [],    // stores selected option index per question
+    timer: null,
+    timeLeft: TIME_LIMIT,
+    startedAt: null,
 
-            var self = this;
-            fetchQuestions(CATEGORY).then(function(data) {
-                var pool;
-                if (CATEGORY === 'Universal') {
-                    // Universal: 100 questions proportionally across all categories
-                    var cats = [
-                        { name: 'Core', n: 30 },
-                        { name: 'Type I', n: 20 },
-                        { name: 'Type II', n: 25 },
-                        { name: 'Type III', n: 25 }
-                    ];
-                    var picked = [];
-                    cats.forEach(function(c) {
-                        var catPool = data.filter(function(q) { return q.category === c.name; });
-                        shuffle(catPool);
-                        picked = picked.concat(catPool.slice(0, c.n));
-                    });
-                    self.questions = shuffle(picked);
-                } else {
-                    pool = data.filter(function(q) { return q.category === CATEGORY; });
-                    self.questions = shuffle([].concat(pool)).slice(0, QUESTIONS_PER_TEST);
-                }
-
-                if (self.questions.length === 0) {
-                    document.getElementById('qText').textContent = 'No questions available.';
-                    return;
-                }
-
-                // Shuffle options per question
-                self.shuffledOptions = self.questions.map(function(q) {
-                    var opts = [].concat(q.options);
-                    shuffle(opts);
-                    return opts;
-                });
-                self.answers = new Array(self.questions.length).fill(null);
-                self.startedAt = Date.now();
-                self.render();
-                self.startTimer();
-
-                // Ensure anon ID exists before any tracking calls
-                try {
-                    if (!localStorage.getItem('epa608_anon_id')) {
-                        localStorage.setItem('epa608_anon_id',
-                            'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
-                    }
-                    fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
-                    }).catch(function(){});
-                } catch(e) {}
-            }).catch(function() {
-                document.getElementById('qText').innerHTML = 'Error loading questions. <button onclick="location.reload()">Retry</button>';
-            });
-        },
-
-        render: function() {
-            var q = this.questions[this.currentIdx];
-            if (!q) return;
-            var opts = this.shuffledOptions[this.currentIdx];
-            document.getElementById('qText').textContent = q.question;
-            document.getElementById('questionNumber').textContent = 'Question ' + (this.currentIdx + 1) + ' of ' + this.questions.length;
-            document.getElementById('progressFill').style.width = ((this.currentIdx + 1) / this.questions.length * 100) + '%';
-
-            var list = document.getElementById('ansList');
-            list.innerHTML = '';
-            var self = this;
-            opts.forEach(function(opt, i) {
-                var btn = document.createElement('button');
-                btn.className = 'answer-btn' + (self.answers[self.currentIdx] === i ? ' selected' : '');
-                btn.textContent = opt;
-                btn.onclick = function() { self.select(i); };
-                list.appendChild(btn);
-            });
-
-            document.getElementById('prevBtn').disabled = this.currentIdx === 0;
-            document.getElementById('nextBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'none' : 'block';
-            document.getElementById('submitBtn').style.display = this.currentIdx === this.questions.length - 1 ? 'block' : 'none';
-        },
-
-        select: function(i) {
-            this.answers[this.currentIdx] = i;
-            this.render();
-        },
-
-        next: function() { if (this.currentIdx < this.questions.length - 1) { this.currentIdx++; this.render(); } },
-        prev: function() { if (this.currentIdx > 0) { this.currentIdx--; this.render(); } },
-
-        finish: function() {
-            clearInterval(this.timer);
-            var score = 0;
-            var details = [];
-            var self = this;
-            this.questions.forEach(function(q, i) {
-                var opts = self.shuffledOptions[i];
-                var userAnswer = self.answers[i] !== null ? opts[self.answers[i]] : null;
-                var isCorrect = userAnswer !== null && userAnswer.trim() === (q.answer_text || '').trim();
-                if (isCorrect) score++;
-                details.push({
-                    questionId: q.id || null,
-                    question: q.question,
-                    answers: opts,
-                    correctAnswer: opts.indexOf(q.answer_text),
-                    userAnswerIndex: self.answers[i],
-                    isCorrect: isCorrect,
-                    topic: q.subtopic_id || q.category || CATEGORY
-                });
-            });
-
-            var pct = Math.round((score / this.questions.length) * 100);
-            var attemptCount = recordAttempt(CATEGORY);
-            var remaining = 3 - attemptCount;
-
-            document.getElementById('testView').style.display = 'none';
-            document.getElementById('resultView').style.display = 'block';
-            document.getElementById('scoreValue').textContent = pct + '%';
-            document.getElementById('feedbackText').textContent = pct >= 70
-                ? PASS_MSG + ' You scored ' + score + '/' + this.questions.length + '.'
-                : FAIL_MSG + ' You scored ' + score + '/' + this.questions.length + '.';
-
-            // Result details — HVAC-friendly: large text, clear pass/fail per question
-            var wrongCount = details.filter(function(d){return !d.isCorrect;}).length;
-            var html = '';
-
-            // Summary bar
-            if (wrongCount > 0) {
-                html += '<div style="margin-top:20px;padding:14px 18px;background:#fef2f2;border:2px solid #fecaca;border-radius:12px;display:flex;align-items:center;gap:12px">'
-                    + '<span style="font-size:28px">⚠️</span>'
-                    + '<div><div style="font-size:17px;font-weight:800;color:#991b1b">' + wrongCount + ' question' + (wrongCount!==1?'s':'') + ' to review</div>'
-                    + '<div style="font-size:14px;color:#b91c1c;margin-top:2px">Study these before your next attempt</div></div>'
-                    + '</div>';
-            } else {
-                html += '<div style="margin-top:20px;padding:14px 18px;background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;display:flex;align-items:center;gap:12px">'
-                    + '<span style="font-size:28px">🎉</span>'
-                    + '<div style="font-size:17px;font-weight:800;color:#166534">Perfect score — all answers correct!</div>'
-                    + '</div>';
-            }
-
-            html += '<div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">';
-            details.forEach(function(d, i) {
-                var correct = d.isCorrect;
-                if (correct) {
-                    // Correct — compact green row
-                    html += '<div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px">';
-                    html += '<span style="font-size:22px;line-height:1;flex-shrink:0;margin-top:1px">✅</span>';
-                    html += '<div style="font-size:16px;font-weight:600;color:#166534;line-height:1.4">Q' + (i+1) + '. ' + d.question + '</div>';
-                    html += '</div>';
-                } else {
-                    var yourAns = d.userAnswerIndex !== null && d.userAnswerIndex >= 0 ? d.answers[d.userAnswerIndex] : 'Skipped';
-                    var corrAns = d.correctAnswer >= 0 ? d.answers[d.correctAnswer] : '—';
-                    // Wrong — expanded red card with full detail
-                    html += '<div style="background:#fff5f5;border:2px solid #fca5a5;border-radius:12px;padding:16px 18px">';
-                    html += '<div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px">';
-                    html += '<span style="font-size:22px;line-height:1;flex-shrink:0;margin-top:2px">❌</span>';
-                    html += '<div style="font-size:17px;font-weight:700;color:#7f1d1d;line-height:1.4">Q' + (i+1) + '. ' + d.question + '</div>';
-                    html += '</div>';
-                    html += '<div style="background:#fff;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">';
-                    html += '<div style="display:flex;align-items:baseline;gap-x:8px;gap:8px">'
-                        + '<span style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Your answer</span>'
-                        + '<span style="font-size:15px;font-weight:600;color:#dc2626">' + yourAns + '</span>'
-                        + '</div>';
-                    html += '<div style="display:flex;align-items:baseline;gap:8px">'
-                        + '<span style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Correct</span>'
-                        + '<span style="font-size:15px;font-weight:700;color:#16a34a">' + corrAns + '</span>'
-                        + '</div>';
-                    if (d.explanation) {
-                        html += '<div style="margin-top:4px;padding-top:10px;border-top:1px solid #f1f5f9;font-size:14px;color:#475569;line-height:1.6">'
-                            + '<span style="font-weight:700;color:#0f172a">Why: </span>' + d.explanation + '</div>';
-                    }
-                    html += '</div></div>';
-                }
-            });
-            html += '</div>';
-
-            document.getElementById('resultDetails').innerHTML = html;
-
-            // Social share buttons
-            var shareText = 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! Free HVAC certification prep:';
-            var shareUrl = 'https://epa608practicetest.net';
-            var shareHtml = '<div style="margin-top:20px;padding:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">'
-                + '<div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:12px">Share your result</div>'
-                + '<div style="display:flex;flex-wrap:wrap;gap:8px">'
-                + '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#000;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;min-height:44px">𝕏 Share on X</a>'
-                + '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#1877f2;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;min-height:44px">Facebook</a>'
-                + '<button onclick="navigator.clipboard.writeText(\'' + shareUrl + '\').then(function(){this.textContent=\'✓ Copied!\';}.bind(this))" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#fff;color:#374151;border:1.5px solid #d1d5db;font-size:14px;font-weight:600;border-radius:8px;cursor:pointer;min-height:44px">🔗 Copy link</button>'
-                + '</div></div>';
-
-            var shareContainer = document.getElementById('shareButtons');
-            if (shareContainer) shareContainer.innerHTML = shareHtml;
-
-            // Show popup: passed ≥70% OR every 3rd test attempt
-            var totalTests = parseInt(localStorage.getItem('epa608TotalTests') || '0') + 1;
-            localStorage.setItem('epa608TotalTests', totalTests);
-            var alreadyShared = localStorage.getItem('epa608Shared') === '1';
-            var shouldShowPopup = !alreadyShared && (pct >= 70 || totalTests % 3 === 0);
-
-            if (shouldShowPopup) {
-                var twitterLink = document.getElementById('popupTwitter');
-                var facebookLink = document.getElementById('popupFacebook');
-                var popupText = pct >= 70
-                    ? 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! 🎉 Try it free:'
-                    : 'Studying for the EPA 608 HVAC exam? This free practice test is really helpful:';
-                if (twitterLink) twitterLink.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(popupText) + '&url=' + encodeURIComponent(shareUrl);
-                if (facebookLink) facebookLink.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(popupText);
-                setTimeout(function() {
-                    var popup = document.getElementById('sharePopup');
-                    if (popup) {
-                        popup.style.display = 'flex';
-                        // Mark as shown so it doesn't spam every session
-                        localStorage.setItem('epa608Shared', '1');
-                    }
-                }, 2500);
-            }
-
-            // Save history with detailed results for review.html
-            var history = JSON.parse(localStorage.getItem('epa608History') || '[]');
-            history.push({
-                type: HISTORY_KEY,
-                category: CATEGORY,
-                score: pct,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                detailedResults: details
-            });
-            localStorage.setItem('epa608History', JSON.stringify(history));
-
-            // ── Anonymous session tracking ──────────────────────────────
-            (function() {
-                try {
-                    var anonId = localStorage.getItem('epa608_anon_id') || null;
-                    var timeSpent = this.startedAt ? Math.round((Date.now() - this.startedAt) / 1000) : null;
-                    fetch('https://epa608practicetest.net/api/anonymous-sessions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            anonymous_id: anonId,
-                            category: CATEGORY,
-                            score: score,
-                            total: this.questions.length,
-                            time_spent: timeSpent,
-                        })
-                    }).catch(function(){});
-                } catch(e) {}
-            }).call(this);
-
-            window.scrollTo(0, 0);
-        },
-
-        startTimer: function() {
-            var self = this;
-            this.timer = setInterval(function() {
-                self.timeLeft--;
-                var m = Math.floor(self.timeLeft / 60);
-                var s = self.timeLeft % 60;
-                var el = document.getElementById('countdown');
-                el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-                if (self.timeLeft <= 60) el.style.color = '#dc2626';
-                if (self.timeLeft <= 0) self.finish();
-            }, 1000);
+    init: function() {
+      var self = this;
+      fetchQuestions(CATEGORY).then(function(data) {
+        var pool;
+        if (CATEGORY === 'Universal') {
+          var cats = [
+            { name: 'Core', n: 30 }, { name: 'Type I', n: 20 },
+            { name: 'Type II', n: 25 }, { name: 'Type III', n: 25 }
+          ];
+          var picked = [];
+          cats.forEach(function(c) {
+            var catPool = data.filter(function(q) { return q.category === c.name; });
+            shuffle(catPool);
+            picked = picked.concat(catPool.slice(0, c.n));
+          });
+          self.questions = shuffle(picked);
+        } else {
+          pool = data.filter(function(q) { return q.category === CATEGORY; });
+          self.questions = shuffle([].concat(pool)).slice(0, QUESTIONS_PER_TEST);
         }
-    };
 
-    // Expose globally for onclick handlers
-    window.ctrl = ctrl;
-    document.addEventListener('DOMContentLoaded', function() { ctrl.init(); });
+        if (self.questions.length === 0) {
+          document.getElementById('qText').textContent = 'No questions available.';
+          return;
+        }
+
+        self.shuffledOptions = self.questions.map(function(q) {
+          var opts = [].concat(q.options);
+          shuffle(opts);
+          return opts;
+        });
+        self.answers = new Array(self.questions.length).fill(null);
+        self.startedAt = Date.now();
+        self.render();
+        self.startTimer();
+
+        try {
+          if (!localStorage.getItem('epa608_anon_id')) {
+            localStorage.setItem('epa608_anon_id',
+              'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
+          }
+          fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
+          }).catch(function(){});
+        } catch(e) {}
+
+      }).catch(function() {
+        document.getElementById('qText').innerHTML = 'Error loading questions. <button onclick="location.reload()">Retry</button>';
+      });
+    },
+
+    render: function() {
+      var q = this.questions[this.currentIdx];
+      if (!q) return;
+      var opts = this.shuffledOptions[this.currentIdx];
+      var isLast = this.currentIdx === this.questions.length - 1;
+      var alreadyAnswered = this.answers[this.currentIdx] !== null;
+
+      document.getElementById('qText').textContent = q.question;
+      document.getElementById('questionNumber').textContent =
+        'Question ' + (this.currentIdx + 1) + ' of ' + this.questions.length;
+      document.getElementById('progressFill').style.width =
+        ((this.currentIdx + 1) / this.questions.length * 100) + '%';
+
+      // Answer buttons
+      var list = document.getElementById('ansList');
+      list.innerHTML = '';
+      var self = this;
+      opts.forEach(function(opt, i) {
+        var btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.textContent = opt;
+        if (alreadyAnswered) {
+          btn.disabled = true;
+          if (opts[i] === q.answer_text) btn.classList.add('correct');
+          else if (i === self.answers[self.currentIdx]) btn.classList.add('incorrect');
+        } else {
+          btn.onclick = function() { self.selectAndReveal(i); };
+        }
+        list.appendChild(btn);
+      });
+
+      // Navigation buttons
+      document.getElementById('prevBtn').style.display = 'none'; // no going back in immediate mode
+      document.getElementById('nextBtn').style.display = alreadyAnswered && !isLast ? 'block' : 'none';
+      document.getElementById('nextBtn').textContent = 'Next Question →';
+      document.getElementById('submitBtn').style.display = alreadyAnswered && isLast ? 'block' : 'none';
+      document.getElementById('submitBtn').textContent = 'See My Results →';
+
+      // Inline explanation
+      var expEl = document.getElementById('inlineExplanation');
+      if (expEl) {
+        if (alreadyAnswered) {
+          this.renderExplanation(expEl, q, opts, this.answers[this.currentIdx]);
+          expEl.style.display = 'block';
+        } else {
+          expEl.style.display = 'none';
+          expEl.innerHTML = '';
+        }
+      }
+    },
+
+    renderExplanation: function(el, q, opts, userAnsIdx) {
+      var isCorrect = opts[userAnsIdx] === q.answer_text;
+      var html = '';
+      if (isCorrect) {
+        html = '<div style="margin-top:12px;padding:12px 16px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;display:flex;align-items:center;gap:10px">'
+          + '<span style="font-size:20px">✅</span>'
+          + '<span style="font-size:15px;font-weight:700;color:#166534">Correct!</span>'
+          + '</div>';
+      } else {
+        html = '<div style="margin-top:12px;padding:12px 16px;background:#fff5f5;border:1.5px solid #fca5a5;border-radius:10px">'
+          + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+          + '<span style="font-size:20px">❌</span>'
+          + '<span style="font-size:15px;font-weight:700;color:#991b1b">Incorrect</span>'
+          + '</div>'
+          + '<div style="font-size:14px;color:#7f1d1d;margin-bottom:4px">'
+          + 'Correct answer: <strong style="color:#16a34a">' + q.answer_text + '</strong></div>';
+        if (q.explanation) {
+          html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid #fecaca;font-size:13px;color:#475569;line-height:1.6">'
+            + '<strong style="color:#0f172a">Why: </strong>' + q.explanation + '</div>';
+        }
+        html += '</div>';
+      }
+      el.innerHTML = html;
+    },
+
+    selectAndReveal: function(i) {
+      if (this.answers[this.currentIdx] !== null) return;
+      this.answers[this.currentIdx] = i;
+      this.render(); // re-render with locked state + feedback
+    },
+
+    next: function() {
+      if (this.currentIdx < this.questions.length - 1) {
+        this.currentIdx++;
+        this.render();
+        // Scroll question into view smoothly
+        var qEl = document.getElementById('qText');
+        if (qEl) qEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+
+    prev: function() { /* disabled in immediate mode */ },
+
+    finish: function() {
+      clearInterval(this.timer);
+      var score = 0;
+      var wrongByTopic = {};   // topic label → count
+      var wrongByCategory = {}; // category → count
+      var details = [];
+      var self = this;
+
+      this.questions.forEach(function(q, i) {
+        var opts = self.shuffledOptions[i];
+        var userAnswer = self.answers[i] !== null ? opts[self.answers[i]] : null;
+        var isCorrect = userAnswer !== null && userAnswer.trim() === (q.answer_text || '').trim();
+        if (isCorrect) score++;
+
+        if (!isCorrect) {
+          // Group by readable topic
+          var topicLabel = getTopicLabel(q.subtopic_id) || q.category || CATEGORY;
+          wrongByTopic[topicLabel] = (wrongByTopic[topicLabel] || 0) + 1;
+          var cat = q.category || CATEGORY;
+          wrongByCategory[cat] = (wrongByCategory[cat] || 0) + 1;
+        }
+
+        details.push({
+          questionId: q.id || null,
+          question: q.question,
+          answers: opts,
+          correctAnswer: opts.indexOf(q.answer_text),
+          userAnswerIndex: self.answers[i],
+          isCorrect: isCorrect,
+          topic: q.subtopic_id || q.category || CATEGORY
+        });
+      });
+
+      var pct = Math.round((score / this.questions.length) * 100);
+      var passed = pct >= 70;
+      recordAttempt(CATEGORY);
+
+      document.getElementById('testView').style.display = 'none';
+      document.getElementById('resultView').style.display = 'block';
+
+      var wrongCount = this.questions.length - score;
+
+      // Score display
+      document.getElementById('scoreValue').textContent = pct + '%';
+      document.getElementById('feedbackText').innerHTML = passed
+        ? '<span style="color:#16a34a;font-weight:700">✓ Passed!</span> ' + score + '/' + this.questions.length + ' correct'
+        : '<span style="color:#dc2626;font-weight:700">✗ Not passed</span> — ' + score + '/' + this.questions.length + ' correct · need ' + Math.ceil(this.questions.length * 0.7);
+
+      // Weak area analysis
+      var html = '';
+
+      if (wrongCount === 0) {
+        html = '<div style="margin:20px 0;padding:16px 20px;background:#f0fdf4;border:2px solid #86efac;border-radius:14px;display:flex;align-items:center;gap:12px">'
+          + '<span style="font-size:32px">🎉</span>'
+          + '<div><div style="font-size:17px;font-weight:800;color:#166534">Perfect score!</div>'
+          + '<div style="font-size:13px;color:#15803d;margin-top:2px">Ready to try the next section or Universal exam.</div></div>'
+          + '</div>';
+      } else {
+        // Weak areas section
+        var topicsSorted = Object.keys(wrongByTopic).sort(function(a,b){ return wrongByTopic[b]-wrongByTopic[a]; });
+        var catsSorted = Object.keys(wrongByCategory).sort(function(a,b){ return wrongByCategory[b]-wrongByCategory[a]; });
+
+        html += '<div style="margin:20px 0">';
+        html += '<div style="font-size:15px;font-weight:800;color:#0f172a;margin-bottom:10px">📌 Where you need work</div>';
+
+        // Topic breakdown
+        topicsSorted.slice(0, 5).forEach(function(topic) {
+          var count = wrongByTopic[topic];
+          var bar = Math.round((count / wrongCount) * 100);
+          html += '<div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-bottom:8px">';
+          html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+          html += '<span style="font-size:13px;font-weight:600;color:#0f172a">' + topic + '</span>';
+          html += '<span style="font-size:12px;font-weight:700;color:#dc2626">' + count + ' wrong</span>';
+          html += '</div>';
+          html += '<div style="height:6px;background:#f1f5f9;border-radius:4px;overflow:hidden">';
+          html += '<div style="height:100%;width:' + bar + '%;background:#ef4444;border-radius:4px"></div>';
+          html += '</div></div>';
+        });
+
+        // Study links per category
+        html += '<div style="margin-top:14px;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:8px">Where to study next</div>';
+        html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px">';
+        catsSorted.forEach(function(cat) {
+          var links = STUDY_LINKS[cat];
+          if (links) {
+            html += '<a href="' + links.guide + '" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">'
+              + '📖 ' + cat + ' Study Guide</a>';
+            html += '<a href="' + links.flash + '" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#f0fdf4;color:#166534;border:1.5px solid #bbf7d0;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">'
+              + '🃏 Flashcards</a>';
+          }
+        });
+        html += '</div>';
+
+        // Pro hint — only if ≥3 wrong, subtle, inline
+        if (wrongCount >= 3) {
+          html += '<div style="margin-top:12px;display:flex;align-items:center;gap-x:10px;gap:10px;flex-wrap:wrap">';
+          html += '<span style="font-size:18px">⚡</span>';
+          html += '<span style="font-size:12px;color:#64748b;flex:1">';
+          html += '<strong style="color:#0f172a">Blind Spot Drill</strong> auto-builds a test targeting exactly these '
+            + topicsSorted.slice(0,3).join(', ') + '.';
+          html += ' <a href="https://epa608practicetest.net/checkout.html" style="color:#1d4ed8;font-weight:600;text-decoration:underline">Unlock Pro — $14.99</a>';
+          html += '</span></div>';
+        }
+
+        html += '</div>';
+      }
+
+      document.getElementById('resultDetails').innerHTML = html;
+
+      // Share buttons
+      var shareText = 'I scored ' + pct + '% on the EPA 608 ' + CATEGORY + ' Practice Test! Free HVAC certification prep:';
+      var shareUrl = 'https://epa608practicetest.net';
+      var shareHtml = '<div style="margin-top:16px;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">'
+        + '<div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:10px">Share your result</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:8px">'
+        + '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 14px;background:#000;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;min-height:40px">𝕏 Twitter</a>'
+        + '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 14px;background:#1877f2;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;min-height:40px">Facebook</a>'
+        + '</div></div>';
+      var shareContainer = document.getElementById('shareButtons');
+      if (shareContainer) shareContainer.innerHTML = shareHtml;
+
+      // Signup nudge (cookie user) — already injected by HTML, just show/hide
+      var nudge = document.getElementById('signup-nudge');
+      if (nudge) nudge.style.display = isLoggedIn() ? 'none' : 'flex';
+
+      // Save history
+      var history = JSON.parse(localStorage.getItem('epa608History') || '[]');
+      history.push({
+        type: HISTORY_KEY, category: CATEGORY, score: pct,
+        date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(),
+        detailedResults: details
+      });
+      localStorage.setItem('epa608History', JSON.stringify(history));
+
+      // Anonymous tracking
+      try {
+        var anonId = localStorage.getItem('epa608_anon_id') || null;
+        var timeSpent = this.startedAt ? Math.round((Date.now() - this.startedAt) / 1000) : null;
+        fetch('https://epa608practicetest.net/api/anonymous-sessions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ anonymous_id: anonId, category: CATEGORY, score: score,
+            total: this.questions.length, time_spent: timeSpent })
+        }).catch(function(){});
+      } catch(e) {}
+
+      window.scrollTo(0, 0);
+    },
+
+    startTimer: function() {
+      var self = this;
+      this.timer = setInterval(function() {
+        self.timeLeft--;
+        var m = Math.floor(self.timeLeft / 60);
+        var s = self.timeLeft % 60;
+        var el = document.getElementById('countdown');
+        if (el) {
+          el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+          if (self.timeLeft <= 60) el.style.color = '#dc2626';
+        }
+        if (self.timeLeft <= 0) self.finish();
+      }, 1000);
+    }
+  };
+
+  window.ctrl = ctrl;
+  document.addEventListener('DOMContentLoaded', function() { ctrl.init(); });
 }
