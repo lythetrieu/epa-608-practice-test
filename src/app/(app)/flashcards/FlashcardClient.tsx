@@ -28,6 +28,7 @@ const TIER_CATEGORIES: Record<Tier, string[]> = {
   free: ['Core'],
   starter: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
   ultimate: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
+  pro: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
 }
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D']

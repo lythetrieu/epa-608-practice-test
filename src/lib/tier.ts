@@ -65,6 +65,7 @@ export function getTierLabel(tier: Tier): string {
     free: 'Free',
     starter: 'Pro',
     ultimate: 'Pro',
+    pro: 'Pro',
   }
   return labels[tier]
 }

@@ -62,7 +62,7 @@ async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: 
           <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-bottom:24px;">
             <p style="font-size:13px;color:#15803d;font-weight:600;margin:0 0 8px;">✓ What's included in your Pro account:</p>
             <ul style="font-size:13px;color:#374151;margin:0;padding-left:20px;line-height:1.8;">
-              <li>530+ ESCO & SkillCat exam questions</li>
+              <li>866 practice questions (all 4 sections)</li>
               <li>AI Tutor — 1,000 questions/day</li>
               <li>Weak Spot Drill + Progress Analytics</li>
               <li>All future features, forever</li>
@@ -131,13 +131,31 @@ export async function POST(request: NextRequest) {
 
     if (profile) {
       // Existing user → upgrade immediately
-      await admin.from('users_profile').update({
+      const { error: upgradeError } = await admin.from('users_profile').update({
         tier: 'starter',
         lifetime_access: true,
       }).eq('id', profile.id)
 
+      if (upgradeError) {
+        console.error('Upgrade failed for existing user:', upgradeError)
+        return NextResponse.json({ error: 'Upgrade failed' }, { status: 500, headers: HEADERS })
+      }
+
       // Clean up pending_upgrades
       await admin.from('pending_upgrades').delete().eq('email', payerEmail)
+
+      // Send Pro welcome email to existing users too
+      const { data: configRow } = await admin
+        .from('app_config')
+        .select('value')
+        .eq('key', 'resend_api_key')
+        .single()
+      const resendKey = configRow?.value
+      if (resendKey) {
+        await sendProWelcomeEmail(resendKey, payerEmail, 'https://epa608practicetest.net/dashboard').catch(err =>
+          console.error('Resend email failed (existing user):', err)
+        )
+      }
 
       return NextResponse.json({ ok: true, email: payerEmail, newAccount: false }, { headers: HEADERS })
     }
@@ -162,7 +180,7 @@ export async function POST(request: NextRequest) {
     const { data: linkData } = await admin.auth.admin.generateLink({
       type: 'recovery',
       email: payerEmail,
-      options: { redirectTo: 'https://epa608practicetest.net/dashboard' },
+      options: { redirectTo: 'https://epa608practicetest.net/reset-password' },
     })
 
     const setupLink = linkData?.properties?.action_link

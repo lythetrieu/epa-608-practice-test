@@ -2,12 +2,13 @@
 // Tiers
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type Tier = 'free' | 'starter' | 'ultimate'
+export type Tier = 'free' | 'starter' | 'ultimate' | 'pro'
 
 export const TIER_RANK: Record<Tier, number> = {
   free: 0,
   starter: 1,
   ultimate: 2,
+  pro: 2,
 }
 
 export const TIER_LIMITS = {
@@ -36,6 +37,18 @@ export const TIER_LIMITS = {
     hasCertificate: true,
   },
   ultimate: {
+    questionsPerDay: Infinity,
+    categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
+    hasExplanations: true,
+    hasProgress: true,
+    hasProgressLimit: Infinity,
+    hasBlindSpot: true,
+    hasRadarChart: true,
+    aiQueriesPerDay: 1000,
+    hasPDF: true,
+    hasCertificate: true,
+  },
+  pro: {
     questionsPerDay: Infinity,
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,

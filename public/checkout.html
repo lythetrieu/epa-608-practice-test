@@ -6,7 +6,7 @@
     <title>Checkout — EPA 608 Pro Lifetime Access</title>
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -15,467 +15,215 @@
         gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
-    <!-- PayPal JS SDK with card-fields -->
+    <!-- PayPal SDK — buttons + card-fields -->
     <script src="https://www.paypal.com/sdk/js?client-id=AYohdNmC16sq6MerpGN4CyurCTIghChS2YRdMgi9e3m9N3_1PDt7oZ8BJrKYteU67JSmvxhTXe9RPVSt&currency=USD&components=buttons,card-fields&enable-funding=card,paylater,venmo&intent=capture"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
 
+        .checkout-header {
+            background: #0f172a; padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .checkout-header .logo { color: #fff; font-size: 16px; font-weight: 800; text-decoration: none; }
+        .checkout-header .back-link { color: rgba(255,255,255,.55); font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .checkout-header .back-link:hover { color: #fff; }
+        .secure-badge { color: rgba(255,255,255,.6); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+
         .page-wrap {
-            max-width: 960px;
-            margin: 0 auto;
+            max-width: 960px; margin: 0 auto;
             padding: 32px 16px 60px;
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 32px;
-            align-items: start;
+            display: grid; grid-template-columns: 1fr 400px;
+            gap: 32px; align-items: start;
         }
 
-        /* ── Order Summary (left) ── */
+        /* Order Summary */
         .order-summary {
-            background: #fff;
-            border-radius: 16px;
-            padding: 28px 28px 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,.07);
+            background: #fff; border-radius: 16px;
+            padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,.07);
         }
-        .order-summary h2 {
-            font-size: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            color: #64748b;
-            margin-bottom: 20px;
-        }
-        .product-row {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        .product-icon {
-            width: 52px; height: 52px;
-            background: linear-gradient(135deg, #0f172a, #1a4080);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        .product-name { font-size: 17px; font-weight: 700; color: #0f172a; line-height: 1.3; }
+        .order-summary h2 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin-bottom: 20px; }
+        .product-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+        .product-icon { width: 52px; height: 52px; background: linear-gradient(135deg,#0f172a,#1a4080); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        .product-name { font-size: 17px; font-weight: 700; color: #0f172a; }
         .product-desc { font-size: 13px; color: #64748b; margin-top: 4px; }
-        .product-badge {
-            display: inline-block;
-            background: #dbeafe;
-            color: #1d4ed8;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-top: 6px;
-        }
+        .product-badge { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 6px; }
 
-        .feature-list {
-            list-style: none;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 16px;
-            margin-bottom: 20px;
-        }
-        .feature-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            font-size: 13px;
-            color: #475569;
-            padding: 4px 0;
-        }
-        .feature-list li::before { content: '✓'; color: #007acc; font-weight: 700; flex-shrink: 0; }
+        .feature-list { list-style: none; border-top: 1px solid #f1f5f9; padding-top: 16px; margin-bottom: 20px; }
+        .feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #475569; padding: 4px 0; }
+        .feature-list li::before { content: '✓'; color: #16a34a; font-weight: 700; flex-shrink: 0; }
 
-        .price-summary {
-            border-top: 1px solid #f1f5f9;
-            padding-top: 16px;
-        }
-        .price-row-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 6px;
-        }
-        .price-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 18px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px solid #e2e8f0;
-        }
-        .price-total .was {
-            font-size: 14px;
-            font-weight: 500;
-            color: #94a3b8;
-            text-decoration: line-through;
-            margin-right: 8px;
-        }
-        .price-total .save-pill {
-            background: #dcfce7;
-            color: #15803d;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
+        .price-summary { border-top: 1px solid #f1f5f9; padding-top: 16px; }
+        .price-row { display: flex; justify-content: space-between; font-size: 14px; color: #64748b; margin-bottom: 6px; }
+        .price-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 10px; padding-top: 10px; border-top: 2px solid #e2e8f0; }
+        .was { font-size: 14px; font-weight: 400; color: #94a3b8; text-decoration: line-through; margin-right: 6px; }
+        .save-pill { background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
 
-        .guarantee-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 14px 16px;
-            margin-top: 16px;
-            font-size: 13px;
-            color: #475569;
-            display: flex;
-            gap: 10px;
-        }
-        .guarantee-box .g-icon { font-size: 20px; flex-shrink: 0; }
+        .guarantee-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-top: 16px; font-size: 13px; color: #475569; display: flex; gap: 10px; }
+        .guarantee-box .icon { font-size: 20px; flex-shrink: 0; }
 
-        /* ── Checkout Panel (right) ── */
-        .checkout-panel {
-            background: #fff;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 1px 4px rgba(0,0,0,.07);
-            position: sticky;
-            top: 24px;
-        }
-        .checkout-panel h2 {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-        .checkout-panel .subtitle {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 24px;
-        }
+        /* Checkout panel */
+        .checkout-panel { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,.07); position: sticky; top: 24px; }
+        .checkout-panel h2 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+        .checkout-panel .subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; }
 
-        /* Email field */
-        .email-section { margin-bottom: 20px; }
-        .email-section label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
-        .email-section input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-            transition: border-color .15s;
-        }
-        .email-section input:focus { border-color: #007acc; }
+        /* Promo */
+        .email-field { width: 100%; padding: 11px 13px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box; margin-bottom: 14px; }
+        .email-field:focus { border-color: #007acc; }
+        .email-field.error { border-color: #dc2626; }
+        .email-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 5px; display: block; }
+        .promo-toggle { font-size: 12px; color: #64748b; background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 4px; text-decoration: underline; }
+        .promo-toggle:hover { color: #374151; }
+        .promo-row { display: none; flex-direction: row; gap: 8px; margin-bottom: 6px; }
+        .promo-row.open { display: flex; }
+        .promo-input { flex: 1; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; text-transform: uppercase; }
+        .promo-input:focus { border-color: #007acc; }
+        .promo-apply-btn { padding: 10px 16px; background: #0f172a; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .promo-apply-btn:hover { background: #1e293b; }
+        .promo-msg { font-size: 12px; margin-bottom: 12px; display: none; }
+        .promo-msg.ok { color: #15803d; display: block; }
+        .promo-msg.err { color: #dc2626; display: block; }
 
-        /* PayPal button area */
-        #paypal-checkout-btn { min-height: 48px; }
+        /* PayPal button */
+        #paypal-btn-wrap { min-height: 50px; }
 
         /* Divider */
-        .pay-divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 18px 0;
-            color: #94a3b8;
-            font-size: 12px;
-        }
-        .pay-divider::before, .pay-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e2e8f0;
-        }
+        .pay-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: #94a3b8; font-size: 12px; }
+        .pay-divider::before, .pay-divider::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
 
-        /* Card form */
-        .card-section-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .card-field-wrap { margin-bottom: 10px; }
-        .card-field-wrap label { display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 5px; }
-
-        /* PayPal CardFields renders iframe inside these — must have a height */
-        .card-field-box {
+        /* Card fields — compact, no labels */
+        .card-group {
             border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            height: 46px;
-            padding: 0 2px;
-            transition: border-color .15s;
+            border-radius: 10px;
+            overflow: hidden;
             background: #fff;
         }
-        .card-field-box.focused { border-color: #007acc; }
-
-        .card-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        .card-name-input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-            transition: border-color .15s;
-        }
-        .card-name-input:focus { border-color: #007acc; }
-
-        .pay-btn {
-            width: 100%;
-            padding: 15px;
-            background: #0f172a;
-            color: #fff;
+        .card-group .card-field-box {
+            height: 46px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 14px;
-            transition: background .15s, transform .1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            border-bottom: 1.5px solid #e2e8f0;
+            transition: background .15s;
         }
+        .card-group .card-field-box:last-child { border-bottom: none; }
+        .card-group .card-row-2 { display: grid; grid-template-columns: 1fr 1fr; }
+        .card-group .card-row-2 .card-field-box { border-bottom: none; border-right: 1.5px solid #e2e8f0; }
+        .card-group .card-row-2 .card-field-box:last-child { border-right: none; }
+        .card-group:focus-within { border-color: #007acc; }
+
+        /* Pay button */
+        .pay-btn { width: 100%; padding: 15px; background: #0f172a; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: background .15s, transform .1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .pay-btn:hover { background: #1e293b; }
         .pay-btn:active { transform: scale(.98); }
         .pay-btn:disabled { background: #94a3b8; cursor: not-allowed; }
-
-        .pay-btn .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,.4);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin .7s linear infinite;
-            display: none;
-        }
+        .pay-btn .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
         .pay-btn.loading .spinner { display: block; }
-        .pay-btn.loading .btn-text { opacity: 0.7; }
-
+        .pay-btn.loading .btn-text { opacity: .7; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .secure-note {
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
+        .error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
 
-        .terms-note {
-            font-size: 11px;
-            color: #94a3b8;
-            text-align: center;
-            margin-top: 10px;
-            line-height: 1.6;
-        }
+        .secure-note { text-align: center; font-size: 12px; color: #94a3b8; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .terms-note { font-size: 11px; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.6; }
         .terms-note a { color: #64748b; }
 
-        /* Card not eligible fallback */
-        .card-unavailable {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 14px;
-            font-size: 13px;
-            color: #64748b;
-            text-align: center;
-        }
-
-        /* Error message */
-        .error-msg {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-            font-size: 13px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Success overlay */
-        #success-overlay {
-            display: none;
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,.65);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .success-box {
-            background: #fff;
-            border-radius: 20px;
-            padding: 44px 36px;
-            max-width: 460px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 24px 60px rgba(0,0,0,.25);
-        }
+        /* Success */
+        #success-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
+        .success-box { background: #fff; border-radius: 20px; padding: 44px 36px; max-width: 460px; width: 100%; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,.25); }
         .success-box .emoji { font-size: 56px; margin-bottom: 16px; }
         .success-box h2 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
         .success-box p { font-size: 15px; color: #64748b; line-height: 1.7; margin-bottom: 8px; }
-        .success-box .goto-btn {
-            display: inline-block;
-            background: #007acc;
-            color: #fff;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 16px;
-            margin-top: 20px;
-        }
+        .success-box .goto-btn { display: inline-block; background: #007acc; color: #fff; padding: 14px 32px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 16px; margin-top: 20px; }
 
-        /* Mobile */
         @media (max-width: 720px) {
             .page-wrap { grid-template-columns: 1fr; }
             .checkout-panel { position: static; }
         }
-
-        /* Header bar */
-        .checkout-header {
-            background: #0f172a;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .checkout-header .logo {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 800;
-            text-decoration: none;
-        }
-        .checkout-header .back-link {
-            color: rgba(255,255,255,.55);
-            font-size: 13px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .checkout-header .back-link:hover { color: #fff; }
-        .secure-badge {
-            color: rgba(255,255,255,.6);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
     </style>
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"EPA 608 Practice Test","url":"https://epa608practicetest.net","logo":"https://epa608practicetest.net/images/og-image.jpg","description":"Free EPA 608 practice test platform helping HVAC technicians pass their Section 608 certification exam.","foundingDate":"2024","founder":{"@type":"Person","name":"Lý Thế Triều","sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]},"sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]}
+    </script>
 </head>
 <body>
 
-<!-- Header -->
 <div class="checkout-header">
     <a href="/pricing.html" class="back-link">← Back</a>
     <a href="/" class="logo">EPA 608 Practice Test</a>
     <div class="secure-badge">🔒 Secure Checkout</div>
 </div>
 
-<!-- Main -->
 <div class="page-wrap">
 
-    <!-- Left: Order Summary -->
+    <!-- Order Summary -->
     <div class="order-summary">
         <h2>Order Summary</h2>
-
         <div class="product-row">
             <div class="product-icon">🎓</div>
             <div>
                 <div class="product-name">EPA 608 Pro — Lifetime Access</div>
                 <div class="product-desc">Everything you need to pass the EPA 608 exam</div>
-                <div class="product-badge">Founding Price · One-time</div>
+                <div class="product-badge">Founding Price · One-time · No subscription</div>
             </div>
         </div>
 
         <ul class="feature-list">
-            <li>866 ESCO & SkillCat questions (500 free, full 866 with Pro)</li>
-            <li>AI Tutor — 1,000 questions/day</li>
+            <li>Full 866-question bank (366 more than free)</li>
+            <li>AI Tutor — 1,000 sessions/day</li>
             <li>Full explanation on every wrong answer</li>
-            <li>Weak Spot Drill — AI targets your weak areas</li>
+            <li>Weak Spot Drill — targets your weakest areas</li>
             <li>Unlimited test history with trends</li>
-            <li>Radar chart — readiness across 4 sections</li>
-            <li>Shareable Achievement Badge</li>
-            <li>All future features — podcast audio, study planner, offline mode</li>
+            <li>Radar chart — readiness across all 4 sections</li>
+            <li>Shareable Achievement Certificate</li>
+            <li>All future features included, forever</li>
         </ul>
 
         <div class="price-summary">
-            <div class="price-row-item"><span>Regular price</span><span>$19.99</span></div>
-            <div class="price-row-item" style="color:#15803d;"><span>Founding discount (25% off)</span><span>−$5.00</span></div>
+            <div class="price-row"><span>Regular price</span><span>$39.99</span></div>
+            <div class="price-row" id="discount-row" style="color:#15803d;display:none;">
+                <span id="discount-label">Promo code</span><span id="discount-amount"></span>
+            </div>
+            <div class="price-row" style="color:#15803d;"><span>Founding discount</span><span id="founding-savings">−$25.00</span></div>
             <div class="price-total">
-                <span>Total</span>
-                <span>
-                    <span class="was">$19.99</span>
-                    $14.99
-                    <span class="save-pill">SAVE 25%</span>
-                </span>
+                <span>Total today</span>
+                <span><span class="was">$39.99</span><span id="price-display">$14.99</span><span class="save-pill" id="save-pill">SAVE 63%</span></span>
             </div>
         </div>
 
         <div class="guarantee-box">
-            <div class="g-icon">🛡️</div>
-            <div><strong>30-day money-back guarantee.</strong> If you're not satisfied, email <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a> within 30 days for a full refund — no questions asked.</div>
+            <div class="icon">🛡️</div>
+            <div><strong>30-day money-back guarantee.</strong> Not satisfied? Email <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a> within 30 days — no questions asked.</div>
         </div>
     </div>
 
-    <!-- Right: Checkout Form -->
+    <!-- Checkout Panel -->
     <div class="checkout-panel">
         <h2>Complete your order</h2>
         <p class="subtitle">One payment · Instant access · No subscription ever</p>
 
         <!-- Email -->
-        <div class="email-section">
-            <label for="buyer-email">Your email <span style="color:#94a3b8;font-weight:400;">(for receipt & account activation)</span></label>
-            <input type="email" id="buyer-email" placeholder="you@example.com" autocomplete="email">
+        <label class="email-label" for="buyer-email">Your email address <span style="color:#dc2626">*</span></label>
+        <input type="email" id="buyer-email" class="email-field" placeholder="you@email.com" autocomplete="email">
+
+        <!-- Promo -->
+        <button class="promo-toggle" type="button" onclick="togglePromo()">🏷️ Have a promo code?</button>
+        <div class="promo-row" id="promo-row">
+            <input type="text" id="promo-input" class="promo-input" placeholder="ENTER CODE" maxlength="32">
+            <button class="promo-apply-btn" type="button" onclick="applyPromo()">Apply</button>
         </div>
+        <div class="promo-msg" id="promo-msg"></div>
 
         <!-- PayPal button -->
-        <div id="paypal-checkout-btn"></div>
+        <div id="paypal-btn-wrap"></div>
 
-        <div class="pay-divider">or pay with card</div>
+        <!-- Card fields (shown only when PayPal CardFields eligible) -->
+        <div id="card-section" style="display:none;">
+            <div class="pay-divider">or pay with card</div>
 
-        <!-- Card form -->
-        <div id="card-form-section">
-            <div class="card-section-title">
-                💳 Credit / Debit Card
-            </div>
-
-            <div class="card-field-wrap">
-                <label>Name on card</label>
-                <input type="text" id="card-name" class="card-name-input" placeholder="John Smith" autocomplete="cc-name">
-            </div>
-
-            <div class="card-field-wrap">
-                <label>Card number</label>
+            <div class="card-group">
                 <div id="card-number-field" class="card-field-box"></div>
-            </div>
-
-            <div class="card-row-2">
-                <div class="card-field-wrap">
-                    <label>Expiry date</label>
+                <div class="card-row-2">
                     <div id="card-expiry-field" class="card-field-box"></div>
-                </div>
-                <div class="card-field-wrap">
-                    <label>Security code</label>
                     <div id="card-cvv-field" class="card-field-box"></div>
                 </div>
             </div>
@@ -484,13 +232,11 @@
 
             <button class="pay-btn" id="card-pay-btn" onclick="submitCardPayment()">
                 <div class="spinner"></div>
-                <span class="btn-text">Pay $14.99 — Get Instant Access</span>
+                <span class="btn-text">Pay <span id="btn-price">$14.99</span> — Get Instant Access</span>
             </button>
         </div>
 
-        <div class="secure-note">
-            🔒 Secured by PayPal · 256-bit SSL encryption
-        </div>
+        <div class="secure-note">🔒 Secured by PayPal · 256-bit SSL encryption</div>
         <div class="terms-note">
             By purchasing you agree to our
             <a href="/terms.html">Terms of Service</a>,
@@ -501,137 +247,195 @@
 
 </div>
 
-<!-- Success overlay -->
+<!-- Success -->
 <div id="success-overlay">
     <div class="success-box">
         <div class="emoji">🎉</div>
         <h2>You're in — welcome to Pro!</h2>
-        <p>Payment confirmed. Check your email for your receipt.</p>
-        <p style="font-size:13px;color:#94a3b8;">Log in at <strong>app.epa608practicetest.net</strong> with the same email to unlock all Pro features.</p>
-        <a href="/universal.html" class="goto-btn">Start practicing now →</a>
-        <p style="font-size:12px;color:#94a3b8;margin-top:18px;">Questions? <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a></p>
+        <p>Payment confirmed. Check your email for your PayPal receipt.</p>
+        <p style="font-size:13px;color:#94a3b8;margin-top:4px;">
+            Check your email — we sent a link to set your password and access your Pro account.<br>
+            <strong>Already have an account?</strong> Log in now — Pro is active.
+        </p>
+        <a href="https://epa608practicetest.net/login" class="goto-btn">Log in to access Pro →</a>
+        <p style="font-size:12px;color:#94a3b8;margin-top:18px;">
+            Questions? <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a>
+        </p>
     </div>
 </div>
 
 <script>
-// ── Helpers ──
-function getEmail() {
-    return (document.getElementById('buyer-email').value || '').trim();
+var BASE_PRICE = 14.99;
+var finalPrice = BASE_PRICE;
+var appliedPromo = null;
+
+// ── Promo ──
+function togglePromo() {
+    var row = document.getElementById('promo-row');
+    row.classList.toggle('open');
+    if (row.classList.contains('open')) document.getElementById('promo-input').focus();
 }
 
+function applyPromo() {
+    var code = document.getElementById('promo-input').value.trim().toUpperCase();
+    var msgEl = document.getElementById('promo-msg');
+    if (!code) return;
+
+    fetch('https://epa608practicetest.net/api/paypal/validate-discount', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+        if (d.valid) {
+            appliedPromo = { code: code, percent: d.percent };
+            finalPrice = +(BASE_PRICE * (1 - d.percent / 100)).toFixed(2);
+            updatePriceDisplay();
+            msgEl.className = 'promo-msg ok';
+            msgEl.textContent = '✓ Code applied — ' + d.percent + '% off!';
+            document.getElementById('btn-price').textContent = '$' + finalPrice.toFixed(2);
+            renderPayPalButtons();
+        } else {
+            msgEl.className = 'promo-msg err';
+            msgEl.textContent = 'Invalid or expired promo code.';
+        }
+    })
+    .catch(function() {
+        msgEl.className = 'promo-msg err';
+        msgEl.textContent = 'Could not verify code. Try again.';
+    });
+}
+
+function updatePriceDisplay() {
+    var savings = (39.99 - finalPrice).toFixed(2);
+    var pct = Math.round((39.99 - finalPrice) / 39.99 * 100);
+    document.getElementById('price-display').textContent = '$' + finalPrice.toFixed(2);
+    document.getElementById('founding-savings').textContent = '−$' + savings;
+    document.getElementById('save-pill').textContent = 'SAVE ' + pct + '%';
+    if (appliedPromo && appliedPromo.percent > 0) {
+        var promoSavings = (BASE_PRICE - finalPrice).toFixed(2);
+        document.getElementById('discount-row').style.display = 'flex';
+        document.getElementById('discount-label').textContent = 'Promo: ' + appliedPromo.code;
+        document.getElementById('discount-amount').textContent = '−$' + promoSavings;
+    }
+}
+
+// ── Helpers ──
 function showSuccess() {
-    if (typeof gtag !== 'undefined') gtag('event', 'purchase', { currency: 'USD', value: 14.99 });
+    if (typeof gtag !== 'undefined') gtag('event', 'purchase', { currency: 'USD', value: finalPrice });
     document.getElementById('success-overlay').style.display = 'flex';
 }
 
-function recordPurchase(orderID, email) {
+function getFormEmail() {
+    var el = document.getElementById('buyer-email');
+    return el ? el.value.trim().toLowerCase() : '';
+}
+
+function recordPurchase(orderID, paypalEmail) {
+    var formEmail = getFormEmail();
+    // PayPal button passes verified paypalEmail → use it; card passes '' → use form
+    var email = paypalEmail || formEmail || '';
+    var body = { orderID: orderID, email: email };
+    if (appliedPromo) body.promoCode = appliedPromo.code;
     fetch('https://epa608practicetest.net/api/paypal/capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderID: orderID, email: email })
+        body: JSON.stringify(body)
     }).catch(function(){});
 }
 
-// ── PayPal Button ──
-function initPayPal() {
-    if (!window.paypal) return;
-
+// ── PayPal Buttons ──
+function renderPayPalButtons() {
+    var wrap = document.getElementById('paypal-btn-wrap');
+    wrap.innerHTML = '';
     paypal.Buttons({
-        style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', height: 48 },
+        style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', height: 50 },
         createOrder: function(data, actions) {
-            if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: 14.99 });
+            if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: finalPrice });
             return actions.order.create({
                 purchase_units: [{
-                    amount: { value: '14.99', currency_code: 'USD' },
-                    description: 'EPA 608 Pro Lifetime Access',
-                }]
+                    amount: { value: finalPrice.toFixed(2), currency_code: 'USD' },
+                    description: 'EPA 608 Pro Lifetime Access'
+                }],
+                application_context: {
+                    shipping_preference: 'NO_SHIPPING'
+                }
             });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                var email = getEmail() || (details.payer && details.payer.email_address) || '';
-                recordPurchase(data.orderID, email);
+                // PayPal button: prefer verified PayPal email, fallback to form
+                var paypalEmail = (details.payer && details.payer.email_address) || '';
+                recordPurchase(data.orderID, paypalEmail);
                 showSuccess();
             });
         },
+        onError: function(err) { console.error('PayPal error', err); }
+    }).render('#paypal-btn-wrap');
+}
+
+// ── Card Fields ──
+function initCardFields() {
+    if (!paypal.CardFields) return;
+
+    var cardFields = paypal.CardFields({
+        createOrder: function() {
+            if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: finalPrice });
+            var body = { amount: finalPrice.toFixed(2) };
+            if (appliedPromo) body.promoCode = appliedPromo.code;
+            return fetch('https://epa608practicetest.net/api/paypal/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            }).then(function(r) { return r.json(); }).then(function(d) { return d.orderID; });
+        },
+        onApprove: function(data) {
+            recordPurchase(data.orderID, '');
+            showSuccess();
+        },
         onError: function(err) {
-            console.error('PayPal error', err);
+            var el = document.getElementById('card-error');
+            el.textContent = 'Payment failed. Please check your card details and try again.';
+            el.style.display = 'block';
+            var btn = document.getElementById('card-pay-btn');
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        },
+        style: {
+            input: { 'font-size': '15px', 'font-family': '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', 'color': '#1e293b' }
         }
-    }).render('#paypal-checkout-btn');
+    });
 
-    // ── Card Fields ──
-    if (paypal.CardFields) {
-        var cardFields = paypal.CardFields({
-            createOrder: function() {
-                if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: 14.99 });
-                return fetch('https://epa608practicetest.net/api/paypal/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: '14.99' })
-                }).then(function(r) { return r.json(); }).then(function(d) { return d.orderID; });
-            },
-            onApprove: function(data) {
-                var email = getEmail();
-                recordPurchase(data.orderID, email);
-                showSuccess();
-            },
-            onError: function(err) {
-                var el = document.getElementById('card-error');
-                el.textContent = 'Payment failed. Please check your card details and try again.';
-                el.style.display = 'block';
-                var btn = document.getElementById('card-pay-btn');
-                btn.classList.remove('loading');
-                btn.disabled = false;
-                console.error('Card error', err);
-            },
-            style: {
-                input: {
-                    'font-size': '15px',
-                    'font-family': '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
-                    'color': '#1e293b',
-                    'padding': '12px 14px',
-                }
-            }
-        });
-
-        if (cardFields.isEligible()) {
-            cardFields.NumberField().render('#card-number-field');
-            cardFields.ExpiryField().render('#card-expiry-field');
-            cardFields.CVVField().render('#card-cvv-field');
-            window._cardFields = cardFields;
-        } else {
-            // Card fields not eligible — show PayPal-only message
-            document.getElementById('card-form-section').innerHTML =
-                '<div class="card-unavailable">💳 Credit/debit card payment is available via the PayPal button above — no PayPal account required.</div>';
-        }
+    if (cardFields.isEligible()) {
+        cardFields.NumberField({ placeholder: '4111 1111 1111 1111' }).render('#card-number-field');
+        cardFields.ExpiryField({ placeholder: 'MM / YY' }).render('#card-expiry-field');
+        cardFields.CVVField({ placeholder: 'CVV' }).render('#card-cvv-field');
+        window._cardFields = cardFields;
+        document.getElementById('card-section').style.display = 'block';
     }
+    // If not eligible — card section stays hidden, PayPal button handles card via popup
 }
 
 window.submitCardPayment = function() {
-    var email = getEmail();
-    if (!email) {
-        document.getElementById('buyer-email').focus();
-        document.getElementById('buyer-email').style.borderColor = '#dc2626';
+    if (!window._cardFields) return;
+    var emailEl = document.getElementById('buyer-email');
+    var email = emailEl ? emailEl.value.trim() : '';
+    if (!email || !email.includes('@')) {
+        emailEl.classList.add('error');
+        emailEl.focus();
+        document.getElementById('card-error').textContent = 'Please enter your email address.';
+        document.getElementById('card-error').style.display = 'block';
         return;
     }
+    emailEl.classList.remove('error');
     var btn = document.getElementById('card-pay-btn');
     btn.classList.add('loading');
     btn.disabled = true;
     document.getElementById('card-error').style.display = 'none';
 
-    if (!window._cardFields) {
-        document.getElementById('card-error').textContent = 'Card payment unavailable. Please use PayPal button above.';
-        document.getElementById('card-error').style.display = 'block';
-        btn.classList.remove('loading');
-        btn.disabled = false;
-        return;
-    }
-
-    var name = document.getElementById('card-name').value.trim();
-    window._cardFields.submit({
-        cardholderName: name,
-        billingAddress: { countryCode: 'US' }
-    }).catch(function(err) {
+    window._cardFields.submit({})
+    .catch(function() {
         var el = document.getElementById('card-error');
         el.textContent = 'Payment failed. Please check your card details and try again.';
         el.style.display = 'block';
@@ -640,11 +444,15 @@ window.submitCardPayment = function() {
     });
 };
 
-// Poll until PayPal SDK ready
+// ── Init ──
 var pollCount = 0;
 function tryInit() {
-    if (window.paypal) { initPayPal(); }
-    else if (pollCount++ < 20) { setTimeout(tryInit, 300); }
+    if (window.paypal) {
+        renderPayPalButtons();
+        initCardFields();
+    } else if (pollCount++ < 30) {
+        setTimeout(tryInit, 300);
+    }
 }
 tryInit();
 </script>

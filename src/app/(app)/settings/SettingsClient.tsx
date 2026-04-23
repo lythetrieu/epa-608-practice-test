@@ -57,6 +57,7 @@ export default function SettingsClient({
     free: 'bg-gray-100 text-gray-600',
     starter: 'bg-blue-100 text-blue-700',
     ultimate: 'bg-amber-100 text-amber-700',
+    pro: 'bg-blue-100 text-blue-700',
   }
 
   const memberSince = new Date(createdAt).toLocaleDateString('en-US', {
