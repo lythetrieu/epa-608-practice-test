@@ -18,8 +18,7 @@ BEGIN
       DELETE FROM pending_upgrades WHERE email = lower(new.email);
     END IF;
   EXCEPTION WHEN OTHERS THEN
-    -- Never block user creation due to upgrade errors
-    NULL;
+    RAISE WARNING 'apply_pending_upgrade failed for % (%): %', new.email, SQLSTATE, SQLERRM;
   END;
 
   RETURN new;

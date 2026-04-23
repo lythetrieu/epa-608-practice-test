@@ -247,6 +247,18 @@
 
 </div>
 
+<!-- Capture error (payment taken but server failed to activate) -->
+<div id="capture-error-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:10000;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:#fff;border-radius:20px;padding:44px 36px;max-width:460px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25);">
+        <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+        <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px;">Payment received — activation issue</h2>
+        <p style="font-size:14px;color:#64748b;line-height:1.7;margin-bottom:12px;">Your payment was captured by PayPal, but we had trouble activating your Pro account. You have <strong>not</strong> been charged more than once.</p>
+        <p style="font-size:13px;color:#64748b;margin-bottom:6px;">Please email us with your Order ID so we can activate your account manually:</p>
+        <p style="font-size:14px;font-family:monospace;background:#f1f5f9;padding:8px 14px;border-radius:6px;color:#0f172a;word-break:break-all;" id="capture-error-orderid"></p>
+        <a href="mailto:support@epa608practicetest.net" style="display:inline-block;background:#dc2626;color:#fff;padding:12px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px;margin-top:20px;">Contact Support →</a>
+    </div>
+</div>
+
 <!-- Success -->
 <div id="success-overlay">
     <div class="success-box">
@@ -289,11 +301,11 @@ function applyPromo() {
     .then(function(r) { return r.json(); })
     .then(function(d) {
         if (d.valid) {
-            appliedPromo = { code: code, percent: d.percent };
-            finalPrice = +(BASE_PRICE * (1 - d.percent / 100)).toFixed(2);
+            appliedPromo = { code: code, discount: d.discount };
+            finalPrice = d.finalPrice;
             updatePriceDisplay();
             msgEl.className = 'promo-msg ok';
-            msgEl.textContent = '✓ Code applied — ' + d.percent + '% off!';
+            msgEl.textContent = '✓ Code applied — ' + d.discount + '% off!';
             document.getElementById('btn-price').textContent = '$' + finalPrice.toFixed(2);
             renderPayPalButtons();
         } else {
@@ -308,12 +320,11 @@ function applyPromo() {
 }
 
 function updatePriceDisplay() {
-    var savings = (39.99 - finalPrice).toFixed(2);
     var pct = Math.round((39.99 - finalPrice) / 39.99 * 100);
     document.getElementById('price-display').textContent = '$' + finalPrice.toFixed(2);
-    document.getElementById('founding-savings').textContent = '−$' + savings;
+    document.getElementById('founding-savings').textContent = '−$25.00';
     document.getElementById('save-pill').textContent = 'SAVE ' + pct + '%';
-    if (appliedPromo && appliedPromo.percent > 0) {
+    if (appliedPromo && appliedPromo.discount > 0) {
         var promoSavings = (BASE_PRICE - finalPrice).toFixed(2);
         document.getElementById('discount-row').style.display = 'flex';
         document.getElementById('discount-label').textContent = 'Promo: ' + appliedPromo.code;
@@ -334,15 +345,27 @@ function getFormEmail() {
 
 function recordPurchase(orderID, paypalEmail) {
     var formEmail = getFormEmail();
-    // PayPal button passes verified paypalEmail → use it; card passes '' → use form
     var email = paypalEmail || formEmail || '';
     var body = { orderID: orderID, email: email };
-    if (appliedPromo) body.promoCode = appliedPromo.code;
-    fetch('https://epa608practicetest.net/api/paypal/capture', {
+    if (appliedPromo) body.discountCode = appliedPromo.code;
+    return fetch('https://epa608practicetest.net/api/paypal/capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
-    }).catch(function(){});
+    }).then(function(res) {
+        if (!res.ok) return { ok: false };
+        return res.json();
+    }).catch(function() {
+        return { ok: false };
+    });
+}
+
+function showCaptureError(orderID) {
+    var el = document.getElementById('capture-error-overlay');
+    if (el) {
+        document.getElementById('capture-error-orderid').textContent = orderID || 'unknown';
+        el.style.display = 'flex';
+    }
 }
 
 // ── PayPal Buttons ──
@@ -351,24 +374,22 @@ function renderPayPalButtons() {
     wrap.innerHTML = '';
     paypal.Buttons({
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', height: 50 },
-        createOrder: function(data, actions) {
+        createOrder: function() {
             if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: finalPrice });
-            return actions.order.create({
-                purchase_units: [{
-                    amount: { value: finalPrice.toFixed(2), currency_code: 'USD' },
-                    description: 'EPA 608 Pro Lifetime Access'
-                }],
-                application_context: {
-                    shipping_preference: 'NO_SHIPPING'
-                }
-            });
+            var body = {};
+            if (appliedPromo) body.discountCode = appliedPromo.code;
+            return fetch('https://epa608practicetest.net/api/paypal/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            }).then(function(r) { return r.json(); }).then(function(d) { return d.orderID; });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                // PayPal button: prefer verified PayPal email, fallback to form
                 var paypalEmail = (details.payer && details.payer.email_address) || '';
-                recordPurchase(data.orderID, paypalEmail);
-                showSuccess();
+                return recordPurchase(data.orderID, paypalEmail).then(function(result) {
+                    if (result && result.ok) { showSuccess(); } else { showCaptureError(data.orderID); }
+                });
             });
         },
         onError: function(err) { console.error('PayPal error', err); }
@@ -383,7 +404,7 @@ function initCardFields() {
         createOrder: function() {
             if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { currency: 'USD', value: finalPrice });
             var body = { amount: finalPrice.toFixed(2) };
-            if (appliedPromo) body.promoCode = appliedPromo.code;
+            if (appliedPromo) body.discountCode = appliedPromo.code;
             return fetch('https://epa608practicetest.net/api/paypal/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -391,8 +412,11 @@ function initCardFields() {
             }).then(function(r) { return r.json(); }).then(function(d) { return d.orderID; });
         },
         onApprove: function(data) {
-            recordPurchase(data.orderID, '');
-            showSuccess();
+            recordPurchase(data.orderID, '').then(function(result) {
+                if (result && result.ok) { showSuccess(); } else { showCaptureError(data.orderID); }
+                var btn = document.getElementById('card-pay-btn');
+                if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+            });
         },
         onError: function(err) {
             var el = document.getElementById('card-error');
@@ -413,8 +437,12 @@ function initCardFields() {
         cardFields.CVVField({ placeholder: 'CVV' }).render('#card-cvv-field');
         window._cardFields = cardFields;
         document.getElementById('card-section').style.display = 'block';
+    } else {
+        var note = document.createElement('p');
+        note.style.cssText = 'font-size:12px;color:#64748b;text-align:center;margin-top:8px;';
+        note.textContent = 'Click "Debit or Credit Card" above — no PayPal account required.';
+        document.getElementById('paypal-btn-wrap').insertAdjacentElement('afterend', note);
     }
-    // If not eligible — card section stays hidden, PayPal button handles card via popup
 }
 
 window.submitCardPayment = function() {
@@ -434,7 +462,7 @@ window.submitCardPayment = function() {
     btn.disabled = true;
     document.getElementById('card-error').style.display = 'none';
 
-    window._cardFields.submit({})
+    window._cardFields.submit({ billingAddress: { countryCode: 'US' } })
     .catch(function() {
         var el = document.getElementById('card-error');
         el.textContent = 'Payment failed. Please check your card details and try again.';

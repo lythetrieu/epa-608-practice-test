@@ -30,6 +30,54 @@ async function getAccessToken(): Promise<string> {
   return data.access_token
 }
 
+async function sendProUpgradeEmail(resendKey: string, email: string) {
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${resendKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
+      to: [email],
+      subject: '🎉 Your EPA 608 Pro upgrade is active',
+      html: `
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#1e293b;">
+          <div style="background:#003087;border-radius:12px;padding:24px;text-align:center;margin-bottom:28px;">
+            <h1 style="color:#fff;font-size:22px;margin:0 0 6px;">🎉 Pro upgrade confirmed!</h1>
+            <p style="color:#93c5fd;font-size:14px;margin:0;">Your existing account is now Pro.</p>
+          </div>
+
+          <p style="font-size:15px;color:#374151;line-height:1.6;">
+            Your account at <strong>${email}</strong> has been upgraded to Pro. Log in with your existing password to access all Pro features:
+          </p>
+
+          <div style="text-align:center;margin:28px 0;">
+            <a href="https://epa608practicetest.net/login"
+               style="display:inline-block;background:#e85d04;color:#fff;text-decoration:none;padding:15px 36px;border-radius:10px;font-size:16px;font-weight:700;">
+              Log In to Access Pro →
+            </a>
+          </div>
+
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-bottom:24px;">
+            <p style="font-size:13px;color:#15803d;font-weight:600;margin:0 0 8px;">✓ What's now unlocked in your account:</p>
+            <ul style="font-size:13px;color:#374151;margin:0;padding-left:20px;line-height:1.8;">
+              <li>866 practice questions (all 4 sections)</li>
+              <li>AI Tutor — 1,000 questions/day</li>
+              <li>Weak Spot Drill + Progress Analytics</li>
+              <li>All future features, forever</li>
+            </ul>
+          </div>
+
+          <p style="font-size:12px;color:#94a3b8;text-align:center;line-height:1.6;">
+            Questions? <a href="mailto:support@epa608practicetest.net" style="color:#003087;">support@epa608practicetest.net</a>
+          </p>
+        </div>
+      `,
+    }),
+  })
+}
+
 async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: string) {
   await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -80,7 +128,7 @@ async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: 
 }
 
 export async function POST(request: NextRequest) {
-  let body: { orderID?: string; email?: string; coupon?: string }
+  let body: { orderID?: string; email?: string; discountCode?: string }
   try { body = await request.json() } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400, headers: HEADERS })
   }
@@ -144,7 +192,7 @@ export async function POST(request: NextRequest) {
       // Clean up pending_upgrades
       await admin.from('pending_upgrades').delete().eq('email', payerEmail)
 
-      // Send Pro welcome email to existing users too
+      // Send Pro upgrade confirmation email (existing user — they already have a password)
       const { data: configRow } = await admin
         .from('app_config')
         .select('value')
@@ -152,7 +200,7 @@ export async function POST(request: NextRequest) {
         .single()
       const resendKey = configRow?.value
       if (resendKey) {
-        await sendProWelcomeEmail(resendKey, payerEmail, 'https://epa608practicetest.net/dashboard').catch(err =>
+        await sendProUpgradeEmail(resendKey, payerEmail).catch(err =>
           console.error('Resend email failed (existing user):', err)
         )
       }
