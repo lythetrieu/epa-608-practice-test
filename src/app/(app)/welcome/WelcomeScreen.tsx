@@ -2,9 +2,13 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useMigrateAnonymous } from '@/hooks/useMigrateAnonymous'
 
 export function WelcomeScreen({ name, destination }: { name: string; destination: string }) {
   const router = useRouter()
+
+  // Kick off freebie → Pro migration as soon as the user lands here after login
+  useMigrateAnonymous()
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -5,6 +5,7 @@ import { TIER_LIMITS, type Tier, type Category } from '@/types'
 import { GuidedTour } from './guided-tour'
 import { Onboarding } from './onboarding'
 import { ProActivatedBanner } from './pro-activated-banner'
+import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
@@ -136,6 +137,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-3 sm:p-5 max-w-6xl">
+      <AnonymousMigrator />
       {totalTests === 0 && <GuidedTour />}
       <Onboarding show={totalTests === 0} />
       <ProActivatedBanner isPro={!isFree && !!profile?.lifetime_access} />

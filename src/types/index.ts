@@ -15,12 +15,12 @@ export const TIER_LIMITS = {
   free: {
     questionsPerDay: Infinity,
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
-    hasExplanations: true,       // All tiers get explanations
+    hasExplanations: true,
     hasProgress: true,
-    hasProgressLimit: Infinity,  // Unlimited — same as cookie users
-    hasBlindSpot: false,         // Drill is Pro only; chart/list visible to all
-    hasRadarChart: true,         // Chart visible to all (drill gated separately)
-    aiQueriesPerDay: 10,
+    hasProgressLimit: Infinity,
+    hasBlindSpot: false,
+    hasRadarChart: true,
+    aiQueriesPerDay: 10,         // 10/day to incentivize signup; Pro gets 1000
     hasPDF: false,
     hasCertificate: false,
   },

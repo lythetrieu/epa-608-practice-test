@@ -16,20 +16,15 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
   const [result, setResult] = useState<SessionResult | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const [retakeKey, setRetakeKey] = useState(0)
+  const [retakeKey] = useState(0)
 
   function handleRetake() {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-    setResult(null)
-    setPhase('loading')
-    setSessionId(null)
-    setQuestions([])
-    setAnswers({})
-    setCurrentIdx(0)
-    setTimeLeft(1800)
-    setErrorMsg('')
-    setSubmitting(false)
-    setRetakeKey(k => k + 1)
+    // Hard reload → new GA4 pageview + fresh session data from server
+    // __hardReload: shows PageTransition overlay (white fade), then calls reload()
+    // Guaranteed full reload on all browsers, seamless UX via overlay
+    const hardReload = (window as any).__hardReload
+    if (hardReload) hardReload()
+    else window.location.reload()
   }
 
   // Load questions

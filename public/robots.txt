@@ -1,44 +1,41 @@
 User-agent: *
 Allow: /
 
-# AI Content Usage Preferences (Content Signals)
-Content-Signal: ai-train=no, search=yes, ai-input=no
+# ── PUBLIC MARKETING LAYER (crawlable) ──────────────────────────────
+# .html pages are the SEO/freebie surface — always crawlable
 
-# Sitemaps
-Sitemap: https://epa608practicetest.net/sitemap.xml
+# ── PRIVATE APP LAYER (blocked) ─────────────────────────────────────
+# Slug routes = authenticated app — Google must not crawl these
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /welcome
+Disallow: /practice/
+Disallow: /test/
+Disallow: /tutor
+Disallow: /learn
+Disallow: /podcast
+Disallow: /progress
+Disallow: /history
+Disallow: /certificate
+Disallow: /flashcards
+Disallow: /join/
+Disallow: /cert/
 
-# Allow all important pages
-Allow: /index.html
-Allow: /about.html
-Allow: /contact.html
-Allow: /core.html
-Allow: /type-1.html
-Allow: /type-2.html
-Allow: /type-3.html
-Allow: /universal.html
-Allow: /history.html
-Allow: /review.html
-Allow: /faq.html
-Allow: /terms.html
-Allow: /policy.html
-Allow: /changelog.html
+# NOTE: /flashcards.html (freebie, .html) is still crawlable
+# NOTE: /pricing.html (freebie) is still crawlable
+# NOTE: /history.html (EPA 608 history article) is still crawlable
 
-# Allow assets
-Allow: /favicon.ico
-Allow: /favicon.svg
-Allow: /logo.svg
-Allow: /*.css
-Allow: /*.js
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.webp
-
-# Disallow temporary or system files
-Disallow: /favicon.html
-Disallow: /tracking.html
+# ── SYSTEM FILES ─────────────────────────────────────────────────────
 Disallow: /*.tmp
 Disallow: /.git/
 Disallow: /node_modules/
+Disallow: /api/
 
-# Crawl-delay (optional - remove if you want faster crawling)
-# Crawl-delay: 1
+# AI Content Usage Preferences
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+Sitemap: https://epa608practicetest.net/sitemap.xml

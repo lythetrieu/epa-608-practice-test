@@ -5,16 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>EPA 608 Flashcards — Interactive Practice by Section</title>
-<meta name="description" content="Free interactive EPA 608 flashcards. Pick a section, answer questions, swipe to advance. Instant feedback on every card.">
+<meta name="description" content="Free interactive EPA 608 flashcards. Pick a section, answer questions, swipe to advance. Core section free — 5 sessions/day. No signup required.">
 <link rel="canonical" href="https://epa608practicetest.net/flashcards.html">
-
+  <!-- Schema: Organization -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"EPA 608 Practice Test","url":"https://epa608practicetest.net","logo":"https://epa608practicetest.net/images/og-image.jpg","description":"Free EPA 608 practice test platform helping HVAC technicians pass their Section 608 certification exam. 500 questions free, full 866-question bank with Pro.","foundingDate":"2024","founder":{"@type":"Person","name":"Lý Thế Triều","sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]},"sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]}
+  </script>
   <!-- Open Graph -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="EPA 608 Practice Test">
   <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
   <meta property="og:url" content="https://epa608practicetest.net/flashcards.html">
   <meta property="og:title" content="EPA 608 Flashcards — Interactive Practice by Section">
-  <meta property="og:description" content="Free interactive EPA 608 flashcards. Pick a section, answer questions, swipe to advance. Instant feedback on every card.">
+  <meta property="og:description" content="Free interactive EPA 608 flashcards. Core section free. Type I, II, III unlocked with Pro.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -25,39 +28,98 @@
   "educationalLevel": "Professional certification",
   "educationalUse": "Practice",
   "learningResourceType": "Flashcard",
-  "about": {
-    "@type": "Thing",
-    "name": "EPA 608 Refrigerant Certification"
-  },
-  "provider": {
-    "@type": "Organization",
-    "name": "EPA608PracticeTest.net",
-    "url": "https://epa608practicetest.net"
-  },
+  "about": {"@type": "Thing","name": "EPA 608 Refrigerant Certification"},
+  "provider": {"@type": "Organization","name": "EPA 608 Practice Test","url": "https://epa608practicetest.net"},
   "isAccessibleForFree": true,
   "inLanguage": "en"
 }
 </script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+<!-- Vercel Analytics -->
+<script defer src="https://va.vercel-scripts.com/v1/script.js" data-api="_vercel/insights"></script>
+
 <style>
+/* ─── Reset ─── */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
 
+/* ─── Header / Nav ─── */
+header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.header-content{display:flex;justify-content:space-between;align-items:center;height:64px;max-width:1200px;margin:0 auto;padding:0 20px;gap:16px}
+.logo{text-decoration:none;display:flex;align-items:center;flex-shrink:0}
+.logo img{height:38px;width:auto}
+nav{display:flex;align-items:center}
+.nav-menu{display:flex;align-items:center;list-style:none;margin:0;padding:0;gap:2px}
+.nav-menu>li{position:relative}
+.nav-menu>li>a{display:block;padding:10px 14px;color:#374151;text-decoration:none;font-weight:500;font-size:14px;border-radius:8px;transition:background .15s,color .15s;white-space:nowrap}
+.nav-menu>li>a:hover{background:#f1f5f9;color:#003087}
+.dropdown{position:relative}
+.dropdown-toggle{display:flex;align-items:center;gap:5px;padding:10px 14px;color:#374151;font-weight:500;font-size:14px;cursor:pointer;border-radius:8px;transition:background .15s,color .15s;background:transparent;border:none;white-space:nowrap;font-family:inherit}
+.dropdown-toggle::after{content:"▾";font-size:12px;opacity:.5;transition:transform .2s}
+.dropdown.open>.dropdown-toggle{background:#f1f5f9;color:#003087}
+.dropdown.open>.dropdown-toggle::after{transform:rotate(180deg)}
+.dropdown-menu{position:absolute;top:100%;left:0;padding-top:8px;list-style:none;display:none;z-index:200;min-width:210px}
+.dropdown-menu-inner{background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;padding:6px}
+.dropdown.open .dropdown-menu{display:block}
+.dropdown-menu li a{display:flex;align-items:center;gap:10px;padding:9px 12px;color:#374151;text-decoration:none;font-size:14px;font-weight:500;border-radius:8px;transition:background .15s,color .15s;white-space:nowrap}
+.dropdown-menu li a:hover{background:#eef3ff;color:#003087}
+.dropdown-menu .divider{height:1px;background:#f1f5f9;margin:4px 4px}
+.dropdown-menu .menu-label{padding:6px 12px 4px;font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
+.nav-signin{display:inline-flex;align-items:center;padding:8px 18px;background:#1d4ed8;color:#fff!important;text-decoration:none;font-weight:600;font-size:14px;border-radius:8px;transition:background .15s;white-space:nowrap;flex-shrink:0}
+.nav-signin:hover{background:#1e40af}
+.nav-signup{display:inline-flex;align-items:center;padding:8px 18px;background:#1d4ed8;color:#fff!important;text-decoration:none;font-weight:600;font-size:14px;border-radius:8px;transition:background .15s;white-space:nowrap;flex-shrink:0}
+.nav-signup:hover{background:#1e40af}
+.nav-dashboard{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:#16a34a;color:#fff!important;text-decoration:none;font-weight:600;font-size:14px;border-radius:8px;transition:background .15s;white-space:nowrap;flex-shrink:0}
+.nav-dashboard:hover{background:#15803d!important}
+.nav-pricing{font-weight:700;color:#003087!important}
+.nav-pricing:hover{background:#eef3ff;color:#003087!important}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:transparent;border:none;cursor:pointer;border-radius:8px;transition:background .15s;flex-shrink:0;padding:8px}
+.nav-hamburger:hover{background:#f1f5f9}
+.nav-hamburger span{display:block;width:22px;height:2px;background:#374151;border-radius:2px;transition:transform .25s,opacity .25s;transform-origin:center}
+.nav-hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98}
+.mobile-nav-overlay.active{display:block}
+.mobile-nav{display:none;position:fixed;top:0;right:0;bottom:0;width:280px;max-width:85vw;background:#fff;z-index:99;overflow-y:auto;padding:0 0 32px;box-shadow:-4px 0 32px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+.mobile-nav.active{display:block;transform:translateX(0)}
+.mobile-nav-header{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;border-bottom:1px solid #e2e8f0}
+.mobile-nav-close{width:36px;height:36px;background:transparent;border:none;cursor:pointer;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#64748b;transition:background .15s}
+.mobile-nav-close:hover{background:#f1f5f9}
+.mobile-nav-section{padding:16px 20px 8px}
+.mobile-nav-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;padding:0 4px}
+.mobile-nav-links{list-style:none;display:flex;flex-direction:column;gap:2px}
+.mobile-nav-links a{display:block;padding:10px 12px;color:#374151;text-decoration:none;font-size:15px;font-weight:500;border-radius:8px;transition:background .15s,color .15s}
+.mobile-nav-links a:hover{background:#f1f5f9;color:#003087}
+.mobile-nav-links .m-pricing{font-weight:700;color:#003087!important}
+.mobile-nav-divider{height:1px;background:#f1f5f9;margin:8px 20px}
+.mobile-nav-auth{padding:12px 20px;display:flex;flex-direction:column;gap:8px}
+.mobile-btn-signin,.mobile-btn-signup{display:block;text-align:center;padding:11px 16px;background:#1d4ed8;color:#fff!important;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;transition:background .15s}
+.mobile-btn-signin:hover,.mobile-btn-signup:hover{background:#1e40af}
+.mobile-btn-dashboard{display:block;text-align:center;padding:11px 16px;background:#16a34a;color:#fff!important;text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;transition:background .15s}
+.mobile-btn-dashboard:hover{background:#15803d}
+@media(max-width:768px){
+  .header-content{height:56px;padding:0 16px}
+  .logo img{height:32px}
+  nav,#nav-auth-area{display:none!important}
+  .nav-hamburger{display:flex}
+}
+
 /* ─── App Shell ─── */
 #app{display:flex;flex-direction:column;min-height:calc(100vh - 64px)}
-
-/* ─── App-level header (inside practice) ─── */
-.app-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.app-header-left{display:flex;align-items:center;gap:10px}
-.back-btn{background:none;border:none;cursor:pointer;color:#64748b;padding:4px 6px;border-radius:6px;display:flex;align-items:center;font-size:13px;gap:4px;font-weight:600}
-.back-btn:hover{background:#f1f5f9;color:#0f172a}
-.app-header h2{font-size:14px;font-weight:700;color:#0f172a}
-.score-correct{color:#16a34a;font-weight:700;font-size:14px}
-.score-wrong{color:#ef4444;font-weight:700;font-size:14px}
-.score-sep{color:#cbd5e1;font-size:14px}
-.progress-bar-wrap{height:3px;background:#e2e8f0;flex-shrink:0}
-.progress-bar-fill{height:100%;background:#1d4ed8;transition:width .3s ease}
-
-/* ─── Phases ─── */
 .phase{display:none;flex:1;flex-direction:column}
 .phase.active{display:flex}
 
@@ -71,18 +133,33 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 .cat-btn{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fff;border:2px solid #e2e8f0;border-radius:14px;cursor:pointer;margin-bottom:10px;transition:all .15s;text-align:left}
 .cat-btn:hover{border-color:#1d4ed8;box-shadow:0 2px 12px rgba(29,78,216,.1)}
 .cat-btn:active{transform:scale(.98)}
-.cat-locked{opacity:.75;cursor:pointer}
-.cat-locked:hover{border-color:#94a3b8;box-shadow:none}
+.cat-locked{opacity:.72;cursor:pointer}
+.cat-locked:hover{border-color:#f59e0b;box-shadow:0 2px 8px rgba(245,158,11,.15)}
 .cat-icon{font-size:26px;flex-shrink:0}
 .cat-label{font-size:16px;font-weight:700;color:#0f172a}
 .cat-sub{font-size:12px;color:#94a3b8;margin-top:2px}
+.cat-badge{margin-left:auto;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;flex-shrink:0}
+.badge-free{background:#dcfce7;color:#15803d}
+.badge-pro{background:#fef3c7;color:#d97706}
 
 /* ─── Loading ─── */
 .loading-phase{align-items:center;justify-content:center;gap:16px;min-height:400px}
 .spinner{width:40px;height:40px;border:3px solid #e2e8f0;border-top-color:#1d4ed8;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ─── Active ─── */
+/* ─── App header (inside session) ─── */
+.app-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.app-header-left{display:flex;align-items:center;gap:10px}
+.back-btn{background:none;border:none;cursor:pointer;color:#64748b;padding:4px 6px;border-radius:6px;display:flex;align-items:center;font-size:13px;gap:4px;font-weight:600}
+.back-btn:hover{background:#f1f5f9;color:#0f172a}
+.app-header h2{font-size:14px;font-weight:700;color:#0f172a}
+.score-correct{color:#16a34a;font-weight:700;font-size:14px}
+.score-wrong{color:#ef4444;font-weight:700;font-size:14px}
+.score-sep{color:#cbd5e1;font-size:14px}
+.progress-bar-wrap{height:3px;background:#e2e8f0;flex-shrink:0}
+.progress-bar-fill{height:100%;background:#1d4ed8;transition:width .3s ease}
+
+/* ─── Active session ─── */
 .active-phase{position:relative;overflow:hidden}
 .card-area{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 16px;position:relative;overflow:hidden;min-height:450px}
 .stack-card{position:absolute;background:#fff;border-radius:20px;border:1px solid #e2e8f0;pointer-events:none}
@@ -92,16 +169,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 .main-card.dragging{transition:none}
 .main-card.fly-right{transform:translateX(130vw) rotate(28deg)!important;opacity:0!important}
 .main-card.fly-left{transform:translateX(-130vw) rotate(-28deg)!important;opacity:0!important}
-
-/* Swipe overlays */
 .swipe-overlay{position:absolute;inset:0;border-radius:20px;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
 .swipe-got{border:3px solid #22c55e;background:rgba(240,253,244,.85)}
 .swipe-review{border:3px solid #f97316;background:rgba(255,247,237,.85)}
 .swipe-badge{font-size:22px;font-weight:900;padding:6px 18px;border-radius:8px;letter-spacing:.05em}
 .swipe-got .swipe-badge{color:#15803d;border:3px solid #16a34a;transform:rotate(-12deg)}
 .swipe-review .swipe-badge{color:#c2410c;border:3px solid #f97316;transform:rotate(12deg)}
-
-/* Card body */
 .card-body{padding:20px 22px 16px}
 .card-badges{display:flex;gap:6px;margin-bottom:14px}
 .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
@@ -128,8 +201,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 .result-banner.rb-fail{background:#fee2e2;color:#991b1b}
 .explanation{font-size:12px;color:#475569;line-height:1.6;margin-top:8px;padding:0 2px}
 .card-hint{text-align:center;padding:10px 0 14px;font-size:12px;color:#94a3b8}
-
-/* Bottom bar */
 .bottom-bar{flex-shrink:0;background:#fff;border-top:1px solid #e2e8f0;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:12px}
 .bottom-hint{font-size:13px;color:#94a3b8}
 .btn-review{display:flex;align-items:center;gap:6px;padding:11px 20px;background:#fff7ed;border:2px solid #fed7aa;border-radius:12px;color:#c2410c;font-weight:700;font-size:14px;cursor:pointer;transition:all .15s}
@@ -137,7 +208,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 .btn-next{display:flex;align-items:center;gap:6px;padding:11px 28px;background:#1d4ed8;border:none;border-radius:12px;color:#fff;font-weight:700;font-size:14px;cursor:pointer;transition:all .15s}
 .btn-next:hover{background:#1e40af}
 
-/* Done */
+/* ─── Done ─── */
 .done-phase{align-items:center;justify-content:flex-start;padding:40px 16px}
 .done-wrap{width:100%;max-width:380px;margin:0 auto}
 .done-score-card{border-radius:20px;padding:32px 24px;text-align:center;color:#fff;margin-bottom:20px}
@@ -154,176 +225,578 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#0f
 .btn-back-home{background:#f1f5f9;color:#475569}
 .btn-back-home:hover{background:#e2e8f0}
 
-/* Error */
-.error-phase{align-items:center;justify-content:center;padding:40px 16px;text-align:center}
-.error-card{background:#fff;border:1px solid #fecaca;border-radius:16px;padding:32px 24px;max-width:360px}
+/* ─── Pro upgrade modal ─── */
+.upgrade-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.upgrade-modal-bg.active{display:flex}
+.upgrade-modal{background:#fff;border-radius:20px;padding:32px 24px;max-width:380px;width:100%;text-align:center}
+.upgrade-modal .up-icon{font-size:48px;margin-bottom:12px}
+.upgrade-modal h2{font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px}
+.upgrade-modal p{font-size:14px;color:#64748b;line-height:1.6;margin-bottom:24px}
+.btn-upgrade{display:block;padding:14px 32px;background:#1d4ed8;color:#fff;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;margin-bottom:12px;transition:background .15s}
+.btn-upgrade:hover{background:#1e40af}
+.btn-cancel{background:none;border:none;color:#94a3b8;font-size:13px;cursor:pointer;text-decoration:underline}
+
+/* ─── Daily limit notice ─── */
+.limit-notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:16px;margin-top:12px;font-size:13px;color:#92400e;text-align:center;line-height:1.5}
+.limit-notice strong{color:#c2410c}
 
 @media(max-width:480px){.stack-card-2,.stack-card-1{display:none}.main-card{max-width:100%}}
-</style>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ── Header ── */
-
-/* ── Nav ── */
-
-/* ── Dropdown ── */
-
-/* ── CTA Button ── */
-
-/* ── Auth buttons ── */
-@media (max-width: 768px) {
-}
-
-/* ── Footer ── */
-footer {
-    background: #0f172a;
-    color: #94a3b8;
-    padding: 56px 0 32px;
-}
-
-.footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 48px;
-}
-
-.footer-brand p {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #64748b;
-    margin: 12px 0 20px;
-    max-width: 260px;
-}
-
-.footer-brand .footer-logo {
-    font-size: 16px;
-    font-weight: 700;
-    color: #f1f5f9;
-}
-
-.footer-badge {
-    display: inline-block;
-    padding: 5px 12px;
-    background: rgba(0,122,204,0.15);
-    color: #38bdf8;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.footer-col h5 {
-    font-size: 13px;
-    font-weight: 700;
-    color: #f1f5f9;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 14px;
-}
-
-.footer-col ul { list-style: none; padding: 0; margin: 0; }
-
-.footer-col ul li { margin-bottom: 8px; }
-
-.footer-col ul li a {
-    color: #64748b;
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.15s;
-    line-height: 1.4;
-    display: block;
-}
-
-.footer-col ul li a:hover { color: #38bdf8; }
-
-.footer-bottom {
-    border-top: 1px solid #1e293b;
-    padding-top: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.footer-bottom p { font-size: 13px; color: #475569; }
-
-.footer-bottom a { color: #475569; text-decoration: none; font-size: 13px; }
-.footer-bottom a:hover { color: #94a3b8; }
-
-/* ── Mobile ── */
-@media (max-width: 768px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .footer-brand { grid-column: 1 / -1; }
-}
-
-@media (max-width: 480px) {
-    .footer-grid { grid-template-columns: 1fr; }
-}
+/* ─── Footer ─── */
+footer{background:#0f172a;color:#94a3b8;padding:56px 0 32px}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 20px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand p{font-size:14px;line-height:1.7;color:#64748b;margin:12px 0 20px;max-width:260px}
+.footer-brand .footer-logo{font-size:16px;font-weight:700;color:#f1f5f9}
+.footer-badge{display:inline-block;padding:5px 12px;background:rgba(0,48,135,.15);color:#38bdf8;border-radius:20px;font-size:12px;font-weight:600}
+.footer-col h5{font-size:13px;font-weight:700;color:#f1f5f9;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.footer-col ul{list-style:none;padding:0;margin:0}
+.footer-col ul li{margin-bottom:8px}
+.footer-col ul li a{color:#64748b;text-decoration:none;font-size:14px;transition:color .15s;line-height:1.4;display:block}
+.footer-col ul li a:hover{color:#38bdf8}
+.footer-bottom{border-top:1px solid #1e293b;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:#475569}
+.footer-bottom a{color:#475569;text-decoration:none;font-size:13px}
+.footer-bottom a:hover{color:#94a3b8}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}.footer-brand{grid-column:1/-1}footer{padding:40px 0 28px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr;gap:24px}}
 </style>
     <link rel="stylesheet" href="/site.css">
 </head>
 <body>
+
 <!-- Header -->
-<!-- HEADER:START -->
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- HEADER:END -->
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Practice Tests</button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li role="menuitem"><a href="/universal.html">Universal — All Sections</a></li>
+                        <li class="divider" role="separator"></li>
+                        <li role="menuitem"><a href="/core.html">Core — Regulations</a></li>
+                        <li role="menuitem"><a href="/type-1.html">Type I — Small Appliances</a></li>
+                        <li role="menuitem"><a href="/type-2.html">Type II — High Pressure</a></li>
+                        <li role="menuitem"><a href="/type-3.html">Type III — Low Pressure</a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Features</button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Free tools</li>
+                        <li role="menuitem"><a href="/tutor.html">AI Study Tutor<span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · 10/day</span></a></li>
+                        <li role="menuitem"><a href="/flashcards.html">EPA 608 Flashcards<span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · Core only · 5/day</span></a></li>
+                        <li class="divider" role="separator"></li>
+                        <li class="menu-label">Pro features</li>
+                        <li role="menuitem"><a href="/weak-spots.html">Weak-Spot Drill<span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span></a></li>
+                        <li role="menuitem"><a href="/progress.html">Progress Dashboard<span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span></a></li>
+                        <li role="menuitem"><a href="/review.html">Fix My Mistakes<span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span></a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/certificate">Achievement Badges<span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span></a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/learn">Study Path<span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span></a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
+            </ul>
+        </nav>
+        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin" style="display:none;">Sign In</a>
+            <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up</a>
+            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
+        </div>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
 
-<main style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:24px;background:#f8fafc">
-  <div style="max-width:440px;width:100%;text-align:center">
-    <div style="font-size:56px;margin-bottom:16px">🃏</div>
-    <h1 style="font-size:26px;font-weight:800;color:#0f172a;margin-bottom:10px">Flashcards — Pro Feature</h1>
-    <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:28px">
-      Drill every concept with interactive flashcards covering all 5 sections.<br>
-      Available on <strong>Pro</strong>.
-    </p>
-    <a href="/checkout.html"
-      style="display:inline-block;padding:14px 32px;background:#1d4ed8;color:#fff;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;margin-bottom:12px">
-      Upgrade to Pro — $14.99
-    </a>
-    <p style="color:#94a3b8;font-size:12px;margin-bottom:24px">One-time payment · Lifetime access</p>
-    <a href="/" style="color:#64748b;font-size:13px;text-decoration:none;border-bottom:1px solid #e2e8f0">
-      ← Back to practice tests
-    </a>
-  </div>
-</main>
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
 
+<!-- Mobile Nav Drawer -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-header">
+        <a href="/" style="text-decoration:none;">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:30px;width:auto;">
+        </a>
+        <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Practice Tests</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/universal.html">Universal — All Sections</a></li>
+            <li><a href="/core.html">Core — Regulations</a></li>
+            <li><a href="/type-1.html">Type I — Small Appliances</a></li>
+            <li><a href="/type-2.html">Type II — High Pressure</a></li>
+            <li><a href="/type-3.html">Type III — Low Pressure</a></li>
+        </ul>
+    </div>
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Free Tools</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/tutor.html">AI Study Tutor <span style="font-size:11px;color:#94a3b8;">10/day</span></a></li>
+            <li><a href="/flashcards.html">Flashcards <span style="font-size:11px;color:#94a3b8;">Core · 5/day</span></a></li>
+        </ul>
+    </div>
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Pro Features</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/weak-spots.html">Weak-Spot Drill <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/progress.html">Progress Dashboard <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/review.html">Fix My Mistakes <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="https://epa608practicetest.net/certificate">Achievement Badges <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="https://epa608practicetest.net/learn">Study Path <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="/pricing.html" class="m-pricing">Pricing</a></li>
+        </ul>
+    </div>
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <a href="https://epa608practicetest.net/login" class="mobile-btn-signin" id="mobile-btn-signin" style="display:none;">Sign In</a>
+        <a href="https://epa608practicetest.net/signup" class="mobile-btn-signup" id="mobile-btn-signup">Sign Up Free</a>
+        <a href="https://epa608practicetest.net/dashboard" class="mobile-btn-dashboard" id="mobile-btn-dashboard" style="display:none;">Dashboard →</a>
+    </div>
+</nav>
+
+<!-- Nav JS -->
 <script>
-// If user is logged in → redirect to SaaS flashcards page
-(function(){
-  var key='sb-sequvmxgtmbirnixeril-auth-token';
-  try{
-    var raw=localStorage.getItem(key);
-    if(raw){
-      var tok=JSON.parse(raw);
-      if(tok&&tok.access_token){
+(function() {
+    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+    try {
+        var raw = localStorage.getItem(KEY);
+        if (!raw) return;
+        var session = JSON.parse(raw);
+        var token = session?.access_token || session?.[0]?.access_token;
+        if (!token) return;
+        // Logged in → redirect to full SaaS flashcards
         window.location.replace('https://epa608practicetest.net/flashcards');
-      }
-    }
-  }catch(e){}
+    } catch(e) {}
+})();
+(function() {
+    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+    try {
+        var raw = localStorage.getItem(KEY);
+        if (raw) {
+            var session = JSON.parse(raw);
+            var token = session?.access_token || session?.[0]?.access_token;
+            if (token) {
+                var si = document.getElementById('nav-btn-signin');
+                var su = document.getElementById('nav-btn-signup');
+                var db = document.getElementById('nav-btn-dashboard');
+                if (si) si.style.display = 'none';
+                if (su) su.style.display = 'none';
+                if (db) db.style.display = 'inline-flex';
+                var msi = document.getElementById('mobile-btn-signin');
+                var msu = document.getElementById('mobile-btn-signup');
+                var mdb = document.getElementById('mobile-btn-dashboard');
+                if (msi) msi.style.display = 'none';
+                if (msu) msu.style.display = 'none';
+                if (mdb) mdb.style.display = 'block';
+            }
+        }
+    } catch(e) {}
+})();
+document.querySelectorAll('.dropdown-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var li = btn.closest('.dropdown');
+        var isOpen = li.classList.contains('open');
+        document.querySelectorAll('.dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+        if (!isOpen) { li.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+        else { btn.setAttribute('aria-expanded', 'false'); }
+    });
+});
+document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown.open').forEach(function(el) {
+        el.classList.remove('open');
+        var btn = el.querySelector('.dropdown-toggle');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+});
+(function() {
+    var hamburger = document.getElementById('nav-hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    var overlay = document.getElementById('mobile-nav-overlay');
+    var closeBtn = document.getElementById('mobile-nav-close');
+    function openMenu() { hamburger.classList.add('active'); hamburger.setAttribute('aria-expanded','true'); mobileNav.classList.add('active'); overlay.classList.add('active'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeMenu() { hamburger.classList.remove('active'); hamburger.setAttribute('aria-expanded','false'); mobileNav.classList.remove('active'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    if (hamburger) hamburger.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) closeMenu(); });
 })();
 </script>
+
+<!-- App -->
+<div id="app">
+
+  <!-- Phase: Category Select -->
+  <div class="phase select-phase active" id="phase-select">
+    <div class="select-wrap">
+      <div class="select-title">
+        <div class="icon">🃏</div>
+        <h1>EPA 608 Flashcards</h1>
+        <p>Pick a section to begin. Swipe right to mark correct, left to review again.</p>
+      </div>
+
+      <!-- Core: free -->
+      <button class="cat-btn" id="btn-core" onclick="startCore()">
+        <span class="cat-icon">📘</span>
+        <div>
+          <div class="cat-label">Core — Regulations</div>
+          <div class="cat-sub" id="core-sub">10 cards · Free · 5 sessions/day</div>
+        </div>
+        <span class="cat-badge badge-free">Free</span>
+      </button>
+
+      <!-- Type I, II, III: locked -->
+      <button class="cat-btn cat-locked" onclick="showUpgrade('Type I')">
+        <span class="cat-icon">🔧</span>
+        <div>
+          <div class="cat-label">Type I — Small Appliances</div>
+          <div class="cat-sub">102 questions · Hermetic systems</div>
+        </div>
+        <span class="cat-badge badge-pro">Pro</span>
+      </button>
+
+      <button class="cat-btn cat-locked" onclick="showUpgrade('Type II')">
+        <span class="cat-icon">❄️</span>
+        <div>
+          <div class="cat-label">Type II — High Pressure</div>
+          <div class="cat-sub">209 questions · CFC/HCFC/HFC systems</div>
+        </div>
+        <span class="cat-badge badge-pro">Pro</span>
+      </button>
+
+      <button class="cat-btn cat-locked" onclick="showUpgrade('Type III')">
+        <span class="cat-icon">🌡️</span>
+        <div>
+          <div class="cat-label">Type III — Low Pressure</div>
+          <div class="cat-sub">119 questions · CFC systems</div>
+        </div>
+        <span class="cat-badge badge-pro">Pro</span>
+      </button>
+
+      <div id="limit-msg" class="limit-notice" style="display:none">
+        <strong>Daily limit reached.</strong><br>
+        You've used all 5 free Core sessions today. Come back tomorrow — or
+        <a href="/pricing.html" style="color:#c2410c;font-weight:700;">upgrade to Pro</a> for unlimited access to all sections.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase: Loading -->
+  <div class="phase loading-phase" id="phase-loading">
+    <div class="spinner"></div>
+    <p style="color:#64748b;font-size:14px;">Loading cards…</p>
+  </div>
+
+  <!-- Phase: Active session -->
+  <div class="phase active-phase" id="phase-active">
+    <div class="app-header">
+      <div class="app-header-left">
+        <button class="back-btn" onclick="goBack()">← Back</button>
+        <h2 id="session-title">Core Flashcards</h2>
+      </div>
+      <div>
+        <span class="score-correct" id="score-correct">0</span>
+        <span class="score-sep"> / </span>
+        <span style="color:#64748b;font-size:14px;" id="score-total">0</span>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+
+    <div class="card-area" id="card-area">
+      <!-- Stack backdrop cards -->
+      <div class="stack-card stack-card-2"></div>
+      <div class="stack-card stack-card-1"></div>
+      <!-- Main card -->
+      <div class="main-card" id="main-card">
+        <div class="swipe-overlay swipe-got" id="swipe-got" style="display:none"><span class="swipe-badge">GOT IT</span></div>
+        <div class="swipe-overlay swipe-review" id="swipe-review" style="display:none"><span class="swipe-badge">REVIEW</span></div>
+        <div class="card-body">
+          <div class="card-badges">
+            <span class="badge badge-cat" id="card-cat-badge">Core</span>
+            <span class="badge badge-diff" id="card-diff-badge">Q1</span>
+          </div>
+          <div class="card-question" id="card-question">Question text here</div>
+          <div class="options" id="card-options"></div>
+          <div id="result-area"></div>
+        </div>
+        <div class="card-hint" id="card-hint" style="display:none">Swipe right = Got it &nbsp;·&nbsp; Swipe left = Review again</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar" id="bottom-bar" style="display:none">
+      <button class="btn-review" id="btn-mark-review" onclick="markReview()">↩ Review Again</button>
+      <button class="btn-next" id="btn-got-it" onclick="markGotIt()">Got It ✓</button>
+    </div>
+  </div>
+
+  <!-- Phase: Done -->
+  <div class="phase done-phase" id="phase-done">
+    <div class="done-wrap">
+      <div class="done-score-card" id="done-card">
+        <div class="done-label">Session Complete</div>
+        <div class="done-pct" id="done-pct">0%</div>
+        <div class="done-msg" id="done-msg">Nice work!</div>
+        <div class="done-stats">
+          <span>✅ <span id="done-correct">0</span> correct</span>
+          <span>🔁 <span id="done-review">0</span> to review</span>
+        </div>
+      </div>
+      <div class="done-actions">
+        <button class="btn-again" onclick="startCore()">Practice Again</button>
+        <button class="btn-back-home" onclick="goBack()">← Choose Section</button>
+      </div>
+      <div style="margin-top:20px;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;text-align:center">
+        <p style="font-size:13px;color:#64748b;margin-bottom:10px">Unlock all 4 sections + unlimited sessions</p>
+        <a href="/pricing.html" style="display:inline-block;padding:10px 24px;background:#1d4ed8;color:#fff;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;">Upgrade to Pro →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Pro Upgrade Modal -->
+<div class="upgrade-modal-bg" id="upgrade-modal">
+  <div class="upgrade-modal">
+    <div class="up-icon">🔒</div>
+    <h2 id="modal-title">Type I Flashcards</h2>
+    <p>This section is included in <strong>Pro</strong>. Upgrade once for lifetime access to all 4 sections, unlimited daily sessions, and 866 questions.</p>
+    <a href="/pricing.html" class="btn-upgrade">Upgrade to Pro — $14.99</a>
+    <button class="btn-cancel" onclick="closeUpgrade()">Maybe later</button>
+  </div>
+</div>
+
+<script>
+/* ─── Question Bank (Core, 20 questions) ─── */
+var CORE_QUESTIONS = [
+  {q:"Which type of refrigerant is a chlorofluorocarbon (CFC)?",opts:["R-12","R-134a","R-410A","R-744"],ans:0,exp:"R-12 is a CFC containing chlorine, fluorine, and carbon. CFCs have high ODP (R-12 ODP=1.0) and were phased out under the Montreal Protocol."},
+  {q:"What does ODP stand for in refrigerant terminology?",opts:["Ozone Depletion Potential","Oxygen Density Pressure","Operational Discharge Point","Overheat Detection Procedure"],ans:0,exp:"ODP = Ozone Depletion Potential — a measure of a substance's ability to destroy stratospheric ozone relative to R-11 (the reference compound, ODP=1.0)."},
+  {q:"Which international treaty controls the production of ozone-depleting substances?",opts:["Montreal Protocol","Kyoto Protocol","Paris Agreement","Geneva Convention"],ans:0,exp:"The Montreal Protocol (Sept 16, 1987) controls production and use of ODSs including CFCs and HCFCs. Ratified by 197 countries."},
+  {q:"What is the main purpose of the Clean Air Act as it relates to refrigerants?",opts:["To protect the ozone layer by regulating refrigerant handling","To regulate vehicle emissions only","To manage air conditioning efficiency","To set building ventilation standards"],ans:0,exp:"Clean Air Act Title VI (Stratospheric Ozone Protection) requires EPA to regulate ODSs. Section 608 establishes the refrigerant management program."},
+  {q:"Which of these is an HCFC refrigerant?",opts:["R-22","R-134a","R-12","R-744"],ans:0,exp:"R-22 (chlorodifluoromethane) is an HCFC — a hydrochlorofluorocarbon. R-22 ODP=0.05. US production ended January 1, 2020."},
+  {q:"What is GWP?",opts:["Global Warming Potential","Gas Weight Parameter","Ground Water Pressure","General Work Protocol"],ans:0,exp:"GWP = Global Warming Potential — how much heat a greenhouse gas traps relative to CO₂ (reference GWP=1) over 100 years."},
+  {q:"Technicians who violate Section 608 refrigerant venting rules can be fined up to how much per day, per violation?",opts:["$44,539","$1,000","$10,000","$500"],ans:0,exp:"EPA can assess fines up to $44,539 per day per violation for knowingly venting refrigerants (amount adjusted annually for inflation)."},
+  {q:"Which type of refrigerant has an ODP of zero?",opts:["HFCs (R-134a, R-410A)","CFCs (R-11, R-12)","HCFCs (R-22)","Halon"],ans:0,exp:"HFCs contain no chlorine so they have ODP=0. They were introduced as replacements for CFCs and HCFCs."},
+  {q:"Before opening any refrigerant system for service, technicians must:",opts:["Recover the refrigerant","Vent the refrigerant to atmosphere","Add more oil first","Pressurize to 150 psi"],ans:0,exp:"EPA Section 608 prohibits venting. All refrigerant must be recovered before opening a system for service, repair, or disposal."},
+  {q:"What refrigerant is R-410A classified as?",opts:["HFC","CFC","HCFC","HFO"],ans:0,exp:"R-410A is an HFC blend (50% R-32 + 50% R-125). It has ODP=0 and GWP=2,088. It replaced R-22 in new residential systems."},
+  {q:"Who must be EPA-certified to purchase and use refrigerants in containers above 2 lbs?",opts:["HVAC/R technicians servicing refrigerant-containing equipment","Any licensed contractor","Only engineers","No certification required"],ans:0,exp:"EPA Section 608 requires technician certification to purchase refrigerants in containers exceeding 2 lbs (except for specific small cans)."},
+  {q:"Which refrigerant has the highest ODP?",opts:["R-11","R-22","R-134a","R-410A"],ans:0,exp:"R-11 (trichlorofluoromethane) has ODP=1.0 and is the reference compound. It was phased out in 1996 under the Montreal Protocol."},
+  {q:"The term 'de minimis' release of refrigerant refers to:",opts:["Releases that are unavoidable in good-faith service","Any intentional venting","Releases over 100 lbs","Releases requiring no documentation"],ans:0,exp:"De minimis releases are small, unavoidable releases that occur during good-faith service (e.g., when disconnecting hoses). These are not prohibited."},
+  {q:"What is the EPA Section 608 rule on venting refrigerants?",opts:["Venting is prohibited except for specific low-GWP exemptions","Venting is allowed for small amounts","Venting is only prohibited for CFCs","Venting is allowed outdoors"],ans:0,exp:"Section 608 prohibits knowingly venting ozone-depleting and substitute refrigerants used in stationary equipment during service, maintenance, repair, or disposal."},
+  {q:"Which EPA certification type covers large commercial refrigeration?",opts:["Type II","Type I","Core only","Universal"],ans:0,exp:"Type II covers high-pressure systems used in large commercial refrigeration. Type I covers small appliances; Type III covers low-pressure systems."},
+  {q:"R-744 is the refrigerant designation for:",opts:["Carbon dioxide (CO₂)","Propane","Ammonia","R-12"],ans:0,exp:"R-744 = CO₂ (carbon dioxide). It has ODP=0 and GWP=1. Natural refrigerant used in transcritical systems and commercial refrigeration."},
+  {q:"Which refrigerant classification includes propane (R-290) and isobutane (R-600a)?",opts:["Hydrocarbons","HFCs","HCFCs","HFOs"],ans:0,exp:"Propane and isobutane are hydrocarbon (HC) refrigerants. They have ODP=0 and very low GWP but are flammable (A3 safety class)."},
+  {q:"What does Section 608 of the Clean Air Act specifically address?",opts:["Servicing of motor vehicle air conditioners","Stationary refrigeration and air conditioning","Industrial process refrigeration only","Commercial refrigeration only"],ans:1,exp:"Section 608 addresses stationary refrigeration and air conditioning equipment. Motor vehicle A/C is covered under Section 609."},
+  {q:"A refrigerant recovery machine must be used to achieve what recovery efficiency?",opts:["90% or greater for systems with less than 200 lbs","100%","50% or greater","75% or greater"],ans:0,exp:"EPA requires 90%+ recovery efficiency for systems with less than 200 lbs of refrigerant when using certified recovery equipment manufactured after November 15, 1993."},
+  {q:"HFOs (hydrofluoroolefins) like R-1234yf are characterized by:",opts:["Very low GWP and ODP of zero","High GWP and zero ODP","High ODP and low GWP","Same GWP as HFCs"],ans:0,exp:"HFOs have ODP=0 and GWP typically <10 (R-1234yf GWP=4). They are 4th-generation refrigerants being adopted in automotive A/C and heat pumps."}
+];
+
+/* ─── Daily limit logic ─── */
+var DAILY_KEY = 'fc_daily_core';
+var DAILY_LIMIT = 5;
+
+function getTodayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+function getDailyCount() {
+  try {
+    var raw = localStorage.getItem(DAILY_KEY);
+    if (!raw) return {date: getTodayStr(), count: 0};
+    var data = JSON.parse(raw);
+    if (data.date !== getTodayStr()) return {date: getTodayStr(), count: 0};
+    return data;
+  } catch(e) { return {date: getTodayStr(), count: 0}; }
+}
+function incrementDailyCount() {
+  var data = getDailyCount();
+  data.count++;
+  try { localStorage.setItem(DAILY_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+/* ─── Session state ─── */
+var session = { questions: [], idx: 0, correct: 0, answered: false };
+
+function showPhase(id) {
+  document.querySelectorAll('.phase').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function startCore() {
+  var daily = getDailyCount();
+  if (daily.count >= DAILY_LIMIT) {
+    document.getElementById('limit-msg').style.display = 'block';
+    showPhase('phase-select');
+    return;
+  }
+  incrementDailyCount();
+  showPhase('phase-loading');
+  // Shuffle and pick 10 questions
+  var shuffled = CORE_QUESTIONS.slice().sort(function() { return Math.random() - 0.5; });
+  session.questions = shuffled.slice(0, 10);
+  session.idx = 0;
+  session.correct = 0;
+  setTimeout(function() {
+    showPhase('phase-active');
+    renderCard();
+    updateCoreSubLabel();
+  }, 400);
+}
+
+function updateCoreSubLabel() {
+  var daily = getDailyCount();
+  var remaining = Math.max(0, DAILY_LIMIT - daily.count);
+  var sub = document.getElementById('core-sub');
+  if (sub) {
+    sub.textContent = '10 cards · Free · ' + remaining + ' session' + (remaining===1?'':'s') + ' remaining today';
+  }
+}
+
+function renderCard() {
+  var q = session.questions[session.idx];
+  session.answered = false;
+
+  document.getElementById('card-cat-badge').textContent = 'Core';
+  document.getElementById('card-diff-badge').textContent = 'Q' + (session.idx + 1) + '/' + session.questions.length;
+  document.getElementById('card-question').textContent = q.q;
+  document.getElementById('score-correct').textContent = session.correct;
+  document.getElementById('score-total').textContent = session.questions.length;
+  document.getElementById('progress-fill').style.width = (session.idx / session.questions.length * 100) + '%';
+  document.getElementById('result-area').innerHTML = '';
+  document.getElementById('card-hint').style.display = 'none';
+  document.getElementById('bottom-bar').style.display = 'none';
+  document.getElementById('swipe-got').style.display = 'none';
+  document.getElementById('swipe-review').style.display = 'none';
+
+  // Render options
+  var optEl = document.getElementById('card-options');
+  optEl.innerHTML = '';
+  var labels = ['A','B','C','D'];
+  q.opts.forEach(function(opt, i) {
+    var btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = '<span class="opt-label">' + labels[i] + '</span><span class="opt-text">' + opt + '</span>';
+    btn.addEventListener('click', function() { answerCard(i); });
+    optEl.appendChild(btn);
+  });
+}
+
+function answerCard(chosen) {
+  if (session.answered) return;
+  session.answered = true;
+  var q = session.questions[session.idx];
+  var btns = document.querySelectorAll('#card-options .option-btn');
+  var correct = (chosen === q.ans);
+  btns.forEach(function(btn, i) {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === chosen && !correct) btn.classList.add('opt-wrong');
+    else btn.classList.add('opt-dimmed');
+  });
+  // Result banner
+  var resultArea = document.getElementById('result-area');
+  resultArea.innerHTML = '<div class="result-banner ' + (correct?'rb-pass':'rb-fail') + '">' +
+    (correct ? '✅ Correct!' : '❌ Not quite') + '</div>' +
+    '<div class="explanation">' + q.exp + '</div>';
+  if (correct) session.correct++;
+  // Show bottom bar + hint
+  document.getElementById('bottom-bar').style.display = 'flex';
+  document.getElementById('card-hint').style.display = 'block';
+}
+
+function markGotIt() {
+  nextCard(true);
+}
+function markReview() {
+  // Push current question to end of queue
+  var q = session.questions[session.idx];
+  session.questions.push(q);
+  nextCard(false);
+}
+
+function nextCard(advance) {
+  session.idx++;
+  if (session.idx >= session.questions.length) {
+    showDone();
+    return;
+  }
+  // Animate fly-right
+  var card = document.getElementById('main-card');
+  card.classList.add(advance ? 'fly-right' : 'fly-left');
+  setTimeout(function() {
+    card.classList.remove('fly-right', 'fly-left');
+    renderCard();
+  }, 300);
+}
+
+function showDone() {
+  var total = session.questions.filter(function(q,i) { return i < 10; }).length;
+  var pct = Math.round(session.correct / 10 * 100);
+  var toReview = 10 - session.correct;
+  document.getElementById('done-pct').textContent = pct + '%';
+  document.getElementById('done-correct').textContent = session.correct;
+  document.getElementById('done-review').textContent = toReview;
+  var doneCard = document.getElementById('done-card');
+  if (pct >= 70) {
+    doneCard.className = 'done-score-card done-pass';
+    document.getElementById('done-msg').textContent = pct === 100 ? 'Perfect score! 🏆' : 'Great work! Keep it up!';
+  } else {
+    doneCard.className = 'done-score-card done-fail';
+    document.getElementById('done-msg').textContent = 'Keep practicing — you\'ve got this!';
+  }
+  showPhase('phase-done');
+}
+
+function goBack() {
+  showPhase('phase-select');
+  updateCoreSubLabel();
+  // Check limit display
+  var daily = getDailyCount();
+  document.getElementById('limit-msg').style.display = daily.count >= DAILY_LIMIT ? 'block' : 'none';
+}
+
+/* ─── Pro upgrade modal ─── */
+function showUpgrade(section) {
+  document.getElementById('modal-title').textContent = section + ' Flashcards — Pro';
+  document.getElementById('upgrade-modal').classList.add('active');
+}
+function closeUpgrade() {
+  document.getElementById('upgrade-modal').classList.remove('active');
+}
+document.getElementById('upgrade-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeUpgrade();
+});
+
+/* ─── Init ─── */
+updateCoreSubLabel();
+var daily = getDailyCount();
+if (daily.count >= DAILY_LIMIT) {
+  document.getElementById('limit-msg').style.display = 'block';
+}
+</script>
+
 <!-- Footer -->
 <footer>
     <div class="footer-inner">
         <div class="footer-grid">
-
-            <!-- Brand -->
             <div class="footer-brand">
                 <div class="footer-logo">EPA 608 Practice Test</div>
                 <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
                 <span class="footer-badge">Forever Free for HVAC Community</span>
             </div>
-
-            <!-- Practice Tests -->
             <div class="footer-col">
                 <h5>Practice Tests</h5>
                 <ul>
@@ -332,12 +805,9 @@ footer {
                     <li><a href="/type-1.html">Type I</a></li>
                     <li><a href="/type-2.html">Type II</a></li>
                     <li><a href="/type-3.html">Type III</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam</a></li>
                     <li><a href="/review.html">Fix My Mistakes</a></li>
                 </ul>
             </div>
-
-            <!-- Study Resources -->
             <div class="footer-col">
                 <h5>Study Resources</h5>
                 <ul>
@@ -350,8 +820,6 @@ footer {
                     <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
                 </ul>
             </div>
-
-            <!-- Exam Prep -->
             <div class="footer-col">
                 <h5>Exam Prep</h5>
                 <ul>
@@ -362,8 +830,6 @@ footer {
                     <li><a href="/test-duration.html">Exam Duration</a></li>
                 </ul>
             </div>
-
-            <!-- Tools & Info -->
             <div class="footer-col">
                 <h5>Tools &amp; Info</h5>
                 <ul>
@@ -374,9 +840,7 @@ footer {
                     <li><a href="/about.html">About</a></li>
                 </ul>
             </div>
-
         </div>
-
         <div class="footer-bottom">
             <p>&copy; 2026 EPA608PracticeTest.net — Free forever for the HVAC community.</p>
             <div style="display:flex;gap:16px;">

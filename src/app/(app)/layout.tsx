@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
 import { LocaleProvider } from '@/lib/i18n-context'
+import { PageTransition } from '@/components/PageTransition'
 import type { Tier } from '@/types'
+
+// Private app — never indexed by search engines
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 // Never cache layout — always fetch fresh user data
 export const dynamic = 'force-dynamic'
@@ -24,6 +31,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <LocaleProvider>
+      <PageTransition />
       <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950 overflow-x-hidden">
         <AppSidebar
           email={user.email ?? ''}

@@ -236,17 +236,26 @@ function initTestEngine(config) {
 
     selectAndReveal: function(i) {
       if (this.answers[this.currentIdx] !== null) return;
+      // Blur immediately — prevents mobile browser from auto-scrolling to focused button
+      if (document.activeElement) document.activeElement.blur();
+      var savedY = window.scrollY;
       this.answers[this.currentIdx] = i;
       this.render(); // re-render with locked state + feedback
+      // Restore scroll position after render (stops any layout-shift-induced scroll)
+      requestAnimationFrame(function() {
+        window.scrollTo({ top: savedY, behavior: 'instant' });
+      });
     },
 
     next: function() {
       if (this.currentIdx < this.questions.length - 1) {
         this.currentIdx++;
+        if (document.activeElement) document.activeElement.blur();
         this.render();
-        // Scroll question into view smoothly
-        var qEl = document.getElementById('qText');
-        if (qEl) qEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Scroll to absolute top instantly — question always visible, no header overlap
+        requestAnimationFrame(function() {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        });
       }
     },
 

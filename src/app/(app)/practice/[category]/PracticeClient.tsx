@@ -345,7 +345,10 @@ export function PracticeClient({ category }: { category: string }) {
           {/* Action buttons */}
           <div className="flex gap-3 mb-4">
             <button
-              onClick={() => window.location.href = `/test/${slug}?mode=practice`}
+              onClick={() => {
+                const g = (window as any).__goTo
+                if (g) { g(`/practice/${slug}`) } else { window.location.href = `/practice/${slug}` }
+              }}
               className="flex-1 text-center px-5 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900"
             >
               Practice Again

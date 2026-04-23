@@ -42,3 +42,8 @@ Thumbs.db
 # Testing
 coverage/
 .env.local
+/data
+
+# Local utility scripts
+gen-link.mjs
+gen-link2.mjs

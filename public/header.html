@@ -186,32 +186,32 @@ nav { display: flex; align-items: center; }
 /* ── Auth buttons ── */
 .nav-signin {
     display: inline-flex; align-items: center;
-    padding: 8px 14px;
-    color: #475569;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.nav-signin:hover { background: #f1f5f9; color: #003087; }
-.nav-signup {
-    display: inline-flex; align-items: center;
-    padding: 8px 16px;
-    background: #fff;
-    color: #003087 !important;
-    border: 1.5px solid #003087;
+    padding: 8px 18px;
+    background: #1d4ed8;
+    color: #fff !important;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
     border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.15s;
     white-space: nowrap;
     flex-shrink: 0;
 }
-.nav-signup:hover { background: #003087; color: #fff !important; }
+.nav-signin:hover { background: #1e40af; }
+.nav-signup {
+    display: inline-flex; align-items: center;
+    padding: 8px 18px;
+    background: #1d4ed8;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.nav-signup:hover { background: #1e40af; }
 .nav-dashboard {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 8px 16px;
@@ -351,21 +351,21 @@ nav { display: flex; align-items: center; }
 .mobile-btn-signin {
     display: block; text-align: center;
     padding: 11px 16px;
-    color: #475569; text-decoration: none;
-    font-size: 14px; font-weight: 500;
-    border-radius: 8px; border: 1px solid #e2e8f0;
-    transition: background 0.15s;
-}
-.mobile-btn-signin:hover { background: #f1f5f9; }
-.mobile-btn-signup {
-    display: block; text-align: center;
-    padding: 11px 16px;
-    background: #003087; color: #fff !important; text-decoration: none;
+    background: #1d4ed8; color: #fff !important; text-decoration: none;
     font-size: 14px; font-weight: 600;
     border-radius: 8px;
     transition: background 0.15s;
 }
-.mobile-btn-signup:hover { background: #002268; }
+.mobile-btn-signin:hover { background: #1e40af; }
+.mobile-btn-signup {
+    display: block; text-align: center;
+    padding: 11px 16px;
+    background: #1d4ed8; color: #fff !important; text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+.mobile-btn-signup:hover { background: #1e40af; }
 .mobile-btn-dashboard {
     display: block; text-align: center;
     padding: 11px 16px;
@@ -500,14 +500,50 @@ footer {
                         </div>
                     </ul>
                 </li>
-                <li><a href="/progress.html">My Progress</a></li>
-                <li><a href="/history.html">History</a></li>
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Features</button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Free tools</li>
+                        <li role="menuitem"><a href="/tutor.html">
+                            AI Study Tutor
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · 10/day</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/flashcards.html">
+                            EPA 608 Flashcards
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · Core only · 5/day</span>
+                        </a></li>
+                        <li class="divider" role="separator"></li>
+                        <li class="menu-label">Pro features</li>
+                        <li role="menuitem"><a href="/weak-spots.html">
+                            Weak-Spot Drill
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/progress.html">
+                            Progress Dashboard
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/review.html">
+                            Fix My Mistakes
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/certificate">
+                            Achievement Badges
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/learn">
+                            Study Path
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        </div>
+                    </ul>
+                </li>
                 <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
             </ul>
         </nav>
 
         <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin">Sign In</a>
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin" style="display:none;">Sign In</a>
             <a href="https://epa608practicetest.net/signup" class="nav-signup" id="nav-btn-signup">Sign Up</a>
             <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
         </div>
@@ -549,10 +585,23 @@ footer {
     <div class="mobile-nav-divider"></div>
 
     <div class="mobile-nav-section">
-        <div class="mobile-nav-label">Account</div>
+        <div class="mobile-nav-label">Free Tools</div>
         <ul class="mobile-nav-links">
-            <li><a href="/progress.html">My Progress</a></li>
-            <li><a href="/history.html">History</a></li>
+            <li><a href="/tutor.html">AI Study Tutor <span style="font-size:11px;color:#94a3b8;">10/day</span></a></li>
+            <li><a href="/flashcards.html">Flashcards <span style="font-size:11px;color:#94a3b8;">Core · 5/day</span></a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Pro Features</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/weak-spots.html">Weak-Spot Drill <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/progress.html">Progress Dashboard <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/review.html">Fix My Mistakes <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="https://epa608practicetest.net/certificate">Achievement Badges <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="https://epa608practicetest.net/learn">Study Path <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
             <li><a href="/pricing.html" class="m-pricing">Pricing</a></li>
         </ul>
     </div>
@@ -560,36 +609,57 @@ footer {
     <div class="mobile-nav-divider"></div>
 
     <div class="mobile-nav-auth" id="mobile-nav-auth">
-        <a href="https://epa608practicetest.net/login" class="mobile-btn-signin" id="mobile-btn-signin">Sign In</a>
+        <a href="https://epa608practicetest.net/login" class="mobile-btn-signin" id="mobile-btn-signin" style="display:none;">Sign In</a>
         <a href="https://epa608practicetest.net/signup" class="mobile-btn-signup" id="mobile-btn-signup">Sign Up Free</a>
         <a href="https://epa608practicetest.net/dashboard" class="mobile-btn-dashboard" id="mobile-btn-dashboard" style="display:none;">Dashboard →</a>
     </div>
 </nav>
 
 <script>
-// Auth detection
+// Auth detection — 3 states:
+// 1. Logged in (Supabase token)  → Dashboard only
+// 2. Returning user (has history, no token) → Sign In only (blue)
+// 3. Brand new user (no history, no token)  → Sign Up only (blue)
 (function() {
-    var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
     try {
-        var raw = localStorage.getItem(KEY);
-        if (!raw) return;
-        var session = JSON.parse(raw);
-        var token = session?.access_token || session?.[0]?.access_token;
-        if (!token) return;
-        // Desktop
-        var si = document.getElementById('nav-btn-signin');
-        var su = document.getElementById('nav-btn-signup');
-        var db = document.getElementById('nav-btn-dashboard');
-        if (si) si.style.display = 'none';
-        if (su) su.style.display = 'none';
-        if (db) db.style.display = 'inline-flex';
-        // Mobile
+        var si  = document.getElementById('nav-btn-signin');
+        var su  = document.getElementById('nav-btn-signup');
+        var db  = document.getElementById('nav-btn-dashboard');
         var msi = document.getElementById('mobile-btn-signin');
         var msu = document.getElementById('mobile-btn-signup');
         var mdb = document.getElementById('mobile-btn-dashboard');
-        if (msi) msi.style.display = 'none';
-        if (msu) msu.style.display = 'none';
-        if (mdb) mdb.style.display = 'block';
+
+        function showOnly(desktop, mobile) {
+            // desktop: 'signin' | 'signup' | 'dashboard'
+            if (si) si.style.display  = desktop === 'signin'    ? 'inline-flex' : 'none';
+            if (su) su.style.display  = desktop === 'signup'    ? 'inline-flex' : 'none';
+            if (db) db.style.display  = desktop === 'dashboard' ? 'inline-flex' : 'none';
+            if (msi) msi.style.display = mobile === 'signin'    ? 'block' : 'none';
+            if (msu) msu.style.display = mobile === 'signup'    ? 'block' : 'none';
+            if (mdb) mdb.style.display = mobile === 'dashboard' ? 'block' : 'none';
+        }
+
+        // 1. Check active Supabase session
+        var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+        var raw = localStorage.getItem(KEY);
+        if (raw) {
+            var session = JSON.parse(raw);
+            var token = session && (session.access_token || (session[0] && session[0].access_token));
+            if (token) { showOnly('dashboard', 'dashboard'); return; }
+        }
+
+        // 2. Returning user = has test history
+        var history = localStorage.getItem('epa608History');
+        var hasHistory = false;
+        if (history) {
+            try { hasHistory = JSON.parse(history).length > 0; } catch(e) {}
+        }
+
+        if (hasHistory) {
+            showOnly('signin', 'signin');
+        } else {
+            showOnly('signup', 'signup');
+        }
     } catch(e) {}
 })();
 
