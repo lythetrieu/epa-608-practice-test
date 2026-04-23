@@ -149,8 +149,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Payment not completed' }, { status: 400, headers: HEADERS })
     }
 
-    // Email: prefer form input, fallback to PayPal payer email
-    const payerEmail = (email || order.payer?.email_address || '').toLowerCase().trim()
+    // Email: validate client-supplied email against PayPal's verified payer email
+    const paypalPayerEmail = (order.payer?.email_address || '').toLowerCase().trim()
+    const clientEmail = (email || '').toLowerCase().trim()
+    if (clientEmail && paypalPayerEmail && clientEmail !== paypalPayerEmail) {
+      return NextResponse.json({ error: 'Email mismatch' }, { status: 400, headers: HEADERS })
+    }
+    const payerEmail = paypalPayerEmail || clientEmail
     const amount = order.purchase_units?.[0]?.payments?.captures?.[0]?.amount?.value
 
     if (!amount || parseFloat(amount) < 0.01) {
