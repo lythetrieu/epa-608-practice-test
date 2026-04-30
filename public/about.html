@@ -19,16 +19,86 @@
     <title>About Us - EPA 608 Practice Test</title>
 
   <!-- Schema: Organization -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"EPA 608 Practice Test","url":"https://epa608practicetest.net","logo":"https://epa608practicetest.net/images/og-image.jpg","description":"Free EPA 608 practice test platform helping HVAC technicians pass their Section 608 certification exam. 500 questions free, full 866-question bank with Pro.","foundingDate":"2024","founder":{"@type":"Person","name":"Lý Thế Triều","sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]},"sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]}
-  </script>
 
   <!-- Schema: AboutPage -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"AboutPage","name":"About EPA 608 Practice Test","url":"https://epa608practicetest.net/about.html","description":"Learn about the story behind EPA 608 Practice Test — built by immigrants for immigrants and career changers seeking HVAC certification opportunities.","author":{"@type":"Person","name":"Lý Thế Triều","sameAs":["https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/","https://x.com/TrieuLy14"]},"publisher":{"@type":"Organization","name":"EPA 608 Practice Test","url":"https://epa608practicetest.net"}}
-  </script>
 
-    <style>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://epa608practicetest.net/#organization",
+      "name": "EPA 608 Practice Test",
+      "url": "https://epa608practicetest.net",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://epa608practicetest.net/logo.svg",
+        "width": 200,
+        "height": 60
+      },
+      "description": "Free EPA 608 practice test platform. 866 questions verified against official EPA Section 608 regulations and Prometric content outline.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Lý Thế Triều",
+        "sameAs": [
+          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+          "https://x.com/TrieuLy14"
+        ]
+      },
+      "knowsAbout": [
+        "EPA 608 Certification",
+        "Section 608 Clean Air Act",
+        "refrigerant handling regulations",
+        "HVAC technician certification"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+        "https://x.com/TrieuLy14"
+      ]
+    },
+    {
+      "@type": "AboutPage",
+      "name": "About EPA 608 Practice Test",
+      "url": "https://epa608practicetest.net/about.html",
+      "description": "Learn about the story behind EPA 608 Practice Test — built by immigrants for immigrants and career changers seeking HVAC certification opportunities.",
+      "author": {
+        "@type": "Person",
+        "name": "Lý Thế Triều",
+        "sameAs": [
+          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+          "https://x.com/TrieuLy14"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "EPA 608 Practice Test",
+        "url": "https://epa608practicetest.net"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://epa608practicetest.net/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About",
+          "item": "https://epa608practicetest.net/about.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
         :root {
             --color-primary: #003087;
             --color-success: #28a745;
@@ -941,6 +1011,10 @@ document.addEventListener('click', function() {
 
 
     <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <a href="/">Home</a> &rsaquo; About
+        </nav>
+
         <div class="about-container">
             <div class="about-header">
                 <h1>About EPA 608 Practice Test</h1>

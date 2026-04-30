@@ -15,12 +15,17 @@ Disallow: /reset-password
 Disallow: /welcome
 Disallow: /practice/
 Disallow: /test/
+Allow: /tutor.html
+Allow: /tutor.html?*
 Disallow: /tutor
 Disallow: /learn
 Disallow: /podcast
+Allow: /progress.html
 Disallow: /progress
+Allow: /history.html
 Disallow: /history
 Disallow: /certificate
+Allow: /flashcards.html
 Disallow: /flashcards
 Disallow: /join/
 Disallow: /cert/

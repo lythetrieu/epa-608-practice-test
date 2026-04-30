@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>EPA 608 Practice Questions: How I Built (and Rebuilt) 532 of Them</title>
+    <meta name="description" content="EPA 608 practice questions from the builder's perspective: how I wrote, validated, and rewrote hundreds of questions — and what I learned about why most practice tests get technicians wrong answers.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <link rel="canonical" href="https://epa608practicetest.net/epa-608-practice-questions.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="EPA 608 Practice Test">
+  <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+  <meta property="og:url" content="https://epa608practicetest.net/epa-608-practice-questions.html">
+  <meta property="og:title" content="EPA 608 Practice Questions: How I Built (and Rebuilt) 532 of Them">
+  <meta property="og:description" content="EPA 608 practice questions from the builder's perspective: how I wrote, validated, and rewrote hundreds of questions — and what I learned about why most practice tests give wrong answers.">
+
+    <style>
+:root { --blue: #007acc; --dark: #1e293b; --bg: #f8fafc; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 16px/1.8 system-ui, sans-serif; color: #333; background: #fff; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.hero { padding: 56px 0; background: var(--bg); border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+.hero h1 { font-size: 36px; color: var(--dark); margin-bottom: 14px; line-height: 1.2; text-align: center; }
+.hero p { text-align: center; color: #64748b; font-size: 17px; max-width: 660px; margin: 0 auto; }
+h2 { font-size: 26px; color: var(--dark); margin: 40px 0 14px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+h3 { font-size: 19px; color: var(--dark); margin: 26px 0 10px; }
+p { margin-bottom: 20px; }
+ul, ol { margin-bottom: 20px; padding-left: 26px; }
+li { margin-bottom: 10px; }
+.breadcrumb { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+.breadcrumb a { color: var(--blue); text-decoration: none; }
+table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+th { background: var(--dark); color: #fff; padding: 11px 14px; text-align: left; }
+td { padding: 11px 14px; border-bottom: 1px solid #e2e8f0; }
+tr:nth-child(even) td { background: var(--bg); }
+.callout { background: #eff6ff; border-left: 4px solid var(--blue); padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.callout h3 { color: #1e40af; margin: 0 0 8px; font-size: 16px; }
+.callout p { margin: 0; }
+.warn { background: #fefce8; border-left: 4px solid #eab308; padding: 20px 22px; border-radius: 8px; margin: 26px 0; }
+.warn h3 { color: #854d0e; margin: 0 0 8px; font-size: 16px; }
+.warn p { margin: 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 28px 0; }
+.stat-card { background: var(--bg); border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 16px; text-align: center; }
+.stat-card .num { font-size: 36px; font-weight: 800; color: var(--blue); line-height: 1; }
+.stat-card .label { font-size: 13px; color: #64748b; margin-top: 6px; }
+.founder-note { background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 22px 24px; margin: 30px 0; }
+.founder-note .byline { font-size: 13px; color: #166534; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.04em; }
+.founder-note p { margin: 0; color: #14532d; font-style: italic; line-height: 1.7; }
+.pipeline { background: #0f172a; color: #e2e8f0; border-radius: 12px; padding: 24px 28px; margin: 26px 0; font-family: monospace; font-size: 14px; line-height: 2; }
+.pipeline .comment { color: #64748b; }
+.pipeline .highlight { color: #38bdf8; font-weight: 700; }
+.faq-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.faq-q { padding: 16px 18px; font-weight: 700; font-size: 15px; color: var(--dark); background: var(--bg); }
+.faq-a { padding: 14px 18px; border-top: 1px solid #e2e8f0; color: #444; line-height: 1.7; }
+.cta { background: var(--dark); color: #fff; padding: 44px 36px; border-radius: 18px; text-align: center; margin: 56px 0; }
+.cta h2 { color: #fff; border: none; margin: 0 0 10px; font-size: 26px; }
+.cta p { color: #94a3b8; margin-bottom: 6px; }
+.btn-w { display: inline-block; background: #fff; color: var(--dark); padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 800; margin-top: 18px; }
+@media(max-width:600px) { .hero h1 { font-size: 24px; } h2 { font-size: 21px; } .cta { padding: 28px 18px; } .stat-grid { grid-template-columns: 1fr 1fr; } }
+    </style>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 0 32px;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 12px 0 20px;
+    max-width: 260px;
+}
+.footer-logo { font-size: 18px; font-weight: 800; color: #f8fafc; }
+.footer-badge { display: inline-block; background: #1e40af; color: #bfdbfe; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.05em; }
+.footer-col h5 { font-size: 13px; font-weight: 700; color: #f8fafc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a { color: #94a3b8; text-decoration: none; font-size: 14px; }
+.footer-col ul li a:hover { color: #f8fafc; }
+.footer-bottom { border-top: 1px solid #1e293b; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.footer-bottom a { color: #64748b; text-decoration: none; }
+.footer-bottom a:hover { color: #f8fafc; }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>
+    <link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://epa608practicetest.net/#organization",
+      "name": "EPA 608 Practice Test",
+      "url": "https://epa608practicetest.net",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://epa608practicetest.net/logo.svg",
+        "width": 200,
+        "height": 60
+      },
+      "description": "Free EPA 608 practice test platform. 532 questions built and validated against official EPA Section 608 regulations and Prometric content outline.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Lý Thế Triều",
+        "sameAs": [
+          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+          "https://x.com/TrieuLy14"
+        ]
+      },
+      "knowsAbout": [
+        "EPA 608 Certification",
+        "Section 608 Clean Air Act",
+        "refrigerant handling regulations",
+        "HVAC technician certification"
+      ]
+    },
+    {
+      "@type": "Article",
+      "headline": "EPA 608 Practice Questions: How I Built (and Rebuilt) 532 of Them",
+      "url": "https://epa608practicetest.net/epa-608-practice-questions.html",
+      "datePublished": "2026-04-29",
+      "dateModified": "2026-04-29",
+      "description": "The founder's account of building, validating, and iterating the EPA 608 question bank: why competitors get answers wrong, how 3-layer validation works, and what the data revealed about the hardest topics for technicians.",
+      "author": {
+        "@id": "https://epa608practicetest.net/#organization"
+      },
+      "publisher": {
+        "@id": "https://epa608practicetest.net/#organization"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://epa608practicetest.net/images/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "EPA 608 Practice Questions",
+        "sameAs": "https://www.epa.gov/section608"
+      },
+      "mentions": [
+        { "@type": "Thing", "name": "EPA 608 Certification" },
+        { "@type": "Thing", "name": "Clean Air Act Section 608" },
+        { "@type": "Thing", "name": "AIM Act HFC phasedown" },
+        { "@type": "Thing", "name": "refrigerant handling regulations" },
+        { "@type": "Thing", "name": "HVAC technician certification" },
+        { "@type": "Thing", "name": "A2L refrigerants" }
+      ],
+      "isPartOf": {
+        "@id": "https://epa608practicetest.net/study-guides.html"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://epa608practicetest.net/epa-608-practice-questions.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many EPA 608 practice questions are on this site?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bank currently has 532 verified questions across all four EPA 608 categories: 238 Core, 156 Type II, 76 Type III, and 62 Type I. Questions are tagged by difficulty (easy/medium/hard) and subtopic, and each includes a regulatory citation and explanation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are these EPA 608 practice questions accurate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every question in the bank is validated through a 3-layer process: structural review (correct format, plausible distractors), fact-check against a ground-truth table built from 40 CFR Part 82, and LLM-assisted cross-verification. Questions flagged during validation are quarantined in a separate file and not shown to users until reviewed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do the practice questions cover the AIM Act and A2L refrigerants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The bank includes 19 A2L-flagged questions covering the R-410A ban effective January 1, 2025, R-454B and R-32 as replacements, ASHRAE Standard 34 A2L classification, and the AIM Act phasedown schedule. These were the most recently updated questions in the bank."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What topics do most technicians get wrong on the EPA 608 exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Based on the question bank data and difficulty ratings, the hardest concepts cluster around: civil penalty and enforcement specifics (who can file a complaint, dollar amounts), recovery cylinder hydrostatic test requirements, and Type II cross-category scope (e.g., whether a Type II tech can service low-pressure equipment). Core section questions about venting prohibition dates are frequently missed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you keep practice questions current when EPA regulations change?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The platform uses an automated regulatory watch tool (cfr-watch.ts) that monitors eCFR for changes to 40 CFR Part 82 and 40 CFR Part 84. When a change is detected, affected questions are automatically flagged for review and a GitHub issue is created. This is how the bank was updated when the AIM Act R-410A provisions came into effect."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://epa608practicetest.net"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Study Guides",
+          "item": "https://epa608practicetest.net/study-guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "EPA 608 Practice Questions",
+          "item": "https://epa608practicetest.net/epa-608-practice-questions.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+    <script src="includes.js"></script>
+    <!-- Header -->
+<!-- HEADER:START -->
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KSX9M3DD');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wcxpankiye");
+</script>
+
+<!-- Vercel Analytics -->
+<script defer src="https://va.vercel-scripts.com/v1/script.js" data-api="_vercel/insights"></script>
+
+<!-- GTM Noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSX9M3DD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- HEADER:END -->
+
+    <main class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <a href="/">Home</a> › <a href="/study-guides.html">Study Guides</a> › EPA 608 Practice Questions
+        </nav>
+
+        <section class="hero">
+            <h1>EPA 608 Practice Questions: How I Built (and Rebuilt) 532 of Them</h1>
+            <p>A founder's account of what it actually takes to build accurate EPA 608 practice questions — and why the first version wasn't good enough.</p>
+
+<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:20px 24px;margin:24px 0;">
+  <strong style="color:#0369a1;font-size:0.95rem;letter-spacing:0.05em;">QUICK FACTS — THE QUESTION BANK</strong>
+  <ul style="margin:10px 0 0;padding-left:20px;color:#1e3a5f;">
+    <li>532 verified questions across 4 categories: Core (238), Type II (156), Type III (76), Type I (62)</li>
+    <li>3-layer validation: structural → fact-check against 40 CFR → LLM cross-verify</li>
+    <li>Difficulty tagged per question: 165 easy, 254 medium, 113 hard</li>
+    <li>19 questions specifically flagged and updated for A2L / AIM Act changes (R-410A ban Jan 1, 2025)</li>
+    <li>Automated regulatory watch monitors eCFR for changes to 40 CFR Part 82 and Part 84</li>
+    <li>Target coverage: ~80 subtopics × multiple angles — every real exam concept has at least 3 question variants</li>
+  </ul>
+</div>
+        </section>
+
+        <h2 id="the-problem">EPA 608 Practice Questions Are Broken Across the Web — Here's What I Found</h2>
+
+        <p>EPA 608 practice questions are a solved problem if you measure by quantity. Search for them and you'll find dozens of sites offering 50, 100, sometimes 300 questions. What most of them don't offer is accuracy. When I started building this platform, I spent three weeks auditing competitor question banks before writing a single question of my own. What I found was not encouraging.</p>
+
+        <p>The most common failure mode is wrong distractors. On multiple-choice questions, the incorrect answer choices should be plausible but clearly wrong when you understand the regulation. What I found instead were questions where two or three of the four choices could be correct depending on which version of the regulation you consult, because the question writer had not checked the current Code of Federal Regulations (40 CFR Part 82). The AIM Act alone invalidated dozens of questions on sites that hadn't updated since 2020.</p>
+
+        <p>The second failure mode is missing explanations. An explanation is not just pedagogically useful — it's how you catch a bad question before a technician studies with it. If you can't write a clear explanation that cites a specific regulation, the question is probably wrong. This became one of my non-negotiable requirements: every question in the bank must have a citable explanation. No explanation, no promotion to the live bank.</p>
+
+        <div class="founder-note">
+            <div class="byline">FOUNDER NOTE</div>
+            <p>I'm a software developer, not an HVAC technician. Building this forced me to learn the regulations the hard way — by trying to write questions precise enough to survive 3-layer validation. I've read 40 CFR Part 82 cover to cover. I've read the AIM Act. I've tracked EPA rulemaking notices. This is non-commodity knowledge not because I'm an expert, but because I've had to verify every single fact by primary source to prevent my own platform from teaching people wrong answers.</p>
+        </div>
+
+        <h2 id="v1-problem">Version 1: Starting from a Legacy PDF</h2>
+
+        <p>The first version of the question bank was bootstrapped from a commercially available EPA 608 exam prep guide — one of the common PDFs that circulates in the HVAC training world. I imported 20 questions from it, manually reviewed them, and used them as a baseline while I built the generation system. They're still in the bank today, tagged <code>source: legacy-pdf</code>, and they perform fine. But they showed me immediately what the ceiling was.</p>
+
+        <p>Legacy questions from PDF study guides have a specific characteristic: they test recall, not comprehension. "What is the ODP of R-12?" is a recall question. It has one right answer, but it tells you nothing about whether the technician understands why ODP matters to the Section 608 framework. After the first internal beta, I could see from the completion patterns that technicians were moving through the easy questions at 90%+ accuracy, hitting the medium questions, and then dropping off.</p>
+
+        <p>The problem wasn't question difficulty in the abstract. It was that the question difficulty was miscalibrated. I had too many "name this refrigerant" questions (easy recall) and not enough situational questions — the kind the real Prometric exam uses. The real exam gives you a scenario: a technician arrives on-site, here is the equipment, here is what they want to do — is this legal? Those questions require understanding of scope, certification type, equipment category, and the specific prohibition language in 40 CFR Part 82.</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="num">532</div>
+                <div class="label">Verified questions in current bank</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">238</div>
+                <div class="label">Core section questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">113</div>
+                <div class="label">Hard-difficulty questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">19</div>
+                <div class="label">A2L / AIM Act questions updated</div>
+            </div>
+        </div>
+
+        <h2 id="the-rebuild">The Rebuild: Facts First, Questions Second</h2>
+
+        <p>EPA 608 practice questions live or die by the accuracy of the underlying facts. Every number, every date, every dollar amount in a question must be traceable to a primary source — and the primary source for EPA 608 is always the Code of Federal Regulations, not a study guide and not another practice test site.</p>
+
+        <p>The core decision I made in the rebuild was to separate the ground truth from the question generation. Before generating a single new question, I built a <strong>facts table</strong> — a structured data file where every verifiable fact in the entire EPA 608 domain is stored with its source citation. Civil penalty amount: $44,539 per day per violation (40 CFR Part 82.169). CFC/HCFC venting prohibition date: July 1, 1992. HFC venting prohibition date: November 15, 1995. R-410A high-pressure appliance threshold: 200 psig. Each fact has a source_ref, a verified flag, and a last_updated timestamp.</p>
+
+        <p>This matters because the question generator is Claude (the AI model) operating against the facts table — not against its own training data. When Claude generates a question that says "up to $50,000 per day," the validator catches it against <code>facts.ts</code> and rejects it, because the current CFR figure is $44,539. This distinction between AI-generated questions checked against a facts table versus AI-generated questions based on training data alone is the entire difference between accurate and inaccurate practice tests at scale.</p>
+
+        <div class="callout">
+            <h3>How the 3-Layer Validation Works</h3>
+            <p>Every generated question passes through: (1) <strong>Structural check</strong> — four distinct options, no duplicate answers, explanation present, source_ref present. (2) <strong>Fact check</strong> — every number, date, and regulatory citation is cross-referenced against the ground truth table. (3) <strong>LLM verify</strong> — a separate AI pass evaluates whether the explanation is accurate, whether the distractors are appropriately wrong, and whether the question matches the subtopic it's tagged to. Questions that fail any layer go to <code>questions-flagged.json</code>, not the live bank.</p>
+        </div>
+
+        <h2 id="what-the-data-shows">What the Data Shows About Difficulty</h2>
+
+        <p>With 532 questions tagged by difficulty across 4 categories, some patterns emerge that aren't obvious from the outside.</p>
+
+        <p>The hardest Core questions — the ones that have the highest failure rate in practice — are not about refrigerant chemistry. They're about enforcement and scope. Questions like: "A technician holds Type II certification. A customer asks them to service a centrifugal chiller that uses R-123. Can they legally perform the work?" The answer is no — centrifugal chillers with R-123 are low-pressure appliances, which require Type III or Universal. But the question requires the technician to know equipment category, not just their certification type. This is the concept the real exam tests hardest.</p>
+
+        <p>Recovery cylinder questions are another hard cluster. The hydrostatic test requirement — cylinders must be tested every 5 years per DOT regulations, and a technician is responsible for not using cylinders with an expired or missing test date — appears straightforward until you see the scenario format. If you've only studied "hydrostatic test = 5 years," you may not recognize it when it's framed as "a cylinder with no visible date stamp arrives on site."</p>
+
+        <p>The easiest questions, consistently, are the ones about what venting is. "Is it legal to vent refrigerant directly to the atmosphere?" Every technician gets this right. The harder version — "A technician is servicing equipment that contains a refrigerant blend where one component is below the de minimis threshold. Does the venting prohibition still apply?" — fails at a much higher rate. Same topic, different cognitive depth.</p>
+
+        <h2 id="aim-act-challenge">The AIM Act Update: Why Regulatory Freshness Matters</h2>
+
+        <p>The hardest single event in building this question bank was the AIM Act's R-410A provisions coming into effect. The American Innovation and Manufacturing Act of 2020 (42 U.S.C. § 7675) authorized EPA to phase down HFCs, and one of the first significant implementation milestones was the restriction on new R-410A equipment production starting January 1, 2025.</p>
+
+        <p>This directly invalidated practice questions. Any question that said "R-410A is the current standard high-pressure refrigerant for new residential equipment" was no longer accurate as of January 2025. Any question that asked about R-454B or R-32 as "proposed alternatives" needed to be updated to reflect that these are now the primary choices for new equipment. I had to review and update 19 questions specifically tagged as A2L or AIM Act affected.</p>
+
+        <p>This is why the platform has an automated regulatory watch: <code>cfr-watch.ts</code> monitors the eCFR for changes to 40 CFR Part 82 (refrigerant management) and 40 CFR Part 84 (AIM Act HFC allocation). When a change is detected, the system flags all questions whose <code>source_ref</code> matches the changed section and creates a review task. The bank doesn't update automatically — every change gets human review before promotion. But the detection is automatic, which means we catch changes within days, not months.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Questions</th>
+                    <th>Target</th>
+                    <th>Gap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Core</strong></td>
+                    <td>238</td>
+                    <td>~250</td>
+                    <td>~12</td>
+                </tr>
+                <tr>
+                    <td><strong>Type I</strong></td>
+                    <td>62</td>
+                    <td>~80</td>
+                    <td>~18</td>
+                </tr>
+                <tr>
+                    <td><strong>Type II</strong></td>
+                    <td>156</td>
+                    <td>~165</td>
+                    <td>~9</td>
+                </tr>
+                <tr>
+                    <td><strong>Type III</strong></td>
+                    <td>76</td>
+                    <td>~105</td>
+                    <td>~29</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>532</strong></td>
+                    <td><strong>~600</strong></td>
+                    <td><strong>~68</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="coverage-philosophy">Coverage Philosophy: 80 Subtopics × Multiple Angles</h2>
+
+        <p>The real EPA 608 exam draws from a content outline published by Prometric, the primary exam administrator. The outline is organized by section and subtopic — not by keyword or refrigerant type. When I structured the question bank, I mapped every subtopic in the Prometric outline to a coverage target in the bank. The goal is not to have 600 questions. The goal is to have at least 3 questions per subtopic per angle — meaning the same underlying concept approached from different directions: definition, application, and scenario.</p>
+
+        <p>Type I is currently the thinnest section at 62 questions against a target of 80. Type I is the open-book section of the EPA 608 exam — technicians can bring reference materials — which creates a counterintuitive difficulty: the questions are actually designed to test whether you know where to find information and can apply it under pressure, not whether you memorized a number. Writing good Type I practice questions requires understanding that distinction, and it's taken longer to build than the other sections.</p>
+
+        <h2 id="what-this-means-for-you">What This Means If You're Studying</h2>
+
+        <p>EPA 608 practice questions are only useful if they're accurate and if they match the cognitive level of the real exam. Recall questions will get you to 60%. Application and scenario questions are what get you from 60% to passing 70%.</p>
+
+        <p>Every question on this platform has an explanation. Read the explanation even when you get the question right. The explanation usually contains the specific CFR citation and the principle behind the rule, which is more useful for the exam than the answer choice itself. When you understand why the venting prohibition applies to HFCs at 40 CFR Part 82.154, you can answer any question about venting — not just the one you practiced.</p>
+
+        <p>The hardest questions in the bank — the 113 hard-tagged questions — are worth spending extra time on. They represent the concepts the real exam uses to separate technicians who understand the regulations from those who memorized answers. The <a href="/weak-spots.html">Weak Spot Drill</a> on this site lets you filter to hard-only questions by category, which is the fastest way to find your actual gaps before exam day.</p>
+
+        <div class="warn">
+            <h3>A Note on Answer Accuracy</h3>
+            <p>253 questions in the bank are currently flagged internally for a second-pass review (<code>_needs_review: true</code>). These questions are visible to users but the flag triggers a scheduled review cycle. If you encounter a question where the explanation seems to contradict the answer, use the "Report an Issue" link — those reports go directly into the review queue and typically get resolved within 48 hours.</p>
+        </div>
+
+        <h2 id="faq">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-q">How many EPA 608 practice questions are on this site?</div>
+            <div class="faq-a">532 verified questions: 238 Core, 156 Type II, 76 Type III, and 62 Type I. The target is 600+ when Type I and Type III are fully built out. All questions include difficulty tags, subtopic tags, explanations, and regulatory citations.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Are the practice questions accurate — can I trust the answers?</div>
+            <div class="faq-a">Every answer is validated through a 3-layer process against the Code of Federal Regulations. Questions that fail validation are quarantined and not shown to users. That said, regulations change — if you find an answer that seems wrong, report it and we'll review it within 48 hours.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Do the questions cover the AIM Act and new A2L refrigerants?</div>
+            <div class="faq-a">Yes. The bank has 19 questions specifically covering A2L refrigerants (R-454B, R-32, R-466A), the R-410A ban effective January 1, 2025, ASHRAE Standard 34 A2L classification requirements, and the AIM Act HFC phasedown schedule under 42 U.S.C. § 7675. These were updated when the provisions took effect.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What topics are on the EPA 608 Core exam?</div>
+            <div class="faq-a">The Core section covers refrigerant regulations under 40 CFR Part 82, environmental impact (ozone depletion, GWP), types of refrigerants (CFCs, HCFCs, HFCs, natural), recovery/recycling/reclamation requirements, safety procedures, and leak detection. The Core section has 25 questions; you need 18 correct (70%) to pass. See the <a href="/study-guide-core.html">Core Study Guide</a> for full topic breakdown.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What's the hardest part of the EPA 608 exam?</div>
+            <div class="faq-a">Based on question difficulty data, the hardest concepts are: enforcement scope (who can be penalized and under what conditions), recovery cylinder DOT requirements, cross-certification-type scope questions (e.g., can a Type II tech service low-pressure equipment), and AIM Act specifics about which refrigerants are restricted and when. The <a href="/weak-spots.html">Weak Spot Drill</a> lets you filter to hard questions by topic.</div>
+        </div>
+
+        <div class="cta">
+            <h2>Try the Practice Questions</h2>
+            <p>All 532 questions. No signup required for the first 25.</p>
+            <a href="/universal.html" class="btn-w">Start Free Practice Test →</a>
+        </div>
+
+    </main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">EPA 608 Practice Test</div>
+                <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
+                <span class="footer-badge">Forever Free for HVAC Community</span>
+            </div>
+            <div class="footer-col">
+                <h5>Practice Tests</h5>
+                <ul>
+                    <li><a href="/universal.html">Universal</a></li>
+                    <li><a href="/core.html">Core</a></li>
+                    <li><a href="/type-1.html">Type I</a></li>
+                    <li><a href="/type-2.html">Type II</a></li>
+                    <li><a href="/type-3.html">Type III</a></li>
+                    <li><a href="/timed-exam.html">Timed Exam</a></li>
+                    <li><a href="/review.html">Fix My Mistakes</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Study Resources</h5>
+                <ul>
+                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
+                    <li><a href="/flashcards.html">Flashcards</a></li>
+                    <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Certification Cost</a></li>
+                    <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Exam Prep</h5>
+                <ul>
+                    <li><a href="/how-to-study-for-epa-608.html">How to Study</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate</a></li>
+                    <li><a href="/test-duration.html">Exam Duration</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Tools &amp; Info</h5>
+                <ul>
+                    <li><a href="/tutor.html">AI Study Helper</a></li>
+                    <li><a href="/weak-spots.html">Weak Spot Drill</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA608PracticeTest.net &mdash; Free forever for the HVAC community.</p>
+            <div style="display:flex;gap:16px;">
+                <a href="/policy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

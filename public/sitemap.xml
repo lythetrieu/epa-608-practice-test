@@ -158,12 +158,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://epa608practicetest.net/epa-608-complete-study-guide.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://epa608practicetest.net/epa-608-practice-exam-tips.html</loc>
     <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
@@ -340,4 +334,28 @@
     <priority>0.5</priority>
   </url>
 
+    <url>
+        <loc>https://epa608practicetest.net/epa-608-practice-questions.html</loc>
+        <lastmod>2026-04-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+  <url>
+    <loc>https://epa608practicetest.net/weak-spots.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://epa608practicetest.net/review.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://epa608practicetest.net/tutor.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
