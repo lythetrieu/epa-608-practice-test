@@ -18,8 +18,9 @@ const path = require('path')
 const PUBLIC = path.join(__dirname, '..', 'public')
 
 // Read header and footer source
-const headerSrc = fs.readFileSync(path.join(PUBLIC, 'header.html'), 'utf-8')
-const footerSrc = fs.readFileSync(path.join(PUBLIC, 'footer.html'), 'utf-8')
+const TEMPLATES = path.join(__dirname, 'templates')
+const headerSrc = fs.readFileSync(path.join(TEMPLATES, 'header.html'), 'utf-8')
+const footerSrc = fs.readFileSync(path.join(TEMPLATES, 'footer.html'), 'utf-8')
 
 // Extract just the <header>...</header> part (skip head content like favicon/gtag)
 const headerMatch = headerSrc.match(/<!-- Header -->[\s\S]*$/)

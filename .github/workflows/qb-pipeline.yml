@@ -1,0 +1,180 @@
+name: Question Bank Pipeline
+
+on:
+  # Run every Monday at 9:00 UTC
+  schedule:
+    - cron: '0 9 * * 1'
+
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Pipeline mode'
+        required: true
+        default: 'coverage'
+        type: choice
+        options:
+          - coverage        # Just show coverage report
+          - watch           # Check CFR for changes only
+          - validate        # Validate existing bank
+          - generate        # Generate new questions for gaps
+          - generate-core   # Generate Core only
+          - generate-type2  # Generate Type II only (A2L focus)
+      run_llm_verify:
+        description: 'Run LLM verification on generated questions'
+        type: boolean
+        default: true
+
+jobs:
+  # ── Weekly: check CFR for regulatory changes ──────────────────────────
+  cfr-watch:
+    name: Check CFR for Regulatory Changes
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.watch.outputs.changed }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Check eCFR for Part 82 changes
+        id: watch
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npx tsx question-bank/pipeline.ts --watch
+          # Check if CFR-CHANGE-REPORT.md was created
+          if [ -f CFR-CHANGE-REPORT.md ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Issue if regulation changed
+        if: steps.watch.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const body = fs.readFileSync('CFR-CHANGE-REPORT.md', 'utf8')
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ CFR Regulatory Change Detected — Question Bank Review Required',
+              body: body,
+              labels: ['regulation-change', 'question-bank']
+            })
+
+  # ── Coverage report (always runs) ─────────────────────────────────────
+  coverage-report:
+    name: Coverage Report
+    runs-on: ubuntu-latest
+    needs: cfr-watch
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      - name: Generate coverage report
+        run: npx tsx question-bank/pipeline.ts --coverage
+
+  # ── Generate new questions for gaps ───────────────────────────────────
+  generate:
+    name: Generate Questions
+    runs-on: ubuntu-latest
+    needs: cfr-watch
+    # Only run generation on manual trigger with generate mode
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.mode == 'generate' ||
+       github.event.inputs.mode == 'generate-core' ||
+       github.event.inputs.mode == 'generate-type2')
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Determine category flag
+        id: category
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          if [ "$MODE" = "generate-core" ]; then
+            echo "flag=--category=Core" >> $GITHUB_OUTPUT
+          elif [ "$MODE" = "generate-type2" ]; then
+            echo "flag=--category=Type II" >> $GITHUB_OUTPUT
+          else
+            echo "flag=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run generation pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npx tsx question-bank/pipeline.ts ${{ steps.category.outputs.flag }}
+
+      - name: Upload generated questions as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: questions-validated-${{ github.run_number }}
+          path: |
+            questions-draft.json
+            questions-validated.json
+            questions-flagged.json
+          retention-days: 30
+
+      - name: Create PR with generated questions
+        if: hashFiles('questions-validated.json') != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require('child_process')
+            const branch = `qb-update-${Date.now()}`
+
+            execSync(`git config user.email "actions@github.com"`)
+            execSync(`git config user.name "QB Pipeline Bot"`)
+            execSync(`git checkout -b ${branch}`)
+            execSync(`git add questions-draft.json questions-validated.json questions-flagged.json question-bank/.cfr-watch-state.json || true`)
+            execSync(`git commit -m "chore: QB pipeline run #${context.runNumber}" || true`)
+            execSync(`git push origin ${branch}`)
+
+            await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🤖 Question Bank Update — Run #${context.runNumber}`,
+              head: branch,
+              base: 'main',
+              body: `## Automated Question Bank Update
+
+This PR was generated by the QB Pipeline.
+
+**Files:**
+- \`questions-validated.json\` — New questions that passed all validation
+- \`questions-flagged.json\` — Questions needing human review
+
+**Review checklist:**
+- [ ] Spot-check 10 random questions from \`questions-validated.json\`
+- [ ] Verify all \`source_ref\` values are real CFR citations
+- [ ] Check \`questions-flagged.json\` and decide: fix or discard
+- [ ] After review: run \`npm run qb:promote\` to merge into live bank
+
+**Do not merge this PR** until human review is complete.`,
+              labels: ['automated', 'question-bank']
+            })
