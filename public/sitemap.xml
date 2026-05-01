@@ -222,12 +222,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://epa608practicetest.net/questions-answers-pdf.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 
   <!-- AIM ACT -->
   <url>
@@ -308,6 +302,14 @@
     <loc>https://epa608practicetest.net/tutor.html</loc>
     <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- CERTIFICATION HISTORY -->
+  <url>
+    <loc>https://epa608practicetest.net/history.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 </urlset>
