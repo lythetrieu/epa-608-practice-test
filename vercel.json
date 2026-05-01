@@ -57,7 +57,7 @@
     },
     {
       "source": "/timed-exam/",
-      "destination": "/timed-exam.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
@@ -102,12 +102,17 @@
     },
     {
       "source": "/timed-exam",
-      "destination": "/timed-exam.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/timed-exam.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
       "source": "/mini-quiz",
-      "destination": "/mini-quiz.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
@@ -122,7 +127,7 @@
     },
     {
       "source": "/questions-answers-pdf",
-      "destination": "/questions-answers-pdf.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
@@ -217,7 +222,12 @@
     },
     {
       "source": "/epa-608-practice-exam-tips",
-      "destination": "/epa-608-practice-exam-tips.html",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-practice-exam-tips.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
@@ -312,12 +322,12 @@
     },
     {
       "source": "/certification-validity-and-expiration-rules",
-      "destination": "/epa-608-certification-complete-guide.html",
+      "destination": "/does-it-expire.html",
       "statusCode": 301
     },
     {
       "source": "/certification-validity-and-expiration-rules.html",
-      "destination": "/epa-608-certification-complete-guide.html",
+      "destination": "/does-it-expire.html",
       "statusCode": 301
     },
     {
@@ -352,12 +362,12 @@
     },
     {
       "source": "/epa-608-common-mistakes",
-      "destination": "/epa-608-practice-exam-tips.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/epa-608-common-mistakes.html",
-      "destination": "/epa-608-practice-exam-tips.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
@@ -417,32 +427,32 @@
     },
     {
       "source": "/exam-difficulty",
-      "destination": "/epa-608-practice-exam-tips.html",
+      "destination": "/pass-rate.html",
       "statusCode": 301
     },
     {
       "source": "/exam-difficulty.html",
-      "destination": "/epa-608-practice-exam-tips.html",
+      "destination": "/pass-rate.html",
       "statusCode": 301
     },
     {
       "source": "/exam-preparation",
-      "destination": "/exam-day.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/exam-preparation.html",
-      "destination": "/exam-day.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/how-to-get-certified-step-by-step",
-      "destination": "/epa-608-certification-complete-guide.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/how-to-get-certified-step-by-step.html",
-      "destination": "/epa-608-certification-complete-guide.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
@@ -643,6 +653,26 @@
     {
       "source": "/questions-answers-pdf.html",
       "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-epa-608-practice-test",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-epa-608-practice-test.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/header.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/footer.html",
+      "destination": "/",
       "statusCode": 301
     }
   ]
