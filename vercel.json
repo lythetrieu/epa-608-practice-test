@@ -4,19 +4,28 @@
     {
       "source": "/(.*).html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/test-engine.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/index.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     }
   ],
@@ -128,7 +137,7 @@
     },
     {
       "source": "/faq",
-      "destination": "/faq.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
@@ -173,7 +182,7 @@
     },
     {
       "source": "/exam-prep",
-      "destination": "/exam-prep.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
@@ -203,7 +212,7 @@
     },
     {
       "source": "/epa-608-complete-study-guide",
-      "destination": "/epa-608-complete-study-guide.html",
+      "destination": "/study-guides.html",
       "statusCode": 301
     },
     {
@@ -233,7 +242,7 @@
     },
     {
       "source": "/hvac-students",
-      "destination": "/hvac-students.html",
+      "destination": "/epa-608-certification-complete-guide.html",
       "statusCode": 301
     },
     {
@@ -243,7 +252,7 @@
     },
     {
       "source": "/practice-vs-real",
-      "destination": "/practice-vs-real.html",
+      "destination": "/universal.html",
       "statusCode": 301
     },
     {
@@ -563,12 +572,12 @@
     },
     {
       "source": "/test-strategies",
-      "destination": "/test-strategies.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/study-schedule",
-      "destination": "/study-schedule.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
@@ -578,12 +587,62 @@
     },
     {
       "source": "/test-anxiety",
-      "destination": "/test-anxiety.html",
+      "destination": "/how-to-get-certified.html",
       "statusCode": 301
     },
     {
       "source": "/test-day-checklist",
       "destination": "/test-day-checklist.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-prep.html",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mini-quiz.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/practice-vs-real.html",
+      "destination": "/universal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-strategies.html",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/study-schedule.html",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-anxiety.html",
+      "destination": "/how-to-get-certified.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/epa-608-complete-study-guide.html",
+      "destination": "/study-guides.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/hvac-students.html",
+      "destination": "/epa-608-certification-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/questions-answers-pdf.html",
+      "destination": "/universal.html",
       "statusCode": 301
     }
   ]
