@@ -28,6 +28,17 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Person",
+      "@id": "https://epa608practicetest.net/#author",
+      "name": "Trieu Ly",
+      "url": "https://epa608practicetest.net/about.html",
+      "jobTitle": "HVAC Certification Educator",
+      "sameAs": [
+        "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+        "https://x.com/TrieuLy14"
+      ]
+    },
+    {
       "@type": "Organization",
       "@id": "https://epa608practicetest.net/#organization",
       "name": "EPA 608 Practice Test",
@@ -40,14 +51,7 @@
       },
       "description": "Free EPA 608 practice test platform. 866 questions verified against official EPA Section 608 regulations and Prometric content outline.",
       "foundingDate": "2024",
-      "founder": {
-        "@type": "Person",
-        "name": "Lý Thế Triều",
-        "sameAs": [
-          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
-          "https://x.com/TrieuLy14"
-        ]
-      },
+      "founder": {"@id": "https://epa608practicetest.net/#author"},
       "knowsAbout": [
         "EPA 608 Certification",
         "Section 608 Clean Air Act",
@@ -64,19 +68,8 @@
       "name": "About EPA 608 Practice Test",
       "url": "https://epa608practicetest.net/about.html",
       "description": "Learn about the story behind EPA 608 Practice Test — built by immigrants for immigrants and career changers seeking HVAC certification opportunities.",
-      "author": {
-        "@type": "Person",
-        "name": "Lý Thế Triều",
-        "sameAs": [
-          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
-          "https://x.com/TrieuLy14"
-        ]
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "EPA 608 Practice Test",
-        "url": "https://epa608practicetest.net"
-      }
+      "author": {"@id": "https://epa608practicetest.net/#author"},
+      "publisher": {"@id": "https://epa608practicetest.net/#organization"}
     },
     {
       "@type": "BreadcrumbList",
@@ -992,7 +985,7 @@ document.addEventListener('click', function() {
                     <h2>Our Story</h2>
 
                     <div class="story-box">
-                        <p>When the founders of <strong>EPA 608 Practice Test</strong> immigrated to the U.S., we were
+                        <p>Hi, I'm <strong>Trieu Ly</strong> — founder of EPA 608 Practice Test. When my family immigrated to the U.S., we were
                             starting over. New country. New language. New everything. We were just trying to settle in
                             and build a life — but it was hard, and everything seemed expensive.</p>
 
@@ -1074,7 +1067,7 @@ document.addEventListener('click', function() {
                         <p><strong>This isn't just a test site. It's a bridge to opportunities — and it's for
                                 everyone.</strong></p>
 
-                        <p>See how we compare to other options in our independent look at the <a href="/best-epa-608-practice-test.html" style="color:#007acc;font-weight:600;">best EPA 608 practice test resources</a>.</p>
+                        <p>See how we compare to other options in our independent look at the best EPA 608 practice test resources.</p>
                     </div>
                 </section>
             </main>
@@ -1102,7 +1095,6 @@ document.addEventListener('click', function() {
                     <li><a href="/type-1.html">Type I</a></li>
                     <li><a href="/type-2.html">Type II</a></li>
                     <li><a href="/type-3.html">Type III</a></li>
-                    <li><a href="/timed-exam.html">Timed Exam</a></li>
                     <li><a href="/review.html">Fix My Mistakes</a></li>
                 </ul>
             </div>
