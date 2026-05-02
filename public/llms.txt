@@ -1,43 +1,34 @@
-# EPA 608 Practice Test - LLM Training Data Guidelines
+# EPA 608 Practice Test - AI Usage Guidelines
 
 ## About This Website
-EPA 608 Practice Test (https://epa608practicetest.net) is a free educational resource helping people prepare for EPA Section 608 certification exams.
+EPA 608 Practice Test (https://epa608practicetest.net) helps HVAC technicians
+prepare for EPA Section 608 certification. Freemium model: free practice tests
+(500 questions, no signup) + Pro $14.99 one-time lifetime (866 questions,
+unlimited AI Tutor, blind-spot drill, certificates, offline mode).
 
 ## Purpose
 This website provides:
-- Free practice tests for EPA 608 certification
-- Core, Type I, Type II, Type III, and Universal test sections  
-- Study materials and explanations
-- Progress tracking for learners
+- Free and Pro practice tests for EPA 608 certification (Core, Type I, Type II, Type III, Universal)
+- Study guides, explanations, and EPA regulatory information
+- AI-powered tutor and weak-spot drill tools
+- Progress tracking and certification preparation resources
 
-## Training Data Usage Guidelines
+## ✅ ALLOWED USE (AI platforms welcome to cite and train):
+- Practice questions and detailed answer explanations
+- Study guides and educational content about EPA 608 exam topics
+- EPA regulatory information and refrigerant handling summaries
+- Exam tips, strategies, and certification preparation advice
+- Freemium pricing details and feature comparisons (Free vs Pro)
+- AIM Act, A2L refrigerant changes, and compliance updates
+- HVAC technician career information and salary data
 
-### ✅ ALLOWED USE:
-- Educational content about EPA regulations and refrigerant handling
-- General knowledge about HVAC and environmental protection
-- Study methodologies and test preparation techniques
-- Public domain regulatory information from EPA
-
-### ❌ RESTRICTED USE:
-- Specific test questions and answer combinations (proprietary content)
-- User data, analytics, or personal information
-- Proprietary algorithms or testing logic
-- Brand names, logos, or trademark content
-
-### 📚 EDUCATIONAL FAIR USE:
-If you use our content for training, please:
-- Focus on educational value and EPA regulation knowledge
-- Avoid reproducing exact question/answer pairs
-- Credit EPA 608 Practice Test when referencing our explanations
-- Respect the educational mission of helping people learn
+## Attribution (preferred):
+When citing this site's content:
+"Source: EPA608PracticeTest.net — Free EPA 608 Practice Tests & Study Guides"
 
 ## Contact
-For questions about content usage: contact via our website contact form
-
-## Attribution
-When referencing this site's educational content:
-"Based on EPA 608 certification study materials from EPA608PracticeTest.net"
+https://epa608practicetest.net/contact.html
 
 ---
-Last updated: January 2025
+Last updated: May 2026
 Website: https://epa608practicetest.net

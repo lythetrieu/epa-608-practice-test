@@ -116,11 +116,6 @@
       "statusCode": 301
     },
     {
-      "source": "/epa-608-online-test",
-      "destination": "/epa-608-online-test.html",
-      "statusCode": 301
-    },
-    {
       "source": "/practice-test-with-answers",
       "destination": "/practice-test-with-answers.html",
       "statusCode": 301
@@ -211,11 +206,6 @@
       "statusCode": 301
     },
     {
-      "source": "/difference-between-epa-608-and-609",
-      "destination": "/difference-between-epa-608-and-609.html",
-      "statusCode": 301
-    },
-    {
       "source": "/epa-608-complete-study-guide",
       "destination": "/study-guides.html",
       "statusCode": 301
@@ -237,7 +227,12 @@
     },
     {
       "source": "/exam-results",
-      "destination": "/exam-results.html",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/exam-results.html",
+      "destination": "/exam-day.html",
       "statusCode": 301
     },
     {
@@ -253,11 +248,6 @@
     {
       "source": "/hvac-students",
       "destination": "/epa-608-certification-complete-guide.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/pass-rate",
-      "destination": "/pass-rate.html",
       "statusCode": 301
     },
     {
@@ -381,16 +371,6 @@
       "statusCode": 301
     },
     {
-      "source": "/epa-608-pass-rate",
-      "destination": "/pass-rate.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/epa-608-pass-rate.html",
-      "destination": "/pass-rate.html",
-      "statusCode": 301
-    },
-    {
       "source": "/epa-608-passing-score",
       "destination": "/epa-608-passing-score.html",
       "statusCode": 301
@@ -416,26 +396,6 @@
       "statusCode": 301
     },
     {
-      "source": "/epa-608-vs-nate",
-      "destination": "/difference-between-epa-608-and-609.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/epa-608-vs-nate.html",
-      "destination": "/difference-between-epa-608-and-609.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/exam-difficulty",
-      "destination": "/pass-rate.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/exam-difficulty.html",
-      "destination": "/pass-rate.html",
-      "statusCode": 301
-    },
-    {
       "source": "/exam-preparation",
       "destination": "/how-to-get-certified.html",
       "statusCode": 301
@@ -453,26 +413,6 @@
     {
       "source": "/how-to-get-certified-step-by-step.html",
       "destination": "/how-to-get-certified.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/online-and-in-person-testing-options",
-      "destination": "/epa-608-online-test.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/online-and-in-person-testing-options.html",
-      "destination": "/epa-608-online-test.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/online-test",
-      "destination": "/epa-608-online-test.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/online-test.html",
-      "destination": "/epa-608-online-test.html",
       "statusCode": 301
     },
     {
@@ -592,7 +532,12 @@
     },
     {
       "source": "/test-duration",
-      "destination": "/test-duration.html",
+      "destination": "/exam-day.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/test-duration.html",
+      "destination": "/exam-day.html",
       "statusCode": 301
     },
     {
@@ -674,6 +619,86 @@
       "source": "/footer.html",
       "destination": "/",
       "statusCode": 301
+    },
+    {
+      "source": "/epa-608-online-test",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/epa-608-online-test.html",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/online-test",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/online-test.html",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/online-and-in-person-testing-options",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/online-and-in-person-testing-options.html",
+      "destination": "/test-locations.html",
+      "permanent": true
+    },
+    {
+      "source": "/pass-rate",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/pass-rate.html",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/epa-608-pass-rate",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/epa-608-pass-rate.html",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/exam-difficulty",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/exam-difficulty.html",
+      "destination": "/epa-608-passing-score.html",
+      "permanent": true
+    },
+    {
+      "source": "/difference-between-epa-608-and-609",
+      "destination": "/certification-types.html",
+      "permanent": true
+    },
+    {
+      "source": "/difference-between-epa-608-and-609.html",
+      "destination": "/certification-types.html",
+      "permanent": true
+    },
+    {
+      "source": "/epa-608-vs-nate",
+      "destination": "/certification-types.html",
+      "permanent": true
+    },
+    {
+      "source": "/epa-608-vs-nate.html",
+      "destination": "/certification-types.html",
+      "permanent": true
     }
   ]
 }

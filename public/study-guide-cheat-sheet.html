@@ -180,7 +180,7 @@ footer {
         "width": 200,
         "height": 60
       },
-      "description": "Free EPA 608 practice test platform. 866 questions verified against official EPA Section 608 regulations and Prometric content outline.",
+      "description": "Freemium EPA 608 practice test platform — 500 questions free (no signup) + Pro $14.99 lifetime (866 questions, AI Tutor, blind-spot drills, certificates). Verified against official EPA Section 608 regulations and Prometric content outline.",
       "foundingDate": "2024",
       "founder": {
         "@type": "Person",
@@ -1206,6 +1206,80 @@ document.addEventListener('click', function() {
             <p>Type II uses inches Hg vacuum. Type III uses mm Hg absolute. 25 mm Hg absolute is a deep vacuum — do not confuse with Type II vacuum levels.</p>
         </div>
 
+        <h2>Recovery Vacuum Standards Quick Reference</h2>
+        <p>Recovery depth is measured in inches of mercury (in. Hg) vacuum or psig. Equipment manufactured after November 15, 1993 must meet the higher post-1993 standard. Memorize these three tiers:</p>
+        <table>
+            <thead><tr><th>System Size / Refrigerant</th><th>Pre-1993 Equipment</th><th>Post-1993 Equipment</th></tr></thead>
+            <tbody>
+                <tr><td>HCFC &lt;200 lbs, compressor working</td><td>0 psig</td><td>0 psig</td></tr>
+                <tr><td>HFC systems under 200 lbs</td><td>0 psig</td><td>0 psig</td></tr>
+                <tr><td>HFC/HCFC systems 200+ lbs</td><td>4 in. Hg</td><td>4 in. Hg</td></tr>
+                <tr><td>High-pressure systems, compressor non-op</td><td>4 in. Hg</td><td>4 in. Hg</td></tr>
+                <tr><td>Low-pressure systems (Type III)</td><td>25 in. Hg</td><td>25 in. Hg</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Type I exception:</strong> System-dependent (passive) recovery on small appliances requires 80% removal if compressor works, 90% if it does not. Self-contained active recovery always requires 90% regardless of compressor status.</p>
+        <p>These numbers matter because exam questions often hide the deciding factor in one phrase: whether the appliance is a small appliance, a high-pressure appliance, or a low-pressure chiller. If you do not first classify the equipment correctly, you can know the vacuum numbers and still miss the answer. A strong test-day habit is to underline the refrigerant family, system size, and compressor condition before looking at the answer choices. That prevents confusing the Type II vacuum figures with the Type III absolute pressure standard.</p>
+        <p>Another frequent trap is the November 15, 1993 equipment manufacture date. The EPA uses that cutoff throughout Section 608 to distinguish older recovery equipment standards from newer standards. When a question asks whether recovery equipment was manufactured before or after that date, treat it as a signal that the required recovery depth may change. On Type I questions, the same date can appear even when the real concept being tested is active versus passive recovery. Read the full prompt, not just the numbers.</p>
+
+        <h2>Leak Rate Thresholds — Memorization Table</h2>
+        <p>For appliances containing 50+ lbs of refrigerant, EPA regulations set maximum allowable annual leak rates before mandatory repair or retrofit/retire action is required. These are frequently tested on all sections.</p>
+        <table>
+            <thead><tr><th>System Category</th><th>Max Annual Leak Rate</th></tr></thead>
+            <tbody>
+                <tr><td>Industrial process refrigeration</td><td>35%</td></tr>
+                <tr><td>Commercial refrigeration</td><td>20%</td></tr>
+                <tr><td>Comfort cooling (HVAC)</td><td>15%</td></tr>
+                <tr><td>All other appliances 50+ lbs</td><td>15%</td></tr>
+            </tbody>
+        </table>
+        <p>When a leak is discovered, the owner must repair it within <strong>30 days</strong>. If repair is not feasible, a retrofit or retirement plan must be submitted within 30 days and completed within 1 year. Technicians must provide a written statement of refrigerant added to the owner for systems 50+ lbs.</p>
+        <p>The easiest way to keep these values straight is to remember that industrial process refrigeration gets the highest threshold because those systems often run in demanding operating conditions, commercial refrigeration sits in the middle, and comfort cooling stays lower. Many older prep materials still teach a 10% comfort-cooling figure, so the exam may present 10%, 15%, and 20% together to see whether you are relying on an outdated chart. Use the current threshold table on this page, not legacy notes copied from old manuals.</p>
+        <p>Leak-rate questions also test procedure, not just the percentages. Once the threshold is exceeded, you should immediately think about the 30-day repair clock, the possibility of a retrofit or retirement plan if repair is not feasible, and the documentation obligations for appliances with 50 pounds or more of refrigerant. That sequence shows up in Core and Universal questions because it connects legal compliance with field practice. If the owner chooses to retire or retrofit instead of repair, the plan is not optional paperwork; it is the compliance path that replaces immediate repair.</p>
+
+        <h2>Refrigerant Classification Quick Reference</h2>
+        <p>The exam tests refrigerant classification by chemical family, safety rating, and regulatory status. Key classifications:</p>
+        <table>
+            <thead><tr><th>Refrigerant</th><th>Type</th><th>Safety Class</th><th>Status</th></tr></thead>
+            <tbody>
+                <tr><td>R-11</td><td>CFC</td><td>A1</td><td>Fully phased out (1996)</td></tr>
+                <tr><td>R-12</td><td>CFC</td><td>A1</td><td>Fully phased out (1996)</td></tr>
+                <tr><td>R-22</td><td>HCFC</td><td>A1</td><td>No new production (2020)</td></tr>
+                <tr><td>R-123</td><td>HCFC</td><td>B1</td><td>Active — low GWP HCFC</td></tr>
+                <tr><td>R-134a</td><td>HFC</td><td>A1</td><td>AIM Act phasedown</td></tr>
+                <tr><td>R-410A</td><td>HFC blend</td><td>A1</td><td>AIM Act phasedown</td></tr>
+                <tr><td>R-32</td><td>HFC</td><td>A2L</td><td>Lower GWP replacement</td></tr>
+                <tr><td>R-454B</td><td>HFC blend</td><td>A2L</td><td>R-410A replacement</td></tr>
+                <tr><td>R-600a</td><td>Hydrocarbon</td><td>A3</td><td>Common in small appliances</td></tr>
+                <tr><td>R-290</td><td>Hydrocarbon</td><td>A3</td><td>Growing use in commercial</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Safety class decoding:</strong> Letter = toxicity (A = lower, B = higher). Number = flammability (1 = no flame, 2L = mildly flammable, 2 = flammable, 3 = highly flammable). A2L refrigerants require special handling protocols and are a major focus of AIM Act transition questions. See <a href="/aim-act-changes.html">AIM Act refrigerant changes</a> for phasedown schedule details.</p>
+        <p>Classification tables become much easier to memorize when you group the refrigerants by why they matter on the exam. R-11 and R-12 are usually there to test phaseout history and low-pressure versus high-pressure recognition. R-22 and R-123 show up when the exam wants you to identify HCFCs or distinguish Type II from Type III systems. R-134a and R-410A are often used as familiar HFC examples, while R-32 and R-454B signal the industry transition toward lower-GWP A2L options. R-600a and R-290 usually point to hydrocarbon safety and flammability questions.</p>
+        <p>Do not memorize the letters and numbers in the safety class code as abstract symbols. Translate them every time. A means lower toxicity. B means higher toxicity. The number describes flammability, with A1 refrigerants being nonflammable under the test conditions and A3 refrigerants being highly flammable. That decoding process helps on unfamiliar refrigerants because even if you do not recognize the product name immediately, you can still reason through what the safety class implies for handling, storage, and ignition risk. This is especially useful when modern A2L refrigerants are compared with older A1 refrigerants in transition-era questions.</p>
+
+        <h2>Civil Penalty and Venting Prohibition Reference</h2>
+        <p>Core section and Universal exam both test civil penalty amounts and venting prohibition rules directly. These are not estimates — memorize the exact figures:</p>
+        <ul>
+            <li><strong>Venting prohibition effective date:</strong> July 1, 1992 (CFCs and HCFCs); extended to HFCs and blends under later regulations</li>
+            <li><strong>Civil penalty per violation:</strong> Up to <strong>$44,539 per day per violation</strong> (adjusted for inflation; exam uses $37,500 or the current figure depending on question vintage)</li>
+            <li><strong>De minimis exemption:</strong> Releases of refrigerant that occur from normal operations (e.g., purging hoses) do not violate the venting prohibition when the release is minimized</li>
+            <li><strong>Technician certification required:</strong> Any person who opens an appliance to service or repair it must be certified</li>
+            <li><strong>Reclaimed refrigerant standard:</strong> Must meet ARI 700 purity standard before resale</li>
+        </ul>
+        <p>These rules are foundational because they explain why the rest of the recovery and leak-repair standards exist. Section 608 is not just a technical exam; it is a regulatory exam tied to environmental compliance. Questions about venting, recovery, recordkeeping, and certification are all different expressions of the same legal principle: refrigerant must be handled in a way that minimizes emissions to the atmosphere. When you study the exact dates and penalty figures, connect them to that larger compliance purpose so the numbers are easier to remember under pressure.</p>
+        <p>The venting prohibition is also a favorite source of tricky wording. The exam may ask whether any release at all is illegal, which is not quite correct. The de minimis concept matters because incidental releases from normal good-faith service practices can be permitted when minimized, such as a small amount released while connecting or disconnecting hoses. The key is that intentional venting is prohibited, while unavoidable releases must be kept as small as possible. If an answer choice sounds casual about letting refrigerant out on purpose, it is almost always wrong.</p>
+
+        <h2>Deep Dive by Section</h2>
+        <p>This cheat sheet summarizes key numbers — for full context, explanations, and practice questions on each section:</p>
+        <ul>
+            <li><a href="/study-guide-core.html">Core Section Study Guide</a> — Montreal Protocol, venting prohibitions, civil penalties, recovery certification</li>
+            <li><a href="/study-guide-type-1.html">Type I Study Guide</a> — Small appliances, system-dependent recovery thresholds, piercing valves</li>
+            <li><a href="/study-guide-type-2.html">Type II Study Guide</a> — High-pressure systems, R-410A/R-22, leak rate tables, AIM Act HFC phasedown</li>
+            <li><a href="/study-guide-type-3.html">Type III Study Guide</a> — Low-pressure chillers, R-123, purge units, moisture contamination</li>
+            <li><a href="/study-guide-universal.html">Universal Study Guide</a> — All sections combined, cross-section comparisons, full exam strategy</li>
+        </ul>
+
         <h2>Cheat Sheet FAQ</h2>
 
         <div class="faq-item">
@@ -1252,7 +1326,7 @@ document.addEventListener('click', function() {
             <div class="footer-brand">
                 <div class="footer-logo">EPA 608 Practice Test</div>
                 <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
-                <span class="footer-badge">Forever Free for HVAC Community</span>
+                <span class="footer-badge">Free Practice Tests + Pro $14.99 Lifetime</span>
             </div>
 
             <!-- Practice Tests -->
@@ -1265,6 +1339,7 @@ document.addEventListener('click', function() {
                     <li><a href="/type-2.html">Type II</a></li>
                     <li><a href="/type-3.html">Type III</a></li>
                     <li><a href="/review.html">Fix My Mistakes</a></li>
+                    <li><a href="/epa-608-practice-questions.html">Practice Questions</a></li>
                 </ul>
             </div>
 
@@ -1272,7 +1347,7 @@ document.addEventListener('click', function() {
             <div class="footer-col">
                 <h5>Study Resources</h5>
                 <ul>
-                    <li><a href="/epa-608-complete-study-guide.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guides.html">Complete Study Guide</a></li>
                     <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
                     <li><a href="/flashcards.html">Flashcards</a></li>
                     <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
@@ -1290,7 +1365,7 @@ document.addEventListener('click', function() {
                     <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
                     <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
                     <li><a href="/pass-rate.html">Pass Rate</a></li>
-                    <li><a href="/test-duration.html">Exam Duration</a></li>
+                    <li><a href="/exam-day.html#timing">Exam Duration</a></li>
                 </ul>
             </div>
 
@@ -1300,7 +1375,7 @@ document.addEventListener('click', function() {
                 <ul>
                     <li><a href="/tutor.html">AI Study Helper</a></li>
                     <li><a href="/weak-spots.html">Weak Spot Drill</a></li>
-                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/universal.html">FAQ</a></li>
                     <li><a href="/pricing.html">Pricing</a></li>
                     <li><a href="/about.html">About</a></li>
                 </ul>
@@ -1309,7 +1384,7 @@ document.addEventListener('click', function() {
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 EPA608PracticeTest.net — Free forever for the HVAC community.</p>
+            <p>&copy; 2026 EPA608PracticeTest.net — Freemium: Free practice tests + Pro $14.99 lifetime.</p>
             <div style="display:flex;gap:16px;">
                 <a href="/policy.html">Privacy</a>
                 <a href="/terms.html">Terms</a>

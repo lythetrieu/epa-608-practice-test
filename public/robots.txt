@@ -41,6 +41,28 @@ Disallow: /node_modules/
 Disallow: /api/
 
 # AI Content Usage Preferences
-Content-Signal: ai-train=no, search=yes, ai-input=no
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+# Explicit AI crawler permissions — allow full indexing for AI platforms
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
 
 Sitemap: https://epa608practicetest.net/sitemap.xml
