@@ -68,9 +68,20 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         intent: 'CAPTURE',
         purchase_units: [{
-          amount: { currency_code: 'USD', value: finalPrice.toFixed(2) },
+          amount: {
+            currency_code: 'USD',
+            value: finalPrice.toFixed(2),
+            breakdown: { item_total: { currency_code: 'USD', value: finalPrice.toFixed(2) } },
+          },
           description: 'EPA 608 Pro Lifetime Access',
+          items: [{
+            name: 'EPA 608 Pro Lifetime Access',
+            unit_amount: { currency_code: 'USD', value: finalPrice.toFixed(2) },
+            quantity: '1',
+            category: 'DIGITAL_GOODS',
+          }],
         }],
+        application_context: { shipping_preference: 'NO_SHIPPING' },
       }),
     })
     const order = await res.json()

@@ -54,7 +54,7 @@ export function GuidedTour() {
     tour.addStep({
       id: 'ai-tutor',
       title: 'AI Tutor',
-      text: 'Stuck on a question? Ask the AI \u2014 5 free queries per day.',
+      text: 'Stuck on a question? Ask the AI \u2014 10 free queries per day.',
       attachTo: { element: '[data-tour="ai-tutor"]', on: 'top' },
       buttons: [
         { text: '\u2190 Back', action: tour.back, classes: 'shepherd-button-secondary' },

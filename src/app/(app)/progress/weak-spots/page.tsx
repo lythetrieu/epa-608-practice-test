@@ -120,6 +120,15 @@ export default async function WeakSpotsPage() {
         </div>
       ) : (
         <>
+          {/* Review Wrong Answers — free for all */}
+          <a
+            href="/review.html"
+            className="mb-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-green-700 text-white rounded-xl font-semibold hover:bg-green-800 transition-colors text-center"
+          >
+            <span>🔁</span>
+            <span>Review Wrong Answers</span>
+          </a>
+
           {/* Drill CTA — Pro only */}
           {isPro ? (
             <Link
@@ -144,15 +153,39 @@ export default async function WeakSpotsPage() {
             </div>
           )}
 
-          {/* Proficiency Radar Chart */}
+          {/* Proficiency Radar Chart — Pro only */}
           {radarData.length >= 3 && (
             <section className="mb-8">
-              <div className="bg-white rounded-xl border border-gray-200 p-6">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
-                  Topic Proficiency
-                </h2>
-                <RadarChart data={radarData} />
-              </div>
+              {isPro ? (
+                <div className="bg-white rounded-xl border border-gray-200 p-6">
+                  <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
+                    Topic Proficiency
+                  </h2>
+                  <RadarChart data={radarData} />
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                  <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                    Topic Proficiency
+                  </h2>
+                  <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
+                    <div className="opacity-20 pointer-events-none select-none" aria-hidden>
+                      <RadarChart data={radarData} />
+                    </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                      <span className="text-2xl">🔒</span>
+                      <p className="text-sm font-semibold text-gray-700">Radar Chart — Pro</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mb-4">See your proficiency across all 8 topic areas at a glance.</p>
+                  <Link
+                    href="https://epa608practicetest.net/checkout.html"
+                    className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+                  >
+                    Upgrade — $14.99 lifetime
+                  </Link>
+                </div>
+              )}
             </section>
           )}
 

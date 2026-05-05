@@ -19,8 +19,9 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: false,
-    hasRadarChart: true,
-    aiQueriesPerDay: 10,         // 10/day to incentivize signup; Pro gets 1000
+    hasRadarChart: false,        // Pro only — free sees raw scores only
+    hasTimedMode: false,         // Pro only — timed simulation
+    aiQueriesPerDay: 10,         // 10/day free; Pro gets 1000
     hasPDF: false,
     hasCertificate: false,
   },
@@ -29,10 +30,11 @@ export const TIER_LIMITS = {
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
-    hasProgressLimit: Infinity,  // unlimited history
+    hasProgressLimit: Infinity,
     hasBlindSpot: true,
     hasRadarChart: true,
-    aiQueriesPerDay: 1000,       // 1000 AI questions/day for Pro
+    hasTimedMode: true,
+    aiQueriesPerDay: 1000,
     hasPDF: true,
     hasCertificate: true,
   },
@@ -44,6 +46,7 @@ export const TIER_LIMITS = {
     hasProgressLimit: Infinity,
     hasBlindSpot: true,
     hasRadarChart: true,
+    hasTimedMode: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
     hasCertificate: true,
@@ -56,6 +59,7 @@ export const TIER_LIMITS = {
     hasProgressLimit: Infinity,
     hasBlindSpot: true,
     hasRadarChart: true,
+    hasTimedMode: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
     hasCertificate: true,

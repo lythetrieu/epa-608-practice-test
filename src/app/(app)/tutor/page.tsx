@@ -35,7 +35,7 @@ export default async function TutorPage() {
               Upgrade to unlock AI Tutor
             </p>
             <p className="text-xs text-blue-600">
-              Starter Pass includes 20 AI queries per day. Ultimate gets 100.
+              Free accounts get 10 AI queries/day. Pro unlocks 1,000/day.
             </p>
           </div>
           <Link
