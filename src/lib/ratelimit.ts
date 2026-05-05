@@ -61,6 +61,15 @@ export const submitRateLimit = makeRatelimit(30, '1 h', 'rl:submit')
 /** PDF download endpoint — 10 downloads per user per day. */
 export const downloadRateLimit = makeRatelimit(10, '1 d', 'rl:download')
 
+/** Checkout capture — 10 captures per IP per hour (replay/spam protection). */
+export const captureRateLimit = makeRatelimit(10, '1 h', 'rl:checkout-capture')
+
+/** Resend setup email — 3 requests per IP per hour. */
+export const resendEmailRateLimit = makeRatelimit(3, '1 h', 'rl:resend-email')
+
+/** Order creation — 30 orders per IP per hour. */
+export const createOrderRateLimit = makeRatelimit(30, '1 h', 'rl:checkout-create')
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────

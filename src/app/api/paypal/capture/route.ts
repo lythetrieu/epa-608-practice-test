@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { captureRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
 
 const PAYPAL_API = 'https://api-m.paypal.com'
 
@@ -128,6 +129,9 @@ async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: 
 }
 
 export async function POST(request: NextRequest) {
+  const { success, reset } = await captureRateLimit.limit(getIdentifier(request))
+  if (!success) return rateLimitResponse(reset)
+
   let body: { orderID?: string; email?: string; discountCode?: string }
   try { body = await request.json() } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400, headers: HEADERS })
@@ -158,7 +162,7 @@ export async function POST(request: NextRequest) {
     const payerEmail = paypalPayerEmail || clientEmail
     const amount = order.purchase_units?.[0]?.payments?.captures?.[0]?.amount?.value
 
-    if (!amount || parseFloat(amount) < 0.01) {
+    if (!amount || parseFloat(amount) < 1.00) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400, headers: HEADERS })
     }
 
@@ -168,21 +172,19 @@ export async function POST(request: NextRequest) {
 
     const admin = createAdminClient()
 
-    // 1. Save purchase record (in case anything below fails)
-    await admin.from('pending_upgrades').upsert({
-      email: payerEmail,
-      tier: 'starter',
-      ls_order_id: orderID,
-    }, { onConflict: 'email' })
-
-    // 2. Check if user already has an account
+    // 1. Check if user already has an account
     const { data: profile } = await admin
       .from('users_profile')
-      .select('id')
+      .select('id, lifetime_access')
       .eq('email', payerEmail)
       .single()
 
     if (profile) {
+      // Already Pro — idempotent return (prevents duplicate upgrade + email on replay)
+      if (profile.lifetime_access) {
+        return NextResponse.json({ ok: true, email: payerEmail, newAccount: false }, { headers: HEADERS })
+      }
+
       // Existing user → upgrade immediately
       const { error: upgradeError } = await admin.from('users_profile').update({
         tier: 'starter',
@@ -213,6 +215,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true, email: payerEmail, newAccount: false }, { headers: HEADERS })
     }
 
+    // 2. Guard: reject if this orderID was already used for a different email
+    const { data: existingOrder } = await admin
+      .from('pending_upgrades')
+      .select('email')
+      .eq('ls_order_id', orderID)
+      .maybeSingle()
+
+    if (existingOrder && existingOrder.email.toLowerCase().trim() !== payerEmail) {
+      return NextResponse.json({ error: 'Order already used' }, { status: 409, headers: HEADERS })
+    }
+
+    // Save purchase record (in case anything below fails)
+    const { error: upsertError } = await admin.from('pending_upgrades').upsert({
+      email: payerEmail,
+      tier: 'starter',
+      ls_order_id: orderID,
+    }, { onConflict: 'email' })
+    if (upsertError) {
+      console.error('pending_upgrades upsert failed:', upsertError)
+    }
+
     // 3. No account → create one server-side
     // Triggers fire automatically:
     //   handle_new_user       → creates users_profile row
@@ -239,19 +262,17 @@ export async function POST(request: NextRequest) {
     const setupLink = linkData?.properties?.action_link
 
     // 5. Send Pro welcome email via Resend
-    if (setupLink) {
-      const { data: configRow } = await admin
-        .from('app_config')
-        .select('value')
-        .eq('key', 'resend_api_key')
-        .single()
-
-      const resendKey = configRow?.value
-      if (resendKey) {
-        await sendProWelcomeEmail(resendKey, payerEmail, setupLink).catch(err =>
-          console.error('Resend email failed:', err)
-        )
-      }
+    const { data: configRow2 } = await admin
+      .from('app_config')
+      .select('value')
+      .eq('key', 'resend_api_key')
+      .single()
+    const resendKey2 = configRow2?.value
+    if (resendKey2) {
+      const link = setupLink || `https://epa608practicetest.net/forgot-password?email=${encodeURIComponent(payerEmail)}`
+      await sendProWelcomeEmail(resendKey2, payerEmail, link).catch(err =>
+        console.error('Resend email failed:', err)
+      )
     }
 
     return NextResponse.json({ ok: true, email: payerEmail, newAccount: true }, { headers: HEADERS })
