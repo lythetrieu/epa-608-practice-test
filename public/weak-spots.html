@@ -765,14 +765,15 @@ footer { background: #0f172a; color: #94a3b8; padding: 56px 0 32px; }
             if (mdb) mdb.style.display = mobile === 'dashboard' ? 'block' : 'none';
         }
 
-        // 1. Check active Supabase session
+        // 1. Check active Supabase session (@supabase/ssr stores in cookies)
         var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
-        var raw = localStorage.getItem(KEY);
-        if (raw) {
-            var session = JSON.parse(raw);
-            var token = session && (session.access_token || (session[0] && session[0].access_token));
-            if (token) { showOnly('dashboard', 'dashboard'); return; }
+        var _cp = document.cookie.split('; ');
+        var _hasSession = _cp.some(function(c){ return c.startsWith(KEY+'=') || c.startsWith(KEY+'.0='); });
+        if (!_hasSession) {
+            var raw = localStorage.getItem(KEY);
+            if (raw) { try { var s=JSON.parse(raw); _hasSession=!!(s&&s.access_token); }catch(e){} }
         }
+        if (_hasSession) { showOnly('dashboard', 'dashboard'); return; }
 
         // 2. Returning user = has test history
         var history = localStorage.getItem('epa608History');
@@ -963,13 +964,35 @@ var WS=(function(){
   var spots=[];
   var drillCategories=[];
 
-  // ── Analyze localStorage history ──────────────────────────────
-  function analyze(){
+  function _isLoggedIn(){
+    try{
+      var key='sb-sequvmxgtmbirnixeril-auth-token';
+      var parts=document.cookie.split('; ');
+      for(var i=0;i<parts.length;i++){
+        if(parts[i].startsWith(key+'=')||parts[i].startsWith(key+'.0='))return true;
+      }
+      var raw=localStorage.getItem(key);
+      return !!(raw&&JSON.parse(raw)?.access_token);
+    }catch(e){return false;}
+  }
+
+  // ── Analyze: API for logged-in, localStorage for anonymous ────
+  async function analyze(){
+    if(_isLoggedIn()){
+      try{
+        var res=await fetch('/api/progress/weak-spots');
+        if(res.ok){
+          var data=await res.json();
+          spots=data.spots||[];
+          return spots;
+        }
+      }catch(e){}
+    }
+    // fallback: localStorage history
     var history=[];
     try{history=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}catch(e){}
 
-    // Collect all wrong questions across all sessions
-    var catStats={};  // {category: {wrong:0, total:0}}
+    var catStats={};
     history.forEach(function(h){
       var details=h.detailedResults||[];
       details.forEach(function(d){
@@ -984,17 +1007,9 @@ var WS=(function(){
     Object.keys(catStats).forEach(function(cat){
       var s=catStats[cat];
       if(s.total>=2){
-        result.push({
-          category:cat,
-          label:cat,
-          errorPct:Math.round(s.wrong/s.total*100),
-          wrongCount:s.wrong,
-          totalCount:s.total
-        });
+        result.push({category:cat,label:cat,errorPct:Math.round(s.wrong/s.total*100),wrongCount:s.wrong,totalCount:s.total});
       }
     });
-
-    // Sort by error rate desc
     result.sort(function(a,b){return b.errorPct-a.errorPct;});
     spots=result;
     return result;
@@ -1065,17 +1080,11 @@ var WS=(function(){
 
   /* ── Pro check helper ─────────────────────────────────────────── */
   async function checkProStatus(){
-    // Not logged in = definitely free
-    try{
-      var raw=localStorage.getItem('sb-sequvmxgtmbirnixeril-auth-token');
-      if(!raw||!JSON.parse(raw)?.access_token)return false;
-    }catch(e){return false;}
-    // Check cache (10 min TTL)
+    if(!_isLoggedIn())return false;
     try{
       var c=JSON.parse(localStorage.getItem('_tier_cache')||'null');
       if(c&&Date.now()-c.ts<600000)return c.isPro;
     }catch(e){}
-    // Fetch tier from API
     try{
       var res=await fetch('/api/profile');
       if(!res.ok)return false;
@@ -1086,33 +1095,16 @@ var WS=(function(){
     }catch(e){return false;}
   }
 
-  setTimeout(function(){analyze();renderReport();},100);
+  setTimeout(async function(){await analyze();renderReport();},100);
 
-  return{};
+  return{_checkPro:checkProStatus};
 })();
 
 /* ── Drill button handler ─────────────────────────────────────── */
 async function WS_startDrill(){
   var btn=document.getElementById('drill-btn');
   if(btn){btn.textContent='Checking...';btn.disabled=true;}
-  var isPro=await(async function(){
-    try{
-      var raw=localStorage.getItem('sb-sequvmxgtmbirnixeril-auth-token');
-      if(!raw||!JSON.parse(raw)?.access_token)return false;
-    }catch(e){return false;}
-    try{
-      var c=JSON.parse(localStorage.getItem('_tier_cache')||'null');
-      if(c&&Date.now()-c.ts<600000)return c.isPro;
-    }catch(e){}
-    try{
-      var res=await fetch('/api/profile');
-      if(!res.ok)return false;
-      var d=await res.json();
-      var p=d.tier!=='free'||d.lifetime_access===true;
-      localStorage.setItem('_tier_cache',JSON.stringify({isPro:p,ts:Date.now()}));
-      return p;
-    }catch(e){return false;}
-  })();
+  var isPro=await WS._checkPro();
 
   if(isPro){
     // Pro user: go to blind-spot drill
