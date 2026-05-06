@@ -1114,11 +1114,20 @@ document.addEventListener('click', function() {
             let wrongQuestions;
             let isLoggedIn = false;
             try {
-                var raw = localStorage.getItem('sb-sequvmxgtmbirnixeril-auth-token');
-                if (raw) {
-                    var session = JSON.parse(raw);
-                    var token = session && (session.access_token || (session[0] && session[0].access_token));
-                    if (token) isLoggedIn = true;
+                var _key = 'sb-sequvmxgtmbirnixeril-auth-token';
+                // @supabase/ssr v0.4+ stores session in cookies
+                var _parts = document.cookie.split('; ');
+                for (var _i = 0; _i < _parts.length; _i++) {
+                    if (_parts[_i].startsWith(_key + '=') || _parts[_i].startsWith(_key + '.0=')) { isLoggedIn = true; break; }
+                }
+                // legacy localStorage fallback
+                if (!isLoggedIn) {
+                    var raw = localStorage.getItem(_key);
+                    if (raw) {
+                        var session = JSON.parse(raw);
+                        var token = session && (session.access_token || (session[0] && session[0].access_token));
+                        if (token) isLoggedIn = true;
+                    }
                 }
             } catch(e) {}
 

@@ -74,7 +74,14 @@ function recordAttempt(category) {
 
 function isLoggedIn() {
   try {
-    var raw = localStorage.getItem('sb-sequvmxgtmbirnixeril-auth-token');
+    var key = 'sb-sequvmxgtmbirnixeril-auth-token';
+    // @supabase/ssr v0.4+ stores session in document.cookie, not localStorage
+    var parts = document.cookie.split('; ');
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].startsWith(key + '=') || parts[i].startsWith(key + '.0=')) return true;
+    }
+    // legacy localStorage fallback
+    var raw = localStorage.getItem(key);
     return !!(raw && JSON.parse(raw)?.access_token);
   } catch(e) { return false; }
 }
