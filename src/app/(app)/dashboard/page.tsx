@@ -187,6 +187,18 @@ export default async function DashboardPage() {
         </div>
       </Link>
 
+      {/* ═══ AI TUTOR CTA ═══ */}
+      <Link href="/tutor" data-tour="ai-tutor-cta"
+        className="block rounded-xl px-4 py-3 mb-3 hover:opacity-90 transition-opacity" style={{background:'#4c1d95'}}>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="font-bold text-white text-base">AI Tutor</p>
+            <p className="text-purple-200 text-xs mt-0.5">Ask questions, get instant explanations</p>
+          </div>
+          <Bot size={28} className="text-white shrink-0" />
+        </div>
+      </Link>
+
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
         <div className="rounded-xl px-4 py-3 text-white mb-3 flex items-center justify-between gap-3" style={{background:'linear-gradient(to right, #003087, #0077b6)'}}>

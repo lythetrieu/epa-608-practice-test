@@ -240,6 +240,18 @@ function initTestEngine(config) {
       if (document.activeElement) document.activeElement.blur();
       var savedY = window.scrollY;
       this.answers[this.currentIdx] = i;
+      // Track per-question answer for logged-in users (powers Weak Spots + Review Wrong)
+      var q = this.questions[this.currentIdx];
+      var opts = this.shuffledOptions[this.currentIdx];
+      var isCorrect = opts[i] === q.answer_text;
+      if (isLoggedIn() && q.id) {
+        fetch('https://epa608practicetest.net/api/practice/track', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ questionId: q.id, correct: isCorrect })
+        }).catch(function() {});
+      }
       this.render(); // re-render with locked state + feedback
       // Restore scroll position after render (stops any layout-shift-induced scroll)
       requestAnimationFrame(function() {
@@ -400,6 +412,25 @@ function initTestEngine(config) {
             total: this.questions.length, time_spent: timeSpent })
         }).catch(function(){});
       } catch(e) {}
+
+      // AI Tutor nudge — show only to logged-in users with wrong answers
+      if (isLoggedIn() && wrongCount > 0) {
+        var tutorNudge = document.getElementById('tutor-nudge');
+        if (!tutorNudge) {
+          tutorNudge = document.createElement('div');
+          tutorNudge.id = 'tutor-nudge';
+          tutorNudge.style.cssText = 'margin-top:16px;padding:14px 16px;background:#f5f3ff;border:1.5px solid #c4b5fd;border-radius:12px;display:flex;align-items:center;gap:12px';
+          tutorNudge.innerHTML = '<span style="font-size:22px">🤖</span>'
+            + '<div style="flex:1">'
+            + '<div style="font-size:13px;font-weight:700;color:#4c1d95">Ask the AI Tutor why you got those wrong</div>'
+            + '<div style="font-size:12px;color:#6d28d9;margin-top:2px">Get instant explanations for any question</div>'
+            + '</div>'
+            + '<a href="https://epa608practicetest.net/tutor" style="background:#7c3aed;color:#fff;font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap">Open Tutor →</a>';
+          var resultDetails = document.getElementById('resultDetails');
+          if (resultDetails) resultDetails.appendChild(tutorNudge);
+        }
+        tutorNudge.style.display = 'flex';
+      }
 
       window.scrollTo(0, 0);
     },
