@@ -12,7 +12,6 @@ export type PlanCardData = {
   cta: string
   ctaHref?: string
   highlighted?: boolean
-  paddlePriceId?: string
 }
 
 const TIER_MAP: Record<string, string> = {
@@ -128,8 +127,8 @@ export function PlanCard({ plan, currentTier, isLoggedIn }: { plan: PlanCardData
               window.location.href = '/signup'
               return
             }
-            // TODO: open Paddle.js checkout
-            alert('Paddle checkout coming soon!')
+            // TODO: wire PayPal checkout (see /api/paypal/create-order)
+            alert('Upgrade checkout is on our main site — redirecting…')
           }}
           className={`inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors ${
             plan.highlighted

@@ -34,7 +34,7 @@ export default async function UserDetailPage({
   // Fetch user profile
   const { data: profile } = await admin
     .from('users_profile')
-    .select('id, email, tier, lifetime_access, created_at, paddle_customer_id')
+    .select('id, email, tier, lifetime_access, created_at')
     .eq('id', userId)
     .single()
 
@@ -92,7 +92,7 @@ export default async function UserDetailPage({
             {profile.lifetime_access ? ' (Lifetime)' : ''}
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
           <div>
             <div className="text-xs text-gray-400 uppercase font-medium">Joined</div>
             <div className="text-sm text-gray-700 mt-0.5">
@@ -107,12 +107,6 @@ export default async function UserDetailPage({
             <div className="text-xs text-gray-400 uppercase font-medium">Lifetime Access</div>
             <div className="text-sm text-gray-700 mt-0.5">
               {profile.lifetime_access ? 'Yes' : 'No'}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-gray-400 uppercase font-medium">Paddle Customer</div>
-            <div className="text-sm text-gray-700 mt-0.5">
-              {profile.paddle_customer_id ?? 'None'}
             </div>
           </div>
         </div>
