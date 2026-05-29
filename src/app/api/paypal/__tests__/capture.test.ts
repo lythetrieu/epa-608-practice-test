@@ -3,12 +3,11 @@ import { NextRequest } from 'next/server'
 
 // ── Supabase mock ──────────────────────────────────────────────────────────────
 const mockCreateUser = vi.fn()
-const mockGenerateLink = vi.fn()
 const mockFrom = vi.fn()
 
 const supabaseMock = {
   from: mockFrom,
-  auth: { admin: { createUser: mockCreateUser, generateLink: mockGenerateLink } },
+  auth: { admin: { createUser: mockCreateUser } },
 }
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -278,6 +277,7 @@ describe('POST /api/paypal/capture', () => {
       ([url]) => String(url).includes('resend.com')
     )!
     const resendBody = JSON.parse(resendCall[1]!.body as string)
+    expect(resendBody.to).toContain('new@user.com')
     expect(resendBody.html).toContain(createArgs.password)
     expect(resendBody.html).toContain('epa608practicetest.net/login')
     expect(resendBody.html).not.toContain('token_hash')
@@ -600,7 +600,6 @@ describe('POST /api/paypal/capture', () => {
       return chain(null)
     })
     mockCreateUser.mockResolvedValue({ data: { user: { id: 'new-uid' } }, error: null })
-    mockGenerateLink.mockResolvedValue({ data: { properties: { action_link: 'https://epa608.net/reset?token=x' } } })
 
     await POST(req({ orderID: 'specific-order-id-123', email: 'newuser@example.com' }))
 

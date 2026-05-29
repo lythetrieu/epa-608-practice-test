@@ -102,19 +102,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No account found for this email' }, { status: 404, headers: HEADERS })
     }
 
-    // 2. Reset to a fresh temporary password and email it. Same robust path as
-    // the PayPal capture flow — no recovery link to fail in the browser.
-    const tempPassword = generateTempPassword()
-    const { error: updateError } = await admin.auth.admin.updateUserById(profile.id, {
-      password: tempPassword,
-      email_confirm: true,
-    })
-    if (updateError) {
-      console.error('resend-setup-email updateUserById failed:', updateError)
-      return NextResponse.json({ error: 'Unexpected error. Please try again.' }, { status: 500, headers: HEADERS })
+    // 2. Anti-lockout guard: this endpoint exists only to (re)deliver the initial
+    // temp password to customers who never got into their account. If the user has
+    // ALREADY signed in, rotating their password from an unauthenticated request
+    // would let anyone lock them out — so refuse and send them to self-service reset.
+    const { data: userData } = await admin.auth.admin.getUserById(profile.id)
+    if (userData?.user?.last_sign_in_at) {
+      return NextResponse.json(
+        { error: 'This account is already active. Use "Forgot password" on the login page to reset it.' },
+        { status: 409, headers: HEADERS }
+      )
     }
 
-    // 3. Get resend key from app_config
+    // 3. Get resend key from app_config (the whole point is to send an email)
     const { data: configRow } = await admin
       .from('app_config')
       .select('value')
@@ -126,8 +126,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email service unavailable' }, { status: 500, headers: HEADERS })
     }
 
-    // 4. Send welcome email with the temporary password
+    // 4. Send the email FIRST, then rotate the password — so a send failure never
+    // invalidates the customer's current password (sendProWelcomeEmail throws on a
+    // non-2xx Resend response, falling through to the 500 below with nothing changed).
+    const tempPassword = generateTempPassword()
     await sendProWelcomeEmail(resendKey, payerEmail, tempPassword)
+
+    // 5. Email delivered → now apply the temp password.
+    const { error: updateError } = await admin.auth.admin.updateUserById(profile.id, {
+      password: tempPassword,
+      email_confirm: true,
+    })
+    if (updateError) {
+      console.error('resend-setup-email updateUserById failed:', updateError)
+      return NextResponse.json({ error: 'Unexpected error. Please try again.' }, { status: 500, headers: HEADERS })
+    }
 
     return NextResponse.json({ ok: true }, { headers: HEADERS })
 

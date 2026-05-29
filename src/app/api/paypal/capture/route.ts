@@ -81,7 +81,7 @@ async function sendProUpgradeEmail(resendKey: string, email: string) {
 }
 
 async function sendProWelcomeEmail(resendKey: string, email: string, tempPassword: string) {
-  await fetch('https://api.resend.com/emails', {
+  const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${resendKey}`,
@@ -134,6 +134,12 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
       `,
     }),
   })
+  // Non-fatal here (we must never fail the purchase after charging), but log
+  // a non-2xx so a failed credential email is visible/alertable, not silent.
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '')
+    console.error('Pro welcome email failed:', res.status, detail)
+  }
 }
 
 export async function POST(request: NextRequest) {

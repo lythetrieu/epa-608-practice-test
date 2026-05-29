@@ -3,11 +3,12 @@ import { NextRequest } from 'next/server'
 
 // ── Supabase mock ──────────────────────────────────────────────────────────────
 const mockUpdateUserById = vi.fn()
+const mockGetUserById = vi.fn()
 const mockFrom = vi.fn()
 
 const supabaseMock = {
   from: mockFrom,
-  auth: { admin: { updateUserById: mockUpdateUserById } },
+  auth: { admin: { updateUserById: mockUpdateUserById, getUserById: mockGetUserById } },
 }
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -68,6 +69,7 @@ function setupDb({
   existingProfile = { id: 'user-uid' } as { id: string } | null,
   resendKey = 'resend-key-abc' as string | null,
   updateError = null as unknown,
+  lastSignInAt = null as string | null,
 } = {}) {
   mockFrom.mockImplementation((table: string) => {
     const chain = (resolve: unknown) => ({
@@ -80,6 +82,7 @@ function setupDb({
     if (table === 'app_config') return chain(resendKey ? { value: resendKey } : null)
     return chain(null)
   })
+  mockGetUserById.mockResolvedValue({ data: { user: { id: 'user-uid', last_sign_in_at: lastSignInAt } }, error: null })
   mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'user-uid' } }, error: updateError })
 }
 
@@ -212,15 +215,29 @@ describe('POST /api/resend-setup-email', () => {
     expect(body.subject.length).toBeGreaterThan(0)
   })
 
-  // ── updateUserById failure → 500, no email ───────────────────────────────────
+  // ── Anti-lockout gate: already-active account ────────────────────────────────
 
-  it('500 — updateUserById returns an error → 500 and no email sent', async () => {
-    setupDb({ updateError: { message: 'boom' } })
+  it('409 — account already signed in before → not rotated, no email', async () => {
+    setupDb({ lastSignInAt: '2026-05-01T00:00:00Z' })
     const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true, json: async () => ({}) } as Response)
-    const res = await POST(req({ email: 'user@example.com' }))
-    expect(res.status).toBe(500)
+    const res = await POST(req({ email: 'active@example.com' }))
+    expect(res.status).toBe(409)
+    expect(mockUpdateUserById).not.toHaveBeenCalled()
     const resendCall = fetchSpy.mock.calls.find(([url]) => String(url).includes('resend.com'))
     expect(resendCall).toBeUndefined()
+  })
+
+  // ── updateUserById failure → 500 (email already sent first) ──────────────────
+
+  it('500 — updateUserById error after email sent → 500 (send-then-rotate order)', async () => {
+    setupDb({ updateError: { message: 'boom' } })
+    mockFetch(RESEND_OK)
+    const res = await POST(req({ email: 'user@example.com' }))
+    expect(res.status).toBe(500)
+    // email is sent BEFORE the password rotation, so a rotation failure does not
+    // mean nothing was emailed — but the password was not changed.
+    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) => String(url).includes('resend.com'))
+    expect(resendCall).toBeDefined()
   })
 
   // ── Missing resend key → 500 ─────────────────────────────────────────────────
@@ -277,6 +294,7 @@ describe('POST /api/resend-setup-email', () => {
       single: vi.fn().mockResolvedValue({ data: { value: 'resend-key' }, error: null }),
       maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'uid' }, error: null }),
     }))
+    mockGetUserById.mockResolvedValue({ data: { user: { id: 'uid', last_sign_in_at: null } }, error: null })
     mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'uid' } }, error: null })
     mockFetch(RESEND_OK)
 
@@ -308,6 +326,7 @@ describe('POST /api/resend-setup-email', () => {
         maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
       }
     })
+    mockGetUserById.mockResolvedValue({ data: { user: { id: 'uid', last_sign_in_at: null } }, error: null })
     mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'uid' } }, error: null })
     mockFetch(RESEND_OK)
 
