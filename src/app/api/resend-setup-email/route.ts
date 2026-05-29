@@ -25,48 +25,34 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
     body: JSON.stringify({
       from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
       to: [email],
-      subject: '🎉 Your EPA 608 Pro account — log in details inside',
-      html: `
-        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#1e293b;">
-          <div style="background:#003087;border-radius:12px;padding:24px;text-align:center;margin-bottom:28px;">
-            <h1 style="color:#fff;font-size:22px;margin:0 0 6px;">🎉 Welcome to EPA 608 Pro!</h1>
-            <p style="color:#93c5fd;font-size:14px;margin:0;">Your account is ready.</p>
-          </div>
-
-          <p style="font-size:15px;color:#374151;line-height:1.6;">
-            Log in with the details below, then change your password anytime under <strong>Settings → Change Password</strong>.
-          </p>
-
-          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin:20px 0;">
-            <p style="font-size:13px;color:#64748b;margin:0 0 4px;">Email</p>
-            <p style="font-size:15px;color:#1e293b;font-weight:600;margin:0 0 14px;">${email}</p>
-            <p style="font-size:13px;color:#64748b;margin:0 0 4px;">Temporary password</p>
-            <p style="font-size:18px;color:#1e293b;font-weight:700;letter-spacing:0.5px;font-family:'SFMono-Regular',Consolas,monospace;margin:0;">${tempPassword}</p>
-          </div>
-
-          <div style="text-align:center;margin:28px 0;">
-            <a href="https://epa608practicetest.net/login"
-               style="display:inline-block;background:#e85d04;color:#fff;text-decoration:none;padding:15px 36px;border-radius:10px;font-size:16px;font-weight:700;">
-              Log In to Access Pro →
-            </a>
-          </div>
-
-          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-bottom:24px;">
-            <p style="font-size:13px;color:#15803d;font-weight:600;margin:0 0 8px;">✓ What's included in your Pro account:</p>
-            <ul style="font-size:13px;color:#374151;margin:0;padding-left:20px;line-height:1.8;">
-              <li>866 practice questions (all 4 sections)</li>
-              <li>AI Tutor — 1,000 questions/day</li>
-              <li>Weak Spot Drill + Progress Analytics</li>
-              <li>All future features, forever</li>
-            </ul>
-          </div>
-
-          <p style="font-size:12px;color:#94a3b8;text-align:center;line-height:1.6;">
-            For your security, please change this temporary password after logging in. Questions?
-            <a href="mailto:support@epa608practicetest.net" style="color:#003087;">support@epa608practicetest.net</a>
-          </p>
-        </div>
-      `,
+      subject: 'Your account access has been restored',
+      text: `EPA 608 Practice Test\n\nYour access is restored\n\nDear valued customer, we recently had an issue that affected signing in to some accounts. It is now fully resolved, and we're sorry for the trouble.\n\nEmail: ${email}\nTemporary password: ${tempPassword}\nSign in: https://epa608practicetest.net/login\n\nPlease change your password in Settings after signing in.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
+      html: `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>Access restored</title></head>
+<body style="margin:0;padding:0;background:#f7f8fa;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#f7f8fa;opacity:0;">The sign-in issue is resolved. Here are your details to log back in.&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f8fa;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;">
+<tr><td style="padding:32px 40px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<div style="font-size:16px;font-weight:600;color:#1f2a44;padding-bottom:28px;"><span style="color:#003087;">&#9889;</span> EPA 608 Practice Test</div>
+<h1 style="margin:0 0 12px;font-size:20px;line-height:1.3;font-weight:600;color:#1f2a44;">Your access is restored</h1>
+<p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#475569;">Dear valued customer, we recently had an issue that affected signing in to some accounts. It is now fully resolved, and we're sorry for the trouble.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;background:#f7f8fa;border:1px solid #e2e8f0;border-radius:8px;">
+<tr><td style="padding:16px 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<div style="font-size:12px;color:#64748b;padding-bottom:2px;">Email</div>
+<div style="font-size:14px;font-weight:600;color:#1f2a44;padding-bottom:14px;">${email}</div>
+<div style="font-size:12px;color:#64748b;padding-bottom:2px;">Temporary password</div>
+<div style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:14px;font-weight:600;color:#1f2a44;">${tempPassword}</div>
+</td></tr></table>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
+<tr><td style="border-radius:6px;background:#c2691c;"><a href="https://epa608practicetest.net/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
+</table>
+<p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Please change your password in Settings after signing in.</p>
+<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="https://epa608practicetest.net/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
+</td></tr></table>
+</td></tr></table>
+</body></html>`,
     }),
   })
   if (!res.ok) throw new Error(`Resend API error: ${res.status}`)
