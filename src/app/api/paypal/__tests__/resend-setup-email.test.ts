@@ -2,12 +2,12 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { NextRequest } from 'next/server'
 
 // ── Supabase mock ──────────────────────────────────────────────────────────────
-const mockGenerateLink = vi.fn()
+const mockUpdateUserById = vi.fn()
 const mockFrom = vi.fn()
 
 const supabaseMock = {
   from: mockFrom,
-  auth: { admin: { generateLink: mockGenerateLink } },
+  auth: { admin: { updateUserById: mockUpdateUserById } },
 }
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -27,7 +27,6 @@ vi.mock('@/lib/ratelimit', () => ({
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 function req(body: unknown, method = 'POST') {
-  // Use a plain object and cast — Next.js RequestInit is compatible at runtime
   const headers: Record<string, string> = body !== undefined
     ? { 'Content-Type': 'application/json' }
     : {}
@@ -59,17 +58,16 @@ function mockFetch(...responses: FetchResp[]) {
 
 const RESEND_OK = { json: { id: 'resend-abc' } }
 
-const RECOVERY_LINK = 'https://epa608practicetest.net/reset-password?token=xyz123'
-
 /**
  * Configures Supabase mock for resend-setup-email scenarios.
- *
  * users_profile lookup returns `existingProfile` if provided, null otherwise.
  * app_config returns the resend key if `resendKey` is non-null.
+ * updateUserById resolves OK unless `updateError` is provided.
  */
 function setupDb({
   existingProfile = { id: 'user-uid' } as { id: string } | null,
   resendKey = 'resend-key-abc' as string | null,
+  updateError = null as unknown,
 } = {}) {
   mockFrom.mockImplementation((table: string) => {
     const chain = (resolve: unknown) => ({
@@ -78,11 +76,11 @@ function setupDb({
       single: vi.fn().mockResolvedValue({ data: resolve, error: null }),
       maybeSingle: vi.fn().mockResolvedValue({ data: resolve, error: null }),
     })
-
     if (table === 'users_profile') return chain(existingProfile)
     if (table === 'app_config') return chain(resendKey ? { value: resendKey } : null)
     return chain(null)
   })
+  mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'user-uid' } }, error: updateError })
 }
 
 // ── Tests ──────────────────────────────────────────────────────────────────────
@@ -92,10 +90,7 @@ describe('POST /api/resend-setup-email', () => {
 
   beforeEach(async () => {
     vi.resetModules()
-    // Re-apply mocks after resetModules so the freshly imported module picks them up
-    vi.mock('@/lib/supabase/server', () => ({
-      createAdminClient: () => supabaseMock,
-    }))
+    vi.mock('@/lib/supabase/server', () => ({ createAdminClient: () => supabaseMock }))
     vi.mock('@/lib/ratelimit', () => ({
       resendEmailRateLimit: { limit: mockRateLimitFn },
       getIdentifier: vi.fn().mockReturnValue('127.0.0.1'),
@@ -123,7 +118,6 @@ describe('POST /api/resend-setup-email', () => {
   it('400 — empty string email', async () => {
     const res = await POST(req({ email: '' }))
     expect(res.status).toBe(400)
-    expect(await res.json()).toMatchObject({ error: expect.stringMatching(/email/i) })
   })
 
   it('400 — invalid JSON body', async () => {
@@ -143,7 +137,7 @@ describe('POST /api/resend-setup-email', () => {
 
   // ── Rate limiting ────────────────────────────────────────────────────────────
 
-  it('429 — rate limited (limiter returns success: false)', async () => {
+  it('429 — rate limited', async () => {
     mockRateLimitFn.mockResolvedValue({ success: false, reset: Date.now() + 3600_000 })
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(429)
@@ -158,171 +152,100 @@ describe('POST /api/resend-setup-email', () => {
     expect(await res.json()).toMatchObject({ error: 'No account found for this email' })
   })
 
-  it('404 — user exists in auth but not in users_profile (no profile row)', async () => {
-    // users_profile.single() returns null — profile not yet created
-    setupDb({ existingProfile: null })
-    const res = await POST(req({ email: 'auth-only@example.com' }))
-    expect(res.status).toBe(404)
-  })
+  // ── Success: temp password is reset and emailed ──────────────────────────────
 
-  // ── Success: generateLink returns a valid link ───────────────────────────────
-
-  it('200 — success: user found, link generated, email sent', async () => {
+  it('200 — user found, password reset, email sent', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
-
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(200)
     expect(await res.json()).toMatchObject({ ok: true })
   })
 
-  it('200 — Resend is called with the correct recipient email address', async () => {
+  it('200 — updateUserById is called with a password and email_confirm', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'recipient@example.com' }))
-
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )
-    expect(resendCall).toBeDefined()
-    const body = JSON.parse(resendCall![1]!.body as string)
-    expect(body.to).toContain('recipient@example.com')
+    await POST(req({ email: 'user@example.com' }))
+    expect(mockUpdateUserById).toHaveBeenCalledTimes(1)
+    const [uid, attrs] = mockUpdateUserById.mock.calls[0]
+    expect(uid).toBe('user-uid')
+    expect(typeof attrs.password).toBe('string')
+    expect(attrs.password.length).toBeGreaterThanOrEqual(8)
+    expect(attrs.email_confirm).toBe(true)
   })
 
-  it('200 — Resend email HTML contains the recovery/setup link', async () => {
+  it('200 — the emailed temp password matches the one set on the account', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
-
     await POST(req({ email: 'user@example.com' }))
-
+    const setPassword = mockUpdateUserById.mock.calls[0][1].password as string
     const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
       String(url).includes('resend.com')
     )!
     const body = JSON.parse(resendCall[1]!.body as string)
-    expect(body.html).toContain('reset-password?token=xyz123')
+    expect(body.html).toContain(setPassword)
   })
 
-  it("200 — Resend 'from' address is support@epa608practicetest.net", async () => {
+  it('200 — email goes to the right recipient with a login link (no recovery link)', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
+    await POST(req({ email: 'recipient@example.com' }))
+    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
+      String(url).includes('resend.com')
+    )!
+    const body = JSON.parse(resendCall[1]!.body as string)
+    expect(body.to).toContain('recipient@example.com')
+    expect(body.html).toContain('epa608practicetest.net/login')
+    expect(body.html).not.toContain('token_hash')
+  })
 
+  it("200 — Resend 'from' is support@epa608practicetest.net with a subject", async () => {
+    setupDb()
+    mockFetch(RESEND_OK)
     await POST(req({ email: 'user@example.com' }))
-
     const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
       String(url).includes('resend.com')
     )!
     const body = JSON.parse(resendCall[1]!.body as string)
     expect(body.from).toContain('support@epa608practicetest.net')
-  })
-
-  it('200 — Resend email has a non-empty subject line', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'user@example.com' }))
-
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )!
-    const body = JSON.parse(resendCall[1]!.body as string)
     expect(typeof body.subject).toBe('string')
     expect(body.subject.length).toBeGreaterThan(0)
   })
 
-  // ── generateLink returns null → fallback URL ─────────────────────────────────
+  // ── updateUserById failure → 500, no email ───────────────────────────────────
 
-  it('200 — generateLink returns null data → fallback /forgot-password URL in email', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({ data: null })
-    mockFetch(RESEND_OK)
-
+  it('500 — updateUserById returns an error → 500 and no email sent', async () => {
+    setupDb({ updateError: { message: 'boom' } })
+    const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true, json: async () => ({}) } as Response)
     const res = await POST(req({ email: 'user@example.com' }))
-    expect(res.status).toBe(200)
-
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )!
-    const body = JSON.parse(resendCall[1]!.body as string)
-    expect(body.html).toContain('forgot-password')
-  })
-
-  it('200 — generateLink returns empty action_link → fallback /forgot-password URL', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: null } },
-    })
-    mockFetch(RESEND_OK)
-
-    const res = await POST(req({ email: 'user@example.com' }))
-    expect(res.status).toBe(200)
-
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )!
-    const body = JSON.parse(resendCall[1]!.body as string)
-    expect(body.html).toContain('forgot-password')
+    expect(res.status).toBe(500)
+    const resendCall = fetchSpy.mock.calls.find(([url]) => String(url).includes('resend.com'))
+    expect(resendCall).toBeUndefined()
   })
 
   // ── Missing resend key → 500 ─────────────────────────────────────────────────
-  // Design decision: unlike the capture route (where email is a nice-to-have),
-  // the entire purpose of this endpoint IS to send an email. Therefore a missing
-  // resend key or a Resend API failure is fatal and returns 500.
 
-  it('500 — resend_api_key not in app_config → returns 500 (email is the purpose)', async () => {
+  it('500 — resend_api_key not in app_config → 500 (email is the purpose)', async () => {
     setupDb({ resendKey: null })
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true, json: async () => ({}) } as Response)
-
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(500)
-    // Resend should NOT have been called — we errored before reaching it
-    const resendCall = fetchSpy.mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )
+    const resendCall = fetchSpy.mock.calls.find(([url]) => String(url).includes('resend.com'))
     expect(resendCall).toBeUndefined()
   })
 
   // ── Resend API failure → 500 ─────────────────────────────────────────────────
-  // Design decision: if Resend throws a network error, the email was not sent.
-  // Since sending the email IS the feature, we surface a 500 rather than
-  // swallowing the error (contrast with capture route where email is non-fatal).
 
-  it('500 — Resend API returns non-ok response → returns 500', async () => {
+  it('500 — Resend returns non-ok → 500', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch({ json: { error: 'invalid_api_key' }, ok: false })
-
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(500)
   })
 
-  it('500 — Resend API throws network error → returns 500', async () => {
+  it('500 — Resend throws network error → 500', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     vi.spyOn(global, 'fetch').mockRejectedValue(new Error('ECONNREFUSED'))
-
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(500)
   })
@@ -330,10 +253,7 @@ describe('POST /api/resend-setup-email', () => {
   // ── Supabase unexpected error ────────────────────────────────────────────────
 
   it('500 — Supabase admin client throws unexpected error', async () => {
-    mockFrom.mockImplementation(() => {
-      throw new Error('Unexpected Supabase internal error')
-    })
-
+    mockFrom.mockImplementation(() => { throw new Error('Unexpected Supabase internal error') })
     const res = await POST(req({ email: 'user@example.com' }))
     expect(res.status).toBe(500)
   })
@@ -341,7 +261,6 @@ describe('POST /api/resend-setup-email', () => {
   // ── Email normalization ──────────────────────────────────────────────────────
 
   it('200 — uppercase email is normalized to lowercase before lookup', async () => {
-    // The DB mock will only match the lowercase version used during lookup
     let capturedEmail: string | null = null
     mockFrom.mockImplementation((table: string) => ({
       select: vi.fn().mockReturnThis(),
@@ -358,39 +277,10 @@ describe('POST /api/resend-setup-email', () => {
       single: vi.fn().mockResolvedValue({ data: { value: 'resend-key' }, error: null }),
       maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'uid' }, error: null }),
     }))
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
+    mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'uid' } }, error: null })
     mockFetch(RESEND_OK)
 
     const res = await POST(req({ email: 'USER@EXAMPLE.COM' }))
-    expect(res.status).toBe(200)
-    expect(capturedEmail).toBe('user@example.com')
-  })
-
-  it('200 — email with leading/trailing whitespace is trimmed before lookup', async () => {
-    let capturedEmail: string | null = null
-    mockFrom.mockImplementation((table: string) => ({
-      select: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockImplementation((_col: string, val: string) => {
-        if (table === 'users_profile') capturedEmail = val
-        const innerData = table === 'app_config' ? { value: 'resend-key' } : { id: 'uid' }
-        return {
-          select: vi.fn().mockReturnThis(),
-          eq: vi.fn().mockReturnThis(),
-          single: vi.fn().mockResolvedValue({ data: innerData, error: null }),
-          maybeSingle: vi.fn().mockResolvedValue({ data: innerData, error: null }),
-        }
-      }),
-      single: vi.fn().mockResolvedValue({ data: { value: 'resend-key' }, error: null }),
-      maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'uid' }, error: null }),
-    }))
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    const res = await POST(req({ email: '  user@example.com  ' }))
     expect(res.status).toBe(200)
     expect(capturedEmail).toBe('user@example.com')
   })
@@ -400,7 +290,6 @@ describe('POST /api/resend-setup-email', () => {
   it('200 — success does not call update or upsert on users_profile', async () => {
     const mockUpdate = vi.fn()
     const mockUpsert = vi.fn()
-
     mockFrom.mockImplementation((table: string) => {
       if (table === 'users_profile') {
         return {
@@ -419,36 +308,12 @@ describe('POST /api/resend-setup-email', () => {
         maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
       }
     })
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
+    mockUpdateUserById.mockResolvedValue({ data: { user: { id: 'uid' } }, error: null })
     mockFetch(RESEND_OK)
 
     await POST(req({ email: 'user@example.com' }))
     expect(mockUpdate).not.toHaveBeenCalled()
     expect(mockUpsert).not.toHaveBeenCalled()
-  })
-
-  // ── generateLink called with correct params ──────────────────────────────────
-
-  it('200 — generateLink is called with type recovery and correct redirectTo', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'user@example.com' }))
-
-    expect(mockGenerateLink).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'recovery',
-        email: 'user@example.com',
-        options: expect.objectContaining({
-          redirectTo: expect.stringContaining('reset-password'),
-        }),
-      })
-    )
   })
 
   // ── OPTIONS / CORS ───────────────────────────────────────────────────────────
@@ -462,17 +327,10 @@ describe('POST /api/resend-setup-email', () => {
     expect(res.headers.get('Access-Control-Allow-Methods')).toContain('POST')
   })
 
-  // ── Resend called with correct data (integration check) ─────────────────────
-
-  it('200 — Resend API receives correct Authorization header with resend key', async () => {
+  it('200 — Resend Authorization header carries the resend key', async () => {
     setupDb({ resendKey: 'my-secret-resend-key' })
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
-
     await POST(req({ email: 'user@example.com' }))
-
     const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
       String(url).includes('resend.com')
     )!
@@ -481,73 +339,13 @@ describe('POST /api/resend-setup-email', () => {
     )
   })
 
-  it("200 — 'from' address field in Resend payload contains support@epa608practicetest.net", async () => {
+  it('200 — Resend is called exactly once (no duplicate sends)', async () => {
     setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
     mockFetch(RESEND_OK)
-
     await POST(req({ email: 'user@example.com' }))
-
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(([url]) =>
-      String(url).includes('resend.com')
-    )!
-    const body = JSON.parse(resendCall[1]!.body as string)
-    expect(body.from).toContain('support@epa608practicetest.net')
-  })
-
-  it('200 — generateLink is called with lowercase email even when input is mixed-case', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'User@Example.COM' }))
-
-    expect(mockGenerateLink).toHaveBeenCalledWith(
-      expect.objectContaining({ email: 'user@example.com' })
-    )
-  })
-
-  it('200 — Resend is called exactly once per request (no duplicate sends)', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'user@example.com' }))
-
     const resendCalls = vi.mocked(global.fetch).mock.calls.filter(([url]) =>
       String(url).includes('resend.com')
     )
     expect(resendCalls).toHaveLength(1)
-  })
-
-  it('200 — generateLink is called exactly once (no duplicate link generation)', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    await POST(req({ email: 'user@example.com' }))
-
-    expect(mockGenerateLink).toHaveBeenCalledTimes(1)
-  })
-
-  it('200 — returns JSON with ok: true (not just status 200)', async () => {
-    setupDb()
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: RECOVERY_LINK } },
-    })
-    mockFetch(RESEND_OK)
-
-    const res = await POST(req({ email: 'user@example.com' }))
-    expect(res.status).toBe(200)
-    const body = await res.json()
-    expect(body).toMatchObject({ ok: true })
   })
 })

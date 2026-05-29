@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { resendEmailRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
-import { buildSetupLink } from '@/lib/auth/recovery-session'
+import { generateTempPassword } from '@/lib/auth/temp-password'
 
 const HEADERS = {
   'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
@@ -15,7 +15,7 @@ export async function OPTIONS() {
   })
 }
 
-async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: string) {
+async function sendProWelcomeEmail(resendKey: string, email: string, tempPassword: string) {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -25,22 +25,29 @@ async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: 
     body: JSON.stringify({
       from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
       to: [email],
-      subject: '🎉 Your EPA 608 Pro account is ready — click to access',
+      subject: '🎉 Your EPA 608 Pro account — log in details inside',
       html: `
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#1e293b;">
           <div style="background:#003087;border-radius:12px;padding:24px;text-align:center;margin-bottom:28px;">
             <h1 style="color:#fff;font-size:22px;margin:0 0 6px;">🎉 Welcome to EPA 608 Pro!</h1>
-            <p style="color:#93c5fd;font-size:14px;margin:0;">Your payment was confirmed. Your account is ready.</p>
+            <p style="color:#93c5fd;font-size:14px;margin:0;">Your account is ready.</p>
           </div>
 
           <p style="font-size:15px;color:#374151;line-height:1.6;">
-            We created your Pro account at <strong>${email}</strong>. Click the button below to set your password and go straight to your dashboard:
+            Log in with the details below, then change your password anytime under <strong>Settings → Change Password</strong>.
           </p>
 
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin:20px 0;">
+            <p style="font-size:13px;color:#64748b;margin:0 0 4px;">Email</p>
+            <p style="font-size:15px;color:#1e293b;font-weight:600;margin:0 0 14px;">${email}</p>
+            <p style="font-size:13px;color:#64748b;margin:0 0 4px;">Temporary password</p>
+            <p style="font-size:18px;color:#1e293b;font-weight:700;letter-spacing:0.5px;font-family:'SFMono-Regular',Consolas,monospace;margin:0;">${tempPassword}</p>
+          </div>
+
           <div style="text-align:center;margin:28px 0;">
-            <a href="${setupLink}"
+            <a href="https://epa608practicetest.net/login"
                style="display:inline-block;background:#e85d04;color:#fff;text-decoration:none;padding:15px 36px;border-radius:10px;font-size:16px;font-weight:700;">
-              Set Password &amp; Access Pro →
+              Log In to Access Pro →
             </a>
           </div>
 
@@ -55,7 +62,7 @@ async function sendProWelcomeEmail(resendKey: string, email: string, setupLink: 
           </div>
 
           <p style="font-size:12px;color:#94a3b8;text-align:center;line-height:1.6;">
-            This link expires in 24 hours. Questions?
+            For your security, please change this temporary password after logging in. Questions?
             <a href="mailto:support@epa608practicetest.net" style="color:#003087;">support@epa608practicetest.net</a>
           </p>
         </div>
@@ -84,7 +91,7 @@ export async function POST(request: NextRequest) {
   try {
     const admin = createAdminClient()
 
-    // 1. Look up user in users_profile by email
+    // 1. Look up user in users_profile by email (profile.id === auth.users.id)
     const { data: profile } = await admin
       .from('users_profile')
       .select('id')
@@ -95,17 +102,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No account found for this email' }, { status: 404, headers: HEADERS })
     }
 
-    // 2. Generate a new recovery/setup link
-    const { data: linkData } = await admin.auth.admin.generateLink({
-      type: 'recovery',
-      email: payerEmail,
-      options: { redirectTo: 'https://epa608practicetest.net/reset-password' },
+    // 2. Reset to a fresh temporary password and email it. Same robust path as
+    // the PayPal capture flow — no recovery link to fail in the browser.
+    const tempPassword = generateTempPassword()
+    const { error: updateError } = await admin.auth.admin.updateUserById(profile.id, {
+      password: tempPassword,
+      email_confirm: true,
     })
-    const link = buildSetupLink(linkData?.properties, {
-      resetUrl: 'https://epa608practicetest.net/reset-password',
-      forgotUrl: 'https://epa608practicetest.net/forgot-password',
-      email: payerEmail,
-    })
+    if (updateError) {
+      console.error('resend-setup-email updateUserById failed:', updateError)
+      return NextResponse.json({ error: 'Unexpected error. Please try again.' }, { status: 500, headers: HEADERS })
+    }
 
     // 3. Get resend key from app_config
     const { data: configRow } = await admin
@@ -119,8 +126,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email service unavailable' }, { status: 500, headers: HEADERS })
     }
 
-    // 4. Send welcome email
-    await sendProWelcomeEmail(resendKey, payerEmail, link)
+    // 4. Send welcome email with the temporary password
+    await sendProWelcomeEmail(resendKey, payerEmail, tempPassword)
 
     return NextResponse.json({ ok: true }, { headers: HEADERS })
 
