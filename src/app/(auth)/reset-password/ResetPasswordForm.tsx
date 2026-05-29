@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -17,6 +17,12 @@ export default function ResetPasswordForm() {
   const [success, setSuccess] = useState(false)
   // 'checking' until we know whether the recovery link produced a valid session
   const [sessionState, setSessionState] = useState<'checking' | 'ready' | 'invalid'>('checking')
+  const redirectTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cancel the post-success redirect timer if the user navigates away first.
+  useEffect(() => () => {
+    if (redirectTimer.current) clearTimeout(redirectTimer.current)
+  }, [])
 
   // Establish the auth session from the recovery link before allowing a password change.
   // Recovery links generated server-side (PayPal welcome / resend-setup) and the standard
@@ -73,7 +79,7 @@ export default function ResetPasswordForm() {
       setLoading(false)
 
       // Redirect to login after a short delay
-      setTimeout(() => {
+      redirectTimer.current = setTimeout(() => {
         router.push('/login?message=password-updated')
       }, 2000)
     } catch {

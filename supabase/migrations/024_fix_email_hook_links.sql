@@ -53,6 +53,9 @@ BEGIN
   IF site_url IS NULL THEN
     site_url := coalesce(event -> 'email_data' ->> 'site_url', 'https://epa608practicetest.net');
   END IF;
+  -- Normalize: strip any trailing slash so concatenated links never become '<host>//path'
+  -- (a trailing-slash override in app_config.site_url would otherwise produce a 404 link).
+  site_url := rtrim(site_url, '/');
 
   user_email := event -> 'user' ->> 'email';
   email_action := event -> 'email_data' ->> 'email_action_type';
