@@ -1,5 +1,21 @@
 # CLAUDE.md - EPA608PracticeTest.net Master Guide
 
+> ⚠️ **REALITY CHECK (updated 2026-05-29) — read before trusting the rest of this file.**
+> Parts of this guide describe an earlier, content-only vision and are now out of date.
+> Actual current architecture:
+> - **Two layers.** A static SEO site in `public/` (the `.html` pages + `test-engine.js`,
+>   runtime question data = `public/questions.json` + `public/questions-flagged.json` only),
+>   AND a full **Next.js 15 SaaS app** in `src/` (Supabase auth, tiers, AI tutor, dashboard,
+>   certificates, teams, offline mode).
+> - **Not "free forever / no signup."** The app has required auth and **paid tiers**
+>   (free + Pro). Payment is **PayPal only** (`src/app/api/paypal/**`,
+>   static `public/checkout.html`). Paddle and LemonSqueezy were removed.
+> - The "13 live pages" list below is stale — there are ~40 static pages plus the app routes.
+> - Draft/legacy question JSON lives in `_archive/question-bank/`, not `public/`.
+>
+> The content strategy / SEO / writing guidance below is still useful. The status,
+> page counts, and "monetization: free SaaS" lines are historical.
+
 ## 🎯 QUICK START
 
 **Writing an article?** → Read CONTENT-TEMPLATE.md
