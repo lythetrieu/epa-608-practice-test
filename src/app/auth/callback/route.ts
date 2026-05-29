@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
+import type { EmailOtpType } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -26,10 +27,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(target.toString())
   }
 
-  if (code) {
-    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
-
-    const supabase = createServerClient(
+  // Build a redirect response with a Supabase client bound to its cookies, so a
+  // verified session is persisted on the response we return.
+  function clientFor(response: NextResponse) {
+    return createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
       {
@@ -46,7 +47,30 @@ export async function GET(request: NextRequest) {
         },
       },
     )
+  }
 
+  // Email confirmation (signup / magic link / invite) arrives as token_hash.
+  // Verify it SERVER-SIDE — works from any browser with no PKCE code_verifier
+  // (signup is a raw REST call, so exchangeCodeForSession would have no verifier
+  // and fall through to /login). verifyOtp confirms the email AND creates the
+  // session; we then land the user on /welcome.
+  if (tokenHash) {
+    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
+    const supabase = clientFor(response)
+    const { error } = await supabase.auth.verifyOtp({
+      type: (type ?? 'email') as EmailOtpType,
+      token_hash: tokenHash,
+    })
+    if (!error) {
+      return response
+    }
+  }
+
+  // OAuth (Google) returns ?code= with the PKCE verifier present in the browser
+  // because the flow was initiated client-side.
+  if (code) {
+    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
+    const supabase = clientFor(response)
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       return response
