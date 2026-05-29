@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { captureRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
+import { buildSetupLink } from '@/lib/auth/recovery-session'
 
 const PAYPAL_API = 'https://api-m.paypal.com'
 
@@ -259,7 +260,14 @@ export async function POST(request: NextRequest) {
       options: { redirectTo: 'https://epa608practicetest.net/reset-password' },
     })
 
-    const setupLink = linkData?.properties?.action_link
+    // Build a token_hash setup link so the recovery works in any browser
+    // (a PKCE ?code= action_link can't be exchanged in the user's browser since
+    //  the link was generated server-side).
+    const link = buildSetupLink(linkData?.properties, {
+      resetUrl: 'https://epa608practicetest.net/reset-password',
+      forgotUrl: 'https://epa608practicetest.net/forgot-password',
+      email: payerEmail,
+    })
 
     // 5. Send Pro welcome email via Resend
     const { data: configRow2 } = await admin
@@ -269,7 +277,6 @@ export async function POST(request: NextRequest) {
       .single()
     const resendKey2 = configRow2?.value
     if (resendKey2) {
-      const link = setupLink || `https://epa608practicetest.net/forgot-password?email=${encodeURIComponent(payerEmail)}`
       await sendProWelcomeEmail(resendKey2, payerEmail, link).catch(err =>
         console.error('Resend email failed:', err)
       )

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { resendEmailRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
+import { buildSetupLink } from '@/lib/auth/recovery-session'
 
 const HEADERS = {
   'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
@@ -100,7 +101,11 @@ export async function POST(request: NextRequest) {
       email: payerEmail,
       options: { redirectTo: 'https://epa608practicetest.net/reset-password' },
     })
-    const setupLink = linkData?.properties?.action_link
+    const link = buildSetupLink(linkData?.properties, {
+      resetUrl: 'https://epa608practicetest.net/reset-password',
+      forgotUrl: 'https://epa608practicetest.net/forgot-password',
+      email: payerEmail,
+    })
 
     // 3. Get resend key from app_config
     const { data: configRow } = await admin
@@ -115,7 +120,6 @@ export async function POST(request: NextRequest) {
     }
 
     // 4. Send welcome email
-    const link = setupLink || `https://epa608practicetest.net/forgot-password?email=${encodeURIComponent(payerEmail)}`
     await sendProWelcomeEmail(resendKey, payerEmail, link)
 
     return NextResponse.json({ ok: true }, { headers: HEADERS })

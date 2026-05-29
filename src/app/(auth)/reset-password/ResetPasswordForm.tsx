@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { establishRecoverySession } from '@/lib/auth/recovery-session'
 
 export default function ResetPasswordForm() {
   const router = useRouter()
@@ -26,48 +27,18 @@ export default function ResetPasswordForm() {
   useEffect(() => {
     let cancelled = false
 
-    async function establishSession() {
-      // If a session already exists (e.g. detectSessionInUrl already ran), we're done.
-      const { data: existing } = await supabase.auth.getSession()
-      if (existing.session) {
-        if (!cancelled) setSessionState('ready')
-        return
-      }
-
-      const url = new URL(window.location.href)
-      const params = url.searchParams
-      const hash = new URLSearchParams(url.hash.replace(/^#/, ''))
-
-      try {
-        const tokenHash = params.get('token_hash')
-        const code = params.get('code')
-        const accessToken = hash.get('access_token')
-        const refreshToken = hash.get('refresh_token')
-
-        if (tokenHash) {
-          const { error } = await supabase.auth.verifyOtp({ type: 'recovery', token_hash: tokenHash })
-          if (error) throw error
-        } else if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code)
-          if (error) throw error
-        } else if (accessToken && refreshToken) {
-          const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
-          if (error) throw error
-        } else {
-          // No recovery credentials in the URL at all.
-          if (!cancelled) setSessionState('invalid')
-          return
-        }
-
-        // Strip the token from the URL so it isn't left in history.
-        window.history.replaceState(null, '', url.pathname)
-        if (!cancelled) setSessionState('ready')
-      } catch {
-        if (!cancelled) setSessionState('invalid')
+    async function run() {
+      const result = await establishRecoverySession(supabase.auth, window.location.href)
+      if (cancelled) return
+      if (result.state === 'ready') {
+        if (result.cleanUrl) window.history.replaceState(null, '', result.cleanUrl)
+        setSessionState('ready')
+      } else {
+        setSessionState('invalid')
       }
     }
 
-    establishSession()
+    run()
     return () => {
       cancelled = true
     }
