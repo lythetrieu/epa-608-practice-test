@@ -1,0 +1,1226 @@
+[
+  {
+    "id": "t2-leak-1.2-nitro-trace-001",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.2",
+    "question": "Why is mixing nitrogen with a trace amount of HCFC-22 an acceptable method for pressurizing a refrigeration system during leak testing?",
+    "options": [
+      "Nitrogen alone is undetectable, so the trace HCFC-22 acts as a tracer gas that a halogen detector can sense while nitrogen provides safe bulk pressure",
+      "HCFC-22 raises the pressure of nitrogen to levels needed for leak detection",
+      "The mixture allows refrigerant to be vented legally after the test is complete",
+      "Nitrogen reacts with HCFC-22 to create a visible indicator at leak points"
+    ],
+    "answer_text": "Nitrogen alone is undetectable, so the trace HCFC-22 acts as a tracer gas that a halogen detector can sense while nitrogen provides safe bulk pressure",
+    "explanation": "Per 40 CFR §82.156, using nitrogen with a small trace of HCFC-22 or another detectable refrigerant is an acceptable leak testing method. Nitrogen is inert and safe at high pressure, but it cannot be detected by electronic halogen detectors or halide torches. The trace refrigerant — kept at minimal concentration — allows the detector to alarm at a leak point. The nitrogen carries the tracer to where the leak is located.",
+    "source_ref": "40 CFR §82.156; 40 CFR §82.154",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.2-nitro-trace-002",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.2",
+    "question": "Which of the following correctly describes the role of nitrogen in the nitrogen/trace-refrigerant leak testing method?",
+    "options": [
+      "Nitrogen is the bulk pressurizing gas; it creates the test pressure safely without the risk of venting illegal amounts of ODS",
+      "Nitrogen is the tracer gas detected by the electronic leak detector",
+      "Nitrogen raises the system pressure above the refrigerant's saturation point to simulate operating conditions",
+      "Nitrogen reacts with moisture to create an acid detectable at the leak site"
+    ],
+    "answer_text": "Nitrogen is the bulk pressurizing gas; it creates the test pressure safely without the risk of venting illegal amounts of ODS",
+    "explanation": "In the nitrogen/trace-refrigerant method, nitrogen provides the bulk of the test pressure. Nitrogen is inert, widely available, and inexpensive. Critically, nitrogen is not an ozone-depleting substance (ODS) or a regulated refrigerant, so releasing it does not violate EPA venting prohibitions under 40 CFR §82.154. The trace refrigerant (e.g., HCFC-22) is present only in small amounts solely for detectability.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.2-nitro-trace-003",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.2",
+    "question": "A technician pressurizes a system to leak test pressure using nitrogen mixed with a small trace of HCFC-22, then scans the joints with an electronic halogen detector. Under EPA regulations, is this procedure compliant?",
+    "options": [
+      "Yes, this method is compliant under 40 CFR §82.156 because nitrogen is the bulk gas and only a trace amount of refrigerant is used as a detectable tracer",
+      "No, any use of HCFC-22 for pressurizing a system is prohibited under 40 CFR §82.154",
+      "No, because HCFC-22 is a phased-out refrigerant and cannot be used at all after 2020",
+      "Yes, but only if the technician recovers the nitrogen/refrigerant mixture immediately after the test"
+    ],
+    "answer_text": "Yes, this method is compliant under 40 CFR §82.156 because nitrogen is the bulk gas and only a trace amount of refrigerant is used as a detectable tracer",
+    "explanation": "EPA regulations under 40 CFR §82.156 permit the use of nitrogen mixed with a trace amount of a detectable refrigerant (such as HCFC-22) for system leak testing. This method is compliant because the refrigerant is not being used to pressurize the system — nitrogen performs that function — and only a minimal trace quantity of refrigerant is present. The prohibition under 40 CFR §82.154 is against venting refrigerant, not against using trace amounts as a tracer in an approved testing procedure.",
+    "source_ref": "40 CFR §82.156; 40 CFR §82.154",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.2-nitro-trace-004",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.2",
+    "question": "What type of leak detector is specifically effective at detecting the trace HCFC-22 in a nitrogen/trace-refrigerant leak test mixture?",
+    "options": [
+      "Electronic halogen detector (heated diode or infrared sensor) or halide torch",
+      "Ultrasonic acoustic detector only",
+      "Thermal conductivity detector calibrated for nitrogen",
+      "Colorimetric tube detector calibrated for CO2"
+    ],
+    "answer_text": "Electronic halogen detector (heated diode or infrared sensor) or halide torch",
+    "explanation": "HCFC-22 contains chlorine atoms (it is a hydrochlorofluorocarbon). An electronic halogen detector — which uses a heated diode or infrared sensor to detect halogenated compounds — will alarm in the presence of trace HCFC-22 escaping at a leak point. A halide torch also reacts to chlorine-containing refrigerants by changing the flame color. Ultrasonic detectors work on gas flow sounds but do not identify refrigerant type, so they are less specific.",
+    "source_ref": "40 CFR §82.156; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.2-nitro-trace-005",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.2",
+    "question": "What is the primary reason that using pure refrigerant (not mixed with nitrogen) to pressurize a system for leak testing is NOT acceptable under EPA regulations?",
+    "options": [
+      "Any refrigerant escaping from the system during the test constitutes illegal venting under 40 CFR §82.154, regardless of intent",
+      "Pure refrigerant is too expensive to waste on leak testing",
+      "Pure refrigerant pressure is too low to reveal small leaks",
+      "Pure refrigerant cannot be detected by electronic leak detectors at leak sites"
+    ],
+    "answer_text": "Any refrigerant escaping from the system during the test constitutes illegal venting under 40 CFR §82.154, regardless of intent",
+    "explanation": "Under 40 CFR §82.154, it is illegal to knowingly vent or release refrigerant to the atmosphere. If pure refrigerant is used to pressurize a system, any refrigerant that escapes through a leak during the test is released to the atmosphere. This constitutes venting — an EPA violation. The nitrogen/trace method avoids this problem because nitrogen (the bulk gas) is not a regulated refrigerant and its release is not prohibited.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-001",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "A technician notices an oily residue around a flare fitting on the liquid line of a residential split system. What does this most likely indicate?",
+    "options": [
+      "A refrigerant leak at that fitting, because refrigerant carries compressor oil when it escapes",
+      "Normal condensation accumulating at the fitting",
+      "An overcharged system causing liquid to travel through the liquid line",
+      "A restriction in the liquid line causing oil to back up"
+    ],
+    "answer_text": "A refrigerant leak at that fitting, because refrigerant carries compressor oil when it escapes",
+    "explanation": "Oil stains or oily residue near fittings, valve stems, or joints are a classic sign of refrigerant leakage. Compressor oil circulates throughout the refrigerant system. When refrigerant leaks out through a fitting, it carries oil with it, leaving behind an oily deposit as the refrigerant evaporates. This is one of the most reliable visual indicators of a leak that a technician can identify before using electronic instruments.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-002",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "A technician observes frost or ice forming on the expansion valve and the suction line near the evaporator of a running system. What does this symptom suggest?",
+    "options": [
+      "A low refrigerant charge caused by a leak, resulting in abnormally low suction pressure and temperatures",
+      "The system is overcharged, causing the refrigerant to flood the suction line",
+      "The condenser fan is running too fast, dropping the condensing temperature",
+      "The system is in heating mode and this is normal frost accumulation"
+    ],
+    "answer_text": "A low refrigerant charge caused by a leak, resulting in abnormally low suction pressure and temperatures",
+    "explanation": "When a system leaks refrigerant, the refrigerant charge drops, causing the evaporator to operate at lower-than-normal pressures and temperatures. The suction pressure drops below the design point, causing surface temperatures to fall below the dew point of ambient air or even below freezing. The result is frost or ice forming on the expansion device outlet, evaporator, or suction line — a visible sign of refrigerant loss from a leak.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-003",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "A technician applies a soap bubble solution to the service valve stems and schrader ports of a compressor. Bubbles appear and grow at one valve stem. What does this confirm?",
+    "options": [
+      "A refrigerant leak at that valve stem, confirmed by the bubbles expanding from escaping pressurized gas",
+      "Air trapped in the system is being released normally",
+      "The valve stem is properly sealed and the bubbles indicate system pressure is holding",
+      "Moisture has entered the system and is vaporizing at the valve stem"
+    ],
+    "answer_text": "A refrigerant leak at that valve stem, confirmed by the bubbles expanding from escaping pressurized gas",
+    "explanation": "The soap bubble test is a simple and reliable leak detection method. When a soap solution is applied to a fitting or valve, escaping pressurized refrigerant gas causes the solution to form and expand bubbles at the leak point. Growing bubbles confirm active leakage. This method requires the system to be pressurized and is best used when the approximate location of a leak is already known, since it requires direct access to fittings.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-004",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "A technician uses a UV (ultraviolet) light and observes a bright fluorescent yellow-green glow around a brazed joint on the liquid line. What does this indicate?",
+    "options": [
+      "UV-detectable dye has escaped with refrigerant at a leak point, revealing the leak location",
+      "The brazing material used contains a UV-reactive flux that glows normally",
+      "The refrigerant has degraded inside the system and is forming a fluorescent acid",
+      "Contamination from a previous refrigerant type is present in the system"
+    ],
+    "answer_text": "UV-detectable dye has escaped with refrigerant at a leak point, revealing the leak location",
+    "explanation": "UV-fluorescent dye leak detection works by introducing a compatible dye into the refrigerant system. The dye circulates with the refrigerant. When a leak occurs, the dye escapes with the refrigerant and remains on the exterior surface. Under ultraviolet light, the dye fluoresces brightly (typically yellow-green), pinpointing the exact leak location. This method is particularly effective for finding slow leaks that are difficult to detect with electronic instruments.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-005",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "Which of the following operating symptoms is most consistent with an ongoing refrigerant leak in a comfort cooling system?",
+    "options": [
+      "Lower-than-expected suction pressure, reduced cooling capacity, and more frequent compressor cycling",
+      "Higher-than-normal high-side pressure and compressor short-cycling on the high-pressure cutout",
+      "Elevated discharge temperature with normal suction pressure",
+      "Increased subcooling at the condenser outlet with reduced superheat"
+    ],
+    "answer_text": "Lower-than-expected suction pressure, reduced cooling capacity, and more frequent compressor cycling",
+    "explanation": "As refrigerant leaks from a system, the charge decreases. Lower charge causes reduced mass flow of refrigerant through the evaporator, which lowers the evaporating pressure (suction pressure). The system absorbs less heat, reducing cooling capacity. The compressor cycles more frequently because the thermostat cannot be satisfied. These symptoms together — low suction pressure, reduced capacity, and frequent short-cycling — are reliable indicators of refrigerant loss from a leak.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.4-signs-006",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.4",
+    "question": "An electronic refrigerant leak detector alarms when passed near the Schrader port access fitting on the suction line. What is the most appropriate next step?",
+    "options": [
+      "Verify the leak by applying soap bubbles or UV light, then locate and repair the leak before recharging",
+      "Immediately add refrigerant to bring the system back to full charge",
+      "Replace the entire Schrader port assembly without further testing",
+      "Ignore the alarm if the system is still cooling, as false alarms are common"
+    ],
+    "answer_text": "Verify the leak by applying soap bubbles or UV light, then locate and repair the leak before recharging",
+    "explanation": "When an electronic leak detector alarms, it indicates the presence of refrigerant at that location. The next step is to confirm the leak using a secondary method (soap bubbles or UV dye under UV light) to avoid acting on a false positive. Once confirmed, the leak must be repaired before adding refrigerant. Adding refrigerant to a leaking system without repair wastes refrigerant and violates EPA's implicit requirement to fix leaks when they are discovered and exceed applicable thresholds under 40 CFR §82.157.",
+    "source_ref": "40 CFR §82.157; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.1-comfort-005",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.1",
+    "question": "A comfort cooling system has a full charge of 200 lbs. Service records show 25 lbs of refrigerant was added over the past 12 months. What is the annual leak rate and what action is required?",
+    "options": [
+      "12.5%; the leak rate exceeds the 10% comfort cooling threshold and repair must begin within 30 days",
+      "12.5%; no repair is required because the system exceeds 200 lbs and has a higher threshold",
+      "25%; the entire charge must be replaced immediately",
+      "8.3%; below the threshold so no action is needed"
+    ],
+    "answer_text": "12.5%; the leak rate exceeds the 10% comfort cooling threshold and repair must begin within 30 days",
+    "explanation": "Annual leak rate = (25 lbs ÷ 200 lbs) × 100 = 12.5%. This exceeds the 10% annual leak rate threshold for comfort cooling appliances under 40 CFR §82.157(b). System size does not change the 10% threshold for comfort cooling — all comfort cooling systems (above the charge size threshold) are held to 10%. The owner must repair the leak within 30 days of determining the threshold has been exceeded per 40 CFR §82.157(d).",
+    "source_ref": "40 CFR §82.157(b); 40 CFR §82.157(d)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.1-comfort-006",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.1",
+    "question": "When calculating the annual leak rate for EPA compliance purposes, what figure is used as the \"full charge\" of the system?",
+    "options": [
+      "The total refrigerant capacity the system was designed and rated to hold when properly charged",
+      "The amount of refrigerant currently in the system at the time of inspection",
+      "The amount of refrigerant added at the most recent service call",
+      "The amount of refrigerant recovered during the last evacuation"
+    ],
+    "answer_text": "The total refrigerant capacity the system was designed and rated to hold when properly charged",
+    "explanation": "Under 40 CFR §82.157, the annual leak rate is calculated as: (pounds leaked per year ÷ full charge) × 100. The \"full charge\" refers to the nameplate or manufacturer-specified refrigerant charge — the amount the system is designed to hold when properly charged. This is not the amount currently in the system (which may be low due to leaks) and not the amount added during service. Using the full design charge provides a consistent basis for comparison.",
+    "source_ref": "40 CFR §82.157(b)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.1-comfort-007",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.1",
+    "question": "Effective January 1, 2026, which comfort cooling systems become newly subject to EPA leak repair obligations that were previously exempt?",
+    "options": [
+      "Systems containing between 15 lbs and 50 lbs of refrigerant, previously below the 50 lb threshold",
+      "Systems containing more than 200 lbs of refrigerant that previously had a higher threshold",
+      "All residential window units regardless of charge size",
+      "Only systems installed after January 1, 2025 that use A2L refrigerants"
+    ],
+    "answer_text": "Systems containing between 15 lbs and 50 lbs of refrigerant, previously below the 50 lb threshold",
+    "explanation": "Before 2026, the EPA leak repair requirements under 40 CFR §82.157 applied only to comfort cooling appliances containing 50 lbs or more of refrigerant. The AIM Act HFC Leak Repair Rule lowered this threshold to 15 lbs effective January 1, 2026. This means comfort cooling systems with charges between 15 and 49.9 lbs — previously exempt — are now subject to the 10% annual leak rate limit, 30-day repair deadlines, and all associated recordkeeping requirements.",
+    "source_ref": "40 CFR §82.157; AIM Act HFC Leak Repair Rule effective January 1, 2026",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.1-comfort-008",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.1",
+    "question": "Under 40 CFR §82.157(d), within how many days must a comfort cooling system owner begin repairing a leak once it is determined the annual leak rate exceeds 10%?",
+    "options": [
+      "30 days from the date the threshold exceedance is discovered or determined",
+      "60 days from the date of the first service call",
+      "90 days from the EPA notification date",
+      "Immediately upon discovery with no grace period"
+    ],
+    "answer_text": "30 days from the date the threshold exceedance is discovered or determined",
+    "explanation": "Per 40 CFR §82.157(d), the owner of a comfort cooling appliance must repair the leak within 30 days after determining that the annual leak rate exceeds the applicable threshold (10% for comfort cooling). The 30-day clock begins when the exceedance is discovered — for example, when a technician calculates the leak rate from service records and confirms the threshold is exceeded. If repair cannot be completed within 30 days, the owner must develop a retrofit or retirement plan.",
+    "source_ref": "40 CFR §82.157(d)",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.5-plan-001",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.5",
+    "question": "Under what circumstance may a system owner develop a retrofit or retirement plan instead of completing an immediate repair within 30 days?",
+    "options": [
+      "When parts are unavailable or repair within 30 days is not feasible, the owner may develop a documented retrofit or retirement plan",
+      "When the leak rate is less than 15%, a plan is always allowed instead of repair",
+      "Only industrial process refrigeration systems may use a retrofit plan",
+      "When the system is older than 10 years, a retirement plan automatically replaces the repair requirement"
+    ],
+    "answer_text": "When parts are unavailable or repair within 30 days is not feasible, the owner may develop a documented retrofit or retirement plan",
+    "explanation": "Per 40 CFR §82.157(d), if an owner cannot complete repairs to a leaking appliance within the standard 30-day window — for example, because replacement parts are unavailable or the repair is technically complex — they may instead develop a retrofit or retirement plan. This plan must be documented, made available for EPA inspection, and fully executed within 1 year of the date the leak exceedance was discovered. The plan does not eliminate the obligation; it provides a structured compliance path.",
+    "source_ref": "40 CFR §82.157(d); 40 CFR §82.157(d)(3)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.5-plan-002",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.5",
+    "question": "Under 40 CFR §82.157(d)(3), within what maximum timeframe must a retrofit or retirement plan for a leaking appliance be completed?",
+    "options": [
+      "1 year (12 months) from the date the plan was developed",
+      "6 months from the date of leak discovery",
+      "90 days from when the 30-day repair deadline passed",
+      "2 years from leak discovery, with annual EPA reporting"
+    ],
+    "answer_text": "1 year (12 months) from the date the plan was developed",
+    "explanation": "Under 40 CFR §82.157(d)(3), an owner who develops a retrofit or retirement plan must complete that plan within 1 year. This 1-year deadline provides a reasonable window to procure replacement equipment, schedule downtime, and complete the retrofit or retirement, while ensuring the non-compliant equipment is not operated indefinitely. The plan must be in writing and available for EPA inspection at any time during the plan period.",
+    "source_ref": "40 CFR §82.157(d)(3)",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.5-plan-003",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.5",
+    "question": "While a retrofit or retirement plan is in effect for a leaking appliance, what record must the owner maintain for each refrigerant addition to the system?",
+    "options": [
+      "The date of each addition, the amount added, and the person or company performing the service",
+      "Only the total annual refrigerant consumption reported to the EPA at year end",
+      "No additional recordkeeping is required beyond the initial plan document",
+      "A daily leak rate calculation until the retrofit or retirement is complete"
+    ],
+    "answer_text": "The date of each addition, the amount added, and the person or company performing the service",
+    "explanation": "During the period that a retrofit or retirement plan is in effect, the owner must document all refrigerant additions to the system. Required records include the date of each addition, the quantity added, and identifying information about the technician or company performing the work. These records must be kept on-site and available for EPA inspection. This documentation ensures accountability and prevents the plan from being used as a perpetual excuse to defer compliance.",
+    "source_ref": "40 CFR §82.157(d); 40 CFR §82.166 (recordkeeping)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.5-plan-004",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.5",
+    "question": "A comfort cooling system exceeding the 10% leak rate threshold cannot be repaired within 30 days. The owner develops a retrofit plan on April 1. By what date must the retrofit be completed?",
+    "options": [
+      "April 1 of the following year (1 year from plan development)",
+      "June 30 of the same year (90 days after plan development)",
+      "October 1 of the same year (6 months after plan development)",
+      "April 1 two years later, if the EPA grants an extension"
+    ],
+    "answer_text": "April 1 of the following year (1 year from plan development)",
+    "explanation": "Under 40 CFR §82.157(d)(3), a retrofit or retirement plan must be completed within 1 year of the date it was developed. If the plan was developed on April 1, the retrofit or retirement must be fully completed by April 1 of the following year. This deadline applies regardless of system type (comfort cooling, commercial refrigeration) — unlike the 120-day extension for industrial process refrigeration, which is a separate provision under §82.157(d)(2).",
+    "source_ref": "40 CFR §82.157(d)(3)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.5-plan-005",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.5",
+    "question": "Which of the following statements about the extended retrofit/retirement plan under 40 CFR §82.157(d)(3) is CORRECT?",
+    "options": [
+      "The plan must be documented in writing, available for EPA inspection, and completed within 1 year",
+      "The plan is automatically approved and requires no documentation",
+      "The plan allows the owner to continue operating the leaking system indefinitely as long as refrigerant additions are reported",
+      "The plan is only available for systems with refrigerant charges greater than 500 lbs"
+    ],
+    "answer_text": "The plan must be documented in writing, available for EPA inspection, and completed within 1 year",
+    "explanation": "Under 40 CFR §82.157(d)(3), a retrofit or retirement plan must: (1) be documented in writing, (2) be made available for EPA inspection upon request, and (3) be completed within 1 year of when the plan was developed. There is no automatic approval process — the owner creates the plan and is responsible for executing it within the deadline. Failure to complete the plan within 1 year constitutes a violation of the regulations.",
+    "source_ref": "40 CFR §82.157(d)(3); 40 CFR §82.166",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.6-verify-001",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.6",
+    "question": "After repairing a refrigerant leak in a high-pressure comfort cooling system, what must a technician do before returning the system to service?",
+    "options": [
+      "Perform a leak verification test to confirm the repair was successful, then document the results",
+      "Add refrigerant to restore full charge and test cooling capacity",
+      "Pull a deep vacuum on the system regardless of whether parts were opened",
+      "Notify the EPA within 5 business days that the repair was completed"
+    ],
+    "answer_text": "Perform a leak verification test to confirm the repair was successful, then document the results",
+    "explanation": "After completing a leak repair, the technician must verify that the leak has been successfully fixed before returning the system to service. This is required under the general intent of 40 CFR §82.157 — the regulation requires that leaks be repaired, and verification confirms the repair is effective. The leak test should use an appropriate method (electronic detector, soap bubbles, or UV dye) at system operating pressure. The date and result of the verification test must be recorded in the service records.",
+    "source_ref": "40 CFR §82.157; 40 CFR §82.166",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.6-verify-002",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.6",
+    "question": "What system condition is required before performing a leak verification test after completing a repair?",
+    "options": [
+      "The system must be pressurized to normal operating pressure so escaping refrigerant can be detected",
+      "The system must be in a full vacuum before scanning for leaks",
+      "The system must be at ambient temperature with no pressure differential",
+      "The system must be fully charged and running for at least 30 minutes before leak testing"
+    ],
+    "answer_text": "The system must be pressurized to normal operating pressure so escaping refrigerant can be detected",
+    "explanation": "Leak verification after repair requires the system to be pressurized — either to normal operating pressure with refrigerant, or pressurized with nitrogen/trace refrigerant for testing. A system in vacuum cannot demonstrate a refrigerant leak because there is no pressure driving refrigerant outward through any remaining leak paths. Pressurizing to operating conditions ensures that any remaining leak is large enough to produce a detectable signal at the repair site.",
+    "source_ref": "40 CFR §82.157; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.6-verify-003",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.6",
+    "question": "A technician repairs a brazed joint on the liquid line and verifies the repair by applying soap bubbles with the system pressurized. Bubbles still form at the repaired joint. What must the technician do?",
+    "options": [
+      "Repair the leak again — the first repair was unsuccessful — and perform another verification test after the second repair",
+      "Proceed with recharging because small residual bubbles are acceptable after brazing",
+      "Return the system to service and schedule a follow-up inspection in 30 days",
+      "Apply Teflon tape to the joint and verify again"
+    ],
+    "answer_text": "Repair the leak again — the first repair was unsuccessful — and perform another verification test after the second repair",
+    "explanation": "If a verification leak test still shows leakage after a repair attempt, the repair is not complete. The technician must repair the leak again and perform another verification test after the second repair attempt. The system should not be returned to service while a confirmed leak remains. The 30-day compliance clock may also restart if the leak still exceeds the applicable threshold. Proper brazing technique requires re-heating and re-flowing the brazing material, or replacing the fitting.",
+    "source_ref": "40 CFR §82.157; 40 CFR §82.166",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.6-verify-004",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.6",
+    "question": "Which of the following information must be recorded in service records after a successful leak repair and verification?",
+    "options": [
+      "The date of the repair, the leak location, the repair method used, and the date and result of the verification leak test",
+      "Only the amount of refrigerant added after the repair",
+      "The technician's Section 608 certification number and the equipment owner's signature",
+      "The EPA notification form number and date of submission"
+    ],
+    "answer_text": "The date of the repair, the leak location, the repair method used, and the date and result of the verification leak test",
+    "explanation": "Under 40 CFR §82.166 (recordkeeping requirements), service records for appliances subject to the leak repair requirements must include information documenting that the leak was repaired and verified. This includes the date of repair, the location of the leak, the type of repair performed, and the date and result of the post-repair verification test. These records must be retained for at least 3 years and made available for EPA inspection upon request.",
+    "source_ref": "40 CFR §82.166; 40 CFR §82.157",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.6-verify-005",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.6",
+    "question": "Which leak detection methods are acceptable for verifying that a refrigerant leak has been successfully repaired?",
+    "options": [
+      "Electronic halogen detector, soap bubble solution, or UV dye inspection under UV light",
+      "Only a calibrated electronic detector with EPA-approved sensitivity settings",
+      "Only pressure testing with nitrogen — refrigerant-based detection is not allowed post-repair",
+      "Visual inspection alone is sufficient if no oil stains are visible after repair"
+    ],
+    "answer_text": "Electronic halogen detector, soap bubble solution, or UV dye inspection under UV light",
+    "explanation": "Any standard leak detection method may be used for post-repair verification, including: electronic halogen detectors (heated diode, infrared, or ultrasonic), soap bubble solution applied directly to the repaired area, or UV-fluorescent dye inspection under a UV lamp (if dye was previously introduced). The choice of method depends on the type of refrigerant, access to the repair area, and available equipment. Visual inspection alone is not sufficient for regulatory verification purposes.",
+    "source_ref": "40 CFR §82.157; EPA 608 Technician Certification Study Guide",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-005",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "What evacuation level is required for a high-pressure system (such as an R-22 unit) with a charge of 150 lbs, manufactured after November 15, 1993?",
+    "options": [
+      "4 inches of mercury (in Hg) vacuum",
+      "10 inches of mercury (in Hg) vacuum",
+      "15 inches of mercury (in Hg) vacuum",
+      "0 inches of mercury — standard atmospheric pressure is acceptable"
+    ],
+    "answer_text": "4 inches of mercury (in Hg) vacuum",
+    "explanation": "Per 40 CFR §82.156(b) Table 1, post-1993 recovery equipment standards for high-pressure appliances (such as R-22 systems) require evacuation to 4 inches of mercury vacuum for systems with charges less than 200 lbs. R-22 is classified as a high-pressure refrigerant (normal operating pressures in the range of 70–250 psig). This 4 in Hg vacuum level applies regardless of whether the system is below 200 lbs or 200 lbs and above — both categories require 4 in Hg for high-pressure systems.",
+    "source_ref": "40 CFR §82.156(b) Table 1",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-006",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "An R-410A system is classified as a very-high-pressure system. Under 40 CFR §82.156(b) Table 1, what evacuation level is required for a post-1993 R-410A system with 150 lbs of refrigerant?",
+    "options": [
+      "10 inches of mercury (in Hg) vacuum",
+      "4 inches of mercury (in Hg) vacuum",
+      "15 inches of mercury (in Hg) vacuum",
+      "25 inches of mercury (in Hg) vacuum"
+    ],
+    "answer_text": "10 inches of mercury (in Hg) vacuum",
+    "explanation": "R-410A is classified as a very-high-pressure refrigerant (high-side operating pressures exceeding 400 psig). Under 40 CFR §82.156(b) Table 1, post-1993 recovery standards for very-high-pressure systems (including R-410A and R-32) require evacuation to 10 inches of mercury vacuum, regardless of charge size (both under and over 200 lbs). This is a stricter requirement than the 4 in Hg required for standard high-pressure systems like R-22.",
+    "source_ref": "40 CFR §82.156(b) Table 1",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-007",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "A technician is servicing a high-pressure system with a charge of 250 lbs of R-22, manufactured in 2005. What is the required evacuation level before opening the refrigerant circuit?",
+    "options": [
+      "4 inches of mercury (in Hg) vacuum, per 40 CFR §82.156(b) Table 1 for high-pressure systems ≥200 lbs",
+      "10 inches of mercury (in Hg) vacuum, because the system exceeds 200 lbs",
+      "15 inches of mercury (in Hg) vacuum, for all systems with more than 200 lbs charge",
+      "0 inches of mercury — high-pressure systems with large charges are exempt from evacuation requirements"
+    ],
+    "answer_text": "4 inches of mercury (in Hg) vacuum, per 40 CFR §82.156(b) Table 1 for high-pressure systems ≥200 lbs",
+    "explanation": "Per 40 CFR §82.156(b) Table 1, the evacuation requirement for post-1993 high-pressure appliances is 4 inches of mercury vacuum for both systems under 200 lbs and systems 200 lbs and above. R-22 is a high-pressure refrigerant (not very-high-pressure). Unlike medium-pressure refrigerants (which require 15 in Hg for ≥200 lb systems), high-pressure systems consistently require only 4 in Hg regardless of charge size.",
+    "source_ref": "40 CFR §82.156(b) Table 1",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-008",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "Why do evacuation standards vary by system charge size (below vs. at or above 200 lbs) for medium-pressure systems, but NOT for high-pressure systems?",
+    "options": [
+      "Medium-pressure systems are more difficult to evacuate at large charge sizes because lower saturation pressures make pulling deep vacuums harder without extended time; high-pressure systems have higher vapor pressures that facilitate faster evacuation regardless of size",
+      "High-pressure systems always require the same vacuum because their compressors can assist evacuation",
+      "The 200 lb threshold only applies to industrial process refrigeration systems",
+      "The EPA set uniform standards for high-pressure systems to simplify compliance for technicians"
+    ],
+    "answer_text": "Medium-pressure systems are more difficult to evacuate at large charge sizes because lower saturation pressures make pulling deep vacuums harder without extended time; high-pressure systems have higher vapor pressures that facilitate faster evacuation regardless of size",
+    "explanation": "Under 40 CFR §82.156(b) Table 1, medium-pressure systems (e.g., R-12, R-134a) require a deeper vacuum (15 in Hg) for systems ≥200 lbs vs. 10 in Hg for smaller systems, because larger volumes of medium-pressure refrigerant are harder to evacuate to low levels. High-pressure systems (e.g., R-22, R-410A) are set at the same 4 in Hg level regardless of charge size because their higher vapor pressures make evacuation more straightforward at any charge level.",
+    "source_ref": "40 CFR §82.156(b) Table 1",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-009",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "A technician is servicing an R-454B (A2L, very-high-pressure) system manufactured in 2026 with a charge of 180 lbs. What evacuation level is required?",
+    "options": [
+      "10 inches of mercury (in Hg) vacuum, because R-454B is classified as very-high-pressure",
+      "4 inches of mercury (in Hg) vacuum, because systems under 200 lbs use the lower standard",
+      "15 inches of mercury (in Hg) vacuum, because A2L refrigerants require deeper evacuation",
+      "0 inches of mercury — R-454B systems use nitrogen purge instead of evacuation"
+    ],
+    "answer_text": "10 inches of mercury (in Hg) vacuum, because R-454B is classified as very-high-pressure",
+    "explanation": "R-454B operates at high-side pressures similar to R-410A, classifying it as a very-high-pressure refrigerant (operating pressures >400 psig on the high side). Per 40 CFR §82.156(b) Table 1, very-high-pressure systems require evacuation to 10 inches of mercury vacuum regardless of charge size (both below and above 200 lbs). The A2L classification does not change the evacuation vacuum requirement — it only affects handling precautions regarding ignition sources.",
+    "source_ref": "40 CFR §82.156(b) Table 1; ASHRAE Standard 34",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.1-evac-010",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.1",
+    "question": "Before the current post-1993 recovery standards took effect, what was the evacuation requirement for high-pressure systems under 200 lbs charged before November 15, 1993?",
+    "options": [
+      "4 inches of mercury (in Hg) vacuum — the pre-1993 standard was the same as the post-1993 standard for high-pressure systems",
+      "0 inches of mercury — pre-1993 equipment had no evacuation requirement",
+      "15 inches of mercury (in Hg) vacuum, matching the strictest medium-pressure standard",
+      "10 inches of mercury (in Hg) vacuum, the universal pre-1993 standard"
+    ],
+    "answer_text": "4 inches of mercury (in Hg) vacuum — the pre-1993 standard was the same as the post-1993 standard for high-pressure systems",
+    "explanation": "Per 40 CFR §82.156(b) Table 1, the evacuation requirement for high-pressure appliances (both pre-1993 and post-1993 recovery equipment) is 4 inches of mercury vacuum for systems under 200 lbs. For high-pressure systems, the standard did not change when the post-1993 recovery equipment standards took effect in November 1993. This consistency applies to both charge size categories for high-pressure refrigerants like R-22.",
+    "source_ref": "40 CFR §82.156(b) Table 1",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.2-sysdep-005",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.2",
+    "question": "A technician has both system-dependent and self-contained recovery equipment available. A rooftop unit has a full charge of 12 lbs of R-410A. Which type of recovery equipment is the technician permitted to use?",
+    "options": [
+      "Either system-dependent or self-contained equipment — the 12 lb charge is at or below the 15 lb limit for system-dependent equipment",
+      "Self-contained equipment only — system-dependent equipment is prohibited for all high-pressure systems",
+      "System-dependent equipment only — self-contained equipment cannot be used on systems under 15 lbs",
+      "No recovery equipment is needed — systems under 15 lbs are exempt from recovery requirements"
+    ],
+    "answer_text": "Either system-dependent or self-contained equipment — the 12 lb charge is at or below the 15 lb limit for system-dependent equipment",
+    "explanation": "Per 40 CFR §82.158(b), system-dependent recovery equipment may only be used on appliances with a full charge of 15 lbs or less. Since this system has a 12 lb charge, system-dependent equipment is permitted. Self-contained recovery equipment (which has its own compressor) may be used on systems of any charge size, so it is also permitted here. The technician has the choice of either type. Recovery is required regardless of charge size under 40 CFR §82.155.",
+    "source_ref": "40 CFR §82.158(b); 40 CFR §82.155",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.2-sysdep-006",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.2",
+    "question": "What is the primary technical limitation that restricts system-dependent recovery equipment to appliances with 15 lbs or less of refrigerant?",
+    "options": [
+      "System-dependent equipment relies on the appliance's own compressor to push refrigerant into the recovery cylinder; larger systems have more refrigerant and the compressor may not efficiently recover all of it",
+      "System-dependent equipment recovery cylinders can only hold a maximum of 15 lbs of refrigerant",
+      "EPA regulations prohibit system-dependent equipment on larger systems due to the risk of refrigerant contamination",
+      "System-dependent equipment cannot pull sufficient vacuum on systems with more than 15 lbs of charge"
+    ],
+    "answer_text": "System-dependent equipment relies on the appliance's own compressor to push refrigerant into the recovery cylinder; larger systems have more refrigerant and the compressor may not efficiently recover all of it",
+    "explanation": "System-dependent recovery equipment uses the refrigeration system's own compressor to push refrigerant vapor from the low side through the recovery process into an external cylinder. It does not have its own compressor. On large systems (over 15 lbs), relying solely on the system's compressor is inefficient and may not achieve the required recovery efficiency. The 15 lb limit under 40 CFR §82.158(b) ensures system-dependent equipment is only used where it can perform adequately. Self-contained equipment with its own compressor is more effective for larger charges.",
+    "source_ref": "40 CFR §82.158(b)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.3-major-001",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.3",
+    "question": "What is the regulatory definition of a \"major repair\" on a refrigeration system for EPA Section 608 purposes?",
+    "options": [
+      "Any repair that involves opening the refrigerant circuit to the atmosphere, such as replacing a compressor, evaporator, condenser, or metering device",
+      "Any repair costing more than $500 in parts and labor",
+      "Any repair that requires adding more than 10 lbs of refrigerant after completion",
+      "Any repair performed on a system containing more than 50 lbs of refrigerant"
+    ],
+    "answer_text": "Any repair that involves opening the refrigerant circuit to the atmosphere, such as replacing a compressor, evaporator, condenser, or metering device",
+    "explanation": "For EPA Section 608 purposes, a major repair is defined as any repair that involves opening the refrigerant circuit — breaking into the sealed refrigerant-containing system. This includes replacing the compressor, evaporator coil, condenser coil, metering device (expansion valve or orifice), filter-drier, or any other component that requires cutting or disconnecting refrigerant lines. Opening the circuit requires proper recovery before the work and evacuation before recharging.",
+    "source_ref": "40 CFR §82.156; EPA 608 Technician Certification Study Guide",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.3-major-002",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.3",
+    "question": "Which of the following tasks is classified as a MINOR repair and does NOT require opening the refrigerant circuit?",
+    "options": [
+      "Tightening a loose valve packing nut or replacing a valve cap on an access fitting",
+      "Replacing a leaking liquid line filter-drier",
+      "Replacing a failed hermetic compressor",
+      "Installing a new expansion valve due to flooding"
+    ],
+    "answer_text": "Tightening a loose valve packing nut or replacing a valve cap on an access fitting",
+    "explanation": "A minor repair does not open (breach) the refrigerant circuit. Tightening a loose valve packing nut or replacing a valve cap addresses a leak point externally without cutting or disconnecting any refrigerant line. In contrast, replacing a filter-drier, compressor, or expansion valve all require opening the refrigerant circuit, classifying them as major repairs that require recovery before the work and evacuation before recharging.",
+    "source_ref": "40 CFR §82.156; EPA 608 Technician Certification Study Guide",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.3-major-003",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.3",
+    "question": "Before performing a major repair that requires opening the refrigerant circuit of a high-pressure system, what must the technician do?",
+    "options": [
+      "Recover refrigerant to the applicable vacuum level per 40 CFR §82.156 before opening the circuit",
+      "Add a refrigerant dye to mark the refrigerant before recovery",
+      "Notify the EPA 24 hours in advance before opening the circuit",
+      "Open the circuit and immediately place collection bags around joints to capture escaped refrigerant"
+    ],
+    "answer_text": "Recover refrigerant to the applicable vacuum level per 40 CFR §82.156 before opening the circuit",
+    "explanation": "Under 40 CFR §82.155 and §82.156, before opening a refrigerant circuit for major repair, the technician must recover the refrigerant to the applicable vacuum level using certified recovery equipment. For high-pressure systems, the recovery level is 4 in Hg vacuum per 40 CFR §82.156(b) Table 1. Knowingly releasing refrigerant to the atmosphere (by opening an un-recovered system) violates the venting prohibition at 40 CFR §82.154.",
+    "source_ref": "40 CFR §82.155; 40 CFR §82.156; 40 CFR §82.154",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.3-major-004",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.3",
+    "question": "After completing a major repair that required opening the refrigerant circuit, what must be done before recharging the system with refrigerant?",
+    "options": [
+      "The system must be evacuated to the applicable vacuum standard per 40 CFR §82.156 to remove air, nitrogen, and moisture introduced during the repair",
+      "The system must be leak tested with pure refrigerant at full operating pressure before pulling vacuum",
+      "The system must be pressure tested with oxygen to verify the repairs hold",
+      "The system may be recharged immediately if the repair was performed quickly and no visible moisture entered"
+    ],
+    "answer_text": "The system must be evacuated to the applicable vacuum standard per 40 CFR §82.156 to remove air, nitrogen, and moisture introduced during the repair",
+    "explanation": "After completing a major repair that opened the refrigerant circuit, air, nitrogen (if used for pressure testing), and atmospheric moisture will have entered the system. Before recharging, the technician must pull a vacuum to the applicable standard per 40 CFR §82.156(b) Table 1 to remove these non-condensables and moisture. Non-condensables raise system head pressure, and moisture reacts with refrigerant oil to form acids that damage compressors. Proper evacuation is critical for system reliability and longevity.",
+    "source_ref": "40 CFR §82.156; 40 CFR §82.155",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.3-major-005",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.3",
+    "question": "A technician replaces a failed TXV (thermostatic expansion valve) on a commercial rooftop unit. Under EPA regulations, this is classified as what type of repair, and what recovery/evacuation steps are required?",
+    "options": [
+      "Major repair — requires recovering refrigerant before opening the circuit and evacuating the system after repair before recharging",
+      "Minor repair — no recovery or evacuation is required since only the metering device is replaced",
+      "Major repair — requires evacuation before opening but no recovery if the system is pumped down",
+      "Minor repair — requires only a nitrogen purge after replacement to remove air"
+    ],
+    "answer_text": "Major repair — requires recovering refrigerant before opening the circuit and evacuating the system after repair before recharging",
+    "explanation": "Replacing a TXV requires disconnecting and removing a component in the refrigerant circuit, which constitutes a major repair under EPA Section 608 guidelines. Before opening the circuit, refrigerant must be recovered to the applicable vacuum level. After the TXV is replaced and the circuit is closed, the system must be evacuated again to the required vacuum level per 40 CFR §82.156(b) Table 1 to remove air and moisture before recharging with refrigerant.",
+    "source_ref": "40 CFR §82.155; 40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.4-pressrise-001",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.4",
+    "question": "After reaching the target vacuum level, a technician closes the manifold valves and observes the vacuum gauge. The pressure rises from 4 in Hg to 8 in Hg over 30 minutes and keeps rising. What does this indicate?",
+    "options": [
+      "A leak in the refrigerant system — a continuously rising pressure in a closed system indicates an active refrigerant or air leak path",
+      "Residual moisture is evaporating inside the system as the vacuum drops",
+      "The vacuum pump is not sealed properly and is pulling air in reverse",
+      "Normal behavior after evacuation — pressure always rises slightly as the system equalizes"
+    ],
+    "answer_text": "A leak in the refrigerant system — a continuously rising pressure in a closed system indicates an active refrigerant or air leak path",
+    "explanation": "A pressure rise test (also called a standing vacuum test) is performed after reaching the target vacuum by closing the manifold valves and monitoring the vacuum gauge for 15–30 minutes. If pressure continuously rises without leveling off, this indicates a system leak — an active path allowing air, refrigerant vapor, or atmospheric gas to enter the system. This must be repaired before recharging. A continuous rise distinguishes a leak from the leveling-off behavior characteristic of evaporating moisture.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.4-pressrise-002",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.4",
+    "question": "During a standing vacuum test, the vacuum gauge shows a pressure rise that quickly moves from the target level upward, then levels off and stabilizes after about 10 minutes. What does this pattern most likely indicate?",
+    "options": [
+      "Residual moisture or non-condensables remaining in the system are evaporating — not an active leak",
+      "A large refrigerant leak that must be repaired immediately",
+      "The manifold hoses are leaking and need to be replaced",
+      "The vacuum pump check valve failed during the test"
+    ],
+    "answer_text": "Residual moisture or non-condensables remaining in the system are evaporating — not an active leak",
+    "explanation": "During a standing vacuum test, the distinction between a leak and moisture is critical: if the pressure rises quickly and then levels off and stabilizes, this typically indicates that residual moisture or non-condensable gases (trapped in oil, corners, or small pockets) are evaporating and contributing to the pressure before equilibrating. An active leak would cause the pressure to rise continuously without leveling off. If moisture is suspected, the solution is to re-pull the vacuum, hold it longer, or apply gentle heat to drive moisture out of the oil.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.4-pressrise-003",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.4",
+    "question": "What is the appropriate tool to use for accurate vacuum measurement during a final evacuation verification of a refrigeration system?",
+    "options": [
+      "An electronic micron gauge (thermistor or Pirani gauge) — more accurate than a compound manifold gauge at deep vacuum levels",
+      "A standard compound manifold gauge reading in inches of mercury",
+      "A digital multimeter measuring system resistance",
+      "A clamp-on ammeter measuring compressor current draw"
+    ],
+    "answer_text": "An electronic micron gauge (thermistor or Pirani gauge) — more accurate than a compound manifold gauge at deep vacuum levels",
+    "explanation": "A standard compound manifold gauge reads vacuum in inches of mercury (in Hg), but becomes increasingly inaccurate as the vacuum deepens because the scale is compressed at low readings. A micron gauge (also called a thermocouple or Pirani vacuum gauge) measures absolute pressure in microns of mercury (µmHg), providing much more precise readings at deep vacuum levels. Using a micron gauge allows the technician to confirm that the system has reached the required evacuation level and passes the standing vacuum test more accurately.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.4-pressrise-004",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.4",
+    "question": "If a standing vacuum test reveals suspected moisture contamination rather than a leak, what is the recommended corrective action?",
+    "options": [
+      "Break the vacuum with dry nitrogen, replace the filter-drier, re-evacuate the system, and pull vacuum again — optionally applying mild heat to help boil off moisture",
+      "Add a moisture absorber to the refrigerant charge before recharging",
+      "Continue pulling vacuum indefinitely until the pressure reading stabilizes",
+      "Recharge the system immediately since moisture will be absorbed by the new filter-drier"
+    ],
+    "answer_text": "Break the vacuum with dry nitrogen, replace the filter-drier, re-evacuate the system, and pull vacuum again — optionally applying mild heat to help boil off moisture",
+    "explanation": "When moisture contamination is suspected after a vacuum test (pressure rises then levels off), the recommended procedure is to break the vacuum with dry nitrogen, replace the filter-drier (which absorbs moisture), and then re-evacuate the system. Pulling a second (or third) vacuum after allowing the system to sit or applying mild external heat helps drive residual moisture out of the compressor oil and system surfaces. Simply continuing to pump without addressing the moisture source is ineffective.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; ASHRAE Refrigeration Handbook",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-rec-3.4-pressrise-005",
+    "category": "Type II",
+    "subtopic_id": "t2-rec-3.4",
+    "question": "How long should a technician wait and monitor the vacuum gauge after closing manifold valves to conduct a proper pressure rise (standing vacuum) test?",
+    "options": [
+      "At least 15–30 minutes, to allow enough time to distinguish between a leak and moisture evaporation",
+      "Only 2–3 minutes — any rise in that time frame indicates a failure",
+      "A full 24 hours is required for regulatory compliance under 40 CFR §82.156",
+      "5 minutes maximum — longer waits are not permitted before recharging"
+    ],
+    "answer_text": "At least 15–30 minutes, to allow enough time to distinguish between a leak and moisture evaporation",
+    "explanation": "Industry best practice recommends monitoring the vacuum gauge for at least 15 to 30 minutes after closing the manifold valves for a pressure rise test. Shorter wait times may not allow enough time to distinguish between an active leak (continuous rise) and moisture evaporation (rises then levels off). A 15–30 minute observation window gives a meaningful data set. While 40 CFR §82.156 specifies the evacuation depth required, the standing vacuum test duration is an industry best practice standard rather than a specific CFR time requirement.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; industry best practice",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.1-liqrec-006",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.1",
+    "question": "When recovering refrigerant from a large Type II (high-pressure) system, a technician first connects the recovery machine to the liquid service valve. Why is recovering liquid refrigerant first the preferred approach?",
+    "options": [
+      "Liquid recovery is significantly faster than vapor recovery because liquid refrigerant is much denser — more refrigerant mass is transferred per unit time through the same size hose",
+      "Liquid refrigerant must be recovered first to prevent compressor damage during vapor recovery",
+      "EPA regulations require liquid recovery first for all systems over 50 lbs under 40 CFR §82.156",
+      "Liquid recovery prevents moisture from entering the recovery cylinder during the process"
+    ],
+    "answer_text": "Liquid recovery is significantly faster than vapor recovery because liquid refrigerant is much denser — more refrigerant mass is transferred per unit time through the same size hose",
+    "explanation": "Liquid refrigerant is approximately 10–20 times denser than refrigerant vapor at system pressures. Recovering liquid through the liquid service valve moves far more refrigerant mass per minute compared to recovering vapor. For large high-pressure systems (Type II), emptying the liquid first dramatically reduces total recovery time. After liquid recovery, vapor recovery continues to remove the remaining refrigerant from the low side to meet the required evacuation level per 40 CFR §82.156(b) Table 1.",
+    "source_ref": "40 CFR §82.156; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.2-crosscont-001",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.2",
+    "question": "A technician finishes recovering R-22 from a system and immediately connects the same hoses to an R-410A system for recovery. What problem can this cause?",
+    "options": [
+      "Cross-contamination — residual R-22 in the hoses mixes with the R-410A being recovered, creating a contaminated mixed refrigerant blend",
+      "No problem — R-22 and R-410A are both HCFCs and are compatible in the same cylinder",
+      "The hose fittings are different, so connection is physically impossible",
+      "R-410A will purge any residual R-22 naturally as the system runs"
+    ],
+    "answer_text": "Cross-contamination — residual R-22 in the hoses mixes with the R-410A being recovered, creating a contaminated mixed refrigerant blend",
+    "explanation": "Residual refrigerant remaining in hoses and manifold passages after an R-22 recovery will mix with R-410A during the subsequent recovery. Once two different refrigerants are mixed, the resulting blend cannot be recycled using standard equipment and must be sent to a certified refrigerant reclaimer for processing, adding cost and regulatory burden. Cross-contamination also prevents the mixed refrigerant from being reused in either original application. Technicians must use dedicated equipment per refrigerant type or thoroughly evacuate and purge hoses between jobs.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; 40 CFR §82.155",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.2-crosscont-002",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.2",
+    "question": "What is the best practice for preventing cross-contamination when a technician services systems with multiple refrigerant types using shared recovery equipment?",
+    "options": [
+      "Use dedicated hoses and manifold gauges for each refrigerant type, or thoroughly evacuate and purge the equipment before switching refrigerants",
+      "Recover all refrigerants into the same cylinder and label it as a mixed blend for reuse",
+      "Use nitrogen to flush the hoses between refrigerant types — nitrogen will displace all residual refrigerant",
+      "Cross-contamination is not a concern if both refrigerants are HFCs and do not contain chlorine"
+    ],
+    "answer_text": "Use dedicated hoses and manifold gauges for each refrigerant type, or thoroughly evacuate and purge the equipment before switching refrigerants",
+    "explanation": "The best practice for preventing cross-contamination is to maintain dedicated hoses, manifold gauges, and recovery cylinders for each refrigerant type. If equipment must be shared, it should be thoroughly evacuated (pulled to a deep vacuum) to remove all residual refrigerant before connecting to a system containing a different refrigerant. Using nitrogen to flush is not sufficient on its own — nitrogen will dilute but not fully remove all residual refrigerant traces, and the nitrogen itself would then contaminate the next refrigerant recovered.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; 40 CFR §82.155",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.2-crosscont-003",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.2",
+    "question": "A technician recovers what they believe is pure R-22 into a recovery cylinder, but later discovers the system had been previously topped off with an unknown refrigerant blend. What must be done with this recovery cylinder?",
+    "options": [
+      "Send the cylinder to a certified refrigerant reclaimer — mixed or unknown refrigerants cannot be recycled on-site and must be processed by a reclaimer",
+      "Use the refrigerant on the next R-22 job since the difference is minor",
+      "Vent the contaminated refrigerant and start with fresh R-22",
+      "Return the cylinder to the refrigerant supplier for a full refund"
+    ],
+    "answer_text": "Send the cylinder to a certified refrigerant reclaimer — mixed or unknown refrigerants cannot be recycled on-site and must be processed by a reclaimer",
+    "explanation": "When recovered refrigerant is of unknown composition or is a mixture of refrigerants, it cannot be recycled on-site using standard recycling equipment (which assumes a single known refrigerant type). The contaminated refrigerant must be sent to an EPA-certified refrigerant reclaimer who has the analytical equipment and processes to handle mixed refrigerants safely. Venting is prohibited under 40 CFR §82.154. Using unknown or mixed refrigerant in a system risks equipment damage and further regulatory violations.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.155; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.2-crosscont-004",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.2",
+    "question": "Why must recovery cylinders be clearly labeled with the refrigerant type before use?",
+    "options": [
+      "To prevent mixing different refrigerants in the same cylinder, which creates a contaminated blend that cannot be recycled and adds reclaimer cost and regulatory burden",
+      "EPA regulations require labels only for cylinders containing ozone-depleting substances like HCFC-22",
+      "Labeling is required only for cylinders sent offsite for reclaiming, not for field use",
+      "To satisfy DOT shipping requirements that apply only when transporting cylinders across state lines"
+    ],
+    "answer_text": "To prevent mixing different refrigerants in the same cylinder, which creates a contaminated blend that cannot be recycled and adds reclaimer cost and regulatory burden",
+    "explanation": "Recovery cylinders must be clearly and accurately labeled with the specific refrigerant type before use. Mixing different refrigerants in the same cylinder creates a contaminated blend that standard on-site recycling equipment cannot process. The mixed refrigerant must be sent to a reclaimer, which adds significant cost and creates regulatory burden. Proper cylinder labeling is also required under DOT regulations (49 CFR) for cylinder identification and safe handling, and is a fundamental best practice under the EPA Section 608 program.",
+    "source_ref": "40 CFR §82.155; 49 CFR (DOT cylinder labeling); EPA 608 Technician Certification Study Guide",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-tech-4.2-crosscont-005",
+    "category": "Type II",
+    "subtopic_id": "t2-tech-4.2",
+    "question": "A technician recovers R-410A from a system into a cylinder that previously held R-22 and was not thoroughly evacuated. What regulatory and practical consequences can result?",
+    "options": [
+      "The recovered refrigerant becomes a contaminated mixture that cannot be recycled, must be sent to a reclaimer, and may cause equipment damage if mistakenly reused",
+      "No consequence — R-22 and R-410A are compatible because both are HFC-based refrigerants",
+      "Only a minor refrigerant performance penalty occurs; the system can still be recharged with the mixture",
+      "The EPA only requires reclaiming for HCFC refrigerants; HFC mixtures may be vented in small quantities"
+    ],
+    "answer_text": "The recovered refrigerant becomes a contaminated mixture that cannot be recycled, must be sent to a reclaimer, and may cause equipment damage if mistakenly reused",
+    "explanation": "R-22 (HCFC) and R-410A (HFC blend) are not compatible and must never be mixed. If R-410A is recovered into a cylinder containing residual R-22, the resulting mixture is contaminated. The mixed refrigerant: (1) cannot be recycled on-site, (2) must be sent to a certified reclaimer, (3) is unusable in any system as either R-22 or R-410A, and (4) if mistakenly added to a system, can cause compressor damage, lubrication failure, and incorrect operating pressures. R-22 is an HCFC with different molecular properties and lubricant compatibility than R-410A.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.155; EPA 608 Technician Certification Study Guide",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.2-hpcomp-006",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.2",
+    "question": "In a standard vapor-compression refrigeration system, which component is the boundary between the high-pressure side and the low-pressure side on the outlet (downstream) of the metering device?",
+    "options": [
+      "The metering device outlet — pressure drops across the metering device, so everything downstream (evaporator, suction line, compressor inlet) is low-pressure side",
+      "The compressor discharge valve — pressure begins at the compressor and everything before it is high-pressure",
+      "The filter-drier — it separates high and low pressure in the liquid line",
+      "The condenser outlet — everything before the condenser is high pressure, everything after is low pressure"
+    ],
+    "answer_text": "The metering device outlet — pressure drops across the metering device, so everything downstream (evaporator, suction line, compressor inlet) is low-pressure side",
+    "explanation": "The metering device (expansion valve or orifice) is the dividing point between the high-pressure and low-pressure sides of the refrigeration system. The metering device inlet receives high-pressure liquid refrigerant from the liquid line. As refrigerant passes through the metering device, pressure drops sharply. Everything downstream of the metering device — the evaporator, suction line, and compressor suction inlet — operates at low pressure. Everything upstream of the metering device — liquid line, condenser, compressor discharge — operates at high pressure.",
+    "source_ref": "EPA 608 Technician Certification Study Guide; ASHRAE Refrigeration Fundamentals",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.3-hcban-001",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.3",
+    "question": "A technician is asked to retrofit a rooftop R-22 air conditioning unit with propane (R-290) as a \"natural\" low-GWP alternative. Why is this NOT acceptable under EPA regulations?",
+    "options": [
+      "R-290 (propane) is classified A3 (highly flammable) and is listed as unacceptable for retrofit into equipment not originally designed for flammable refrigerants under the EPA SNAP program",
+      "Propane is acceptable as a retrofit refrigerant if used in quantities less than 10 lbs",
+      "Propane is only prohibited in residential applications; commercial rooftop units are exempt",
+      "Propane requires a special certified technician but is otherwise an approved retrofit option"
+    ],
+    "answer_text": "R-290 (propane) is classified A3 (highly flammable) and is listed as unacceptable for retrofit into equipment not originally designed for flammable refrigerants under the EPA SNAP program",
+    "explanation": "R-290 (propane) carries an ASHRAE A3 safety classification, meaning it is highly flammable. Under the EPA Significant New Alternatives Policy (SNAP) program (40 CFR Part 82, Subpart G), propane is listed as unacceptable for retrofit use in most stationary air conditioning and refrigeration equipment that was not originally designed for flammable refrigerants. Introducing propane into an R-22 system creates serious fire and explosion risks from fan motor sparks, relay contacts, and other ignition sources present in HVAC equipment.",
+    "source_ref": "EPA SNAP program (40 CFR Part 82, Subpart G); ASHRAE Standard 34",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.3-hcban-002",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.3",
+    "question": "Which ASHRAE safety classification applies to propane (R-290) and isobutane (R-600a), and why does this classification matter for retrofit decisions?",
+    "options": [
+      "A3 — highly flammable; this classification means these refrigerants present a serious fire and explosion hazard in equipment containing ignition sources such as relay contacts and fan motor windings",
+      "A2L — lower flammability; same as R-454B, so they can be handled with the same spark-free tools",
+      "A1 — non-flammable; propane and isobutane are safe for use in all refrigeration applications",
+      "B3 — highly flammable and toxic; their use is limited to industrial refrigeration only"
+    ],
+    "answer_text": "A3 — highly flammable; this classification means these refrigerants present a serious fire and explosion hazard in equipment containing ignition sources such as relay contacts and fan motor windings",
+    "explanation": "Under ASHRAE Standard 34, hydrocarbons such as propane (R-290) and isobutane (R-600a) are classified A3 — low toxicity but highly flammable. Class A3 refrigerants have a lower flammability limit (LFL) in air and can ignite from common electrical ignition sources found in HVAC equipment (fan motor windings, capacitor contacts, relay switches). This makes A3 refrigerants extremely risky in systems not designed for flammable refrigerants. The EPA SNAP program therefore lists A3 hydrocarbons as unacceptable for most retrofit applications.",
+    "source_ref": "ASHRAE Standard 34-2022; EPA SNAP program (40 CFR Part 82, Subpart G)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.3-hcban-003",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.3",
+    "question": "Under what limited circumstance is a hydrocarbon refrigerant (such as R-290 or R-600a) acceptable in commercial refrigeration or air conditioning equipment?",
+    "options": [
+      "Only in equipment specifically designed and listed by the OEM (original equipment manufacturer) for use with that hydrocarbon refrigerant, meeting applicable flammability safety standards",
+      "Only in equipment serviced by a master-certified HVAC technician with a hydrocarbon endorsement",
+      "In any equipment if the charge is kept below 10 lbs and the space is well-ventilated",
+      "Hydrocarbon refrigerants are universally prohibited in all commercial refrigeration and A/C equipment under the EPA SNAP program"
+    ],
+    "answer_text": "Only in equipment specifically designed and listed by the OEM (original equipment manufacturer) for use with that hydrocarbon refrigerant, meeting applicable flammability safety standards",
+    "explanation": "The EPA SNAP program (40 CFR Part 82, Subpart G) recognizes that R-290 and other hydrocarbons may be acceptable in certain new equipment specifically engineered and listed by the OEM for flammable refrigerant use. These systems incorporate safety features such as charge size limits, sealed electrical compartments, refrigerant detectors, and special motor designs that minimize ignition risk. Retrofitting non-flammable-refrigerant equipment with hydrocarbons — even at low charge levels — is not approved because the equipment lacks these engineered safety controls.",
+    "source_ref": "EPA SNAP program (40 CFR Part 82, Subpart G); ASHRAE Standard 15-2022",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.3-hcban-004",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.3",
+    "question": "Why does the EPA SNAP program list propane (R-290) as unacceptable for retrofit use in most stationary air conditioning equipment originally designed for R-22?",
+    "options": [
+      "Standard R-22 equipment contains ignition sources (fan motors, relays, contactors) that could ignite propane in the event of a leak, creating a fire or explosion hazard",
+      "Propane's GWP is too high to qualify as an environmentally acceptable alternative under the AIM Act",
+      "Propane requires a different type of compressor oil that is incompatible with R-22 systems",
+      "Propane is prohibited because it would increase the system's operating pressures beyond safe design limits"
+    ],
+    "answer_text": "Standard R-22 equipment contains ignition sources (fan motors, relays, contactors) that could ignite propane in the event of a leak, creating a fire or explosion hazard",
+    "explanation": "R-22 equipment was designed without the explosion-proof electrical components needed for flammable refrigerant service. Fan motor windings, run capacitors, relay contacts, and contactor sparks are all potential ignition sources. Propane (R-290) is A3 — highly flammable — and if it leaks in a concentration above its LFL (about 2.1%), any of these ignition sources could cause ignition. The EPA SNAP program designation of 'unacceptable' for propane in most R-22 retrofit applications reflects this inherent danger of using a highly flammable refrigerant in equipment not designed to contain it safely.",
+    "source_ref": "EPA SNAP program (40 CFR Part 82, Subpart G); ASHRAE Standard 34-2022",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.3-hcban-005",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.3",
+    "question": "Which of the following refrigerants is the MOST appropriate low-GWP alternative for replacing R-410A in new residential central air conditioning equipment, while remaining compliant with EPA regulations?",
+    "options": [
+      "R-454B (GWP 466, A2L) — specifically designed as an R-410A replacement and listed as acceptable under the EPA SNAP program for new residential AC equipment",
+      "R-290 (propane, GWP 3, A3) — the lowest GWP option approved for all R-410A retrofit applications",
+      "R-22 (HCFC-22, A1) — still available for new equipment use as a lower-GWP alternative to R-410A",
+      "R-600a (isobutane, GWP 3, A3) — approved for all residential and commercial AC systems post-2025"
+    ],
+    "answer_text": "R-454B (GWP 466, A2L) — specifically designed as an R-410A replacement and listed as acceptable under the EPA SNAP program for new residential AC equipment",
+    "explanation": "R-454B (trade name Opteon XL41) is an A2L refrigerant with a GWP of 466 — approximately 78% lower than R-410A's GWP of 2088. It is specifically designed as an R-410A replacement for residential and light commercial air conditioning and is listed as acceptable under the EPA SNAP program for this application. Unlike A3 hydrocarbons (R-290, R-600a), R-454B's A2L classification means it has lower flammability risk and can be used in equipment designed for A2L service with appropriate safety measures.",
+    "source_ref": "EPA SNAP program (40 CFR Part 82, Subpart G); ASHRAE Standard 34-2022; 40 CFR §84",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.4-ashrae15-001",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.4",
+    "question": "What is the primary purpose of ASHRAE Standard 15 as it applies to refrigeration systems in occupied buildings?",
+    "options": [
+      "To establish safety requirements for refrigeration systems, including requirements for refrigerant detection to protect occupants and workers from asphyxiation or flammable refrigerant buildup",
+      "To set maximum GWP limits for refrigerants used in commercial buildings",
+      "To define EPA leak repair thresholds for HVAC systems in occupied buildings",
+      "To establish minimum efficiency standards (SEER/EER) for comfort cooling equipment"
+    ],
+    "answer_text": "To establish safety requirements for refrigeration systems, including requirements for refrigerant detection to protect occupants and workers from asphyxiation or flammable refrigerant buildup",
+    "explanation": "ASHRAE Standard 15 (Safety Standard for Refrigeration Systems) establishes safety requirements for the design, construction, installation, and operation of refrigeration systems. A key requirement is that occupied machinery rooms containing refrigerant systems above specified charge thresholds must have refrigerant detection systems. These detectors alarm when refrigerant concentrations reach dangerous levels — protecting workers from asphyxiation (refrigerant displacing oxygen) and protecting against flammable refrigerant buildup in the case of A2 or A3 refrigerants.",
+    "source_ref": "ASHRAE Standard 15-2022",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.4-ashrae15-002",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.4",
+    "question": "Under ASHRAE Standard 15, at what concentration level must a refrigerant detector alarm for a flammable (A2L or A3) refrigerant in a machinery room?",
+    "options": [
+      "25% of the Lower Flammability Limit (LFL) — to provide an early warning before the concentration reaches a flammable level",
+      "100% of the LFL — the detector only alarms when the refrigerant reaches its actual flammability threshold",
+      "At the Refrigerant Concentration Limit (RCL) — same standard as for non-flammable refrigerants",
+      "50% of the LFL — at the midpoint between safe concentration and the flammability threshold"
+    ],
+    "answer_text": "25% of the Lower Flammability Limit (LFL) — to provide an early warning before the concentration reaches a flammable level",
+    "explanation": "ASHRAE Standard 15 requires refrigerant detectors in machinery rooms to alarm at 25% of the Lower Flammability Limit (LFL) for flammable refrigerants (A2L and A3 classifications). This 25% LFL threshold provides a substantial safety margin — the alarm triggers at one-quarter of the concentration needed for ignition. This early warning gives occupants and workers time to ventilate the space, eliminate ignition sources, and evacuate before the refrigerant concentration approaches a potentially flammable level.",
+    "source_ref": "ASHRAE Standard 15-2022",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.4-ashrae15-003",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.4",
+    "question": "For a non-flammable refrigerant such as R-410A (A1 classification), at what concentration level must a refrigerant detector alarm under ASHRAE Standard 15?",
+    "options": [
+      "At the Refrigerant Concentration Limit (RCL) — the concentration at which the refrigerant begins to displace enough oxygen to create an asphyxiation risk",
+      "At 25% of the Lower Flammability Limit (LFL)",
+      "At 50% of the LFL, since R-410A is slightly flammable",
+      "At 100 ppm — the same threshold as for carbon monoxide detectors"
+    ],
+    "answer_text": "At the Refrigerant Concentration Limit (RCL) — the concentration at which the refrigerant begins to displace enough oxygen to create an asphyxiation risk",
+    "explanation": "For non-flammable (A1) refrigerants like R-410A and R-22, the LFL-based alarm threshold does not apply because there is no flammability concern. Instead, ASHRAE Standard 15 requires detectors to alarm at the Refrigerant Concentration Limit (RCL), which is the concentration at which refrigerant vapor in the air could displace enough oxygen to create an asphyxiation hazard. The RCL for different refrigerants is specified in ASHRAE Standard 34 and is the relevant safety threshold for non-flammable refrigerants.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.4-ashrae15-004",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.4",
+    "question": "Where should refrigerant detectors typically be located in a machinery room that contains refrigerants heavier than air (such as most HFCs and HCFCs)?",
+    "options": [
+      "Near the floor — because refrigerants denser than air will settle to the lowest point in the room if a leak occurs",
+      "Near the ceiling — because refrigerant vapors rise with warm air currents",
+      "At mid-height on the wall — to capture refrigerant concentration at breathing level",
+      "Adjacent to the compressor discharge port — to detect leaks at the highest-pressure point"
+    ],
+    "answer_text": "Near the floor — because refrigerants denser than air will settle to the lowest point in the room if a leak occurs",
+    "explanation": "Most common HFC and HCFC refrigerants (R-410A, R-454B, R-32, R-22, R-134a) are heavier than air. When these refrigerants leak, they settle toward the floor. ASHRAE Standard 15 guidance calls for placing refrigerant detectors at or near floor level so they can detect the accumulating refrigerant concentration before it builds up to dangerous levels at breathing height. This placement ensures early detection. (Ammonia is lighter than air and requires detectors near the ceiling.)",
+    "source_ref": "ASHRAE Standard 15-2022",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-ref-5.4-ashrae15-005",
+    "category": "Type II",
+    "subtopic_id": "t2-ref-5.4",
+    "question": "A building manager installs a new refrigeration system in an enclosed machinery room. Under ASHRAE Standard 15, what safety device is required to protect workers from refrigerant asphyxiation or flammable refrigerant accumulation?",
+    "options": [
+      "A refrigerant detector (oxygen-deprivation sensor or refrigerant-specific monitor) that alarms at the applicable concentration limit (RCL for non-flammable, 25% LFL for flammable refrigerants)",
+      "A carbon dioxide (CO2) detector calibrated to 800 ppm",
+      "A pressure relief valve vented to the exterior of the building",
+      "A self-contained breathing apparatus (SCBA) stored inside the machinery room"
+    ],
+    "answer_text": "A refrigerant detector (oxygen-deprivation sensor or refrigerant-specific monitor) that alarms at the applicable concentration limit (RCL for non-flammable, 25% LFL for flammable refrigerants)",
+    "explanation": "ASHRAE Standard 15 requires that occupied machinery rooms with refrigerant systems above specified charge thresholds be equipped with a refrigerant detector — either an oxygen-deprivation sensor (which detects reduction in oxygen from refrigerant displacement) or a refrigerant-specific monitor. The alarm setpoint must be at the RCL for non-flammable refrigerants (asphyxiation protection) or at 25% of the LFL for flammable refrigerants (fire/explosion protection). This is a building code–level requirement enforced through ASHRAE Standard 15 compliance.",
+    "source_ref": "ASHRAE Standard 15-2022",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.1-class-007",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.1",
+    "question": "R-32 has a GWP of 675. How does this compare to R-454B (GWP 466) and R-410A (GWP 2088), and what ASHRAE safety class does R-32 belong to?",
+    "options": [
+      "R-32 has a GWP between R-454B and R-410A; all three are different: R-454B is A2L (GWP 466), R-32 is A2L (GWP 675), and R-410A is A1 (GWP 2088)",
+      "R-32 and R-454B have identical GWPs and the same safety classification",
+      "R-32 is classified A1 (non-flammable) with a GWP lower than R-410A but higher than R-454B",
+      "R-32 has the same GWP as R-410A (2088) because it is a component of R-410A"
+    ],
+    "answer_text": "R-32 has a GWP between R-454B and R-410A; all three are different: R-454B is A2L (GWP 466), R-32 is A2L (GWP 675), and R-410A is A1 (GWP 2088)",
+    "explanation": "R-32 (difluoromethane) is actually one of the two components of R-410A (which is a 50/50 blend of R-32 and R-125). As a standalone refrigerant, R-32 has a GWP of 675 — lower than R-410A (2088) but higher than R-454B (466). All three operate at similar high pressures. However, R-32 and R-454B are both classified A2L (lower flammability) under ASHRAE Standard 34, while R-410A is classified A1 (non-flammable). The A2L classification requires different handling procedures than A1 refrigerants.",
+    "source_ref": "ASHRAE Standard 34-2022; 40 CFR §84",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.1-class-008",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.1",
+    "question": "Which of the following statements about R-454B is correct regarding its intended use and regulatory status?",
+    "options": [
+      "R-454B (GWP 466, A2L) is designed to replace R-410A in new residential and light commercial air conditioning equipment and is listed as acceptable under the EPA SNAP program for this application",
+      "R-454B is a retrofit refrigerant approved for direct use in existing R-410A systems without equipment modification",
+      "R-454B is classified A1 (non-flammable) and requires no special handling beyond standard R-410A procedures",
+      "R-454B has a GWP greater than 700 and is therefore banned from new equipment after January 1, 2026"
+    ],
+    "answer_text": "R-454B (GWP 466, A2L) is designed to replace R-410A in new residential and light commercial air conditioning equipment and is listed as acceptable under the EPA SNAP program for this application",
+    "explanation": "R-454B (Opteon XL41) is a low-GWP A2L refrigerant specifically formulated to replace R-410A in new residential and light commercial air conditioning equipment. With a GWP of 466 (well below the 700 GWP limit for new equipment after January 1, 2026), it complies with the AIM Act equipment ban. It is listed as acceptable under the EPA SNAP program for these applications. Because R-454B is A2L, equipment using it must be designed for mildly flammable refrigerant service, and technicians must use spark-free tools when servicing it.",
+    "source_ref": "EPA SNAP program; ASHRAE Standard 34-2022; 40 CFR §84",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.2-handling-006",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.2",
+    "question": "When working with an R-454B (A2L) system, what precautions must be taken regarding ignition sources that are NOT required when working with R-410A (A1)?",
+    "options": [
+      "All open flames and spark-producing tools must be kept away from the work area, and spark-free (intrinsically safe) equipment must be used",
+      "The technician must wear flame-resistant PPE at all times when handling R-454B",
+      "No additional precautions are required — A2L refrigerants are safe to handle with standard tools",
+      "The technician must purge the system with CO2 before opening any refrigerant circuit"
+    ],
+    "answer_text": "All open flames and spark-producing tools must be kept away from the work area, and spark-free (intrinsically safe) equipment must be used",
+    "explanation": "R-410A is A1 (non-flammable) and poses no flammability risk, so standard tools with normal electrical components are acceptable. R-454B is A2L (mildly flammable) with a flame speed ≤10 cm/s — it can ignite given a sufficient concentration and ignition source. When working with A2L refrigerants, open flames (torches, pilot lights) must not be used near the work area, and recovery machines, vacuum pumps, and manifold gauge sets used on A2L systems should be spark-free (intrinsically safe) to eliminate ignition sources. This is the primary procedural difference from A1 refrigerant work.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022; 40 CFR §82.161",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.2-handling-007",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.2",
+    "question": "Why is ventilation of the work area especially important when servicing R-454B or R-32 (A2L) systems compared to R-410A (A1) systems?",
+    "options": [
+      "A2L refrigerants are mildly flammable; adequate ventilation prevents refrigerant from accumulating to concentrations that could reach 25% of the LFL and potentially ignite",
+      "A2L refrigerants are more toxic than A1 refrigerants and ventilation is required to protect the technician from poisoning",
+      "Ventilation is required for A2L refrigerants only in enclosed spaces larger than 500 square feet",
+      "R-410A already requires the same ventilation as A2L refrigerants, so no additional precautions apply"
+    ],
+    "answer_text": "A2L refrigerants are mildly flammable; adequate ventilation prevents refrigerant from accumulating to concentrations that could reach 25% of the LFL and potentially ignite",
+    "explanation": "A2L refrigerants (R-454B, R-32) are mildly flammable — they can burn if the concentration in air exceeds the LFL and an ignition source is present. In enclosed or poorly ventilated spaces, a refrigerant leak could allow the concentration to build up. Adequate ventilation keeps the refrigerant concentration below the dangerous level (ideally below 25% LFL, the ASHRAE Standard 15 alarm threshold). R-410A (A1) poses no flammability risk, so the ventilation requirement for flammability protection does not apply. For A2L work, ventilation is a standard safety precaution alongside elimination of ignition sources.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.2-handling-008",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.2",
+    "question": "A technician needs to evacuate an R-32 (A2L) mini-split system before replacing the evaporator coil. What special consideration applies to the vacuum pump selection?",
+    "options": [
+      "The vacuum pump should be rated or certified for A2L refrigerant service (spark-free internal components) to eliminate the risk of ignition from residual A2L refrigerant vapor passing through the pump",
+      "Any standard vacuum pump is acceptable because vacuum pumps do not contact refrigerant during operation",
+      "A special A2L-rated vacuum pump must have a larger CFM capacity than pumps used for R-410A",
+      "Nitrogen must be used instead of a vacuum pump when evacuating A2L systems to prevent ignition"
+    ],
+    "answer_text": "The vacuum pump should be rated or certified for A2L refrigerant service (spark-free internal components) to eliminate the risk of ignition from residual A2L refrigerant vapor passing through the pump",
+    "explanation": "When evacuating an A2L system, residual refrigerant vapor passes through the vacuum pump before being expelled. If the vacuum pump's motor or internal components can produce sparks, and the A2L refrigerant reaches a flammable concentration inside the pump body, ignition could occur. Vacuum pumps rated or certified for A2L service use intrinsically safe (spark-free) motor designs and materials to eliminate this risk. Leading equipment manufacturers are producing A2L-compatible vacuum pumps specifically for this reason as A2L refrigerants become more common in the field.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022; EPA 608 Technician Certification Study Guide",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.3-r410aban-006",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.3",
+    "question": "Under the AIM Act (40 CFR §84.54), what specific action regarding R-410A was prohibited beginning January 1, 2025?",
+    "options": [
+      "The production and importation of R-410A refrigerant was banned — existing supplies may still be used for servicing equipment already in the field",
+      "The installation of any new equipment using R-410A was banned, and all existing R-410A systems must be retrofitted",
+      "The sale of R-410A was banned, including selling recovered R-410A to existing system owners",
+      "All R-410A systems must be decommissioned and recovered by January 1, 2025"
+    ],
+    "answer_text": "The production and importation of R-410A refrigerant was banned — existing supplies may still be used for servicing equipment already in the field",
+    "explanation": "Under the AIM Act HFC phasedown rule (40 CFR §84.54), the production and importation of R-410A refrigerant was prohibited beginning January 1, 2025. This does not immediately stop all R-410A use — existing stockpiles and recovered/recycled R-410A may continue to be used for servicing R-410A systems already installed in the field. The ban targets new production to reduce HFC emissions over time. Technicians may continue to purchase and use R-410A for service work from existing inventories.",
+    "source_ref": "40 CFR §84.54; AIM Act HFC Phasedown Rule",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.4-gwpban-006",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.4",
+    "question": "After January 1, 2026, which refrigerants are prohibited in NEW high-pressure air conditioning equipment under the AIM Act GWP equipment ban (40 CFR §84)?",
+    "options": [
+      "Refrigerants with GWP greater than 700, including R-410A (GWP 2088) — new equipment must use lower-GWP alternatives like R-454B (GWP 466) or R-32 (GWP 675)",
+      "All HFC refrigerants, including R-134a and R-32, regardless of GWP",
+      "Only refrigerants with GWP greater than 2,000, such as R-410A and SF6",
+      "All refrigerants except ammonia and CO2, which are the only approved natural alternatives"
+    ],
+    "answer_text": "Refrigerants with GWP greater than 700, including R-410A (GWP 2088) — new equipment must use lower-GWP alternatives like R-454B (GWP 466) or R-32 (GWP 675)",
+    "explanation": "The AIM Act equipment ban under 40 CFR §84 prohibits the manufacture and importation of new high-pressure residential and light commercial air conditioning equipment using refrigerants with GWP greater than 700 after January 1, 2026. R-410A (GWP 2088) exceeds this limit and cannot be used in new equipment. R-454B (GWP 466) and R-32 (GWP 675) are both below 700 GWP and are approved for use in new equipment. Existing R-410A equipment installed before 2026 may continue operating and receiving service.",
+    "source_ref": "40 CFR §84; AIM Act HFC Phasedown Rule",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.5-sparkfree-005",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.5",
+    "question": "Which of the following pieces of equipment MUST be spark-free (intrinsically safe) when used on systems containing A2L refrigerants such as R-454B or R-32?",
+    "options": [
+      "Recovery machines, vacuum pumps, and manifold gauge sets — all equipment through which A2L refrigerant vapor may pass or that may be operated in the presence of A2L concentrations",
+      "Only the recovery machine — all other equipment is considered low-voltage and safe",
+      "Only brazing torches — electrical tools are exempt from the spark-free requirement",
+      "Spark-free equipment is not required for A2L refrigerants because they are not truly flammable"
+    ],
+    "answer_text": "Recovery machines, vacuum pumps, and manifold gauge sets — all equipment through which A2L refrigerant vapor may pass or that may be operated in the presence of A2L concentrations",
+    "explanation": "A2L refrigerants are mildly flammable (flame speed ≤10 cm/s). Any equipment that handles A2L refrigerant vapor directly — including recovery machines (which compress refrigerant vapor), vacuum pumps (through which residual vapor passes during evacuation), and manifold gauge sets — should be rated or certified for A2L use with spark-free (intrinsically safe) internal components. Electronic leak detectors and refrigerant analyzers used near A2L systems should also be intrinsically safe. This precaution eliminates the risk of igniting refrigerant vapor at the equipment.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022; EPA 608 Technician Certification Study Guide",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-a2l-6.5-sparkfree-006",
+    "category": "Type II",
+    "subtopic_id": "t2-a2l-6.5",
+    "question": "A technician is servicing a new R-454B split system and plans to use a standard (non-spark-free) recovery machine. What risk does this create?",
+    "options": [
+      "The electric motor and compressor contacts inside a non-spark-free recovery machine can produce sparks that could ignite R-454B vapor passing through the machine if the concentration exceeds the LFL",
+      "A non-spark-free recovery machine will not create sufficient vacuum to recover A2L refrigerant effectively",
+      "No risk — R-454B's LFL is so high that ignition inside a recovery machine is physically impossible",
+      "The risk is limited to the recovery cylinder, not the recovery machine itself"
+    ],
+    "answer_text": "The electric motor and compressor contacts inside a non-spark-free recovery machine can produce sparks that could ignite R-454B vapor passing through the machine if the concentration exceeds the LFL",
+    "explanation": "A standard recovery machine contains an electric motor, compressor, relays, and internal contacts that can produce electrical sparks during operation. R-454B is A2L — mildly flammable. As R-454B vapor is drawn through the recovery machine during the recovery process, if the vapor concentration inside the machine reaches or exceeds the LFL, an internal spark from the motor or contacts could cause ignition. A2L-rated (spark-free) recovery machines are designed with explosion-proof or intrinsically safe electrical components that eliminate this internal ignition risk.",
+    "source_ref": "ASHRAE Standard 15-2022; ASHRAE Standard 34-2022",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.2-comm-007",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.2",
+    "question": "A walk-in freezer (commercial refrigeration) has a full charge of 75 lbs. The service log shows 18 lbs was added over the past year. What is the annual leak rate and is repair required under 40 CFR §82.157?",
+    "options": [
+      "24%; yes, it exceeds the 20% commercial refrigeration threshold — repair must begin within 30 days",
+      "24%; no, because the system is under 100 lbs and therefore exempt from the commercial refrigeration rule",
+      "18%; no, the leak rate does not exceed the 20% threshold",
+      "24%; yes, but only if the system also exceeds the 50 lb threshold (pre-2026) or 15 lb threshold (post-2026)"
+    ],
+    "answer_text": "24%; yes, it exceeds the 20% commercial refrigeration threshold — repair must begin within 30 days",
+    "explanation": "Annual leak rate = (18 ÷ 75) × 100 = 24%. Since this exceeds the 20% annual leak rate threshold for commercial refrigeration appliances under 40 CFR §82.157(b), a repair obligation is triggered. This 75 lb system exceeds both the pre-2026 (50 lb) and post-2026 (15 lb) charge thresholds, so it is fully subject to EPA leak repair requirements. The owner must repair the leak within 30 days of discovering the threshold exceedance per 40 CFR §82.157(d).",
+    "source_ref": "40 CFR §82.157(b); 40 CFR §82.157(d)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t2-leak-1.3-pureref-006",
+    "category": "Type II",
+    "subtopic_id": "t2-leak-1.3",
+    "question": "A technician proposes to save time by pressurizing a system with pure R-410A and immediately scanning all joints with a leak detector. Which statement best explains why this method violates EPA regulations even if all refrigerant is recovered afterward?",
+    "options": [
+      "Pressurizing with pure refrigerant risks releasing refrigerant through the leak being tested — any refrigerant escaping during the test constitutes venting, which is prohibited under 40 CFR §82.154 regardless of whether remaining refrigerant is later recovered",
+      "Pure R-410A cannot be detected by standard halogen detectors, making the test ineffective",
+      "EPA requires all leak tests to use nitrogen, so any other gas — including refrigerant — is prohibited",
+      "The technician would need a special EPA permit to use pure refrigerant for leak testing purposes"
+    ],
+    "answer_text": "Pressurizing with pure refrigerant risks releasing refrigerant through the leak being tested — any refrigerant escaping during the test constitutes venting, which is prohibited under 40 CFR §82.154 regardless of whether remaining refrigerant is later recovered",
+    "explanation": "Under 40 CFR §82.154, knowingly venting refrigerant to the atmosphere is prohibited. When a system is pressurized with pure refrigerant and a leak test is performed, refrigerant escapes through any leak site present — this is precisely what the test is looking for. That escape constitutes venting. The fact that the technician recovers the bulk of the refrigerant afterward does not retroactively legalize the refrigerant that was released during testing. Using nitrogen/trace refrigerant or other non-destructive methods avoids this problem.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "t2-repair-2.3-indproc-006",
+    "category": "Type II",
+    "subtopic_id": "t2-repair-2.3",
+    "question": "A pharmaceutical manufacturing plant has a large industrial process refrigeration system with a full charge of 800 lbs. The annual leak rate is 28%. Does this trigger a repair obligation under 40 CFR §82.157, and if so, what extended repair option may be available?",
+    "options": [
+      "Yes, 28% does not exceed the 30% industrial process threshold — no repair obligation is triggered at this time",
+      "Yes, 28% exceeds the 20% commercial refrigeration threshold but not the 30% industrial process threshold — the system classification determines which applies",
+      "No, industrial process systems are exempt from all EPA leak repair requirements regardless of leak rate",
+      "Yes, 28% exceeds the 20% commercial refrigeration threshold — but since this is industrial process refrigeration, a 120-day extension (total) may be available if repair within 30 days is infeasible"
+    ],
+    "answer_text": "Yes, 28% does not exceed the 30% industrial process threshold — no repair obligation is triggered at this time",
+    "explanation": "Industrial process refrigeration appliances under 40 CFR §82.157(b) are subject to a 30% annual leak rate threshold — the highest of the three categories. At a 28% annual leak rate, this system has not yet exceeded the 30% threshold, so no repair obligation is triggered at this time. The 28% rate is above the 20% commercial refrigeration threshold, but since this system is correctly classified as industrial process refrigeration (used in pharmaceutical manufacturing), the 30% threshold applies. The owner should monitor the system, as any further increase could push the rate above 30%.",
+    "source_ref": "40 CFR §82.157(b)",
+    "difficulty": "hard",
+    "verified": true
+  }
+]

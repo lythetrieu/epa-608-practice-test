@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free EPA 608 Type 2 Practice Test 2026 | High-Pressure</title>
+    <meta name="description"
+        content="Take the free EPA 608 Type 2 practice test. 25 questions covering high-pressure system recovery, leak repair rates (10%, 20%, 30%), and vacuum standards.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/type-2.html">
+  <!-- Schema: Organization -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Type 2 Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Type 2 exam with 25 expert-designed questions. Practice leak repair requirements for systems with 50+ pounds of refrigerant.">
+    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --color-primary: #007acc;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+
+
+
+
+
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Header ── */
+
+/* ── Nav ── */
+
+/* ── Dropdown ── */
+
+/* ── CTA Button ── */
+
+/* ── Auth buttons ── */
+@media (max-width: 768px) {
+}
+
+/* ── Footer ── */
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 0 32px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 12px 0 20px;
+    max-width: 260px;
+}
+
+.footer-brand .footer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.footer-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(0,122,204,0.15);
+    color: #38bdf8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer-col h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+
+.footer-col ul li { margin-bottom: 8px; }
+
+.footer-col ul li a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+    line-height: 1.4;
+    display: block;
+}
+
+.footer-col ul li a:hover { color: #38bdf8; }
+
+.footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-bottom p { font-size: 13px; color: #475569; }
+
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 13px; }
+.footer-bottom a:hover { color: #94a3b8; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+    <link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://epa608practicetest.net/#organization",
+      "name": "EPA 608 Practice Test",
+      "url": "https://epa608practicetest.net",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://epa608practicetest.net/logo.svg",
+        "width": 200,
+        "height": 60
+      },
+      "description": "Freemium EPA 608 practice test platform — 500 questions free (no signup) + Pro $14.99 lifetime (866 questions, AI Tutor, blind-spot drills, certificates). Verified against official EPA Section 608 regulations and Prometric content outline.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Lý Thế Triều",
+        "sameAs": [
+          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+          "https://x.com/TrieuLy14"
+        ]
+      },
+      "knowsAbout": [
+        "EPA 608 Certification",
+        "Section 608 Clean Air Act",
+        "refrigerant handling regulations",
+        "HVAC technician certification"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+        "https://x.com/TrieuLy14"
+      ]
+    },
+    {
+      "@type": "Quiz",
+      "name": "Free EPA 608 Type 2 Practice Test 2026",
+      "description": "25 questions covering high-pressure system recovery, leak repair rates, and vacuum standards.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/type-2.html",
+      "about": {
+        "@type": "Thing",
+        "name": "EPA 608 Type II — High-Pressure Systems"
+      },
+      "numberOfQuestions": 25,
+      "timeRequired": "PT30M",
+      "educationalAlignment": {
+        "@type": "AlignmentObject",
+        "educationalFramework": "EPA Section 608 Certification"
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Type II Practice Test",
+      "url": "https://epa608practicetest.net/type-2.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free interactive EPA 608 Type II practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What systems fall under Type II certification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "High-pressure and medium-pressure systems including residential central AC, heat pumps, and\n                        commercial refrigeration racks. Any refrigerant with a boiling point above -50°C at atmospheric\n                        pressure is classified as high or medium pressure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the leak rate threshold for comfort cooling systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding\n                        this threshold must be repaired within 30 days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does IPR stand for in EPA 608?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due\n                        to the complexity and continuous operation requirements of industrial processes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can nitrogen be used to test for leaks in a Type II system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and\n                        before recharging. Never use oxygen or air — they create combustion risk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a shallow vacuum versus a deep vacuum?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300–500\n                        microns) removes moisture and confirms system integrity before recharging. Type II tests both\n                        procedures and their respective equipment requirements."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://epa608practicetest.net/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "EPA 608 Type II Practice Test",
+          "item": "https://epa608practicetest.net/type-2.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://epa608practicetest.net/type-2.html",
+      "name": "Free EPA 608 Type II Practice Test 2026",
+      "url": "https://epa608practicetest.net/type-2.html",
+      "dateModified": "2026-05-02"
+    }
+  ,
+    {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2", ".hero p", ".intro p"]
+    }]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
+</head>
+
+<body>
+
+    
+    <!-- Header -->
+<!-- HEADER:START -->
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KSX9M3DD');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wcxpankiye");
+</script>
+
+<!-- Vercel Analytics -->
+<script defer src="https://va.vercel-scripts.com/v1/script.js" data-api="_vercel/insights"></script>
+
+<!-- GTM Noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSX9M3DD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Header ── */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 68px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    gap: 8px;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.logo img { height: 40px; width: auto; }
+
+/* ── Desktop Nav ── */
+nav { display: flex; align-items: center; flex: 1; }
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+}
+
+.nav-menu > li { position: relative; }
+
+.nav-menu > li > a {
+    display: block;
+    padding: 8px 14px;
+    color: #111827;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+}
+
+.nav-menu > li > a:hover { background: #f3f4f6; color: #000; }
+
+/* ── Dropdown ── */
+.dropdown { position: relative; }
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    color: #111827;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    background: transparent;
+    border: none;
+    white-space: nowrap;
+    font-family: inherit;
+    letter-spacing: -0.01em;
+}
+
+.dropdown-toggle svg {
+    width: 14px; height: 14px;
+    stroke: currentColor; stroke-width: 2.2;
+    fill: none; stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0.5;
+    transition: transform 0.2s ease, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.dropdown:hover > .dropdown-toggle,
+.dropdown.open > .dropdown-toggle { background: #f3f4f6; color: #000; }
+
+.dropdown:hover > .dropdown-toggle svg,
+.dropdown.open > .dropdown-toggle svg { transform: rotate(180deg); opacity: 0.8; }
+
+/* ── Dropdown menu — hover shows, no click needed ── */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;           /* flush — no gap so hover stays active */
+    left: 0;
+    list-style: none;
+    z-index: 300;
+    min-width: 240px;
+    display: block;      /* always in flow — visibility controls hide/show */
+    padding-top: 10px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    transform-origin: top left;
+    transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease;
+    pointer-events: none;
+}
+
+.dropdown:hover > .dropdown-menu,
+.dropdown.open > .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.dropdown-menu-inner {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 16px 48px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 6px;
+}
+
+.dropdown-menu li a {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    color: #111827;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.1s;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+
+.dropdown-menu li a:hover { background: #f3f4f6; color: #000; }
+.dropdown-menu li a:hover span { color: inherit; }
+
+.dropdown-menu .divider { height: 1px; background: #f1f5f9; margin: 4px 6px; }
+
+.dropdown-menu .menu-label {
+    display: block;
+    padding: 8px 12px 3px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* ── Auth buttons ── */
+.nav-signin {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+}
+.nav-signin:hover { background: #f3f4f6; color: #000; }
+
+.nav-dashboard {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    background: #18181b;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14.5px;
+    border-radius: 8px;
+    transition: background 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.nav-dashboard:hover { background: #27272a !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+.nav-pricing { font-weight: 600; color: #003087 !important; }
+.nav-pricing:hover { background: #eef3ff !important; color: #003087 !important; }
+
+/* ── Pricing CTA ── */
+.nav-cta-pricing {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    background: #003087;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14.5px;
+    border-radius: 8px;
+    transition: background 0.12s, box-shadow 0.12s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+}
+.nav-cta-pricing:hover { background: #002268 !important; box-shadow: 0 4px 12px rgba(0,48,135,0.25); }
+
+/* ── Hamburger ── */
+.nav-hamburger {
+    display: none; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px; background: transparent; border: none;
+    cursor: pointer; border-radius: 8px; transition: background 0.12s; flex-shrink: 0;
+}
+.nav-hamburger:hover { background: #f3f4f6; }
+.nav-hamburger span {
+    display: block; width: 22px; height: 1.5px; background: #111827; border-radius: 2px;
+    transition: transform 0.22s, opacity 0.22s; transform-origin: center;
+}
+.nav-hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile Drawer ── */
+.mobile-nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 98; backdrop-filter: blur(2px); }
+.mobile-nav-overlay.active { display: block; }
+
+.mobile-nav {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 88vw;
+    background: #fff; z-index: 99; overflow-y: auto; padding: 0 0 40px;
+    box-shadow: -8px 0 48px rgba(0,0,0,0.14);
+    transform: translateX(100%); transition: transform 0.26s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-nav.active { display: block; transform: translateX(0); }
+
+.mobile-nav-header {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; padding: 0 20px; border-bottom: 1px solid #f1f5f9;
+}
+.mobile-nav-close {
+    width: 36px; height: 36px; background: transparent; border: none; cursor: pointer;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: #6b7280; transition: background 0.12s;
+}
+.mobile-nav-close:hover { background: #f3f4f6; }
+
+.mobile-nav-section { padding: 16px 16px 8px; }
+.mobile-nav-label {
+    font-size: 10.5px; font-weight: 700; color: #9ca3af; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 4px; padding: 0 8px;
+}
+.mobile-nav-links { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+.mobile-nav-links a {
+    display: block; padding: 11px 12px; color: #111827; text-decoration: none;
+    font-size: 16px; font-weight: 500; border-radius: 8px;
+    transition: background 0.1s, color 0.1s; letter-spacing: -0.01em;
+}
+.mobile-nav-links a:hover { background: #f3f4f6; color: #000; }
+.mobile-nav-links a.active { background: #eef3ff; color: #003087; }
+.mobile-nav-links .m-pricing { font-weight: 700; color: #003087 !important; }
+
+.mobile-nav-divider { height: 1px; background: #f1f5f9; margin: 6px 16px; }
+
+.mobile-nav-auth { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.mobile-btn-signin {
+    display: block; text-align: center; padding: 13px 16px;
+    color: #374151; text-decoration: none; font-size: 15px; font-weight: 500;
+    border-radius: 8px; border: 1px solid #e5e7eb; transition: background 0.12s;
+}
+.mobile-btn-signin:hover { background: #f3f4f6; }
+.mobile-btn-signup {
+    display: block; text-align: center; padding: 13px 16px;
+    background: #003087; color: #fff !important; text-decoration: none;
+    font-size: 15px; font-weight: 600; border-radius: 8px; transition: background 0.12s;
+}
+.mobile-btn-signup:hover { background: #002268; }
+.mobile-btn-dashboard {
+    display: block; text-align: center; padding: 13px 16px;
+    background: #18181b; color: #fff !important; text-decoration: none;
+    font-size: 15px; font-weight: 600; border-radius: 8px; transition: background 0.12s;
+}
+.mobile-btn-dashboard:hover { background: #27272a; }
+
+/* ── Footer ── */
+footer { background: #0f172a; color: #94a3b8; padding: 56px 0 32px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+.footer-brand p { font-size: 15px; line-height: 1.7; color: #64748b; margin: 12px 0 20px; max-width: 280px; }
+.footer-brand .footer-logo { font-size: 17px; font-weight: 700; color: #f1f5f9; }
+.footer-badge { display: inline-block; padding: 4px 10px; background: rgba(56,189,248,0.1); color: #38bdf8; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.footer-col h5 { font-size: 12px; font-weight: 700; color: #e2e8f0; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: #64748b; text-decoration: none; font-size: 15px; transition: color 0.12s; line-height: 1.4; display: block; }
+.footer-col ul li a:hover { color: #e2e8f0; }
+.footer-bottom { border-top: 1px solid #1e293b; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: 14px; color: #475569; }
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 14px; }
+.footer-bottom a:hover { color: #94a3b8; }
+.footer-hub { font-weight: 600; color: #94a3b8 !important; }
+.footer-hub:hover { color: #38bdf8 !important; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .header-content { height: 60px; padding: 0 16px; }
+    .logo img { height: 34px; }
+    nav, #nav-auth-area { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-brand { grid-column: 1 / -1; }
+    footer { padding: 40px 0 28px; }
+}
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; gap: 24px; } }
+</style>
+
+<!-- Header -->
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Practice Tests <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li role="menuitem"><a href="/universal.html">Universal — All Sections</a></li>
+                        <li class="divider" role="separator"></li>
+                        <li role="menuitem"><a href="/core.html">Core — Regulations</a></li>
+                        <li role="menuitem"><a href="/type-1.html">Type I — Small Appliances</a></li>
+                        <li role="menuitem"><a href="/type-2.html">Type II — High Pressure</a></li>
+                        <li role="menuitem"><a href="/type-3.html">Type III — Low Pressure</a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Features <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Free tools</li>
+                        <li role="menuitem"><a href="/tutor.html">
+                            AI Study Tutor
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · 10/day</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/flashcards.html">
+                            EPA 608 Flashcards
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · Core only · 5/day</span>
+                        </a></li>
+                        <li class="divider" role="separator"></li>
+                        <li class="menu-label">Pro features</li>
+                        <li role="menuitem"><a href="/weak-spots.html">
+                            Weak-Spot Drill
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/progress.html">
+                            Progress Dashboard
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/review.html">
+                            Fix My Mistakes
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/certificate">
+                            Achievement Badges
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/learn">
+                            Study Path
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin" style="display:none;">Sign In</a>
+            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
+        </div>
+
+        <!-- Hamburger (mobile only) -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
+
+<!-- Mobile Nav Drawer -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-header">
+        <a href="/" style="text-decoration:none;">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:30px;width:auto;">
+        </a>
+        <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Practice Tests</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/universal.html">Universal — All Sections</a></li>
+            <li><a href="/core.html">Core — Regulations</a></li>
+            <li><a href="/type-1.html">Type I — Small Appliances</a></li>
+            <li><a href="/type-2.html">Type II — High Pressure</a></li>
+            <li><a href="/type-3.html">Type III — Low Pressure</a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Free Tools</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/tutor.html">AI Study Tutor <span style="font-size:11px;color:#94a3b8;">10/day</span></a></li>
+            <li><a href="/flashcards.html">Flashcards <span style="font-size:11px;color:#94a3b8;">Core · 5/day</span></a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Pro Features</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/weak-spots.html">Weak-Spot Drill <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/progress.html">Progress Dashboard <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/review.html">Fix My Mistakes <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="https://epa608practicetest.net/certificate">Achievement Badges <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="https://epa608practicetest.net/learn">Study Path <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="/pricing.html" class="m-pricing">Pricing</a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <a href="https://epa608practicetest.net/login" class="mobile-btn-signin" id="mobile-btn-signin" style="display:none;">Sign In</a>
+        <a href="https://epa608practicetest.net/dashboard" class="mobile-btn-dashboard" id="mobile-btn-dashboard" style="display:none;">Dashboard →</a>
+    </div>
+</nav>
+
+<script>
+// Auth detection — 3 states:
+// 1. Logged in (Supabase token)  → Dashboard only
+// 2. Returning user (has history, no token) → Sign In only (blue)
+// 3. Brand new user (no history, no token)  → Sign Up only (blue)
+(function() {
+    try {
+        var si  = document.getElementById('nav-btn-signin');
+        var su  = document.getElementById('nav-btn-signup');
+        var db  = document.getElementById('nav-btn-dashboard');
+        var msi = document.getElementById('mobile-btn-signin');
+        var msu = document.getElementById('mobile-btn-signup');
+        var mdb = document.getElementById('mobile-btn-dashboard');
+
+        function showOnly(desktop, mobile) {
+            // desktop: 'signin' | 'signup' | 'dashboard'
+            if (si) si.style.display  = desktop === 'signin'    ? 'inline-flex' : 'none';
+            if (su) su.style.display  = desktop === 'signup'    ? 'inline-flex' : 'none';
+            if (db) db.style.display  = desktop === 'dashboard' ? 'inline-flex' : 'none';
+            if (msi) msi.style.display = mobile === 'signin'    ? 'block' : 'none';
+            if (msu) msu.style.display = mobile === 'signup'    ? 'block' : 'none';
+            if (mdb) mdb.style.display = mobile === 'dashboard' ? 'block' : 'none';
+        }
+
+        // 1. Check active Supabase session
+        var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+        var raw = localStorage.getItem(KEY);
+        if (raw) {
+            var session = JSON.parse(raw);
+            var token = session && (session.access_token || (session[0] && session[0].access_token));
+            if (token) { showOnly('dashboard', 'dashboard'); return; }
+        }
+
+        // 2. Returning user = has test history
+        var history = localStorage.getItem('epa608History');
+        var hasHistory = false;
+        if (history) {
+            try { hasHistory = JSON.parse(history).length > 0; } catch(e) {}
+        }
+
+        if (hasHistory) {
+            showOnly('signin', 'signin');
+        } else {
+            showOnly('signup', 'signup');
+        }
+    } catch(e) {}
+})();
+
+// Dropdown: hover is handled by CSS; click handles touch/keyboard
+document.querySelectorAll('.dropdown-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var li = btn.closest('.dropdown');
+        var isOpen = li.classList.contains('open');
+        document.querySelectorAll('.dropdown.open').forEach(function(el) {
+            el.classList.remove('open');
+            var b = el.querySelector('.dropdown-toggle');
+            if (b) b.setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+            li.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown.open').forEach(function(el) {
+        el.classList.remove('open');
+        var btn = el.querySelector('.dropdown-toggle');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+});
+
+// Mobile hamburger
+(function() {
+    var hamburger = document.getElementById('nav-hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    var overlay = document.getElementById('mobile-nav-overlay');
+    var closeBtn = document.getElementById('mobile-nav-close');
+
+    function openMenu() {
+        hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        mobileNav.classList.add('active');
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    if (hamburger) hamburger.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) closeMenu();
+    });
+})();
+</script>
+<!-- HEADER:END -->
+
+
+
+
+    <main class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/study-guides.html">Practice Tests</a> &rsaquo; Type II — High-Pressure
+        </nav>
+
+        <section class="quiz-hero">
+            <h1>EPA 608 Practice Test — Type 2 Exam (Free)</h1>
+            <p>The <strong>EPA 608 Practice Test</strong> Type 2 section tests 25 questions on high-pressure systems
+                including central air
+                conditioners, heat pumps, and commercial refrigeration racks. This test measures your ability to handle
+                leak repair requirements for systems with 50+ pounds of refrigerant.</p>
+        </section>
+
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="test-header">
+                    <div id="questionNumber">Question 1 of 10</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div id="countdown">12:00</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
+                </div>
+
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <h2>Test Results</h2>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div id="resultDetails"></div>
+                <div id="shareButtons"></div>
+                <div id="signup-nudge" style="display:none;margin:16px 0;padding:12px 16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <p style="font-size:13px;font-weight:600;color:#1e3a8a;margin:0">Know exactly where you're weak — fix it faster</p>
+                    <p style="font-size:12px;color:#3b82f6;margin:4px 0 0">Free account shows your weak spots &amp; tracks improvement over every test.</p>
+                  </div>
+                  <a href="/checkout.html" style="flex-shrink:0;font-size:12px;font-weight:700;color:#fff;background:#1d4ed8;padding:8px 16px;border-radius:8px;text-decoration:none;white-space:nowrap">Get Pro →</a>
+                </div>
+                <script>
+                (function(){
+                  var KEY='sb-sequvmxgtmbirnixeril-auth-token';
+                  var nudge=document.getElementById('signup-nudge');
+                  if(!nudge) return;
+                  try {
+                    var raw=localStorage.getItem(KEY);
+                    var loggedIn=raw && JSON.parse(raw)?.access_token;
+                    if(loggedIn) nudge.style.display='none';
+                    else nudge.style.display='flex';
+                  } catch(e){ nudge.style.display='flex'; }
+                })();
+                </script>
+                <div class="results-nav">
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
+                </div>
+
+            </div>
+            <!-- Share popup -->
+            <div id="sharePopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center;padding:16px">
+                <div style="background:#fff;border-radius:20px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,.2)">
+                    <div style="font-size:48px;margin-bottom:8px">🎉</div>
+                    <h3 style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:6px">Great score!</h3>
+                    <p style="font-size:14px;color:#64748b;margin-bottom:20px">Help other HVAC techs find this free resource</p>
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+                        <a id="popupTwitter" href="#" target="_blank" rel="noopener" style="display:block;padding:14px;background:#000;color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px">Share on 𝕏 Twitter</a>
+                        <a id="popupFacebook" href="#" target="_blank" rel="noopener" style="display:block;padding:14px;background:#1877f2;color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px">Share on Facebook</a>
+                    </div>
+                    <button onclick="document.getElementById('sharePopup').style.display='none'" style="font-size:13px;color:#94a3b8;background:none;border:none;cursor:pointer;padding:8px">Maybe later</button>
+                </div>
+            </div>
+        </section>
+
+        <article class="content-body">
+            <h2>Understanding EPA 608 Type II Scope (EPA 608 Practice Test)</h2>
+            <p>Type II certification covers high-pressure and medium-pressure systems — the most common appliances
+                HVAC technicians encounter in the field. This includes residential central air conditioners, heat
+                pumps, commercial refrigeration racks, and refrigerated warehouses. Any system using a refrigerant with
+                a boiling point above -50°C at atmospheric pressure falls under Type II jurisdiction.</p>
+
+            <p>The Type II exam focuses on three high-value technical areas:</p>
+            <ul>
+                <li><strong>Leak Repair Requirements</strong> — Systems with more than 50 pounds of refrigerant are
+                    subject to mandatory leak repair thresholds. The threshold varies by system category.</li>
+                <li><strong>Recovery Vacuum Standards</strong> — Evacuation depth requirements (in inches of mercury)
+                    differ based on refrigerant type and whether recovery equipment was manufactured before or after
+                    November 15, 1993.</li>
+                <li><strong>High-Pressure System Components</strong> — Receivers, accumulators, moisture-indicating
+                    sight glasses, oil separators, and relief valves are all testable entities.</li>
+            </ul>
+
+            <h2>Leak Repair Requirements for Systems Over 50 Pounds</h2>
+            <p>Under Section 608, systems containing more than 50 pounds of refrigerant that leak above the annual
+                threshold must be repaired within 30 days, or within 120 days with an approved retrofit or retirement
+                plan. Leak rates are calculated as a percentage of the total system charge per year.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>System Category</th>
+                        <th>Annual Leak Rate Threshold</th>
+                        <th>Example Systems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Comfort Cooling</td>
+                        <td>10%</td>
+                        <td>Central AC, chillers for buildings</td>
+                    </tr>
+                    <tr>
+                        <td>Commercial Refrigeration</td>
+                        <td>20%</td>
+                        <td>Grocery store racks, walk-in coolers</td>
+                    </tr>
+                    <tr>
+                        <td>Industrial Process Refrigeration (IPR)</td>
+                        <td>30%</td>
+                        <td>Food processing, chemical plants</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Field Note:</strong> Grocery store refrigeration racks often blend Commercial and IPR
+                categories. Always verify the system classification before calculating the applicable leak rate
+                threshold on the job.
+            </div>
+
+            <h2>Recovery Vacuum Standards for High-Pressure Systems</h2>
+            <p>Recovery depth requirements are measured in inches of mercury (in. Hg) vacuum. Equipment manufactured
+                after November 15, 1993 must meet the higher post-1993 standard. For most HFC refrigerants (R-410A,
+                R-32) in systems under 200 pounds, the recovery standard requires pulling to 0 psig. Systems over 200
+                pounds require a deeper vacuum pull to 4 in. Hg. The Type II exam tests these thresholds directly —
+                memorize them alongside the leak rate table above.</p>
+
+            <p>After completing this practice test, take the <a href="/type-1.html">Type I practice test</a>, the
+                <a href="/type-3.html">Type III low-pressure practice test</a>, or the <a href="/universal.html">EPA 608 Universal practice test</a> to simulate the full 100-question exam. Review the
+                <a href="/study-guide-cheat-sheet.html">EPA 608 cheat sheet</a> for a consolidated table of all vacuum
+                levels by refrigerant and system size.
+            </p>
+
+            <h2>Refrigerant Identification and Handling on Type II</h2>
+            <p>The Type II exam tests refrigerant identification skills beyond simple name recall. Technicians must know which refrigerants are HFCs, HCFCs, or blends, and what those classifications mean for venting rules and phase-out timelines. R-22 (an HCFC) was fully phased out of production for new equipment under the AIM Act schedule. R-410A (an HFC blend) is being phased down under the AIM Act's GWP-based restrictions. R-32 and R-454B are lower-GWP alternatives increasingly used in residential systems — the exam may include questions on their classification and handling requirements.</p>
+
+            <p>Refrigerant containers are color-coded by industry convention, but the exam tests the regulatory side: technicians must verify container labeling, check for the DOT specification plate, and never mix refrigerants in a single recovery cylinder. Recovery cylinders must be rated for the pressure of the refrigerant being recovered — using an undersized cylinder with a high-pressure refrigerant like R-410A is a safety violation and an exam topic.</p>
+
+            <h2>Service Records and Leak Repair Obligations</h2>
+            <p>EPA regulations require technicians to provide the owner with a written statement of the quantity of refrigerant added during service on appliances containing 50 or more pounds of refrigerant. For systems that exceed the applicable leak rate, owners must either repair the leak within 30 days of discovery or retrofit/retire the equipment. The Type II exam tests these record-keeping obligations directly — knowing the 50-pound threshold, the 30-day repair window, and the technician's documentation duties is essential for full-credit answers on this section.</p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>What systems fall under Type II certification?</strong>
+                    <p>High-pressure and medium-pressure systems including residential central AC, heat pumps, and
+                        commercial refrigeration racks. Any refrigerant with a boiling point above -50°C at atmospheric
+                        pressure is classified as high or medium pressure.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the leak rate threshold for comfort cooling systems?</strong>
+                    <p>10% annual leak rate for systems with more than 50 pounds of refrigerant. Systems exceeding
+                        this threshold must be repaired within 30 days.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What does IPR stand for in EPA 608?</strong>
+                    <p>Industrial Process Refrigeration. IPR systems have the highest permissible leak rate (30%) due
+                        to the complexity and continuous operation requirements of industrial processes.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can nitrogen be used to test for leaks in a Type II system?</strong>
+                    <p>Yes. Nitrogen trace gas is the accepted method for pressure-testing a system after repair and
+                        before recharging. Never use oxygen or air — they create combustion risk.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is a shallow vacuum versus a deep vacuum?</strong>
+                    <p>A shallow vacuum removes large amounts of non-condensables. A deep vacuum (typically 300–500
+                        microns) removes moisture and confirms system integrity before recharging. Type II tests both
+                        procedures and their respective equipment requirements.</p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+
+<!-- Static sample questions for Google crawlability — do not remove -->
+<section style="max-width:780px;margin:40px auto 0;padding:0 20px" aria-label="Sample Type II Practice Questions">
+<h2 style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:4px">Sample Type II Questions</h2>
+<p style="font-size:14px;color:#64748b;margin-bottom:20px">These questions appear on the Type II section of the EPA 608 exam.</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q1.</strong> Which of the following refrigerants are classified as A2L under the ASHRAE 34 safety classification system?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#374151;font-weight:400">R-410A and R-22</li>
+    <li style="font-size:15px;color:#16a34a;font-weight:700">R-454B and R-32 ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-134a and R-404A</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-11 and R-113</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> R-454B (GWP 466) and R-32 (GWP 675) are both classified A2L under ASHRAE Standard 34, meaning they have lower flammability. R-410A and R-22 are A1 (non-flammable). A2L refrigerants require spark-free tools and specific handling procedures per 40 CFR §82.161 and ASHRAE Standard 15-2022.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q2.</strong> What is the ASHRAE safety classification of R-32, a refrigerant used in some newer high-pressure systems?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#374151;font-weight:400">A1 — non-flammable, low toxicity</li>
+    <li style="font-size:15px;color:#16a34a;font-weight:700">A2L — lower flammability, low toxicity ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">A2 — flammable, low toxicity</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">B1 — non-flammable, higher toxicity</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> R-32 is classified A2L under ASHRAE Standard 34. The 'A' indicates low toxicity, and '2L' indicates lower flammability with a maximum burning velocity of ≤10 cm/s. R-32 has a GWP of 675 and is used as a standalone refrigerant in some systems, particularly mini-splits.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q3.</strong> Which statement correctly compares R-454B to R-410A regarding GWP and flammability classification?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#374151;font-weight:400">R-454B has a higher GWP than R-410A and is classified A1</li>
+    <li style="font-size:15px;color:#16a34a;font-weight:700">R-454B has a GWP of 466 and is classified A2L, while R-410A has a GWP of 2088 and is classified A1 ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-454B and R-410A have the same GWP but different flammability ratings</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-454B is classified A2 (flammable) and R-410A is classified A2L</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> R-454B (Opteon XL41) has a GWP of 466 — approximately 78% lower than R-410A's GWP of 2088. R-410A is ASHRAE A1 (non-flammable), while R-454B is A2L (lower flammability). Both operate at similar pressures, making R-454B a near-drop-in replacement, though A2L handling rules apply per ASHRAE Standard 15.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q4.</strong> In the ASHRAE 34 refrigerant classification system, what does "A2L" mean?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#374151;font-weight:400">High toxicity and non-flammable</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Low toxicity and non-flammable</li>
+    <li style="font-size:15px;color:#16a34a;font-weight:700">Low toxicity and lower flammability (burning velocity ≤10 cm/s) ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Low toxicity and highly flammable</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> In ASHRAE Standard 34, 'A' indicates low toxicity and '2L' indicates lower flammability with burning velocity ≤10 cm/s. A2L refrigerants like R-454B and R-32 are mildly flammable but not explosive under normal conditions. Class 1 = non-flammable, 2 = flammable, 3 = highly flammable.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q5.</strong> As of 2026, a technician is servicing a new R-454B residential split system. Which of the following requirements applies specifically because R-454B is classified A2L?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#374151;font-weight:400">The technician must wear a self-contained breathing apparatus (SCBA) during all service</li>
+    <li style="font-size:15px;color:#16a34a;font-weight:700">The technician must use spark-free recovery and service equipment when working with R-454B ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">The technician must obtain a separate A2L certification beyond the standard EPA 608</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">The technician must evacuate all building occupants before opening the refrigerant circuit</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> ASHRAE Standard 15-2022 and equipment manufacturer requirements mandate spark-free tools for A2L refrigerants due to their lower flammability classification. Standard PPE is sufficient — no SCBA or special certification beyond EPA 608 is required. Occupant evacuation is not mandated for normal service of properly operating A2L systems.</p>
+</div>
+</div>
+</section>
+<!-- End static sample questions -->
+
+    <!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-logo">EPA 608 Practice Test</div>
+                <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
+                <span class="footer-badge">Free Practice Tests + Pro $14.99 Lifetime</span>
+            </div>
+
+            <!-- Practice Tests -->
+            <div class="footer-col">
+                <h5>Practice Tests</h5>
+                <ul>
+                    <li><a href="/universal.html">Universal</a></li>
+                    <li><a href="/core.html">Core</a></li>
+                    <li><a href="/type-1.html">Type I</a></li>
+                    <li><a href="/type-2.html">Type II</a></li>
+                    <li><a href="/type-3.html">Type III</a></li>
+                    <li><a href="/review.html">Fix My Mistakes</a></li>
+                    <li><a href="/epa-608-practice-questions.html">Practice Questions</a></li>
+                </ul>
+            </div>
+
+            <!-- Study Resources -->
+            <div class="footer-col">
+                <h5>Study Resources</h5>
+                <ul>
+                    <li><a href="/study-guides.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
+                    <li><a href="/flashcards.html">Flashcards</a></li>
+                    <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Certification Cost</a></li>
+                    <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
+                </ul>
+            </div>
+
+            <!-- Exam Prep -->
+            <div class="footer-col">
+                <h5>Exam Prep</h5>
+                <ul>
+                    <li><a href="/how-to-study-for-epa-608.html">How to Study</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate</a></li>
+                    <li><a href="/exam-day.html#timing">Exam Duration</a></li>
+                </ul>
+            </div>
+
+            <!-- Tools & Info -->
+            <div class="footer-col">
+                <h5>Tools &amp; Info</h5>
+                <ul>
+                    <li><a href="/tutor.html">AI Study Helper</a></li>
+                    <li><a href="/weak-spots.html">Weak Spot Drill</a></li>
+                    <li><a href="/universal.html">FAQ</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA608PracticeTest.net — Freemium: Free practice tests + Pro $14.99 lifetime.</p>
+            <div style="display:flex;gap:16px;">
+                <a href="/policy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="test-engine.js"></script>
+    <script>
+        initTestEngine({
+            category: 'Type II',
+            historyKey: 'type2',
+            passMsg: "Pass! You've mastered the High-Pressure Type II requirements.",
+            failMsg: "Focus on leak repair percentages (10/20/30%) and vacuum recovery levels."
+        });
+    </script>
+    <script src="/includes.js" defer></script>
+</body>
+
+</html>

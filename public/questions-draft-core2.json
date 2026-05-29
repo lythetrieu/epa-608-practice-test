@@ -1,0 +1,1195 @@
+[
+  {
+    "id": "core-regs-3.4-cert-001",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.4",
+    "question": "Under 40 CFR §82.158, who is responsible for certifying that refrigerant recovery and recycling equipment meets EPA performance standards?",
+    "options": [
+      "The equipment manufacturer self-certifies through an affidavit",
+      "An EPA-approved third-party testing organization",
+      "The technician's employer after an internal audit",
+      "OSHA through its hazardous materials inspection program"
+    ],
+    "answer_text": "An EPA-approved third-party testing organization",
+    "explanation": "40 CFR §82.158 requires that recovery and recycling equipment manufactured after November 15, 1993 be tested and certified by an EPA-approved third-party organization. Examples include AHRI (Air-Conditioning, Heating, and Refrigeration Institute) and UL (Underwriters Laboratories). Technicians must use equipment that has received this certification; manufacturer self-certification is not sufficient.",
+    "source_ref": "40 CFR §82.158",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-regs-3.4-cert-002",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.4",
+    "question": "Which of the following organizations is an EPA-approved third-party certifier for refrigerant recovery equipment under 40 CFR §82.158?",
+    "options": [
+      "OSHA",
+      "NFPA",
+      "AHRI",
+      "ANSI"
+    ],
+    "answer_text": "AHRI",
+    "explanation": "The Air-Conditioning, Heating, and Refrigeration Institute (AHRI) is one of the EPA-approved third-party testing organizations that certifies recovery and recycling equipment under 40 CFR §82.158. UL (Underwriters Laboratories) is another example. Certification by an approved third party is required for all equipment manufactured after November 15, 1993.",
+    "source_ref": "40 CFR §82.158",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-regs-3.4-cert-003",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.4",
+    "question": "A technician purchases a used refrigerant recovery machine manufactured in 1991. Under EPA regulations, what certification requirement applies to this equipment?",
+    "options": [
+      "It must be recertified every five years by AHRI",
+      "It is exempt from third-party certification requirements because it was manufactured before November 15, 1993",
+      "It must be submitted to the EPA regional office for approval before use",
+      "It must be certified by UL before any refrigerant can be recovered with it"
+    ],
+    "answer_text": "It is exempt from third-party certification requirements because it was manufactured before November 15, 1993",
+    "explanation": "40 CFR §82.158 requires third-party certification only for recovery equipment manufactured after November 15, 1993. Equipment manufactured before that date is grandfathered and exempt from the third-party certification requirement. However, technicians using pre-1993 equipment must still follow all other recovery requirements, including achieving the required evacuation levels.",
+    "source_ref": "40 CFR §82.158",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-regs-3.4-cert-004",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.4",
+    "question": "What is the purpose of requiring third-party certification for recovery equipment under Section 608?",
+    "options": [
+      "To ensure the equipment meets minimum refrigerant recovery efficiency standards set by the EPA",
+      "To generate revenue for AHRI through certification fees",
+      "To verify that the equipment does not contain CFCs in its refrigerant circuit",
+      "To confirm that the manufacturer has adequate product liability insurance"
+    ],
+    "answer_text": "To ensure the equipment meets minimum refrigerant recovery efficiency standards set by the EPA",
+    "explanation": "Third-party certification under 40 CFR §82.158 verifies that recovery and recycling equipment meets the EPA's minimum recovery efficiency standards. The EPA sets the performance benchmarks, and approved third-party organizations (such as AHRI or UL) independently test and certify that specific equipment models achieve those benchmarks. This ensures refrigerants are actually captured rather than vented during servicing.",
+    "source_ref": "40 CFR §82.158",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-regs-3.4-cert-005",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.4",
+    "question": "A technician wants to use a recovery machine purchased after November 15, 1993 but cannot find any certification markings on it. What should the technician do?",
+    "options": [
+      "Use the machine anyway if it appears to work correctly",
+      "Contact the manufacturer to confirm if it was certified by an EPA-approved third-party organization",
+      "Certify the machine himself by performing a self-test",
+      "Report the machine to OSHA as non-compliant"
+    ],
+    "answer_text": "Contact the manufacturer to confirm if it was certified by an EPA-approved third-party organization",
+    "explanation": "Under 40 CFR §82.158, all recovery equipment manufactured after November 15, 1993 must be certified by an EPA-approved third-party testing organization. If a technician cannot find certification markings, the proper step is to verify certification status with the manufacturer. Using uncertified equipment for refrigerant recovery after November 15, 1993 violates EPA regulations and could result in civil penalties.",
+    "source_ref": "40 CFR §82.158",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-sub-4.1-dropin-001",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.1",
+    "question": "A technician has a system that uses R-22. To comply with EPA regulations when converting this system to a different refrigerant, which requirement must be met?",
+    "options": [
+      "Any refrigerant can be added as long as pressures remain within the nameplate ratings",
+      "Only EPA SNAP-approved substitutes may be used as replacements for R-22",
+      "The technician may use any HFC refrigerant without modification since all HFCs are EPA-approved",
+      "Drop-in replacement is allowed if the refrigerant has the same GWP as R-22"
+    ],
+    "answer_text": "Only EPA SNAP-approved substitutes may be used as replacements for R-22",
+    "explanation": "Under the EPA's Significant New Alternatives Policy (SNAP) program, established under Section 612 of the Clean Air Act, only approved substitutes may be used to replace ozone-depleting substances. Technicians cannot simply add any refrigerant — the substitute must appear on the EPA's SNAP list of approved alternatives. Additionally, system modifications such as oil changes, seal replacements, and metering device adjustments are typically required when changing refrigerants.",
+    "source_ref": "Clean Air Act §612; 40 CFR Part 82, Subpart G",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.1-dropin-002",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.1",
+    "question": "What does the term 'no drop-in replacement' mean in the context of refrigerant servicing?",
+    "options": [
+      "A technician may never change the refrigerant in an existing system under any circumstances",
+      "You cannot simply add a different refrigerant to an existing system without proper conversion — system modifications are typically required",
+      "Only factory-trained technicians may change refrigerant types in a system",
+      "Drop-in replacements are allowed only for HFC refrigerants, not HCFCs"
+    ],
+    "answer_text": "You cannot simply add a different refrigerant to an existing system without proper conversion — system modifications are typically required",
+    "explanation": "The no drop-in replacement rule means that different refrigerants are not interchangeable without proper system conversion. Each refrigerant has different pressure-temperature characteristics, oil compatibility requirements, and metering device settings. Simply topping off an R-22 system with an HFC blend, for example, creates a mixed refrigerant that behaves unpredictably and violates 40 CFR §82.154's prohibition on mixing. System conversion requires draining the old oil, replacing seals and gaskets, adjusting or replacing the expansion valve, and verifying system compatibility.",
+    "source_ref": "40 CFR §82.154; Clean Air Act §612",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.1-dropin-003",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.1",
+    "question": "When converting an HCFC system to an HFC refrigerant, which system component most commonly requires replacement or modification due to lubricant incompatibility?",
+    "options": [
+      "The condenser coil",
+      "The compressor motor windings",
+      "The refrigerant oil — mineral or alkylbenzene oil used with HCFCs must be replaced with polyolester (POE) oil for most HFCs",
+      "The evaporator coil fin spacing"
+    ],
+    "answer_text": "The refrigerant oil — mineral or alkylbenzene oil used with HCFCs must be replaced with polyolester (POE) oil for most HFCs",
+    "explanation": "HCFC refrigerants like R-22 are compatible with mineral oil and alkylbenzene oil, which circulate through the system with the refrigerant. Most HFC refrigerants (such as R-410A or R-407C blends) require polyolester (POE) oil, which is hygroscopic (absorbs moisture) and has different viscosity characteristics. When converting from an HCFC to an HFC, the old oil must be flushed from the system and replaced with the correct POE oil. Failure to do so results in poor lubrication, acid formation, and compressor failure.",
+    "source_ref": "Clean Air Act §612; 40 CFR Part 82, Subpart G; ASHRAE Refrigeration Handbook",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.1-dropin-004",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.1",
+    "question": "Which EPA program specifically evaluates and approves refrigerant substitutes for ozone-depleting substances?",
+    "options": [
+      "The Montreal Protocol Compliance Program",
+      "The SNAP (Significant New Alternatives Policy) Program",
+      "The AIM Act Phasedown Registry",
+      "The DOT Hazardous Materials Approval Program"
+    ],
+    "answer_text": "The SNAP (Significant New Alternatives Policy) Program",
+    "explanation": "The EPA's Significant New Alternatives Policy (SNAP) program, established under Section 612 of the Clean Air Act and codified at 40 CFR Part 82, Subpart G, evaluates and publishes lists of acceptable and unacceptable substitutes for ozone-depleting substances. Technicians and equipment manufacturers must use only SNAP-approved substitutes. The SNAP program examines potential substitutes for ozone depletion potential, GWP, flammability, toxicity, and environmental impact.",
+    "source_ref": "Clean Air Act §612; 40 CFR Part 82, Subpart G",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.1-dropin-005",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.1",
+    "question": "A technician adds R-407C to a system originally designed for R-22 without recovering the existing R-22 charge first. Which regulation is violated?",
+    "options": [
+      "Nothing — R-407C is a SNAP-approved R-22 substitute, so mixing is permitted",
+      "40 CFR §82.154, which prohibits knowingly venting or otherwise releasing refrigerants, and mixing creates a contaminated blend that cannot be properly recycled",
+      "Only the manufacturer's warranty is voided — no federal regulation is violated",
+      "DOT 49 CFR §173.115, which governs cylinder pressure limits"
+    ],
+    "answer_text": "40 CFR §82.154, which prohibits knowingly venting or otherwise releasing refrigerants, and mixing creates a contaminated blend that cannot be properly recycled",
+    "explanation": "Adding a different refrigerant to a system without recovering the existing charge first creates a mixed refrigerant blend. Mixed refrigerants cannot be recycled on-site; they must be sent to a certified reclaimer. If the mixture is unusable or untraceable, it may ultimately be vented — violating 40 CFR §82.154's prohibition on the release of refrigerants. The correct procedure is to recover all existing R-22, properly label the recovered refrigerant, and then convert the system before charging with the approved substitute.",
+    "source_ref": "40 CFR §82.154; 40 CFR Part 82, Subpart G",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-sub-4.3-frac-001",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.3",
+    "question": "What is fractionation in the context of zeotropic refrigerant blends?",
+    "options": [
+      "The process of separating refrigerant from oil during recovery",
+      "A change in the blend's composition that occurs when vapor leaks, because more volatile components escape first",
+      "The chemical breakdown of HFCs into hydrofluoric acid under high temperatures",
+      "The separation of refrigerant into liquid and vapor phases inside the evaporator"
+    ],
+    "answer_text": "A change in the blend's composition that occurs when vapor leaks, because more volatile components escape first",
+    "explanation": "Zeotropic blends (such as R-407C and R-404A) are composed of refrigerants with different boiling points and vapor pressures. When vapor leaks from a zeotropic blend, the more volatile (lower boiling point) component tends to escape at a higher rate, leaving behind a mix that is richer in the less volatile component. This changes the blend's composition and thus its pressure-temperature characteristics, making the remaining charge behave differently than the original specification. This is why zeotropic blends must be charged as liquid.",
+    "source_ref": "ASHRAE Refrigeration Handbook; 40 CFR Part 82",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.3-frac-002",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.3",
+    "question": "How should a technician charge a zeotropic refrigerant blend such as R-407C into a system?",
+    "options": [
+      "As vapor from the vapor port, just like a single-component refrigerant",
+      "As liquid from the liquid port of the refrigerant cylinder to maintain proper blend composition",
+      "As a mixture of liquid and vapor simultaneously through both service ports",
+      "As vapor into the high-side service port while the system is running"
+    ],
+    "answer_text": "As liquid from the liquid port of the refrigerant cylinder to maintain proper blend composition",
+    "explanation": "Because of fractionation risk, zeotropic refrigerant blends (such as R-407C, R-404A, R-410A) must always be charged into a system as liquid. The liquid port on the refrigerant cylinder is typically marked with a dip tube or valve designation. Charging as vapor would allow the more volatile components to leave the cylinder first, changing the composition of both the remaining cylinder charge and the amount being introduced into the system. The cylinder must be inverted or the liquid valve used to ensure liquid-phase transfer.",
+    "source_ref": "ASHRAE Refrigeration Handbook; refrigerant manufacturer guidelines",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.3-frac-003",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.3",
+    "question": "Which type of refrigerant blend is MOST susceptible to fractionation during a vapor leak?",
+    "options": [
+      "Azeotropic blends like R-502",
+      "Single-component refrigerants like R-22",
+      "Zeotropic blends like R-404A and R-407C",
+      "Pure HFO refrigerants like R-1234yf"
+    ],
+    "answer_text": "Zeotropic blends like R-404A and R-407C",
+    "explanation": "Zeotropic blends are the most susceptible to fractionation because they are composed of refrigerant components with significantly different boiling points and vapor pressures. During a vapor leak, each component escapes at a different rate, changing the overall composition of the remaining blend. Azeotropic blends behave more like single-component refrigerants and exhibit minimal fractionation. Single-component refrigerants obviously cannot fractionate. Near-azeotropic blends fractionate less than fully zeotropic blends but more than true azeotropes.",
+    "source_ref": "ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.3-frac-004",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.3",
+    "question": "What is 'temperature glide' and which type of refrigerant exhibits it?",
+    "options": [
+      "The temperature drop across the expansion valve; exhibited by all refrigerants",
+      "The difference in temperature between the entering and leaving saturated temperatures during evaporation or condensation; exhibited by zeotropic blends",
+      "The superheat measured at the evaporator outlet; exhibited by pure refrigerants only",
+      "The temperature rise of the refrigerant across the compressor; exhibited by high-GWP refrigerants"
+    ],
+    "answer_text": "The difference in temperature between the entering and leaving saturated temperatures during evaporation or condensation; exhibited by zeotropic blends",
+    "explanation": "Temperature glide is a characteristic of zeotropic refrigerant blends. Unlike single-component or azeotropic refrigerants (which evaporate and condense at a single temperature for a given pressure), zeotropic blends evaporate and condense over a temperature range. This range — from the bubble point to the dew point — is called the temperature glide. For example, R-407C has a temperature glide of approximately 7–9°F. This affects system design, particularly heat exchanger sizing and P-T chart use. Technicians must reference the refrigerant-specific P-T chart for the correct glide when diagnosing zeotropic systems.",
+    "source_ref": "ASHRAE Refrigeration Handbook; refrigerant P-T charts",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-sub-4.3-frac-005",
+    "category": "Core",
+    "subtopic_id": "core-sub-4.3",
+    "question": "A technician discovers that a system using R-404A has developed a vapor leak over several months. After the leak is repaired, why is it generally recommended to recover the remaining charge and recharge with a full, fresh cylinder of R-404A rather than simply topping off?",
+    "options": [
+      "Because R-404A cylinders expire after 6 months and old refrigerant becomes flammable",
+      "Because fractionation from the vapor leak has likely changed the remaining blend composition, making topping off unreliable",
+      "Because the EPA requires full recovery anytime a leak is repaired, regardless of remaining charge amount",
+      "Because R-404A cannot be mixed with any other refrigerant, including itself from a different cylinder"
+    ],
+    "answer_text": "Because fractionation from the vapor leak has likely changed the remaining blend composition, making topping off unreliable",
+    "explanation": "R-404A is a zeotropic blend of HFC-125, HFC-143a, and HFC-134a. During a prolonged vapor leak, the more volatile components (particularly HFC-143a) escape at a higher rate, leaving a charge that is proportionally richer in the less volatile components. This changed composition means the remaining refrigerant has different pressure-temperature characteristics than fresh R-404A. Simply topping off with fresh R-404A introduces a mix of the altered charge and the fresh charge, resulting in unpredictable system performance. Best practice is to recover, verify composition if possible, and recharge with a verified full charge.",
+    "source_ref": "ASHRAE Refrigeration Handbook; refrigerant manufacturer guidelines",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-rec-7.1-mix-001",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.1",
+    "question": "What happens to recovered refrigerant that has been mixed with a different refrigerant type in the same recovery cylinder?",
+    "options": [
+      "The mixture can still be recycled on-site using standard recycling equipment",
+      "The mixture is contaminated and cannot be recycled on-site; it must be sent to a certified reclaimer for proper disposal or destruction",
+      "The mixed refrigerant can be used in a system that uses either of the original refrigerant types",
+      "The mixture must be tested by the technician before further use is permitted"
+    ],
+    "answer_text": "The mixture is contaminated and cannot be recycled on-site; it must be sent to a certified reclaimer for proper disposal or destruction",
+    "explanation": "On-site recycling equipment (as defined under 40 CFR §82.152) cleans refrigerant to be reused in the same system or same owner's systems. However, a mixture of two different refrigerant types cannot be recycled by on-site equipment — it is cross-contaminated. Cross-contaminated refrigerant must be sent to an EPA-certified reclaimer who has the capability to analyze, separate, and process the mixture. Mixing refrigerants in a recovery cylinder effectively destroys their reuse value and contributes to potential violation of 40 CFR §82.154.",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.154",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-rec-7.1-mix-002",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.1",
+    "question": "To prevent cross-contamination of refrigerants during recovery, which practice should a technician follow?",
+    "options": [
+      "Use one universal recovery cylinder for all refrigerant types to simplify tracking",
+      "Use separate, clearly labeled recovery cylinders for each refrigerant type",
+      "It is acceptable to mix R-404A and R-410A since both are HFC blends",
+      "Purge the recovery hoses into the atmosphere between jobs to remove residual refrigerant"
+    ],
+    "answer_text": "Use separate, clearly labeled recovery cylinders for each refrigerant type",
+    "explanation": "To prevent cross-contamination, technicians must use separate recovery cylinders for each refrigerant type and label each cylinder with the refrigerant it contains. Mixing different refrigerants — even within the same refrigerant family such as two different HFC blends — creates a contaminated mixture that cannot be recycled on-site. Additionally, hoses should be purged using the recovery machine or dedicated clean hoses per refrigerant type (not vented to atmosphere) before switching between refrigerant types.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-rec-7.1-mix-003",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.1",
+    "question": "Which federal regulation prohibits the mixing of refrigerants in a way that contributes to illegal venting or renders recovered refrigerant unusable?",
+    "options": [
+      "40 CFR §82.156 — Equipment standards for recovery",
+      "40 CFR §82.154 — Prohibition on venting of refrigerants",
+      "40 CFR §82.160 — Safe disposal requirements",
+      "40 CFR §82.164 — Disposable container requirements"
+    ],
+    "answer_text": "40 CFR §82.154 — Prohibition on venting of refrigerants",
+    "explanation": "40 CFR §82.154 is the core prohibition that makes it illegal to knowingly vent or otherwise release refrigerants into the atmosphere during the maintenance, service, repair, or disposal of appliances. Mixing different refrigerants in a recovery cylinder renders the mixture unrecyclable and potentially unusable — if the mixture is ultimately vented or improperly disposed of because it cannot be processed, it violates §82.154. This is why mixing is effectively treated as a violation pathway.",
+    "source_ref": "40 CFR §82.154",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-rec-7.1-mix-004",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.1",
+    "question": "Before connecting manifold hoses to a new system with a different refrigerant type, what should a technician do with the hoses to prevent cross-contamination?",
+    "options": [
+      "Briefly purge the hoses to atmosphere to clear any residual refrigerant",
+      "Rinse the hoses with water to remove residual refrigerant",
+      "Use dedicated hoses for each refrigerant type, or properly purge hoses through the recovery machine before switching refrigerants",
+      "Hose cross-contamination is not a concern because refrigerants mix without issue inside hoses"
+    ],
+    "answer_text": "Use dedicated hoses for each refrigerant type, or properly purge hoses through the recovery machine before switching refrigerants",
+    "explanation": "Manifold hoses can retain residual refrigerant from a previous job. If the hoses are connected to a system containing a different refrigerant without being cleared, cross-contamination occurs. The proper approach is to use dedicated hoses for each refrigerant type (the cleanest solution) or to purge the residual refrigerant through the recovery machine into the appropriate recovery cylinder — never to atmosphere. Purging to atmosphere is itself a violation of 40 CFR §82.154.",
+    "source_ref": "40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-rec-7.1-mix-005",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.1",
+    "question": "A recovery cylinder is labeled 'R-22' but a technician suspects it contains a small amount of R-410A from a previous recovery. What must be done with the refrigerant in this cylinder?",
+    "options": [
+      "Top off with more R-22 until the R-410A concentration is diluted to less than 2%, then use it normally",
+      "The refrigerant must be sent to an EPA-certified reclaimer because it is cross-contaminated and cannot be recycled on-site",
+      "Test the pressure — if it matches R-22 saturation pressure, the refrigerant is still usable",
+      "The mixture can be used in systems that are already past their useful service life without penalty"
+    ],
+    "answer_text": "The refrigerant must be sent to an EPA-certified reclaimer because it is cross-contaminated and cannot be recycled on-site",
+    "explanation": "Any recovery cylinder that contains a mixture of two different refrigerant types is considered cross-contaminated. Cross-contaminated refrigerant cannot be processed by on-site recycling equipment and must be sent to an EPA-certified reclaimer. Reclaimers have the analytical equipment and processes to handle contaminated refrigerant — either by separating the components or properly destroying the mixture. Diluting or attempting to use the mixed refrigerant in a system is not permitted.",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.154; AHRI 700",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-evac-8.1-why-001",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.1",
+    "question": "Why must technicians evacuate a refrigerant system before introducing a new refrigerant charge?",
+    "options": [
+      "To increase system pressure so the new refrigerant enters more quickly",
+      "To remove non-condensable gases (such as air and nitrogen) and moisture that would harm system performance and components",
+      "To cool the compressor windings before startup",
+      "Evacuation is required only for new systems, not for systems that have been previously charged"
+    ],
+    "answer_text": "To remove non-condensable gases (such as air and nitrogen) and moisture that would harm system performance and components",
+    "explanation": "Evacuation is required under 40 CFR §82.156 to remove two types of contaminants from a system: (1) non-condensable gases such as air and nitrogen, which raise head pressure because they do not condense at normal condensing temperatures and reduce system efficiency; and (2) moisture/water vapor, which combines with refrigerant to form hydrochloric or hydrofluoric acid, degrading compressor oil and damaging metal components. Both contaminants are removed by pulling a vacuum with a vacuum pump until the specified evacuation level is achieved.",
+    "source_ref": "40 CFR §82.156; ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.1-why-002",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.1",
+    "question": "Non-condensable gases (such as air) trapped in a refrigeration system cause which primary problem?",
+    "options": [
+      "They lower the evaporating temperature and cause the system to over-cool",
+      "They raise the condensing pressure (head pressure) because they do not condense at normal condensing temperatures",
+      "They cause the refrigerant to fractionate and change composition",
+      "They freeze inside the expansion valve, blocking refrigerant flow"
+    ],
+    "answer_text": "They raise the condensing pressure (head pressure) because they do not condense at normal condensing temperatures",
+    "explanation": "Non-condensable gases (air, nitrogen) do not participate in the refrigeration cycle — they accumulate in the condenser and raise the total pressure (partial pressure of the non-condensables plus the refrigerant saturation pressure). This elevated head pressure forces the compressor to work harder, reduces system capacity, increases power consumption, and can cause compressor overheating. The symptom is abnormally high discharge pressure compared to what the P-T chart predicts for the ambient temperature. Evacuation removes these gases before charging.",
+    "source_ref": "40 CFR §82.156; ASHRAE Refrigeration Handbook",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.1-why-003",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.1",
+    "question": "Which instrument should be used to verify that a system has been evacuated to the required level?",
+    "options": [
+      "A standard refrigerant manifold gauge set (compound gauge)",
+      "An electronic micron gauge (vacuum gauge)",
+      "A clamp-on ammeter",
+      "A refrigerant identifier"
+    ],
+    "answer_text": "An electronic micron gauge (vacuum gauge)",
+    "explanation": "Standard manifold compound gauges measure down to approximately 30 in Hg (about 25,000 microns), which is far too coarse to verify the deep vacuum levels required by EPA regulations (which are specified in inches of mercury vacuum, e.g., 4 in Hg or 15 in Hg). For verification of system tightness and complete evacuation, an electronic micron gauge (also called an electronic vacuum gauge) is required — it can measure vacuum in microns of mercury (e.g., 500 microns, 250 microns), providing the precision needed. A stable micron reading that does not rise confirms the vacuum is holding and the system is leak-free.",
+    "source_ref": "40 CFR §82.156; ASHRAE Standards",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.1-why-004",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.1",
+    "question": "After pulling a vacuum on a system, a technician observes that the micron gauge reading slowly rises (increases) after the vacuum pump is isolated. What does this indicate?",
+    "options": [
+      "The system is fully evacuated and ready for charging",
+      "The vacuum pump is operating correctly and removing remaining moisture",
+      "There is either a system leak or residual moisture still boiling off in the system",
+      "The refrigerant has begun to migrate back through the service valves"
+    ],
+    "answer_text": "There is either a system leak or residual moisture still boiling off in the system",
+    "explanation": "After isolating the vacuum pump, the micron reading should stabilize. A rising micron reading indicates one of two problems: (1) the system has a leak — air or other gases are entering through a leak point and raising the pressure; or (2) there is still residual moisture in the system that is continuing to evaporate (off-gas), which adds vapor to the system and raises the pressure. If the reading rises rapidly, suspect a leak. If it rises slowly and then levels off at a higher level, residual moisture is more likely. Continued evacuation (possibly with heat applied to the system) is needed to remove moisture.",
+    "source_ref": "40 CFR §82.156; ASHRAE Refrigeration Handbook",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.1-why-005",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.1",
+    "question": "Under 40 CFR §82.156, what is the required evacuation level for a high-pressure system containing less than 200 pounds of refrigerant, using equipment manufactured after November 15, 1993?",
+    "options": [
+      "10 in Hg vacuum",
+      "15 in Hg vacuum",
+      "4 in Hg vacuum",
+      "0 in Hg (atmospheric pressure)"
+    ],
+    "answer_text": "4 in Hg vacuum",
+    "explanation": "Under Table 1 of 40 CFR §82.156(b), for high-pressure appliances (such as those using R-22, R-410A, R-404A) containing less than 200 pounds of refrigerant, and using recovery equipment manufactured after November 15, 1993, the required evacuation level is 4 inches of mercury (in Hg) vacuum. The same 4 in Hg requirement applies to high-pressure appliances with 200 pounds or more. Medium-pressure appliances have higher vacuum requirements (10–15 in Hg depending on charge size).",
+    "source_ref": "40 CFR §82.156(b), Table 1",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-evac-8.2-acid-001",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.2",
+    "question": "What happens when moisture enters a refrigeration system containing an HCFC or CFC refrigerant?",
+    "options": [
+      "The moisture evaporates harmlessly during normal operation",
+      "Moisture reacts with the refrigerant to form hydrochloric acid (HCl) and/or hydrofluoric acid (HF), which damage compressor components",
+      "Moisture improves lubrication by thinning the oil for better flow at low temperatures",
+      "Moisture causes the refrigerant to fractionate into its constituent components"
+    ],
+    "answer_text": "Moisture reacts with the refrigerant to form hydrochloric acid (HCl) and/or hydrofluoric acid (HF), which damage compressor components",
+    "explanation": "Water (moisture) reacts chemically with CFC and HCFC refrigerants — which contain chlorine — to produce hydrochloric acid (HCl). With fluorine-containing refrigerants (CFCs, HCFCs, HFCs), hydrofluoric acid (HF) can also form. These acids attack copper plating onto steel components (copper plating), degrade compressor oil, corrode motor windings and valve seats, and ultimately lead to compressor failure. This is why evacuation to remove moisture is critical before charging, and why filter-driers are installed to absorb any remaining moisture.",
+    "source_ref": "40 CFR §82.156; ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.2-acid-002",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.2",
+    "question": "What is the dark, sludge-like residue commonly found inside a compressor that has experienced a burnout, and what caused it?",
+    "options": [
+      "Carbon deposits from combustion; caused by the compressor operating at too-high RPM",
+      "Oxidized refrigerant oil from overheating; caused by inadequate refrigerant charge",
+      "Burnout residue (carbonized oil and acid byproducts) resulting from acid attack on compressor windings and oil, often caused by moisture contamination",
+      "Crystallized refrigerant solids that condensed inside the compressor housing"
+    ],
+    "answer_text": "Burnout residue (carbonized oil and acid byproducts) resulting from acid attack on compressor windings and oil, often caused by moisture contamination",
+    "explanation": "When moisture-induced acids (HCl, HF) attack the compressor internals, they degrade the lubricating oil and damage the motor windings. The resulting reaction produces a dark, sludge-like burnout residue consisting of carbonized oil, acid byproducts, and damaged winding material. This contamination circulates through the entire system. After a burnout, the system must be thoroughly flushed, filter-driers replaced, the root cause (moisture entry or other) corrected, and proper evacuation performed before recharging. Burnout residue left in the system will contaminate the replacement compressor.",
+    "source_ref": "ASHRAE Refrigeration Handbook; refrigerant service practices",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.2-acid-003",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.2",
+    "question": "What is the primary purpose of a filter-drier in a refrigeration system?",
+    "options": [
+      "To separate oil from refrigerant before it returns to the compressor",
+      "To remove moisture and particulate contamination from the refrigerant circuit",
+      "To reduce refrigerant pressure before the expansion valve",
+      "To prevent refrigerant vapor from condensing in the liquid line"
+    ],
+    "answer_text": "To remove moisture and particulate contamination from the refrigerant circuit",
+    "explanation": "A filter-drier serves two functions: (1) the desiccant (drying) function — it absorbs moisture from the refrigerant, preventing acid formation; and (2) the filtration function — it captures particulate contaminants (metal particles, debris) before they can reach the expansion valve or compressor. After a system has been opened to the atmosphere or after a compressor burnout, the filter-drier must be replaced because it becomes saturated with moisture and contamination and can no longer protect the system.",
+    "source_ref": "ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.2-acid-004",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.2",
+    "question": "To what vacuum level should a new or recently opened refrigeration system be evacuated to ensure thorough dehydration before charging?",
+    "options": [
+      "500 microns (0.5 mm Hg) or below for deep dehydration",
+      "29 in Hg, as read on a standard manifold gauge",
+      "10 in Hg is sufficient for all systems regardless of size",
+      "No evacuation is needed if the system uses a filter-drier"
+    ],
+    "answer_text": "500 microns (0.5 mm Hg) or below for deep dehydration",
+    "explanation": "Industry best practice calls for evacuating new or recently opened systems to 500 microns (500 millitorr) or below for thorough dehydration. At this level, residual moisture is reliably boiled off and removed by the vacuum pump. Some specifications call for 250–300 microns for critical applications. Standard manifold gauges cannot measure this level — an electronic micron gauge is required. The EPA regulatory minimums (such as 4 in Hg ≈ approximately 100,000 microns) are the legal floor, not the industry best practice for dehydration.",
+    "source_ref": "ASHRAE Refrigeration Handbook; refrigerant service industry standards",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-evac-8.2-acid-005",
+    "category": "Core",
+    "subtopic_id": "core-evac-8.2",
+    "question": "A technician notices that a system's acid test shows high acid level in the oil. Which of the following was the most likely cause?",
+    "options": [
+      "The system was overcharged with refrigerant at the last service",
+      "Moisture entered the system and reacted with the refrigerant to form hydrofluoric or hydrochloric acid",
+      "The refrigerant was charged as liquid instead of vapor, causing slugging",
+      "The condenser was dirty, raising head pressure beyond acid formation thresholds"
+    ],
+    "answer_text": "Moisture entered the system and reacted with the refrigerant to form hydrofluoric or hydrochloric acid",
+    "explanation": "High acid content in the compressor oil is a direct indicator that moisture entered the system and chemically reacted with the refrigerant. CFC and HCFC refrigerants (which contain chlorine) react with water to produce hydrochloric acid (HCl); all fluorinated refrigerants can produce hydrofluoric acid (HF). These acids contaminate and degrade the oil. The technician must: drain and dispose of the contaminated oil, replace the filter-drier, find and correct the moisture entry point, evacuate the system deeply, and recharge with fresh refrigerant and oil.",
+    "source_ref": "ASHRAE Refrigeration Handbook; 40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-safe-9.1-ppe-001",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "Which type of eye protection is required when working with liquid refrigerant?",
+    "options": [
+      "Standard safety glasses with side shields",
+      "A full-face welding shield",
+      "Chemical-splash resistant goggles",
+      "No eye protection is required if the technician works carefully"
+    ],
+    "answer_text": "Chemical-splash resistant goggles",
+    "explanation": "When handling liquid refrigerant, chemical-splash resistant goggles are required because liquid refrigerant can splash or spray under pressure. Standard safety glasses do not provide adequate protection against liquid splashes because they do not seal around the eye. Liquid refrigerant at temperatures of -40°F to -60°F (-40°C to -51°C) can cause severe frostbite and freeze burns to the eyes almost instantly. Chemical-splash goggles create a sealed barrier around the eye to prevent any liquid from reaching it.",
+    "source_ref": "40 CFR Part 82; OSHA 29 CFR §1910.133; refrigerant safety guidelines",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.1-ppe-002",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "Liquid R-22 makes contact with a technician's ungloved hand. What injury should be expected and why?",
+    "options": [
+      "Chemical burns from HCl acid in the liquid refrigerant",
+      "Severe frostbite or freeze burns because liquid R-22 has a boiling point of approximately -41°F (-41°C)",
+      "An allergic rash because R-22 contains chlorine compounds that react with skin",
+      "No injury — liquid refrigerant evaporates too quickly to cause harm at room temperature"
+    ],
+    "answer_text": "Severe frostbite or freeze burns because liquid R-22 has a boiling point of approximately -41°F (-41°C)",
+    "explanation": "R-22's boiling point at atmospheric pressure is approximately -41°F (-41°C). When liquid R-22 contacts skin, it rapidly absorbs heat and evaporates, causing the skin to freeze — resulting in frostbite or freeze burns. This can occur within seconds. The injury is similar to cryogenic burns. Technicians must wear appropriate gloves (leather or rubber insulated gloves) when handling refrigerant lines, cylinders, or connections that may have liquid refrigerant. Even touching frost-covered refrigerant lines can cause freeze injury.",
+    "source_ref": "OSHA 29 CFR §1910.132; refrigerant safety data sheets (SDS)",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.1-ppe-003",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "When working in a confined space where a significant refrigerant leak has occurred, what type of respiratory protection is required?",
+    "options": [
+      "A standard dust mask rated N95",
+      "A half-face air-purifying respirator with organic vapor cartridges",
+      "A supplied-air respirator (or SCBA) because refrigerant vapors can displace oxygen",
+      "No respiratory protection is needed because refrigerant vapors are non-toxic"
+    ],
+    "answer_text": "A supplied-air respirator (or SCBA) because refrigerant vapors can displace oxygen",
+    "explanation": "Refrigerant vapors are heavier than air and can accumulate in low or confined spaces, displacing oxygen and creating an oxygen-deficient atmosphere (below 19.5% O2). Standard air-purifying respirators (APRs) with cartridges do not add oxygen — they filter air already present. If the surrounding air is oxygen-deficient, an APR provides no protection against asphyxiation. A supplied-air respirator (SAR) or self-contained breathing apparatus (SCBA) provides clean, oxygen-enriched air independent of the surrounding atmosphere. Additionally, high concentrations of refrigerant vapors can cause cardiac sensitization (irregular heartbeat) and sudden death.",
+    "source_ref": "OSHA 29 CFR §1910.134; refrigerant SDS; ASHRAE Standard 15",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.1-ppe-004",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "A technician accidentally releases refrigerant near an open flame. What hazardous decomposition products can be produced?",
+    "options": [
+      "Carbon monoxide (CO) and nitrogen oxides (NOx) — the same as combustion products",
+      "Phosgene gas and hydrogen halide gases (such as HCl or HF), which are highly toxic",
+      "Ozone (O3) at ground level, which is an irritant but not acutely dangerous",
+      "Refrigerant vapor is inert near flame and does not decompose"
+    ],
+    "answer_text": "Phosgene gas and hydrogen halide gases (such as HCl or HF), which are highly toxic",
+    "explanation": "When refrigerants (especially CFCs and HCFCs that contain chlorine) are exposed to open flames, welding arcs, or very hot surfaces, they can thermally decompose to produce highly toxic products including phosgene (COCl2), hydrogen chloride (HCl), hydrogen fluoride (HF), and other hydrogen halides. These gases are acutely toxic — phosgene was used as a chemical warfare agent in World War I. If a technician smells a sharp, acrid odor near an open flame and refrigerant, the area must be evacuated immediately and ventilated. Never use open flames in areas where refrigerant leaks may be present.",
+    "source_ref": "Refrigerant SDS; OSHA 29 CFR §1910.119; ASHRAE Standard 15",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.1-ppe-005",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "Which hand protection is appropriate when handling refrigerant cylinders and connections that may expose a technician to liquid refrigerant?",
+    "options": [
+      "Thin latex surgical gloves are adequate for refrigerant protection",
+      "No gloves are needed because modern quick-connect fittings prevent exposure",
+      "Leather or rubber insulated gloves appropriate for cryogenic material handling",
+      "Cotton work gloves are sufficient since refrigerant exposure is brief"
+    ],
+    "answer_text": "Leather or rubber insulated gloves appropriate for cryogenic material handling",
+    "explanation": "Liquid refrigerants are extremely cold (cryogenic-temperature range) and can cause instant freeze burns through thin gloves. Leather or rubber insulated gloves designed for low-temperature work provide the thermal barrier needed to protect against cryogenic contact. Thin latex or cotton gloves offer insufficient thermal protection — liquid refrigerant can soak through cotton and freeze the skin beneath it. In addition to frostbite protection, gloves protect against the mechanical hazards of handling pressurized cylinders.",
+    "source_ref": "OSHA 29 CFR §1910.138; refrigerant SDS; ASHRAE Standard 15",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.1-ppe-006",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.1",
+    "question": "What is the primary atmospheric hazard that refrigerant vapors pose in enclosed or poorly ventilated spaces?",
+    "options": [
+      "Refrigerant vapors are highly flammable and pose an explosion risk in all confined spaces",
+      "Refrigerant vapors are heavier than air and can displace oxygen, creating an oxygen-deficient atmosphere that can cause asphyxiation",
+      "Refrigerant vapors react with building materials to produce toxic dust",
+      "Refrigerant vapors rise to the ceiling and damage electrical systems"
+    ],
+    "answer_text": "Refrigerant vapors are heavier than air and can displace oxygen, creating an oxygen-deficient atmosphere that can cause asphyxiation",
+    "explanation": "Most common refrigerant vapors (R-22, R-134a, R-410A, etc.) are denser than air and tend to sink and accumulate at floor level in enclosed spaces. As refrigerant concentration builds, it displaces oxygen. OSHA defines an oxygen-deficient atmosphere as below 19.5% O2 (normal air is 20.9%). Workers entering such spaces without supplied-air protection can lose consciousness rapidly and suffer fatal asphyxiation with little warning — refrigerant vapors are colorless and have only faint odors at dangerous concentrations. ASHRAE Standard 15 specifies machinery room refrigerant detector requirements and emergency ventilation requirements.",
+    "source_ref": "OSHA 29 CFR §1910.146; ASHRAE Standard 15; refrigerant SDS",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-safe-9.4-cyl-001",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.4",
+    "question": "What does the marking 'DO NOT REFILL' on a refrigerant cylinder indicate, and what is the legal consequence of violating it?",
+    "options": [
+      "The cylinder is rated for only one refrigerant type; refilling with a different refrigerant is prohibited but refilling with the same type is allowed",
+      "The cylinder is a DOT-specification disposable cylinder intended for one-time use; refilling it is illegal under federal law",
+      "The marking is a voluntary manufacturer recommendation, not a legal requirement",
+      "The cylinder must not be refilled by the customer but may be refilled by the original manufacturer"
+    ],
+    "answer_text": "The cylinder is a DOT-specification disposable cylinder intended for one-time use; refilling it is illegal under federal law",
+    "explanation": "Cylinders marked 'DO NOT REFILL' are DOT-specification disposable refrigerant cylinders designed and approved for one-time use to contain new refrigerant from the manufacturer. Refilling a disposable cylinder is illegal under federal law — both under DOT regulations (49 CFR) and EPA regulations. Disposable cylinders have thinner walls than reusable recovery cylinders and are not designed to withstand repeated pressurization cycles, making refilling a serious safety hazard as well as a legal violation. Before disposal, the cylinder must be evacuated to 15 in Hg vacuum per 40 CFR §82.164.",
+    "source_ref": "40 CFR §82.164; DOT 49 CFR",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.4-cyl-002",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.4",
+    "question": "Before disposing of an empty disposable refrigerant cylinder, what must the technician do under 40 CFR §82.164?",
+    "options": [
+      "Drill a hole in the cylinder to prevent accidental reuse",
+      "Evacuate the cylinder to 15 inches of mercury vacuum to remove residual refrigerant",
+      "Return the cylinder to the refrigerant manufacturer for proper destruction",
+      "Simply throw it in the general trash — it is considered empty once the pressure gauge reads zero"
+    ],
+    "answer_text": "Evacuate the cylinder to 15 inches of mercury vacuum to remove residual refrigerant",
+    "explanation": "40 CFR §82.164 requires that disposable refrigerant cylinders be evacuated to 15 inches of mercury vacuum before disposal. Even when a cylinder appears 'empty' (zero gauge pressure), it still contains residual refrigerant vapor. Evacuating to 15 in Hg vacuum ensures the residual refrigerant is recovered rather than vented during disposal. After evacuation, the valve should be removed or rendered inoperable to prevent reuse. The evacuated cylinder may then be recycled as scrap metal.",
+    "source_ref": "40 CFR §82.164",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.4-cyl-003",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.4",
+    "question": "What are the identifying color markings for a reusable refrigerant recovery cylinder as specified by industry standards?",
+    "options": [
+      "All-green cylinder with a white label",
+      "Yellow top and gray body",
+      "Orange top and silver body",
+      "Blue top and red body to match manifold gauge colors"
+    ],
+    "answer_text": "Yellow top and gray body",
+    "explanation": "Reusable refrigerant recovery cylinders are identified by their standard color coding: yellow top (collar/shoulder) and gray body. This color coding helps technicians quickly distinguish recovery cylinders from other types of compressed gas cylinders at a worksite. The Compressed Gas Association (CGA) and DOT standards establish this color convention. Recovery cylinders can be refilled and reused, but must undergo hydrostatic testing every 5 years per DOT 49 CFR §180.209.",
+    "source_ref": "DOT 49 CFR §180.209; CGA standards",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.4-cyl-004",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.4",
+    "question": "How often must reusable refrigerant recovery cylinders undergo hydrostatic pressure testing under DOT regulations?",
+    "options": [
+      "Every year",
+      "Every 3 years",
+      "Every 5 years",
+      "Every 10 years"
+    ],
+    "answer_text": "Every 5 years",
+    "explanation": "DOT 49 CFR §180.209 requires that reusable refrigerant recovery cylinders (classified as DOT specification cylinders) undergo hydrostatic pressure testing every 5 years to verify the cylinder's structural integrity. The test date is stamped on the cylinder collar. A cylinder that has exceeded its test date must not be used for refrigerant recovery or transport until it has been retested and re-certified by an authorized testing facility. Using an out-of-date cylinder violates DOT HMR.",
+    "source_ref": "DOT 49 CFR §180.209",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.4-cyl-005",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.4",
+    "question": "What is the maximum allowable fill level for any refrigerant recovery cylinder?",
+    "options": [
+      "100% of the cylinder's water capacity",
+      "95% to allow for a small vapor space",
+      "80% of the cylinder's capacity",
+      "60% to provide a large safety margin"
+    ],
+    "answer_text": "80% of the cylinder's capacity",
+    "explanation": "40 CFR §82.156(f) and DOT regulations prohibit filling any refrigerant cylinder beyond 80% of its capacity. This limit accounts for liquid refrigerant's thermal expansion — as temperature rises, liquid refrigerant expands. A cylinder filled to 100% with liquid refrigerant could develop dangerously high hydrostatic pressures if the temperature rises, potentially causing the cylinder to rupture. The 80% limit (sometimes expressed as the DOT collar-marked gross weight limit) ensures there is always a vapor space to accommodate thermal expansion.",
+    "source_ref": "40 CFR §82.156(f); DOT 49 CFR §173.301",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-ship-10.1-label-001",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.1",
+    "question": "Which information must be included on a refrigerant recovery cylinder label before it is transported?",
+    "options": [
+      "Only the technician's name and company name are required by law",
+      "The refrigerant type/name, gross weight, tare weight, and hazard warnings",
+      "Only a DOT hazard class placard is required — no other labeling is necessary",
+      "A simple 'contents unknown' label is acceptable if the origin is documented"
+    ],
+    "answer_text": "The refrigerant type/name, gross weight, tare weight, and hazard warnings",
+    "explanation": "Recovery cylinders must be properly labeled to identify their contents and associated hazards. Required information includes: the refrigerant type/name (e.g., 'R-22 Recovered'), gross weight (total weight of cylinder plus contents), tare weight (empty cylinder weight), and appropriate hazard warnings/labels as required by DOT HMR (49 CFR). Proper labeling ensures that handlers downstream — including reclaimers and disposal facilities — know exactly what they are handling and can take appropriate precautions.",
+    "source_ref": "DOT 49 CFR §172.301; 40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.1-label-002",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.1",
+    "question": "A recovery cylinder contains refrigerant from a system where two different refrigerants were present (cross-contaminated). How should this cylinder be labeled?",
+    "options": [
+      "Label it with the name of the refrigerant that makes up the majority of the contents",
+      "Label it as 'contaminated' or indicate that it contains a mixture of refrigerant types",
+      "No special labeling is needed — all refrigerant is treated the same at reclaimers",
+      "Label it with the refrigerant type that was originally in the system before contamination"
+    ],
+    "answer_text": "Label it as 'contaminated' or indicate that it contains a mixture of refrigerant types",
+    "explanation": "A cylinder containing a cross-contaminated or mixed refrigerant must be clearly labeled to reflect its actual contents. Labeling it as a single known refrigerant type would be inaccurate and potentially dangerous — reclaimers, handlers, and disposal facilities need to know the cylinder contains a mixture so they can take appropriate safety precautions and process it correctly. Mislabeling hazardous materials during transport violates DOT HMR (49 CFR §172.301) and could result in serious safety incidents.",
+    "source_ref": "DOT 49 CFR §172.301; 40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.1-label-003",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.1",
+    "question": "Why should a technician never use an unlabeled or unidentified recovery cylinder?",
+    "options": [
+      "Unlabeled cylinders may contain a different refrigerant than intended, leading to cross-contamination, improper handling, and regulatory violations",
+      "Unlabeled cylinders are typically old and their structural integrity cannot be verified",
+      "OSHA requires all cylinders to be painted in company colors before use",
+      "An unlabeled cylinder cannot be filled with refrigerant because the scale cannot tare without the label weight"
+    ],
+    "answer_text": "Unlabeled cylinders may contain a different refrigerant than intended, leading to cross-contamination, improper handling, and regulatory violations",
+    "explanation": "An unlabeled cylinder poses multiple risks: (1) if the contents are unknown, adding recovered refrigerant risks cross-contamination if a different refrigerant is already present; (2) cross-contaminated refrigerant cannot be recycled on-site and must be sent to a reclaimer; (3) transporting a cylinder with unknown contents violates DOT HMR labeling requirements; (4) if the cylinder is inadvertently used or processed as a different refrigerant, safety hazards can result. All cylinders must be clearly labeled with contents before use and transport.",
+    "source_ref": "DOT 49 CFR §172.301; 40 CFR §82.154; 40 CFR §82.156",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.1-label-004",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.1",
+    "question": "Under DOT HMR, which hazard class do most non-flammable refrigerants (such as R-22, R-134a, and R-410A) fall into when transported?",
+    "options": [
+      "Class 3 — Flammable Liquid",
+      "Class 2.1 — Flammable Gas",
+      "Class 2.2 — Non-flammable, Non-toxic Compressed Gas",
+      "Class 8 — Corrosive Material"
+    ],
+    "answer_text": "Class 2.2 — Non-flammable, Non-toxic Compressed Gas",
+    "explanation": "Under DOT Hazardous Materials Regulations (49 CFR), non-flammable refrigerants like R-22 (ASHRAE A1), R-134a (A1), and R-410A (A1) are classified as Class 2.2 — Non-flammable, non-toxic compressed gas. This classification requires the green 'Non-Flammable Gas' label on the cylinder during transport. Flammable refrigerants (A2L, A2, A3 safety classes) are classified as Class 2.1 — Flammable Gas and require the red 'Flammable Gas' label.",
+    "source_ref": "DOT 49 CFR §172.101; DOT 49 CFR §173.115",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.1-label-005",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.1",
+    "question": "Which document is required to accompany hazardous materials (such as refrigerant cylinders) during transport under DOT HMR?",
+    "options": [
+      "A copy of the technician's EPA 608 certification card",
+      "A shipping paper (bill of lading or hazmat shipping paper) describing the material, quantity, and hazard class",
+      "A current MSDS from the refrigerant manufacturer",
+      "No documentation is required for cylinders under 100 lbs gross weight"
+    ],
+    "answer_text": "A shipping paper (bill of lading or hazmat shipping paper) describing the material, quantity, and hazard class",
+    "explanation": "DOT HMR (49 CFR §172.200) requires that hazardous materials — including refrigerant cylinders — be accompanied by proper shipping papers during transport. These papers (typically a bill of lading or hazmat shipping document) must include the proper shipping name, hazard class, UN identification number, packing group (if applicable), quantity, and emergency contact information. This requirement applies regardless of cylinder size. Failure to have proper shipping papers during transport is a DOT violation.",
+    "source_ref": "DOT 49 CFR §172.200; DOT 49 CFR §172.201",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-ship-10.2-dot-001",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.2",
+    "question": "Under DOT regulations, how are flammable refrigerants (ASHRAE A2L, A2, or A3 safety class) classified for transport?",
+    "options": [
+      "Class 2.2 — Non-flammable Compressed Gas",
+      "Class 2.1 — Flammable Gas",
+      "Class 3 — Flammable Liquid",
+      "Class 9 — Miscellaneous Hazardous Material"
+    ],
+    "answer_text": "Class 2.1 — Flammable Gas",
+    "explanation": "Under DOT HMR (49 CFR §173.115), flammable refrigerants — including mildly flammable A2L refrigerants (R-32, R-454B, R-1234yf) and more flammable A2 and A3 refrigerants — are classified as Class 2.1, Flammable Gas. This requires the red 'Flammable Gas' hazard label on the cylinder during transport. Non-flammable refrigerants (A1 safety class, such as R-22, R-134a, R-410A) are Class 2.2. The DOT classification is based on flammability characteristics, not ASHRAE safety class directly, but the flammability assessment results are consistent.",
+    "source_ref": "DOT 49 CFR §173.115; DOT 49 CFR §172.101",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.2-dot-002",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.2",
+    "question": "What DOT specification must refrigerant recovery cylinders meet in order to be used for transport of recovered refrigerants?",
+    "options": [
+      "Cylinders must meet DOT specification requirements (such as DOT-4BA or DOT-4BW), as confirmed by the DOT spec marking stamped on the cylinder",
+      "Any steel cylinder of sufficient size is acceptable as long as it holds pressure",
+      "Recovery cylinders must be made of aluminum and exceed 50 lbs tare weight",
+      "Cylinders must be approved by the EPA's Section 608 program, not DOT"
+    ],
+    "answer_text": "Cylinders must meet DOT specification requirements (such as DOT-4BA or DOT-4BW), as confirmed by the DOT spec marking stamped on the cylinder",
+    "explanation": "DOT HMR (49 CFR Part 178) specifies the design, construction, and testing requirements for cylinders used to transport hazardous gases, including refrigerants. Refrigerant recovery cylinders must be manufactured to a DOT specification — most commonly DOT-4BA or DOT-4BW for steel cylinders. The DOT spec number, service pressure, serial number, manufacturer's mark, and hydrostatic test date are stamped on the cylinder collar. Using a cylinder that does not meet DOT specifications for hazmat transport is illegal under 49 CFR.",
+    "source_ref": "DOT 49 CFR Part 178; DOT 49 CFR §173.301",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.2-dot-003",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.2",
+    "question": "What is the UN identification number format required on DOT labels for compressed gas refrigerants during transport?",
+    "options": [
+      "The EPA certification number of the technician who recovered the refrigerant",
+      "A four-digit UN number specific to the refrigerant (e.g., UN 1018 for R-22, UN 3163 for liquefied gas NOS)",
+      "The ASHRAE refrigerant number (e.g., '22' for R-22)",
+      "No UN number is required for cylinders under 119 gallons"
+    ],
+    "answer_text": "A four-digit UN number specific to the refrigerant (e.g., UN 1018 for R-22, UN 3163 for liquefied gas NOS)",
+    "explanation": "DOT HMR (49 CFR §172.301) requires that hazardous materials during transport display the UN (United Nations) identification number. Each refrigerant or refrigerant category has an assigned four-digit UN number. For example, UN 1018 is assigned to chlorodifluoromethane (R-22), UN 3252 is used for difluoromethane (R-32), and UN 3163 covers liquefied gas mixtures NOS (not otherwise specified). The UN number must appear on the shipping paper and on labels or placards on the cylinder/package. This system enables emergency responders worldwide to quickly identify hazardous contents.",
+    "source_ref": "DOT 49 CFR §172.101; DOT 49 CFR §172.301",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-ship-10.2-dot-004",
+    "category": "Core",
+    "subtopic_id": "core-ship-10.2",
+    "question": "A technician recovers R-410A from a commercial system and places it in a properly labeled recovery cylinder. Before transporting the cylinder in a service vehicle, what DOT requirement must be met?",
+    "options": [
+      "The cylinder must be transported upside down to keep liquid refrigerant in the valve",
+      "The cylinder must be secured to prevent movement, valve must be protected, and proper DOT labels must be in place on the cylinder",
+      "Refrigerant cylinders under 100 lbs are exempt from all DOT transport requirements",
+      "Only a bill of lading is required; no labels are needed if the cylinder is inside the vehicle"
+    ],
+    "answer_text": "The cylinder must be secured to prevent movement, valve must be protected, and proper DOT labels must be in place on the cylinder",
+    "explanation": "DOT HMR (49 CFR) requires that compressed gas cylinders transported in vehicles be properly secured to prevent tipping or rolling, that valve protection caps or guards be in place, and that required DOT hazard labels be affixed to the cylinder. R-410A is Class 2.2 (non-flammable gas), requiring a green non-flammable gas label. Additionally, proper shipping papers must be in the vehicle. Failure to meet these requirements constitutes a DOT violation, which can result in significant civil penalties regardless of whether an incident occurs.",
+    "source_ref": "DOT 49 CFR §177.840; DOT 49 CFR §172.400",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-ref-5.2-gauge-001",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.2",
+    "question": "What does the blue gauge on a manifold gauge set measure and to which side of the system is it connected?",
+    "options": [
+      "High-side (discharge) pressure; connected to the compressor discharge port",
+      "Low-side (suction) pressure; connected to the suction side of the system",
+      "Refrigerant cylinder pressure; connected to the refrigerant supply",
+      "Ambient temperature converted to pressure; connected to the condenser outlet"
+    ],
+    "answer_text": "Low-side (suction) pressure; connected to the suction side of the system",
+    "explanation": "The blue gauge on a refrigerant manifold gauge set is the low-side (compound) gauge. It connects via the blue hose to the suction side of the refrigerant system (the low-pressure side). This gauge reads both pressure in psig (positive pressure) and vacuum in inches of mercury (in Hg) — hence it is called a 'compound' gauge. The suction pressure reading, when cross-referenced with the refrigerant's P-T chart, indicates the evaporating temperature and can be used to diagnose system performance.",
+    "source_ref": "ASHRAE Refrigeration Handbook; EPA 608 technician training",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-ref-5.2-gauge-002",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.2",
+    "question": "What color is the center/service hose on a standard refrigerant manifold gauge set, and what is it used for?",
+    "options": [
+      "Blue; used exclusively for vacuum pump connection",
+      "Red; used to connect to the high-side service port",
+      "Yellow; used to connect to the refrigerant cylinder, recovery machine, or vacuum pump",
+      "Green; used to connect to the nitrogen cylinder for pressure testing"
+    ],
+    "answer_text": "Yellow; used to connect to the refrigerant cylinder, recovery machine, or vacuum pump",
+    "explanation": "The center/service port hose on a manifold gauge set is yellow. This hose connects to the service equipment — which could be a refrigerant cylinder (for charging), a recovery machine (for recovery), or a vacuum pump (for evacuation). The yellow hose is the utility connection through which refrigerant or vacuum passes into or out of the system being serviced. The manifold valves control whether the center port connects to the low side (blue), high side (red), or both.",
+    "source_ref": "EPA 608 technician training; ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+  {
+    "id": "core-ref-5.2-gauge-003",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.2",
+    "question": "Why is the low-side (blue) gauge called a 'compound' gauge while the high-side (red) gauge is not?",
+    "options": [
+      "The blue gauge measures two refrigerants simultaneously; the red gauge measures only one",
+      "The blue gauge measures both positive pressure (psig) and vacuum (in Hg); the red gauge measures pressure only",
+      "The blue gauge has two needles for redundancy; the red gauge has only one",
+      "The blue gauge is used for both R-22 and R-410A systems; the red gauge is type-specific"
+    ],
+    "answer_text": "The blue gauge measures both positive pressure (psig) and vacuum (in Hg); the red gauge measures pressure only",
+    "explanation": "A compound gauge measures both positive pressure (above atmospheric) in psig and negative pressure (vacuum) in inches of mercury (in Hg). The low-side gauge is a compound gauge because the suction side of the system can be at either positive pressure (normal operation) or negative pressure/vacuum (during evacuation or in certain low-temperature systems). The high-side gauge is a standard pressure gauge that only measures positive pressure — the discharge/liquid side of the system never operates in a vacuum during normal use.",
+    "source_ref": "EPA 608 technician training; ASHRAE Refrigeration Handbook",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ref-5.2-gauge-004",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.2",
+    "question": "A technician attaches manifold gauges to an R-22 system running normally. The red gauge reads 225 psig and the blue gauge reads 68 psig. What do these readings represent respectively?",
+    "options": [
+      "Suction pressure 225 psig; discharge pressure 68 psig",
+      "Discharge/condensing pressure 225 psig; suction/evaporating pressure 68 psig",
+      "Refrigerant cylinder pressure 225 psig; system charge remaining 68 psig",
+      "Ambient temperature (converted) 225; system superheat 68"
+    ],
+    "answer_text": "Discharge/condensing pressure 225 psig; suction/evaporating pressure 68 psig",
+    "explanation": "The red (high-side) gauge reads the discharge/condensing pressure — the high-pressure side of the system where the condenser is located. The blue (low-side) gauge reads the suction/evaporating pressure — the low-pressure side of the system where the evaporator is located. For R-22 at typical operating conditions: a high-side reading of approximately 225 psig corresponds to a condensing temperature around 105°F, and a low-side reading of approximately 68 psig corresponds to an evaporating temperature around 40°F — both normal for a comfort cooling application. These are cross-referenced against the R-22 pressure-temperature (P-T) chart to diagnose system condition.",
+    "source_ref": "EPA 608 technician training; R-22 P-T chart",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-ref-5.2-gauge-005",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.2",
+    "question": "When attaching manifold gauges to a running refrigeration system, why should a technician stabilize the system before taking pressure readings?",
+    "options": [
+      "Gauges must warm up for 10 minutes before they read accurately",
+      "System pressures fluctuate during compressor startup and must stabilize to provide accurate steady-state diagnostic readings",
+      "Refrigerant takes time to settle to the bottom of the system before accurate readings can be obtained",
+      "Gauge needles must be zeroed after each connection to remove instrument error"
+    ],
+    "answer_text": "System pressures fluctuate during compressor startup and must stabilize to provide accurate steady-state diagnostic readings",
+    "explanation": "Refrigerant system pressures fluctuate during compressor startup, during cycling, and whenever operating conditions change (load, ambient temperature). To get accurate diagnostic readings that can be meaningfully compared to the pressure-temperature chart, the system must be running under stable, representative conditions. Technicians should wait for the system to reach steady-state operation — typically several minutes of continuous compressor operation — before recording gauge readings for diagnostic comparison. Reading pressures during unstable conditions leads to incorrect diagnoses.",
+    "source_ref": "EPA 608 technician training; ASHRAE Refrigeration Handbook",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-env-1.2-class-001",
+    "category": "Core",
+    "subtopic_id": "core-env-1.2",
+    "question": "Which refrigerant has an ozone depletion potential (ODP) of 1.0 and serves as the reference standard for ODP measurements?",
+    "options": [
+      "R-22 (HCFC-22)",
+      "R-11 (CFC-11)",
+      "R-134a (HFC-134a)",
+      "R-1234yf (HFO-1234yf)"
+    ],
+    "answer_text": "R-11 (CFC-11)",
+    "explanation": "R-11 (trichlorofluoromethane, CFC-11) is the reference refrigerant for ozone depletion potential with an ODP of 1.0. All other refrigerants' ODPs are measured relative to R-11. R-12 (CFC-12) also has an ODP of 1.0. R-22 (HCFC-22) has an ODP of 0.05 — much lower than CFCs because it partially breaks down in the troposphere before reaching the stratosphere. HFCs like R-134a and HFOs like R-1234yf have an ODP of zero because they contain no chlorine or bromine.",
+    "source_ref": "40 CFR §82.3; Montreal Protocol; EPA ODP reference values",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-env-1.2-class-002",
+    "category": "Core",
+    "subtopic_id": "core-env-1.2",
+    "question": "What ASHRAE safety classification does R-1234yf carry, and why is it considered environmentally preferable to R-134a?",
+    "options": [
+      "A1 (non-flammable); R-1234yf is preferable because it has a lower boiling point",
+      "A2L (mildly flammable); R-1234yf is preferable because it has an ultra-low GWP (approximately 4) and ODP of zero, compared to R-134a's GWP of 1430",
+      "B2 (toxic, mildly flammable); R-1234yf is preferable because it contains no fluorine",
+      "A3 (highly flammable); R-1234yf is preferable because it is a drop-in replacement for R-134a with no system modifications"
+    ],
+    "answer_text": "A2L (mildly flammable); R-1234yf is preferable because it has an ultra-low GWP (approximately 4) and ODP of zero, compared to R-134a's GWP of 1430",
+    "explanation": "R-1234yf (HFO-1234yf) has an ASHRAE A2L safety classification — mildly flammable with low flame speed (≤10 cm/s) and low toxicity. Its global warming potential is approximately 4 (100-year GWP), compared to R-134a's GWP of 1430. Both have zero ODP. R-1234yf has become the primary replacement for R-134a in mobile air conditioning (covered under Section 609) and is also being adopted in stationary equipment. Despite the A2L flammability classification, its very low flame propagation speed means it requires specialized precautions but is far less dangerous than conventional flammable gases.",
+    "source_ref": "ASHRAE Standard 34; EPA SNAP program; AIM Act",
+    "difficulty": "hard",
+    "verified": true
+  },
+  {
+    "id": "core-env-1.2-class-003",
+    "category": "Core",
+    "subtopic_id": "core-env-1.2",
+    "question": "A technician reads a refrigerant container label showing 'R-500.' Which refrigerant family does R-500 belong to, and is it still legally available for new equipment today?",
+    "options": [
+      "HFC blend; R-500 is still in production and available for new equipment",
+      "CFC blend (R-12 and R-152a); R-500 is a CFC whose production ended in 1996 and is no longer available for new equipment",
+      "HCFC; R-500 production ends in 2030 per the AIM Act phasedown schedule",
+      "HFO; R-500 is a new low-GWP refrigerant approved under EPA SNAP"
+    ],
+    "answer_text": "CFC blend (R-12 and R-152a); R-500 is a CFC whose production ended in 1996 and is no longer available for new equipment",
+    "explanation": "R-500 is a blend of R-12 (CFC-12, 73.8%) and R-152a (HFC-152a, 26.2%). Because R-12 is a CFC, R-500 is classified as a CFC blend with a significant ozone depletion potential. Under the Clean Air Act and the Montreal Protocol, CFC production in the United States ended on January 1, 1996. R-500 is no longer manufactured or imported for new use. Any remaining R-500 is from pre-1996 stockpiles or recovered material. Technicians encountering R-500 systems are working with legacy equipment.",
+    "source_ref": "40 CFR §82.4; Montreal Protocol; Clean Air Act Title VI",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-safe-9.3-n2-001",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.3",
+    "question": "Why must a pressure regulator always be used when connecting a nitrogen cylinder to a refrigeration system for pressure testing?",
+    "options": [
+      "Because nitrogen reacts with refrigerant oil at high pressures, requiring a regulator to prevent contamination",
+      "Because nitrogen cylinders can contain pressures of 2000 psig or more, and connecting directly without a regulator could over-pressurize the system and cause catastrophic failure",
+      "Because a regulator is required to add moisture to the dry nitrogen before it enters the system",
+      "Because OSHA requires regulators on all compressed gas cylinders regardless of application"
+    ],
+    "answer_text": "Because nitrogen cylinders can contain pressures of 2000 psig or more, and connecting directly without a regulator could over-pressurize the system and cause catastrophic failure",
+    "explanation": "Nitrogen cylinders used for pressure testing are typically charged to 2200–2640 psig. Refrigeration system components (copper tubing, valves, heat exchangers) are designed to withstand specific maximum pressures — often 400–600 psig for R-22 systems and up to 700+ psig for R-410A systems. Connecting a nitrogen cylinder directly to a refrigeration system without a pressure regulator could instantly expose the system to the full cylinder pressure, causing immediate catastrophic rupture, explosion, and potentially fatal injuries to nearby personnel. A pressure regulator set to the appropriate test pressure (typically not exceeding 150% of the system's design pressure) is mandatory.",
+    "source_ref": "ASHRAE Standard 15; refrigerant service safety guidelines; CGA G-10.1",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.3-n2-002",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.3",
+    "question": "A technician uses nitrogen for pressure testing a refrigerant system. What makes nitrogen appropriate for this purpose compared to other gases?",
+    "options": [
+      "Nitrogen is flammable, which makes leaks detectable by smell",
+      "Nitrogen is non-toxic, chemically inert, does not react with system components or oil, does not contribute to ozone depletion, and is dry (no moisture)",
+      "Nitrogen has a high GWP, which makes it a valid substitute for refrigerant during pressure testing",
+      "Nitrogen dissolves easily into refrigerant oil, making it easy to remove during evacuation"
+    ],
+    "answer_text": "Nitrogen is non-toxic, chemically inert, does not react with system components or oil, does not contribute to ozone depletion, and is dry (no moisture)",
+    "explanation": "Nitrogen (N2) is the preferred gas for pressure testing refrigeration systems because it is: (1) inert — it does not react with refrigerant, oil, or system materials; (2) dry — it contains no moisture that could contaminate the system; (3) non-flammable — safe to use near ignition sources; (4) non-toxic — a simple asphyxiant at very high concentrations but not chemically hazardous; (5) has no ODP or GWP — environmentally neutral. After pressure testing, nitrogen must be removed from the system through the vacuum process before charging with refrigerant, since nitrogen is a non-condensable gas that would elevate head pressure.",
+    "source_ref": "ASHRAE Standard 15; refrigerant service safety guidelines",
+    "difficulty": "easy",
+    "verified": true
+  },
+
+  {
+    "id": "core-safe-9.5-firstaid-001",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.5",
+    "question": "A technician gets liquid refrigerant on their skin and suspects frostbite. What is the correct first aid treatment?",
+    "options": [
+      "Apply hot water (as hot as possible) to rapidly rewarm the affected area",
+      "Rewarm the affected area with lukewarm (warm but not hot) water and seek medical attention",
+      "Apply ice to prevent further tissue damage and reduce inflammation",
+      "Rub the affected area vigorously with a dry cloth to restore circulation"
+    ],
+    "answer_text": "Rewarm the affected area with lukewarm (warm but not hot) water and seek medical attention",
+    "explanation": "For frostbite from liquid refrigerant contact, the recommended first aid is to carefully rewarm the affected area using lukewarm water (approximately 104–108°F / 40–42°C) — not hot water, which can cause thermal burns to tissue that is already damaged and cannot sense heat properly. Rubbing the affected area can cause additional tissue damage by breaking ice crystals in the tissue. After initial first aid, the affected person should seek medical attention for evaluation and treatment. Cold-related injuries can be more severe than they initially appear.",
+    "source_ref": "Refrigerant SDS; OSHA first aid guidelines; medical frostbite treatment protocols",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "core-safe-9.5-firstaid-002",
+    "category": "Core",
+    "subtopic_id": "core-safe-9.5",
+    "question": "A worker in a machinery room is found unconscious after a large refrigerant release. After calling for emergency help, what is the first action to take?",
+    "options": [
+      "Administer 100% oxygen using a portable oxygen tank immediately",
+      "Move the person to fresh air immediately, while avoiding entering the contaminated area without supplied-air respiratory protection",
+      "Induce vomiting in case the refrigerant was ingested",
+      "Apply cold compresses to the face to revive the worker from refrigerant-induced drowsiness"
+    ],
+    "answer_text": "Move the person to fresh air immediately, while avoiding entering the contaminated area without supplied-air respiratory protection",
+    "explanation": "If a worker is found unconscious in an area with a significant refrigerant release, the priority is to remove them to fresh air. However, the rescuer must not enter the oxygen-deficient or refrigerant-contaminated area without supplied-air respiratory protection — otherwise the rescuer also becomes a victim. After removing the victim to fresh air, assess breathing and circulation and provide CPR if needed. Refrigerant inhalation can cause cardiac sensitization (cardiac arrhythmia) — avoid use of epinephrine and seek immediate medical care. Vomiting should never be induced for inhalation exposure.",
+    "source_ref": "Refrigerant SDS; OSHA 29 CFR §1910.146 (confined space rescue)",
+    "difficulty": "hard",
+    "verified": true
+  },
+
+  {
+    "id": "core-caa-2.1-phaseout-001",
+    "category": "Core",
+    "subtopic_id": "core-caa-2.1",
+    "question": "Under the Clean Air Act regulations implementing the Montreal Protocol, what happened to R-22 production and import on January 1, 2020?",
+    "options": [
+      "R-22 production was reduced by 50% but continued at reduced levels",
+      "R-22 production and import were completely banned; only recovered, recycled, or reclaimed R-22 may be used to service existing systems",
+      "R-22 production ended for residential use but continued for commercial applications",
+      "R-22 was reclassified as an HFC and production resumed under new regulations"
+    ],
+    "answer_text": "R-22 production and import were completely banned; only recovered, recycled, or reclaimed R-22 may be used to service existing systems",
+    "explanation": "Under 40 CFR §82.4 implementing the HCFC phaseout schedule of the Clean Air Act, U.S. production and import of R-22 (HCFC-22) was completely banned effective January 1, 2020. After this date, only R-22 that has been recovered from existing systems, recycled on-site, or reclaimed by EPA-certified reclaimers may be used to service R-22 equipment that remains in operation. This makes proper recovery and reclamation of R-22 critically important, as the supply of R-22 for servicing is finite and irreplaceable.",
+    "source_ref": "40 CFR §82.4; Clean Air Act §605",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-caa-2.2-vent-001",
+    "category": "Core",
+    "subtopic_id": "core-caa-2.2",
+    "question": "As of January 1, 2018, which refrigerant family was added to the Section 608 venting prohibition, extending the ban beyond CFCs and HCFCs?",
+    "options": [
+      "Hydrocarbons (propane, isobutane)",
+      "HFOs (hydrofluoroolefins)",
+      "HFCs (hydrofluorocarbons)",
+      "Ammonia (R-717)"
+    ],
+    "answer_text": "HFCs (hydrofluorocarbons)",
+    "explanation": "Effective January 1, 2018, the EPA extended the Section 608 venting prohibition to cover HFCs (hydrofluorocarbons) and their blends. Before this date, venting HFCs was not specifically prohibited under Section 608 because HFCs do not deplete the ozone layer. However, the EPA acted under its authority to add refrigerants that injure the environment — HFCs are potent greenhouse gases with high GWPs. The prohibition now covers CFCs, HCFCs, and HFCs, meaning technicians cannot knowingly vent any of these refrigerant families. This change was upheld following litigation and remains in effect.",
+    "source_ref": "40 CFR §82.154; EPA final rule effective January 1, 2018",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-ref-5.1-cycle-001",
+    "category": "Core",
+    "subtopic_id": "core-ref-5.1",
+    "question": "In which component of the refrigeration cycle does refrigerant reject heat to the surrounding environment and change from a high-pressure vapor to a high-pressure liquid?",
+    "options": [
+      "Evaporator",
+      "Compressor",
+      "Condenser",
+      "Metering device (expansion valve)"
+    ],
+    "answer_text": "Condenser",
+    "explanation": "The condenser is the heat-rejection component of the refrigeration cycle. High-pressure, high-temperature refrigerant vapor leaving the compressor enters the condenser, where it rejects heat to the surrounding medium (air or water). As it releases heat, the refrigerant cools and condenses from a vapor into a high-pressure liquid. The condenser is located on the high-pressure side of the system. The temperature at which condensation occurs can be determined from the P-T chart using the high-side pressure reading. A dirty or undersized condenser results in higher-than-normal condensing pressure (high head pressure).",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "difficulty": "easy",
+    "verified": true
+  },
+
+  {
+    "id": "core-3rs-6.2-recycle-001",
+    "category": "Core",
+    "subtopic_id": "core-3rs-6.2",
+    "question": "Under 40 CFR §82.152, what is the definition of 'recycling' refrigerant, and where may recycled refrigerant be used?",
+    "options": [
+      "Recycling means restoring refrigerant to AHRI 700 virgin-equivalent purity standards at a certified reclaim facility; recycled refrigerant may be resold to anyone",
+      "Recycling means cleaning refrigerant on-site using oil separation and single or multiple passes through filter-driers; recycled refrigerant may be reused in the same system or other systems belonging to the same owner",
+      "Recycling is the same as reclaiming; both involve sending refrigerant to an external certified facility",
+      "Recycling refrigerant means mixing it with new virgin refrigerant to dilute contaminants before recharging"
+    ],
+    "answer_text": "Recycling means cleaning refrigerant on-site using oil separation and single or multiple passes through filter-driers; recycled refrigerant may be reused in the same system or other systems belonging to the same owner",
+    "explanation": "40 CFR §82.152 defines recycling as the process of reducing contaminants in used refrigerant by oil separation and single or multiple passes through filter-driers, either on-site or off-site, without testing to verify the refrigerant meets AHRI 700 purity standards. Recycled refrigerant may be returned to the same system it was recovered from or used in systems owned by the same owner — it cannot be resold. Recycling equipment must be certified per 40 CFR §82.158. This distinguishes recycling from reclaiming, which involves processing to virgin-equivalent purity standards.",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.158",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-3rs-6.3-reclaim-001",
+    "category": "Core",
+    "subtopic_id": "core-3rs-6.3",
+    "question": "To what purity standard must refrigerant be processed before it can be considered 'reclaimed' and resold?",
+    "options": [
+      "The refrigerant must be filtered through a standard drier to remove moisture — no chemical purity standard applies",
+      "AHRI Standard 700 (formerly ARI 700), which establishes purity requirements equivalent to new, virgin refrigerant",
+      "EPA SNAP approval standards, which vary by refrigerant type and application",
+      "DOT transport purity standards, which require 99% pure refrigerant by volume"
+    ],
+    "answer_text": "AHRI Standard 700 (formerly ARI 700), which establishes purity requirements equivalent to new, virgin refrigerant",
+    "explanation": "Reclaiming refrigerant means processing it at an EPA-certified reclaim facility to a purity level that meets AHRI Standard 700 — which specifies limits for moisture, acidity, particulates, air and other non-condensables, and other refrigerant types. Refrigerant meeting AHRI 700 standards is essentially equivalent to virgin (new) refrigerant in purity and can be resold on the open market. Only EPA-certified reclaimers using appropriate analytical and processing equipment can produce AHRI 700-grade reclaimed refrigerant. This is a higher standard than on-site recycling.",
+    "source_ref": "40 CFR §82.152; AHRI Standard 700",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-rec-7.2-speed-001",
+    "category": "Core",
+    "subtopic_id": "core-rec-7.2",
+    "question": "Which factor most significantly increases the speed of refrigerant recovery from a system?",
+    "options": [
+      "Using larger diameter recovery hoses to reduce pressure drop, and warming the refrigerant system to increase refrigerant pressure and transfer rate",
+      "Cooling the recovery cylinder in ice water to speed up condensation of the refrigerant",
+      "Connecting the recovery machine to the high-side only, since liquid recovers faster",
+      "Venting the recovery cylinder to atmosphere to equalize pressure before recovery begins"
+    ],
+    "answer_text": "Using larger diameter recovery hoses to reduce pressure drop, and warming the refrigerant system to increase refrigerant pressure and transfer rate",
+    "explanation": "Several factors affect recovery speed: (1) hose size — larger diameter hoses have lower pressure drop, allowing refrigerant to flow faster; (2) system temperature — warming the refrigerant (e.g., by gently warming the system or leaving it in the sun) increases the refrigerant's vapor pressure, driving faster transfer to the recovery cylinder; (3) recovery cylinder temperature — keeping the recovery cylinder cool (or using a cylinder cooling device) maintains a lower pressure in the cylinder, creating a greater pressure differential and faster flow; (4) refrigerant type — refrigerants with higher vapor pressures recover faster; (5) recovery equipment capacity — larger, more powerful recovery machines recover faster.",
+    "source_ref": "40 CFR §82.156; EPA 608 technician training",
+    "difficulty": "medium",
+    "verified": true
+  },
+
+  {
+    "id": "core-regs-3.2-scope-001",
+    "category": "Core",
+    "subtopic_id": "core-regs-3.2",
+    "question": "Section 608 of the Clean Air Act covers refrigerant handling requirements for stationary refrigeration and air conditioning equipment. Which type of system is specifically EXCLUDED from Section 608 and covered instead by Section 609?",
+    "options": [
+      "Commercial refrigeration systems using R-404A",
+      "Industrial process refrigeration systems",
+      "Motor vehicle air conditioning (MVAC) systems",
+      "Residential central air conditioning systems"
+    ],
+    "answer_text": "Motor vehicle air conditioning (MVAC) systems",
+    "explanation": "Section 608 of the Clean Air Act and 40 CFR Part 82, Subpart F cover stationary appliances — refrigeration and air conditioning equipment that is not motor vehicles. Motor vehicle air conditioning (MVAC) systems are explicitly excluded from Section 608. MVAC systems are regulated separately under Section 609 of the Clean Air Act (40 CFR Part 82, Subpart B), which has its own technician certification requirements, equipment standards, and recovery requirements. The EPA 609 technician certification covers MVAC work, which is distinct from the EPA 608 certification covered in this exam.",
+    "source_ref": "Clean Air Act §608; Clean Air Act §609; 40 CFR Part 82, Subpart F",
+    "difficulty": "easy",
+    "verified": true
+  }
+]

@@ -1,0 +1,17 @@
+# Dev tooling (question bank pipeline)
+node_modules/
+question-bank/
+*.ts
+*.pdf
+
+# Draft/backup question JSON files (not needed by test engine)
+questions-draft*.json
+questions-flagged.json
+questions-needs-verify.json
+questions-legacy-backup.json
+questions-validated.json
+bank-stats.json
+
+# Build tooling
+package.json
+package-lock.json

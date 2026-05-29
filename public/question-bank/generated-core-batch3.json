@@ -1,0 +1,506 @@
+[
+  {
+    "id": "generated-core-regs-3-3-001",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "What is the primary defining characteristic of system-dependent recovery equipment?",
+    "options": [
+      "It has its own built-in compressor and can operate independently",
+      "It relies on the refrigeration system's own compressor to assist the recovery process",
+      "It is only approved for use on systems containing HFC refrigerants",
+      "It must be used with a dedicated recovery cylinder rated above 400 psi"
+    ],
+    "answer_text": "It relies on the refrigeration system's own compressor to assist the recovery process",
+    "explanation": "System-dependent (passive) recovery equipment does not have its own compressor. Instead, it uses the refrigeration system's own compressor to push or pull refrigerant into the recovery cylinder. This distinguishes it from self-contained equipment, which has its own compressor. Per 40 CFR §82.158(b), system-dependent equipment is only approved for use on systems with 15 lbs or less of refrigerant charge.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-002",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "Under EPA regulations, what is the maximum refrigerant charge allowed in a system for system-dependent recovery equipment to be legally used?",
+    "options": [
+      "5 lbs",
+      "10 lbs",
+      "15 lbs",
+      "50 lbs"
+    ],
+    "answer_text": "15 lbs",
+    "explanation": "Per 40 CFR §82.158(b), system-dependent recovery equipment may only be used on systems containing 15 lbs or less of refrigerant. Systems with more than 15 lbs require self-contained recovery equipment, which has its own compressor and does not rely on the system being serviced.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-003",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "A technician needs to recover refrigerant from a rooftop commercial unit with an 80 lb charge. Which type of recovery equipment is required?",
+    "options": [
+      "System-dependent recovery equipment, because it is faster",
+      "Self-contained recovery equipment, because the system charge exceeds 15 lbs",
+      "Either type is acceptable as long as the technician is EPA-certified",
+      "System-dependent recovery equipment, as long as the system compressor is operational"
+    ],
+    "answer_text": "Self-contained recovery equipment, because the system charge exceeds 15 lbs",
+    "explanation": "40 CFR §82.158(b) requires self-contained recovery equipment for systems with more than 15 lbs of refrigerant. An 80 lb charge far exceeds this threshold. Self-contained equipment has its own motor-driven compressor and operates independently of the system under service, making it the only compliant choice here.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-004",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "Which of the following best describes self-contained recovery equipment?",
+    "options": [
+      "Equipment that uses the system's own compressor and is limited to systems with less than 15 lbs of refrigerant",
+      "Equipment with its own compressor that can recover refrigerant from systems of any size",
+      "Equipment that only works with HFC refrigerants and requires a specialized recovery cylinder",
+      "Equipment that performs simultaneous recovery and recycling without an external tank"
+    ],
+    "answer_text": "Equipment with its own compressor that can recover refrigerant from systems of any size",
+    "explanation": "Self-contained recovery equipment is equipped with its own motor and compressor, making it independent of the system being serviced. Unlike system-dependent equipment, it is not restricted by system charge size and can be used on systems of any refrigerant charge capacity. This makes it the required choice for systems with more than 15 lbs per 40 CFR §82.158(b).",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-005",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "Recovery equipment manufactured after November 15, 1993 must meet which requirement before it can be used for EPA 608 compliance?",
+    "options": [
+      "It must be registered with the EPA directly by the manufacturer",
+      "It must be certified by an EPA-approved third-party organization",
+      "It must be capable of achieving 0 psi recovery efficiency on all system types",
+      "It must be recalibrated annually by a certified HVAC technician"
+    ],
+    "answer_text": "It must be certified by an EPA-approved third-party organization",
+    "explanation": "Under EPA Section 608 regulations, recovery and recycling equipment manufactured after November 15, 1993 must be certified by an EPA-approved third-party testing organization (such as UL or ARI/AHRI) before it may be used for regulatory compliance. This certification verifies that the equipment meets required recovery efficiency standards. Equipment manufactured before that date was grandfathered in without third-party certification.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-006",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "A technician uses system-dependent recovery equipment on a system that contains 20 lbs of R-22. Which statement is correct about this situation?",
+    "options": [
+      "This is compliant because R-22 is an HCFC and has a special exemption",
+      "This is a violation because system-dependent equipment is limited to systems with 15 lbs or less",
+      "This is compliant as long as the system compressor is running during recovery",
+      "This is acceptable if the technician holds a Type II EPA 608 certification"
+    ],
+    "answer_text": "This is a violation because system-dependent equipment is limited to systems with 15 lbs or less",
+    "explanation": "Per 40 CFR §82.158(b), system-dependent recovery equipment is approved only for use on systems with a refrigerant charge of 15 lbs or less. A 20 lb system requires self-contained recovery equipment. The type of refrigerant (R-22, R-410A, etc.) or the technician's certification level do not change this equipment requirement — the charge size threshold is what governs equipment type selection.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-007",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "Which scenario would make it impossible to use system-dependent recovery equipment, regardless of system charge size?",
+    "options": [
+      "The system contains an HFC refrigerant such as R-410A",
+      "The system compressor is burned out or non-functional",
+      "The recovery cylinder is only half full",
+      "The outdoor ambient temperature is below 40°F"
+    ],
+    "answer_text": "The system compressor is burned out or non-functional",
+    "explanation": "System-dependent recovery equipment relies on the refrigeration system's own compressor to assist recovery. If the system compressor is non-functional (burned out, seized, or otherwise inoperable), system-dependent equipment cannot perform its function. In this case, self-contained recovery equipment — which has its own compressor — would be required. This is a practical limitation beyond the 15 lb charge threshold stated in 40 CFR §82.158(b).",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-regs-3-3-008",
+    "subtopic_id": "core-regs-3.3",
+    "category": "Core",
+    "question": "A technician's shop has two recovery machines: Machine A is system-dependent, and Machine B is self-contained. A residential mini-split with a 10 lb charge needs to be serviced. Which machine(s) may legally be used?",
+    "options": [
+      "Only Machine A (system-dependent), because it is more efficient on small systems",
+      "Only Machine B (self-contained), because it is always required for EPA compliance",
+      "Either Machine A or Machine B may be used, since the charge does not exceed 15 lbs",
+      "Neither machine may be used without additional EPA-issued site authorization"
+    ],
+    "answer_text": "Either Machine A or Machine B may be used, since the charge does not exceed 15 lbs",
+    "explanation": "40 CFR §82.158(b) permits the use of system-dependent recovery equipment on systems with 15 lbs or less of refrigerant charge. A 10 lb system falls within this limit, so both system-dependent (Machine A) and self-contained (Machine B) equipment are legally acceptable options, provided both machines are third-party certified (if manufactured after November 15, 1993). The regulation establishes a ceiling for system-dependent use, not a floor for self-contained use.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.158(b)",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-001",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "Which refrigerant leak detection method is considered the most sensitive for pinpointing small leaks?",
+    "options": [
+      "Bubble test using soap solution",
+      "Halide torch",
+      "Electronic leak detector",
+      "Ultraviolet fluorescent dye inspection"
+    ],
+    "answer_text": "Electronic leak detector",
+    "explanation": "Electronic leak detectors are recognized as the most sensitive method for detecting refrigerant leaks and are particularly effective at pinpointing the precise location of small or hard-to-find leaks. They must be recalibrated per the manufacturer's instructions to maintain accuracy. Bubble tests are least sensitive, halide torches only detect chlorinated refrigerants, and dye requires UV light and prior dye injection. See 40 CFR §82.154 and EPA 608 technician study guide.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-002",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "A technician injects fluorescent dye into a refrigerant system to help locate a suspected leak. What additional tool is required to detect the dye?",
+    "options": [
+      "An infrared thermometer",
+      "An electronic leak detector",
+      "A UV (ultraviolet) light",
+      "A combustible gas detector"
+    ],
+    "answer_text": "A UV (ultraviolet) light",
+    "explanation": "Fluorescent leak detection dye must be viewed under ultraviolet (UV) light to be visible. When dye escapes with leaking refrigerant, it leaves a glowing residue at the leak site that is revealed when illuminated with a UV lamp or flashlight. This method is particularly useful for finding intermittent leaks and the dye remains in the system for future inspections. Per 40 CFR §82.154 and EPA 608 technician study guide.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-003",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "Which leak detection method is the simplest and least expensive, but is only effective for detecting large (gross) leaks?",
+    "options": [
+      "Electronic leak detector",
+      "Halide torch",
+      "Bubble test using soap solution",
+      "Fluorescent dye with UV light"
+    ],
+    "answer_text": "Bubble test using soap solution",
+    "explanation": "The bubble test (applying soap solution to suspected leak points and watching for bubbles) is the simplest and cheapest leak detection method. However, it can only detect relatively large (gross) leaks that produce enough flow to form visible bubbles. It is not suitable for detecting small leaks or leaks in hidden, inaccessible areas. Electronic detectors are far more sensitive for small leaks. See 40 CFR §82.154.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-004",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "A halide torch leak detector changes the color of its flame from blue to green when refrigerant is detected. This method is ONLY effective for which category of refrigerants?",
+    "options": [
+      "HFC refrigerants such as R-410A and R-134a",
+      "HFO refrigerants such as R-1234yf",
+      "Chlorine-bearing refrigerants such as CFCs and HCFCs",
+      "Any refrigerant, because all refrigerants affect the flame color"
+    ],
+    "answer_text": "Chlorine-bearing refrigerants such as CFCs and HCFCs",
+    "explanation": "The halide torch works by detecting chlorine in the refrigerant — the copper element in the torch reacts with chlorine to produce a green flame. This means it only works with chlorinated refrigerants (CFCs like R-11 and R-12, and HCFCs like R-22). It will NOT detect HFCs (e.g., R-410A, R-134a) or HFOs (e.g., R-1234yf) because these refrigerants contain no chlorine. The halide torch is considered an older, largely obsolete method. See 40 CFR §82.154.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-005",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "Under EPA regulations, which of the following is PROHIBITED when pressure-testing a refrigeration system for leaks?",
+    "options": [
+      "Using nitrogen to pressurize the system",
+      "Using a mixture of nitrogen and a trace amount of refrigerant",
+      "Using pure refrigerant as the pressurizing gas",
+      "Using an inert gas at the manufacturer's specified test pressure"
+    ],
+    "answer_text": "Using pure refrigerant as the pressurizing gas",
+    "explanation": "EPA regulations under 40 CFR §82.154 prohibit using pure refrigerant as a pressurizing agent for leak testing, because doing so results in the release of refrigerant into the atmosphere when the test is complete or if a leak exists. The approved method is to use dry nitrogen (or a nitrogen/trace-refrigerant mixture) for pressure testing. This minimizes environmental release of ozone-depleting or greenhouse gas refrigerants.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-006",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "A technician uses fluorescent dye to locate a refrigerant leak. After the repair is confirmed, what happens to the dye that was added to the system?",
+    "options": [
+      "It is automatically filtered out by the system's drier",
+      "It breaks down and converts to oil within 24 hours of operation",
+      "It remains in the system and can be used for future leak inspections",
+      "It must be flushed out before the system is returned to service"
+    ],
+    "answer_text": "It remains in the system and can be used for future leak inspections",
+    "explanation": "Fluorescent dye is designed to remain circulating in the refrigeration system indefinitely. This is actually a benefit: if a new leak develops in the future, the technician can use a UV light to detect dye traces at the leak site without re-injecting dye. The dye is compatible with the system's refrigerant and lubricant and does not need to be removed after the repair. Per EPA 608 technician study guide and 40 CFR §82.154.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-007",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "An electronic leak detector begins giving false readings and inconsistent results in the field. What should the technician do before continuing to use it?",
+    "options": [
+      "Replace the detector with a halide torch, which requires no calibration",
+      "Recalibrate the detector according to the manufacturer's instructions",
+      "Use the bubble test exclusively until the detector is serviced at a repair facility",
+      "Reset the detector by removing and reinstalling the batteries"
+    ],
+    "answer_text": "Recalibrate the detector according to the manufacturer's instructions",
+    "explanation": "Electronic leak detectors must be recalibrated per the manufacturer's specifications to maintain accuracy and reliability. Sensors in electronic detectors can drift over time, especially with heavy use or after exposure to high refrigerant concentrations. The EPA 608 technician study guide and equipment manufacturers specify that recalibration is required when results become inconsistent. Substituting a halide torch is not appropriate for HFC or HFO systems, and a bubble test cannot detect small leaks.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-ref-5-3-008",
+    "subtopic_id": "core-ref-5.3",
+    "category": "Core",
+    "question": "A technician suspects a very small, intermittent refrigerant leak on an R-410A system inside a mechanical room. Which combination of detection methods would provide both sensitivity and the ability to confirm the exact leak location over time?",
+    "options": [
+      "Halide torch first, then bubble test for confirmation",
+      "Electronic leak detector to locate the area, then fluorescent dye to confirm the exact site during future inspections",
+      "Bubble test first, then halide torch to identify the refrigerant type",
+      "Fluorescent dye only, with weekly UV light inspections until the leak is found"
+    ],
+    "answer_text": "Electronic leak detector to locate the area, then fluorescent dye to confirm the exact site during future inspections",
+    "explanation": "For a small, intermittent leak on an HFC system (R-410A), the halide torch is useless (no chlorine). An electronic leak detector provides the best sensitivity for initial detection and general leak location. Adding fluorescent dye to the system then allows future UV light inspections to pinpoint the exact leak location even if the leak is only intermittent, since the dye will accumulate and stain at the leak point. This layered approach is endorsed by the EPA 608 technician study guide and 40 CFR §82.154.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-001",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "Which type of lubricating oil is required in systems using R-410A or other HFC refrigerants?",
+    "options": [
+      "Mineral oil (MO)",
+      "Alkylbenzene oil (AB)",
+      "Polyolester oil (POE)",
+      "Polyalkylene glycol oil (PAG)"
+    ],
+    "answer_text": "Polyolester oil (POE)",
+    "explanation": "R-410A and other HFC refrigerants require polyolester (POE) oil. Mineral oil and alkylbenzene oil are not miscible with HFC refrigerants and will separate, causing poor lubrication, compressor damage, and oil logging in the system. POE oil is specifically formulated to remain miscible with HFCs. PAG oil is used in automotive A/C systems but is not standard for commercial HVAC. Per ASHRAE refrigeration handbook and equipment manufacturer specifications, and consistent with 40 CFR Part 82 requirements.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-002",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "Why is mineral oil incompatible with R-410A systems?",
+    "options": [
+      "Mineral oil reacts chemically with R-410A to produce corrosive acids",
+      "Mineral oil is not miscible with HFC refrigerants and will separate, causing inadequate lubrication",
+      "Mineral oil has too low a viscosity for the higher pressures in R-410A systems",
+      "Mineral oil increases the flammability risk of R-410A systems"
+    ],
+    "answer_text": "Mineral oil is not miscible with HFC refrigerants and will separate, causing inadequate lubrication",
+    "explanation": "Mineral oil does not mix (is immiscible) with HFC refrigerants like R-410A. In a refrigeration system, oil must circulate with the refrigerant to lubricate the compressor. When mineral oil is used with HFCs, it separates from the refrigerant and can oil-log heat exchangers, starve the compressor of lubrication, and ultimately cause compressor failure. POE oil, which is miscible with HFCs, is the required lubricant. Per ASHRAE refrigeration handbook and equipment manufacturer specifications.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-003",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "A technician accidentally mixes POE oil with mineral oil in an R-22 system. What is the most likely consequence?",
+    "options": [
+      "No negative effect, since both oils are compatible with HCFC refrigerants",
+      "The mixture causes sludge formation, which can clog the system and cause damage",
+      "The mineral oil will gradually dissolve the POE oil, restoring normal system operation",
+      "The system pressure will rise above safe operating limits due to the oil mixture"
+    ],
+    "answer_text": "The mixture causes sludge formation, which can clog the system and cause damage",
+    "explanation": "Mixing POE oil with mineral oil is known to cause sludge formation. The two oil types are not fully compatible, and their mixture can create deposits that clog metering devices, oil separators, and other components. This can cause serious damage to the refrigeration system. When converting a system from R-22 (which may use mineral oil or alkylbenzene) to an HFC refrigerant requiring POE, the system must be thoroughly flushed to remove the old oil before POE is added. Per ASHRAE refrigeration handbook.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-004",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "A technician is retrofitting an older R-22 system to use an HFC drop-in replacement. Which oil change procedure is required?",
+    "options": [
+      "No oil change is needed because R-22 drop-in replacements are designed to work with mineral oil",
+      "The mineral oil must be removed and replaced with POE oil to ensure miscibility with the HFC refrigerant",
+      "Add POE oil directly on top of the existing mineral oil, as they are compatible in small quantities",
+      "Replace the mineral oil with alkylbenzene oil, which is compatible with all refrigerant types"
+    ],
+    "answer_text": "The mineral oil must be removed and replaced with POE oil to ensure miscibility with the HFC refrigerant",
+    "explanation": "When retrofitting an R-22 system to use an HFC replacement refrigerant, the mineral oil (or alkylbenzene oil) must be removed and replaced with POE oil. HFC refrigerants are not miscible with mineral oil; POE oil is required for proper circulation and compressor lubrication. Mixing the oils will cause sludge. Multiple oil flushes may be necessary to reduce the residual mineral oil concentration to an acceptable level (typically below 5%). Per ASHRAE refrigeration handbook and equipment manufacturer specifications.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-005",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "POE oil is described as hygroscopic. What does this mean for a technician handling POE oil during system service?",
+    "options": [
+      "POE oil is flammable and must be stored away from heat sources",
+      "POE oil readily absorbs moisture from the atmosphere and must be kept sealed to prevent contamination",
+      "POE oil breaks down quickly when exposed to UV light and must be stored in opaque containers",
+      "POE oil has a higher viscosity than mineral oil and must be pre-heated before use"
+    ],
+    "answer_text": "POE oil readily absorbs moisture from the atmosphere and must be kept sealed to prevent contamination",
+    "explanation": "POE (polyolester) oil is highly hygroscopic, meaning it readily absorbs water vapor from the air. Even brief exposure to the atmosphere can allow enough moisture to enter the oil to cause problems in the system, including acid formation, ice blockage at the expansion device, and compressor damage. Technicians must minimize the time that POE oil containers and open system ports are exposed to the atmosphere, and must use proper moisture indicators and driers. Per ASHRAE refrigeration handbook and equipment manufacturer specifications.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-sub-4-2-006",
+    "subtopic_id": "core-sub-4.2",
+    "category": "Core",
+    "question": "A new R-32 system arrives from the factory. A technician plans to add a small amount of mineral oil to supplement the factory charge. Why is this action incorrect?",
+    "options": [
+      "Mineral oil is too viscous for the high-speed compressors used in R-32 systems",
+      "R-32 is an HFC refrigerant and requires POE oil; mineral oil is incompatible and will cause separation and system damage",
+      "Adding any supplemental oil voids the manufacturer warranty but does not cause system damage",
+      "Mineral oil is acceptable in R-32 systems only if the charge is below 5 lbs"
+    ],
+    "answer_text": "R-32 is an HFC refrigerant and requires POE oil; mineral oil is incompatible and will cause separation and system damage",
+    "explanation": "R-32 is a pure HFC refrigerant. Like all HFCs, it requires POE oil for proper miscibility and lubrication. Adding mineral oil to an R-32 system will cause phase separation — the oil will not circulate properly with the refrigerant — leading to compressor lubrication failure and potential oil logging in heat exchangers. There is no charge-size exemption that makes mineral oil acceptable for use with HFC refrigerants. The system should only use the oil type specified by the equipment manufacturer, which for HFC systems is POE. Per ASHRAE refrigeration handbook and 40 CFR Part 82.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR Part 82; ASHRAE Refrigeration Handbook",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-001",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "Which of the following best defines refrigerant recovery as described under EPA Section 608 regulations?",
+    "options": [
+      "Cleaning and purifying used refrigerant to meet new refrigerant standards before returning it to a cylinder",
+      "Removing refrigerant from a system and storing it in an external container, not necessarily cleaning or testing it",
+      "Removing refrigerant from a system and immediately disposing of it at an EPA-approved facility",
+      "Recirculating refrigerant through the system's filter-drier to remove moisture and contaminants"
+    ],
+    "answer_text": "Removing refrigerant from a system and storing it in an external container, not necessarily cleaning or testing it",
+    "explanation": "Under EPA Section 608 (40 CFR §82.154), recovery means removing refrigerant from a system in any condition and storing it in an external container. Recovery does not require that the refrigerant be cleaned, tested, or returned to a particular purity level — that is the definition of reclaim. Recovery simply gets the refrigerant out of the system and into a container to prevent atmospheric release. Recycle (filtering on-site) and reclaim (factory-level purification) are distinct processes with different requirements.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-002",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "Before opening a refrigeration system for repair or disposal, what must a technician do first?",
+    "options": [
+      "Obtain a written work order signed by the equipment owner",
+      "Recover the refrigerant from the system into an approved recovery cylinder",
+      "Test the refrigerant purity using a refrigerant identifier",
+      "Check the ambient temperature to ensure it is above 50°F for efficient recovery"
+    ],
+    "answer_text": "Recover the refrigerant from the system into an approved recovery cylinder",
+    "explanation": "40 CFR §82.156 requires that refrigerant be recovered from any refrigeration or air conditioning system before the system is opened for service, maintenance, or disposal. Opening a system before recovery would allow refrigerant to escape to the atmosphere, which is prohibited under the Section 608 venting prohibition (40 CFR §82.154). Recovery must be performed with EPA-approved (third-party certified) equipment. The technician must also be certified under Section 608 if the system contains more than 5 lbs of refrigerant.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.154; §82.156",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-003",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "Who is required to hold EPA Section 608 certification when recovering refrigerant from systems with more than 5 lbs of charge?",
+    "options": [
+      "Only the business owner or supervisor overseeing the work",
+      "Any person who recovers refrigerant from such systems",
+      "Only technicians working on commercial refrigeration equipment",
+      "Only technicians working with Class I ozone-depleting substances (CFCs)"
+    ],
+    "answer_text": "Any person who recovers refrigerant from such systems",
+    "explanation": "Under 40 CFR §82.161, any person who recovers refrigerant from systems with more than 5 lbs of refrigerant must be certified under EPA Section 608. This applies regardless of the type of refrigerant or the type of equipment (residential, commercial, industrial). Certification is not limited to supervisors or to those working only with CFCs — it is required for all technicians performing recovery on systems above the 5 lb threshold.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.161",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-004",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "A technician is servicing a small appliance that contains less than 5 lbs of refrigerant. The technician intentionally vents a small amount during a hose connection. Which statement is correct?",
+    "options": [
+      "This is acceptable because systems under 5 lbs are exempt from all venting prohibitions",
+      "This is a violation because technicians must minimize refrigerant releases even from small systems",
+      "This is acceptable as long as the refrigerant is an HFC, which is not ozone-depleting",
+      "This is acceptable if the technician holds a Type I EPA 608 certification"
+    ],
+    "answer_text": "This is a violation because technicians must minimize refrigerant releases even from small systems",
+    "explanation": "The Section 608 venting prohibition under 40 CFR §82.154 prohibits any person from knowingly venting refrigerant during the service, maintenance, repair, or disposal of refrigeration and air conditioning equipment. While small appliances (under 5 lbs) have reduced recovery requirements compared to larger systems, the general prohibition on intentional venting still applies. Technicians must take steps to minimize releases regardless of system size or refrigerant type.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-005",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "What distinguishes recovery from reclaim under EPA Section 608 regulations?",
+    "options": [
+      "Recovery requires third-party lab analysis; reclaim only requires visual inspection of the refrigerant",
+      "Recovery removes refrigerant without necessarily cleaning it; reclaim purifies it to new product standards",
+      "Recovery is only performed on CFC systems; reclaim applies to HCFC and HFC systems",
+      "Recovery and reclaim are interchangeable terms under current EPA regulations"
+    ],
+    "answer_text": "Recovery removes refrigerant without necessarily cleaning it; reclaim purifies it to new product standards",
+    "explanation": "Under 40 CFR §82.154, the three R's are defined separately: Recovery = removing refrigerant from a system and storing it in an external container (no purity requirement). Recycle = cleaning refrigerant on-site by passing it through oil separators and driers (single-pass cleaning). Reclaim = processing refrigerant off-site to meet AHRI 700 purity standards equivalent to new refrigerant. Only reclaimed refrigerant can be resold as refrigerant. These are not interchangeable terms and have distinct regulatory meanings.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.154",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-core-3rs-6-1-006",
+    "subtopic_id": "core-3rs-6.1",
+    "category": "Core",
+    "question": "A technician recovers refrigerant from a system using a non-certified, homemade recovery device. Which regulation does this violate, and what is the consequence?",
+    "options": [
+      "It violates 40 CFR §82.158, which requires recovery equipment to be EPA-approved (third-party certified); using uncertified equipment is a regulatory violation subject to penalties",
+      "It violates OSHA 29 CFR 1910.119, which governs process safety management; the penalty is a mandatory facility shutdown",
+      "It only violates local building codes and does not trigger any federal EPA penalties",
+      "It violates 40 CFR §82.161 only if the system charge exceeds 50 lbs; smaller systems have no equipment certification requirement"
+    ],
+    "answer_text": "It violates 40 CFR §82.158, which requires recovery equipment to be EPA-approved (third-party certified); using uncertified equipment is a regulatory violation subject to penalties",
+    "explanation": "40 CFR §82.158 requires that recovery equipment manufactured after November 15, 1993 be certified by an EPA-approved third-party organization before it may be used in Section 608 compliance activities. Using homemade or non-certified recovery equipment is a federal regulatory violation regardless of system size. Violations of Section 608 regulations can result in civil penalties of up to $44,539 per day per violation. There is no charge-size exemption that permits use of uncertified recovery equipment.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.154; §82.156; §82.158",
+    "verified": false,
+    "trust_level": "high"
+  }
+]

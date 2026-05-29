@@ -1,0 +1,48 @@
+project_id = "epa608-platform"
+
+[api]
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[studio]
+port = 54323
+
+[inbucket]
+port = 54324
+
+[storage]
+enabled = true
+
+[auth]
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://epa608practicetest.net"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+
+[functions.send-email]
+enabled = true
+verify_jwt = true
+import_map = "./functions/send-email/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/send-email/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/send-email/*.html" ]

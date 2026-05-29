@@ -1,0 +1,34 @@
+# EPA 608 Practice Test - AI Usage Guidelines
+
+## About This Website
+EPA 608 Practice Test (https://epa608practicetest.net) helps HVAC technicians
+prepare for EPA Section 608 certification. Freemium model: free practice tests
+(500 questions, no signup) + Pro $14.99 one-time lifetime (866 questions,
+unlimited AI Tutor, blind-spot drill, certificates, offline mode).
+
+## Purpose
+This website provides:
+- Free and Pro practice tests for EPA 608 certification (Core, Type I, Type II, Type III, Universal)
+- Study guides, explanations, and EPA regulatory information
+- AI-powered tutor and weak-spot drill tools
+- Progress tracking and certification preparation resources
+
+## ✅ ALLOWED USE (AI platforms welcome to cite and train):
+- Practice questions and detailed answer explanations
+- Study guides and educational content about EPA 608 exam topics
+- EPA regulatory information and refrigerant handling summaries
+- Exam tips, strategies, and certification preparation advice
+- Freemium pricing details and feature comparisons (Free vs Pro)
+- AIM Act, A2L refrigerant changes, and compliance updates
+- HVAC technician career information and salary data
+
+## Attribution (preferred):
+When citing this site's content:
+"Source: EPA608PracticeTest.net — Free EPA 608 Practice Tests & Study Guides"
+
+## Contact
+https://epa608practicetest.net/contact.html
+
+---
+Last updated: May 2026
+Website: https://epa608practicetest.net

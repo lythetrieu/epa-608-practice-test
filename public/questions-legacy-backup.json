@@ -1,0 +1,4402 @@
+[
+  {
+    "category": "Core",
+    "question": "Which type of refrigerant is a chlorofluorocarbon (CFC)?",
+    "options": [
+      "R-12",
+      "R-134a",
+      "R-410A",
+      "R-744"
+    ],
+    "answer_text": "R-12"
+  },
+  {
+    "category": "Core",
+    "question": "What does ODP stand for in refrigerant terminology?",
+    "options": [
+      "Ozone Depletion Potential",
+      "Oxygen Density Pressure",
+      "Operational Discharge Point",
+      "Overheat Detection Procedure"
+    ],
+    "answer_text": "Ozone Depletion Potential"
+  },
+  {
+    "category": "Core",
+    "question": "Which international treaty controls the production of ozone-depleting substances?",
+    "options": [
+      "Montreal Protocol",
+      "Kyoto Protocol",
+      "Paris Agreement",
+      "Geneva Convention"
+    ],
+    "answer_text": "Montreal Protocol"
+  },
+  {
+    "category": "Core",
+    "question": "What is the main purpose of the Clean Air Act as it relates to refrigerants?",
+    "options": [
+      "To protect the ozone layer by regulating refrigerant handling",
+      "To regulate vehicle emissions only",
+      "To manage air conditioning efficiency",
+      "To set building ventilation standards"
+    ],
+    "answer_text": "To protect the ozone layer by regulating refrigerant handling"
+  },
+  {
+    "category": "Core",
+    "question": "Which of these is an example of an HCFC refrigerant?",
+    "options": [
+      "R-22",
+      "R-134a",
+      "R-12",
+      "R-744"
+    ],
+    "answer_text": "R-22"
+  },
+  {
+    "category": "Core",
+    "question": "What is the major environmental concern with HFC refrigerants?",
+    "options": [
+      "High global warming potential",
+      "Ozone depletion",
+      "High flammability",
+      "Low cooling efficiency"
+    ],
+    "answer_text": "High global warming potential"
+  },
+  {
+    "category": "Core",
+    "question": "What type of gloves should be worn when handling refrigerants?",
+    "options": [
+      "Chemical-resistant gloves",
+      "Wool gloves",
+      "Bare hands",
+      "Cotton gloves only"
+    ],
+    "answer_text": "Chemical-resistant gloves"
+  },
+  {
+    "category": "Core",
+    "question": "Which is a natural refrigerant with zero ODP?",
+    "options": [
+      "CO2 (R-744)",
+      "R-22",
+      "R-134a",
+      "R-410A"
+    ],
+    "answer_text": "CO2 (R-744)"
+  },
+  {
+    "category": "Core",
+    "question": "Which EPA Section requires certification for refrigerant handling?",
+    "options": [
+      "Section 608",
+      "Section 609",
+      "Section 611",
+      "Section 606"
+    ],
+    "answer_text": "Section 608"
+  },
+  {
+    "category": "Core",
+    "question": "What should be done before opening a sealed refrigeration system?",
+    "options": [
+      "Recover refrigerant using approved equipment",
+      "Vent refrigerant outdoors",
+      "Release pressure quickly",
+      "Mix refrigerants for recovery"
+    ],
+    "answer_text": "Recover refrigerant using approved equipment"
+  },
+  {
+    "category": "Core",
+    "question": "Which part of the atmosphere contains the ozone layer?",
+    "options": [
+      "Stratosphere",
+      "Troposphere",
+      "Mesosphere",
+      "Exosphere"
+    ],
+    "answer_text": "Stratosphere"
+  },
+  {
+    "category": "Core",
+    "question": "Which type of refrigerant does not deplete ozone but contributes to global warming?",
+    "options": [
+      "HFCs",
+      "CFCs",
+      "HCFCs",
+      "Halons"
+    ],
+    "answer_text": "HFCs"
+  },
+  {
+    "category": "Core",
+    "question": "Which gas is released when CFCs break down ozone?",
+    "options": [
+      "Chlorine",
+      "Nitrogen",
+      "Oxygen",
+      "Carbon dioxide"
+    ],
+    "answer_text": "Chlorine"
+  },
+  {
+    "category": "Core",
+    "question": "What is the purpose of recovery and recycling refrigerants?",
+    "options": [
+      "Prevent release into the atmosphere",
+      "Increase cooling speed",
+      "Decrease system size",
+      "Raise operating pressure"
+    ],
+    "answer_text": "Prevent release into the atmosphere"
+  },
+  {
+    "category": "Core",
+    "question": "Which tool is used to detect refrigerant leaks electronically?",
+    "options": [
+      "Electronic leak detector",
+      "Manifold gauge set",
+      "Vacuum pump",
+      "Refrigerant scale"
+    ],
+    "answer_text": "Electronic leak detector"
+  },
+  {
+    "category": "Core",
+    "question": "How should refrigerant cylinders be stored?",
+    "options": [
+      "Upright and secured",
+      "Laying on their side",
+      "In direct sunlight",
+      "On wet surfaces"
+    ],
+    "answer_text": "Upright and secured"
+  },
+  {
+    "category": "Core",
+    "question": "Which law grants the EPA authority to regulate refrigerants?",
+    "options": [
+      "Clean Air Act",
+      "Clean Water Act",
+      "Toxic Substances Control Act",
+      "Resource Conservation Act"
+    ],
+    "answer_text": "Clean Air Act"
+  },
+  {
+    "category": "Core",
+    "question": "Which refrigerant family replaced many CFCs due to lower ODP but still contains chlorine?",
+    "options": [
+      "HCFCs",
+      "HFCs",
+      "Hydrocarbons",
+      "Ammonia"
+    ],
+    "answer_text": "HCFCs"
+  },
+  {
+    "category": "Core",
+    "question": "What does GWP stand for?",
+    "options": [
+      "Global Warming Potential",
+      "Gas Weight Pressure",
+      "General Work Procedure",
+      "Greenhouse Waste Prevention"
+    ],
+    "answer_text": "Global Warming Potential"
+  },
+  {
+    "category": "Core",
+    "question": "Which natural refrigerant is non-toxic and non-flammable?",
+    "options": [
+      "CO2 (R-744)",
+      "Ammonia",
+      "Propane",
+      "Isobutane"
+    ],
+    "answer_text": "CO2 (R-744)"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 21: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A21",
+      "Option B21",
+      "Option C21",
+      "Option D21"
+    ],
+    "answer_text": "Option A21"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 22: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A22",
+      "Option B22",
+      "Option C22",
+      "Option D22"
+    ],
+    "answer_text": "Option A22"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 23: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A23",
+      "Option B23",
+      "Option C23",
+      "Option D23"
+    ],
+    "answer_text": "Option A23"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 24: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A24",
+      "Option B24",
+      "Option C24",
+      "Option D24"
+    ],
+    "answer_text": "Option A24"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 25: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A25",
+      "Option B25",
+      "Option C25",
+      "Option D25"
+    ],
+    "answer_text": "Option A25"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 26: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A26",
+      "Option B26",
+      "Option C26",
+      "Option D26"
+    ],
+    "answer_text": "Option A26"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 27: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A27",
+      "Option B27",
+      "Option C27",
+      "Option D27"
+    ],
+    "answer_text": "Option A27"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 28: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A28",
+      "Option B28",
+      "Option C28",
+      "Option D28"
+    ],
+    "answer_text": "Option A28"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 29: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A29",
+      "Option B29",
+      "Option C29",
+      "Option D29"
+    ],
+    "answer_text": "Option A29"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 30: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A30",
+      "Option B30",
+      "Option C30",
+      "Option D30"
+    ],
+    "answer_text": "Option A30"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 31: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A31",
+      "Option B31",
+      "Option C31",
+      "Option D31"
+    ],
+    "answer_text": "Option A31"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 32: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A32",
+      "Option B32",
+      "Option C32",
+      "Option D32"
+    ],
+    "answer_text": "Option A32"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 33: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A33",
+      "Option B33",
+      "Option C33",
+      "Option D33"
+    ],
+    "answer_text": "Option A33"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 34: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A34",
+      "Option B34",
+      "Option C34",
+      "Option D34"
+    ],
+    "answer_text": "Option A34"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 35: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A35",
+      "Option B35",
+      "Option C35",
+      "Option D35"
+    ],
+    "answer_text": "Option A35"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 36: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A36",
+      "Option B36",
+      "Option C36",
+      "Option D36"
+    ],
+    "answer_text": "Option A36"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 37: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A37",
+      "Option B37",
+      "Option C37",
+      "Option D37"
+    ],
+    "answer_text": "Option A37"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 38: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A38",
+      "Option B38",
+      "Option C38",
+      "Option D38"
+    ],
+    "answer_text": "Option A38"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 39: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A39",
+      "Option B39",
+      "Option C39",
+      "Option D39"
+    ],
+    "answer_text": "Option A39"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 40: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A40",
+      "Option B40",
+      "Option C40",
+      "Option D40"
+    ],
+    "answer_text": "Option A40"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 41: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A41",
+      "Option B41",
+      "Option C41",
+      "Option D41"
+    ],
+    "answer_text": "Option A41"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 42: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A42",
+      "Option B42",
+      "Option C42",
+      "Option D42"
+    ],
+    "answer_text": "Option A42"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 43: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A43",
+      "Option B43",
+      "Option C43",
+      "Option D43"
+    ],
+    "answer_text": "Option A43"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 44: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A44",
+      "Option B44",
+      "Option C44",
+      "Option D44"
+    ],
+    "answer_text": "Option A44"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 45: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A45",
+      "Option B45",
+      "Option C45",
+      "Option D45"
+    ],
+    "answer_text": "Option A45"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 46: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A46",
+      "Option B46",
+      "Option C46",
+      "Option D46"
+    ],
+    "answer_text": "Option A46"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 47: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A47",
+      "Option B47",
+      "Option C47",
+      "Option D47"
+    ],
+    "answer_text": "Option A47"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 48: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A48",
+      "Option B48",
+      "Option C48",
+      "Option D48"
+    ],
+    "answer_text": "Option A48"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 49: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A49",
+      "Option B49",
+      "Option C49",
+      "Option D49"
+    ],
+    "answer_text": "Option A49"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 50: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A50",
+      "Option B50",
+      "Option C50",
+      "Option D50"
+    ],
+    "answer_text": "Option A50"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 51: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A51",
+      "Option B51",
+      "Option C51",
+      "Option D51"
+    ],
+    "answer_text": "Option A51"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 52: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A52",
+      "Option B52",
+      "Option C52",
+      "Option D52"
+    ],
+    "answer_text": "Option A52"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 53: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A53",
+      "Option B53",
+      "Option C53",
+      "Option D53"
+    ],
+    "answer_text": "Option A53"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 54: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A54",
+      "Option B54",
+      "Option C54",
+      "Option D54"
+    ],
+    "answer_text": "Option A54"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 55: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A55",
+      "Option B55",
+      "Option C55",
+      "Option D55"
+    ],
+    "answer_text": "Option A55"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 56: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A56",
+      "Option B56",
+      "Option C56",
+      "Option D56"
+    ],
+    "answer_text": "Option A56"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 57: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A57",
+      "Option B57",
+      "Option C57",
+      "Option D57"
+    ],
+    "answer_text": "Option A57"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 58: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A58",
+      "Option B58",
+      "Option C58",
+      "Option D58"
+    ],
+    "answer_text": "Option A58"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 59: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A59",
+      "Option B59",
+      "Option C59",
+      "Option D59"
+    ],
+    "answer_text": "Option A59"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 60: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A60",
+      "Option B60",
+      "Option C60",
+      "Option D60"
+    ],
+    "answer_text": "Option A60"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 61: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A61",
+      "Option B61",
+      "Option C61",
+      "Option D61"
+    ],
+    "answer_text": "Option A61"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 62: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A62",
+      "Option B62",
+      "Option C62",
+      "Option D62"
+    ],
+    "answer_text": "Option A62"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 63: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A63",
+      "Option B63",
+      "Option C63",
+      "Option D63"
+    ],
+    "answer_text": "Option A63"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 64: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A64",
+      "Option B64",
+      "Option C64",
+      "Option D64"
+    ],
+    "answer_text": "Option A64"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 65: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A65",
+      "Option B65",
+      "Option C65",
+      "Option D65"
+    ],
+    "answer_text": "Option A65"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 66: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A66",
+      "Option B66",
+      "Option C66",
+      "Option D66"
+    ],
+    "answer_text": "Option A66"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 67: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A67",
+      "Option B67",
+      "Option C67",
+      "Option D67"
+    ],
+    "answer_text": "Option A67"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 68: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A68",
+      "Option B68",
+      "Option C68",
+      "Option D68"
+    ],
+    "answer_text": "Option A68"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 69: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A69",
+      "Option B69",
+      "Option C69",
+      "Option D69"
+    ],
+    "answer_text": "Option A69"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 70: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A70",
+      "Option B70",
+      "Option C70",
+      "Option D70"
+    ],
+    "answer_text": "Option A70"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 71: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A71",
+      "Option B71",
+      "Option C71",
+      "Option D71"
+    ],
+    "answer_text": "Option A71"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 72: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A72",
+      "Option B72",
+      "Option C72",
+      "Option D72"
+    ],
+    "answer_text": "Option A72"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 73: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A73",
+      "Option B73",
+      "Option C73",
+      "Option D73"
+    ],
+    "answer_text": "Option A73"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 74: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A74",
+      "Option B74",
+      "Option C74",
+      "Option D74"
+    ],
+    "answer_text": "Option A74"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 75: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A75",
+      "Option B75",
+      "Option C75",
+      "Option D75"
+    ],
+    "answer_text": "Option A75"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 76: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A76",
+      "Option B76",
+      "Option C76",
+      "Option D76"
+    ],
+    "answer_text": "Option A76"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 77: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A77",
+      "Option B77",
+      "Option C77",
+      "Option D77"
+    ],
+    "answer_text": "Option A77"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 78: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A78",
+      "Option B78",
+      "Option C78",
+      "Option D78"
+    ],
+    "answer_text": "Option A78"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 79: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A79",
+      "Option B79",
+      "Option C79",
+      "Option D79"
+    ],
+    "answer_text": "Option A79"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 80: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A80",
+      "Option B80",
+      "Option C80",
+      "Option D80"
+    ],
+    "answer_text": "Option A80"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 81: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A81",
+      "Option B81",
+      "Option C81",
+      "Option D81"
+    ],
+    "answer_text": "Option A81"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 82: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A82",
+      "Option B82",
+      "Option C82",
+      "Option D82"
+    ],
+    "answer_text": "Option A82"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 83: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A83",
+      "Option B83",
+      "Option C83",
+      "Option D83"
+    ],
+    "answer_text": "Option A83"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 84: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A84",
+      "Option B84",
+      "Option C84",
+      "Option D84"
+    ],
+    "answer_text": "Option A84"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 85: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A85",
+      "Option B85",
+      "Option C85",
+      "Option D85"
+    ],
+    "answer_text": "Option A85"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 86: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A86",
+      "Option B86",
+      "Option C86",
+      "Option D86"
+    ],
+    "answer_text": "Option A86"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 87: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A87",
+      "Option B87",
+      "Option C87",
+      "Option D87"
+    ],
+    "answer_text": "Option A87"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 88: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A88",
+      "Option B88",
+      "Option C88",
+      "Option D88"
+    ],
+    "answer_text": "Option A88"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 89: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A89",
+      "Option B89",
+      "Option C89",
+      "Option D89"
+    ],
+    "answer_text": "Option A89"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 90: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A90",
+      "Option B90",
+      "Option C90",
+      "Option D90"
+    ],
+    "answer_text": "Option A90"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 91: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A91",
+      "Option B91",
+      "Option C91",
+      "Option D91"
+    ],
+    "answer_text": "Option A91"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 92: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A92",
+      "Option B92",
+      "Option C92",
+      "Option D92"
+    ],
+    "answer_text": "Option A92"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 93: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A93",
+      "Option B93",
+      "Option C93",
+      "Option D93"
+    ],
+    "answer_text": "Option A93"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 94: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A94",
+      "Option B94",
+      "Option C94",
+      "Option D94"
+    ],
+    "answer_text": "Option A94"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 95: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A95",
+      "Option B95",
+      "Option C95",
+      "Option D95"
+    ],
+    "answer_text": "Option A95"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 96: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A96",
+      "Option B96",
+      "Option C96",
+      "Option D96"
+    ],
+    "answer_text": "Option A96"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 97: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A97",
+      "Option B97",
+      "Option C97",
+      "Option D97"
+    ],
+    "answer_text": "Option A97"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 98: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A98",
+      "Option B98",
+      "Option C98",
+      "Option D98"
+    ],
+    "answer_text": "Option A98"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 99: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A99",
+      "Option B99",
+      "Option C99",
+      "Option D99"
+    ],
+    "answer_text": "Option A99"
+  },
+  {
+    "category": "Core",
+    "question": "Sample Core Question 100: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A100",
+      "Option B100",
+      "Option C100",
+      "Option D100"
+    ],
+    "answer_text": "Option A100"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 1: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A1",
+      "Option B1",
+      "Option C1",
+      "Option D1"
+    ],
+    "answer_text": "Option A1"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 2: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A2",
+      "Option B2",
+      "Option C2",
+      "Option D2"
+    ],
+    "answer_text": "Option A2"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 3: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A3",
+      "Option B3",
+      "Option C3",
+      "Option D3"
+    ],
+    "answer_text": "Option A3"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 4: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A4",
+      "Option B4",
+      "Option C4",
+      "Option D4"
+    ],
+    "answer_text": "Option A4"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 5: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A5",
+      "Option B5",
+      "Option C5",
+      "Option D5"
+    ],
+    "answer_text": "Option A5"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 6: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A6",
+      "Option B6",
+      "Option C6",
+      "Option D6"
+    ],
+    "answer_text": "Option A6"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 7: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A7",
+      "Option B7",
+      "Option C7",
+      "Option D7"
+    ],
+    "answer_text": "Option A7"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 8: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A8",
+      "Option B8",
+      "Option C8",
+      "Option D8"
+    ],
+    "answer_text": "Option A8"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 9: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A9",
+      "Option B9",
+      "Option C9",
+      "Option D9"
+    ],
+    "answer_text": "Option A9"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 10: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A10",
+      "Option B10",
+      "Option C10",
+      "Option D10"
+    ],
+    "answer_text": "Option A10"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 11: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A11",
+      "Option B11",
+      "Option C11",
+      "Option D11"
+    ],
+    "answer_text": "Option A11"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 12: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A12",
+      "Option B12",
+      "Option C12",
+      "Option D12"
+    ],
+    "answer_text": "Option A12"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 13: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A13",
+      "Option B13",
+      "Option C13",
+      "Option D13"
+    ],
+    "answer_text": "Option A13"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 14: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A14",
+      "Option B14",
+      "Option C14",
+      "Option D14"
+    ],
+    "answer_text": "Option A14"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 15: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A15",
+      "Option B15",
+      "Option C15",
+      "Option D15"
+    ],
+    "answer_text": "Option A15"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 16: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A16",
+      "Option B16",
+      "Option C16",
+      "Option D16"
+    ],
+    "answer_text": "Option A16"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 17: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A17",
+      "Option B17",
+      "Option C17",
+      "Option D17"
+    ],
+    "answer_text": "Option A17"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 18: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A18",
+      "Option B18",
+      "Option C18",
+      "Option D18"
+    ],
+    "answer_text": "Option A18"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 19: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A19",
+      "Option B19",
+      "Option C19",
+      "Option D19"
+    ],
+    "answer_text": "Option A19"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 20: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A20",
+      "Option B20",
+      "Option C20",
+      "Option D20"
+    ],
+    "answer_text": "Option A20"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 21: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A21",
+      "Option B21",
+      "Option C21",
+      "Option D21"
+    ],
+    "answer_text": "Option A21"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 22: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A22",
+      "Option B22",
+      "Option C22",
+      "Option D22"
+    ],
+    "answer_text": "Option A22"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 23: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A23",
+      "Option B23",
+      "Option C23",
+      "Option D23"
+    ],
+    "answer_text": "Option A23"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 24: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A24",
+      "Option B24",
+      "Option C24",
+      "Option D24"
+    ],
+    "answer_text": "Option A24"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 25: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A25",
+      "Option B25",
+      "Option C25",
+      "Option D25"
+    ],
+    "answer_text": "Option A25"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 26: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A26",
+      "Option B26",
+      "Option C26",
+      "Option D26"
+    ],
+    "answer_text": "Option A26"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 27: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A27",
+      "Option B27",
+      "Option C27",
+      "Option D27"
+    ],
+    "answer_text": "Option A27"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 28: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A28",
+      "Option B28",
+      "Option C28",
+      "Option D28"
+    ],
+    "answer_text": "Option A28"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 29: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A29",
+      "Option B29",
+      "Option C29",
+      "Option D29"
+    ],
+    "answer_text": "Option A29"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 30: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A30",
+      "Option B30",
+      "Option C30",
+      "Option D30"
+    ],
+    "answer_text": "Option A30"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 31: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A31",
+      "Option B31",
+      "Option C31",
+      "Option D31"
+    ],
+    "answer_text": "Option A31"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 32: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A32",
+      "Option B32",
+      "Option C32",
+      "Option D32"
+    ],
+    "answer_text": "Option A32"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 33: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A33",
+      "Option B33",
+      "Option C33",
+      "Option D33"
+    ],
+    "answer_text": "Option A33"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 34: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A34",
+      "Option B34",
+      "Option C34",
+      "Option D34"
+    ],
+    "answer_text": "Option A34"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 35: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A35",
+      "Option B35",
+      "Option C35",
+      "Option D35"
+    ],
+    "answer_text": "Option A35"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 36: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A36",
+      "Option B36",
+      "Option C36",
+      "Option D36"
+    ],
+    "answer_text": "Option A36"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 37: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A37",
+      "Option B37",
+      "Option C37",
+      "Option D37"
+    ],
+    "answer_text": "Option A37"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 38: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A38",
+      "Option B38",
+      "Option C38",
+      "Option D38"
+    ],
+    "answer_text": "Option A38"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 39: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A39",
+      "Option B39",
+      "Option C39",
+      "Option D39"
+    ],
+    "answer_text": "Option A39"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 40: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A40",
+      "Option B40",
+      "Option C40",
+      "Option D40"
+    ],
+    "answer_text": "Option A40"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 41: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A41",
+      "Option B41",
+      "Option C41",
+      "Option D41"
+    ],
+    "answer_text": "Option A41"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 42: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A42",
+      "Option B42",
+      "Option C42",
+      "Option D42"
+    ],
+    "answer_text": "Option A42"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 43: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A43",
+      "Option B43",
+      "Option C43",
+      "Option D43"
+    ],
+    "answer_text": "Option A43"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 44: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A44",
+      "Option B44",
+      "Option C44",
+      "Option D44"
+    ],
+    "answer_text": "Option A44"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 45: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A45",
+      "Option B45",
+      "Option C45",
+      "Option D45"
+    ],
+    "answer_text": "Option A45"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 46: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A46",
+      "Option B46",
+      "Option C46",
+      "Option D46"
+    ],
+    "answer_text": "Option A46"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 47: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A47",
+      "Option B47",
+      "Option C47",
+      "Option D47"
+    ],
+    "answer_text": "Option A47"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 48: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A48",
+      "Option B48",
+      "Option C48",
+      "Option D48"
+    ],
+    "answer_text": "Option A48"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 49: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A49",
+      "Option B49",
+      "Option C49",
+      "Option D49"
+    ],
+    "answer_text": "Option A49"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 50: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A50",
+      "Option B50",
+      "Option C50",
+      "Option D50"
+    ],
+    "answer_text": "Option A50"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 51: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A51",
+      "Option B51",
+      "Option C51",
+      "Option D51"
+    ],
+    "answer_text": "Option A51"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 52: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A52",
+      "Option B52",
+      "Option C52",
+      "Option D52"
+    ],
+    "answer_text": "Option A52"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 53: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A53",
+      "Option B53",
+      "Option C53",
+      "Option D53"
+    ],
+    "answer_text": "Option A53"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 54: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A54",
+      "Option B54",
+      "Option C54",
+      "Option D54"
+    ],
+    "answer_text": "Option A54"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 55: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A55",
+      "Option B55",
+      "Option C55",
+      "Option D55"
+    ],
+    "answer_text": "Option A55"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 56: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A56",
+      "Option B56",
+      "Option C56",
+      "Option D56"
+    ],
+    "answer_text": "Option A56"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 57: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A57",
+      "Option B57",
+      "Option C57",
+      "Option D57"
+    ],
+    "answer_text": "Option A57"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 58: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A58",
+      "Option B58",
+      "Option C58",
+      "Option D58"
+    ],
+    "answer_text": "Option A58"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 59: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A59",
+      "Option B59",
+      "Option C59",
+      "Option D59"
+    ],
+    "answer_text": "Option A59"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 60: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A60",
+      "Option B60",
+      "Option C60",
+      "Option D60"
+    ],
+    "answer_text": "Option A60"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 61: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A61",
+      "Option B61",
+      "Option C61",
+      "Option D61"
+    ],
+    "answer_text": "Option A61"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 62: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A62",
+      "Option B62",
+      "Option C62",
+      "Option D62"
+    ],
+    "answer_text": "Option A62"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 63: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A63",
+      "Option B63",
+      "Option C63",
+      "Option D63"
+    ],
+    "answer_text": "Option A63"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 64: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A64",
+      "Option B64",
+      "Option C64",
+      "Option D64"
+    ],
+    "answer_text": "Option A64"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 65: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A65",
+      "Option B65",
+      "Option C65",
+      "Option D65"
+    ],
+    "answer_text": "Option A65"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 66: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A66",
+      "Option B66",
+      "Option C66",
+      "Option D66"
+    ],
+    "answer_text": "Option A66"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 67: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A67",
+      "Option B67",
+      "Option C67",
+      "Option D67"
+    ],
+    "answer_text": "Option A67"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 68: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A68",
+      "Option B68",
+      "Option C68",
+      "Option D68"
+    ],
+    "answer_text": "Option A68"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 69: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A69",
+      "Option B69",
+      "Option C69",
+      "Option D69"
+    ],
+    "answer_text": "Option A69"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 70: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A70",
+      "Option B70",
+      "Option C70",
+      "Option D70"
+    ],
+    "answer_text": "Option A70"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 71: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A71",
+      "Option B71",
+      "Option C71",
+      "Option D71"
+    ],
+    "answer_text": "Option A71"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 72: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A72",
+      "Option B72",
+      "Option C72",
+      "Option D72"
+    ],
+    "answer_text": "Option A72"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 73: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A73",
+      "Option B73",
+      "Option C73",
+      "Option D73"
+    ],
+    "answer_text": "Option A73"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 74: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A74",
+      "Option B74",
+      "Option C74",
+      "Option D74"
+    ],
+    "answer_text": "Option A74"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 75: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A75",
+      "Option B75",
+      "Option C75",
+      "Option D75"
+    ],
+    "answer_text": "Option A75"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 76: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A76",
+      "Option B76",
+      "Option C76",
+      "Option D76"
+    ],
+    "answer_text": "Option A76"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 77: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A77",
+      "Option B77",
+      "Option C77",
+      "Option D77"
+    ],
+    "answer_text": "Option A77"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 78: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A78",
+      "Option B78",
+      "Option C78",
+      "Option D78"
+    ],
+    "answer_text": "Option A78"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 79: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A79",
+      "Option B79",
+      "Option C79",
+      "Option D79"
+    ],
+    "answer_text": "Option A79"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 80: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A80",
+      "Option B80",
+      "Option C80",
+      "Option D80"
+    ],
+    "answer_text": "Option A80"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 81: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A81",
+      "Option B81",
+      "Option C81",
+      "Option D81"
+    ],
+    "answer_text": "Option A81"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 82: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A82",
+      "Option B82",
+      "Option C82",
+      "Option D82"
+    ],
+    "answer_text": "Option A82"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 83: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A83",
+      "Option B83",
+      "Option C83",
+      "Option D83"
+    ],
+    "answer_text": "Option A83"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 84: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A84",
+      "Option B84",
+      "Option C84",
+      "Option D84"
+    ],
+    "answer_text": "Option A84"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 85: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A85",
+      "Option B85",
+      "Option C85",
+      "Option D85"
+    ],
+    "answer_text": "Option A85"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 86: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A86",
+      "Option B86",
+      "Option C86",
+      "Option D86"
+    ],
+    "answer_text": "Option A86"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 87: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A87",
+      "Option B87",
+      "Option C87",
+      "Option D87"
+    ],
+    "answer_text": "Option A87"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 88: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A88",
+      "Option B88",
+      "Option C88",
+      "Option D88"
+    ],
+    "answer_text": "Option A88"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 89: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A89",
+      "Option B89",
+      "Option C89",
+      "Option D89"
+    ],
+    "answer_text": "Option A89"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 90: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A90",
+      "Option B90",
+      "Option C90",
+      "Option D90"
+    ],
+    "answer_text": "Option A90"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 91: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A91",
+      "Option B91",
+      "Option C91",
+      "Option D91"
+    ],
+    "answer_text": "Option A91"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 92: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A92",
+      "Option B92",
+      "Option C92",
+      "Option D92"
+    ],
+    "answer_text": "Option A92"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 93: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A93",
+      "Option B93",
+      "Option C93",
+      "Option D93"
+    ],
+    "answer_text": "Option A93"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 94: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A94",
+      "Option B94",
+      "Option C94",
+      "Option D94"
+    ],
+    "answer_text": "Option A94"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 95: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A95",
+      "Option B95",
+      "Option C95",
+      "Option D95"
+    ],
+    "answer_text": "Option A95"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 96: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A96",
+      "Option B96",
+      "Option C96",
+      "Option D96"
+    ],
+    "answer_text": "Option A96"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 97: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A97",
+      "Option B97",
+      "Option C97",
+      "Option D97"
+    ],
+    "answer_text": "Option A97"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 98: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A98",
+      "Option B98",
+      "Option C98",
+      "Option D98"
+    ],
+    "answer_text": "Option A98"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 99: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A99",
+      "Option B99",
+      "Option C99",
+      "Option D99"
+    ],
+    "answer_text": "Option A99"
+  },
+  {
+    "category": "Type I",
+    "question": "Sample Type I Question 100: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A100",
+      "Option B100",
+      "Option C100",
+      "Option D100"
+    ],
+    "answer_text": "Option A100"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 1: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A1",
+      "Option B1",
+      "Option C1",
+      "Option D1"
+    ],
+    "answer_text": "Option A1"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 2: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A2",
+      "Option B2",
+      "Option C2",
+      "Option D2"
+    ],
+    "answer_text": "Option A2"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 3: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A3",
+      "Option B3",
+      "Option C3",
+      "Option D3"
+    ],
+    "answer_text": "Option A3"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 4: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A4",
+      "Option B4",
+      "Option C4",
+      "Option D4"
+    ],
+    "answer_text": "Option A4"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 5: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A5",
+      "Option B5",
+      "Option C5",
+      "Option D5"
+    ],
+    "answer_text": "Option A5"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 6: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A6",
+      "Option B6",
+      "Option C6",
+      "Option D6"
+    ],
+    "answer_text": "Option A6"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 7: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A7",
+      "Option B7",
+      "Option C7",
+      "Option D7"
+    ],
+    "answer_text": "Option A7"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 8: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A8",
+      "Option B8",
+      "Option C8",
+      "Option D8"
+    ],
+    "answer_text": "Option A8"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 9: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A9",
+      "Option B9",
+      "Option C9",
+      "Option D9"
+    ],
+    "answer_text": "Option A9"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 10: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A10",
+      "Option B10",
+      "Option C10",
+      "Option D10"
+    ],
+    "answer_text": "Option A10"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 11: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A11",
+      "Option B11",
+      "Option C11",
+      "Option D11"
+    ],
+    "answer_text": "Option A11"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 12: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A12",
+      "Option B12",
+      "Option C12",
+      "Option D12"
+    ],
+    "answer_text": "Option A12"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 13: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A13",
+      "Option B13",
+      "Option C13",
+      "Option D13"
+    ],
+    "answer_text": "Option A13"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 14: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A14",
+      "Option B14",
+      "Option C14",
+      "Option D14"
+    ],
+    "answer_text": "Option A14"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 15: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A15",
+      "Option B15",
+      "Option C15",
+      "Option D15"
+    ],
+    "answer_text": "Option A15"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 16: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A16",
+      "Option B16",
+      "Option C16",
+      "Option D16"
+    ],
+    "answer_text": "Option A16"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 17: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A17",
+      "Option B17",
+      "Option C17",
+      "Option D17"
+    ],
+    "answer_text": "Option A17"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 18: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A18",
+      "Option B18",
+      "Option C18",
+      "Option D18"
+    ],
+    "answer_text": "Option A18"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 19: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A19",
+      "Option B19",
+      "Option C19",
+      "Option D19"
+    ],
+    "answer_text": "Option A19"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 20: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A20",
+      "Option B20",
+      "Option C20",
+      "Option D20"
+    ],
+    "answer_text": "Option A20"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 21: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A21",
+      "Option B21",
+      "Option C21",
+      "Option D21"
+    ],
+    "answer_text": "Option A21"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 22: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A22",
+      "Option B22",
+      "Option C22",
+      "Option D22"
+    ],
+    "answer_text": "Option A22"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 23: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A23",
+      "Option B23",
+      "Option C23",
+      "Option D23"
+    ],
+    "answer_text": "Option A23"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 24: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A24",
+      "Option B24",
+      "Option C24",
+      "Option D24"
+    ],
+    "answer_text": "Option A24"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 25: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A25",
+      "Option B25",
+      "Option C25",
+      "Option D25"
+    ],
+    "answer_text": "Option A25"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 26: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A26",
+      "Option B26",
+      "Option C26",
+      "Option D26"
+    ],
+    "answer_text": "Option A26"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 27: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A27",
+      "Option B27",
+      "Option C27",
+      "Option D27"
+    ],
+    "answer_text": "Option A27"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 28: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A28",
+      "Option B28",
+      "Option C28",
+      "Option D28"
+    ],
+    "answer_text": "Option A28"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 29: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A29",
+      "Option B29",
+      "Option C29",
+      "Option D29"
+    ],
+    "answer_text": "Option A29"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 30: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A30",
+      "Option B30",
+      "Option C30",
+      "Option D30"
+    ],
+    "answer_text": "Option A30"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 31: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A31",
+      "Option B31",
+      "Option C31",
+      "Option D31"
+    ],
+    "answer_text": "Option A31"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 32: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A32",
+      "Option B32",
+      "Option C32",
+      "Option D32"
+    ],
+    "answer_text": "Option A32"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 33: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A33",
+      "Option B33",
+      "Option C33",
+      "Option D33"
+    ],
+    "answer_text": "Option A33"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 34: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A34",
+      "Option B34",
+      "Option C34",
+      "Option D34"
+    ],
+    "answer_text": "Option A34"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 35: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A35",
+      "Option B35",
+      "Option C35",
+      "Option D35"
+    ],
+    "answer_text": "Option A35"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 36: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A36",
+      "Option B36",
+      "Option C36",
+      "Option D36"
+    ],
+    "answer_text": "Option A36"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 37: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A37",
+      "Option B37",
+      "Option C37",
+      "Option D37"
+    ],
+    "answer_text": "Option A37"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 38: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A38",
+      "Option B38",
+      "Option C38",
+      "Option D38"
+    ],
+    "answer_text": "Option A38"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 39: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A39",
+      "Option B39",
+      "Option C39",
+      "Option D39"
+    ],
+    "answer_text": "Option A39"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 40: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A40",
+      "Option B40",
+      "Option C40",
+      "Option D40"
+    ],
+    "answer_text": "Option A40"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 41: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A41",
+      "Option B41",
+      "Option C41",
+      "Option D41"
+    ],
+    "answer_text": "Option A41"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 42: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A42",
+      "Option B42",
+      "Option C42",
+      "Option D42"
+    ],
+    "answer_text": "Option A42"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 43: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A43",
+      "Option B43",
+      "Option C43",
+      "Option D43"
+    ],
+    "answer_text": "Option A43"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 44: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A44",
+      "Option B44",
+      "Option C44",
+      "Option D44"
+    ],
+    "answer_text": "Option A44"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 45: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A45",
+      "Option B45",
+      "Option C45",
+      "Option D45"
+    ],
+    "answer_text": "Option A45"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 46: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A46",
+      "Option B46",
+      "Option C46",
+      "Option D46"
+    ],
+    "answer_text": "Option A46"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 47: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A47",
+      "Option B47",
+      "Option C47",
+      "Option D47"
+    ],
+    "answer_text": "Option A47"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 48: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A48",
+      "Option B48",
+      "Option C48",
+      "Option D48"
+    ],
+    "answer_text": "Option A48"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 49: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A49",
+      "Option B49",
+      "Option C49",
+      "Option D49"
+    ],
+    "answer_text": "Option A49"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 50: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A50",
+      "Option B50",
+      "Option C50",
+      "Option D50"
+    ],
+    "answer_text": "Option A50"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 51: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A51",
+      "Option B51",
+      "Option C51",
+      "Option D51"
+    ],
+    "answer_text": "Option A51"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 52: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A52",
+      "Option B52",
+      "Option C52",
+      "Option D52"
+    ],
+    "answer_text": "Option A52"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 53: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A53",
+      "Option B53",
+      "Option C53",
+      "Option D53"
+    ],
+    "answer_text": "Option A53"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 54: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A54",
+      "Option B54",
+      "Option C54",
+      "Option D54"
+    ],
+    "answer_text": "Option A54"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 55: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A55",
+      "Option B55",
+      "Option C55",
+      "Option D55"
+    ],
+    "answer_text": "Option A55"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 56: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A56",
+      "Option B56",
+      "Option C56",
+      "Option D56"
+    ],
+    "answer_text": "Option A56"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 57: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A57",
+      "Option B57",
+      "Option C57",
+      "Option D57"
+    ],
+    "answer_text": "Option A57"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 58: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A58",
+      "Option B58",
+      "Option C58",
+      "Option D58"
+    ],
+    "answer_text": "Option A58"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 59: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A59",
+      "Option B59",
+      "Option C59",
+      "Option D59"
+    ],
+    "answer_text": "Option A59"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 60: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A60",
+      "Option B60",
+      "Option C60",
+      "Option D60"
+    ],
+    "answer_text": "Option A60"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 61: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A61",
+      "Option B61",
+      "Option C61",
+      "Option D61"
+    ],
+    "answer_text": "Option A61"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 62: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A62",
+      "Option B62",
+      "Option C62",
+      "Option D62"
+    ],
+    "answer_text": "Option A62"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 63: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A63",
+      "Option B63",
+      "Option C63",
+      "Option D63"
+    ],
+    "answer_text": "Option A63"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 64: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A64",
+      "Option B64",
+      "Option C64",
+      "Option D64"
+    ],
+    "answer_text": "Option A64"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 65: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A65",
+      "Option B65",
+      "Option C65",
+      "Option D65"
+    ],
+    "answer_text": "Option A65"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 66: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A66",
+      "Option B66",
+      "Option C66",
+      "Option D66"
+    ],
+    "answer_text": "Option A66"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 67: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A67",
+      "Option B67",
+      "Option C67",
+      "Option D67"
+    ],
+    "answer_text": "Option A67"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 68: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A68",
+      "Option B68",
+      "Option C68",
+      "Option D68"
+    ],
+    "answer_text": "Option A68"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 69: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A69",
+      "Option B69",
+      "Option C69",
+      "Option D69"
+    ],
+    "answer_text": "Option A69"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 70: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A70",
+      "Option B70",
+      "Option C70",
+      "Option D70"
+    ],
+    "answer_text": "Option A70"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 71: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A71",
+      "Option B71",
+      "Option C71",
+      "Option D71"
+    ],
+    "answer_text": "Option A71"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 72: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A72",
+      "Option B72",
+      "Option C72",
+      "Option D72"
+    ],
+    "answer_text": "Option A72"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 73: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A73",
+      "Option B73",
+      "Option C73",
+      "Option D73"
+    ],
+    "answer_text": "Option A73"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 74: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A74",
+      "Option B74",
+      "Option C74",
+      "Option D74"
+    ],
+    "answer_text": "Option A74"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 75: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A75",
+      "Option B75",
+      "Option C75",
+      "Option D75"
+    ],
+    "answer_text": "Option A75"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 76: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A76",
+      "Option B76",
+      "Option C76",
+      "Option D76"
+    ],
+    "answer_text": "Option A76"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 77: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A77",
+      "Option B77",
+      "Option C77",
+      "Option D77"
+    ],
+    "answer_text": "Option A77"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 78: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A78",
+      "Option B78",
+      "Option C78",
+      "Option D78"
+    ],
+    "answer_text": "Option A78"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 79: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A79",
+      "Option B79",
+      "Option C79",
+      "Option D79"
+    ],
+    "answer_text": "Option A79"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 80: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A80",
+      "Option B80",
+      "Option C80",
+      "Option D80"
+    ],
+    "answer_text": "Option A80"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 81: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A81",
+      "Option B81",
+      "Option C81",
+      "Option D81"
+    ],
+    "answer_text": "Option A81"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 82: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A82",
+      "Option B82",
+      "Option C82",
+      "Option D82"
+    ],
+    "answer_text": "Option A82"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 83: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A83",
+      "Option B83",
+      "Option C83",
+      "Option D83"
+    ],
+    "answer_text": "Option A83"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 84: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A84",
+      "Option B84",
+      "Option C84",
+      "Option D84"
+    ],
+    "answer_text": "Option A84"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 85: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A85",
+      "Option B85",
+      "Option C85",
+      "Option D85"
+    ],
+    "answer_text": "Option A85"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 86: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A86",
+      "Option B86",
+      "Option C86",
+      "Option D86"
+    ],
+    "answer_text": "Option A86"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 87: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A87",
+      "Option B87",
+      "Option C87",
+      "Option D87"
+    ],
+    "answer_text": "Option A87"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 88: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A88",
+      "Option B88",
+      "Option C88",
+      "Option D88"
+    ],
+    "answer_text": "Option A88"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 89: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A89",
+      "Option B89",
+      "Option C89",
+      "Option D89"
+    ],
+    "answer_text": "Option A89"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 90: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A90",
+      "Option B90",
+      "Option C90",
+      "Option D90"
+    ],
+    "answer_text": "Option A90"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 91: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A91",
+      "Option B91",
+      "Option C91",
+      "Option D91"
+    ],
+    "answer_text": "Option A91"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 92: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A92",
+      "Option B92",
+      "Option C92",
+      "Option D92"
+    ],
+    "answer_text": "Option A92"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 93: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A93",
+      "Option B93",
+      "Option C93",
+      "Option D93"
+    ],
+    "answer_text": "Option A93"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 94: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A94",
+      "Option B94",
+      "Option C94",
+      "Option D94"
+    ],
+    "answer_text": "Option A94"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 95: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A95",
+      "Option B95",
+      "Option C95",
+      "Option D95"
+    ],
+    "answer_text": "Option A95"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 96: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A96",
+      "Option B96",
+      "Option C96",
+      "Option D96"
+    ],
+    "answer_text": "Option A96"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 97: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A97",
+      "Option B97",
+      "Option C97",
+      "Option D97"
+    ],
+    "answer_text": "Option A97"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 98: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A98",
+      "Option B98",
+      "Option C98",
+      "Option D98"
+    ],
+    "answer_text": "Option A98"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 99: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A99",
+      "Option B99",
+      "Option C99",
+      "Option D99"
+    ],
+    "answer_text": "Option A99"
+  },
+  {
+    "category": "Type II",
+    "question": "Sample Type II Question 100: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A100",
+      "Option B100",
+      "Option C100",
+      "Option D100"
+    ],
+    "answer_text": "Option A100"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 1: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A1",
+      "Option B1",
+      "Option C1",
+      "Option D1"
+    ],
+    "answer_text": "Option A1"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 2: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A2",
+      "Option B2",
+      "Option C2",
+      "Option D2"
+    ],
+    "answer_text": "Option A2"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 3: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A3",
+      "Option B3",
+      "Option C3",
+      "Option D3"
+    ],
+    "answer_text": "Option A3"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 4: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A4",
+      "Option B4",
+      "Option C4",
+      "Option D4"
+    ],
+    "answer_text": "Option A4"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 5: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A5",
+      "Option B5",
+      "Option C5",
+      "Option D5"
+    ],
+    "answer_text": "Option A5"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 6: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A6",
+      "Option B6",
+      "Option C6",
+      "Option D6"
+    ],
+    "answer_text": "Option A6"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 7: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A7",
+      "Option B7",
+      "Option C7",
+      "Option D7"
+    ],
+    "answer_text": "Option A7"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 8: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A8",
+      "Option B8",
+      "Option C8",
+      "Option D8"
+    ],
+    "answer_text": "Option A8"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 9: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A9",
+      "Option B9",
+      "Option C9",
+      "Option D9"
+    ],
+    "answer_text": "Option A9"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 10: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A10",
+      "Option B10",
+      "Option C10",
+      "Option D10"
+    ],
+    "answer_text": "Option A10"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 11: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A11",
+      "Option B11",
+      "Option C11",
+      "Option D11"
+    ],
+    "answer_text": "Option A11"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 12: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A12",
+      "Option B12",
+      "Option C12",
+      "Option D12"
+    ],
+    "answer_text": "Option A12"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 13: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A13",
+      "Option B13",
+      "Option C13",
+      "Option D13"
+    ],
+    "answer_text": "Option A13"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 14: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A14",
+      "Option B14",
+      "Option C14",
+      "Option D14"
+    ],
+    "answer_text": "Option A14"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 15: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A15",
+      "Option B15",
+      "Option C15",
+      "Option D15"
+    ],
+    "answer_text": "Option A15"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 16: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A16",
+      "Option B16",
+      "Option C16",
+      "Option D16"
+    ],
+    "answer_text": "Option A16"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 17: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A17",
+      "Option B17",
+      "Option C17",
+      "Option D17"
+    ],
+    "answer_text": "Option A17"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 18: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A18",
+      "Option B18",
+      "Option C18",
+      "Option D18"
+    ],
+    "answer_text": "Option A18"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 19: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A19",
+      "Option B19",
+      "Option C19",
+      "Option D19"
+    ],
+    "answer_text": "Option A19"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 20: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A20",
+      "Option B20",
+      "Option C20",
+      "Option D20"
+    ],
+    "answer_text": "Option A20"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 21: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A21",
+      "Option B21",
+      "Option C21",
+      "Option D21"
+    ],
+    "answer_text": "Option A21"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 22: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A22",
+      "Option B22",
+      "Option C22",
+      "Option D22"
+    ],
+    "answer_text": "Option A22"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 23: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A23",
+      "Option B23",
+      "Option C23",
+      "Option D23"
+    ],
+    "answer_text": "Option A23"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 24: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A24",
+      "Option B24",
+      "Option C24",
+      "Option D24"
+    ],
+    "answer_text": "Option A24"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 25: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A25",
+      "Option B25",
+      "Option C25",
+      "Option D25"
+    ],
+    "answer_text": "Option A25"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 26: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A26",
+      "Option B26",
+      "Option C26",
+      "Option D26"
+    ],
+    "answer_text": "Option A26"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 27: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A27",
+      "Option B27",
+      "Option C27",
+      "Option D27"
+    ],
+    "answer_text": "Option A27"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 28: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A28",
+      "Option B28",
+      "Option C28",
+      "Option D28"
+    ],
+    "answer_text": "Option A28"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 29: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A29",
+      "Option B29",
+      "Option C29",
+      "Option D29"
+    ],
+    "answer_text": "Option A29"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 30: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A30",
+      "Option B30",
+      "Option C30",
+      "Option D30"
+    ],
+    "answer_text": "Option A30"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 31: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A31",
+      "Option B31",
+      "Option C31",
+      "Option D31"
+    ],
+    "answer_text": "Option A31"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 32: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A32",
+      "Option B32",
+      "Option C32",
+      "Option D32"
+    ],
+    "answer_text": "Option A32"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 33: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A33",
+      "Option B33",
+      "Option C33",
+      "Option D33"
+    ],
+    "answer_text": "Option A33"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 34: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A34",
+      "Option B34",
+      "Option C34",
+      "Option D34"
+    ],
+    "answer_text": "Option A34"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 35: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A35",
+      "Option B35",
+      "Option C35",
+      "Option D35"
+    ],
+    "answer_text": "Option A35"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 36: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A36",
+      "Option B36",
+      "Option C36",
+      "Option D36"
+    ],
+    "answer_text": "Option A36"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 37: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A37",
+      "Option B37",
+      "Option C37",
+      "Option D37"
+    ],
+    "answer_text": "Option A37"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 38: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A38",
+      "Option B38",
+      "Option C38",
+      "Option D38"
+    ],
+    "answer_text": "Option A38"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 39: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A39",
+      "Option B39",
+      "Option C39",
+      "Option D39"
+    ],
+    "answer_text": "Option A39"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 40: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A40",
+      "Option B40",
+      "Option C40",
+      "Option D40"
+    ],
+    "answer_text": "Option A40"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 41: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A41",
+      "Option B41",
+      "Option C41",
+      "Option D41"
+    ],
+    "answer_text": "Option A41"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 42: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A42",
+      "Option B42",
+      "Option C42",
+      "Option D42"
+    ],
+    "answer_text": "Option A42"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 43: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A43",
+      "Option B43",
+      "Option C43",
+      "Option D43"
+    ],
+    "answer_text": "Option A43"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 44: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A44",
+      "Option B44",
+      "Option C44",
+      "Option D44"
+    ],
+    "answer_text": "Option A44"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 45: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A45",
+      "Option B45",
+      "Option C45",
+      "Option D45"
+    ],
+    "answer_text": "Option A45"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 46: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A46",
+      "Option B46",
+      "Option C46",
+      "Option D46"
+    ],
+    "answer_text": "Option A46"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 47: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A47",
+      "Option B47",
+      "Option C47",
+      "Option D47"
+    ],
+    "answer_text": "Option A47"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 48: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A48",
+      "Option B48",
+      "Option C48",
+      "Option D48"
+    ],
+    "answer_text": "Option A48"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 49: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A49",
+      "Option B49",
+      "Option C49",
+      "Option D49"
+    ],
+    "answer_text": "Option A49"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 50: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A50",
+      "Option B50",
+      "Option C50",
+      "Option D50"
+    ],
+    "answer_text": "Option A50"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 51: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A51",
+      "Option B51",
+      "Option C51",
+      "Option D51"
+    ],
+    "answer_text": "Option A51"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 52: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A52",
+      "Option B52",
+      "Option C52",
+      "Option D52"
+    ],
+    "answer_text": "Option A52"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 53: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A53",
+      "Option B53",
+      "Option C53",
+      "Option D53"
+    ],
+    "answer_text": "Option A53"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 54: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A54",
+      "Option B54",
+      "Option C54",
+      "Option D54"
+    ],
+    "answer_text": "Option A54"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 55: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A55",
+      "Option B55",
+      "Option C55",
+      "Option D55"
+    ],
+    "answer_text": "Option A55"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 56: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A56",
+      "Option B56",
+      "Option C56",
+      "Option D56"
+    ],
+    "answer_text": "Option A56"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 57: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A57",
+      "Option B57",
+      "Option C57",
+      "Option D57"
+    ],
+    "answer_text": "Option A57"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 58: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A58",
+      "Option B58",
+      "Option C58",
+      "Option D58"
+    ],
+    "answer_text": "Option A58"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 59: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A59",
+      "Option B59",
+      "Option C59",
+      "Option D59"
+    ],
+    "answer_text": "Option A59"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 60: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A60",
+      "Option B60",
+      "Option C60",
+      "Option D60"
+    ],
+    "answer_text": "Option A60"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 61: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A61",
+      "Option B61",
+      "Option C61",
+      "Option D61"
+    ],
+    "answer_text": "Option A61"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 62: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A62",
+      "Option B62",
+      "Option C62",
+      "Option D62"
+    ],
+    "answer_text": "Option A62"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 63: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A63",
+      "Option B63",
+      "Option C63",
+      "Option D63"
+    ],
+    "answer_text": "Option A63"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 64: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A64",
+      "Option B64",
+      "Option C64",
+      "Option D64"
+    ],
+    "answer_text": "Option A64"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 65: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A65",
+      "Option B65",
+      "Option C65",
+      "Option D65"
+    ],
+    "answer_text": "Option A65"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 66: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A66",
+      "Option B66",
+      "Option C66",
+      "Option D66"
+    ],
+    "answer_text": "Option A66"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 67: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A67",
+      "Option B67",
+      "Option C67",
+      "Option D67"
+    ],
+    "answer_text": "Option A67"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 68: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A68",
+      "Option B68",
+      "Option C68",
+      "Option D68"
+    ],
+    "answer_text": "Option A68"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 69: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A69",
+      "Option B69",
+      "Option C69",
+      "Option D69"
+    ],
+    "answer_text": "Option A69"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 70: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A70",
+      "Option B70",
+      "Option C70",
+      "Option D70"
+    ],
+    "answer_text": "Option A70"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 71: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A71",
+      "Option B71",
+      "Option C71",
+      "Option D71"
+    ],
+    "answer_text": "Option A71"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 72: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A72",
+      "Option B72",
+      "Option C72",
+      "Option D72"
+    ],
+    "answer_text": "Option A72"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 73: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A73",
+      "Option B73",
+      "Option C73",
+      "Option D73"
+    ],
+    "answer_text": "Option A73"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 74: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A74",
+      "Option B74",
+      "Option C74",
+      "Option D74"
+    ],
+    "answer_text": "Option A74"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 75: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A75",
+      "Option B75",
+      "Option C75",
+      "Option D75"
+    ],
+    "answer_text": "Option A75"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 76: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A76",
+      "Option B76",
+      "Option C76",
+      "Option D76"
+    ],
+    "answer_text": "Option A76"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 77: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A77",
+      "Option B77",
+      "Option C77",
+      "Option D77"
+    ],
+    "answer_text": "Option A77"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 78: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A78",
+      "Option B78",
+      "Option C78",
+      "Option D78"
+    ],
+    "answer_text": "Option A78"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 79: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A79",
+      "Option B79",
+      "Option C79",
+      "Option D79"
+    ],
+    "answer_text": "Option A79"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 80: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A80",
+      "Option B80",
+      "Option C80",
+      "Option D80"
+    ],
+    "answer_text": "Option A80"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 81: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A81",
+      "Option B81",
+      "Option C81",
+      "Option D81"
+    ],
+    "answer_text": "Option A81"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 82: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A82",
+      "Option B82",
+      "Option C82",
+      "Option D82"
+    ],
+    "answer_text": "Option A82"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 83: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A83",
+      "Option B83",
+      "Option C83",
+      "Option D83"
+    ],
+    "answer_text": "Option A83"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 84: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A84",
+      "Option B84",
+      "Option C84",
+      "Option D84"
+    ],
+    "answer_text": "Option A84"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 85: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A85",
+      "Option B85",
+      "Option C85",
+      "Option D85"
+    ],
+    "answer_text": "Option A85"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 86: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A86",
+      "Option B86",
+      "Option C86",
+      "Option D86"
+    ],
+    "answer_text": "Option A86"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 87: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A87",
+      "Option B87",
+      "Option C87",
+      "Option D87"
+    ],
+    "answer_text": "Option A87"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 88: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A88",
+      "Option B88",
+      "Option C88",
+      "Option D88"
+    ],
+    "answer_text": "Option A88"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 89: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A89",
+      "Option B89",
+      "Option C89",
+      "Option D89"
+    ],
+    "answer_text": "Option A89"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 90: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A90",
+      "Option B90",
+      "Option C90",
+      "Option D90"
+    ],
+    "answer_text": "Option A90"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 91: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A91",
+      "Option B91",
+      "Option C91",
+      "Option D91"
+    ],
+    "answer_text": "Option A91"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 92: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A92",
+      "Option B92",
+      "Option C92",
+      "Option D92"
+    ],
+    "answer_text": "Option A92"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 93: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A93",
+      "Option B93",
+      "Option C93",
+      "Option D93"
+    ],
+    "answer_text": "Option A93"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 94: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A94",
+      "Option B94",
+      "Option C94",
+      "Option D94"
+    ],
+    "answer_text": "Option A94"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 95: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A95",
+      "Option B95",
+      "Option C95",
+      "Option D95"
+    ],
+    "answer_text": "Option A95"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 96: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A96",
+      "Option B96",
+      "Option C96",
+      "Option D96"
+    ],
+    "answer_text": "Option A96"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 97: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A97",
+      "Option B97",
+      "Option C97",
+      "Option D97"
+    ],
+    "answer_text": "Option A97"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 98: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A98",
+      "Option B98",
+      "Option C98",
+      "Option D98"
+    ],
+    "answer_text": "Option A98"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 99: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A99",
+      "Option B99",
+      "Option C99",
+      "Option D99"
+    ],
+    "answer_text": "Option A99"
+  },
+  {
+    "category": "Type III",
+    "question": "Sample Type III Question 100: This is a placeholder question for demonstration purposes?",
+    "options": [
+      "Option A100",
+      "Option B100",
+      "Option C100",
+      "Option D100"
+    ],
+    "answer_text": "Option A100"
+  }
+]

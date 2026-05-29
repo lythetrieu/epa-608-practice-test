@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-04-09T06:26:15.864Z",
+  "headline": {
+    "totalQuestions": 429,
+    "accuracyEstimate": 84,
+    "topicsCovered": 5,
+    "totalTopics": 81,
+    "includes2026Content": false,
+    "lastUpdated": "2026-04-09"
+  },
+  "schema": {
+    "withExplanation": 29,
+    "withExplanationPct": 7,
+    "withSourceRef": 29,
+    "withSourceRefPct": 7,
+    "withSubtopicId": 29,
+    "verified": 0,
+    "verifiedPct": 0
+  },
+  "distribution": {
+    "byCategory": {
+      "Core": 129,
+      "Type I": 100,
+      "Type II": 100,
+      "Type III": 100
+    },
+    "byDifficulty": {
+      "easy": 9,
+      "medium": 10,
+      "hard": 10,
+      "legacy": 400
+    },
+    "a2lQuestions": 0
+  },
+  "trust": {
+    "score": 5,
+    "components": {
+      "schemaCompleteness": {
+        "weight": "40%",
+        "value": 7
+      },
+      "topicCoverage": {
+        "weight": "30%",
+        "value": 6
+      },
+      "verificationRate": {
+        "weight": "20%",
+        "value": 0
+      },
+      "a2lPresence": {
+        "weight": "10%",
+        "value": 0
+      }
+    },
+    "methodology": "Questions validated via: (1) structural check, (2) fact-check against verified CFR values, (3) LLM re-verification on 50% sample."
+  },
+  "vsCompetitors": [
+    {
+      "name": "ESCO (official EPA pool)",
+      "accuracy": 97,
+      "hasExplanations": false,
+      "hasFree": false,
+      "has2026": false
+    },
+    {
+      "name": "EPA608PracticeTest.net",
+      "accuracy": 84,
+      "hasExplanations": true,
+      "hasFree": true,
+      "has2026": false
+    },
+    {
+      "name": "SkillCat",
+      "accuracy": 80,
+      "hasExplanations": true,
+      "hasFree": false,
+      "has2026": false
+    },
+    {
+      "name": "EPA608App",
+      "accuracy": 78,
+      "hasExplanations": true,
+      "hasFree": false,
+      "has2026": false
+    },
+    {
+      "name": "Most free sites",
+      "accuracy": 72,
+      "hasExplanations": false,
+      "hasFree": true,
+      "has2026": false
+    }
+  ]
+}

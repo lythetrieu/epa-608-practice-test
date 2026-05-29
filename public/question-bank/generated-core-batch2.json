@@ -1,0 +1,470 @@
+[
+  {
+    "id": "generated-env13-001",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "What is the Ozone Depletion Potential (ODP) of R-12, the CFC refrigerant used as the reference standard?",
+    "options": [
+      "0.05",
+      "0.50",
+      "1.0",
+      "2.0"
+    ],
+    "answer_text": "1.0",
+    "explanation": "R-12 (CFC-12) has an ODP of 1.0 and serves as the reference compound against which all other refrigerants are measured. ODP quantifies a substance's potential to destroy stratospheric ozone relative to R-12. All other substances are rated on this scale — lower is better. Source: EPA Clean Air Act §605; UNEP Montreal Protocol reference values.",
+    "difficulty": "easy",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-002",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "Which of the following best describes the difference between ODP and GWP?",
+    "options": [
+      "ODP measures harm to the troposphere; GWP measures harm to the stratosphere",
+      "ODP measures potential to destroy stratospheric ozone; GWP measures heat-trapping potential relative to CO2 over 100 years",
+      "ODP is measured in parts per million; GWP is measured as a percentage",
+      "ODP applies only to HFCs; GWP applies only to CFCs"
+    ],
+    "answer_text": "ODP measures potential to destroy stratospheric ozone; GWP measures heat-trapping potential relative to CO2 over 100 years",
+    "explanation": "ODP (Ozone Depletion Potential) quantifies how much a substance can destroy stratospheric ozone relative to R-12 (ODP = 1.0). GWP (Global Warming Potential) measures a substance's heat-trapping ability over a 100-year period relative to CO2 (GWP = 1). These are two separate environmental metrics. Source: 40 CFR Part 82; IPCC AR6.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82; IPCC AR6",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-003",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "What is the ODP of R-22 (HCFC-22)?",
+    "options": [
+      "0.0",
+      "0.02",
+      "0.05",
+      "1.0"
+    ],
+    "answer_text": "0.05",
+    "explanation": "R-22 (HCFC-22) has an ODP of 0.05, meaning it depletes ozone at 5% the rate of R-12. While significantly lower than R-12's ODP of 1.0, R-22 still contains chlorine atoms that can reach and damage the stratospheric ozone layer. This is why R-22 was phased out under the Montreal Protocol, with production and import ending in 2020 in the U.S. Source: 40 CFR Part 82 Subpart A.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR Part 82 Subpart A",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-004",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "R-410A has a GWP of 2088 but an ODP of 0. What does this tell us about R-410A's environmental impact?",
+    "options": [
+      "R-410A is environmentally safe because its ODP is zero",
+      "R-410A does not harm the ozone layer but is a potent greenhouse gas",
+      "R-410A harms both the ozone layer and contributes to global warming",
+      "R-410A's high GWP cancels out any benefit from its zero ODP, making it worse than R-22"
+    ],
+    "answer_text": "R-410A does not harm the ozone layer but is a potent greenhouse gas",
+    "explanation": "R-410A is an HFC blend with ODP = 0 (no chlorine, so no ozone depletion) but a GWP of 2088 (IPCC AR6). This means R-410A solved the ozone crisis concern but contributes significantly to climate change if released. It is regulated under the AIM Act for phasedown due to its high GWP. Source: IPCC AR6; AIM Act (2020); 40 CFR Part 82.",
+    "difficulty": "medium",
+    "source_ref": "IPCC AR6; AIM Act 2020; 40 CFR Part 82",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-005",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "Which refrigerant class has BOTH a high ODP AND a high GWP?",
+    "options": [
+      "HFCs (e.g., R-410A, R-134a)",
+      "HFOs (e.g., R-1234yf)",
+      "CFCs (e.g., R-12, R-11)",
+      "Natural refrigerants (e.g., R-744, R-717)"
+    ],
+    "answer_text": "CFCs (e.g., R-12, R-11)",
+    "explanation": "CFCs (chlorofluorocarbons) such as R-12 and R-11 have both high ODP (R-12 = 1.0, R-11 = 1.0) and high GWP (R-12 GWP ≈ 10,900; R-11 GWP ≈ 4,750). HFCs have zero ODP but high GWP. HFOs have zero ODP and very low GWP. This dual harm is why CFCs were the first substances phased out under the Montreal Protocol. Source: 40 CFR Part 82; IPCC AR6.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR Part 82; IPCC AR6",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-006",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "A technician is comparing R-454B (GWP 466) and R-410A (GWP 2088) as refrigerant options. Which statement accurately compares these two refrigerants?",
+    "options": [
+      "R-454B has a lower GWP than R-410A and is therefore preferred under low-GWP regulations",
+      "R-410A has a lower GWP than R-454B because it is an older refrigerant",
+      "Both refrigerants have the same ODP, so GWP does not matter for regulatory compliance",
+      "R-454B's GWP of 466 is still above the regulatory threshold, making it unusable in new equipment"
+    ],
+    "answer_text": "R-454B has a lower GWP than R-410A and is therefore preferred under low-GWP regulations",
+    "explanation": "R-454B (per ASHRAE 34-2022) has a GWP of 466, compared to R-410A's GWP of 2088 (IPCC AR6). R-454B represents approximately a 78% GWP reduction over R-410A. Both have ODP = 0. Under the AIM Act phasedown program, lower-GWP alternatives like R-454B and R-32 (GWP 675) are being adopted to replace R-410A in new residential and light commercial HVAC equipment. Source: ASHRAE 34-2022; AIM Act.",
+    "difficulty": "medium",
+    "source_ref": "ASHRAE 34-2022; AIM Act 2020",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-007",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "Which of the following correctly ranks R-22, R-123, and R-12 by ODP from lowest to highest?",
+    "options": [
+      "R-12 (lowest) → R-22 → R-123 (highest)",
+      "R-22 (lowest) → R-12 → R-123 (highest)",
+      "R-123 (lowest) → R-22 → R-12 (highest)",
+      "R-12 (lowest) → R-123 → R-22 (highest)"
+    ],
+    "answer_text": "R-123 (lowest) → R-22 → R-12 (highest)",
+    "explanation": "The ODP values are: R-123 = 0.02, R-22 = 0.05, R-12 = 1.0. R-12 is the reference compound at ODP 1.0. R-22 has a relatively low ODP of 0.05, and R-123 has an even lower ODP of 0.02, making it the least harmful to ozone among these three. All three contain chlorine, distinguishing them from zero-ODP HFCs and HFOs. Source: 40 CFR Part 82; Clean Air Act §605.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR Part 82; Clean Air Act §605",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-env13-008",
+    "subtopic_id": "core-env-1.3",
+    "category": "Core",
+    "question": "An HVAC technician is told that HFOs like R-1234yf have zero ODP and a GWP of less than 1. How do HFOs compare to HFCs in terms of both ODP and GWP?",
+    "options": [
+      "HFOs have higher ODP but lower GWP than HFCs",
+      "HFOs and HFCs both have zero ODP, but HFOs have much lower GWP than HFCs",
+      "HFOs have zero ODP and zero GWP, while HFCs have high ODP and high GWP",
+      "HFOs have lower ODP than HFCs, but similar GWP values"
+    ],
+    "answer_text": "HFOs and HFCs both have zero ODP, but HFOs have much lower GWP than HFCs",
+    "explanation": "Both HFCs and HFOs contain no chlorine, giving them ODP = 0. However, HFCs have high GWP values (e.g., R-410A GWP = 2088, R-32 GWP = 675), while HFOs have extremely low GWP (R-1234yf GWP < 1). HFOs degrade rapidly in the atmosphere. This makes HFOs environmentally superior to HFCs on both ozone and climate metrics, which is why HFOs are emerging as next-generation refrigerants. Source: IPCC AR6; ASHRAE 34-2022.",
+    "difficulty": "hard",
+    "source_ref": "IPCC AR6; ASHRAE 34-2022",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-001",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "In what year was the Montreal Protocol signed?",
+    "options": [
+      "1970",
+      "1987",
+      "1990",
+      "1996"
+    ],
+    "answer_text": "1987",
+    "explanation": "The Montreal Protocol on Substances that Deplete the Ozone Layer was signed on September 16, 1987, in Montreal, Canada. It entered into force on January 1, 1989. It has since been ratified by virtually every nation in the United Nations, making it one of the most universally ratified environmental treaties in history. Source: UNEP Montreal Protocol; Clean Air Act §605; 40 CFR Part 82.",
+    "difficulty": "easy",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-002",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "What is the primary goal of the Montreal Protocol?",
+    "options": [
+      "Reduce carbon dioxide emissions to limit global temperature rise to 1.5°C",
+      "Phase out ozone-depleting substances (ODSs) such as CFCs and HCFCs",
+      "Establish maximum allowable refrigerant charge sizes for HVAC equipment",
+      "Require all new refrigerants to have a GWP below 150"
+    ],
+    "answer_text": "Phase out ozone-depleting substances (ODSs) such as CFCs and HCFCs",
+    "explanation": "The Montreal Protocol's primary goal is to protect the stratospheric ozone layer by phasing out the production and consumption of ozone-depleting substances (ODSs), including CFCs, HCFCs, halons, and other chemicals containing chlorine or bromine. It does not directly address GWP or CO2. The Kigali Amendment (2016) extended the treaty to address HFCs. Source: Clean Air Act §605; 40 CFR Part 82.",
+    "difficulty": "easy",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-003",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "The Montreal Protocol controls which aspect of ozone-depleting substances (ODSs)?",
+    "options": [
+      "Their use in residential air conditioning only",
+      "Their production and consumption globally",
+      "Their storage and labeling requirements at the point of sale",
+      "Their maximum allowable concentration in ambient air"
+    ],
+    "answer_text": "Their production and consumption globally",
+    "explanation": "The Montreal Protocol controls the production and consumption of ODSs at a national level. Each signatory nation agrees to reduce and eventually eliminate the production and importation (consumption) of listed ODSs on a defined schedule. In the U.S., these obligations are implemented through the Clean Air Act §605 and 40 CFR Part 82. Source: Clean Air Act §605; 40 CFR Part 82 Subpart A.",
+    "difficulty": "medium",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82 Subpart A",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-004",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "As a direct result of the Montreal Protocol, CFC production was phased out in the United States by which year?",
+    "options": [
+      "1987",
+      "1992",
+      "1996",
+      "2020"
+    ],
+    "answer_text": "1996",
+    "explanation": "Under the Montreal Protocol schedule, the United States phased out production and importation of CFCs (Class I ODSs) by January 1, 1996. HCFC production and importation (Class II ODSs, including R-22) continued on a phasedown schedule, with new R-22 production/import ending in 2020. Source: Clean Air Act §605; 40 CFR Part 82 Subpart A.",
+    "difficulty": "medium",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82 Subpart A",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-005",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "Which of the following is most accurate about R-22 and the Montreal Protocol?",
+    "options": [
+      "R-22 was never regulated under the Montreal Protocol because it is an HCFC, not a CFC",
+      "R-22 production and import ended in the U.S. in 2020 as part of the HCFC phasedown schedule",
+      "R-22 was phased out in 1996 along with all other chlorinated refrigerants",
+      "R-22 is exempt from Montreal Protocol requirements because its ODP is below 0.1"
+    ],
+    "answer_text": "R-22 production and import ended in the U.S. in 2020 as part of the HCFC phasedown schedule",
+    "explanation": "HCFCs like R-22 are Class II ODSs under the Clean Air Act and are regulated under the Montreal Protocol's HCFC phasedown schedule. While CFC production ended in 1996, HCFCs were given a longer timeline. In the U.S., new production and importation of R-22 ended on January 1, 2020. Only recovered, recycled, or reclaimed R-22 may legally be used for servicing existing equipment after that date. Source: Clean Air Act §605; 40 CFR Part 82 Subpart A.",
+    "difficulty": "medium",
+    "source_ref": "Clean Air Act §605; 40 CFR Part 82 Subpart A",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-caa24-006",
+    "subtopic_id": "core-caa-2.4",
+    "category": "Core",
+    "question": "How does the Kigali Amendment relate to the original Montreal Protocol?",
+    "options": [
+      "The Kigali Amendment replaced the Montreal Protocol in 2016 with stricter CFC regulations",
+      "The Kigali Amendment extended the Montreal Protocol to include a phasedown of HFCs due to their high GWP",
+      "The Kigali Amendment created new penalties for venting refrigerants in developing nations only",
+      "The Kigali Amendment established the AHRI 700 purity standard for reclaimed refrigerants"
+    ],
+    "answer_text": "The Kigali Amendment extended the Montreal Protocol to include a phasedown of HFCs due to their high GWP",
+    "explanation": "The Kigali Amendment, adopted in 2016, extended the Montreal Protocol to address HFCs, which were developed as ODS replacements but have very high GWP values. While HFCs have ODP = 0 (so they don't deplete ozone), their climate impact prompted the amendment. The Kigali Amendment sets a schedule for HFC phasedown in developed and developing nations. The U.S. implemented this domestically through the AIM Act (2020). Source: UNEP Kigali Amendment; AIM Act 2020; 40 CFR Part 82.",
+    "difficulty": "hard",
+    "source_ref": "UNEP Kigali Amendment; AIM Act 2020; 40 CFR Part 82",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-001",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "Which of the following refrigerants is classified as a HIGH-pressure refrigerant?",
+    "options": [
+      "R-11",
+      "R-113",
+      "R-123",
+      "R-410A"
+    ],
+    "answer_text": "R-410A",
+    "explanation": "R-410A is a high-pressure refrigerant with a normal boiling point well below 50°F (approximately -61°F / -52°C), meaning it operates above atmospheric pressure at room temperature. R-11, R-113, and R-123 are all low-pressure refrigerants that boil above 50°F at atmospheric pressure and operate in a vacuum (below atmospheric pressure) at room temperature. Source: 40 CFR §82.152.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-002",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "What is the defining characteristic of a low-pressure refrigerant?",
+    "options": [
+      "It has a normal boiling point below 50°F and operates above atmospheric pressure at room temperature",
+      "It has a normal boiling point above 50°F and operates below atmospheric pressure (in vacuum) at room temperature",
+      "It requires a booster compressor to achieve adequate system pressures",
+      "It is only used in refrigeration systems, never in air conditioning"
+    ],
+    "answer_text": "It has a normal boiling point above 50°F and operates below atmospheric pressure (in vacuum) at room temperature",
+    "explanation": "Low-pressure refrigerants (e.g., R-11, R-113, R-123) have normal boiling points above 50°F at atmospheric pressure. At room temperature, they exist as vapors at pressures below atmospheric, meaning the system operates in a vacuum. This has important service implications — air can leak INTO a low-pressure system if not carefully managed. Source: 40 CFR §82.152.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-003",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "Which refrigerants are classified as LOW-pressure refrigerants under EPA regulations?",
+    "options": [
+      "R-22, R-134a, R-404A",
+      "R-410A, R-407C, R-32",
+      "R-11, R-113, R-123",
+      "R-12, R-500, R-502"
+    ],
+    "answer_text": "R-11, R-113, R-123",
+    "explanation": "R-11, R-113, and R-123 are classified as low-pressure refrigerants because their normal boiling points are above 50°F, causing them to operate below atmospheric pressure at room temperature. R-22, R-134a, R-404A, R-410A, and similar refrigerants are high-pressure types. R-12, R-500, and R-502 are considered medium-pressure refrigerants. Source: 40 CFR §82.152.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-004",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "A technician is servicing a large centrifugal chiller using R-123. What pressure concern should the technician be aware of?",
+    "options": [
+      "The system may have dangerously high pressures, requiring a high-pressure recovery cylinder",
+      "The system operates below atmospheric pressure, so air can leak INTO the system during service",
+      "R-123 requires a special high-pressure gauge set calibrated for pressures above 500 psig",
+      "The system uses medium pressure, so standard gauge sets are inadequate"
+    ],
+    "answer_text": "The system operates below atmospheric pressure, so air can leak INTO the system during service",
+    "explanation": "R-123 is a low-pressure refrigerant that operates below atmospheric pressure (in a vacuum) at room temperature. This means that if any part of the system is opened or has a leak, air (and moisture) can infiltrate the system. Technicians must be especially vigilant about air contamination in low-pressure systems. A standing vacuum test is often used to check system integrity. Source: 40 CFR §82.152; EPA 608 refrigerant management requirements.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-005",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "Which of the following correctly categorizes R-12, R-22, and R-410A by pressure classification?",
+    "options": [
+      "R-12: low-pressure; R-22: medium-pressure; R-410A: high-pressure",
+      "R-12: medium-pressure; R-22: high-pressure; R-410A: high-pressure",
+      "R-12: high-pressure; R-22: high-pressure; R-410A: low-pressure",
+      "R-12: low-pressure; R-22: high-pressure; R-410A: medium-pressure"
+    ],
+    "answer_text": "R-12: medium-pressure; R-22: high-pressure; R-410A: high-pressure",
+    "explanation": "Under EPA pressure classification: R-12 (CFC-12) is a medium-pressure refrigerant that operates slightly above atmospheric pressure at room temperature. R-22 (HCFC-22) and R-410A are both high-pressure refrigerants, with R-410A operating at significantly higher pressures than R-22 (R-410A can reach 400+ psig on the high side). Source: 40 CFR §82.152.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs31-006",
+    "subtopic_id": "core-regs-3.1",
+    "category": "Core",
+    "question": "Why is the distinction between high-pressure and low-pressure refrigerants important for EPA 608 technicians?",
+    "options": [
+      "High-pressure refrigerants require a Type III certification; low-pressure refrigerants require a Type I certification",
+      "The pressure classification determines which recovery equipment is required and the leak testing procedures for compliance",
+      "Only low-pressure refrigerant systems are subject to EPA venting prohibition rules",
+      "High-pressure systems are exempt from refrigerant recovery requirements if under 5 pounds charge"
+    ],
+    "answer_text": "The pressure classification determines which recovery equipment is required and the leak testing procedures for compliance",
+    "explanation": "Under 40 CFR §82.152 and EPA Section 608 regulations, pressure classification affects required recovery equipment specifications, leak rate thresholds for different equipment types, and proper service procedures. Low-pressure systems have unique requirements because air infiltration risk is reversed — leaks pull air in rather than pushing refrigerant out. Different recovery machines and techniques are required for low-pressure vs. high-pressure systems. Source: 40 CFR §82.152; 40 CFR §82.156.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.152; 40 CFR §82.156",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-001",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "What purity standard must reclaimed refrigerant meet before it can be resold?",
+    "options": [
+      "ASHRAE 34-2022",
+      "AHRI 700-2016",
+      "40 CFR §82.152",
+      "SAE J2099"
+    ],
+    "answer_text": "AHRI 700-2016",
+    "explanation": "Reclaimed refrigerant must meet AHRI 700-2016 (Air-Conditioning, Heating, and Refrigeration Institute Standard 700) purity standards before it can be resold or used in equipment owned by a different party. AHRI 700 specifies acceptable levels of moisture, acidity, non-condensable gases, and other contaminants to ensure the refrigerant is equivalent to virgin quality. Source: 40 CFR §82.152.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-002",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "What is the key difference between RECYCLING and RECLAIMING refrigerant?",
+    "options": [
+      "Recycling occurs at a certified off-site facility; reclaiming occurs on-site using portable equipment",
+      "Recycling cleans refrigerant on-site for reuse by the same owner; reclaiming returns refrigerant to virgin purity at a certified facility for resale",
+      "Recycling meets AHRI 700 standards; reclaiming only meets minimum EPA purity standards",
+      "There is no difference — recycling and reclaiming are interchangeable terms under 40 CFR Part 82"
+    ],
+    "answer_text": "Recycling cleans refrigerant on-site for reuse by the same owner; reclaiming returns refrigerant to virgin purity at a certified facility for resale",
+    "explanation": "Under 40 CFR §82.152: Recycling = cleaning refrigerant using oil separation and single or multiple passes through filter-driers on-site; the cleaned refrigerant may be reused only in equipment owned by the same owner. Reclaiming = processing refrigerant to meet AHRI 700-2016 virgin purity standards at a certified off-site reclamation facility; reclaimed refrigerant may be resold. Source: 40 CFR §82.152.",
+    "difficulty": "easy",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-003",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "A technician recovers refrigerant from a system and wants to sell it to another contractor. What must happen first?",
+    "options": [
+      "The technician must recycle the refrigerant using on-site equipment and then can sell it",
+      "The refrigerant must be sent to a certified reclamation facility to be processed to AHRI 700-2016 standards",
+      "The technician must obtain a resale permit from the EPA before transferring the refrigerant",
+      "The refrigerant can be sold immediately as long as it was properly recovered using certified equipment"
+    ],
+    "answer_text": "The refrigerant must be sent to a certified reclamation facility to be processed to AHRI 700-2016 standards",
+    "explanation": "Before recovered refrigerant can be resold or transferred to another owner, it must be reclaimed — sent to an EPA-certified reclamation facility where it is processed to meet AHRI 700-2016 purity standards. On-site recycling is insufficient for resale; it only allows reuse within the same owner's equipment. Selling non-reclaimed refrigerant violates 40 CFR Part 82. Source: 40 CFR §82.152.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-004",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "Which of the following correctly defines the term RECOVER as it relates to refrigerant handling under 40 CFR Part 82?",
+    "options": [
+      "To process refrigerant to AHRI 700-2016 virgin purity standards at a certified facility",
+      "To clean refrigerant on-site using oil separation and filter-driers for reuse",
+      "To remove refrigerant from a system in any condition and store it in an approved external container",
+      "To transfer refrigerant between systems belonging to the same owner without purifying it"
+    ],
+    "answer_text": "To remove refrigerant from a system in any condition and store it in an approved external container",
+    "explanation": "Under 40 CFR §82.152, recovery means removing refrigerant from a system and storing it in an external container — regardless of the refrigerant's condition. Recovery does not involve any cleaning or purification. It is the first step in the recover-recycle-reclaim process. Recovery must be performed before opening any system for service. Source: 40 CFR §82.152.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-005",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "Where must refrigerant reclamation take place to comply with 40 CFR Part 82?",
+    "options": [
+      "On-site at the technician's service vehicle using portable reclaiming equipment",
+      "At the equipment owner's facility using EPA-certified in-house reclamation equipment",
+      "At an EPA-certified off-site reclamation facility",
+      "At any HVAC wholesale distributor that holds a valid refrigerant reseller license"
+    ],
+    "answer_text": "At an EPA-certified off-site reclamation facility",
+    "explanation": "Under 40 CFR §82.152, reclamation must be performed at a certified reclamation facility — an off-site facility that has been approved to process refrigerant to AHRI 700-2016 purity standards. On-site cleaning is classified as recycling, not reclaiming. Only properly reclaimed refrigerant that meets AHRI 700-2016 standards may be resold. Source: 40 CFR §82.152.",
+    "difficulty": "medium",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  },
+  {
+    "id": "generated-regs35-006",
+    "subtopic_id": "core-regs-3.5",
+    "category": "Core",
+    "question": "Which scenario represents a violation of the reclaimed refrigerant requirements under 40 CFR Part 82?",
+    "options": [
+      "A technician sends recovered R-22 to a certified reclaimer and later purchases reclaimed R-22 for use on a different customer's system",
+      "A building owner uses recycled refrigerant recovered from one of their own systems in another one of their own systems",
+      "A technician recovers R-410A, passes it through an on-site recycling machine, and sells it directly to another contractor",
+      "A service company transfers reclaimed R-22 meeting AHRI 700-2016 standards to a customer for use in their equipment"
+    ],
+    "answer_text": "A technician recovers R-410A, passes it through an on-site recycling machine, and sells it directly to another contractor",
+    "explanation": "Selling refrigerant that has only been recycled (cleaned on-site) to another party is a violation of 40 CFR Part 82. Recycled refrigerant may only be reused in equipment owned by the same owner. To legally sell or transfer refrigerant to a different owner, it must first be reclaimed to AHRI 700-2016 standards at an EPA-certified off-site reclamation facility. The other options describe legal activities. Source: 40 CFR §82.152.",
+    "difficulty": "hard",
+    "source_ref": "40 CFR §82.152",
+    "verified": false,
+    "trust_level": "high"
+  }
+]

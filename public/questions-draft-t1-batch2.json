@@ -1,0 +1,155 @@
+[
+  {
+    "id": "t1-rec-1.2-scenario-003",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.2",
+    "question": "A technician services a 1999 window air conditioner charged with R-134a. The unit has a 4 lb refrigerant charge and the compressor is fully operational. What is the minimum amount of refrigerant (in pounds) that must be recovered before opening the system?",
+    "options": [
+      "2.4 lbs (60% of charge)",
+      "3.2 lbs (80% of charge)",
+      "3.6 lbs (90% of charge)",
+      "4.0 lbs (100% of charge)"
+    ],
+    "answer_text": "3.6 lbs (90% of charge)",
+    "explanation": "Under 40 CFR §82.156(a)(1), technicians servicing small appliances manufactured after November 15, 1993 with a functional compressor must recover at least 90% of the refrigerant before disposing of or opening the system. This 1999 window AC is post-1993 and the compressor is operational, so 90% applies: 4 lbs × 90% = 3.6 lbs minimum recovered.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-rec-1.2-scenario-004",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.2",
+    "question": "For a post-November 15, 1993 small appliance with a working compressor, what does '90% recovery by weight' mean in practical terms when a technician uses a system-dependent (active) recovery method?",
+    "options": [
+      "The technician must pull the system down to a 90 psig vacuum",
+      "The technician must weigh the refrigerant before and after recovery and ensure at least 90% of the original charge is captured in the recovery cylinder",
+      "The technician must run the compressor for 90 minutes to push refrigerant out",
+      "The technician must use a recovery machine rated at 90% efficiency"
+    ],
+    "answer_text": "The technician must weigh the refrigerant before and after recovery and ensure at least 90% of the original charge is captured in the recovery cylinder",
+    "explanation": "Under 40 CFR §82.156(a)(1), '90% recovery by weight' means that at least 90% of the total refrigerant charge—measured in weight (ounces or pounds)—must end up in the recovery container. In practice, the technician uses a refrigerant scale to weigh the recovery cylinder before and after recovery, confirming that the captured amount equals or exceeds 90% of the known or estimated system charge. The compressor is used as the pump to push refrigerant into the recovery vessel.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-rec-1.3-concept-001",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.3",
+    "question": "Why does EPA regulation allow a lower recovery requirement (80% rather than 90%) when a post-November 15, 1993 small appliance has a non-functional compressor?",
+    "options": [
+      "Because older refrigerants are less harmful to the ozone layer",
+      "Because the compressor cannot be used to actively push refrigerant into the recovery cylinder, making higher recovery rates technically difficult to achieve",
+      "Because non-functional compressors contain less refrigerant than functional ones",
+      "Because technicians are not required to recover refrigerant from broken appliances"
+    ],
+    "answer_text": "Because the compressor cannot be used to actively push refrigerant into the recovery cylinder, making higher recovery rates technically difficult to achieve",
+    "explanation": "Under 40 CFR §82.156(a)(1), when a small appliance compressor is non-functional, the technician cannot use active (system-dependent) recovery—which relies on the appliance's own compressor to pump refrigerant out efficiently. Instead, passive recovery methods must be used, which are less efficient. EPA acknowledges this limitation by setting a lower threshold of 80% recovery for non-working compressor situations, rather than the 90% required when the compressor operates normally.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-rec-1.3-method-001",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.3",
+    "question": "A technician is scrapping a 2017 dehumidifier with a completely seized (non-functional) compressor. Which recovery method must be used, and what is the minimum recovery percentage required?",
+    "options": [
+      "Active (system-dependent) recovery using the appliance's compressor; 90% minimum",
+      "Passive recovery using a chilled recovery cylinder; 80% minimum",
+      "Passive recovery using a chilled recovery cylinder; 90% minimum",
+      "No recovery is required because the compressor is broken"
+    ],
+    "answer_text": "Passive recovery using a chilled recovery cylinder; 80% minimum",
+    "explanation": "Under 40 CFR §82.156(a)(1), a post-November 15, 1993 small appliance with a non-functional compressor requires at least 80% recovery. Because the compressor is seized, active (system-dependent) recovery is not possible. The technician must use passive recovery: connecting the recovery cylinder to the appliance and chilling the cylinder (with ice water or dry ice) to create a lower pressure inside the cylinder than in the appliance, drawing refrigerant across by pressure differential without using a compressor.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-rec-1.4-concept-001",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.4",
+    "question": "A technician is disposing of a household refrigerator manufactured in 1990 and the compressor is fully functional. What is the minimum refrigerant recovery percentage required, and why does the compressor condition not affect this requirement?",
+    "options": [
+      "90%, because post-1993 rules apply to all appliances once updated refrigerants are used",
+      "80%, because pre-November 15, 1993 equipment is subject to a flat 80% requirement regardless of compressor condition",
+      "70%, because older appliances with CFCs are exempt from modern recovery rules",
+      "100%, because R-12 is fully banned and must be completely recovered"
+    ],
+    "answer_text": "80%, because pre-November 15, 1993 equipment is subject to a flat 80% requirement regardless of compressor condition",
+    "explanation": "Under 40 CFR §82.156(a)(1), small appliances manufactured on or before November 15, 1993 are subject to a single recovery standard of 80%—this applies regardless of whether the compressor is functional or non-functional. The two-tier system (90% for working compressor / 80% for non-working compressor) only applies to appliances manufactured after November 15, 1993. For pre-1993 equipment, compressor condition does not change the requirement.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-rec-1.5-concept-001",
+    "category": "Type I",
+    "subtopic_id": "t1-rec-1.5",
+    "question": "Instead of measuring recovered refrigerant by weight, what alternative standard may a technician use when recovering refrigerant from a Type I small appliance, and what does meeting this standard require?",
+    "options": [
+      "Pull the system down to 0 psig (atmospheric pressure) on the suction side",
+      "Pull a vacuum to 4 inches of mercury (in Hg) vacuum on the system, as measured on the suction side",
+      "Pull a vacuum to 4 psig below atmospheric on the discharge side",
+      "Recover until the manifold gauge reads 4 psig on the high side"
+    ],
+    "answer_text": "Pull a vacuum to 4 inches of mercury (in Hg) vacuum on the system, as measured on the suction side",
+    "explanation": "Under 40 CFR §82.156(a)(1)(ii), technicians may use an alternative recovery standard for Type I small appliances: instead of recovering a percentage by weight, they may evacuate the system to a vacuum of 4 inches of mercury (in Hg). This is measured on the suction side of the system using a manifold gauge set or vacuum gauge. This method is often more practical in field conditions because it does not require refrigerant scales—the technician simply monitors the gauge and stops when 4 in Hg vacuum is achieved.",
+    "source_ref": "40 CFR §82.156(a)(1)(ii)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-tech-2.1-proc-003",
+    "category": "Type I",
+    "subtopic_id": "t1-tech-2.1",
+    "question": "A technician connects a manifold gauge set to a small appliance that has been off long enough to reach ambient temperature (70°F). The low-side gauge reads approximately 56 psig. Based on pressure-temperature relationships, which refrigerant does this reading most likely indicate?",
+    "options": [
+      "R-12, which has a saturation pressure of approximately 70 psig at 70°F",
+      "R-22, which has a saturation pressure of approximately 121 psig at 70°F",
+      "R-134a, which has a saturation pressure of approximately 56 psig at 70°F",
+      "R-410A, which has a saturation pressure of approximately 232 psig at 70°F"
+    ],
+    "answer_text": "R-134a, which has a saturation pressure of approximately 56 psig at 70°F",
+    "explanation": "Each refrigerant has a unique pressure-temperature (P-T) relationship. At 70°F ambient temperature with the system off (static pressure), R-134a saturates at approximately 56 psig, R-12 at approximately 70 psig, R-22 at approximately 121 psig, and R-410A at approximately 232 psig. A reading of ~56 psig at 70°F is consistent with R-134a, which replaced R-12 as the common refrigerant in household refrigerators and window ACs. Technicians use P-T charts to identify refrigerants before recovery to ensure compatible equipment and proper handling procedures are used.",
+    "source_ref": "40 CFR §82.156",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-tech-2.2-proc-003",
+    "category": "Type I",
+    "subtopic_id": "t1-tech-2.2",
+    "question": "A technician is recovering refrigerant from a 2014 window air conditioner with a burned-out compressor using a passive recovery method. What physical principle makes chilling the recovery cylinder effective, and what cooling media may be used?",
+    "options": [
+      "Chilling the cylinder raises its internal pressure, which pushes refrigerant back into the appliance for reuse",
+      "Chilling the recovery cylinder lowers its internal pressure below the appliance pressure, creating a pressure differential that draws refrigerant vapor into the cylinder without a compressor",
+      "Chilling the cylinder converts liquid refrigerant to vapor, speeding up the recovery process",
+      "Chilling is only required for recovery machines, not for passive cylinder methods"
+    ],
+    "answer_text": "Chilling the recovery cylinder lowers its internal pressure below the appliance pressure, creating a pressure differential that draws refrigerant vapor into the cylinder without a compressor",
+    "explanation": "Passive recovery exploits refrigerant's pressure-temperature relationship: lower temperature means lower saturation pressure. By chilling the recovery cylinder with ice water, cold water, or dry ice, the technician reduces the pressure inside the cylinder below the pressure remaining in the appliance. This pressure differential causes refrigerant to migrate from the higher-pressure appliance into the lower-pressure cylinder without requiring a pump or compressor. Common cooling media include ice water and dry ice (solid CO2). This method satisfies 40 CFR §82.156(a)(1) requirements when 80% recovery is achieved for non-functional compressor appliances.",
+    "source_ref": "40 CFR §82.156(a)(1)",
+    "difficulty": "medium",
+    "verified": true
+  },
+  {
+    "id": "t1-tech-2.3-proc-003",
+    "category": "Type I",
+    "subtopic_id": "t1-tech-2.3",
+    "question": "After recovering refrigerant from a hermetically sealed small appliance through a piercing-type access valve, what must a technician do to the valve before leaving the job site?",
+    "options": [
+      "Remove the piercing valve completely and braze the process tube closed",
+      "Leave the valve open so the system can equalize pressure with the atmosphere",
+      "Cap or plug the access valve to prevent refrigerant leaks or air/moisture entry",
+      "Fill the valve with refrigerant oil to seal it temporarily"
+    ],
+    "answer_text": "Cap or plug the access valve to prevent refrigerant leaks or air/moisture entry",
+    "explanation": "Small appliances are hermetically sealed at the factory with no service valves. When a technician installs a piercing-type (or Schrader-type) access valve on the process tube to connect recovery equipment, the valve creates a permanent opening in the sealed system. After recovery is complete, the technician must install a cap or plug on the access valve fitting to prevent any residual refrigerant from leaking into the atmosphere and to prevent air or moisture from entering the system. Leaving an access valve uncapped would violate 40 CFR §82.156 requirements to minimize refrigerant releases and could introduce contaminants if the appliance is to be repaired and recharged.",
+    "source_ref": "40 CFR §82.156",
+    "difficulty": "easy",
+    "verified": true
+  }
+]

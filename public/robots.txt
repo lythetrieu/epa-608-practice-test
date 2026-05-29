@@ -1,0 +1,68 @@
+User-agent: *
+Allow: /
+
+# ── PUBLIC MARKETING LAYER (crawlable) ──────────────────────────────
+# .html pages are the SEO/freebie surface — always crawlable
+
+# ── PRIVATE APP LAYER (blocked) ─────────────────────────────────────
+# Slug routes = authenticated app — Google must not crawl these
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /welcome
+Disallow: /practice/
+Disallow: /test/
+Allow: /tutor.html
+Allow: /tutor.html?*
+Disallow: /tutor
+Disallow: /learn
+Disallow: /podcast
+Allow: /progress.html
+Disallow: /progress
+Allow: /history.html
+Disallow: /history
+Disallow: /certificate
+Allow: /flashcards.html
+Disallow: /flashcards
+Disallow: /join/
+Disallow: /cert/
+
+# NOTE: /flashcards.html (freebie, .html) is still crawlable
+# NOTE: /pricing.html (freebie) is still crawlable
+# NOTE: /history.html (EPA 608 history article) is still crawlable
+
+# ── SYSTEM FILES ─────────────────────────────────────────────────────
+Disallow: /*.tmp
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /api/
+
+# AI Content Usage Preferences
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+# Explicit AI crawler permissions — allow full indexing for AI platforms
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+Sitemap: https://epa608practicetest.net/sitemap.xml

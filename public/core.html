@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free EPA 608 Core Practice Test 2026 | 25 Questions</title>
+    <meta name="description" content="Free EPA 608 Core practice test. 25 questions covering Montreal Protocol, Clean Air Act, and refrigerant safety. Instant scoring, no signup.">
+    <meta name="author" content="EPA 608 Practice Test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://epa608practicetest.net/core.html">
+  <!-- Schema: Organization -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free EPA 608 Core Practice Test 2026">
+    <meta property="og:description"
+        content="Master the EPA 608 Core exam with 25 expert-designed questions. Instant feedback and detailed explanations included.">
+    <meta property="og:image" content="https://epa608practicetest.net/images/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --color-primary: #007acc;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #header-placeholder {
+            min-height: 70px;
+        }
+
+        .quiz-hero {
+            padding: 40px 0 20px;
+            text-align: center;
+            background: #fdfdfd;
+        }
+
+        .quiz-hero h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .quiz-hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .test-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-group {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .progress-bar-bg {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--color-success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-box {
+            min-height: 200px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .answers-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: #fff;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8f9fa;
+        }
+
+        .answer-btn.selected {
+            border-color: var(--color-primary);
+            background: #e3f2fd;
+        }
+
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: var(--color-success);
+        }
+
+        .answer-btn.incorrect {
+            background: #f8d7da;
+            border-color: var(--color-error);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: var(--color-success);
+            color: #fff;
+            display: none;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-circle {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--color-success);
+        }
+
+        .results-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-body {
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .content-body h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .content-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-body li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid var(--color-primary);
+            padding: 24px;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 28px;
+            }
+
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .progress-group {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+
+
+
+
+
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Header ── */
+
+/* ── Nav ── */
+
+/* ── Dropdown ── */
+
+/* ── CTA Button ── */
+
+/* ── Auth buttons ── */
+@media (max-width: 768px) {
+}
+
+/* ── Footer ── */
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 0 32px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 12px 0 20px;
+    max-width: 260px;
+}
+
+.footer-brand .footer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.footer-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(0,122,204,0.15);
+    color: #38bdf8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer-col h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+
+.footer-col ul li { margin-bottom: 8px; }
+
+.footer-col ul li a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+    line-height: 1.4;
+    display: block;
+}
+
+.footer-col ul li a:hover { color: #38bdf8; }
+
+.footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-bottom p { font-size: 13px; color: #475569; }
+
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 13px; }
+.footer-bottom a:hover { color: #94a3b8; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+    <link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://epa608practicetest.net/#organization",
+      "name": "EPA 608 Practice Test",
+      "url": "https://epa608practicetest.net",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://epa608practicetest.net/logo.svg",
+        "width": 200,
+        "height": 60
+      },
+      "description": "Freemium EPA 608 practice test platform — 500 questions free (no signup) + Pro $14.99 lifetime (866 questions, AI Tutor, blind-spot drills, certificates). Verified against official EPA Section 608 regulations and Prometric content outline.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Lý Thế Triều",
+        "sameAs": [
+          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+          "https://x.com/TrieuLy14"
+        ]
+      },
+      "knowsAbout": [
+        "EPA 608 Certification",
+        "Section 608 Clean Air Act",
+        "refrigerant handling regulations",
+        "HVAC technician certification"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
+        "https://x.com/TrieuLy14"
+      ]
+    },
+    {
+      "@type": "Quiz",
+      "name": "Free EPA 608 Core Practice Test 2026",
+      "description": "25 questions covering refrigerant handling, Clean Air Act, and environmental safety.",
+      "educationalLevel": "professional",
+      "url": "https://epa608practicetest.net/core.html",
+      "about": {
+        "@type": "Thing",
+        "name": "EPA Section 608 Core Regulations"
+      },
+      "numberOfQuestions": 25,
+      "timeRequired": "PT30M",
+      "educationalAlignment": {
+        "@type": "AlignmentObject",
+        "educationalFramework": "EPA Section 608 Certification"
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "name": "Free EPA 608 Core Practice Test",
+      "url": "https://epa608practicetest.net/core.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free interactive EPA 608 Core practice test with instant scoring, answer explanations, and progress tracking. No signup required."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many questions are in the EPA 608 Core section?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Core section contains 25 multiple-choice questions. You need 18 of 25 correct (72%) to pass."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the passing score for the EPA 608 Core exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "72% — you need 18 out of 25 correct. The official proctored exam is administered closed-book by EPA-approved organizations such as ESCO Institute and Mainstream Engineering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Core section expire?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Core certification is permanent once earned. It does not require renewal or re-testing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Montreal Protocol on the Core exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The Core exam directly tests knowledge of the Montreal Protocol, its 1987 implementation,\n                        and how it drove the phase-out of CFCs and HCFCs under U.S. Clean Air Act regulations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I take the Core section online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some EPA-approved providers offer online proctored testing. Check our guide on\n                        online and in-person testing options\n                        for current providers and availability."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://epa608practicetest.net/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "EPA 608 Core Practice Test",
+          "item": "https://epa608practicetest.net/core.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://epa608practicetest.net/core.html",
+      "name": "Free EPA 608 Core Practice Test 2026",
+      "url": "https://epa608practicetest.net/core.html",
+      "dateModified": "2026-05-02"
+    }
+  ,
+    {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2", ".hero p", ".intro p"]
+    }]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KTLNXJKN');</script>
+</head>
+
+<body>
+
+    
+    <!-- Header -->
+<!-- HEADER:START -->
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJ8X1DQ1GT');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KSX9M3DD');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wcxpankiye");
+</script>
+
+<!-- Vercel Analytics -->
+<script defer src="https://va.vercel-scripts.com/v1/script.js" data-api="_vercel/insights"></script>
+
+<!-- GTM Noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSX9M3DD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Header ── */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 68px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    gap: 8px;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.logo img { height: 40px; width: auto; }
+
+/* ── Desktop Nav ── */
+nav { display: flex; align-items: center; flex: 1; }
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+}
+
+.nav-menu > li { position: relative; }
+
+.nav-menu > li > a {
+    display: block;
+    padding: 8px 14px;
+    color: #111827;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+}
+
+.nav-menu > li > a:hover { background: #f3f4f6; color: #000; }
+
+/* ── Dropdown ── */
+.dropdown { position: relative; }
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    color: #111827;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    background: transparent;
+    border: none;
+    white-space: nowrap;
+    font-family: inherit;
+    letter-spacing: -0.01em;
+}
+
+.dropdown-toggle svg {
+    width: 14px; height: 14px;
+    stroke: currentColor; stroke-width: 2.2;
+    fill: none; stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0.5;
+    transition: transform 0.2s ease, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.dropdown:hover > .dropdown-toggle,
+.dropdown.open > .dropdown-toggle { background: #f3f4f6; color: #000; }
+
+.dropdown:hover > .dropdown-toggle svg,
+.dropdown.open > .dropdown-toggle svg { transform: rotate(180deg); opacity: 0.8; }
+
+/* ── Dropdown menu — hover shows, no click needed ── */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;           /* flush — no gap so hover stays active */
+    left: 0;
+    list-style: none;
+    z-index: 300;
+    min-width: 240px;
+    display: block;      /* always in flow — visibility controls hide/show */
+    padding-top: 10px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    transform-origin: top left;
+    transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease;
+    pointer-events: none;
+}
+
+.dropdown:hover > .dropdown-menu,
+.dropdown.open > .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.dropdown-menu-inner {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 16px 48px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 6px;
+}
+
+.dropdown-menu li a {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    color: #111827;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.1s;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+
+.dropdown-menu li a:hover { background: #f3f4f6; color: #000; }
+.dropdown-menu li a:hover span { color: inherit; }
+
+.dropdown-menu .divider { height: 1px; background: #f1f5f9; margin: 4px 6px; }
+
+.dropdown-menu .menu-label {
+    display: block;
+    padding: 8px 12px 3px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* ── Auth buttons ── */
+.nav-signin {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+}
+.nav-signin:hover { background: #f3f4f6; color: #000; }
+
+.nav-dashboard {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    background: #18181b;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14.5px;
+    border-radius: 8px;
+    transition: background 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.nav-dashboard:hover { background: #27272a !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+.nav-pricing { font-weight: 600; color: #003087 !important; }
+.nav-pricing:hover { background: #eef3ff !important; color: #003087 !important; }
+
+/* ── Pricing CTA ── */
+.nav-cta-pricing {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    background: #003087;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14.5px;
+    border-radius: 8px;
+    transition: background 0.12s, box-shadow 0.12s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+}
+.nav-cta-pricing:hover { background: #002268 !important; box-shadow: 0 4px 12px rgba(0,48,135,0.25); }
+
+/* ── Hamburger ── */
+.nav-hamburger {
+    display: none; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px; background: transparent; border: none;
+    cursor: pointer; border-radius: 8px; transition: background 0.12s; flex-shrink: 0;
+}
+.nav-hamburger:hover { background: #f3f4f6; }
+.nav-hamburger span {
+    display: block; width: 22px; height: 1.5px; background: #111827; border-radius: 2px;
+    transition: transform 0.22s, opacity 0.22s; transform-origin: center;
+}
+.nav-hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile Drawer ── */
+.mobile-nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 98; backdrop-filter: blur(2px); }
+.mobile-nav-overlay.active { display: block; }
+
+.mobile-nav {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 88vw;
+    background: #fff; z-index: 99; overflow-y: auto; padding: 0 0 40px;
+    box-shadow: -8px 0 48px rgba(0,0,0,0.14);
+    transform: translateX(100%); transition: transform 0.26s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-nav.active { display: block; transform: translateX(0); }
+
+.mobile-nav-header {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; padding: 0 20px; border-bottom: 1px solid #f1f5f9;
+}
+.mobile-nav-close {
+    width: 36px; height: 36px; background: transparent; border: none; cursor: pointer;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: #6b7280; transition: background 0.12s;
+}
+.mobile-nav-close:hover { background: #f3f4f6; }
+
+.mobile-nav-section { padding: 16px 16px 8px; }
+.mobile-nav-label {
+    font-size: 10.5px; font-weight: 700; color: #9ca3af; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 4px; padding: 0 8px;
+}
+.mobile-nav-links { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+.mobile-nav-links a {
+    display: block; padding: 11px 12px; color: #111827; text-decoration: none;
+    font-size: 16px; font-weight: 500; border-radius: 8px;
+    transition: background 0.1s, color 0.1s; letter-spacing: -0.01em;
+}
+.mobile-nav-links a:hover { background: #f3f4f6; color: #000; }
+.mobile-nav-links a.active { background: #eef3ff; color: #003087; }
+.mobile-nav-links .m-pricing { font-weight: 700; color: #003087 !important; }
+
+.mobile-nav-divider { height: 1px; background: #f1f5f9; margin: 6px 16px; }
+
+.mobile-nav-auth { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.mobile-btn-signin {
+    display: block; text-align: center; padding: 13px 16px;
+    color: #374151; text-decoration: none; font-size: 15px; font-weight: 500;
+    border-radius: 8px; border: 1px solid #e5e7eb; transition: background 0.12s;
+}
+.mobile-btn-signin:hover { background: #f3f4f6; }
+.mobile-btn-signup {
+    display: block; text-align: center; padding: 13px 16px;
+    background: #003087; color: #fff !important; text-decoration: none;
+    font-size: 15px; font-weight: 600; border-radius: 8px; transition: background 0.12s;
+}
+.mobile-btn-signup:hover { background: #002268; }
+.mobile-btn-dashboard {
+    display: block; text-align: center; padding: 13px 16px;
+    background: #18181b; color: #fff !important; text-decoration: none;
+    font-size: 15px; font-weight: 600; border-radius: 8px; transition: background 0.12s;
+}
+.mobile-btn-dashboard:hover { background: #27272a; }
+
+/* ── Footer ── */
+footer { background: #0f172a; color: #94a3b8; padding: 56px 0 32px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+.footer-brand p { font-size: 15px; line-height: 1.7; color: #64748b; margin: 12px 0 20px; max-width: 280px; }
+.footer-brand .footer-logo { font-size: 17px; font-weight: 700; color: #f1f5f9; }
+.footer-badge { display: inline-block; padding: 4px 10px; background: rgba(56,189,248,0.1); color: #38bdf8; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.footer-col h5 { font-size: 12px; font-weight: 700; color: #e2e8f0; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: #64748b; text-decoration: none; font-size: 15px; transition: color 0.12s; line-height: 1.4; display: block; }
+.footer-col ul li a:hover { color: #e2e8f0; }
+.footer-bottom { border-top: 1px solid #1e293b; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: 14px; color: #475569; }
+.footer-bottom a { color: #475569; text-decoration: none; font-size: 14px; }
+.footer-bottom a:hover { color: #94a3b8; }
+.footer-hub { font-weight: 600; color: #94a3b8 !important; }
+.footer-hub:hover { color: #38bdf8 !important; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .header-content { height: 60px; padding: 0 16px; }
+    .logo img { height: 34px; }
+    nav, #nav-auth-area { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-brand { grid-column: 1 / -1; }
+    footer { padding: 40px 0 28px; }
+}
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; gap: 24px; } }
+</style>
+
+<!-- Header -->
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:38px;width:auto;">
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Practice Tests <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li role="menuitem"><a href="/universal.html">Universal — All Sections</a></li>
+                        <li class="divider" role="separator"></li>
+                        <li role="menuitem"><a href="/core.html">Core — Regulations</a></li>
+                        <li role="menuitem"><a href="/type-1.html">Type I — Small Appliances</a></li>
+                        <li role="menuitem"><a href="/type-2.html">Type II — High Pressure</a></li>
+                        <li role="menuitem"><a href="/type-3.html">Type III — Low Pressure</a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Features <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu-inner">
+                        <li class="menu-label">Free tools</li>
+                        <li role="menuitem"><a href="/tutor.html">
+                            AI Study Tutor
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · 10/day</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/flashcards.html">
+                            EPA 608 Flashcards
+                            <span style="display:block;font-size:11px;color:#94a3b8;font-weight:400;">Free · Core only · 5/day</span>
+                        </a></li>
+                        <li class="divider" role="separator"></li>
+                        <li class="menu-label">Pro features</li>
+                        <li role="menuitem"><a href="/weak-spots.html">
+                            Weak-Spot Drill
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/progress.html">
+                            Progress Dashboard
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="/review.html">
+                            Fix My Mistakes
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Basic free · Full Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/certificate">
+                            Achievement Badges
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        <li role="menuitem"><a href="https://epa608practicetest.net/learn">
+                            Study Path
+                            <span style="display:block;font-size:11px;color:#f59e0b;font-weight:400;">Pro</span>
+                        </a></li>
+                        </div>
+                    </ul>
+                </li>
+                <li><a href="/pricing.html" class="nav-pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <div id="nav-auth-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <a href="https://epa608practicetest.net/login" class="nav-signin" id="nav-btn-signin" style="display:none;">Sign In</a>
+            <a href="https://epa608practicetest.net/dashboard" class="nav-dashboard" id="nav-btn-dashboard" style="display:none;">Dashboard →</a>
+        </div>
+
+        <!-- Hamburger (mobile only) -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
+
+<!-- Mobile Nav Drawer -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-header">
+        <a href="/" style="text-decoration:none;">
+            <img src="/logo.svg" alt="EPA 608 Practice Test" style="height:30px;width:auto;">
+        </a>
+        <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Practice Tests</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/universal.html">Universal — All Sections</a></li>
+            <li><a href="/core.html">Core — Regulations</a></li>
+            <li><a href="/type-1.html">Type I — Small Appliances</a></li>
+            <li><a href="/type-2.html">Type II — High Pressure</a></li>
+            <li><a href="/type-3.html">Type III — Low Pressure</a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Free Tools</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/tutor.html">AI Study Tutor <span style="font-size:11px;color:#94a3b8;">10/day</span></a></li>
+            <li><a href="/flashcards.html">Flashcards <span style="font-size:11px;color:#94a3b8;">Core · 5/day</span></a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Pro Features</div>
+        <ul class="mobile-nav-links">
+            <li><a href="/weak-spots.html">Weak-Spot Drill <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/progress.html">Progress Dashboard <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="/review.html">Fix My Mistakes <span style="font-size:11px;color:#f59e0b;">Basic free</span></a></li>
+            <li><a href="https://epa608practicetest.net/certificate">Achievement Badges <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="https://epa608practicetest.net/learn">Study Path <span style="font-size:11px;color:#f59e0b;">Pro</span></a></li>
+            <li><a href="/pricing.html" class="m-pricing">Pricing</a></li>
+        </ul>
+    </div>
+
+    <div class="mobile-nav-divider"></div>
+
+    <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <a href="https://epa608practicetest.net/login" class="mobile-btn-signin" id="mobile-btn-signin" style="display:none;">Sign In</a>
+        <a href="https://epa608practicetest.net/dashboard" class="mobile-btn-dashboard" id="mobile-btn-dashboard" style="display:none;">Dashboard →</a>
+    </div>
+</nav>
+
+<script>
+// Auth detection — 3 states:
+// 1. Logged in (Supabase token)  → Dashboard only
+// 2. Returning user (has history, no token) → Sign In only (blue)
+// 3. Brand new user (no history, no token)  → Sign Up only (blue)
+(function() {
+    try {
+        var si  = document.getElementById('nav-btn-signin');
+        var su  = document.getElementById('nav-btn-signup');
+        var db  = document.getElementById('nav-btn-dashboard');
+        var msi = document.getElementById('mobile-btn-signin');
+        var msu = document.getElementById('mobile-btn-signup');
+        var mdb = document.getElementById('mobile-btn-dashboard');
+
+        function showOnly(desktop, mobile) {
+            // desktop: 'signin' | 'signup' | 'dashboard'
+            if (si) si.style.display  = desktop === 'signin'    ? 'inline-flex' : 'none';
+            if (su) su.style.display  = desktop === 'signup'    ? 'inline-flex' : 'none';
+            if (db) db.style.display  = desktop === 'dashboard' ? 'inline-flex' : 'none';
+            if (msi) msi.style.display = mobile === 'signin'    ? 'block' : 'none';
+            if (msu) msu.style.display = mobile === 'signup'    ? 'block' : 'none';
+            if (mdb) mdb.style.display = mobile === 'dashboard' ? 'block' : 'none';
+        }
+
+        // 1. Check active Supabase session
+        var KEY = 'sb-sequvmxgtmbirnixeril-auth-token';
+        var raw = localStorage.getItem(KEY);
+        if (raw) {
+            var session = JSON.parse(raw);
+            var token = session && (session.access_token || (session[0] && session[0].access_token));
+            if (token) { showOnly('dashboard', 'dashboard'); return; }
+        }
+
+        // 2. Returning user = has test history
+        var history = localStorage.getItem('epa608History');
+        var hasHistory = false;
+        if (history) {
+            try { hasHistory = JSON.parse(history).length > 0; } catch(e) {}
+        }
+
+        if (hasHistory) {
+            showOnly('signin', 'signin');
+        } else {
+            showOnly('signup', 'signup');
+        }
+    } catch(e) {}
+})();
+
+// Dropdown: hover is handled by CSS; click handles touch/keyboard
+document.querySelectorAll('.dropdown-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var li = btn.closest('.dropdown');
+        var isOpen = li.classList.contains('open');
+        document.querySelectorAll('.dropdown.open').forEach(function(el) {
+            el.classList.remove('open');
+            var b = el.querySelector('.dropdown-toggle');
+            if (b) b.setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+            li.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown.open').forEach(function(el) {
+        el.classList.remove('open');
+        var btn = el.querySelector('.dropdown-toggle');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+});
+
+// Mobile hamburger
+(function() {
+    var hamburger = document.getElementById('nav-hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    var overlay = document.getElementById('mobile-nav-overlay');
+    var closeBtn = document.getElementById('mobile-nav-close');
+
+    function openMenu() {
+        hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        mobileNav.classList.add('active');
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    if (hamburger) hamburger.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) closeMenu();
+    });
+})();
+</script>
+<!-- HEADER:END -->
+
+
+
+
+    <main class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/study-guides.html">Practice Tests</a> &rsaquo; Core Section
+        </nav>
+
+        <section class="quiz-hero">
+            <h1>EPA 608 Practice Test — Core Exam (Free)</h1>
+            <p>The <strong>EPA 608 Practice Test</strong> Core section tests 25 multiple-choice questions on refrigerant
+                handling, safety procedures,
+                and Clean Air Act regulations. Every technician certification starts here — Core is mandatory regardless
+                of which Type you pursue.</p>
+        </section>
+
+        <section class="test-container" id="quizApp">
+            <div id="testView">
+                <div class="test-header">
+                    <div id="questionNumber">Question 1 of 10</div>
+                    <div class="progress-group">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div id="countdown">12:00</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="qText">Loading questions...</div>
+                    <div class="answers-list" id="ansList"></div>
+                </div>
+
+                <div class="test-nav">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="ctrl.prev()">Previous</button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="ctrl.next()">Next Question</button>
+                    <button class="btn-nav btn-submit" id="submitBtn" onclick="ctrl.finish()">Complete Test</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultView">
+                <h2>Test Results</h2>
+                <div class="score-circle" id="scoreValue">0%</div>
+                <p id="feedbackText"></p>
+                <div id="resultDetails"></div>
+                <div id="shareButtons"></div>
+                <div id="signup-nudge" style="display:none;margin:16px 0;padding:12px 16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <p style="font-size:13px;font-weight:600;color:#1e3a8a;margin:0">Know exactly where you're weak — fix it faster</p>
+                    <p style="font-size:12px;color:#3b82f6;margin:4px 0 0">Free account shows your weak spots &amp; tracks improvement over every test.</p>
+                  </div>
+                  <a href="/checkout.html" style="flex-shrink:0;font-size:12px;font-weight:700;color:#fff;background:#1d4ed8;padding:8px 16px;border-radius:8px;text-decoration:none;white-space:nowrap">Get Pro →</a>
+                </div>
+                <div class="results-nav">
+                    <button class="btn-nav btn-next" onclick="location.reload()">Retake Test</button>
+                </div>
+            </div>
+            <script>
+            (function(){
+              var KEY='sb-sequvmxgtmbirnixeril-auth-token';
+              var nudge=document.getElementById('signup-nudge');
+              if(!nudge) return;
+              try {
+                var raw=localStorage.getItem(KEY);
+                var loggedIn=raw && JSON.parse(raw)?.access_token;
+                if(loggedIn) nudge.style.display='none';
+                else nudge.style.display='flex';
+              } catch(e){ nudge.style.display='flex'; }
+            })();
+            </script>
+
+            <!-- Share popup -->
+            <div id="sharePopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center;padding:16px">
+                <div style="background:#fff;border-radius:20px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,.2)">
+                    <div style="font-size:48px;margin-bottom:8px">🎉</div>
+                    <h3 style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:6px">Great score!</h3>
+                    <p style="font-size:14px;color:#64748b;margin-bottom:20px">Help other HVAC techs find this free resource</p>
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+                        <a id="popupTwitter" href="#" target="_blank" rel="noopener" style="display:block;padding:14px;background:#000;color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px">Share on 𝕏 Twitter</a>
+                        <a id="popupFacebook" href="#" target="_blank" rel="noopener" style="display:block;padding:14px;background:#1877f2;color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px">Share on Facebook</a>
+                    </div>
+                    <button onclick="document.getElementById('sharePopup').style.display='none'" style="font-size:13px;color:#94a3b8;background:none;border:none;cursor:pointer;padding:8px">Maybe later</button>
+                </div>
+            </div>
+        </section>
+
+        <article class="content-body">
+            <h2>What the EPA 608 Core Exam Covers (EPA 608 Practice Test)</h2>
+            <p>The EPA 608 Core section tests foundational knowledge every refrigerant technician must know — regardless
+                of the system type they service. Section 608 of the Clean Air Act prohibits venting refrigerants that
+                harm the stratospheric ozone layer, and the Core exam verifies you understand <em>why</em> and
+                <em>how</em> those rules apply in the field.
+            </p>
+
+            <p>The Core section measures five knowledge pillars:</p>
+            <ul>
+                <li><strong>Environmental Impact</strong> — Ozone Depletion Potential (ODP) and Global Warming
+                    Potential (GWP) for refrigerant families. The 1987 Montreal Protocol and the 1990 Clean Air Act
+                    Amendments set phase-out schedules for CFCs, HCFCs, and now HFCs under the 2020 AIM Act.</li>
+                <li><strong>Recovery, Recycling, and Reclamation</strong> — These three terms have distinct legal
+                    meanings. Recovery = removing refrigerant from a system into an external container. Recycling =
+                    cleaning refrigerant for reuse on-site. Reclamation = processing to ARI 700 standard, certified by
+                    an EPA-approved reclaimer.</li>
+                <li><strong>Evacuation and Dehydration</strong> — Deep vacuum requirements (measured in inches of
+                    mercury or microns) before recharging a system. Core asks about both pre- and post-1993 recovery
+                    equipment standards.</li>
+                <li><strong>Safety</strong> — Cylinder color codes, pressure-relief valve requirements, oxygen
+                    deprivation risks, and the toxicity classification of refrigerants (A1, A2L, B1, B2L).</li>
+                <li><strong>Regulatory Compliance</strong> — Maximum civil penalties exceed $44,539 per day per
+                    violation for illegal venting. Technicians must retain service records for a minimum of 3 years.
+                </li>
+            </ul>
+
+            <h2>Refrigerant Families: CFC, HCFC, HFC, HFO</h2>
+            <p>The Core exam consistently tests your ability to distinguish refrigerant generations by their
+                environmental properties. The phase-out timeline follows ozone impact — the higher the ODP, the faster
+                the phase-out.</p>
+
+            <div class="highlight-box">
+                <strong>Field Note:</strong> R-22 (HCFC) production ended January 1, 2020. Technicians can still
+                recover and recycle existing R-22, but no new production is permitted in the U.S. The Core exam tests
+                this distinction.
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Family</th>
+                        <th>Example</th>
+                        <th>ODP</th>
+                        <th>GWP</th>
+                        <th>Status (2026)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CFC</td>
+                        <td>R-11, R-12</td>
+                        <td>High (1.0)</td>
+                        <td>High</td>
+                        <td>Fully phased out</td>
+                    </tr>
+                    <tr>
+                        <td>HCFC</td>
+                        <td>R-22, R-123</td>
+                        <td>Low (0.055)</td>
+                        <td>Moderate</td>
+                        <td>Production ended 2020</td>
+                    </tr>
+                    <tr>
+                        <td>HFC</td>
+                        <td>R-410A, R-134a</td>
+                        <td>Zero</td>
+                        <td>High (2,088)</td>
+                        <td>AIM Act phase-down in progress</td>
+                    </tr>
+                    <tr>
+                        <td>HFO</td>
+                        <td>R-1234yf</td>
+                        <td>Zero</td>
+                        <td>Very Low (4)</td>
+                        <td>Current transition target</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Passing the EPA 608 Core Section</h2>
+            <p>The Core section requires a minimum score of <strong>72% — 18 correct answers out of 25</strong> (18 ÷ 25 = 0.72 = 72%). Core
+                is mandatory for every technician certification level. You cannot earn a Type I, II, or III
+                certification without passing Core first. Most technicians find the recovery definitions and evacuation
+                micron levels the most difficult to memorize — if you score below 72% on this practice test, focus your
+                review on those two areas.</p>
+
+            <p>Before starting this practice test, review the <a href="/study-guide-core.html" style="color:#007acc;font-weight:600;">EPA 608 Core section study guide</a> — it covers venting prohibition dates, civil penalty amounts, the de minimis exemption, and the refrigerant lifecycle from recovery through reclamation.</p>
+
+            <p>Once passed, Core certification does not expire. It is a permanent part of your Section 608 technician
+                credential. Continue with the <a href="/type-1.html">Type I Small Appliance practice test</a>,
+                <a href="/type-2.html">Type II High-Pressure practice test</a>, or
+                <a href="/type-3.html">Type III Low-Pressure practice test</a>, or jump to
+                the <a href="/universal.html">EPA 608 Universal practice test</a> when you're ready
+                to simulate the full 100-question proctored exam. For in-depth topic coverage, visit our
+                <a href="/study-guides.html">EPA 608 study guide collection</a>.
+            </p>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <strong>How many questions are in the EPA 608 Core section?</strong>
+                    <p>The Core section contains 25 multiple-choice questions. You need 18 of 25 correct (72%) to pass.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>What is the passing score for the EPA 608 Core exam?</strong>
+                    <p>72% — you need 18 out of 25 correct. The official proctored exam is administered closed-book by EPA-approved organizations such as ESCO Institute and Mainstream Engineering.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Does the Core section expire?</strong>
+                    <p>No. Core certification is permanent once earned. It does not require renewal or re-testing.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Is the Montreal Protocol on the Core exam?</strong>
+                    <p>Yes. The Core exam directly tests knowledge of the Montreal Protocol, its 1987 implementation,
+                        and how it drove the phase-out of CFCs and HCFCs under U.S. Clean Air Act regulations.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Can I take the Core section online?</strong>
+                    <p>Some EPA-approved providers offer online proctored testing. Check our guide on
+                        <a href="/epa-608-online-test.html">online and in-person testing options</a>
+                        for current providers and availability.
+                    </p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+
+<!-- Static sample questions for Google crawlability — do not remove -->
+<section style="max-width:780px;margin:40px auto 0;padding:0 20px" aria-label="Sample Core Practice Questions">
+<h2 style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:4px">Sample Core Questions</h2>
+<p style="font-size:14px;color:#64748b;margin-bottom:20px">These questions appear on the Core section of the EPA 608 exam.</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q1.</strong> Which type of refrigerant is a chlorofluorocarbon (CFC)?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#16a34a;font-weight:700">R-12 ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-134a</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-410A</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-744</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> R-12 (dichlorodifluoromethane) is a CFC — a chlorofluorocarbon containing chlorine, fluorine, and carbon. CFCs have high ODP (R-12 ODP=1.0) and were phased out under the Montreal Protocol. R-134a is an HFC, R-410A is an HFC blend, and R-744 is CO₂.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q2.</strong> What does ODP stand for in refrigerant terminology?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#16a34a;font-weight:700">Ozone Depletion Potential ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Oxygen Density Pressure</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Operational Discharge Point</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Overheat Detection Procedure</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> ODP stands for Ozone Depletion Potential — a measure of a substance's ability to destroy stratospheric ozone relative to R-11 (the reference compound, ODP=1.0). Refrigerants with ODP=0 (HFCs, HFOs) do not deplete ozone.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q3.</strong> Which international treaty controls the production of ozone-depleting substances?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#16a34a;font-weight:700">Montreal Protocol ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Kyoto Protocol</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Paris Agreement</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">Geneva Convention</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> The Montreal Protocol, signed September 16, 1987, is the international treaty that controls production and use of ozone-depleting substances (ODSs) including CFCs and HCFCs. It has been ratified by 197 countries and is considered the most successful environmental treaty.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q4.</strong> What is the main purpose of the Clean Air Act as it relates to refrigerants?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#16a34a;font-weight:700">To protect the ozone layer by regulating refrigerant handling ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">To regulate vehicle emissions only</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">To manage air conditioning efficiency</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">To set building ventilation standards</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> The Clean Air Act, specifically Title VI (Stratospheric Ozone Protection), requires EPA to regulate ozone-depleting substances. Section 608 establishes the refrigerant management program: technician certification, recovery requirements, and venting prohibition for refrigerants used in stationary equipment.</p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
+  <p style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px"><strong>Q5.</strong> Which of these is an example of an HCFC refrigerant?</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">    <li style="font-size:15px;color:#16a34a;font-weight:700">R-22 ✓</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-134a</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-12</li>
+    <li style="font-size:15px;color:#374151;font-weight:400">R-744</li>
+  </ul>
+  <p style="font-size:14px;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9"><strong>Explanation:</strong> R-22 (chlorodifluoromethane) is an HCFC — a hydrochlorofluorocarbon. HCFCs contain hydrogen, which shortens atmospheric lifetime and reduces ODP compared to CFCs. R-22 ODP=0.05 (vs R-11=1.0). Production of R-22 ended January 1, 2020 in the US.</p>
+</div>
+</div>
+</section>
+<!-- End static sample questions -->
+
+    <!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-logo">EPA 608 Practice Test</div>
+                <p>Free practice tests for HVAC technicians. Study smarter, pass faster.</p>
+                <span class="footer-badge">Free Practice Tests + Pro $14.99 Lifetime</span>
+            </div>
+
+            <!-- Practice Tests -->
+            <div class="footer-col">
+                <h5>Practice Tests</h5>
+                <ul>
+                    <li><a href="/universal.html">Universal</a></li>
+                    <li><a href="/core.html">Core</a></li>
+                    <li><a href="/type-1.html">Type I</a></li>
+                    <li><a href="/type-2.html">Type II</a></li>
+                    <li><a href="/type-3.html">Type III</a></li>
+                    <li><a href="/review.html">Fix My Mistakes</a></li>
+                    <li><a href="/epa-608-practice-questions.html">Practice Questions</a></li>
+                </ul>
+            </div>
+
+            <!-- Study Resources -->
+            <div class="footer-col">
+                <h5>Study Resources</h5>
+                <ul>
+                    <li><a href="/study-guides.html">Complete Study Guide</a></li>
+                    <li><a href="/study-guide-cheat-sheet.html">Cheat Sheet</a></li>
+                    <li><a href="/flashcards.html">Flashcards</a></li>
+                    <li><a href="/what-is-epa-608-certification.html">What Is EPA 608?</a></li>
+                    <li><a href="/how-to-get-certified.html">How to Get Certified</a></li>
+                    <li><a href="/cost-and-exam-fees.html">Certification Cost</a></li>
+                    <li><a href="/does-it-expire.html">Does 608 Expire?</a></li>
+                </ul>
+            </div>
+
+            <!-- Exam Prep -->
+            <div class="footer-col">
+                <h5>Exam Prep</h5>
+                <ul>
+                    <li><a href="/how-to-study-for-epa-608.html">How to Study</a></li>
+                    <li><a href="/test-day-checklist.html">Test Day Checklist</a></li>
+                    <li><a href="/epa-608-passing-score.html">Passing Score</a></li>
+                    <li><a href="/pass-rate.html">Pass Rate</a></li>
+                    <li><a href="/exam-day.html#timing">Exam Duration</a></li>
+                </ul>
+            </div>
+
+            <!-- Tools & Info -->
+            <div class="footer-col">
+                <h5>Tools &amp; Info</h5>
+                <ul>
+                    <li><a href="/tutor.html">AI Study Helper</a></li>
+                    <li><a href="/weak-spots.html">Weak Spot Drill</a></li>
+                    <li><a href="/universal.html">FAQ</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EPA608PracticeTest.net — Freemium: Free practice tests + Pro $14.99 lifetime.</p>
+            <div style="display:flex;gap:16px;">
+                <a href="/policy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="test-engine.js"></script>
+    <script>
+        initTestEngine({
+            category: 'Core',
+            historyKey: 'core',
+            passMsg: "Pass! You've mastered the Core foundations.",
+            failMsg: "Keep studying. Focus on environmental regulations and safety."
+        });
+    </script>
+    <script src="/includes.js" defer></script>
+</body>
+
+</html>

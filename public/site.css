@@ -1,0 +1,12 @@
+/* ── EPA 608 — site.css ── */
+/* Nav/header/footer CSS lives in scripts/templates/header.html (injected).
+   This file only holds: content-body overrides + misc utilities. */
+
+/* ── Content body: enforce 16px minimum ── */
+main p, main li, main dt, main dd, main blockquote,
+article p, article li,
+.container p, .container li {
+    font-size: 16px;
+}
+main table, article table, .container table { font-size: 16px; }
+.faq-q, .faq-a { font-size: 16px; }
