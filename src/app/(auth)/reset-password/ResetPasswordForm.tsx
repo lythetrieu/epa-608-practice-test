@@ -1,19 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { establishRecoverySession } from '@/lib/auth/recovery-session'
 
 export default function ResetPasswordForm() {
   const router = useRouter()
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  // 'checking' until we know whether the recovery link produced a valid session
+  const [sessionState, setSessionState] = useState<'checking' | 'ready' | 'invalid'>('checking')
+
+  // Establish the auth session from the recovery link before allowing a password change.
+  // Recovery links generated server-side (PayPal welcome / resend-setup) and the standard
+  // "forgot password" email can arrive in three shapes — handle all of them:
+  //   1. ?token_hash=...&type=recovery  → verifyOtp
+  //   2. ?code=...                      → exchangeCodeForSession (PKCE)
+  //   3. #access_token=...&refresh_token=... (implicit hash) → setSession
+  useEffect(() => {
+    let cancelled = false
+
+    async function run() {
+      const result = await establishRecoverySession(supabase.auth, window.location.href)
+      if (cancelled) return
+      if (result.state === 'ready') {
+        if (result.cleanUrl) window.history.replaceState(null, '', result.cleanUrl)
+        setSessionState('ready')
+      } else {
+        setSessionState('invalid')
+      }
+    }
+
+    run()
+    return () => {
+      cancelled = true
+    }
+  }, [supabase])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -51,6 +80,35 @@ export default function ResetPasswordForm() {
       setError('Something went wrong. Please try again.')
       setLoading(false)
     }
+  }
+
+  if (sessionState === 'checking') {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center space-y-3">
+        <div className="animate-pulse text-gray-500 text-sm">Verifying your reset link…</div>
+      </div>
+    )
+  }
+
+  if (sessionState === 'invalid') {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center space-y-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mx-auto">
+          <svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 className="text-xl font-bold text-gray-900">This link has expired</h2>
+        <p className="text-gray-600 text-sm">
+          Your password reset link is invalid or has already been used. Request a fresh one and we&apos;ll email it right away.
+        </p>
+        <p className="text-sm text-gray-500 pt-2">
+          <Link href="/forgot-password" className="text-blue-800 font-medium hover:underline">
+            Send a new reset link
+          </Link>
+        </p>
+      </div>
+    )
   }
 
   if (success) {

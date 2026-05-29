@@ -79,7 +79,6 @@ export type UserProfile = {
   is_team_admin: boolean
   ai_queries_today: number
   ai_queries_reset_at: string
-  paddle_customer_id: string | null
   created_at: string
 }
 
@@ -94,7 +93,6 @@ export type Team = {
   seats_total: number
   seats_used: number
   invite_code: string
-  paddle_subscription_id: string | null
   expires_at: string
   created_at: string
 }
