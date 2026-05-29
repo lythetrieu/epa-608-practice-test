@@ -3,12 +3,11 @@ import { NextRequest } from 'next/server'
 
 // ── Supabase mock ──────────────────────────────────────────────────────────────
 const mockCreateUser = vi.fn()
-const mockGenerateLink = vi.fn()
 const mockFrom = vi.fn()
 
 const supabaseMock = {
   from: mockFrom,
-  auth: { admin: { createUser: mockCreateUser, generateLink: mockGenerateLink } },
+  auth: { admin: { createUser: mockCreateUser } },
 }
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -258,44 +257,43 @@ describe('POST /api/paypal/capture', () => {
 
   // ── New user (no account) ────────────────────────────────────────────────────
 
-  it('200 — new user: creates account, sends welcome email with setup link', async () => {
+  it('200 — new user: creates account with a temp password and emails it', async () => {
     mockFetch(TOKEN_RESP, paypalOrder('new@user.com'), RESEND_OK)
     setupDb({ existingProfile: null })
     mockCreateUser.mockResolvedValue({ data: { user: { id: 'new-uid' } }, error: null })
-    mockGenerateLink.mockResolvedValue({
-      data: { properties: { action_link: 'https://epa608.net/reset-password?token=abc' } },
-    })
 
     const res = await POST(req({ orderID: 'ord-new', email: 'new@user.com' }))
     expect(res.status).toBe(200)
-    const body = await res.json()
-    expect(body).toMatchObject({ ok: true, newAccount: true })
+    expect(await res.json()).toMatchObject({ ok: true, newAccount: true })
 
+    // createUser is called with a generated password + email_confirm (no recovery link)
+    const createArgs = mockCreateUser.mock.calls[0][0]
+    expect(typeof createArgs.password).toBe('string')
+    expect(createArgs.password.length).toBeGreaterThanOrEqual(8)
+    expect(createArgs.email_confirm).toBe(true)
+
+    // welcome email carries that exact temp password + a plain login link
     const resendCall = vi.mocked(global.fetch).mock.calls.find(
       ([url]) => String(url).includes('resend.com')
-    )
-    expect(resendCall).toBeDefined()
-    const resendBody = JSON.parse(resendCall![1]!.body as string)
-    // welcome email — setup link in the HTML
-    expect(resendBody.html).toContain('reset-password?token=abc')
+    )!
+    const resendBody = JSON.parse(resendCall[1]!.body as string)
+    expect(resendBody.to).toContain('new@user.com')
+    expect(resendBody.html).toContain(createArgs.password)
+    expect(resendBody.html).toContain('epa608practicetest.net/login')
+    expect(resendBody.html).not.toContain('token_hash')
   })
 
-  it('200 — new user: setupLink null → sends fallback email with /forgot-password', async () => {
+  it('200 — new user: createUser carries checkout source + order_id metadata', async () => {
     mockFetch(TOKEN_RESP, paypalOrder('new@user.com'), RESEND_OK)
     setupDb({ existingProfile: null })
     mockCreateUser.mockResolvedValue({ data: { user: { id: 'new-uid' } }, error: null })
-    mockGenerateLink.mockResolvedValue({ data: null }) // no link returned
 
-    const res = await POST(req({ orderID: 'ord-new', email: 'new@user.com' }))
+    const res = await POST(req({ orderID: 'ord-meta', email: 'new@user.com' }))
     expect(res.status).toBe(200)
 
-    const resendCall = vi.mocked(global.fetch).mock.calls.find(
-      ([url]) => String(url).includes('resend.com')
-    )
-    expect(resendCall).toBeDefined()
-    const resendBody = JSON.parse(resendCall![1]!.body as string)
-    // fallback: contains forgot-password URL
-    expect(resendBody.html).toContain('forgot-password')
+    const createArgs = mockCreateUser.mock.calls[0][0]
+    expect(createArgs.email).toBe('new@user.com')
+    expect(createArgs.user_metadata).toMatchObject({ source: 'checkout', order_id: 'ord-meta' })
   })
 
   it('200 + setupFailed — createUser fails: returns ok but no account created', async () => {
@@ -602,7 +600,6 @@ describe('POST /api/paypal/capture', () => {
       return chain(null)
     })
     mockCreateUser.mockResolvedValue({ data: { user: { id: 'new-uid' } }, error: null })
-    mockGenerateLink.mockResolvedValue({ data: { properties: { action_link: 'https://epa608.net/reset?token=x' } } })
 
     await POST(req({ orderID: 'specific-order-id-123', email: 'newuser@example.com' }))
 
