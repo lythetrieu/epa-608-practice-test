@@ -53,8 +53,17 @@ export default async function SettingsPage() {
     teamName = team?.name ?? null
   }
 
-  // Determine auth provider
-  const isOAuthUser = user.app_metadata?.provider !== 'email'
+  // Determine auth provider. Show "Change Password" for any email/password user.
+  // admin-created accounts (PayPal checkout) don't reliably carry
+  // app_metadata.provider === 'email', so derive the set of providers from
+  // app_metadata AND the identities list, and only treat the user as OAuth-only
+  // (hide the password form) when there is no email credential at all.
+  const authProviders = new Set<string>([
+    ...(user.app_metadata?.provider ? [user.app_metadata.provider as string] : []),
+    ...(((user.app_metadata?.providers as string[] | undefined) ?? [])),
+    ...((user.identities ?? []).map((i) => i.provider)),
+  ])
+  const isOAuthUser = authProviders.size > 0 && !authProviders.has('email')
   const displayName = user.user_metadata?.display_name ?? user.user_metadata?.full_name ?? ''
 
   return (
