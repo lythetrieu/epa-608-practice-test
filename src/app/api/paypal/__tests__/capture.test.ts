@@ -243,7 +243,10 @@ describe('POST /api/paypal/capture', () => {
     )
     expect(resendCall).toBeDefined()
     const resendBody = JSON.parse(resendCall![1]!.body as string)
-    expect(resendBody.subject).toMatch(/upgrade/i)
+    // existing-user email: Pro upgrade, log in with EXISTING password (no temp password)
+    expect(resendBody.subject).toMatch(/pro/i)
+    expect(resendBody.html).toContain('existing password')
+    expect(resendBody.html).not.toContain('Temporary password')
   })
 
   it('500 — existing user: DB upgrade fails', async () => {
