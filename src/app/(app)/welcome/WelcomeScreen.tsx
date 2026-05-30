@@ -13,7 +13,7 @@ export function WelcomeScreen({ name, destination }: { name: string; destination
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push(destination)
-    }, 2000)
+    }, 800)
     return () => clearTimeout(timer)
   }, [destination, router])
 

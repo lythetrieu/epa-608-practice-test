@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
-import type { EmailOtpType } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -9,15 +8,10 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type')
   const next = searchParams.get('next') ?? '/dashboard'
 
-  const isRecovery = type === 'recovery'
-
-  // A recovery link must NEVER be silently bounced to /login (that was the
-  // "both links go to the login page / loop" bug). Hand the token to the
-  // reset-password page, which establishes the session client-side via
-  // verifyOtp/exchangeCodeForSession and lets the user set a new password.
-  if (isRecovery) {
+  // Recovery → hand the token to the reset-password page (client establishes the
+  // session and lets the user set a new password). Never bounce recovery to /login.
+  if (type === 'recovery') {
     const target = new URL(`${origin}/reset-password`)
-    // Forward whatever credential arrived so the reset page can consume it.
     if (tokenHash) {
       target.searchParams.set('token_hash', tokenHash)
       target.searchParams.set('type', 'recovery')
@@ -27,10 +21,23 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(target.toString())
   }
 
-  // Build a redirect response with a Supabase client bound to its cookies, so a
-  // verified session is persisted on the response we return.
-  function clientFor(response: NextResponse) {
-    return createServerClient(
+  // Email confirmation (signup / magic link / invite) arrives as token_hash.
+  // Forward to the client /auth/confirm page, which shows a "Confirming…" screen
+  // IMMEDIATELY (no blank) and verifies client-side. This is a fast redirect with
+  // no server verifyOtp round-trip, so the user never sees an about:blank tab.
+  if (tokenHash) {
+    const target = new URL(`${origin}/auth/confirm`)
+    target.searchParams.set('token_hash', tokenHash)
+    if (type) target.searchParams.set('type', type)
+    target.searchParams.set('next', next)
+    return NextResponse.redirect(target.toString())
+  }
+
+  // OAuth (Google) returns ?code= with the PKCE verifier present in the browser
+  // because the flow was initiated client-side → exchange server-side.
+  if (code) {
+    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
+    const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
       {
@@ -47,30 +54,6 @@ export async function GET(request: NextRequest) {
         },
       },
     )
-  }
-
-  // Email confirmation (signup / magic link / invite) arrives as token_hash.
-  // Verify it SERVER-SIDE — works from any browser with no PKCE code_verifier
-  // (signup is a raw REST call, so exchangeCodeForSession would have no verifier
-  // and fall through to /login). verifyOtp confirms the email AND creates the
-  // session; we then land the user on /welcome.
-  if (tokenHash) {
-    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
-    const supabase = clientFor(response)
-    const { error } = await supabase.auth.verifyOtp({
-      type: (type ?? 'email') as EmailOtpType,
-      token_hash: tokenHash,
-    })
-    if (!error) {
-      return response
-    }
-  }
-
-  // OAuth (Google) returns ?code= with the PKCE verifier present in the browser
-  // because the flow was initiated client-side.
-  if (code) {
-    const response = NextResponse.redirect(`${origin}/welcome?next=${encodeURIComponent(next)}`)
-    const supabase = clientFor(response)
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       return response
