@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { APP_URL } from '@/lib/site-config'
 import { createAdminClient } from '@/lib/supabase/server'
 import PublicCertificate from './PublicCertificate'
 import { Award, ArrowRight } from 'lucide-react'
@@ -99,7 +100,7 @@ export default async function PublicCertPage({ params }: Props) {
     recognizedBy: {
       '@type': 'Organization',
       name: 'EPA608PracticeTest.net',
-      url: 'https://epa608practicetest.net',
+      url: APP_URL,
     },
     about: {
       '@type': 'EducationalOccupationalProgram',

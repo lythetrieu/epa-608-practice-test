@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getTierLabel } from '@/lib/tier'
+import { MARKETING_URL } from '@/lib/site-config'
 import type { Tier } from '@/types'
 
 type Props = {
@@ -304,7 +305,7 @@ export default function SettingsClient({
 
         {tier === 'free' && (
           <Link
-            href="https://epa608practicetest.net/checkout.html"
+            href={`${MARKETING_URL}/checkout.html`}
             className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
           >
             Upgrade to Pro

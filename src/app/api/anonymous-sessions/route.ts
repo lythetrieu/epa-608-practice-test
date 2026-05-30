@@ -1,23 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { corsHeaders } from '@/lib/site-config'
 
 // Allow cross-origin from static site
-export async function OPTIONS() {
+export async function OPTIONS(request: Request) {
   return new NextResponse(null, {
     status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
+    headers: { ...corsHeaders(request), 'Access-Control-Allow-Headers': 'Content-Type' },
   })
 }
 
 export async function POST(request: NextRequest) {
-  const headers = {
-    'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  }
+  const headers = corsHeaders(request)
 
   let body: unknown
   try {

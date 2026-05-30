@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { resendEmailRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
 import { generateTempPassword } from '@/lib/auth/temp-password'
+import { APP_URL } from '@/lib/site-config'
 
 const HEADERS = {
   'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
@@ -26,7 +27,7 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
       from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
       to: [email],
       subject: 'Your account access has been restored',
-      text: `EPA 608 Practice Test\n\nYour access is restored\n\nDear valued customer, we recently had an issue that affected signing in to some accounts. It is now fully resolved, and we're sorry for the trouble.\n\nEmail: ${email}\nTemporary password: ${tempPassword}\nSign in: https://epa608practicetest.net/login\n\nPlease change your password in Settings after signing in.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
+      text: `EPA 608 Practice Test\n\nYour access is restored\n\nDear valued customer, we recently had an issue that affected signing in to some accounts. It is now fully resolved, and we're sorry for the trouble.\n\nEmail: ${email}\nTemporary password: ${tempPassword}\nSign in: ${APP_URL}/login\n\nPlease change your password in Settings after signing in.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
       html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>Access restored</title></head>
 <body style="margin:0;padding:0;background:#f7f8fa;">
@@ -46,10 +47,10 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
 <div style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:14px;font-weight:600;color:#1f2a44;">${tempPassword}</div>
 </td></tr></table>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
-<tr><td style="border-radius:6px;background:#c2691c;"><a href="https://epa608practicetest.net/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
+<tr><td style="border-radius:6px;background:#c2691c;"><a href="${APP_URL}/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
 </table>
 <p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Please change your password in Settings after signing in.</p>
-<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="https://epa608practicetest.net/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
+<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="${APP_URL}/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
 </td></tr></table>
 </td></tr></table>
 </body></html>`,

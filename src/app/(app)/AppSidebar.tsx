@@ -4,6 +4,7 @@ import { useState, useEffect, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
+import { MARKETING_URL } from '@/lib/site-config'
 import type { Tier } from '@/types'
 import {
   LayoutDashboard, BookOpen, Layers, Bot, BarChart3, Target,
@@ -118,7 +119,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
       {/* Upgrade */}
       {!isPro && (
         <div className="px-3 pb-2">
-          <Link href="https://epa608practicetest.net/checkout.html"
+          <Link href={`${MARKETING_URL}/checkout.html`}
             className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
             style={{ background: '#e85d04' }}>
             <span className="text-white">⚡ Upgrade to Pro</span>
@@ -165,7 +166,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </Link>
         </div>
         {!isPro && (
-          <Link href="https://epa608practicetest.net/checkout.html"
+          <Link href={`${MARKETING_URL}/checkout.html`}
             className="text-xs font-bold px-3 py-1.5 rounded-lg text-white"
             style={{ background: '#e85d04' }}>
             Go Pro

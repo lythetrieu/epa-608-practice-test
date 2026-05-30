@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { corsHeaders } from '@/lib/site-config'
 
 const PAYPAL_API = 'https://api-m.paypal.com'
 const BASE_PRICE = 14.99
 
-const HEADERS = {
-  'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-}
-
-export async function OPTIONS() {
+export async function OPTIONS(request: Request) {
   return new NextResponse(null, {
     status: 204,
-    headers: { ...HEADERS, 'Access-Control-Allow-Headers': 'Content-Type' },
+    headers: { ...corsHeaders(request), 'Access-Control-Allow-Headers': 'Content-Type' },
   })
 }
 
@@ -85,9 +81,9 @@ export async function POST(request: NextRequest) {
       }),
     })
     const order = await res.json()
-    return NextResponse.json({ orderID: order.id, finalPrice }, { headers: HEADERS })
+    return NextResponse.json({ orderID: order.id, finalPrice }, { headers: corsHeaders(request) })
   } catch (err) {
     console.error('Create order error:', err)
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500, headers: HEADERS })
+    return NextResponse.json({ error: 'Failed to create order' }, { status: 500, headers: corsHeaders(request) })
   }
 }
