@@ -2,6 +2,7 @@
 
 import { Shield, Star, Crown, Gem, CheckCircle, Copy, Check, Share2 } from 'lucide-react'
 import { useState } from 'react'
+import { APP_URL } from '@/lib/site-config'
 
 type Props = {
   certId: string
@@ -99,7 +100,7 @@ export default function PublicCertificate({
   const Icon = config.icon
   const shareUrl = typeof window !== 'undefined'
     ? window.location.href
-    : `https://epa608practicetest.net/cert/${certId}`
+    : `${APP_URL}/cert/${certId}`
 
   async function handleCopy() {
     try {

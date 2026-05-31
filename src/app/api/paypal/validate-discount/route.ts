@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const HEADERS = {
-  'Access-Control-Allow-Origin': 'https://epa608practicetest.net',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-}
+import { corsHeaders } from '@/lib/site-config'
 
 const BASE_PRICE = 14.99
 
@@ -19,29 +15,29 @@ function parseCodes(): Record<string, number> {
   return result
 }
 
-export async function OPTIONS() {
+export async function OPTIONS(request: Request) {
   return new NextResponse(null, {
     status: 204,
-    headers: { ...HEADERS, 'Access-Control-Allow-Headers': 'Content-Type' },
+    headers: { ...corsHeaders(request), 'Access-Control-Allow-Headers': 'Content-Type' },
   })
 }
 
 export async function POST(request: NextRequest) {
   let body: { code?: string }
   try { body = await request.json() } catch {
-    return NextResponse.json({ valid: false, message: 'Invalid request' }, { status: 400, headers: HEADERS })
+    return NextResponse.json({ valid: false, message: 'Invalid request' }, { status: 400, headers: corsHeaders(request) })
   }
 
   const code = (body.code || '').trim().toUpperCase()
   if (!code) {
-    return NextResponse.json({ valid: false, message: 'Enter a discount code' }, { headers: HEADERS })
+    return NextResponse.json({ valid: false, message: 'Enter a discount code' }, { headers: corsHeaders(request) })
   }
 
   const codes = parseCodes()
   const discount = codes[code]
 
   if (discount === undefined) {
-    return NextResponse.json({ valid: false, message: 'Invalid code' }, { headers: HEADERS })
+    return NextResponse.json({ valid: false, message: 'Invalid code' }, { headers: corsHeaders(request) })
   }
 
   const finalPrice = Math.max(1.00, parseFloat((BASE_PRICE * (1 - discount / 100)).toFixed(2)))
@@ -54,5 +50,5 @@ export async function POST(request: NextRequest) {
     finalPrice,
     savings: parseFloat((BASE_PRICE - finalPrice).toFixed(2)),
     message: `${discount}% off applied!`,
-  }, { headers: HEADERS })
+  }, { headers: corsHeaders(request) })
 }

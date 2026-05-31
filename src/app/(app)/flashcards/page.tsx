@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import type { Tier } from '@/types'
+import { MARKETING_URL } from '@/lib/site-config'
 import FlashcardClient from './FlashcardClient'
 
 export default async function FlashcardsPage() {
@@ -29,7 +30,7 @@ export default async function FlashcardsPage() {
             Drill every concept with spaced-repetition flashcards. Available on Pro.
           </p>
           <Link
-            href="https://epa608practicetest.net/checkout.html"
+            href={`${MARKETING_URL}/checkout.html`}
             className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors"
           >
             Upgrade to Pro — $14.99

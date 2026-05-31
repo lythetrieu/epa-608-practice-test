@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { captureRateLimit, getIdentifier, rateLimitResponse } from '@/lib/ratelimit'
 import { generateTempPassword } from '@/lib/auth/temp-password'
+import { APP_URL } from '@/lib/site-config'
 
 const PAYPAL_API = 'https://api-m.paypal.com'
 
@@ -43,7 +44,7 @@ async function sendProUpgradeEmail(resendKey: string, email: string) {
       from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
       to: [email],
       subject: "You're on EPA 608 Pro",
-      text: `EPA 608 Practice Test\n\nYou're on EPA 608 Pro\n\nYour account ${email} now has Pro.\n\nLog in:\nhttps://epa608practicetest.net/login\n\nSign in with your existing password.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
+      text: `EPA 608 Practice Test\n\nYou're on EPA 608 Pro\n\nYour account ${email} now has Pro.\n\nLog in:\n${APP_URL}/login\n\nSign in with your existing password.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
       html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>You're on EPA 608 Pro</title></head>
 <body style="margin:0;padding:0;background:#f7f8fa;">
@@ -56,10 +57,10 @@ async function sendProUpgradeEmail(resendKey: string, email: string) {
 <h1 style="margin:0 0 12px;font-size:20px;line-height:1.3;font-weight:600;color:#1f2a44;">You're on EPA 608 Pro</h1>
 <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#475569;">Your account ${email} now has Pro.</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
-<tr><td style="border-radius:6px;background:#c2691c;"><a href="https://epa608practicetest.net/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
+<tr><td style="border-radius:6px;background:#c2691c;"><a href="${APP_URL}/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
 </table>
 <p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Sign in with your existing password.</p>
-<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="https://epa608practicetest.net/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
+<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="${APP_URL}/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
 </td></tr></table>
 </td></tr></table>
 </body></html>`,
@@ -78,7 +79,7 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
       from: 'EPA 608 Practice Test <support@epa608practicetest.net>',
       to: [email],
       subject: 'Welcome to EPA 608 Pro',
-      text: `EPA 608 Practice Test\n\nWelcome to EPA 608 Pro\n\nYour account is ready.\n\nEmail: ${email}\nTemporary password: ${tempPassword}\nLog in: https://epa608practicetest.net/login\n\nChange your password in Settings after signing in.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
+      text: `EPA 608 Practice Test\n\nWelcome to EPA 608 Pro\n\nYour account is ready.\n\nEmail: ${email}\nTemporary password: ${tempPassword}\nLog in: ${APP_URL}/login\n\nChange your password in Settings after signing in.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
       html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>Welcome to EPA 608 Pro</title></head>
 <body style="margin:0;padding:0;background:#f7f8fa;">
@@ -99,10 +100,10 @@ async function sendProWelcomeEmail(resendKey: string, email: string, tempPasswor
 </td></tr>
 </table>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
-<tr><td style="border-radius:6px;background:#c2691c;"><a href="https://epa608practicetest.net/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
+<tr><td style="border-radius:6px;background:#c2691c;"><a href="${APP_URL}/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
 </table>
 <p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Change your password in Settings after signing in.</p>
-<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="https://epa608practicetest.net/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
+<div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="${APP_URL}/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
 </td></tr></table>
 </td></tr></table>
 </body></html>`,

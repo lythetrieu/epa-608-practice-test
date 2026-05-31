@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier } from '@/types'
+import { MARKETING_URL } from '@/lib/site-config'
 import TutorChat from './TutorChat'
 
 export default async function TutorPage() {
@@ -39,7 +40,7 @@ export default async function TutorPage() {
             </p>
           </div>
           <Link
-            href="https://epa608practicetest.net/checkout.html"
+            href={`${MARKETING_URL}/checkout.html`}
             className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-bold hover:bg-blue-900 transition-colors"
           >
             Upgrade Now

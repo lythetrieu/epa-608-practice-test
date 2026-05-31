@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
+import { MARKETING_URL } from '@/lib/site-config'
 import { ReportButton } from './ReportButton'
 
 // Track consecutive fails per category — show gentle Pro hint after 2
@@ -117,7 +118,7 @@ export function ResultView({ result, category, questions, onRetake }: {
             }
             const guideSlug = SLUG_MAP[category] ?? 'core'
             return (
-              <Link href={`https://epa608practicetest.net/study-guide-${guideSlug}.html`}
+              <Link href={`${MARKETING_URL}/study-guide-${guideSlug}.html`}
                 target="_blank" rel="noopener"
                 className="block text-center py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors">
                 Study {category} Guide before retaking →
@@ -146,7 +147,7 @@ export function ResultView({ result, category, questions, onRetake }: {
             <span className="text-amber-500 text-sm shrink-0">⚠</span>
             <p className="text-xs text-gray-500 flex-1">
               Failed {failCount}× on {category} —{' '}
-              <Link href="https://epa608practicetest.net/checkout.html"
+              <Link href={`${MARKETING_URL}/checkout.html`}
                 className="text-blue-700 font-medium hover:underline">
                 Blind Spot Drill targets your exact weak spots
               </Link>
