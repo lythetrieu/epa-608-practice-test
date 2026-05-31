@@ -36,6 +36,12 @@ export function tagNoindex(response: NextResponse, appHost: boolean): NextRespon
   return response
 }
 
+// Where the app-subdomain root ("/") sends a visitor: confirmed users go to the
+// dashboard, everyone else to login. The marketing root domain never uses this.
+export function appRootRedirectPath(isConfirmedUser: boolean): string {
+  return isConfirmedUser ? '/dashboard' : '/login'
+}
+
 export async function middleware(request: NextRequest) {
   const appHost = isAppHost(request)
   let supabaseResponse = NextResponse.next({ request })
@@ -77,6 +83,17 @@ export async function middleware(request: NextRequest) {
   // Public endpoints — skip all auth checks
   if (pathname === '/api/ai/guest-chat' || pathname.startsWith('/api/public/')) {
     return tagNoindex(NextResponse.next(), appHost)
+  }
+
+  // App subdomain root → route users INTO the app instead of serving the 108KB
+  // marketing homepage (which belongs to the marketing root domain). Host-gated:
+  // the root domain's "/" is NEVER touched — it keeps the marketing homepage.
+  // Runs after getUser() so we can send confirmed users straight to /dashboard.
+  if (appHost && pathname === '/') {
+    const dest = request.nextUrl.clone()
+    dest.pathname = appRootRedirectPath(Boolean(user && user.email_confirmed_at))
+    dest.search = ''
+    return tagNoindex(NextResponse.redirect(dest), appHost)
   }
 
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route))

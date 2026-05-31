@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { NextResponse } from 'next/server'
-import { APP_HOST, isAppHost, tagNoindex } from '../middleware'
+import { APP_HOST, isAppHost, tagNoindex, appRootRedirectPath } from '../middleware'
 
 function reqWithHost(host: string | null) {
   return { headers: new Headers(host ? { host } : {}) }
@@ -39,5 +39,15 @@ describe('app-subdomain noindex gating', () => {
   it('tags redirects too (e.g. protected-route bounce)', () => {
     const res = tagNoindex(NextResponse.redirect('https://app.epa608practicetest.net/login'), true)
     expect(res.headers.get('X-Robots-Tag')).toBe('noindex, nofollow')
+  })
+})
+
+describe('app-subdomain root redirect destination', () => {
+  it('sends a confirmed user to the dashboard', () => {
+    expect(appRootRedirectPath(true)).toBe('/dashboard')
+  })
+
+  it('sends an anonymous/unconfirmed visitor to login', () => {
+    expect(appRootRedirectPath(false)).toBe('/login')
   })
 })
