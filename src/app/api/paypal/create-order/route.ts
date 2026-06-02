@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
   }
 
   // 2. Create the order.
-  let order: { id?: string; name?: string; message?: string; details?: unknown }
+  let order: { id?: string; name?: string; message?: string; details?: Array<{ issue?: string; description?: string }> }
   let orderStatus: number
   try {
     const res = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
@@ -130,8 +130,14 @@ export async function POST(request: NextRequest) {
   // non-secret error name so the failure is visible.
   if (!order.id) {
     console.error('create-order: PayPal returned no order id:', orderStatus, JSON.stringify(order))
+    // PayPal puts the specific machine-readable reason in details[].issue
+    // (e.g. PAYEE_ACCOUNT_RESTRICTED, CURRENCY_NOT_SUPPORTED, ITEM_TOTAL_MISMATCH).
+    // These are non-secret diagnostic codes.
+    const issues = Array.isArray(order.details)
+      ? order.details.map((d) => d.issue).filter(Boolean)
+      : []
     return NextResponse.json(
-      { error: 'order_failed', paypalStatus: orderStatus, paypalError: order.name ?? null },
+      { error: 'order_failed', paypalStatus: orderStatus, paypalError: order.name ?? null, paypalIssues: issues },
       { status: 502, headers },
     )
   }
