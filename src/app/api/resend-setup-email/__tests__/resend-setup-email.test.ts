@@ -101,7 +101,7 @@ describe('POST /api/resend-setup-email', () => {
         new Response(JSON.stringify({ error: 'rate limited' }), { status: 429 })
       ),
     }))
-    ;({ POST, OPTIONS } = await import('../../resend-setup-email/route'))
+    ;({ POST, OPTIONS } = await import('../route'))
     mockRateLimitFn.mockResolvedValue({ success: true, reset: 0 })
   })
 

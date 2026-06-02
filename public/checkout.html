@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Complete your EPA 608 Pro upgrade — lifetime access to all practice questions, AI Tutor, and weak-spot drills for $14.99.">
-    <title>Checkout — EPA 608 Pro Lifetime Access</title>
+    <title>Get EPA 608 Pro — Lifetime Access | EPA 608 Practice Test</title>
+    <meta name="description" content="Unlock EPA 608 Pro: unlimited practice tests, AI tutor, weak-spot drills and progress tracking. One-time payment, lifetime access.">
+    <link rel="canonical" href="https://epa608practicetest.net/checkout.html">
     <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="https://epa608practicetest.net/checkout.html" />
 
-    <!-- Google tag -->
+    <!-- Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -17,254 +17,164 @@
         gtag('config', 'G-KJ8X1DQ1GT');
     </script>
 
-    <!-- Payments handled by Polar (Merchant of Record) — hosted checkout, no inline SDK -->
-
     <style>
+        :root {
+            --navy: #001d57;
+            --cta: #e85d04;
+            --cta-dk: #c2691c;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --bg: #f7f8fa;
+            --green: #15803d;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
-
-        .checkout-header {
-            background: #0f172a; padding: 16px 24px;
-            display: flex; align-items: center; justify-content: space-between;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg); color: var(--ink); line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
-        .checkout-header .logo { color: #fff; font-size: 16px; font-weight: 800; text-decoration: none; }
-        .checkout-header .back-link { color: rgba(255,255,255,.55); font-size: 15px; text-decoration: none; display: flex; align-items: center; gap: 5px; }
-        .checkout-header .back-link:hover { color: #fff; }
-        .secure-badge { color: rgba(255,255,255,.6); font-size: 15px; display: flex; align-items: center; gap: 5px; }
+        .wrap { max-width: 500px; margin: 0 auto; padding: 32px 20px 56px; }
 
-        .page-wrap {
-            max-width: 960px; margin: 0 auto;
-            padding: 32px 16px 60px;
-            display: grid; grid-template-columns: 1fr 400px;
-            gap: 32px; align-items: start;
+        /* Brand */
+        .brand { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 28px; }
+        .brand .logo { width: 36px; height: 36px; border-radius: 9px; background: var(--navy); color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+        .brand .name { font-weight: 700; font-size: 15px; }
+        .brand .name span { color: var(--muted); font-weight: 500; }
+
+        /* Card */
+        .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px; box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.06); }
+
+        h1 { font-size: 22px; line-height: 1.25; font-weight: 800; letter-spacing: -.02em; }
+        .sub { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+        /* Price */
+        .price-box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 20px 0; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 3px 0; }
+        .price-row .label { color: var(--muted); }
+        .price-row.discount .label { color: var(--green); }
+        .price-row.discount .val { color: var(--green); font-weight: 600; }
+        .price-divider { height: 1px; background: var(--line); margin: 10px 0; }
+        .price-row.total { font-size: 16px; font-weight: 700; padding-top: 2px; }
+        .price-row.total .val { display: flex; align-items: center; gap: 8px; }
+        .was { color: var(--muted); text-decoration: line-through; font-weight: 400; font-size: 14px; }
+        .save { background: #fee2e2; color: #b91c1c; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+
+        /* Features */
+        ul.feats { list-style: none; margin: 4px 0 22px; }
+        ul.feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; padding: 6px 0; }
+        ul.feats li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+        /* CTA */
+        .pay-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; background: var(--cta); color: #fff; border: none; cursor: pointer;
+            font-size: 16px; font-weight: 700; padding: 16px; border-radius: 12px; text-decoration: none;
+            transition: background .15s; box-shadow: 0 4px 14px rgba(232,93,4,.28);
         }
+        .pay-btn:hover { background: var(--cta-dk); }
+        .pay-note { text-align: center; font-size: 13px; color: var(--muted); margin-top: 10px; }
+        .secure { text-align: center; font-size: 13px; color: #94a3b8; margin-top: 14px; }
 
-        /* Order Summary */
-        .order-summary {
-            background: #fff; border-radius: 16px;
-            padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,.07);
-        }
-        .order-summary h2 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin-bottom: 20px; }
-        .product-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
-        .product-icon { width: 52px; height: 52px; background: linear-gradient(135deg,#0f172a,#1a4080); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-        .product-name { font-size: 17px; font-weight: 700; color: #0f172a; }
-        .product-desc { font-size: 15px; color: #64748b; margin-top: 4px; }
-        .product-badge { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 6px; }
+        /* Trust strip */
+        .trust { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: 20px; font-size: 12.5px; color: var(--muted); }
+        .trust span { display: flex; align-items: center; gap: 5px; }
 
-        .feature-list { list-style: none; border-top: 1px solid #f1f5f9; padding-top: 16px; margin-bottom: 20px; }
-        .feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; color: #475569; padding: 4px 0; }
-        .feature-list li::before { content: '✓'; color: #16a34a; font-weight: 700; flex-shrink: 0; }
+        /* FAQ */
+        .faq { margin-top: 28px; }
+        .faq h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+        details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+        details summary { cursor: pointer; font-weight: 600; font-size: 14.5px; list-style: none; display: flex; justify-content: space-between; }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::after { content: "+"; color: var(--muted); font-weight: 400; }
+        details[open] summary::after { content: "−"; }
+        details p { color: var(--muted); font-size: 14px; margin-top: 8px; }
 
-        .price-summary { border-top: 1px solid #f1f5f9; padding-top: 16px; }
-        .price-row { display: flex; justify-content: space-between; font-size: 15px; color: #64748b; margin-bottom: 6px; }
-        .price-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 10px; padding-top: 10px; border-top: 2px solid #e2e8f0; }
-        .was { font-size: 15px; font-weight: 400; color: #94a3b8; text-decoration: line-through; margin-right: 6px; }
-        .save-pill { background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
-
-        .guarantee-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-top: 16px; font-size: 15px; color: #475569; display: flex; gap: 10px; }
-        .guarantee-box .icon { font-size: 20px; flex-shrink: 0; }
-
-        /* Checkout panel */
-        .checkout-panel { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,.07); position: sticky; top: 24px; }
-        .checkout-panel h2 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-        .checkout-panel .subtitle { font-size: 15px; color: #64748b; margin-bottom: 20px; }
-
-        /* Promo */
-        .email-field { width: 100%; padding: 11px 13px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 14px; }
-        .email-field:focus { border-color: #007acc; }
-        .email-field.error { border-color: #dc2626; }
-        .email-label { font-size: 15px; font-weight: 600; color: #374151; margin-bottom: 5px; display: block; }
-        .promo-toggle { font-size: 15px; color: #64748b; background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 4px; text-decoration: underline; }
-        .promo-toggle:hover { color: #374151; }
-        .promo-row { display: none; flex-direction: row; gap: 8px; margin-bottom: 6px; }
-        .promo-row.open { display: flex; }
-        .promo-input { flex: 1; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 15px; outline: none; text-transform: uppercase; }
-        .promo-input:focus { border-color: #007acc; }
-        .promo-apply-btn { padding: 10px 16px; background: #0f172a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-        .promo-apply-btn:hover { background: #1e293b; }
-        .promo-msg { font-size: 15px; margin-bottom: 12px; display: none; }
-        .promo-msg.ok { color: #15803d; display: block; }
-        .promo-msg.err { color: #dc2626; display: block; }
-
-        /* PayPal button */
-        #paypal-btn-wrap { min-height: 50px; }
-        .paypal-skeleton { height: 50px; background: #e2e8f0; border-radius: 8px; animation: shimmer 1.2s infinite; }
-        @keyframes shimmer { 0%,100%{opacity:.5} 50%{opacity:1} }
-
-        /* Divider */
-        .pay-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: #94a3b8; font-size: 15px; }
-        .pay-divider::before, .pay-divider::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
-
-        /* Card fields — compact, no labels */
-        .card-group {
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #fff;
-        }
-        .card-group .card-field-box {
-            height: 46px;
-            border: none;
-            border-bottom: 1.5px solid #e2e8f0;
-            transition: background .15s;
-        }
-        .card-group .card-field-box:last-child { border-bottom: none; }
-        .card-group .card-row-2 { display: grid; grid-template-columns: 1fr 1fr; }
-        .card-group .card-row-2 .card-field-box { border-bottom: none; border-right: 1.5px solid #e2e8f0; }
-        .card-group .card-row-2 .card-field-box:last-child { border-right: none; }
-        .card-group:focus-within { border-color: #007acc; }
-
-        /* Pay button */
-        .pay-btn { width: 100%; padding: 15px; background: #0f172a; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: background .15s, transform .1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .pay-btn:hover { background: #1e293b; }
-        .pay-btn:active { transform: scale(.98); }
-        .pay-btn:disabled { background: #94a3b8; cursor: not-allowed; }
-        .pay-btn .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
-        .pay-btn.loading .spinner { display: block; }
-        .pay-btn.loading .btn-text { opacity: .7; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 15px; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
-
-        .secure-note { text-align: center; font-size: 15px; color: #94a3b8; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .terms-note { font-size: 11px; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.6; }
-        .terms-note a { color: #64748b; }
-
-        /* Success */
-        #success-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
-        .success-box { background: #fff; border-radius: 20px; padding: 44px 36px; max-width: 460px; width: 100%; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,.25); }
-        .success-box .emoji { font-size: 56px; margin-bottom: 16px; }
-        .success-box h2 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
-        .success-box p { font-size: 15px; color: #64748b; line-height: 1.7; margin-bottom: 8px; }
-        .success-box .goto-btn { display: inline-block; background: #007acc; color: #fff; padding: 14px 32px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 16px; margin-top: 20px; }
-
-        @media (max-width: 720px) {
-            .page-wrap { grid-template-columns: 1fr; }
-            .checkout-panel { position: static; }
-        }
+        .terms { text-align: center; font-size: 12px; color: #94a3b8; margin-top: 24px; line-height: 1.7; }
+        .terms a { color: #007acc; text-decoration: none; }
     </style>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://epa608practicetest.net/#organization",
-      "name": "EPA 608 Practice Test",
-      "url": "https://epa608practicetest.net",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://epa608practicetest.net/logo.svg",
-        "width": 200,
-        "height": 60
-      },
-      "description": "Freemium EPA 608 practice test platform — 500 questions free (no signup) + Pro $14.99 lifetime (866 questions, AI Tutor, blind-spot drills, certificates). Verified against official EPA Section 608 regulations and Prometric content outline.",
-      "foundingDate": "2024",
-      "founder": {
-        "@type": "Person",
-        "name": "Lý Thế Triều",
-        "sameAs": [
-          "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
-          "https://x.com/TrieuLy14"
-        ]
-      },
-      "knowsAbout": [
-        "EPA 608 Certification",
-        "Section 608 Clean Air Act",
-        "refrigerant handling regulations",
-        "HVAC technician certification"
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/l%C3%BD-th%E1%BA%BF-tri%E1%BB%81u-b4767688/",
-        "https://x.com/TrieuLy14"
-      ]
-    }
-  ]
-}
-</script>
 </head>
 <body>
+<div class="wrap">
 
-<div class="checkout-header">
-    <a href="/pricing.html" class="back-link">← Back</a>
-    <a href="/" class="logo">EPA 608 Practice Test</a>
-    <div class="secure-badge">🔒 Secure Checkout</div>
-</div>
-
-<div class="page-wrap">
-
-    <!-- Order Summary -->
-    <div class="order-summary">
-        <h2>Order Summary</h2>
-        <div class="product-row">
-            <div class="product-icon">🎓</div>
-            <div>
-                <div class="product-name">EPA 608 Pro — Lifetime Access</div>
-                <div class="product-desc">Everything you need to pass the EPA 608 exam</div>
-                <div class="product-badge">Founding Price · One-time · No subscription</div>
-            </div>
-        </div>
-
-        <ul class="feature-list">
-            <li>Full 866-question bank (366 more than free)</li>
-            <li>AI Tutor — 1,000 sessions/day</li>
-            <li>Full explanation on every wrong answer</li>
-            <li>Weak Spot Drill — targets your weakest areas</li>
-            <li>Unlimited test history with trends</li>
-            <li>Radar chart — readiness across all 4 sections</li>
-            <li>Shareable Achievement Certificate</li>
-            <li>All future features included, forever</li>
-        </ul>
-
-        <div class="price-summary">
-            <div class="price-row"><span>Regular price</span><span>$39.99</span></div>
-            <div class="price-row" id="discount-row" style="color:#15803d;display:none;">
-                <span id="discount-label">Promo code</span><span id="discount-amount"></span>
-            </div>
-            <div class="price-row" style="color:#15803d;"><span>Founding discount</span><span id="founding-savings">−$25.00</span></div>
-            <div class="price-total">
-                <span>Total today</span>
-                <span><span class="was">$39.99</span><span id="price-display">$14.99</span><span class="save-pill" id="save-pill">SAVE 63%</span></span>
-            </div>
-        </div>
-
-        <div class="guarantee-box">
-            <div class="icon">🛡️</div>
-            <div><strong>30-day money-back guarantee.</strong> Not satisfied? Email <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a> within 30 days — no questions asked.</div>
-        </div>
+    <div class="brand">
+        <div class="logo">608</div>
+        <div class="name">EPA 608 <span>Practice Test</span></div>
     </div>
 
-    <!-- Checkout Panel -->
-    <div class="checkout-panel">
-        <h2>Complete your order</h2>
-        <p class="subtitle">One payment · Instant access · No subscription ever</p>
+    <div class="card">
+        <h1>Unlock EPA 608 Pro</h1>
+        <p class="sub">One payment · Instant access · No subscription ever</p>
 
-        <!-- Embedded Polar checkout (Merchant of Record). data-polar-checkout opens the
-             checkout in a modal ON this page — the URL stays epa608practicetest.net. -->
+        <!-- Price breakdown -->
+        <div class="price-box">
+            <div class="price-row"><span class="label">Regular price</span><span class="val">$39.99</span></div>
+            <div class="price-row discount"><span class="label">Founding discount</span><span class="val">−$25.00</span></div>
+            <div class="price-divider"></div>
+            <div class="price-row total">
+                <span class="label">Total today</span>
+                <span class="val"><span class="was">$39.99</span> $14.99 <span class="save">SAVE 63%</span></span>
+            </div>
+        </div>
+
+        <ul class="feats">
+            <li>Unlimited practice tests — Core, Type I, II &amp; III, Universal</li>
+            <li>AI study tutor on every question</li>
+            <li>Weak-spot drills that target what you miss</li>
+            <li>Full progress tracking &amp; exam-style mock tests</li>
+            <li>Lifetime access — pay once, keep forever</li>
+        </ul>
+
+        <!-- Polar embedded checkout: opens on this page (epa608practicetest.net).
+             Polar is the Merchant of Record — handles cards, Apple/Google Pay,
+             promo codes and tax. On success it redirects to /login?purchased=1. -->
         <a href="https://buy.polar.sh/polar_cl_wYwNqtlEixLfzX7eiMjrBF31qbag3hWMQn5lW48ATCI"
            data-polar-checkout
            data-polar-checkout-theme="light"
-           class="pay-btn" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">
-            <span class="btn-text">Get Instant Access — <span id="btn-price">$14.99</span></span>
-        </a>
-        <p style="text-align:center;font-size:13px;color:#94a3b8;margin-top:10px;">Card, Apple&nbsp;Pay &amp; more · Have a promo code? Apply it at checkout.</p>
+           class="pay-btn">Get Instant Access — $14.99</a>
 
-        <div class="secure-note">🔒 Secure checkout · powered by Polar</div>
-        <div class="terms-note">
-            By purchasing you agree to our
-            <a href="/terms.html">Terms of Service</a>,
-            <a href="/terms.html#refunds">Refund Policy</a> and
-            <a href="/policy.html">Privacy Policy</a>.
+        <p class="pay-note">Card, Apple&nbsp;Pay &amp; more · Have a promo code? Apply it at checkout.</p>
+
+        <div class="trust">
+            <span>🔒 Secure checkout</span>
+            <span>⚡ Instant access</span>
+            <span>🧾 Tax included</span>
         </div>
+        <p class="secure">Powered by Polar · Merchant of Record</p>
     </div>
+
+    <div class="faq">
+        <h2>Questions</h2>
+        <details>
+            <summary>How do I get access after paying?</summary>
+            <p>Your account is created instantly and we email your sign-in details to the email you use at checkout. Then sign in at <a href="https://app.epa608practicetest.net/login">app.epa608practicetest.net/login</a>.</p>
+        </details>
+        <details>
+            <summary>Is this a subscription?</summary>
+            <p>No. It's a one-time payment for lifetime access — you're never charged again.</p>
+        </details>
+        <details>
+            <summary>Already have a free account?</summary>
+            <p>Use the same email at checkout and your existing account is upgraded to Pro automatically.</p>
+        </details>
+        <details>
+            <summary>Can I get a refund?</summary>
+            <p>Yes — see our <a href="/terms.html#refunds">Refund Policy</a>. Questions? <a href="mailto:support@epa608practicetest.net">support@epa608practicetest.net</a>.</p>
+        </details>
+    </div>
+
+    <p class="terms">
+        By purchasing you agree to our
+        <a href="/terms.html">Terms of Service</a>,
+        <a href="/terms.html#refunds">Refund Policy</a> and
+        <a href="/policy.html">Privacy Policy</a>.<br>
+        Payments are processed by Polar Software, Inc. (Merchant of Record).
+    </p>
 
 </div>
 
-<!-- Polar embedded checkout: opens the buy flow in a modal overlay on this page
-     (keeps the customer on epa608practicetest.net). data-auto-init wires every
-     <a data-polar-checkout> automatically. On success Polar redirects to the
-     checkout link's Success URL (/login?purchased=1). -->
+<!-- Polar embedded checkout script (pinned). data-auto-init wires every
+     <a data-polar-checkout> to open the checkout in a modal on this page. -->
 <script
   src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.1/dist/embed.global.js"
   defer
