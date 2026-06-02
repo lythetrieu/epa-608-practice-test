@@ -11,19 +11,42 @@ export async function OPTIONS(request: Request) {
   })
 }
 
-async function getAccessToken(): Promise<string> {
-  const clientId = process.env.PAYPAL_CLIENT_ID!
-  const secret = process.env.PAYPAL_SECRET!
-  const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + Buffer.from(`${clientId}:${secret}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials',
-  })
-  const data = await res.json()
-  return data.access_token
+type TokenResult =
+  | { ok: true; token: string }
+  | { ok: false; reason: string }
+
+async function getAccessToken(): Promise<TokenResult> {
+  const clientId = process.env.PAYPAL_CLIENT_ID
+  const secret = process.env.PAYPAL_SECRET
+  if (!clientId || !secret) {
+    return { ok: false, reason: 'missing_credentials' }
+  }
+  let res: Response
+  try {
+    res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from(`${clientId}:${secret}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: 'grant_type=client_credentials',
+    })
+  } catch (err) {
+    console.error('PayPal token request threw:', err)
+    return { ok: false, reason: 'token_network_error' }
+  }
+  if (!res.ok) {
+    // Body is a small JSON like {"error":"invalid_client"} — safe, non-secret.
+    const detail = await res.text().catch(() => '')
+    console.error('PayPal token request failed:', res.status, detail)
+    return { ok: false, reason: `token_${res.status}` }
+  }
+  const data = await res.json().catch(() => ({}))
+  if (!data.access_token) {
+    console.error('PayPal token response had no access_token')
+    return { ok: false, reason: 'token_empty' }
+  }
+  return { ok: true, token: data.access_token }
 }
 
 function parseCodes(): Record<string, number> {
@@ -37,6 +60,8 @@ function parseCodes(): Record<string, number> {
 }
 
 export async function POST(request: NextRequest) {
+  const headers = corsHeaders(request)
+
   let discountCode = ''
   try {
     const body = await request.json()
@@ -53,12 +78,24 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // 1. Authenticate with PayPal. Fail LOUDLY — never return 200 without an order.
+  const auth = await getAccessToken()
+  if (!auth.ok) {
+    console.error('create-order: PayPal auth failed:', auth.reason)
+    return NextResponse.json(
+      { error: 'payment_unavailable', reason: auth.reason },
+      { status: 502, headers },
+    )
+  }
+
+  // 2. Create the order.
+  let order: { id?: string; name?: string; message?: string; details?: unknown }
+  let orderStatus: number
   try {
-    const token = await getAccessToken()
     const res = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${auth.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -80,10 +117,24 @@ export async function POST(request: NextRequest) {
         application_context: { shipping_preference: 'NO_SHIPPING' },
       }),
     })
-    const order = await res.json()
-    return NextResponse.json({ orderID: order.id, finalPrice }, { headers: corsHeaders(request) })
+    orderStatus = res.status
+    order = await res.json().catch(() => ({}))
   } catch (err) {
-    console.error('Create order error:', err)
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500, headers: corsHeaders(request) })
+    console.error('create-order: PayPal order request threw:', err)
+    return NextResponse.json({ error: 'order_network_error' }, { status: 502, headers })
   }
+
+  // 3. Guard: a successful order MUST have an id. Previously this returned 200
+  // with orderID:undefined, so the PayPal button silently errored ("Payment
+  // error") with no way to diagnose. Now we log PayPal's error and surface its
+  // non-secret error name so the failure is visible.
+  if (!order.id) {
+    console.error('create-order: PayPal returned no order id:', orderStatus, JSON.stringify(order))
+    return NextResponse.json(
+      { error: 'order_failed', paypalStatus: orderStatus, paypalError: order.name ?? null },
+      { status: 502, headers },
+    )
+  }
+
+  return NextResponse.json({ orderID: order.id, finalPrice }, { headers })
 }
