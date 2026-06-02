@@ -125,12 +125,13 @@
             <li>Lifetime access — pay once, keep forever</li>
         </ul>
 
-        <!-- Polar embedded checkout: opens on this page (epa608practicetest.net).
-             Polar is the Merchant of Record — handles cards, Apple/Google Pay,
-             promo codes and tax. On success it redirects to /login?purchased=1. -->
+        <!-- Polar hosted checkout (redirect). Polar is the Merchant of Record —
+             handles cards, Apple/Google Pay, promo codes and tax. On success it
+             redirects to the link's Success URL (/login?purchased=1). We use a
+             full-page redirect (not the embed modal) because Polar's checkout
+             link redirects through polar.sh, which sets X-Frame-Options: DENY
+             and cannot be reliably iframed. -->
         <a href="https://buy.polar.sh/polar_cl_wYwNqtlEixLfzX7eiMjrBF31qbag3hWMQn5lW48ATCI"
-           data-polar-checkout
-           data-polar-checkout-theme="light"
            class="pay-btn">Get Instant Access — $14.99</a>
 
         <p class="pay-note">Card, Apple&nbsp;Pay &amp; more · Have a promo code? Apply it at checkout.</p>
@@ -172,13 +173,6 @@
     </p>
 
 </div>
-
-<!-- Polar embedded checkout script (pinned). data-auto-init wires every
-     <a data-polar-checkout> to open the checkout in a modal on this page. -->
-<script
-  src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.1/dist/embed.global.js"
-  defer
-  data-auto-init></script>
 
 </body>
 </html>
