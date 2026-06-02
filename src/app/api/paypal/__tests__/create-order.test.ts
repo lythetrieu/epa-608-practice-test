@@ -3,11 +3,16 @@ import { NextRequest } from 'next/server'
 
 const TOKEN_RESP = { json: { access_token: 'tok' }, ok: true }
 
-function mockFetch(...responses: { json: object; ok?: boolean }[]) {
+function mockFetch(...responses: { json: object; ok?: boolean; status?: number }[]) {
   let i = 0
   vi.spyOn(global, 'fetch').mockImplementation(async () => {
     const r = responses[Math.min(i++, responses.length - 1)]
-    return { ok: r.ok ?? true, json: async () => r.json } as Response
+    return {
+      ok: r.ok ?? true,
+      status: r.status ?? (r.ok === false ? 401 : 200),
+      json: async () => r.json,
+      text: async () => JSON.stringify(r.json),
+    } as Response
   })
 }
 
@@ -101,10 +106,35 @@ describe('POST /api/paypal/create-order', () => {
     expect(paypalBody.purchase_units[0].items[0].category).toBe('DIGITAL_GOODS')
   })
 
-  it('500 — PayPal API fails', async () => {
+  it('502 — token request throws (network error)', async () => {
     vi.spyOn(global, 'fetch').mockRejectedValue(new Error('timeout'))
     const res = await POST(req({}))
-    expect(res.status).toBe(500)
-    expect(await res.json()).toMatchObject({ error: 'Failed to create order' })
+    expect(res.status).toBe(502)
+    expect(await res.json()).toMatchObject({ error: 'payment_unavailable', reason: 'token_network_error' })
+  })
+
+  it('502 — PayPal credentials missing (the silent-200 outage)', async () => {
+    delete process.env.PAYPAL_CLIENT_ID
+    delete process.env.PAYPAL_SECRET
+    const res = await POST(req({}))
+    expect(res.status).toBe(502)
+    expect(await res.json()).toMatchObject({ error: 'payment_unavailable', reason: 'missing_credentials' })
+  })
+
+  it('502 — token endpoint rejects credentials (invalid_client)', async () => {
+    mockFetch({ json: { error: 'invalid_client' }, ok: false, status: 401 })
+    const res = await POST(req({}))
+    expect(res.status).toBe(502)
+    expect(await res.json()).toMatchObject({ error: 'payment_unavailable', reason: 'token_401' })
+  })
+
+  it('502 — PayPal returns NO order id (exact production bug: was 200 + orderID:undefined)', async () => {
+    // Token OK, but the orders call comes back without an id (PayPal error body).
+    mockFetch(TOKEN_RESP, { json: { name: 'AUTHENTICATION_FAILURE', message: 'Auth failed' } })
+    const res = await POST(req({}))
+    expect(res.status).toBe(502)
+    const body = await res.json()
+    expect(body).toMatchObject({ error: 'order_failed', paypalError: 'AUTHENTICATION_FAILURE' })
+    expect(body.orderID).toBeUndefined()
   })
 })
