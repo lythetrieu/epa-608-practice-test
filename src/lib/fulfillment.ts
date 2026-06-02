@@ -24,7 +24,7 @@ async function sendProUpgradeEmail(resendKey: string, email: string): Promise<vo
       from: FROM,
       to: [email],
       subject: "You're on EPA 608 Pro",
-      text: `EPA 608 Practice Test\n\nYou're on EPA 608 Pro\n\nYour account ${email} now has Pro.\n\nLog in:\n${APP_URL}/login\n\nSign in with your existing password.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
+      text: `EPA 608 Practice Test\n\nYou're on EPA 608 Pro\n\nYour account ${email} now has Pro.\n\nLog in:\n${APP_URL}/login\n\nSign in the way you normally do — with your email and password, or with Google.\n\n—\nEPA 608 Practice Test · epa608practicetest.net`,
       html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>You're on EPA 608 Pro</title></head>
 <body style="margin:0;padding:0;background:#f7f8fa;">
@@ -39,7 +39,7 @@ async function sendProUpgradeEmail(resendKey: string, email: string): Promise<vo
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
 <tr><td style="border-radius:6px;background:#c2691c;"><a href="${APP_URL}/login" style="display:inline-block;padding:12px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">Log in</a></td></tr>
 </table>
-<p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Sign in with your existing password.</p>
+<p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748b;">Sign in the way you normally do &mdash; with your email and password, or with Google.</p>
 <div style="border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;font-size:13px;line-height:1.5;color:#64748b;">EPA 608 Practice Test &middot; epa608practicetest.net<br><a href="${APP_URL}/settings" style="color:#64748b;text-decoration:underline;">Manage email preferences</a></div>
 </td></tr></table>
 </td></tr></table>
