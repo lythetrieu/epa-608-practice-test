@@ -249,6 +249,12 @@
         </div>
         <div class="promo-msg" id="promo-msg"></div>
 
+        <!-- Payments temporarily unavailable (shown if the order service is down, e.g. provider verification) -->
+        <div id="payments-unavailable" style="display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:16px 18px;margin:8px 0 4px;">
+            <div style="font-weight:600;color:#9a3412;font-size:15px;margin-bottom:6px;">Payments are temporarily unavailable</div>
+            <div style="font-size:14px;color:#7c2d12;line-height:1.5;">We're completing a quick verification with our payment provider. Please check back shortly — your access will be available as soon as this is done. Questions? <a href="mailto:support@epa608practicetest.net" style="color:#9a3412;text-decoration:underline;">support@epa608practicetest.net</a></div>
+        </div>
+
         <!-- PayPal button -->
         <div id="paypal-btn-wrap"><div class="paypal-skeleton"></div></div>
 
@@ -350,6 +356,20 @@ var finalPrice = BASE_PRICE;
 var appliedPromo = null;
 var cachedOrderData = null;
 
+var paymentsDown = false;
+function showPaymentsUnavailable() {
+    if (paymentsDown) return;
+    paymentsDown = true;
+    var banner = document.getElementById('payments-unavailable');
+    if (banner) banner.style.display = 'block';
+    ['paypal-btn-wrap', 'card-section', 'promo-row'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+    var toggle = document.querySelector('.promo-toggle');
+    if (toggle) toggle.style.display = 'none';
+}
+
 function prefetchOrder() {
     var body = {};
     if (appliedPromo) body.discountCode = appliedPromo.code;
@@ -357,8 +377,19 @@ function prefetchOrder() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
-    }).then(function(r) { return r.json(); }).then(function(d) {
-        cachedOrderData = d;
+    }).then(function(r) {
+        return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; });
+    }).then(function(res) {
+        // The order API returns an orderID only when PayPal accepts the order.
+        // A 5xx or any response without an orderID means the order service is
+        // down (e.g. payment provider verification) — show a clear notice
+        // instead of letting the PayPal button fail with "Payment error".
+        if (!res.ok || !res.data || !res.data.orderID) {
+            cachedOrderData = null;
+            showPaymentsUnavailable();
+            return;
+        }
+        cachedOrderData = res.data;
     }).catch(function() { cachedOrderData = null; });
 }
 
