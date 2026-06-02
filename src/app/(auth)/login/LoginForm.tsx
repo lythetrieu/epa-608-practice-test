@@ -31,6 +31,7 @@ export default function LoginForm() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect') ?? '/dashboard'
   const joinCode = searchParams.get('join')
+  const purchased = searchParams.get('purchased') === '1'
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -76,6 +77,13 @@ export default function LoginForm() {
 
   return (
     <>
+      {purchased && (
+        <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-sm text-green-800 mb-6 text-center">
+          <p className="font-semibold">Payment successful — welcome to Pro! 🎉</p>
+          <p className="mt-1 text-green-700">We&apos;ve emailed your sign-in details. Use the email and temporary password from that message to log in, then change your password in Settings.</p>
+        </div>
+      )}
+
       {joinCode && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800 mb-6 text-center">
           Sign in to join your team and get instant access.
