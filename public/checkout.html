@@ -240,8 +240,11 @@
         <h2>Complete your order</h2>
         <p class="subtitle">One payment · Instant access · No subscription ever</p>
 
-        <!-- Checkout via Polar (Merchant of Record — cards, Apple/Google Pay, promo codes & tax handled) -->
+        <!-- Embedded Polar checkout (Merchant of Record). data-polar-checkout opens the
+             checkout in a modal ON this page — the URL stays epa608practicetest.net. -->
         <a href="https://buy.polar.sh/polar_cl_wYwNqtlEixLfzX7eiMjrBF31qbag3hWMQn5lW48ATCI"
+           data-polar-checkout
+           data-polar-checkout-theme="light"
            class="pay-btn" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">
             <span class="btn-text">Get Instant Access — <span id="btn-price">$14.99</span></span>
         </a>
@@ -258,6 +261,14 @@
 
 </div>
 
+<!-- Polar embedded checkout: opens the buy flow in a modal overlay on this page
+     (keeps the customer on epa608practicetest.net). data-auto-init wires every
+     <a data-polar-checkout> automatically. On success Polar redirects to the
+     checkout link's Success URL (/login?purchased=1). -->
+<script
+  src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@latest/dist/embed.global.js"
+  defer
+  data-auto-init></script>
 
 </body>
 </html>
