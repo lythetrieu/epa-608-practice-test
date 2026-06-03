@@ -86,9 +86,9 @@ export default function PricingPage() {
               <Feature included text="Pass guarantee — full refund if you fail" bold />
             </div>
 
-            <Link href="/signup" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
+            <a href="/checkout.html" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
               Get Pro — $14.99
-            </Link>
+            </a>
             <p className="mt-3 text-center text-xs text-gray-500">One-time payment. Lifetime access. Money back if you don&apos;t pass.</p>
           </div>
         </div>
