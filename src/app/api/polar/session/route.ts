@@ -13,7 +13,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { APP_URL, MARKETING_URL, corsHeaders } from '@/lib/site-config'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
+// Edge runtime — near-zero cold start so the checkout iframe can start loading
+// sooner. This route only does a fetch() to the Polar API, which is edge-safe.
+export const runtime = 'edge'
 
 export async function OPTIONS(request: Request) {
   return new NextResponse(null, {
