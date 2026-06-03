@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get EPA 608 Pro — Lifetime Access | EPA 608 Practice Test</title>
-    <meta name="description" content="Unlock EPA 608 Pro: unlimited practice tests, AI tutor, weak-spot drills and progress tracking. One-time payment, lifetime access.">
-    <link rel="canonical" href="https://epa608practicetest.net/checkout.html">
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Analytics -->
+    <!-- Warm up the Polar connection so the checkout starts faster -->
+    <link rel="preconnect" href="https://polar.sh" crossorigin>
+    <link rel="preconnect" href="https://api.polar.sh" crossorigin>
+    <link rel="dns-prefetch" href="https://polar.sh">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -18,161 +20,176 @@
     </script>
 
     <style>
-        :root {
-            --navy: #001d57;
-            --cta: #e85d04;
-            --cta-dk: #c2691c;
-            --ink: #0f172a;
-            --muted: #64748b;
-            --line: #e2e8f0;
-            --bg: #f7f8fa;
-            --green: #15803d;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg); color: var(--ink); line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-        .wrap { max-width: 500px; margin: 0 auto; padding: 32px 20px 56px; }
+        :root { --navy:#001d57; --cta:#e85d04; --cta-dk:#c2691c; --ink:#0f172a; --muted:#64748b; --line:#e8ebf0; --bg:#f5f7fa; --green:#15803d; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
 
-        /* Brand */
-        .brand { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 28px; }
-        .brand .logo { width: 36px; height: 36px; border-radius: 9px; background: var(--navy); color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
-        .brand .name { font-weight: 700; font-size: 15px; }
-        .brand .name span { color: var(--muted); font-weight: 500; }
+        /* Top bar */
+        .topbar { border-bottom:1px solid var(--line); background:#fff; }
+        .topbar .inner { max-width:1080px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; gap:10px; }
+        .logo { width:34px; height:34px; border-radius:9px; background:var(--navy); color:#fff; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
+        .brand-name { font-weight:700; font-size:15px; }
+        .brand-name span { color:var(--muted); font-weight:500; }
+        .topbar .secure-pill { margin-left:auto; font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; }
 
-        /* Card */
-        .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px; box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.06); }
+        /* Layout */
+        .wrap { max-width:1080px; margin:0 auto; padding:44px 28px 72px; }
+        .grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:48px; align-items:start; }
+        @media (max-width:880px) { .wrap { padding:28px 18px 56px; } .grid { grid-template-columns:1fr; gap:32px; } }
 
-        h1 { font-size: 22px; line-height: 1.25; font-weight: 800; letter-spacing: -.02em; }
-        .sub { color: var(--muted); font-size: 14px; margin-top: 6px; }
+        /* Left — order summary */
+        .eyebrow { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--cta-dk); }
+        h1 { font-size:30px; line-height:1.15; font-weight:800; letter-spacing:-.025em; margin-top:8px; }
+        .lead { color:var(--muted); font-size:15.5px; margin-top:12px; max-width:42ch; }
 
-        /* Price */
-        .price-box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 20px 0; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 3px 0; }
-        .price-row .label { color: var(--muted); }
-        .price-row.discount .label { color: var(--green); }
-        .price-row.discount .val { color: var(--green); font-weight: 600; }
-        .price-divider { height: 1px; background: var(--line); margin: 10px 0; }
-        .price-row.total { font-size: 16px; font-weight: 700; padding-top: 2px; }
-        .price-row.total .val { display: flex; align-items: center; gap: 8px; }
-        .was { color: var(--muted); text-decoration: line-through; font-weight: 400; font-size: 14px; }
-        .save { background: #fee2e2; color: #b91c1c; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+        .price-box { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin:26px 0; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+        .price-row { display:flex; justify-content:space-between; align-items:center; font-size:14.5px; padding:4px 0; }
+        .price-row .label { color:var(--muted); }
+        .price-row.discount .label, .price-row.discount .val { color:var(--green); font-weight:600; }
+        .price-divider { height:1px; background:var(--line); margin:11px 0; }
+        .price-row.total { font-size:17px; font-weight:800; }
+        .price-row.total .val { display:flex; align-items:center; gap:9px; }
+        .was { color:var(--muted); text-decoration:line-through; font-weight:400; font-size:15px; }
+        .save { background:#fee2e2; color:#b91c1c; font-size:11px; font-weight:800; padding:3px 9px; border-radius:999px; }
 
-        /* Features */
-        ul.feats { list-style: none; margin: 4px 0 22px; }
-        ul.feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; padding: 6px 0; }
-        ul.feats li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+        ul.feats { list-style:none; margin:0; }
+        ul.feats li { display:flex; align-items:flex-start; gap:11px; font-size:15px; padding:7px 0; color:#334155; }
+        ul.feats li::before { content:"✓"; color:var(--green); font-weight:800; flex-shrink:0; }
 
-        /* CTA */
-        .pay-btn {
-            display: flex; align-items: center; justify-content: center;
-            width: 100%; background: var(--cta); color: #fff; border: none; cursor: pointer;
-            font-size: 16px; font-weight: 700; padding: 16px; border-radius: 12px; text-decoration: none;
-            transition: background .15s; box-shadow: 0 4px 14px rgba(232,93,4,.28);
-        }
-        .pay-btn:hover { background: var(--cta-dk); }
-        .pay-note { text-align: center; font-size: 13px; color: var(--muted); margin-top: 10px; }
-        .secure { text-align: center; font-size: 13px; color: #94a3b8; margin-top: 14px; }
+        .reassure { margin-top:24px; display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:var(--muted); }
+        .reassure span { display:flex; align-items:center; gap:6px; }
 
-        /* Trust strip */
-        .trust { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: 20px; font-size: 12.5px; color: var(--muted); }
-        .trust span { display: flex; align-items: center; gap: 5px; }
+        /* Right — payment */
+        .pay-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:10px; box-shadow:0 1px 3px rgba(0,0,0,.04), 0 18px 48px rgba(2,6,23,.08); position:sticky; top:24px; }
+        .pay-head { padding:14px 16px 6px; }
+        .pay-head h2 { font-size:15px; font-weight:700; }
+        .pay-head p { font-size:13px; color:var(--muted); margin-top:2px; }
 
-        /* FAQ */
-        .faq { margin-top: 28px; }
-        .faq h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
-        details { border-bottom: 1px solid var(--line); padding: 12px 0; }
-        details summary { cursor: pointer; font-weight: 600; font-size: 14.5px; list-style: none; display: flex; justify-content: space-between; }
-        details summary::-webkit-details-marker { display: none; }
-        details summary::after { content: "+"; color: var(--muted); font-weight: 400; }
-        details[open] summary::after { content: "−"; }
-        details p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+        #pay-area { padding:6px; position:relative; min-height:780px; }
+        #pay-loading { position:absolute; inset:6px; display:flex; align-items:center; justify-content:center; background:#fff; border-radius:12px; z-index:2; text-align:center; color:var(--muted); font-size:14px; }
+        .spin { display:inline-block; width:24px; height:24px; border:3px solid var(--line); border-top-color:var(--cta); border-radius:50%; animation:s .8s linear infinite; vertical-align:middle; margin-right:9px; }
+        @keyframes s { to { transform:rotate(360deg); } }
+        #polar-iframe { display:block; width:100%; min-height:760px; border:0; border-radius:12px; background:#fff; }
+        #pay-error { display:none; text-align:center; color:#b91c1c; font-size:14px; padding:60px 16px; }
+        #pay-error a { color:var(--cta-dk); }
+        .pay-foot { text-align:center; font-size:12.5px; color:#94a3b8; padding:8px 16px 14px; }
 
-        .terms { text-align: center; font-size: 12px; color: #94a3b8; margin-top: 24px; line-height: 1.7; }
-        .terms a { color: #007acc; text-decoration: none; }
+        .terms { text-align:center; font-size:12px; color:#94a3b8; margin-top:36px; line-height:1.7; }
+        .terms a { color:#007acc; text-decoration:none; }
     </style>
 </head>
 <body>
-<div class="wrap">
 
-    <div class="brand">
+<div class="topbar">
+    <div class="inner">
         <div class="logo">608</div>
-        <div class="name">EPA 608 <span>Practice Test</span></div>
+        <div class="brand-name">EPA 608 <span>Practice Test</span></div>
+        <div class="secure-pill">🔒 Secure checkout</div>
     </div>
+</div>
 
-    <div class="card">
-        <h1>Unlock EPA 608 Pro</h1>
-        <p class="sub">One payment · Instant access · No subscription ever</p>
+<div class="wrap">
+    <div class="grid">
 
-        <!-- Price breakdown -->
-        <div class="price-box">
-            <div class="price-row"><span class="label">Regular price</span><span class="val">$39.99</span></div>
-            <div class="price-row discount"><span class="label">Founding discount</span><span class="val">−$25.00</span></div>
-            <div class="price-divider"></div>
-            <div class="price-row total">
-                <span class="label">Total today</span>
-                <span class="val"><span class="was">$39.99</span> $14.99 <span class="save">SAVE 63%</span></span>
+        <!-- LEFT: order summary -->
+        <div class="left">
+            <div class="eyebrow">EPA 608 Pro · Lifetime</div>
+            <h1>Pass the EPA 608 exam — guaranteed.</h1>
+            <p class="lead">One payment, lifetime access. Unlimited practice tests, an AI tutor on every question, and weak-spot drills that target exactly what you miss.</p>
+
+            <div class="price-box">
+                <div class="price-row"><span class="label">Regular price</span><span class="val">$39.99</span></div>
+                <div class="price-row discount"><span class="label">Founding discount</span><span class="val">−$25.00</span></div>
+                <div class="price-divider"></div>
+                <div class="price-row total">
+                    <span class="label">Total today</span>
+                    <span class="val"><span class="was">$39.99</span> $14.99 <span class="save">SAVE 63%</span></span>
+                </div>
+            </div>
+
+            <ul class="feats">
+                <li>Unlimited practice tests — Core, Type I, II &amp; III, Universal</li>
+                <li>AI study tutor on every question</li>
+                <li>Weak-spot drills that target what you miss</li>
+                <li>Exam-style mock tests &amp; full progress tracking</li>
+                <li>Lifetime access — pay once, keep forever</li>
+            </ul>
+
+            <div class="reassure">
+                <span>⚡ Instant access</span>
+                <span>🧾 Tax included</span>
+                <span>↩️ Pass guarantee — full refund</span>
             </div>
         </div>
 
-        <ul class="feats">
-            <li>Unlimited practice tests — Core, Type I, II &amp; III, Universal</li>
-            <li>AI study tutor on every question</li>
-            <li>Weak-spot drills that target what you miss</li>
-            <li>Full progress tracking &amp; exam-style mock tests</li>
-            <li>Lifetime access — pay once, keep forever</li>
-        </ul>
-
-        <!-- Polar hosted checkout (redirect). Polar is the Merchant of Record —
-             handles cards, Apple/Google Pay, promo codes and tax. On success it
-             redirects to the link's Success URL (/login?purchased=1). We use a
-             full-page redirect (not the embed modal) because Polar's checkout
-             link redirects through polar.sh, which sets X-Frame-Options: DENY
-             and cannot be reliably iframed. -->
-        <a href="https://buy.polar.sh/polar_cl_wYwNqtlEixLfzX7eiMjrBF31qbag3hWMQn5lW48ATCI"
-           class="pay-btn">Get Instant Access — $14.99</a>
-
-        <p class="pay-note">Card, Apple&nbsp;Pay &amp; more · Have a promo code? Apply it at checkout.</p>
-
-        <div class="trust">
-            <span>🔒 Secure checkout</span>
-            <span>⚡ Instant access</span>
-            <span>🧾 Tax included</span>
+        <!-- RIGHT: payment -->
+        <div class="right">
+            <div class="pay-card">
+                <div class="pay-head">
+                    <h2>Complete your purchase</h2>
+                    <p>Card, Apple&nbsp;Pay &amp; more · enter a promo code below.</p>
+                </div>
+                <div id="pay-area">
+                    <div id="pay-loading"><span class="spin"></span>Loading secure checkout…</div>
+                    <iframe id="polar-iframe" title="Secure checkout" allow="payment"></iframe>
+                    <p id="pay-error">Couldn't load the inline checkout. <a href="/checkout.html">Continue to the standard checkout →</a></p>
+                </div>
+                <div class="pay-foot">Powered by Polar · Merchant of Record</div>
+            </div>
         </div>
-        <p class="secure">Powered by Polar · Merchant of Record</p>
-    </div>
 
-    <div class="faq">
-        <h2>Questions</h2>
-        <details>
-            <summary>How do I get access after paying?</summary>
-            <p>Your account is created instantly and we email your sign-in details to the email you use at checkout. Then sign in at <a href="https://app.epa608practicetest.net/login">app.epa608practicetest.net/login</a>.</p>
-        </details>
-        <details>
-            <summary>Is this a subscription?</summary>
-            <p>No. It's a one-time payment for lifetime access — you're never charged again.</p>
-        </details>
-        <details>
-            <summary>Already have a free account?</summary>
-            <p>Use the same email at checkout and your existing account is upgraded to Pro automatically.</p>
-        </details>
-        <details>
-            <summary>Can I get a refund?</summary>
-            <p>Yes — see our <a href="/terms.html#refunds">Refund Policy</a>. Questions? <a href="mailto:support@epa608practicetest.net">support@epa608practicetest.net</a>.</p>
-        </details>
     </div>
 
     <p class="terms">
         By purchasing you agree to our
         <a href="/terms.html">Terms of Service</a>,
         <a href="/terms.html#refunds">Refund Policy</a> and
-        <a href="/policy.html">Privacy Policy</a>.<br>
+        <a href="/policy.html">Privacy Policy</a>.
         Payments are processed by Polar Software, Inc. (Merchant of Record).
     </p>
-
 </div>
+
+<script>
+(function () {
+    var APP_LOGIN = 'https://app.epa608practicetest.net/login?purchased=1';
+    var loading = document.getElementById('pay-loading');
+    var frame   = document.getElementById('polar-iframe');
+    var errEl   = document.getElementById('pay-error');
+
+    function showError(msg) {
+        if (loading) loading.style.display = 'none';
+        if (frame) frame.style.display = 'none';
+        if (errEl) { errEl.style.display = 'block'; if (msg) errEl.firstChild.textContent = msg + ' '; }
+    }
+
+    // 1. Create a checkout session, then render it inline in the iframe.
+    fetch('/api/polar/session', { headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+            if (!res.ok || !res.d || !res.d.url) { showError('Checkout is being set up.'); return; }
+            var url = res.d.url + (res.d.url.indexOf('?') === -1 ? '?' : '&') + 'embed=true&theme=light';
+            // Reveal the iframe right away so the visitor sees Polar's own loader
+            // instead of a frozen spinner. Hide our spinner on load, with a short
+            // fallback timer so it never sticks if onload is slow/flaky.
+            var reveal = function () { if (loading) loading.style.display = 'none'; };
+            frame.style.display = 'block';
+            frame.onload = reveal;
+            frame.src = url;
+            setTimeout(reveal, 1500);
+        })
+        .catch(function () { showError(); });
+
+    // 2. Polar posts checkout events to our origin. Redirect the parent on success.
+    window.addEventListener('message', function (e) {
+        if (e.origin !== 'https://polar.sh') return;
+        var data = e.data || {};
+        var evt = (data.event || data.type || data.name || '') + '';
+        if (evt.indexOf('success') !== -1 || data.status === 'succeeded' || data.success === true) {
+            window.location.href = APP_LOGIN;
+        }
+    });
+})();
+</script>
 
 </body>
 </html>
