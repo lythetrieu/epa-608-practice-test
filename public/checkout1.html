@@ -60,11 +60,11 @@
         .pay-head h2 { font-size:15px; font-weight:700; }
         .pay-head p { font-size:13px; color:var(--muted); margin-top:2px; }
 
-        #pay-area { padding:6px; }
-        #pay-loading { text-align:center; color:var(--muted); font-size:14px; padding:120px 0; }
+        #pay-area { padding:6px; position:relative; min-height:780px; }
+        #pay-loading { position:absolute; inset:6px; display:flex; align-items:center; justify-content:center; background:#fff; border-radius:12px; z-index:2; text-align:center; color:var(--muted); font-size:14px; }
         .spin { display:inline-block; width:24px; height:24px; border:3px solid var(--line); border-top-color:var(--cta); border-radius:50%; animation:s .8s linear infinite; vertical-align:middle; margin-right:9px; }
         @keyframes s { to { transform:rotate(360deg); } }
-        #polar-iframe { display:none; width:100%; min-height:760px; border:0; border-radius:12px; background:#fff; }
+        #polar-iframe { display:block; width:100%; min-height:760px; border:0; border-radius:12px; background:#fff; }
         #pay-error { display:none; text-align:center; color:#b91c1c; font-size:14px; padding:60px 16px; }
         #pay-error a { color:var(--cta-dk); }
         .pay-foot { text-align:center; font-size:12.5px; color:#94a3b8; padding:8px 16px 14px; }
@@ -163,8 +163,14 @@
         .then(function (res) {
             if (!res.ok || !res.d || !res.d.url) { showError('Checkout is being set up.'); return; }
             var url = res.d.url + (res.d.url.indexOf('?') === -1 ? '?' : '&') + 'embed=true&theme=light';
-            frame.onload = function () { if (loading) loading.style.display = 'none'; frame.style.display = 'block'; };
+            // Reveal the iframe right away so the visitor sees Polar's own loader
+            // instead of a frozen spinner. Hide our spinner on load, with a short
+            // fallback timer so it never sticks if onload is slow/flaky.
+            var reveal = function () { if (loading) loading.style.display = 'none'; };
+            frame.style.display = 'block';
+            frame.onload = reveal;
             frame.src = url;
+            setTimeout(reveal, 1500);
         })
         .catch(function () { showError(); });
 
