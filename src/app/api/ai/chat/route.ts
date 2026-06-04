@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { TIER_LIMITS } from '@/types'
-import { SYSTEM_PROMPT } from '@/lib/ai/prompts'
+import { SYSTEM_PROMPT, retrieveKnowledge } from '@/lib/ai/prompts'
 import { buildUserContext, searchRelevantQuestions } from '@/lib/ai/context'
 import { z } from 'zod'
 
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
 
   // Call OpenRouter
   const apiMessages = [
-    { role: 'system', content: SYSTEM_PROMPT + '\n' + userContext + '\n' + questionContext },
+    { role: 'system', content: SYSTEM_PROMPT + '\n' + retrieveKnowledge(lastUserMsg) + '\n' + userContext + '\n' + questionContext },
     ...messages.slice(-10),
   ]
 

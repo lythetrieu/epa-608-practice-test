@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { getIdentifier } from '@/lib/ratelimit'
 import { searchRelevantQuestions } from '@/lib/ai/context'
-import { SYSTEM_PROMPT } from '@/lib/ai/prompts'
+import { SYSTEM_PROMPT, retrieveKnowledge } from '@/lib/ai/prompts'
 import { z } from 'zod'
 
 // Guest AI: 10 requests per IP per day, no auth, shorter responses
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
   const questionContext = await searchRelevantQuestions(message)
 
   const apiMessages = [
-    { role: 'system', content: GUEST_SYSTEM_PROMPT + '\n' + questionContext },
+    { role: 'system', content: GUEST_SYSTEM_PROMPT + '\n' + retrieveKnowledge(message) + '\n' + questionContext },
     { role: 'user', content: message },
   ]
 
