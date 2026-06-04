@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { getIdentifier } from '@/lib/ratelimit'
 import { searchRelevantQuestions } from '@/lib/ai/context'
-import { SYSTEM_PROMPT, retrieveKnowledge } from '@/lib/ai/prompts'
+import { SYSTEM_PROMPT, retrieveKnowledge, enforcePromptBudget } from '@/lib/ai/prompts'
 import { z } from 'zod'
 
 // Guest AI: 10 requests per IP per day, no auth, shorter responses
@@ -72,10 +72,10 @@ export async function POST(request: NextRequest) {
   // Search relevant questions for context
   const questionContext = await searchRelevantQuestions(message)
 
-  const apiMessages = [
+  const apiMessages = enforcePromptBudget([
     { role: 'system', content: GUEST_SYSTEM_PROMPT + '\n' + retrieveKnowledge(message) + '\n' + questionContext },
     { role: 'user', content: message },
-  ]
+  ])
 
   const models = ['qwen/qwen3-235b-a22b:free', 'qwen/qwen-2.5-72b-instruct']
 
