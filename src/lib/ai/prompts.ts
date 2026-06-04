@@ -62,6 +62,32 @@ export function retrieveKnowledge(query: string, maxChars = 14000): string {
   return out ? `RELEVANT EPA 608 FACTS (from the official ESCO manual):\n${out.trim()}` : ''
 }
 
+// Final hard guard: no matter how long the retrieved KB, question context, or
+// conversation history get, keep the assembled prompt under a safe input-token
+// budget (well below OpenRouter's free-tier limit). Trims the system message —
+// where the variable KB facts live — from the end if needed. ~4 chars/token.
+export function enforcePromptBudget<T extends { role: string; content: string }>(
+  messages: T[],
+  maxInputTokens = 13000,
+): T[] {
+  const maxChars = maxInputTokens * 4
+  const total = messages.reduce((n, m) => n + m.content.length, 0)
+  if (total <= maxChars) return messages
+
+  const sys = messages[0]
+  if (sys && sys.role === 'system') {
+    const others = total - sys.content.length
+    const allowed = Math.max(1200, maxChars - others) // always keep the rules
+    if (sys.content.length > allowed) {
+      return [
+        { ...sys, content: sys.content.slice(0, allowed) + '\n…[knowledge truncated to fit]' },
+        ...messages.slice(1),
+      ]
+    }
+  }
+  return messages
+}
+
 export const SYSTEM_PROMPT = `You are an EPA 608 Certification Study Helper — an experienced HVAC instructor trained on the official ESCO EPA 608 preparatory manual.
 
 STRICT SCOPE RULES:
