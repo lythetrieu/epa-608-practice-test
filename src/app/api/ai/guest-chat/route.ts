@@ -79,6 +79,8 @@ export async function POST(request: NextRequest) {
 
   const models = ['qwen/qwen3-235b-a22b:free', 'qwen/qwen-2.5-72b-instruct']
 
+  let lastStatus = 0
+  let lastDetail = ''
   for (const model of models) {
     try {
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -108,8 +110,18 @@ export async function POST(request: NextRequest) {
           },
         })
       }
-    } catch { /* try next model */ }
+      lastStatus = res.status
+      lastDetail = (await res.text().catch(() => '')).slice(0, 300)
+      console.error('OpenRouter error', model, res.status, lastDetail)
+    } catch (e) {
+      lastDetail = String(e).slice(0, 200)
+      console.error('OpenRouter threw', model, e)
+    }
   }
 
-  return Response.json({ error: 'AI service unavailable' }, { status: 502 })
+  // Surface the real upstream reason (non-secret) so the failure is diagnosable.
+  return Response.json(
+    { error: 'AI service unavailable', status: lastStatus, detail: lastDetail, hasKey: !!process.env.OPENROUTER_API_KEY },
+    { status: 502 },
+  )
 }
