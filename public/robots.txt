@@ -28,7 +28,6 @@ Disallow: /certificate
 Allow: /flashcards.html
 Disallow: /flashcards
 Disallow: /join/
-Disallow: /cert/
 
 # NOTE: /flashcards.html (freebie, .html) is still crawlable
 # NOTE: /pricing.html (freebie) is still crawlable
