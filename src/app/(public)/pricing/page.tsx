@@ -5,7 +5,7 @@ import { Check, X } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'EPA 608 Practice Test Pricing — Free Practice + Pro $14.99',
   description:
-    'Free EPA 608 practice: 25 questions, all sections, 10 AI queries/day. Pro $14.99 one-time lifetime: unlimited AI, blind-spot training, offline, certificates, pass guarantee.',
+    'Free EPA 608 practice: 25 questions, all sections, 10 AI queries/day. Pro $14.99 one-time lifetime: unlimited AI, blind-spot training, offline, pass guarantee.',
 }
 
 export default function PricingPage() {
@@ -57,7 +57,6 @@ export default function PricingPage() {
               <Feature included text="Signup = sync history across devices" />
               <Feature included={false} text="Blind-spot drill (auto-targeted test)" />
               <Feature included={false} text="Unlimited AI" />
-              <Feature included={false} text="Certificate of completion" />
               <Feature included={false} text="Pass guarantee — full refund" />
             </div>
 
@@ -82,7 +81,6 @@ export default function PricingPage() {
               <Feature included text="Everything in Free" />
               <Feature included text="Blind-spot drill — auto test your weak topics" bold />
               <Feature included text="Unlimited AI Study Helper" bold />
-              <Feature included text="Certificate of completion (shareable PDF)" bold />
               <Feature included text="Pass guarantee — full refund if you fail" bold />
             </div>
 

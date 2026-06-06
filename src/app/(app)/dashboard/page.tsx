@@ -11,7 +11,7 @@ import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
   Layers, Headphones, Bot, BarChart3, Flame,
-  Play, Award, BookOpen,
+  Play, BookOpen,
 } from 'lucide-react'
 import ActivityHeatmap from './ActivityHeatmap'
 
@@ -259,7 +259,6 @@ export default async function DashboardPage() {
           <div className="space-y-0.5">
             <CompactLink href="/progress" icon={<BarChart3 size={16} />} label="Progress" />
             <CompactLink href="/progress/weak-spots" icon={<Target size={16} />} label="Weak Areas" />
-            <CompactLink href="/certificate" icon={<Award size={16} />} label="Achievement Badges" />
           </div>
         </div>
       </div>
