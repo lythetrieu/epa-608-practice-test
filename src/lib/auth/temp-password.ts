@@ -1,5 +1,5 @@
 // Generates a readable, strong temporary password for accounts created
-// server-side (e.g. after a PayPal purchase). The customer logs in with this
+// server-side (e.g. after a purchase). The customer logs in with this
 // and changes it in Settings → Change Password.
 //
 // This replaces the fragile "email a recovery link to set a password" flow:

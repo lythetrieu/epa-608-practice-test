@@ -36,7 +36,7 @@ export async function createClient() {
  * Admin client that bypasses RLS using the service role key.
  *
  * SECURITY: This function must ONLY be called from:
- *   - PayPal capture route (/api/paypal/capture)
+ *   - Polar webhook (/api/polar/webhooks)
  *   - Server Actions that perform admin operations
  *
  * NEVER import this in client components or expose it through API responses.

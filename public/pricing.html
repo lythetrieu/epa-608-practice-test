@@ -1437,7 +1437,7 @@ document.addEventListener('click', function() {
 
                 <a href="/checkout.html" class="cta-btn-primary" style="display:block;max-width:360px;margin:0 auto 8px;padding:15px 24px;background:#007acc;color:#fff;border-radius:10px;font-size:17px;font-weight:700;text-align:center;text-decoration:none;box-shadow:0 4px 20px rgba(0,122,204,.3);">Get Pro Access — $14.99 →</a>
                 <p style="font-size:12px;color:#64748b;margin:4px 0 4px;line-height:1.6;text-align:center;">
-                    🔒 30-day money-back guarantee &nbsp;·&nbsp; One-time payment &nbsp;·&nbsp; Processed securely by <strong>PayPal</strong>
+                    🔒 30-day money-back guarantee &nbsp;·&nbsp; One-time payment &nbsp;·&nbsp; Processed securely by <strong>Polar</strong>
                 </p>
                 <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">
                     By purchasing you agree to our <a href="/terms.html" style="color:#007acc;">Terms of Service</a>, <a href="/terms.html#refunds" style="color:#007acc;">Refund Policy</a> and <a href="/policy.html" style="color:#007acc;">Privacy Policy</a>
@@ -1641,19 +1641,19 @@ document.addEventListener('click', function() {
     </div>
 </div>
 
-<!-- Success overlay (shown after Paddle checkout completes) -->
+<!-- Success overlay (shown after checkout completes) -->
 <div id="success-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:10000;align-items:center;justify-content:center;padding:20px">
     <div style="background:#fff;border-radius:20px;padding:44px 36px;max-width:460px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25)">
         <div style="font-size:56px;margin-bottom:16px">🎉</div>
         <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:10px">You're in — welcome to Pro!</h2>
-        <p style="font-size:15px;color:#64748b;line-height:1.7;margin-bottom:8px">Thank you! Email us at support@epa608practicetest.net with your PayPal receipt to activate Pro access.</p>
+        <p style="font-size:15px;color:#64748b;line-height:1.7;margin-bottom:8px">Thank you! Email us at support@epa608practicetest.net with your Polar receipt to activate Pro access.</p>
         <p style="font-size:13px;color:#94a3b8;margin-bottom:28px">If you use the SaaS platform at <strong>app.epa608practicetest.net</strong>, log in with the same email to unlock Pro features there.</p>
         <a href="/universal.html" style="display:inline-block;background:#007acc;color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px;box-shadow:0 4px 16px rgba(0,122,204,.3)">Start practicing now →</a>
         <p style="font-size:12px;color:#94a3b8;margin-top:18px">Questions? <a href="mailto:support@epa608practicetest.net" style="color:#007acc;">support@epa608practicetest.net</a></p>
     </div>
 </div>
 
-<!-- Notify modal (fallback before Paddle goes live) -->
+<!-- Notify modal (legacy fallback) -->
 <div id="notify-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;padding:20px">
     <div style="background:#fff;border-radius:20px;padding:36px 32px;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.2)">
         <button onclick="document.getElementById('notify-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;line-height:1">×</button>
@@ -1690,7 +1690,7 @@ function handleNotifySubmit(e) {
 
 
 
-// ── Handle redirect success (if Paddle redirects instead of overlay) ──
+// ── Handle redirect success (if the processor redirects instead of overlay) ──
 if (window.location.search.indexOf('checkout=success') !== -1) {
     document.getElementById('success-overlay').style.display = 'flex';
     // Clean URL

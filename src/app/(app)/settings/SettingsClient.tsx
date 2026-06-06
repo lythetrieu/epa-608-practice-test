@@ -292,14 +292,8 @@ export default function SettingsClient({
         {lifetimeAccess && (
           <div className="rounded-lg bg-green-50 border border-green-200 p-4 mb-4 space-y-1.5">
             <p className="text-sm font-semibold text-green-800">Pro Lifetime Access</p>
-            <p className="text-xs text-green-700">Paid via PayPal · One-time purchase · No recurring charges</p>
-            <p className="text-xs text-green-600">
-              Receipt was sent to your PayPal email.{' '}
-              <a href="https://www.paypal.com/myaccount/activity" target="_blank" rel="noopener noreferrer"
-                className="underline hover:text-green-800">
-                View in PayPal
-              </a>
-            </p>
+            <p className="text-xs text-green-700">One-time purchase · Lifetime access · No recurring charges</p>
+            <p className="text-xs text-green-600">A receipt was emailed to you by Polar, our payment provider.</p>
           </div>
         )}
 
