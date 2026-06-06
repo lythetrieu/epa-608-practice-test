@@ -7,9 +7,8 @@ import { getTierLabel } from '@/lib/tier'
 import { MARKETING_URL } from '@/lib/site-config'
 import type { Tier } from '@/types'
 import {
-  LayoutDashboard, BookOpen, Layers, Bot, BarChart3, Target,
-  Award, Settings, LogOut, Shield, Users, ChevronRight,
-  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, History,
+  BookOpen, Target, Settings, LogOut, Shield, Users, ChevronRight,
+  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, BarChart3, ClipboardList,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -19,6 +18,8 @@ type AppSidebarProps = {
   isAdmin: boolean
 }
 
+// Practice Test categories. Picking one opens the test page where the learner
+// chooses Practice (untimed + hints) or Exam (real, timed) mode.
 const PRACTICE_ITEMS = [
   { href: '/test/core',      label: 'Core',      icon: <FileText size={15} /> },
   { href: '/test/type-1',    label: 'Type I',    icon: <Snowflake size={15} /> },
@@ -47,9 +48,9 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
   const sidebar = (
     <div className="flex flex-col h-full" style={{ background: '#001d57' }}>
 
-      {/* Logo */}
+      {/* Logo → Study Path (home) */}
       <div className="px-4 py-4 border-b border-white/10">
-        <Link href="/dashboard" className="flex items-center gap-2.5">
+        <Link href="/learn" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0 bg-white/15">
             608
           </div>
@@ -60,25 +61,18 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         </Link>
       </div>
 
-      {/* Nav */}
+      {/* Nav — 3 primary tabs (+ Account in footer) */}
       <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-0.5">
 
-        <NavItem href="/dashboard" icon={<LayoutDashboard size={17} />} label="Dashboard" pathname={pathname} />
+        <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} />
 
-        {/* Study */}
-        <SectionLabel>Study</SectionLabel>
-        <NavItem href="/learn"      icon={<BookOpen size={17} />} label="Study Path"  pathname={pathname} />
-        <NavItem href="/flashcards" icon={<Layers size={17} />}   label="Flashcards"  pathname={pathname} badge={!isPro ? 'Pro' : undefined} />
-        <NavItem href="/tutor"      icon={<Bot size={17} />}      label="AI Tutor"    pathname={pathname} />
-
-        {/* Practice */}
-        <SectionLabel>Practice</SectionLabel>
+        {/* Practice Test — pick a category, then Practice or Exam mode */}
         <button
           onClick={() => setPracticeOpen(v => !v)}
           className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-white/70 hover:text-white hover:bg-white/10"
         >
-          <Zap size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Practice Tests</span>
+          <ClipboardList size={18} className="shrink-0" />
+          <span className="flex-1 text-left">Practice Test</span>
           <ChevronRight size={13} className={`transition-transform duration-200 opacity-50 ${practiceOpen ? 'rotate-90' : ''}`} />
         </button>
         {practiceOpen && (
@@ -98,14 +92,9 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </div>
         )}
 
-        {/* Results */}
-        <SectionLabel>Results</SectionLabel>
-        <NavItem href="/progress"            icon={<BarChart3 size={17} />} label="Coverage"    pathname={pathname} />
-        <NavItem href="/progress/weak-spots" icon={<Target size={17} />}    label="Weak Spots"  pathname={pathname} />
-        <NavItem href="/history"             icon={<History size={17} />}   label="History"     pathname={pathname} />
-        <NavItem href="/certificate"         icon={<Award size={17} />}     label="Badges"      pathname={pathname} />
+        <NavItem href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" pathname={pathname} />
 
-        {/* Admin */}
+        {/* Admin (admin-only — not part of the 4 learner tabs) */}
         {(isTeamAdmin || isAdmin) && (
           <>
             <SectionLabel>Admin</SectionLabel>
@@ -128,7 +117,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         </div>
       )}
 
-      {/* User footer */}
+      {/* Account footer (4th tab) */}
       <div className="px-2 py-3 border-t border-white/10 space-y-0.5">
         <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
           <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-bold shrink-0">
@@ -141,7 +130,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
             </span>
           </div>
         </div>
-        <NavItem href="/settings" icon={<Settings size={17} />} label="Settings" pathname={pathname} />
+        <NavItem href="/settings" icon={<Settings size={18} />} label="Account" pathname={pathname} />
         <form action="/auth/signout" method="post">
           <button type="submit" className="w-full text-left text-sm text-white/50 hover:text-red-400 px-3 py-2.5 rounded-lg hover:bg-red-500/10 transition-colors flex items-center gap-2.5">
             <LogOut size={17} />
@@ -160,7 +149,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           <button onClick={() => setOpen(true)} className="p-2 -ml-2 text-white/70" aria-label="Open menu">
             <Menu size={22} />
           </button>
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/learn" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center text-white text-xs font-bold">608</div>
             <span className="font-bold text-white text-sm">EPA 608</span>
           </Link>
