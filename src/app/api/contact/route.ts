@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { corsHeaders } from '@/lib/site-config'
 
 // Never evaluate Supabase creds at build time — this route is request-only.
 export const dynamic = 'force-dynamic'
 
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, { status: 204, headers: corsHeaders(request) })
+}
+
 export async function POST(request: NextRequest) {
+  const cors = corsHeaders(request)
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,12 +20,12 @@ export async function POST(request: NextRequest) {
     const { name, email, subject, message } = await request.json()
 
     if (!name || !email || !subject || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400, headers: cors })
     }
 
     // Basic email validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400, headers: cors })
     }
 
     // Get Resend key from Supabase app_config
@@ -32,7 +38,7 @@ export async function POST(request: NextRequest) {
     const resendKey = configRow?.value
     if (!resendKey) {
       console.error('Resend API key not found in app_config')
-      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
+      return NextResponse.json({ error: 'Email service not configured' }, { status: 500, headers: cors })
     }
 
     // Send email to site owner
@@ -82,13 +88,13 @@ export async function POST(request: NextRequest) {
     if (!res.ok) {
       const err = await res.text()
       console.error('Resend error:', err)
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500, headers: cors })
     }
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true }, { headers: cors })
   } catch (err) {
     console.error('Contact API error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+    return NextResponse.json({ error: 'Server error' }, { status: 500, headers: cors })
   }
 }
 
