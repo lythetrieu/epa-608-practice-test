@@ -163,7 +163,7 @@
     }
 
     // 1. Create a checkout session, then render it inline in the iframe.
-    fetch('/api/polar/session', { headers: { 'Accept': 'application/json' } })
+    fetch('https://app.epa608practicetest.net/api/polar/session', { headers: { 'Accept': 'application/json' } })
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
             if (!res.ok || !res.d || !res.d.url) { showError('Checkout is being set up.'); return; }

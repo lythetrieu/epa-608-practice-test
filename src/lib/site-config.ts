@@ -24,6 +24,7 @@ export function corsHeaders(req: Request, methods = 'POST, OPTIONS'): Record<str
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': methods,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Vary': 'Origin',
   }
 }
