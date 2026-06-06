@@ -184,7 +184,7 @@ export default function StudyPathClient() {
     fetch('/api/public/study-path', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ conceptPrefix: prefix, count: 5 }),
+      body: JSON.stringify({ conceptPrefix: prefix, count: 10 }),
     })
       .then(r => r.json())
       .then(data => setQuiz(data))
