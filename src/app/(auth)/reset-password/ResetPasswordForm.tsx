@@ -25,7 +25,7 @@ export default function ResetPasswordForm() {
   }, [])
 
   // Establish the auth session from the recovery link before allowing a password change.
-  // Recovery links generated server-side (PayPal welcome / resend-setup) and the standard
+  // Recovery links generated server-side (purchase welcome / resend-setup) and the standard
   // "forgot password" email can arrive in three shapes — handle all of them:
   //   1. ?token_hash=...&type=recovery  → verifyOtp
   //   2. ?code=...                      → exchangeCodeForSession (PKCE)
