@@ -128,6 +128,7 @@ export async function grantProAccess(emailRaw: string, orderRef: string): Promis
 
     const resendKey = await getResendKey(admin)
     if (resendKey) await sendProUpgradeEmail(resendKey, email).catch((e) => console.error('upgrade email:', e))
+    else console.error('NO resend_api_key in app_config — Pro upgraded but no email sent:', email)
     return { ok: true, email, status: 'upgraded' }
   }
 
@@ -153,6 +154,7 @@ export async function grantProAccess(emailRaw: string, orderRef: string): Promis
 
   const resendKey = await getResendKey(admin)
   if (resendKey) await sendProWelcomeEmail(resendKey, email, tempPassword).catch((e) => console.error('welcome email:', e))
+  else console.error('NO resend_api_key in app_config — Pro account created but welcome email (temp password) NOT sent:', email)
 
   return { ok: true, email, status: 'created' }
 }
