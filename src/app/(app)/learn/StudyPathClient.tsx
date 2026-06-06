@@ -592,6 +592,20 @@ export default function StudyPathClient() {
         })}
       </div>
 
+      {/* Flashcards — optional spaced-repetition drill, folded into Study Path */}
+      <a href="/flashcards"
+        className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 mb-5 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+        <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+          <LayoutGrid size={18} className="text-purple-600" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-900">Flashcards</p>
+          <p className="text-xs text-gray-400">Swipe-drill any section with spaced repetition</p>
+        </div>
+        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
+        <ChevronRight size={16} className="text-gray-300 shrink-0" />
+      </a>
+
       {/* ═══ COURSE MODE ═══ */}
       {mode === 'course' && (
         <>

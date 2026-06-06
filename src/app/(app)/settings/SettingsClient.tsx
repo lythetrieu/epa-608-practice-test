@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getTierLabel } from '@/lib/tier'
 import { MARKETING_URL } from '@/lib/site-config'
+import { History as HistoryIcon, BarChart3, ChevronRight } from 'lucide-react'
 import type { Tier } from '@/types'
 
 type Props = {
@@ -171,6 +172,31 @@ export default function SettingsClient({
             <p className="text-sm font-medium text-gray-900">{memberSince}</p>
             <p className="text-xs text-gray-400 mt-0.5">Member Since</p>
           </div>
+        </div>
+      </section>
+
+      {/* Activity — History + Coverage consolidated here (no longer separate nav tabs) */}
+      <section className="bg-white border border-gray-200 rounded-xl p-5">
+        <h2 className="text-base font-bold text-gray-900 mb-4">Activity</h2>
+        <div className="space-y-2">
+          <Link href="/history"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+            <HistoryIcon size={18} className="text-blue-700 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900">Test History</p>
+              <p className="text-xs text-gray-400">Every test you&apos;ve taken, with scores</p>
+            </div>
+            <ChevronRight size={16} className="text-gray-300 shrink-0" />
+          </Link>
+          <Link href="/progress"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+            <BarChart3 size={18} className="text-blue-700 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900">Topic Coverage</p>
+              <p className="text-xs text-gray-400">Accuracy by topic across all sections</p>
+            </div>
+            <ChevronRight size={16} className="text-gray-300 shrink-0" />
+          </Link>
         </div>
       </section>
 
