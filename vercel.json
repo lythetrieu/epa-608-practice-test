@@ -700,5 +700,15 @@
       "destination": "/certification-types.html",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/weak-spots",
+      "destination": "/weak-spots.html"
+    }
   ]
 }

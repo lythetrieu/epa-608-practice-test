@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     { role: 'user', content: message },
   ])
 
-  const models = ['qwen/qwen3-235b-a22b:free', 'qwen/qwen-2.5-72b-instruct']
+  const models = ['qwen/qwen3-next-80b-a3b-instruct:free', 'meta-llama/llama-3.3-70b-instruct:free', 'qwen/qwen-2.5-72b-instruct']
 
   let lastStatus = 0
   let lastDetail = ''
@@ -119,9 +119,8 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Surface the real upstream reason (non-secret) so the failure is diagnosable.
-  return Response.json(
-    { error: 'AI service unavailable', status: lastStatus, detail: lastDetail, hasKey: !!process.env.OPENROUTER_API_KEY },
-    { status: 502 },
-  )
+  // Upstream details are logged server-side above; the public response stays
+  // generic (no provider error text or infra state) to avoid info disclosure.
+  console.error('guest-chat all models failed:', lastStatus, lastDetail, 'hasKey:', !!process.env.OPENROUTER_API_KEY)
+  return Response.json({ error: 'AI service unavailable' }, { status: 502 })
 }

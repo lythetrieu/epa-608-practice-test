@@ -46,6 +46,14 @@ export async function middleware(request: NextRequest) {
   const appHost = isAppHost(request)
   let supabaseResponse = NextResponse.next({ request })
 
+  // Static marketing .html files are served on BOTH hosts (same deployment).
+  // On the app subdomain they would be crawlable duplicates of the marketing
+  // pages, so attach noindex there. Do this BEFORE any Supabase work so these
+  // static requests stay cheap on the marketing root (no auth round-trip).
+  if (request.nextUrl.pathname.endsWith('.html')) {
+    return tagNoindex(NextResponse.next(), appHost)
+  }
+
   // During build or if env vars are missing, skip auth checks
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return tagNoindex(supabaseResponse, appHost)
@@ -139,6 +147,6 @@ export const config = {
      * - favicon.ico
      * - Common image extensions
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js|json|html|txt|xml|ico)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js|json|txt|xml|ico)$).*)',
   ],
 }

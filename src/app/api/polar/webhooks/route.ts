@@ -37,6 +37,10 @@ export const POST = Webhooks({
     const result = await grantProAccess(email, orderRef)
     if (!result.ok) {
       console.error('Polar fulfillment FAILED:', orderRef, result.error)
+    } else if (result.status === 'created_setup_failed') {
+      // Paid + recorded in pending_upgrades, but the account/email could not be
+      // created automatically — needs attention (customer must sign up to claim).
+      console.error('Polar fulfillment NEEDS ATTENTION (account not created):', orderRef, result.email)
     } else {
       console.log('Polar fulfillment ok:', orderRef, result.status, result.email)
     }
