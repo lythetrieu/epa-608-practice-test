@@ -129,8 +129,8 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
         </div>
 
         <div className="mt-6 text-center">
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">
-            ← Back to Dashboard
+          <Link href="/learn" className="text-sm text-gray-500 hover:text-gray-700">
+            ← Back to Study Path
           </Link>
         </div>
       </div>
