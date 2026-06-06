@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
-import { TIER_LIMITS } from '@/types'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -108,45 +107,6 @@ export async function POST(
     results.map(r => ({ user_id: user.id, question_id: r.questionId, correct: r.correct }))
   )
 
-  // Auto-issue certificate if passed and tier allows it
-  let newCertificate: { cert_id: string; tier: string } | null = null
-  if (passed) {
-    // Get display name and tier (fallback to email prefix)
-    const { data: profileData } = await supabase
-      .from('users_profile')
-      .select('display_name, email, tier')
-      .eq('id', user.id)
-      .single()
-
-    const userTier = (profileData?.tier ?? 'free') as keyof typeof TIER_LIMITS
-    const canGetCertificate = TIER_LIMITS[userTier]?.hasCertificate ?? false
-    if (!canGetCertificate) {
-      // Skip certificate issuance for free tier
-      const clientResults = results.map(({ category: _cat, ...rest }) => rest)
-      return NextResponse.json({
-        sessionId: session.id, score, total: results.length, percentage, passed,
-        results: clientResults,
-        ...(sectionScores ? { sectionScores } : {}),
-        upgradeToCertificate: true,
-      })
-    }
-    const certName = profileData?.display_name || profileData?.email?.split('@')[0] || 'Student'
-
-    const { data: certResult } = await admin.rpc('issue_certificate', {
-      p_user_id: user.id,
-      p_user_name: certName,
-      p_category: session.category,
-      p_score: percentage,
-      p_total_questions: results.length,
-      p_correct_answers: score,
-      p_session_id: session.id,
-    })
-
-    if (certResult?.issued) {
-      newCertificate = { cert_id: certResult.cert_id, tier: certResult.tier }
-    }
-  }
-
   // Strip internal category field from per-question results sent to client
   const clientResults = results.map(({ category: _cat, ...rest }) => rest)
 
@@ -154,6 +114,5 @@ export async function POST(
     sessionId: session.id, score, total: results.length, percentage, passed,
     results: clientResults,
     ...(sectionScores ? { sectionScores } : {}),
-    ...(newCertificate ? { newCertificate } : {}),
   })
 }

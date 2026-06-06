@@ -43,8 +43,8 @@ describe('app-subdomain noindex gating', () => {
 })
 
 describe('app-subdomain root redirect destination', () => {
-  it('sends a confirmed user to the dashboard', () => {
-    expect(appRootRedirectPath(true)).toBe('/dashboard')
+  it('sends a confirmed user to the Study Path home', () => {
+    expect(appRootRedirectPath(true)).toBe('/learn')
   })
 
   it('sends an anonymous/unconfirmed visitor to login', () => {

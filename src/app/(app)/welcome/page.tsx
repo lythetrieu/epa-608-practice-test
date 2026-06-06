@@ -8,7 +8,7 @@ export default async function WelcomePage({ searchParams }: { searchParams: Prom
   if (!user) redirect('/login')
 
   const { next } = await searchParams
-  const destination = next || '/dashboard'
+  const destination = next || '/learn'
   const name = user.email?.split('@')[0] ?? 'there'
 
   return <WelcomeScreen name={name} destination={destination} />

@@ -1,8 +1,56 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid } from 'lucide-react'
+import { ArrowLeft, Check, X, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid, Bot } from 'lucide-react'
 import { CONCEPT_VISUALS } from './concept-visuals'
+
+// Per-question AI tutor — on-demand "explain simply" for any reviewed question.
+// Mirrors the PracticeClient pattern so every learning surface has the same tutor.
+function ExplainButton({ questionText, correctAnswer }: { questionText: string; correctAnswer: string }) {
+  const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [explanation, setExplanation] = useState('')
+
+  async function handleClick() {
+    if (state === 'done') return
+    setState('loading')
+    try {
+      const res = await fetch('/api/ai/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ questionText, correctAnswer, userAnswer: 'wrong' }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setState('error'); return }
+      setExplanation(data.explanation)
+      setState('done')
+    } catch { setState('error') }
+  }
+
+  if (state === 'done') {
+    return (
+      <div className="mt-2.5 bg-purple-50 border border-purple-200 rounded-lg p-3">
+        <div className="flex items-center gap-1.5 mb-1">
+          <Bot size={13} className="text-purple-600" />
+          <span className="font-semibold text-purple-700 text-[11px] uppercase tracking-wide">AI Tutor</span>
+        </div>
+        <p className="text-sm text-purple-900 leading-relaxed">{explanation}</p>
+      </div>
+    )
+  }
+
+  return (
+    <button onClick={handleClick} disabled={state === 'loading'}
+      className="mt-2.5 inline-flex items-center gap-1.5 text-xs px-3 py-2 min-h-[40px] rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 font-medium">
+      {state === 'loading' ? (
+        <><span className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" /> Explaining...</>
+      ) : state === 'error' ? (
+        <><Bot size={14} /> Try again</>
+      ) : (
+        <><Bot size={14} /> Ask AI: why?</>
+      )}
+    </button>
+  )
+}
 
 type Concept = {
   id: string
@@ -102,7 +150,11 @@ export default function StudyPathClient() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [quizPhase, setQuizPhase] = useState<'lesson' | 'quiz' | 'result'>('lesson')
   const [lessonReady, setLessonReady] = useState(false)
-  const [result, setResult] = useState<{ percentage: number; passed: boolean } | null>(null)
+  const [result, setResult] = useState<{
+    percentage: number
+    passed: boolean
+    results?: { questionId: string; correct: boolean; userAnswer: string | null; correctAnswer: string }[]
+  } | null>(null)
   const [scoring, setScoring] = useState(false)
 
   useEffect(() => {
@@ -184,7 +236,7 @@ export default function StudyPathClient() {
     fetch('/api/public/study-path', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ conceptPrefix: prefix, count: 5 }),
+      body: JSON.stringify({ conceptPrefix: prefix, count: 10 }),
     })
       .then(r => r.json())
       .then(data => setQuiz(data))
@@ -218,7 +270,7 @@ export default function StudyPathClient() {
       p[conceptId] = existing
       setProgress(p)
       saveProgress(p)
-      setResult({ percentage: data.percentage, passed })
+      setResult({ percentage: data.percentage, passed, results: data.results })
       setQuizPhase('result')
     } catch {
       setResult({ percentage: 0, passed: false })
@@ -434,6 +486,45 @@ export default function StudyPathClient() {
                 Back to Study Path
               </button>
             </div>
+
+            {/* Per-question review — see what you missed, ask the AI tutor why */}
+            {result.results && result.results.length > 0 && (
+              <div className="mt-8 text-left">
+                <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Review your answers</h2>
+                <div className="space-y-3">
+                  {result.results.map((r, i) => {
+                    const q = quiz.questions.find(qq => qq.id === r.questionId)
+                    if (!q) return null
+                    return (
+                      <div key={r.questionId}
+                        className={`rounded-xl border-2 p-4 ${r.correct ? 'border-green-200 bg-green-50/50' : 'border-red-200 bg-red-50/50'}`}>
+                        <div className="flex items-start gap-2 mb-2">
+                          <span className={`shrink-0 mt-0.5 ${r.correct ? 'text-green-600' : 'text-red-500'}`}>
+                            {r.correct ? <Check size={16} /> : <X size={16} />}
+                          </span>
+                          <p className="text-sm font-semibold text-gray-900 leading-snug">
+                            <span className="text-gray-400 font-normal mr-1">Q{i + 1}.</span>{q.question}
+                          </p>
+                        </div>
+                        {!r.correct && (
+                          <p className="text-xs text-red-700 ml-6 mb-0.5">
+                            Your answer: <span className="font-medium">{r.userAnswer || '—'}</span>
+                          </p>
+                        )}
+                        <p className="text-xs text-green-700 ml-6">
+                          Correct: <span className="font-semibold">{r.correctAnswer}</span>
+                        </p>
+                        {!r.correct && (
+                          <div className="ml-6">
+                            <ExplainButton questionText={q.question} correctAnswer={r.correctAnswer} />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -500,6 +591,20 @@ export default function StudyPathClient() {
           )
         })}
       </div>
+
+      {/* Flashcards — optional spaced-repetition drill, folded into Study Path */}
+      <a href="/flashcards"
+        className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 mb-5 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+        <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+          <LayoutGrid size={18} className="text-purple-600" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-900">Flashcards</p>
+          <p className="text-xs text-gray-400">Swipe-drill any section with spaced repetition</p>
+        </div>
+        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
+        <ChevronRight size={16} className="text-gray-300 shrink-0" />
+      </a>
 
       {/* ═══ COURSE MODE ═══ */}
       {mode === 'course' && (
