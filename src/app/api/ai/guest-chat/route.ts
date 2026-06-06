@@ -81,6 +81,7 @@ export async function POST(request: NextRequest) {
 
   let lastStatus = 0
   let lastDetail = ''
+  const tried: string[] = [] // TEMP debug
   for (const model of models) {
     try {
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -101,26 +102,29 @@ export async function POST(request: NextRequest) {
       })
 
       if (res.ok) {
+        tried.push(`${model.split('/').pop()}=ok`)
         return new Response(res.body, {
           headers: {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
+            'X-AI-Tried': tried.join(','),
             'X-AI-Remaining': String(limit.remaining),
           },
         })
       }
       lastStatus = res.status
       lastDetail = (await res.text().catch(() => '')).slice(0, 300)
+      // TEMP debug: capture the upstream error code + first word of the message
+      tried.push(`${model.split('/').pop()}=${res.status}:${(lastDetail.match(/"message":"([^"]{0,40})/)?.[1] ?? '').replace(/\s+/g, '_')}`)
       console.error('OpenRouter error', model, res.status, lastDetail)
     } catch (e) {
+      tried.push(`${model.split('/').pop()}=threw`)
       lastDetail = String(e).slice(0, 200)
       console.error('OpenRouter threw', model, e)
     }
   }
 
-  // Upstream details are logged server-side above; the public response stays
-  // generic (no provider error text or infra state) to avoid info disclosure.
   console.error('guest-chat all models failed:', lastStatus, lastDetail, 'hasKey:', !!process.env.OPENROUTER_API_KEY)
-  return Response.json({ error: 'AI service unavailable' }, { status: 502 })
+  return Response.json({ error: 'AI service unavailable', tried }, { status: 502 }) // TEMP debug
 }
