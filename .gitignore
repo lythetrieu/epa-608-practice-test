@@ -54,3 +54,4 @@ gen-link2.mjs
 # public/ subdirectory build tooling (not part of app)
 public/node_modules/
 public/package-lock.json
+backups/

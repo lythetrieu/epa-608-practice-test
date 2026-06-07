@@ -154,8 +154,8 @@ export async function POST(request: NextRequest) {
     const { data: questions } = await admin
       .from('questions')
       .select('id, category, subtopic_id, question, options, answer_text, difficulty')
-      .like('subtopic_id', `${conceptPrefix}%`)
-      .not('question', 'like', 'True or False%')
+      .like('subtopic_id', `${conceptPrefix}-%`)
+      .neq('question_type', 'multi_select') // multi-select handled in QBv2-2; single + true_false here
 
     if (!questions || questions.length === 0) {
       return NextResponse.json({ error: 'No questions for this concept' }, { status: 404 })

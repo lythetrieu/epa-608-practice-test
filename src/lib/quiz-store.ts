@@ -23,7 +23,12 @@ function getRedis(): Redis | null {
   return redis
 }
 
-const fallbackStore = new Map<string, QuizData>()
+// globalThis-pinned so the in-memory fallback survives module re-evaluation
+// (Next dev HMR / separate route bundles share one Map; also a safety net if
+// Redis is briefly unavailable in prod).
+const fallbackStore: Map<string, QuizData> =
+  (globalThis as unknown as { __quizFallbackStore?: Map<string, QuizData> }).__quizFallbackStore ??
+  ((globalThis as unknown as { __quizFallbackStore?: Map<string, QuizData> }).__quizFallbackStore = new Map<string, QuizData>())
 
 export async function saveQuiz(quizId: string, data: QuizData): Promise<void> {
   const r = getRedis()

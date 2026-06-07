@@ -27,6 +27,7 @@ export async function GET() {
   const { data: questions, error } = await admin
     .from('questions')
     .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
+    .neq('question_type', 'multi_select')
     .order('category')
     .order('id')
 

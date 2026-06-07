@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
         .from('questions')
         .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
         .eq('category', cat)
-        .not('question', 'like', 'True or False%')
+        .neq('question_type', 'multi_select')
       if (data) allQuestions.push(...(data as QRow[]))
     }
   } else {
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       .from('questions')
       .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
       .eq('category', category)
-      .not('question', 'like', 'True or False%')
+      .neq('question_type', 'multi_select')
     if (data) allQuestions = data as QRow[]
   }
 
