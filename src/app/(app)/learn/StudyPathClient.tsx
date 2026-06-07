@@ -528,10 +528,10 @@ export default function StudyPathClient() {
   const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' }
 
   const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string }> = {
-    'Core':     { grad: 'from-sky-100 via-sky-50 to-blue-50',       cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-300',     emoji: '☁️', sub: 'Foundations — required for every cert' },
-    'Type I':   { grad: 'from-cyan-100 via-teal-50 to-emerald-50',  cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-300',    emoji: '❄️', sub: 'Small appliances' },
-    'Type II':  { grad: 'from-violet-100 via-indigo-50 to-blue-50', cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-300',  emoji: '🎛️', sub: 'High-pressure systems' },
-    'Type III': { grad: 'from-emerald-100 via-green-50 to-teal-50', cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-300', emoji: '💧', sub: 'Low-pressure chillers' },
+    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert' },
+    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances' },
+    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems' },
+    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers' },
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -614,65 +614,91 @@ export default function StudyPathClient() {
   let cur = worldItems.findIndex(c => !isCleared(c))
   if (cur === -1) cur = worldItems.length
 
+  // node layout: x = % of width (responsive), y = px down the column
+  const ROW = 132
+  const AMP = 28 // horizontal swing in % of container width
+  const node = (i: number) => ({ x: 50 + Math.sin(i * 0.8) * AMP, y: 64 + i * ROW })
+  const pathH = worldItems.length * ROW + 40
+  let trail = ''
+  worldItems.forEach((_, i) => {
+    const c = node(i)
+    if (i === 0) { trail += `M ${c.x} ${c.y}` }
+    else {
+      const p = node(i - 1); const my = (p.y + c.y) / 2
+      trail += ` C ${p.x} ${my}, ${c.x} ${my}, ${c.x} ${c.y}`
+    }
+  })
+
   return (
     <div className={`min-h-screen bg-gradient-to-b ${wt.grad}`}>
-      <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-gray-900">
+      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-white/40 px-4 py-3 flex items-center gap-3">
+        <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1 text-sm font-semibold text-gray-700 hover:text-gray-900">
           <ArrowLeft size={18} /> Worlds
         </button>
         <div className="flex-1 text-center">
           <span className="text-sm font-extrabold text-gray-900">{wt.emoji} {activeWorld}</span>
         </div>
-        <span className="text-[11px] font-bold text-gray-400 w-14 text-right">{worldDone}/{worldItems.length}</span>
+        <span className="text-[11px] font-bold text-gray-500 w-14 text-right">{worldDone}/{worldItems.length}</span>
       </div>
 
-      <div className="px-3 sm:px-6 py-8 mx-auto pb-28 max-w-md md:max-w-3xl lg:max-w-5xl [--amp:56px] md:[--amp:230px] lg:[--amp:340px] relative">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="absolute top-10 right-8 text-6xl opacity-10 select-none">{wt.emoji}</span>
-          <span className="absolute bottom-24 left-8 text-5xl opacity-10 select-none">{wt.emoji}</span>
-          <span className="absolute top-1/2 left-1/4 text-4xl opacity-[0.07] select-none">{wt.emoji}</span>
-        </div>
+      {/* decorative theme blobs */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className={`absolute -top-16 -left-16 w-72 h-72 rounded-full ${wt.blob} opacity-25 blur-3xl`} />
+        <div className={`absolute top-1/3 -right-20 w-80 h-80 rounded-full ${wt.blob} opacity-20 blur-3xl`} />
+        <div className={`absolute bottom-0 left-1/4 w-64 h-64 rounded-full ${wt.blob} opacity-15 blur-3xl`} />
+        <span className="absolute top-24 right-8 text-7xl opacity-15 select-none">{wt.emoji}</span>
+        <span className="absolute bottom-32 left-6 text-6xl opacity-10 select-none">{wt.emoji}</span>
+      </div>
 
-        {worldItems.map((c, i) => {
-          const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
-          const st = getEffectiveStatus(p)
-          const cleared = st === 'mastered' || st === 'review'
-          const locked = i > cur
-          const isCurrent = i === cur
-          const wob = Math.sin(i * 0.8).toFixed(3)
+      <div className="relative px-4 pt-8 pb-28 mx-auto max-w-md md:max-w-3xl lg:max-w-5xl">
+        <div className="relative mx-auto w-full" style={{ height: pathH }}>
+          {/* the road */}
+          <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 100 ${pathH}`} preserveAspectRatio="none" aria-hidden>
+            <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="14" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.9" strokeWidth="5" strokeLinecap="round" strokeDasharray="1 16" vectorEffect="non-scaling-stroke" />
+          </svg>
 
-          let circle = 'bg-gray-200 text-gray-400'
-          let icon = <Lock size={22} />
-          if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
-          else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
-          else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
-          else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
-          else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
+          {worldItems.map((c, i) => {
+            const pt = node(i)
+            const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
+            const st = getEffectiveStatus(p)
+            const cleared = st === 'mastered' || st === 'review'
+            const locked = i > cur
+            const isCurrent = i === cur
 
-          return (
-            <div key={c.id} className="relative flex justify-center my-6" style={{ transform: `translateX(calc(var(--amp) * ${wob}))` }}>
+            let circle = 'bg-gray-200 text-gray-400'
+            let icon = <Lock size={22} />
+            if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
+            else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
+            else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
+            else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
+            else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
+
+            return (
               <button
+                key={c.id}
                 disabled={locked}
                 title={locked ? 'Master the level before this to unlock' : c.title}
                 onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
-                className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
+                style={{ left: `${pt.x}%`, top: pt.y - 32 }}
+                className={`absolute -translate-x-1/2 flex flex-col items-center w-32 ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
               >
                 {isCurrent && (
                   <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
                 )}
-                <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-white/70' : ''} shadow-lg`}>
+                <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/25'} ${isCurrent ? 'ring-4 ring-white/80' : ''} shadow-xl`}>
                   {icon}
                 </span>
-                <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight max-w-[130px] drop-shadow-sm ${locked ? 'text-gray-400' : 'text-gray-800'}`}>
+                <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight drop-shadow-sm ${locked ? 'text-gray-500/70' : 'text-gray-800'}`}>
                   {c.title}
                 </span>
               </button>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
 
         {cur >= worldItems.length && (
-          <div className="relative mt-2 text-center bg-white/80 border border-green-200 rounded-2xl p-6">
+          <div className="relative mt-2 text-center bg-white/85 border border-green-200 rounded-2xl p-6">
             <Trophy size={36} className="text-amber-500 mx-auto mb-2" />
             <p className="text-green-800 font-extrabold text-lg">{activeWorld} mastered!</p>
             <p className="text-green-600 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>
