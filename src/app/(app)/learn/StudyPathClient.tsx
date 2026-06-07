@@ -111,22 +111,20 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
-// Illustrated themed scenery (sky + layered hills) behind the World path.
+// ──────────────────────────────────────────────────────────────────────────
+// BACKGROUND SLOT (for a designer to own)
+// Clean, neutral, professional surface behind the World path. To drop in custom
+// artwork, replace the body below with a full-bleed image/SVG:
+//   • keep classes: fixed inset-0 -z-0 pointer-events-none w-full h-full
+//   • the path column sits above at z-10, so keep artwork BEHIND
+//   • `scene` gives a per-World colour ([light, mid, deep]) for theme tinting
+// e.g.  <img src={`/learn-bg/${world}.svg`} className="fixed inset-0 -z-0 w-full h-full object-cover pointer-events-none" />
+// ──────────────────────────────────────────────────────────────────────────
 function WorldScene({ scene }: { scene: [string, string, string] }) {
-  const [c1, c2, c3] = scene
+  const [c1] = scene
   return (
-    <svg aria-hidden className="fixed inset-0 -z-0 w-full h-full pointer-events-none" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
-      <g fill="#ffffff" opacity="0.55">
-        <ellipse cx="210" cy="150" rx="92" ry="34" />
-        <ellipse cx="300" cy="140" rx="64" ry="26" />
-        <ellipse cx="1170" cy="115" rx="104" ry="38" />
-        <ellipse cx="1085" cy="130" rx="66" ry="26" />
-        <ellipse cx="720" cy="225" rx="58" ry="22" />
-      </g>
-      <path d="M0 720 C 240 660, 430 800, 720 740 S 1210 660, 1440 750 L1440 900 L0 900 Z" fill={c3} opacity="0.55" />
-      <path d="M0 790 C 300 740, 560 860, 900 795 S 1300 760, 1440 815 L1440 900 L0 900 Z" fill={c2} opacity="0.7" />
-      <path d="M0 850 C 360 820, 700 900, 1080 850 S 1380 835, 1440 868 L1440 900 L0 900 Z" fill={c1} opacity="0.85" />
-    </svg>
+    <div aria-hidden className="fixed inset-0 -z-0 pointer-events-none"
+      style={{ background: `linear-gradient(to bottom, ${c1}26, #f8fafc 55%)` }} />
   )
 }
 
