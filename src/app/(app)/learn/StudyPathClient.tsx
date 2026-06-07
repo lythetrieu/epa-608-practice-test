@@ -111,15 +111,24 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
-// Decorative prop slots scattered beside the path (Candy-Crush / Duolingo style).
-const PROP_SLOTS = [
-  { t: '3%', l: '6%', s: 34, r: -12, o: 0.22 }, { t: '8%', l: '83%', s: 44, r: 12, o: 0.18 },
-  { t: '15%', l: '12%', s: 30, r: 8, o: 0.16 }, { t: '22%', l: '86%', s: 40, r: -10, o: 0.20 },
-  { t: '30%', l: '5%', s: 48, r: 16, o: 0.16 }, { t: '38%', l: '82%', s: 32, r: -8, o: 0.20 },
-  { t: '46%', l: '13%', s: 38, r: 12, o: 0.16 }, { t: '54%', l: '85%', s: 46, r: -16, o: 0.18 },
-  { t: '62%', l: '7%', s: 34, r: 10, o: 0.20 }, { t: '70%', l: '83%', s: 42, r: -12, o: 0.16 },
-  { t: '79%', l: '11%', s: 38, r: 14, o: 0.20 }, { t: '88%', l: '82%', s: 34, r: -9, o: 0.18 },
-]
+// Illustrated themed scenery (sky + layered hills) behind the World path.
+function WorldScene({ scene }: { scene: [string, string, string] }) {
+  const [c1, c2, c3] = scene
+  return (
+    <svg aria-hidden className="fixed inset-0 -z-0 w-full h-full pointer-events-none" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="#ffffff" opacity="0.55">
+        <ellipse cx="210" cy="150" rx="92" ry="34" />
+        <ellipse cx="300" cy="140" rx="64" ry="26" />
+        <ellipse cx="1170" cy="115" rx="104" ry="38" />
+        <ellipse cx="1085" cy="130" rx="66" ry="26" />
+        <ellipse cx="720" cy="225" rx="58" ry="22" />
+      </g>
+      <path d="M0 720 C 240 660, 430 800, 720 740 S 1210 660, 1440 750 L1440 900 L0 900 Z" fill={c3} opacity="0.55" />
+      <path d="M0 790 C 300 740, 560 860, 900 795 S 1300 760, 1440 815 L1440 900 L0 900 Z" fill={c2} opacity="0.7" />
+      <path d="M0 850 C 360 820, 700 900, 1080 850 S 1380 835, 1440 868 L1440 900 L0 900 Z" fill={c1} opacity="0.85" />
+    </svg>
+  )
+}
 
 function getEffectiveStatus(prog: ConceptProgress): string {
   const status = prog.status || 'pending'
@@ -537,11 +546,11 @@ export default function StudyPathClient() {
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
   const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' }
 
-  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[] }> = {
-    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'] },
-    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances', props: ['❄️','🧊','🔧','🧰','🥶','🛠️'] },
-    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems', props: ['🎛️','🌡️','⚙️','🔩','🧯','📈'] },
-    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers', props: ['💧','🌀','🧊','⚙️','🚿','🌡️'] },
+  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[]; scene: [string, string, string] }> = {
+    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'], scene: ['#7dd3fc','#bae6fd','#e0f2fe'] },
+    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances', props: ['❄️','🧊','🔧','🧰','🥶','🛠️'], scene: ['#5eead4','#99f6e4','#cffafe'] },
+    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems', props: ['🎛️','🌡️','⚙️','🔩','🧯','📈'], scene: ['#a5b4fc','#c7d2fe','#e0e7ff'] },
+    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers', props: ['💧','🌀','🧊','⚙️','🚿','🌡️'], scene: ['#6ee7b7','#a7f3d0','#d1fae5'] },
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -651,25 +660,9 @@ export default function StudyPathClient() {
         <span className="text-[11px] font-bold text-gray-500 w-14 text-right">{worldDone}/{worldItems.length}</span>
       </div>
 
-      {/* decorative theme blobs */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className={`absolute -top-16 -left-16 w-72 h-72 rounded-full ${wt.blob} opacity-25 blur-3xl`} />
-        <div className={`absolute top-1/3 -right-20 w-80 h-80 rounded-full ${wt.blob} opacity-20 blur-3xl`} />
-        <div className={`absolute bottom-0 left-1/4 w-64 h-64 rounded-full ${wt.blob} opacity-15 blur-3xl`} />
-        <span className="absolute top-24 right-8 text-7xl opacity-15 select-none">{wt.emoji}</span>
-        <span className="absolute bottom-32 left-6 text-6xl opacity-10 select-none">{wt.emoji}</span>
-      </div>
+      <WorldScene scene={wt.scene} />
 
-      <div className="relative px-4 pt-8 pb-28 mx-auto max-w-2xl overflow-hidden">
-        {/* scattered theme props fill the area AROUND the path */}
-        <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
-          {PROP_SLOTS.map((sl, i) => (
-            <span key={i} className="absolute select-none drop-shadow-sm"
-              style={{ top: sl.t, left: sl.l, fontSize: sl.s, opacity: sl.o, transform: `rotate(${sl.r}deg)` }}>
-              {wt.props[i % wt.props.length]}
-            </span>
-          ))}
-        </div>
+      <div className="relative z-10 px-4 pt-8 pb-28 mx-auto max-w-2xl">
         {/* centered narrow path column — same comfortable width on every screen */}
         <div className="relative mx-auto w-[min(88vw,400px)]" style={{ height: pathH }}>
           {/* the road */}
