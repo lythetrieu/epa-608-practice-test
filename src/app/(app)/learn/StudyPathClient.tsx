@@ -626,7 +626,7 @@ export default function StudyPathClient() {
 
   // node layout: x = % of width (responsive), y = px down the column
   const ROW = 132
-  const AMP = 28 // horizontal swing in % of container width
+  const AMP = 26 // horizontal swing in % of the 400px path column
   const node = (i: number) => ({ x: 50 + Math.sin(i * 0.8) * AMP, y: 64 + i * ROW })
   const pathH = worldItems.length * ROW + 40
   let trail = ''
@@ -660,17 +660,18 @@ export default function StudyPathClient() {
         <span className="absolute bottom-32 left-6 text-6xl opacity-10 select-none">{wt.emoji}</span>
       </div>
 
-      <div className="relative px-4 pt-8 pb-28 mx-auto max-w-md md:max-w-3xl lg:max-w-5xl">
-        <div className="relative mx-auto w-full" style={{ height: pathH }}>
-          {/* scattered theme props */}
-          <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
-            {PROP_SLOTS.map((sl, i) => (
-              <span key={i} className="absolute select-none drop-shadow-sm"
-                style={{ top: sl.t, left: sl.l, fontSize: sl.s, opacity: sl.o, transform: `rotate(${sl.r}deg)` }}>
-                {wt.props[i % wt.props.length]}
-              </span>
-            ))}
-          </div>
+      <div className="relative px-4 pt-8 pb-28 mx-auto max-w-2xl overflow-hidden">
+        {/* scattered theme props fill the area AROUND the path */}
+        <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
+          {PROP_SLOTS.map((sl, i) => (
+            <span key={i} className="absolute select-none drop-shadow-sm"
+              style={{ top: sl.t, left: sl.l, fontSize: sl.s, opacity: sl.o, transform: `rotate(${sl.r}deg)` }}>
+              {wt.props[i % wt.props.length]}
+            </span>
+          ))}
+        </div>
+        {/* centered narrow path column — same comfortable width on every screen */}
+        <div className="relative mx-auto w-[min(88vw,400px)]" style={{ height: pathH }}>
           {/* the road */}
           <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 100 ${pathH}`} preserveAspectRatio="none" aria-hidden>
             <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="14" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
