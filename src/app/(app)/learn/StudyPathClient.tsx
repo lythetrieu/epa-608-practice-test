@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, X, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, LayoutGrid, Bot, Play, Trophy } from 'lucide-react'
+import { ArrowLeft, Check, X, ChevronRight, Brain, Lightbulb, AlertCircle, Lock, LayoutGrid, Bot, Trophy, ArrowRight } from 'lucide-react'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
 
@@ -109,23 +109,6 @@ function getProgress(): Record<string, ConceptProgress> {
 
 function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
-}
-
-// ──────────────────────────────────────────────────────────────────────────
-// BACKGROUND SLOT (for a designer to own)
-// Clean, neutral, professional surface behind the World path. To drop in custom
-// artwork, replace the body below with a full-bleed image/SVG:
-//   • keep classes: fixed inset-0 -z-0 pointer-events-none w-full h-full
-//   • the path column sits above at z-10, so keep artwork BEHIND
-//   • `scene` gives a per-World colour ([light, mid, deep]) for theme tinting
-// e.g.  <img src={`/learn-bg/${world}.svg`} className="fixed inset-0 -z-0 w-full h-full object-cover pointer-events-none" />
-// ──────────────────────────────────────────────────────────────────────────
-function WorldScene({ scene }: { scene: [string, string, string] }) {
-  const [c1] = scene
-  return (
-    <div aria-hidden className="fixed inset-0 -z-0 pointer-events-none"
-      style={{ background: `linear-gradient(to bottom, ${c1}26, #f8fafc 55%)` }} />
-  )
 }
 
 function getEffectiveStatus(prog: ConceptProgress): string {
@@ -631,91 +614,131 @@ export default function StudyPathClient() {
   let cur = worldItems.findIndex(c => !isCleared(c))
   if (cur === -1) cur = worldItems.length
 
-  // node layout: x = % of width (responsive), y = px down the column
-  const ROW = 132
-  const AMP = 26 // horizontal swing in % of the 400px path column
-  const node = (i: number) => ({ x: 50 + Math.sin(i * 0.8) * AMP, y: 64 + i * ROW })
-  const pathH = worldItems.length * ROW + 40
-  let trail = ''
-  worldItems.forEach((_, i) => {
-    const c = node(i)
-    if (i === 0) { trail += `M ${c.x} ${c.y}` }
-    else {
-      const p = node(i - 1); const my = (p.y + c.y) / 2
-      trail += ` C ${p.x} ${my}, ${c.x} ${my}, ${c.x} ${c.y}`
-    }
-  })
+  const ACCENT = '#4f46e5' // indigo (v3 "study route")
+  const statusAt = (i: number) => (i > cur ? 'locked' : i === cur ? 'current' : 'done')
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${wt.grad}`}>
-      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-white/40 px-4 py-3 flex items-center gap-3">
-        <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1 text-sm font-semibold text-gray-700 hover:text-gray-900">
-          <ArrowLeft size={18} /> Worlds
-        </button>
-        <div className="flex-1 text-center">
-          <span className="text-sm font-extrabold text-gray-900">{wt.emoji} {activeWorld}</span>
-        </div>
-        <span className="text-[11px] font-bold text-gray-500 w-14 text-right">{worldDone}/{worldItems.length}</span>
-      </div>
-
-      <WorldScene scene={wt.scene} />
-
-      <div className="relative z-10 px-4 pt-8 pb-28 mx-auto max-w-2xl">
-        {/* centered narrow path column — same comfortable width on every screen */}
-        <div className="relative mx-auto w-[min(88vw,400px)]" style={{ height: pathH }}>
-          {/* the road */}
-          <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 100 ${pathH}`} preserveAspectRatio="none" aria-hidden>
-            <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="14" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-            <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.9" strokeWidth="5" strokeLinecap="round" strokeDasharray="1 16" vectorEffect="non-scaling-stroke" />
-          </svg>
-
-          {worldItems.map((c, i) => {
-            const pt = node(i)
-            const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
-            const st = getEffectiveStatus(p)
-            const cleared = st === 'mastered' || st === 'review'
-            const locked = i > cur
-            const isCurrent = i === cur
-
-            let circle = 'bg-gray-200 text-gray-400'
-            let icon = <Lock size={22} />
-            if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
-            else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
-            else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
-            else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
-            else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
-
-            return (
-              <button
-                key={c.id}
-                disabled={locked}
-                title={locked ? 'Master the level before this to unlock' : c.title}
-                onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
-                style={{ left: `${pt.x}%`, top: pt.y - 32 }}
-                className={`absolute -translate-x-1/2 flex flex-col items-center w-32 ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
-              >
-                {isCurrent && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
-                )}
-                <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/25'} ${isCurrent ? 'ring-4 ring-white/80' : ''} shadow-xl`}>
-                  {icon}
-                </span>
-                <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight drop-shadow-sm ${locked ? 'text-gray-500/70' : 'text-gray-800'}`}>
-                  {c.title}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-
-        {cur >= worldItems.length && (
-          <div className="relative mt-2 text-center bg-white/85 border border-green-200 rounded-2xl p-6">
-            <Trophy size={36} className="text-amber-500 mx-auto mb-2" />
-            <p className="text-green-800 font-extrabold text-lg">{activeWorld} mastered!</p>
-            <p className="text-green-600 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>
+    <div className="min-h-screen" style={{ backgroundColor: '#f8fafc', backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.045) 1px, transparent 0)', backgroundSize: '22px 22px' }}>
+      {/* header */}
+      <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-slate-200">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center gap-3 h-14">
+            <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 shrink-0">
+              <ArrowLeft size={16} /> Sections
+            </button>
+            <div className="h-5 w-px bg-slate-200 shrink-0" />
+            <h1 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{wt.emoji} {activeWorld}</h1>
+            <span className="ml-auto shrink-0 text-xs font-semibold px-2 py-1 rounded-md tabular-nums" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>{worldDone} / {worldItems.length}</span>
           </div>
-        )}
+          <div className="pb-3 -mt-0.5">
+            <div className="h-1.5 w-full rounded-full bg-slate-200 overflow-hidden">
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${worldItems.length ? Math.round(worldDone / worldItems.length * 100) : 0}%`, background: ACCENT }} />
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* title */}
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-7">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: ACCENT }}>EPA 608 · Study Route</p>
+        <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900">{activeWorld} levels</h2>
+        <p className="mt-1.5 text-sm text-slate-500 max-w-md">Clear each level with 8 of 10 to unlock the next one.</p>
+      </div>
+
+      {/* metro study line */}
+      <ol className="max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-24 relative">
+        {worldItems.map((c, i) => {
+          const s = statusAt(i)
+          const num = String(i + 1).padStart(2, '0')
+          const first = i === 0, last = i === worldItems.length - 1
+          const aboveFilled = i > 0 && (i - 1) < cur
+          const belowFilled = i < cur
+          return (
+            <li key={c.id} className="relative flex gap-3 sm:gap-5">
+              <div className="hidden sm:flex w-7 shrink-0 items-center justify-end pt-3">
+                <span className={`text-xs font-bold tabular-nums ${s === 'locked' ? 'text-slate-300' : 'text-slate-400'}`}>{num}</span>
+              </div>
+              <div className="relative flex flex-col items-center w-10 shrink-0 self-stretch">
+                {first ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: aboveFilled ? ACCENT : '#e2e8f0' }} />}
+                <div className="my-1">
+                  {s === 'done' && (
+                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full text-white ring-4 ring-white shadow-sm" style={{ background: ACCENT }}>
+                      <Check size={16} strokeWidth={3} />
+                    </span>
+                  )}
+                  {s === 'current' && (
+                    <span className="relative z-10 grid place-items-center w-10 h-10">
+                      <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}40` }} />
+                      <span className="relative grid place-items-center w-10 h-10 rounded-full bg-white shadow-md ring-4" style={{ ['--tw-ring-color' as unknown as string]: ACCENT }}>
+                        <span className="w-3 h-3 rounded-full" style={{ background: ACCENT }} />
+                      </span>
+                    </span>
+                  )}
+                  {s === 'locked' && (
+                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full bg-white border-2 border-slate-300 text-slate-400 ring-4 ring-white">
+                      <Lock size={15} />
+                    </span>
+                  )}
+                </div>
+                {last ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: belowFilled ? ACCENT : '#e2e8f0' }} />}
+              </div>
+              <div className={`flex-1 min-w-0 ${s === 'current' ? 'py-1.5' : 'py-2.5'}`}>
+                {s === 'done' && (
+                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="w-full text-left rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md hover:border-slate-300 transition">
+                    <div className="flex items-center gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
+                        <p className="mt-0.5 text-xs text-slate-400">10 questions · pass 8/10</p>
+                      </div>
+                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">
+                        <Check size={12} strokeWidth={3} /> Cleared
+                      </span>
+                    </div>
+                  </button>
+                )}
+                {s === 'current' && (
+                  <div className="rounded-2xl border-2 bg-white px-4 py-4 sm:px-5" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(79,70,229,0.35)' }}>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
+                      </span>
+                      <span className="text-[11px] font-medium text-slate-400">Next up</span>
+                    </div>
+                    <h3 className="mt-2.5 text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
+                    <p className="mt-0.5 text-xs text-slate-500">10 questions · pass 8/10</p>
+                    <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: ACCENT }}>
+                      Start level <ArrowRight size={16} />
+                    </button>
+                  </div>
+                )}
+                {s === 'locked' && (
+                  <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-400 truncate">{c.title}</h3>
+                        <p className="mt-0.5 text-xs text-slate-300">10 questions</p>
+                      </div>
+                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 bg-white border border-slate-200 px-2 py-1 rounded-md">
+                        <Lock size={12} /> Locked
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </li>
+          )
+        })}
+      </ol>
+
+      {cur >= worldItems.length && (
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">
+          <div className="text-center bg-white border border-emerald-200 rounded-2xl p-6">
+            <Trophy size={32} className="text-amber-500 mx-auto mb-2" />
+            <p className="text-slate-900 font-extrabold text-lg">{activeWorld} complete</p>
+            <p className="text-slate-500 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
