@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { z } from 'zod'
+import { canonicalMulti, isMulti } from '@/lib/multi'
 
 const schema = z.object({
   answers: z.record(z.string(), z.string()),
@@ -43,23 +44,26 @@ export async function POST(
   // Fetch answers from DB (service role bypasses RLS)
   const { data: questions } = await admin
     .from('questions')
-    .select('id, category, answer_text, explanation, source_ref')
+    .select('id, category, answer_text, explanation, source_ref, question_type, correct_answers')
     .in('id', questionIds)
 
   if (!questions) return NextResponse.json({ error: 'Failed to grade' }, { status: 500 })
 
   const showExplanations = true // All tiers get explanations
 
-  // Score server-side
-  const results = questions.map((q: any) => ({
-    questionId: q.id,
-    category: q.category as string,
-    correct: answers[q.id] === q.answer_text,
-    correctAnswer: q.answer_text,
-    explanation: showExplanations ? q.explanation : '',
-    sourceRef: showExplanations ? q.source_ref : '',
-    userAnswer: answers[q.id] ?? null,
-  }))
+  // Score server-side. multi_select: compare canonical sets; else exact string.
+  const results = questions.map((q: any) => {
+    const correctAnswer = isMulti(q.question_type) ? canonicalMulti(q.correct_answers as string[]) : q.answer_text
+    return {
+      questionId: q.id,
+      category: q.category as string,
+      correct: (answers[q.id] ?? '') === correctAnswer,
+      correctAnswer,
+      explanation: showExplanations ? q.explanation : '',
+      sourceRef: showExplanations ? q.source_ref : '',
+      userAnswer: answers[q.id] ?? null,
+    }
+  })
 
   const score = results.filter(r => r.correct).length
   const percentage = Math.round((score / results.length) * 100)

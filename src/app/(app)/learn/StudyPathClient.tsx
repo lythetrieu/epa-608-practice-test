@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ArrowLeft, Check, X, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid, Bot } from 'lucide-react'
 import { CONCEPT_VISUALS } from './concept-visuals'
+import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
 
 // Per-question AI tutor — on-demand "explain simply" for any reviewed question.
 // Mirrors the PracticeClient pattern so every learning surface has the same tutor.
@@ -70,6 +71,7 @@ type QuizQuestion = {
   question: string
   options: string[]
   difficulty: string
+  question_type?: string
 }
 
 type QuizData = {
@@ -380,25 +382,41 @@ export default function StudyPathClient() {
               </div>
             </div>
 
-            <p className="text-base font-semibold text-gray-900 mb-4 leading-relaxed">
+            <p className="text-base font-semibold text-gray-900 mb-1 leading-relaxed">
               {quiz.questions[quizIdx].question}
             </p>
+            {quiz.questions[quizIdx].question_type === 'multi_select' && (
+              <p className="text-xs font-bold text-purple-600 mb-3">Select all that apply</p>
+            )}
 
             <div className="space-y-2 mb-6">
-              {quiz.questions[quizIdx].options.map((opt, i) => {
-                const selected = answers[quiz.questions[quizIdx].id] === opt
-                return (
-                  <button
-                    key={i}
-                    onClick={() => setAnswers(prev => ({ ...prev, [quiz.questions[quizIdx].id]: opt }))}
-                    className={`w-full text-left px-4 py-3.5 rounded-xl border-2 text-sm font-medium min-h-[52px] transition-all ${
-                      selected ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300'
-                    }`}
-                  >
-                    {opt}
-                  </button>
-                )
-              })}
+              {(() => {
+                const q = quiz.questions[quizIdx]
+                const multi = q.question_type === 'multi_select'
+                const current = answers[q.id] ? answers[q.id].split(MULTI_SEP) : []
+                return q.options.map((opt, i) => {
+                  const selected = multi ? current.includes(opt) : answers[q.id] === opt
+                  const onPick = () => setAnswers(prev => {
+                    if (!multi) return { ...prev, [q.id]: opt }
+                    const set = new Set(current)
+                    if (set.has(opt)) set.delete(opt); else set.add(opt)
+                    return { ...prev, [q.id]: canonicalMulti([...set]) }
+                  })
+                  return (
+                    <button key={i} onClick={onPick}
+                      className={`w-full text-left px-4 py-3.5 rounded-xl border-2 text-sm font-medium min-h-[52px] transition-all flex items-center gap-3 ${
+                        selected ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300'
+                      }`}>
+                      {multi && (
+                        <span className={`shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center ${selected ? 'border-blue-600 bg-blue-600' : 'border-gray-300'}`}>
+                          {selected && <Check size={13} className="text-white" />}
+                        </span>
+                      )}
+                      <span>{opt}</span>
+                    </button>
+                  )
+                })
+              })()}
             </div>
 
             <div className="flex gap-3">
@@ -508,11 +526,11 @@ export default function StudyPathClient() {
                         </div>
                         {!r.correct && (
                           <p className="text-xs text-red-700 ml-6 mb-0.5">
-                            Your answer: <span className="font-medium">{r.userAnswer || '—'}</span>
+                            Your answer: <span className="font-medium">{(r.userAnswer || '—').split(MULTI_SEP).join(', ')}</span>
                           </p>
                         )}
                         <p className="text-xs text-green-700 ml-6">
-                          Correct: <span className="font-semibold">{r.correctAnswer}</span>
+                          Correct: <span className="font-semibold">{(r.correctAnswer || '').split(MULTI_SEP).join(', ')}</span>
                         </p>
                         {!r.correct && (
                           <div className="ml-6">

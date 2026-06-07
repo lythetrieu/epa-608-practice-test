@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
         .from('questions')
         .select('id, category, subtopic_id, question, options, answer_text, difficulty')
         .like('subtopic_id', `${prefix}%`)
-        .not('question', 'like', 'True or False%')
+        .neq('question_type', 'multi_select')
         .limit(50)
       if (data) allQuestions.push(...data)
     }

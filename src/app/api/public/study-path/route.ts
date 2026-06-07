@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { getIdentifier } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
+import { canonicalMulti, isMulti } from '@/lib/multi'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
 import { readFileSync } from 'fs'
@@ -153,9 +154,8 @@ export async function POST(request: NextRequest) {
     // Fetch questions for this concept
     const { data: questions } = await admin
       .from('questions')
-      .select('id, category, subtopic_id, question, options, answer_text, difficulty')
-      .like('subtopic_id', `${conceptPrefix}%`)
-      .not('question', 'like', 'True or False%')
+      .select('id, category, subtopic_id, question, options, answer_text, difficulty, question_type, correct_answers')
+      .like('subtopic_id', `${conceptPrefix}-%`)
 
     if (!questions || questions.length === 0) {
       return NextResponse.json({ error: 'No questions for this concept' }, { status: 404 })
@@ -173,7 +173,10 @@ export async function POST(request: NextRequest) {
     const answerMap: Record<string, string> = {}
     const subtopicMap: Record<string, string> = {}
     picked.forEach(q => {
-      answerMap[q.id] = q.answer_text
+      // multi-select: store canonical set so the existing === scorer works
+      answerMap[q.id] = isMulti(q.question_type)
+        ? canonicalMulti(q.correct_answers as string[])
+        : q.answer_text
       subtopicMap[q.id] = q.subtopic_id || conceptPrefix
     })
 
@@ -191,7 +194,7 @@ export async function POST(request: NextRequest) {
         const j = Math.floor(Math.random() * (i + 1));
         [opts[i], opts[j]] = [opts[j], opts[i]]
       }
-      return { id: q.id, category: q.category, question: q.question, options: opts, difficulty: q.difficulty }
+      return { id: q.id, category: q.category, question: q.question, options: opts, difficulty: q.difficulty, question_type: q.question_type }
     })
 
     // Get micro-lesson + ALL knowledge base facts for this concept

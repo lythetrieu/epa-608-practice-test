@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
   // Fetch question data — NO answer_text, NO explanation
   const { data: questions } = await admin
     .from('questions')
-    .select('id, category, subtopic_id, question, options, difficulty')
+    .select('id, category, subtopic_id, question, options, difficulty, question_type')
     .in('id', questionIds)
 
   // Return in shuffled order with shuffled options per question

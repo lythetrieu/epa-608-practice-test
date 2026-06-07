@@ -18,37 +18,45 @@ export type ConceptInfo = {
  * The subtopic group prefix is derived by stripping the numeric suffix
  * from a subtopic_id (e.g. "core-env-1.2" → "core-env").
  */
+// QBv2: keys are the new module prefixes (subtopic_id = "<prefix>-NNN").
+// Order here = display order within each World on the Study Path.
 export const SUBTOPIC_TO_CONCEPT: Record<string, ConceptInfo> = {
-  // ── Core ──────────────────────────────────────────────────────────────────
-  'core-env': { id: 'environment-ozone', title: 'Environment & Ozone Depletion', category: 'Core' },
-  'core-caa': { id: 'clean-air-act', title: 'Clean Air Act & EPA Authority', category: 'Core' },
-  'core-regs': { id: 'regulations-compliance', title: 'Regulations & Compliance', category: 'Core' },
-  'core-sub': { id: 'refrigerant-substances', title: 'Refrigerant Substances & Substitutes', category: 'Core' },
-  'core-ref': { id: 'refrigerant-properties', title: 'Refrigerant Properties & Tools', category: 'Core' },
-  'core-3rs': { id: 'recovery-recycle-reclaim', title: 'Recovery, Recycling & Reclamation', category: 'Core' },
-  'core-rec': { id: 'recovery-equipment', title: 'Recovery Equipment & Procedures', category: 'Core' },
-  'core-evac': { id: 'evacuation-procedures', title: 'Evacuation Procedures & Vacuum', category: 'Core' },
-  'core-safe': { id: 'safety-handling', title: 'Safety & Refrigerant Handling', category: 'Core' },
-  'core-ship': { id: 'shipping-disposal', title: 'Shipping, Disposal & Transport', category: 'Core' },
+  // ── Core (11) ───────────────────────────────────────────────────────────
+  'core-ozone':        { id: 'core-ozone',        title: 'Ozone & Ozone Depletion',        category: 'Core' },
+  'core-refrigerants': { id: 'core-refrigerants', title: 'Refrigerant Types & Identification', category: 'Core' },
+  'core-blends':       { id: 'core-blends',       title: 'Refrigerant Blends & Glide',      category: 'Core' },
+  'core-oils':         { id: 'core-oils',         title: 'Refrigerant Oils',                category: 'Core' },
+  'core-cycle':        { id: 'core-cycle',        title: 'Refrigeration Cycle',             category: 'Core' },
+  'core-regulations':  { id: 'core-regulations',  title: 'Regulations & Clean Air Act',     category: 'Core' },
+  'core-recovery':     { id: 'core-recovery',     title: 'Recovery, Recycle & Reclaim',     category: 'Core' },
+  'core-dehydration':  { id: 'core-dehydration',  title: 'Dehydration & Evacuation',        category: 'Core' },
+  'core-equipment':    { id: 'core-equipment',    title: 'Equipment & Components',          category: 'Core' },
+  'core-safety':       { id: 'core-safety',       title: 'Safety & Leaks',                  category: 'Core' },
+  'core-supplemental': { id: 'core-supplemental', title: 'Core Mixed Review',               category: 'Core' },
 
-  // ── Type I ────────────────────────────────────────────────────────────────
-  't1-rec': { id: 't1-small-appliance-recovery', title: 'Small Appliance Recovery', category: 'Type I' },
-  't1-tech': { id: 't1-techniques', title: 'Type I Techniques & Sealed Systems', category: 'Type I' },
-  't1-safe': { id: 't1-safety', title: 'Type I Safety & Flammable Refrigerants', category: 'Type I' },
+  // ── Type I (5) ──────────────────────────────────────────────────────────
+  't1-regulations':  { id: 't1-regulations',  title: 'Type I Regulations',        category: 'Type I' },
+  't1-recovery':     { id: 't1-recovery',     title: 'Small Appliance Recovery',  category: 'Type I' },
+  't1-servicing':    { id: 't1-servicing',    title: 'Servicing & Techniques',    category: 'Type I' },
+  't1-safety':       { id: 't1-safety',       title: 'Type I Safety',             category: 'Type I' },
+  't1-supplemental': { id: 't1-supplemental', title: 'Type I Mixed Review',       category: 'Type I' },
 
-  // ── Type II ───────────────────────────────────────────────────────────────
-  't2-leak': { id: 't2-leak-detection', title: 'Leak Detection & Rates', category: 'Type II' },
-  't2-repair': { id: 't2-leak-repair', title: 'Leak Repair & Compliance', category: 'Type II' },
-  't2-rec': { id: 't2-high-pressure-recovery', title: 'High-Pressure Recovery', category: 'Type II' },
-  't2-tech': { id: 't2-techniques', title: 'Type II Charging & Diagnosis', category: 'Type II' },
-  't2-ref': { id: 't2-refrigerants', title: 'High-Pressure Refrigerant Properties', category: 'Type II' },
+  // ── Type II (6) ─────────────────────────────────────────────────────────
+  't2-intro':         { id: 't2-intro',         title: 'Introduction & Classifications', category: 'Type II' },
+  't2-leak-repair':   { id: 't2-leak-repair',   title: 'Leak Repair & Rates',            category: 'Type II' },
+  't2-recovery':      { id: 't2-recovery',      title: 'Refrigerant Recovery',           category: 'Type II' },
+  't2-evac-charging': { id: 't2-evac-charging', title: 'Evacuation & Charging',          category: 'Type II' },
+  't2-repairs-safety':{ id: 't2-repairs-safety',title: 'Repairs & Safety',               category: 'Type II' },
+  't2-supplemental':  { id: 't2-supplemental',  title: 'Type II Mixed Review',           category: 'Type II' },
 
-  // ── Type III ──────────────────────────────────────────────────────────────
-  't3-leak': { id: 't3-leak-detection', title: 'Low-Pressure Leak Detection', category: 'Type III' },
-  't3-repair': { id: 't3-chiller-repair', title: 'Centrifugal Chiller Repair', category: 'Type III' },
-  't3-rec': { id: 't3-low-pressure-recovery', title: 'Low-Pressure Recovery', category: 'Type III' },
-  't3-rech': { id: 't3-recharging', title: 'Low-Pressure Recharging', category: 'Type III' },
-  't3-ref': { id: 't3-refrigerants', title: 'Low-Pressure Refrigerant Properties', category: 'Type III' },
+  // ── Type III (7) ────────────────────────────────────────────────────────
+  't3-intro':         { id: 't3-intro',         title: 'Type III Introduction',     category: 'Type III' },
+  't3-leak-detection':{ id: 't3-leak-detection',title: 'Leak Detection & Purge Units', category: 'Type III' },
+  't3-leak-repair':   { id: 't3-leak-repair',   title: 'Leak Repair & Rates',       category: 'Type III' },
+  't3-recovery':      { id: 't3-recovery',      title: 'Low-Pressure Recovery',     category: 'Type III' },
+  't3-evac-charging': { id: 't3-evac-charging', title: 'Evacuation & Recharging',   category: 'Type III' },
+  't3-repairs-safety':{ id: 't3-repairs-safety',title: 'Repairs & Safety',          category: 'Type III' },
+  't3-supplemental':  { id: 't3-supplemental',  title: 'Type III Mixed Review',     category: 'Type III' },
 }
 
 /**
