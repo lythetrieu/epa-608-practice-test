@@ -513,10 +513,17 @@ export default function StudyPathClient() {
   let currentIdx = orderedConcepts.findIndex(c => { const s = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return !(s === 'mastered' || s === 'review') })
   if (currentIdx === -1) currentIdx = orderedConcepts.length
 
-return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
+const WORLD_THEME: Record<string, { grad: string; pill: string; blob: string; emoji: string }> = {
+    'Core':     { grad: 'from-sky-100 via-sky-50 to-blue-50',        pill: 'bg-sky-600',     blob: 'bg-sky-300',     emoji: '☁️' },
+    'Type I':   { grad: 'from-cyan-100 via-teal-50 to-emerald-50',   pill: 'bg-teal-600',    blob: 'bg-teal-300',    emoji: '❄️' },
+    'Type II':  { grad: 'from-violet-100 via-indigo-50 to-blue-50',  pill: 'bg-indigo-600',  blob: 'bg-indigo-300',  emoji: '🎛️' },
+    'Type III': { grad: 'from-emerald-100 via-green-50 to-teal-50',  pill: 'bg-emerald-600', blob: 'bg-emerald-300', emoji: '💧' },
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-100">
       {/* Slim sticky header */}
-      <div className="sticky top-0 z-10 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+      <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
         <div>
           <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
           <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
@@ -526,62 +533,80 @@ return (
         </div>
       </div>
 
-      {/* Winding skill path — amplitude widens with screen so desktop uses the width */}
-      <div className="px-6 py-8 mx-auto pb-28 max-w-md md:max-w-3xl lg:max-w-5xl [--amp:60px] md:[--amp:230px] lg:[--amp:340px]">
-        {orderedConcepts.map((c, idx) => {
-          const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
-          const st = getEffectiveStatus(p)
-          const cleared = st === 'mastered' || st === 'review'
-          const locked = idx > currentIdx
-          const isCurrent = idx === currentIdx
-          const prevCat = idx > 0 ? orderedConcepts[idx - 1].category : null
-          const showBanner = c.category !== prevCat
-          const wob = Math.sin(idx * 0.8).toFixed(3) // -1..1; × responsive --amp
-
-          // node visual
-          let circle = 'bg-gray-200 text-gray-400'
-          let icon = <Lock size={22} />
-          if (cleared && st === 'review') { circle = 'bg-amber-400 text-white shadow-amber-600/40'; icon = <RotateCcw size={22} /> }
-          else if (cleared) { circle = 'bg-green-500 text-white shadow-green-700/40'; icon = <Check size={26} strokeWidth={3} /> }
-          else if (isCurrent) { circle = 'bg-sky-600 text-white shadow-sky-800/40'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
-          else if (st === 'weak') { circle = 'bg-rose-500 text-white shadow-rose-700/40'; icon = <AlertTriangle size={22} /> }
-          else if (st === 'reviewed') { circle = 'bg-sky-500 text-white shadow-sky-700/40'; icon = <BookOpen size={22} /> }
-
+      {/* Themed World zones with a winding skill path */}
+      <div className="px-3 sm:px-6 py-6 mx-auto pb-28 max-w-md md:max-w-3xl lg:max-w-5xl [--amp:56px] md:[--amp:230px] lg:[--amp:340px]">
+        {sections.map(cat => {
+          const items = grouped[cat] || []
+          if (!items.length) return null
+          const t = WORLD_THEME[cat] || WORLD_THEME['Core']
+          const done = items.filter(c => { const s = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return s === 'mastered' || s === 'review' }).length
           return (
-            <div key={c.id}>
-              {showBanner && (
-                <div className="flex items-center gap-3 mt-7 mb-9 first:mt-2">
-                  <div className="flex-1 h-px bg-gray-200" />
-                  <span className="text-xs font-extrabold text-gray-500 uppercase tracking-widest px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm">
-                    {c.category}
-                  </span>
-                  <div className="flex-1 h-px bg-gray-200" />
-                </div>
-              )}
-              <div className="flex justify-center my-6" style={{ transform: `translateX(calc(var(--amp) * ${wob}))` }}>
-                <button
-                  disabled={locked}
-                  title={locked ? 'Master the level before this to unlock' : c.title}
-                  onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
-                  className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
-                >
-                  {isCurrent && (
-                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
-                  )}
-                  <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-gray-300' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-sky-200' : ''} shadow-lg`}>
-                    {icon}
-                  </span>
-                  <span className={`mt-1.5 text-[11px] font-semibold text-center leading-tight max-w-[130px] ${locked ? 'text-gray-300' : 'text-gray-700'}`}>
-                    {c.title}
-                  </span>
-                </button>
+            <section key={cat} className={`relative overflow-hidden rounded-[2rem] border border-white/70 shadow-sm mb-6 bg-gradient-to-b ${t.grad}`}>
+              {/* decorative theme background */}
+              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className={`absolute -top-12 -left-10 w-48 h-48 rounded-full ${t.blob} opacity-40 blur-3xl`} />
+                <div className={`absolute top-1/2 -right-16 w-56 h-56 rounded-full ${t.blob} opacity-30 blur-3xl`} />
+                <div className={`absolute bottom-0 left-1/3 w-40 h-40 rounded-full ${t.blob} opacity-20 blur-3xl`} />
+                <span className="absolute top-5 right-6 text-5xl opacity-15 select-none">{t.emoji}</span>
+                <span className="absolute bottom-10 left-7 text-4xl opacity-10 select-none">{t.emoji}</span>
+                <span className="absolute top-1/2 left-4 text-3xl opacity-10 select-none">{t.emoji}</span>
               </div>
-            </div>
+
+              {/* Zone header */}
+              <div className="relative flex flex-col items-center pt-7 pb-1">
+                <span className={`inline-flex items-center gap-1.5 text-xs font-extrabold text-white uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md ${t.pill}`}>
+                  <span className="text-sm">{t.emoji}</span> {cat}
+                </span>
+                <span className="mt-1.5 text-[11px] font-bold text-gray-500/80">{done}/{items.length} mastered</span>
+              </div>
+
+              {/* Nodes */}
+              <div className="relative pb-9 pt-3">
+                {items.map(c => {
+                  const idx = orderedConcepts.indexOf(c)
+                  const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
+                  const st = getEffectiveStatus(p)
+                  const cleared = st === 'mastered' || st === 'review'
+                  const locked = idx > currentIdx
+                  const isCurrent = idx === currentIdx
+                  const wob = Math.sin(idx * 0.8).toFixed(3)
+
+                  let circle = 'bg-gray-200 text-gray-400'
+                  let icon = <Lock size={22} />
+                  if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
+                  else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
+                  else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
+                  else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
+                  else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
+
+                  return (
+                    <div key={c.id} className="flex justify-center my-6" style={{ transform: `translateX(calc(var(--amp) * ${wob}))` }}>
+                      <button
+                        disabled={locked}
+                        title={locked ? 'Master the level before this to unlock' : c.title}
+                        onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
+                        className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
+                      >
+                        {isCurrent && (
+                          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
+                        )}
+                        <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-white/70' : ''} shadow-lg`}>
+                          {icon}
+                        </span>
+                        <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight max-w-[130px] drop-shadow-sm ${locked ? 'text-gray-400' : 'text-gray-800'}`}>
+                          {c.title}
+                        </span>
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
           )
         })}
 
         {currentIdx >= orderedConcepts.length && (
-          <div className="mt-8 text-center bg-green-50 border border-green-200 rounded-2xl p-6">
+          <div className="mt-2 text-center bg-green-50 border border-green-200 rounded-2xl p-6">
             <Trophy size={36} className="text-amber-500 mx-auto mb-2" />
             <p className="text-green-800 font-extrabold text-lg">All {concepts.length} levels mastered!</p>
             <p className="text-green-600 text-sm mt-1">You&apos;re ready for the real exam.</p>
@@ -590,7 +615,7 @@ return (
 
         {/* Flashcards (optional drill) */}
         <a href="/flashcards"
-          className="mt-10 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+          className="mt-6 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
           <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
             <LayoutGrid size={18} className="text-purple-600" />
           </div>
