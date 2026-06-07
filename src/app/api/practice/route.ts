@@ -8,6 +8,7 @@ const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
   count: z.number().int().min(1).max(100).default(25),
   weakTopics: z.array(z.string()).optional(),
+  flashcard: z.boolean().optional(), // flashcards are open to everyone
 })
 
 export async function POST(request: NextRequest) {
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}))
   const parsed = schema.safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
-  const { category, count, weakTopics } = parsed.data
+  const { category, count, weakTopics, flashcard } = parsed.data
 
   const { data: profile } = await supabase
     .from('users_profile')
@@ -33,7 +34,8 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
 
-  if (category !== 'Universal' && !canAccessCategory(tier, category)) {
+  // Flashcards are free for everyone; the timed Practice test stays tier-gated.
+  if (!flashcard && category !== 'Universal' && !canAccessCategory(tier, category)) {
     return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
   }
 

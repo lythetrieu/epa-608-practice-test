@@ -543,7 +543,7 @@ export default function StudyPathClient() {
               <p className="text-sm font-semibold text-gray-900">Flashcards</p>
               <p className="text-xs text-gray-400">Swipe-drill any section</p>
             </div>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 shrink-0">Free</span>
             <ChevronRight size={16} className="text-gray-300 shrink-0" />
           </a>
         </div>

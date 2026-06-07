@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
-import type { Tier } from '@/types'
 
 type FlashcardQuestion = {
   id: string
@@ -24,16 +23,9 @@ const CATEGORIES = [
   { value: 'Universal', label: 'Universal', icon: '🎯', slug: 'universal' },
 ]
 
-const TIER_CATEGORIES: Record<Tier, string[]> = {
-  free: ['Core'],
-  starter: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
-  ultimate: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
-  pro: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'],
-}
-
 const OPTION_LABELS = ['A', 'B', 'C', 'D']
 
-export default function FlashcardClient({ tier }: { tier: Tier }) {
+export default function FlashcardClient() {
   const [phase, setPhase] = useState<Phase>('select')
   const [cards, setCards] = useState<FlashcardQuestion[]>([])
   const [currentIdx, setCurrentIdx] = useState(0)
@@ -49,7 +41,8 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
   const dragStartX = useRef(0)
   const cardRef = useRef<HTMLDivElement>(null)
 
-  const accessible = TIER_CATEGORIES[tier]
+  // Flashcards are open to everyone — all categories unlocked regardless of tier.
+  const accessible = ['Core', 'Type I', 'Type II', 'Type III', 'Universal']
 
   // Whether an answer has been selected (card is in "revealed" state)
   const answered = selectedOption !== null
@@ -59,7 +52,7 @@ export default function FlashcardClient({ tier }: { tier: Tier }) {
     fetch('/api/practice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category, count: 25 }),
+      body: JSON.stringify({ category, count: 25, flashcard: true }),
     })
       .then(r => r.json())
       .then(data => {
