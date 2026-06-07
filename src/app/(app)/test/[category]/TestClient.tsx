@@ -3,8 +3,17 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import type { QuestionPublic, SessionResult } from '@/types'
 import { ResultView } from './ResultView'
 import { ReportButton } from './ReportButton'
+import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
 
 type Phase = 'loading' | 'active' | 'submitted' | 'error'
+
+// Set (single) or toggle (multi-select) an option for a question.
+function applyPick(prev: Record<string, string>, q: { id: string; question_type?: string }, opt: string): Record<string, string> {
+  if (q.question_type !== 'multi_select') return { ...prev, [q.id]: opt }
+  const set = new Set(prev[q.id] ? prev[q.id].split(MULTI_SEP) : [])
+  if (set.has(opt)) set.delete(opt); else set.add(opt)
+  return { ...prev, [q.id]: canonicalMulti([...set]) }
+}
 
 export function TestClient({ category, mode = 'random' }: { category: string; mode?: 'random' | 'blind-spot' }) {
   const [phase, setPhase] = useState<Phase>('loading')
@@ -98,10 +107,10 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         if (currentIdx > 0) setCurrentIdx(i => i - 1)
-      } else if (['1','2','3','4'].includes(e.key)) {
+      } else if (['1','2','3','4','5'].includes(e.key)) {
         const idx = parseInt(e.key) - 1
         if (q?.options[idx]) {
-          setAnswers(prev => ({ ...prev, [q.id]: q.options[idx] }))
+          setAnswers(prev => applyPick(prev, q, q.options[idx]))
         }
       }
     }
@@ -200,23 +209,26 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
       {/* ═══ QUESTION ═══ */}
       <main ref={mainRef} className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="w-full max-w-2xl mx-auto">
-          <div className="flex items-start justify-between gap-2 mb-4 sm:mb-6">
+          <div className="flex items-start justify-between gap-2 mb-1">
             <p className="text-lg sm:text-xl font-semibold text-gray-900 leading-relaxed break-words">{q.question}</p>
             <ReportButton questionId={q.id} />
           </div>
+          {(q as { question_type?: string }).question_type === 'multi_select' && (
+            <p className="text-xs font-bold text-purple-600 mb-3">Select all that apply</p>
+          )}
 
           <div className="space-y-2.5 sm:space-y-3">
             {q.options.map((opt, i) => {
-              const letter = ['A', 'B', 'C', 'D'][i]
-              const selected = answers[q.id] === opt
+              const letter = ['A', 'B', 'C', 'D', 'E'][i]
+              const multi = (q as { question_type?: string }).question_type === 'multi_select'
+              const selected = multi ? (answers[q.id]?.split(MULTI_SEP).includes(opt) ?? false) : answers[q.id] === opt
               return (
                 <button
                   key={i}
                   onClick={() => {
-                    setAnswers(prev => ({ ...prev, [q.id]: opt }))
-                    // Blur immediately so mobile browser doesn't scroll to focused button
+                    setAnswers(prev => applyPick(prev, q, opt))
                     ;(document.activeElement as HTMLElement)?.blur()
-                    scrollToTop()
+                    if (!multi) scrollToTop() // single-select auto-advances; multi stays to pick more
                   }}
                   className={`w-full text-left px-5 py-4 min-h-[56px] rounded-xl border-2 transition-all flex gap-3 items-start text-base
                     ${selected
@@ -224,7 +236,11 @@ export function TestClient({ category, mode = 'random' }: { category: string; mo
                       : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-gray-800'
                     }`}
                 >
-                  <span className={`font-bold text-base mt-0.5 shrink-0 ${selected ? 'text-blue-800' : 'text-gray-500'}`}>{letter}.</span>
+                  {multi ? (
+                    <span className={`shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center text-xs font-bold ${selected ? 'border-blue-800 bg-blue-800 text-white' : 'border-gray-300 text-transparent'}`}>✓</span>
+                  ) : (
+                    <span className={`font-bold text-base mt-0.5 shrink-0 ${selected ? 'text-blue-800' : 'text-gray-500'}`}>{letter}.</span>
+                  )}
                   <span>{opt}</span>
                 </button>
               )

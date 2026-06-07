@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     }
   } else if (category === 'Universal') {
     const cats = TIER_LIMITS[tier].categories
-    const perCat = Math.ceil((count / cats.length) * 1.3) // over-fetch; multi filtered below
+    const perCat = Math.floor(count / cats.length)
     for (const cat of cats) {
       const { data } = await admin
         .rpc('get_random_questions', { p_category: cat, p_limit: perCat })
@@ -72,17 +72,8 @@ export async function POST(request: NextRequest) {
     }
   } else {
     const { data } = await admin
-      .rpc('get_random_questions', { p_category: category, p_limit: Math.ceil(count * 1.3) })
+      .rpc('get_random_questions', { p_category: category, p_limit: count })
     questionIds = data?.map((q: any) => q.id) ?? []
-  }
-
-  // QBv2: exclude multi_select from the timed exam (scored single-answer until QBv2-2),
-  // then trim back to the requested count.
-  if (questionIds.length > 0) {
-    const { data: nonMulti } = await admin
-      .from('questions').select('id').in('id', questionIds).neq('question_type', 'multi_select')
-    const keep = new Set((nonMulti ?? []).map((q: any) => q.id))
-    questionIds = questionIds.filter(id => keep.has(id)).slice(0, count)
   }
 
   if (questionIds.length === 0) {
@@ -118,7 +109,7 @@ export async function POST(request: NextRequest) {
   // Fetch question data — NO answer_text, NO explanation
   const { data: questions } = await admin
     .from('questions')
-    .select('id, category, subtopic_id, question, options, difficulty')
+    .select('id, category, subtopic_id, question, options, difficulty, question_type')
     .in('id', questionIds)
 
   // Return in shuffled order with shuffled options per question

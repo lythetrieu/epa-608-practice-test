@@ -4,6 +4,7 @@ import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
 import { MARKETING_URL } from '@/lib/site-config'
 import { ReportButton } from './ReportButton'
+import { MULTI_SEP } from '@/lib/multi'
 
 // Track consecutive fails per category — show gentle Pro hint after 2
 function useFailStreak(category: string, passed: boolean) {
@@ -176,8 +177,8 @@ export function ResultView({ result, category, questions, onRetake }: {
                       <p className="text-sm font-medium text-gray-900 leading-snug flex-1">Q{qNum}. {qText}</p>
                       <ReportButton questionId={r.questionId} />
                     </div>
-                    <p className="text-xs text-red-600 mb-0.5">Your answer: <span className="font-semibold">{r.userAnswer ?? 'No answer'}</span></p>
-                    <p className="text-xs text-green-700 mb-2">Correct: <span className="font-semibold">{r.correctAnswer}</span></p>
+                    <p className="text-xs text-red-600 mb-0.5">Your answer: <span className="font-semibold">{(r.userAnswer ?? 'No answer').split(MULTI_SEP).join(', ')}</span></p>
+                    <p className="text-xs text-green-700 mb-2">Correct: <span className="font-semibold">{(r.correctAnswer ?? '').split(MULTI_SEP).join(', ')}</span></p>
                     {r.explanation && (
                       <p className="text-xs text-gray-600 bg-white/70 rounded-lg p-2.5 leading-relaxed">{r.explanation}</p>
                     )}
