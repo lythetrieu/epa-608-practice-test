@@ -137,6 +137,7 @@ export default function StudyPathClient() {
     results?: { questionId: string; correct: boolean; userAnswer: string | null; correctAnswer: string }[]
   } | null>(null)
   const [scoring, setScoring] = useState(false)
+  const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
 
   useEffect(() => {
     setProgress(getProgress())
@@ -184,8 +185,8 @@ export default function StudyPathClient() {
   const openConcept = useCallback((prefix: string, conceptId: string) => {
     setActiveConceptPrefix(prefix)
     setActiveConceptId(conceptId)
-    setQuizPhase('lesson')
-    setLessonReady(false)
+    setQuizPhase('quiz') // straight into the quiz — no lesson gate
+    setLessonReady(true)
     setQuiz(null)
     setQuizIdx(0)
     setAnswers({})
@@ -254,22 +255,36 @@ export default function StudyPathClient() {
   // ═══════════════════════════════════════════════════════════════════════════
   // CONCEPT DETAIL VIEW (lesson → quiz → result)
   // ═══════════════════════════════════════════════════════════════════════════
+  // Loading a concept's quiz → show a spinner (no white flash back to dashboard)
+  if (activeConceptPrefix && !quiz) {
+    return (
+      <div className="p-6 flex flex-col items-center justify-center min-h-[60vh]">
+        <button onClick={closeModal} className="self-start flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-6">
+          <ArrowLeft size={16} /> Back
+        </button>
+        <div className="w-7 h-7 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
+        <p className="text-sm text-gray-400">Loading quiz…</p>
+      </div>
+    )
+  }
+
   if (activeConceptPrefix && quiz) {
     const conceptProg = progress[activeConceptId!] || { status: 'pending', passCount: 0, lastPassed: null }
     const effectiveStatus = getEffectiveStatus(conceptProg)
-    const lessonNum = orderedConcepts.findIndex(c => c.id === activeConceptId) + 1
+    const worldList = grouped[quiz.concept.category] || orderedConcepts
+    const lessonNum = worldList.findIndex(c => c.id === activeConceptId) + 1
     const nextLesson = getNextLesson()
 
     return (
       <div className="p-3 sm:p-6 max-w-2xl">
         <button onClick={closeModal} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4">
-          <ArrowLeft size={16} /> Back to Study Path
+          <ArrowLeft size={16} /> Back to {quiz.concept.category}
         </button>
 
-        {/* Lesson number indicator */}
+        {/* Level number indicator */}
         <div className="flex items-center gap-2 mb-2">
           <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">
-            Lesson {lessonNum} of {orderedConcepts.length}
+            Level {lessonNum} of {worldList.length}
           </span>
           <span className="text-xs text-gray-400">{quiz.concept.category}</span>
         </div>
@@ -510,122 +525,159 @@ export default function StudyPathClient() {
   // MAIN VIEW
   // ═══════════════════════════════════════════════════════════════════════════
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
-  let currentIdx = orderedConcepts.findIndex(c => { const s = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return !(s === 'mastered' || s === 'review') })
-  if (currentIdx === -1) currentIdx = orderedConcepts.length
+  const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' }
 
-const WORLD_THEME: Record<string, { grad: string; pill: string; blob: string; emoji: string }> = {
-    'Core':     { grad: 'from-sky-100 via-sky-50 to-blue-50',        pill: 'bg-sky-600',     blob: 'bg-sky-300',     emoji: '☁️' },
-    'Type I':   { grad: 'from-cyan-100 via-teal-50 to-emerald-50',   pill: 'bg-teal-600',    blob: 'bg-teal-300',    emoji: '❄️' },
-    'Type II':  { grad: 'from-violet-100 via-indigo-50 to-blue-50',  pill: 'bg-indigo-600',  blob: 'bg-indigo-300',  emoji: '🎛️' },
-    'Type III': { grad: 'from-emerald-100 via-green-50 to-teal-50',  pill: 'bg-emerald-600', blob: 'bg-emerald-300', emoji: '💧' },
+  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string }> = {
+    'Core':     { grad: 'from-sky-100 via-sky-50 to-blue-50',       cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-300',     emoji: '☁️', sub: 'Foundations — required for every cert' },
+    'Type I':   { grad: 'from-cyan-100 via-teal-50 to-emerald-50',  cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-300',    emoji: '❄️', sub: 'Small appliances' },
+    'Type II':  { grad: 'from-violet-100 via-indigo-50 to-blue-50', cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-300',  emoji: '🎛️', sub: 'High-pressure systems' },
+    'Type III': { grad: 'from-emerald-100 via-green-50 to-teal-50', cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-300', emoji: '💧', sub: 'Low-pressure chillers' },
   }
 
-  return (
-    <div className="min-h-screen bg-slate-100">
-      {/* Slim sticky header */}
-      <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-        <div>
-          <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
-          <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
+  // ════════════════════════════════════════════════════════════════════
+  // /learn DASHBOARD — pick a World
+  // ════════════════════════════════════════════════════════════════════
+  if (!activeWorld) {
+    return (
+      <div className="min-h-screen bg-slate-100">
+        <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+          <div>
+            <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
+            <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
+          </div>
+          <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
+          </div>
         </div>
-        <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-          <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
+
+        <div className="px-4 py-6 max-w-3xl mx-auto">
+          <p className="text-sm text-gray-500 mb-4 font-medium">Choose a certification to study</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {sections.map(cat => {
+              const items = grouped[cat] || []
+              if (!items.length) return null
+              const t = WORLD_THEME[cat] || WORLD_THEME['Core']
+              const done = items.filter(isCleared).length
+              const pct = items.length ? Math.round(done / items.length * 100) : 0
+              const started = items.some(c => progress[c.id])
+              const allDone = done === items.length
+              return (
+                <button key={cat} onClick={() => setActiveWorld(cat)}
+                  className={`relative overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg border-b-4 border-black/15 bg-gradient-to-br ${t.cardGrad} active:translate-y-0.5 transition-transform`}>
+                  <span aria-hidden className="absolute -right-3 -top-3 text-7xl opacity-20 select-none">{t.emoji}</span>
+                  <div className="relative">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-2xl">{t.emoji}</span>
+                      <h3 className="text-lg font-extrabold">{cat}</h3>
+                      {allDone && <Check size={18} className="ml-auto" strokeWidth={3} />}
+                    </div>
+                    <p className="text-xs text-white/80 mb-4">{t.sub}</p>
+                    <div className="h-2 bg-white/30 rounded-full overflow-hidden mb-1.5">
+                      <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-white/90">{done}/{items.length} levels mastered</span>
+                      <span className="text-xs font-extrabold bg-white/25 px-3 py-1 rounded-full">
+                        {allDone ? 'Review' : started ? 'Continue →' : 'Start →'}
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Flashcards */}
+          <a href="/flashcards"
+            className="mt-5 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+              <LayoutGrid size={18} className="text-purple-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900">Flashcards</p>
+              <p className="text-xs text-gray-400">Swipe-drill any section</p>
+            </div>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
+            <ChevronRight size={16} className="text-gray-300 shrink-0" />
+          </a>
         </div>
       </div>
+    )
+  }
 
-      {/* Themed World zones with a winding skill path */}
-      <div className="px-3 sm:px-6 py-6 mx-auto pb-28 max-w-md md:max-w-3xl lg:max-w-5xl [--amp:56px] md:[--amp:230px] lg:[--amp:340px]">
-        {sections.map(cat => {
-          const items = grouped[cat] || []
-          if (!items.length) return null
-          const t = WORLD_THEME[cat] || WORLD_THEME['Core']
-          const done = items.filter(c => { const s = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return s === 'mastered' || s === 'review' }).length
+  // ════════════════════════════════════════════════════════════════════
+  // WORLD PATH — winding skill path for the selected cert
+  // ════════════════════════════════════════════════════════════════════
+  const worldItems = grouped[activeWorld] || []
+  const wt = WORLD_THEME[activeWorld] || WORLD_THEME['Core']
+  const worldDone = worldItems.filter(isCleared).length
+  let cur = worldItems.findIndex(c => !isCleared(c))
+  if (cur === -1) cur = worldItems.length
+
+  return (
+    <div className={`min-h-screen bg-gradient-to-b ${wt.grad}`}>
+      <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center gap-3">
+        <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-gray-900">
+          <ArrowLeft size={18} /> Worlds
+        </button>
+        <div className="flex-1 text-center">
+          <span className="text-sm font-extrabold text-gray-900">{wt.emoji} {activeWorld}</span>
+        </div>
+        <span className="text-[11px] font-bold text-gray-400 w-14 text-right">{worldDone}/{worldItems.length}</span>
+      </div>
+
+      <div className="px-3 sm:px-6 py-8 mx-auto pb-28 max-w-md md:max-w-3xl lg:max-w-5xl [--amp:56px] md:[--amp:230px] lg:[--amp:340px] relative">
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <span className="absolute top-10 right-8 text-6xl opacity-10 select-none">{wt.emoji}</span>
+          <span className="absolute bottom-24 left-8 text-5xl opacity-10 select-none">{wt.emoji}</span>
+          <span className="absolute top-1/2 left-1/4 text-4xl opacity-[0.07] select-none">{wt.emoji}</span>
+        </div>
+
+        {worldItems.map((c, i) => {
+          const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
+          const st = getEffectiveStatus(p)
+          const cleared = st === 'mastered' || st === 'review'
+          const locked = i > cur
+          const isCurrent = i === cur
+          const wob = Math.sin(i * 0.8).toFixed(3)
+
+          let circle = 'bg-gray-200 text-gray-400'
+          let icon = <Lock size={22} />
+          if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
+          else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
+          else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
+          else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
+          else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
+
           return (
-            <section key={cat} className={`relative overflow-hidden rounded-[2rem] border border-white/70 shadow-sm mb-6 bg-gradient-to-b ${t.grad}`}>
-              {/* decorative theme background */}
-              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className={`absolute -top-12 -left-10 w-48 h-48 rounded-full ${t.blob} opacity-40 blur-3xl`} />
-                <div className={`absolute top-1/2 -right-16 w-56 h-56 rounded-full ${t.blob} opacity-30 blur-3xl`} />
-                <div className={`absolute bottom-0 left-1/3 w-40 h-40 rounded-full ${t.blob} opacity-20 blur-3xl`} />
-                <span className="absolute top-5 right-6 text-5xl opacity-15 select-none">{t.emoji}</span>
-                <span className="absolute bottom-10 left-7 text-4xl opacity-10 select-none">{t.emoji}</span>
-                <span className="absolute top-1/2 left-4 text-3xl opacity-10 select-none">{t.emoji}</span>
-              </div>
-
-              {/* Zone header */}
-              <div className="relative flex flex-col items-center pt-7 pb-1">
-                <span className={`inline-flex items-center gap-1.5 text-xs font-extrabold text-white uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md ${t.pill}`}>
-                  <span className="text-sm">{t.emoji}</span> {cat}
+            <div key={c.id} className="relative flex justify-center my-6" style={{ transform: `translateX(calc(var(--amp) * ${wob}))` }}>
+              <button
+                disabled={locked}
+                title={locked ? 'Master the level before this to unlock' : c.title}
+                onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
+                className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
+              >
+                {isCurrent && (
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
+                )}
+                <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-white/70' : ''} shadow-lg`}>
+                  {icon}
                 </span>
-                <span className="mt-1.5 text-[11px] font-bold text-gray-500/80">{done}/{items.length} mastered</span>
-              </div>
-
-              {/* Nodes */}
-              <div className="relative pb-9 pt-3">
-                {items.map(c => {
-                  const idx = orderedConcepts.indexOf(c)
-                  const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
-                  const st = getEffectiveStatus(p)
-                  const cleared = st === 'mastered' || st === 'review'
-                  const locked = idx > currentIdx
-                  const isCurrent = idx === currentIdx
-                  const wob = Math.sin(idx * 0.8).toFixed(3)
-
-                  let circle = 'bg-gray-200 text-gray-400'
-                  let icon = <Lock size={22} />
-                  if (cleared && st === 'review') { circle = 'bg-amber-400 text-white'; icon = <RotateCcw size={22} /> }
-                  else if (cleared) { circle = 'bg-green-500 text-white'; icon = <Check size={26} strokeWidth={3} /> }
-                  else if (isCurrent) { circle = 'bg-sky-600 text-white'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
-                  else if (st === 'weak') { circle = 'bg-rose-500 text-white'; icon = <AlertTriangle size={22} /> }
-                  else if (st === 'reviewed') { circle = 'bg-sky-500 text-white'; icon = <BookOpen size={22} /> }
-
-                  return (
-                    <div key={c.id} className="flex justify-center my-6" style={{ transform: `translateX(calc(var(--amp) * ${wob}))` }}>
-                      <button
-                        disabled={locked}
-                        title={locked ? 'Master the level before this to unlock' : c.title}
-                        onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
-                        className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
-                      >
-                        {isCurrent && (
-                          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
-                        )}
-                        <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-black/10' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-white/70' : ''} shadow-lg`}>
-                          {icon}
-                        </span>
-                        <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight max-w-[130px] drop-shadow-sm ${locked ? 'text-gray-400' : 'text-gray-800'}`}>
-                          {c.title}
-                        </span>
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-            </section>
+                <span className={`mt-1.5 text-[11px] font-bold text-center leading-tight max-w-[130px] drop-shadow-sm ${locked ? 'text-gray-400' : 'text-gray-800'}`}>
+                  {c.title}
+                </span>
+              </button>
+            </div>
           )
         })}
 
-        {currentIdx >= orderedConcepts.length && (
-          <div className="mt-2 text-center bg-green-50 border border-green-200 rounded-2xl p-6">
+        {cur >= worldItems.length && (
+          <div className="relative mt-2 text-center bg-white/80 border border-green-200 rounded-2xl p-6">
             <Trophy size={36} className="text-amber-500 mx-auto mb-2" />
-            <p className="text-green-800 font-extrabold text-lg">All {concepts.length} levels mastered!</p>
-            <p className="text-green-600 text-sm mt-1">You&apos;re ready for the real exam.</p>
+            <p className="text-green-800 font-extrabold text-lg">{activeWorld} mastered!</p>
+            <p className="text-green-600 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>
           </div>
         )}
-
-        {/* Flashcards (optional drill) */}
-        <a href="/flashcards"
-          className="mt-6 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
-          <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-            <LayoutGrid size={18} className="text-purple-600" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-gray-900">Flashcards</p>
-            <p className="text-xs text-gray-400">Swipe-drill any section</p>
-          </div>
-          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
-          <ChevronRight size={16} className="text-gray-300 shrink-0" />
-        </a>
       </div>
     </div>
   )
