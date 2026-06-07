@@ -527,7 +527,7 @@ return (
       </div>
 
       {/* Winding skill path */}
-      <div className="px-4 py-6 max-w-md mx-auto pb-24">
+      <div className="px-6 py-8 max-w-md mx-auto pb-28">
         {orderedConcepts.map((c, idx) => {
           const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
           const st = getEffectiveStatus(p)
@@ -536,7 +536,7 @@ return (
           const isCurrent = idx === currentIdx
           const prevCat = idx > 0 ? orderedConcepts[idx - 1].category : null
           const showBanner = c.category !== prevCat
-          const offset = Math.round(Math.sin(idx * 0.9) * 74)
+          const offset = Math.round(Math.sin(idx * 0.8) * 46) // gentle zig-zag, fits small screens
 
           // node visual
           let circle = 'bg-gray-200 text-gray-400'
@@ -558,7 +558,7 @@ return (
                   <div className="flex-1 h-px bg-gray-200" />
                 </div>
               )}
-              <div className="flex justify-center my-3" style={{ transform: `translateX(${offset}px)` }}>
+              <div className="flex justify-center my-6" style={{ transform: `translateX(${offset}px)` }}>
                 <button
                   disabled={locked}
                   title={locked ? 'Master the level before this to unlock' : c.title}
