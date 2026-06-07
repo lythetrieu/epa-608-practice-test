@@ -16,9 +16,10 @@ function ELI5Button({ questionText, correctAnswer }: { questionText: string; cor
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionText, correctAnswer, userAnswer: 'wrong' }),
+        signal: AbortSignal.timeout(30000),
       })
       const data = await res.json()
-      if (!res.ok) { setState('error'); return }
+      if (!res.ok || !data.explanation) { setState('error'); return }
       setExplanation(data.explanation)
       setState('done')
     } catch { setState('error') }

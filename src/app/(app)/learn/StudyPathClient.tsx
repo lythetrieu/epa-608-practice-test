@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, X, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, ListOrdered, LayoutGrid, Bot } from 'lucide-react'
+import { ArrowLeft, Check, X, AlertTriangle, RotateCcw, ChevronRight, BookOpen, Brain, Lightbulb, AlertCircle, Lock, LayoutGrid, Bot, Play, Trophy } from 'lucide-react'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
 
@@ -19,9 +19,10 @@ function ExplainButton({ questionText, correctAnswer }: { questionText: string; 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionText, correctAnswer, userAnswer: 'wrong' }),
+        signal: AbortSignal.timeout(30000),
       })
       const data = await res.json()
-      if (!res.ok) { setState('error'); return }
+      if (!res.ok || !data.explanation) { setState('error'); return }
       setExplanation(data.explanation)
       setState('done')
     } catch { setState('error') }
@@ -92,8 +93,6 @@ type ConceptProgress = {
   lastPassed: string | null
 }
 
-type ViewMode = 'course' | 'browse'
-
 function getProgress(): Record<string, ConceptProgress> {
   try {
     const raw = localStorage.getItem('epa608StudyPath')
@@ -112,12 +111,6 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
-function getSavedMode(): ViewMode {
-  try {
-    return (localStorage.getItem('epa608StudyMode') as ViewMode) || 'course'
-  } catch { return 'course' }
-}
-
 function getEffectiveStatus(prog: ConceptProgress): string {
   const status = prog.status || 'pending'
   if (status === 'mastered' && prog.lastPassed) {
@@ -127,24 +120,10 @@ function getEffectiveStatus(prog: ConceptProgress): string {
   return status
 }
 
-// Status icon/color map used in both views
-function getStatusUI(status: string) {
-  const map: Record<string, { icon: React.ReactNode; color: string; bg: string; label: string }> = {
-    mastered: { icon: <Check size={16} />, color: 'text-green-600', bg: 'bg-green-50 border-green-200', label: 'Mastered' },
-    reviewed: { icon: <BookOpen size={16} />, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', label: 'Pass 1/2' },
-    weak: { icon: <AlertTriangle size={16} />, color: 'text-red-500', bg: 'bg-red-50 border-red-200', label: 'Needs Work' },
-    review: { icon: <RotateCcw size={16} />, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200', label: 'Review Due' },
-    pending: { icon: <ChevronRight size={16} />, color: 'text-gray-400', bg: 'bg-white border-gray-200', label: 'Study' },
-    locked: { icon: <Lock size={14} />, color: 'text-gray-300', bg: 'bg-gray-50 border-gray-100', label: 'Locked' },
-  }
-  return map[status] || map.pending
-}
-
 export default function StudyPathClient() {
   const [concepts, setConcepts] = useState<Concept[]>([])
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState<Record<string, ConceptProgress>>({})
-  const [mode, setMode] = useState<ViewMode>('course')
   const [activeConceptPrefix, setActiveConceptPrefix] = useState<string | null>(null)
   const [activeConceptId, setActiveConceptId] = useState<string | null>(null)
   const [quiz, setQuiz] = useState<QuizData | null>(null)
@@ -161,17 +140,11 @@ export default function StudyPathClient() {
 
   useEffect(() => {
     setProgress(getProgress())
-    setMode(getSavedMode())
     fetch('/api/public/study-path')
       .then(r => r.json())
       .then(data => { setConcepts(data.concepts || []); setLoading(false) })
       .catch(() => setLoading(false))
   }, [])
-
-  const switchMode = (m: ViewMode) => {
-    setMode(m)
-    localStorage.setItem('epa608StudyMode', m)
-  }
 
   // Ordered flat list: Core → Type I → Type II → Type III
   const sections = ['Core', 'Type I', 'Type II', 'Type III']
@@ -185,27 +158,11 @@ export default function StudyPathClient() {
 
   // Stats
   let totalMastered = 0
-  const sectionStats = sections.map(cat => {
-    const items = grouped[cat] || []
-    let mastered = 0, inProgress = 0, weak = 0
-    items.forEach(c => {
-      const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
-      const s = getEffectiveStatus(p)
-      if (s === 'mastered') { mastered++; totalMastered++ }
-      else if (s === 'reviewed') inProgress++
-      else if (s === 'weak' || s === 'review') weak++
-    })
-    return { cat, total: items.length, mastered, inProgress, weak }
-  })
+  for (const c of concepts) {
+    if (getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }) === 'mastered') totalMastered++
+  }
   const overallPct = concepts.length > 0 ? Math.round(totalMastered / concepts.length * 100) : 0
 
-  // Course mode: find current lesson index (first non-mastered)
-  const currentLessonIdx = orderedConcepts.findIndex(c => {
-    const p = progress[c.id]
-    if (!p) return true
-    return getEffectiveStatus(p) !== 'mastered'
-  })
-  const currentLesson = currentLessonIdx >= 0 ? orderedConcepts[currentLessonIdx] : null
 
   // Find next lesson after active concept (for "Next Lesson" button in results)
   const getNextLesson = useCallback(() => {
@@ -233,7 +190,7 @@ export default function StudyPathClient() {
     setQuizIdx(0)
     setAnswers({})
     setResult(null)
-    setTimeout(() => setLessonReady(true), 4000)
+    setLessonReady(true) // snappy — no forced wait
 
     fetch('/api/public/study-path', {
       method: 'POST',
@@ -552,197 +509,99 @@ export default function StudyPathClient() {
   // ═══════════════════════════════════════════════════════════════════════════
   // MAIN VIEW
   // ═══════════════════════════════════════════════════════════════════════════
-  return (
-    <div className="p-3 sm:p-6 max-w-3xl">
-      {/* Header + Mode Toggle */}
-      <div className="flex items-center justify-between mb-4">
+    // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
+  let currentIdx = orderedConcepts.findIndex(c => { const s = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return !(s === 'mastered' || s === 'review') })
+  if (currentIdx === -1) currentIdx = orderedConcepts.length
+
+return (
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
+      {/* Slim sticky header */}
+      <div className="sticky top-0 z-10 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 mb-0.5">Study Path</h1>
-          <p className="text-sm text-gray-500">Master every concept. Pass the exam.</p>
+          <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
+          <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
         </div>
-        <div className="flex bg-gray-100 rounded-lg p-0.5 shrink-0">
-          <button
-            onClick={() => switchMode('course')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-              mode === 'course' ? 'bg-white text-blue-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <ListOrdered size={14} /> Course
-          </button>
-          <button
-            onClick={() => switchMode('browse')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-              mode === 'browse' ? 'bg-white text-blue-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <LayoutGrid size={14} /> Browse
-          </button>
+        <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
         </div>
       </div>
 
-      {/* Overall progress */}
-      <div className="bg-blue-800 rounded-xl p-4 mb-4 text-white">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-bold">{totalMastered}/{concepts.length} Concepts Mastered</span>
-          <span className="text-sm font-bold">{overallPct}%</span>
-        </div>
-        <div className="h-2.5 bg-blue-950 rounded-full overflow-hidden">
-          <div className="h-full bg-green-400 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
-        </div>
-      </div>
+      {/* Winding skill path */}
+      <div className="px-4 py-6 max-w-md mx-auto pb-24">
+        {orderedConcepts.map((c, idx) => {
+          const p = progress[c.id] || { status: 'pending' as const, passCount: 0, lastPassed: null }
+          const st = getEffectiveStatus(p)
+          const cleared = st === 'mastered' || st === 'review'
+          const locked = idx > currentIdx
+          const isCurrent = idx === currentIdx
+          const prevCat = idx > 0 ? orderedConcepts[idx - 1].category : null
+          const showBanner = c.category !== prevCat
+          const offset = Math.round(Math.sin(idx * 0.9) * 74)
 
-      {/* Section cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
-        {sectionStats.map(s => {
-          const pct = s.total > 0 ? Math.round(s.mastered / s.total * 100) : 0
+          // node visual
+          let circle = 'bg-gray-200 text-gray-400'
+          let icon = <Lock size={22} />
+          if (cleared && st === 'review') { circle = 'bg-amber-400 text-white shadow-amber-600/40'; icon = <RotateCcw size={22} /> }
+          else if (cleared) { circle = 'bg-green-500 text-white shadow-green-700/40'; icon = <Check size={26} strokeWidth={3} /> }
+          else if (isCurrent) { circle = 'bg-sky-600 text-white shadow-sky-800/40'; icon = <Play size={24} className="ml-0.5" fill="white" /> }
+          else if (st === 'weak') { circle = 'bg-rose-500 text-white shadow-rose-700/40'; icon = <AlertTriangle size={22} /> }
+          else if (st === 'reviewed') { circle = 'bg-sky-500 text-white shadow-sky-700/40'; icon = <BookOpen size={22} /> }
+
           return (
-            <div key={s.cat} className="bg-white rounded-xl border border-gray-200 p-3">
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold text-gray-700">{s.cat}</span>
-                <span className={`text-xs font-bold ${pct >= 80 ? 'text-green-600' : pct > 0 ? 'text-amber-600' : 'text-gray-400'}`}>{pct}%</span>
+            <div key={c.id}>
+              {showBanner && (
+                <div className="flex items-center gap-3 mt-7 mb-9 first:mt-2">
+                  <div className="flex-1 h-px bg-gray-200" />
+                  <span className="text-xs font-extrabold text-gray-500 uppercase tracking-widest px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm">
+                    {c.category}
+                  </span>
+                  <div className="flex-1 h-px bg-gray-200" />
+                </div>
+              )}
+              <div className="flex justify-center my-3" style={{ transform: `translateX(${offset}px)` }}>
+                <button
+                  disabled={locked}
+                  title={locked ? 'Master the level before this to unlock' : c.title}
+                  onClick={() => !locked && openConcept(c.subtopicPrefix, c.id)}
+                  className={`group relative flex flex-col items-center ${locked ? 'cursor-not-allowed' : 'cursor-pointer active:translate-y-0.5'} transition-transform`}
+                >
+                  {isCurrent && (
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 text-[10px] font-extrabold text-white bg-sky-700 px-2 py-0.5 rounded-full shadow animate-pulse whitespace-nowrap">START</span>
+                  )}
+                  <span className={`w-16 h-16 rounded-full flex items-center justify-center border-b-4 ${circle} ${locked ? 'border-gray-300' : 'border-black/20'} ${isCurrent ? 'ring-4 ring-sky-200' : ''} shadow-lg`}>
+                    {icon}
+                  </span>
+                  <span className={`mt-1.5 text-[11px] font-semibold text-center leading-tight max-w-[130px] ${locked ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {c.title}
+                  </span>
+                </button>
               </div>
-              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div className={`h-full rounded-full transition-all ${pct >= 80 ? 'bg-green-500' : pct > 0 ? 'bg-amber-400' : 'bg-gray-200'}`} style={{ width: `${pct}%` }} />
-              </div>
-              <div className="text-xs text-gray-400 mt-1">{s.mastered}/{s.total} mastered</div>
             </div>
           )
         })}
-      </div>
 
-      {/* Flashcards — optional spaced-repetition drill, folded into Study Path */}
-      <a href="/flashcards"
-        className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 mb-5 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
-        <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-          <LayoutGrid size={18} className="text-purple-600" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-900">Flashcards</p>
-          <p className="text-xs text-gray-400">Swipe-drill any section with spaced repetition</p>
-        </div>
-        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
-        <ChevronRight size={16} className="text-gray-300 shrink-0" />
-      </a>
-
-      {/* ═══ COURSE MODE ═══ */}
-      {mode === 'course' && (
-        <>
-          {/* Current lesson CTA */}
-          {currentLesson && (
-            <button
-              onClick={() => openConcept(currentLesson.subtopicPrefix, currentLesson.id)}
-              className="w-full bg-green-600 text-white rounded-xl p-4 mb-5 hover:bg-green-700 transition-colors text-left flex items-center justify-between"
-            >
-              <div>
-                <p className="text-xs text-green-200 font-semibold mb-0.5">
-                  Lesson {currentLessonIdx + 1} of {orderedConcepts.length}
-                </p>
-                <p className="font-bold text-base">{currentLesson.title}</p>
-                <p className="text-green-100 text-xs mt-0.5">{currentLesson.category}</p>
-              </div>
-              <ChevronRight size={24} className="shrink-0" />
-            </button>
-          )}
-
-          {!currentLesson && (
-            <div className="bg-green-50 border border-green-200 rounded-xl p-5 mb-5 text-center">
-              <p className="text-green-800 font-bold text-lg">All 23 Concepts Mastered!</p>
-              <p className="text-green-600 text-sm mt-1">You&apos;ve completed the entire study path. Take a practice test to confirm.</p>
-            </div>
-          )}
-
-          {/* Linear concept list with step numbers */}
-          <div className="space-y-1">
-            {orderedConcepts.map((c, idx) => {
-              const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
-              const status = getEffectiveStatus(p)
-              const isCurrent = currentLesson?.id === c.id
-              const effectiveStatus = status
-              const ui = getStatusUI(effectiveStatus)
-
-              // Section divider
-              const prevCat = idx > 0 ? orderedConcepts[idx - 1].category : null
-              const showDivider = c.category !== prevCat
-
-              return (
-                <div key={c.id}>
-                  {showDivider && (
-                    <div className="flex items-center gap-2 pt-4 pb-1.5">
-                      <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{c.category}</span>
-                      <div className="flex-1 h-px bg-gray-200" />
-                    </div>
-                  )}
-                  <button
-                    onClick={() => openConcept(c.subtopicPrefix, c.id)}
-                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all min-h-[52px] hover:shadow-sm ${
-                      isCurrent ? 'border-green-400 bg-green-50 ring-2 ring-green-200' : ui.bg
-                    }`}
-                  >
-                    {/* Step number */}
-                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                      effectiveStatus === 'mastered' ? 'bg-green-600 text-white'
-                      : isCurrent ? 'bg-green-600 text-white'
-                      : effectiveStatus === 'locked' ? 'bg-gray-200 text-gray-400'
-                      : 'bg-gray-100 text-gray-500'
-                    }`}>
-                      {effectiveStatus === 'mastered' ? <Check size={14} /> : idx + 1}
-                    </span>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate text-gray-900">{c.title}</p>
-                    </div>
-
-                    <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>
-                      {isCurrent && effectiveStatus === 'pending' ? 'Start' : ui.label}
-                    </span>
-                  </button>
-                </div>
-              )
-            })}
+        {currentIdx >= orderedConcepts.length && (
+          <div className="mt-8 text-center bg-green-50 border border-green-200 rounded-2xl p-6">
+            <Trophy size={36} className="text-amber-500 mx-auto mb-2" />
+            <p className="text-green-800 font-extrabold text-lg">All {concepts.length} levels mastered!</p>
+            <p className="text-green-600 text-sm mt-1">You&apos;re ready for the real exam.</p>
           </div>
-        </>
-      )}
+        )}
 
-      {/* ═══ BROWSE MODE ═══ */}
-      {mode === 'browse' && (
-        <>
-          {sections.map(cat => {
-            const items = grouped[cat] || []
-            if (items.length === 0) return null
-            const stats = sectionStats.find(s => s.cat === cat)!
-
-            return (
-              <div key={cat} className="mb-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider">{cat}</h2>
-                  <span className="text-xs text-gray-400">{stats.mastered}/{stats.total}</span>
-                </div>
-                <div className="space-y-1.5">
-                  {items.map(c => {
-                    const p = progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }
-                    const status = getEffectiveStatus(p)
-                    const ui = getStatusUI(status)
-
-                    return (
-                      <button
-                        key={c.id}
-                        onClick={() => openConcept(c.subtopicPrefix, c.id)}
-                        className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all hover:shadow-sm min-h-[52px] ${ui.bg}`}
-                      >
-                        <span className={`shrink-0 ${ui.color}`}>{ui.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">{c.title}</p>
-                        </div>
-                        <span className={`text-xs font-semibold shrink-0 ${ui.color}`}>{ui.label}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            )
-          })}
-        </>
-      )}
+        {/* Flashcards (optional drill) */}
+        <a href="/flashcards"
+          className="mt-10 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+          <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+            <LayoutGrid size={18} className="text-purple-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-gray-900">Flashcards</p>
+            <p className="text-xs text-gray-400">Swipe-drill any section</p>
+          </div>
+          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 shrink-0">Pro</span>
+          <ChevronRight size={16} className="text-gray-300 shrink-0" />
+        </a>
+      </div>
     </div>
   )
 }

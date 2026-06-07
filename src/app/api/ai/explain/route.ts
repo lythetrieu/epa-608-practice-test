@@ -72,7 +72,9 @@ export async function POST(request: NextRequest) {
 
   const userPrompt = `Question: ${questionText}\nCorrect answer: ${correctAnswer}\nStudent's wrong answer: ${userAnswer}\n\nExplain simply why the correct answer is right.`
 
-  const models = ['qwen/qwen3-235b-a22b:free', 'qwen/qwen-2.5-72b-instruct']
+  // Diverse free providers first (the old qwen3-235b:free was retired by OpenRouter
+  // → caused the tutor to hang); paid qwen as last-resort fallback.
+  const models = ['google/gemma-4-31b-it:free', 'meta-llama/llama-3.3-70b-instruct:free', 'qwen/qwen3-next-80b-a3b-instruct:free', 'qwen/qwen-2.5-72b-instruct']
 
   for (const model of models) {
     try {
