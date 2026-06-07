@@ -111,6 +111,16 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
+// Decorative prop slots scattered beside the path (Candy-Crush / Duolingo style).
+const PROP_SLOTS = [
+  { t: '3%', l: '6%', s: 34, r: -12, o: 0.22 }, { t: '8%', l: '83%', s: 44, r: 12, o: 0.18 },
+  { t: '15%', l: '12%', s: 30, r: 8, o: 0.16 }, { t: '22%', l: '86%', s: 40, r: -10, o: 0.20 },
+  { t: '30%', l: '5%', s: 48, r: 16, o: 0.16 }, { t: '38%', l: '82%', s: 32, r: -8, o: 0.20 },
+  { t: '46%', l: '13%', s: 38, r: 12, o: 0.16 }, { t: '54%', l: '85%', s: 46, r: -16, o: 0.18 },
+  { t: '62%', l: '7%', s: 34, r: 10, o: 0.20 }, { t: '70%', l: '83%', s: 42, r: -12, o: 0.16 },
+  { t: '79%', l: '11%', s: 38, r: 14, o: 0.20 }, { t: '88%', l: '82%', s: 34, r: -9, o: 0.18 },
+]
+
 function getEffectiveStatus(prog: ConceptProgress): string {
   const status = prog.status || 'pending'
   if (status === 'mastered' && prog.lastPassed) {
@@ -527,11 +537,11 @@ export default function StudyPathClient() {
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
   const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' }
 
-  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string }> = {
-    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert' },
-    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances' },
-    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems' },
-    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers' },
+  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[] }> = {
+    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'] },
+    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances', props: ['❄️','🧊','🔧','🧰','🥶','🛠️'] },
+    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems', props: ['🎛️','🌡️','⚙️','🔩','🧯','📈'] },
+    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers', props: ['💧','🌀','🧊','⚙️','🚿','🌡️'] },
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -652,6 +662,15 @@ export default function StudyPathClient() {
 
       <div className="relative px-4 pt-8 pb-28 mx-auto max-w-md md:max-w-3xl lg:max-w-5xl">
         <div className="relative mx-auto w-full" style={{ height: pathH }}>
+          {/* scattered theme props */}
+          <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
+            {PROP_SLOTS.map((sl, i) => (
+              <span key={i} className="absolute select-none drop-shadow-sm"
+                style={{ top: sl.t, left: sl.l, fontSize: sl.s, opacity: sl.o, transform: `rotate(${sl.r}deg)` }}>
+                {wt.props[i % wt.props.length]}
+              </span>
+            ))}
+          </div>
           {/* the road */}
           <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 100 ${pathH}`} preserveAspectRatio="none" aria-hidden>
             <path d={trail} fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="14" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
