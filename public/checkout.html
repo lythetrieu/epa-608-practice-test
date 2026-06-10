@@ -162,32 +162,17 @@
         if (errEl) { errEl.style.display = 'block'; if (msg) errEl.firstChild.textContent = msg + ' '; }
     }
 
-    // 1. Create a checkout session, then render it inline in the iframe.
+    // Create a checkout session, then send the buyer to Polar's secure hosted
+    // checkout (top-level redirect, not an iframe — avoids X-Frame / embed_origin
+    // / cross-origin fragility). Polar handles card, Apple Pay and promo codes,
+    // then returns to success_url (the app login).
     fetch('https://app.epa608practicetest.net/api/polar/session', { headers: { 'Accept': 'application/json' } })
-        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
-        .then(function (res) {
-            if (!res.ok || !res.d || !res.d.url) { showError('Checkout is being set up.'); return; }
-            var url = res.d.url + (res.d.url.indexOf('?') === -1 ? '?' : '&') + 'embed=true&theme=light';
-            // Reveal the iframe right away so the visitor sees Polar's own loader
-            // instead of a frozen spinner. Hide our spinner on load, with a short
-            // fallback timer so it never sticks if onload is slow/flaky.
-            var reveal = function () { if (loading) loading.style.display = 'none'; };
-            frame.style.display = 'block';
-            frame.onload = reveal;
-            frame.src = url;
-            setTimeout(reveal, 1500);
+        .then(function (r) { return r.json().catch(function(){ return {}; }); })
+        .then(function (d) {
+            if (!d || !d.url) { showError('Checkout is being set up.'); return; }
+            window.location.href = d.url;
         })
         .catch(function () { showError(); });
-
-    // 2. Polar posts checkout events to our origin. Redirect the parent on success.
-    window.addEventListener('message', function (e) {
-        if (e.origin !== 'https://polar.sh') return;
-        var data = e.data || {};
-        var evt = (data.event || data.type || data.name || '') + '';
-        if (evt.indexOf('success') !== -1 || data.status === 'succeeded' || data.success === true) {
-            window.location.href = APP_LOGIN;
-        }
-    });
 })();
 </script>
 
