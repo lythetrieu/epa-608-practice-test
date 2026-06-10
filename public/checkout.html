@@ -129,9 +129,10 @@
                     <h2>Complete your purchase</h2>
                     <p>Card, Apple&nbsp;Pay &amp; more · enter a promo code below.</p>
                 </div>
-                                <div id="pay-area" style="padding:22px 16px;text-align:center">
-                    <a href="https://app.epa608practicetest.net/api/polar/checkout" style="display:block;background:#e85d04;color:#fff;font-weight:800;font-size:16px;padding:16px 18px;border-radius:12px;text-decoration:none">Continue to secure payment &rarr;</a>
-                    <p style="font-size:12.5px;color:#94a3b8;margin:12px 0 0">Card, Apple Pay and promo codes on Polar's secure page.</p>
+                                                <div id="pay-area" style="position:relative;min-height:760px">
+                    <div id="pay-loading"><span class="spin"></span>Loading secure checkout&hellip;</div>
+                    <iframe id="polar-iframe" title="Secure checkout" allow="payment"></iframe>
+                    <p id="pay-error">Couldn't load the inline checkout. <a href="https://app.epa608practicetest.net/api/polar/checkout">Continue to secure checkout &rarr;</a></p>
                 </div>
                 <div class="pay-foot">Powered by Polar · Merchant of Record</div>
             </div>
@@ -149,6 +150,38 @@
 </div>
 
 
+
+
+<script>
+(function () {
+    var loading = document.getElementById('pay-loading');
+    var frame   = document.getElementById('polar-iframe');
+    var errEl   = document.getElementById('pay-error');
+    function showError() { if (loading) loading.style.display='none'; if (frame) frame.style.display='none'; if (errEl) errEl.style.display='block'; }
+    if (frame) frame.style.display = 'none';
+    // Same-origin relative fetch (the Vercel deployment serves this page AND the API
+    // on whatever host); pass our origin so Polar embed_origin matches and the
+    // success postMessage reaches us. Falls back to the redirect endpoint on error.
+    fetch('/api/polar/session?origin=' + encodeURIComponent(location.origin), { headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+            if (!d || !d.url) { showError(); return; }
+            var reveal = function () { if (loading) loading.style.display='none'; };
+            frame.style.display = 'block';
+            frame.onload = reveal;
+            frame.src = d.url + (d.url.indexOf('?') === -1 ? '?' : '&') + 'embed=true&theme=light';
+            setTimeout(reveal, 2000);
+        })
+        .catch(showError);
+    window.addEventListener('message', function (e) {
+        if (e.origin !== 'https://polar.sh') return;
+        var d = e.data || {}; var ev = (d.event || d.type || d.name || '') + '';
+        if (ev.indexOf('success') !== -1 || d.status === 'succeeded' || d.success === true) {
+            window.location.href = 'https://app.epa608practicetest.net/login?purchased=1';
+        }
+    });
+})();
+</script>
 
 </body>
 </html>

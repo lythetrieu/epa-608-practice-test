@@ -10,7 +10,7 @@
 // Polar only postMessages checkout events to us.
 
 import { NextRequest, NextResponse } from 'next/server'
-import { APP_URL, corsHeaders, allowedOrigin } from '@/lib/site-config'
+import { APP_URL, corsHeaders, allowedOrigin, isAllowedOrigin } from '@/lib/site-config'
 
 export const dynamic = 'force-dynamic'
 // Edge runtime — near-zero cold start so the checkout iframe can start loading
@@ -36,6 +36,12 @@ export async function GET(request: NextRequest) {
     )
   }
 
+  // The embedding page passes its own origin via ?origin= (a same-origin GET
+  // sends no Origin header). Validate it against the allowlist; fall back to the
+  // request Origin, then the marketing URL.
+  const qOrigin = new URL(request.url).searchParams.get('origin') ?? ''
+  const embedOrigin = isAllowedOrigin(qOrigin) ? qOrigin : allowedOrigin(request)
+
   try {
     const res = await fetch('https://api.polar.sh/v1/checkouts/', {
       method: 'POST',
@@ -43,7 +49,7 @@ export async function GET(request: NextRequest) {
       body: JSON.stringify({
         products: [productId],
         success_url: `${APP_URL}/login?purchased=1`,
-        embed_origin: allowedOrigin(request),
+        embed_origin: embedOrigin,
       }),
     })
     const data = await res.json().catch(() => ({}))

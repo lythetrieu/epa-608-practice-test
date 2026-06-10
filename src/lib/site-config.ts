@@ -13,10 +13,17 @@ export const MARKETING_URL = stripSlash(process.env.NEXT_PUBLIC_MARKETING_URL ??
 
 // Extra origins allowed to call these APIs cross-origin (e.g. the Astro/Cloudflare
 // build of the marketing site on *.workers.dev, or a staging domain). Comma-separated.
-const EXTRA_ORIGINS = (process.env.NEXT_PUBLIC_EXTRA_ORIGINS ?? 'https://epa608-astro.thetrieu9587.workers.dev')
+const EXTRA_ORIGINS = (process.env.NEXT_PUBLIC_EXTRA_ORIGINS ?? 'https://epa608-astro.thetrieu9587.workers.dev,https://app.epa608practicetest.net')
   .split(',').map((u) => stripSlash(u.trim())).filter(Boolean)
 
 const ALLOWED_ORIGINS = [APP_URL, MARKETING_URL, ...EXTRA_ORIGINS]
+
+// True when `origin` is an allowed host. Used to validate the page-origin that
+// the checkout passes for Polar embed_origin (a same-origin GET sends no Origin
+// header, so the embedding page tells us its origin via a query param).
+export function isAllowedOrigin(origin: string): boolean {
+  return !!origin && ALLOWED_ORIGINS.includes(stripSlash(origin))
+}
 
 /**
  * The request's Origin if it is on the allowlist, else the marketing URL.
