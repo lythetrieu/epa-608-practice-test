@@ -69,6 +69,8 @@ export const resendEmailRateLimit = makeRatelimit(3, '1 h', 'rl:resend-email')
 
 /** Order creation — 30 orders per IP per hour. */
 export const createOrderRateLimit = makeRatelimit(30, '1 h', 'rl:checkout-create')
+export const contactRateLimit = makeRatelimit(5, '1 h', 'rl:contact')
+export const anonSessionRateLimit = makeRatelimit(20, '1 h', 'rl:anon-session')
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers

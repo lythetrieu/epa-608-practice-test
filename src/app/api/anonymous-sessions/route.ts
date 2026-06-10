@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { corsHeaders } from '@/lib/site-config'
+import { anonSessionRateLimit, getIdentifier } from '@/lib/ratelimit'
 
 // Allow cross-origin from static site
 export async function OPTIONS(request: Request) {
@@ -12,6 +13,8 @@ export async function OPTIONS(request: Request) {
 
 export async function POST(request: NextRequest) {
   const headers = corsHeaders(request)
+  const { success } = await anonSessionRateLimit.limit(getIdentifier(request))
+  if (!success) return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers })
 
   let body: unknown
   try {

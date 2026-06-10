@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { corsHeaders } from '@/lib/site-config'
+import { contactRateLimit, getIdentifier } from '@/lib/ratelimit'
 
 // Never evaluate Supabase creds at build time — this route is request-only.
 export const dynamic = 'force-dynamic'
@@ -11,6 +12,8 @@ export async function OPTIONS(request: Request) {
 
 export async function POST(request: NextRequest) {
   const cors = corsHeaders(request)
+  const { success } = await contactRateLimit.limit(getIdentifier(request))
+  if (!success) return NextResponse.json({ error: 'Too many requests. Try again later.' }, { status: 429, headers: cors })
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,

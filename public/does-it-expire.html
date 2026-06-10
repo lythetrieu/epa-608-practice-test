@@ -120,7 +120,7 @@
     /* ============================================================
        ARTICLE LAYOUT
        ============================================================ */
-    .container { max-width: 820px; margin: 0 auto; padding: 0 28px; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
 
     .breadcrumb {
       font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .03em;
@@ -192,6 +192,26 @@
     .toc a:hover { color: var(--or); }
     @media (max-width: 720px) { .toc ul { columns: 2; } }
     @media (max-width: 480px) { .toc ul { columns: 1; } }
+
+    /* ── Wide 2-column article layout + author sidebar (Rule 9) ── */
+    .article-grid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 44px; align-items: start; margin-top: 6px; }
+    .main-col { grid-column: 1; grid-row: 1; min-width: 0; }
+    .aside-col { grid-column: 2; grid-row: 1; position: sticky; top: 88px; display: flex; flex-direction: column; gap: 18px; }
+    .author-card { background: var(--lk2); border: 1px solid var(--lb1); border-radius: var(--r2); padding: 18px; }
+    .author-card .ac-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .author-card img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .author-card .ac-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: var(--ltext); line-height: 1.2; }
+    .author-card .ac-role { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--lt2); margin-top: 4px; }
+    .author-card p { font-size: 13px; line-height: 1.5; color: var(--lt2); margin: 0 0 10px; max-width: none; }
+    .author-card a { font-size: 13px; font-weight: 600; color: var(--or); text-decoration: none; }
+    .aside-col .toc { background: var(--lk2); border: 1px solid var(--lb1); border-radius: var(--r2); padding: 16px 18px; margin: 0; }
+    .aside-col .toc ul { columns: 1; }
+    @media (max-width: 960px) {
+      .article-grid { display: block; }
+      .aside-col { position: static; margin-bottom: 26px; }
+      .aside-col .toc ul { columns: 2; }
+    }
+    @media (max-width: 520px) { .aside-col .toc ul { columns: 1; } }
 
     /* ── Body typography ── */
     .article-body { color: var(--ltext); }
@@ -287,6 +307,13 @@
     }
     .cta h2::after { display: none; }
     .cta p { color: var(--dt2); font-size: 17px; line-height: 1.6; margin: 0 auto 6px; max-width: 520px; }
+    .cta-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 700px; margin: 22px auto 0; text-align: left; }
+    .cta-seg { border-radius: var(--r2); padding: 20px; border: 1px solid var(--db2); background: rgba(255,255,255,.03); }
+    .cta-seg.warm { background: rgba(249,115,22,.06); border-color: var(--orbd-d); }
+    .cta-seg .seg-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; color: var(--gold); }
+    .cta-seg.warm .seg-label { color: var(--or); }
+    .cta-seg p { color: var(--dt2); font-size: 14.5px; line-height: 1.55; margin: 0 0 14px; max-width: none; }
+    @media (max-width: 600px) { .cta-cols { grid-template-columns: 1fr; } }
     .tool-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
       margin: 24px auto 0; max-width: 520px;
@@ -568,10 +595,19 @@
             </div>
         </section>
 
-        <div class="article-body">
-
-            <p>EPA 608 certification, formally the EPA Section 608 Technician Certification, is a federal credential issued under the Clean Air Act. The regulations at <a href="https://www.ecfr.gov/current/title-40/part-82" rel="nofollow noopener" target="_blank">40 CFR Part 82</a> Subpart F do not include an expiration provision. When you pass the exam and receive your certification card, that certification is permanent. I have read the rule directly to confirm this, because I would rather cite the regulation than repeat what other sites assume.</p>
-
+        <div class="article-grid">
+        <aside class="aside-col">
+            <div class="author-card">
+                <div class="ac-top">
+                    <img src="/images/avatar.jpg" alt="Trieu Ly" width="48" height="48">
+                    <div>
+                        <div class="ac-name">Trieu Ly</div>
+                        <div class="ac-role">Founder · HVAC Cert Educator</div>
+                    </div>
+                </div>
+                <p>Software developer who read 40 CFR Part 82 cover to cover to build this. Every fact verified by primary source.</p>
+                <a href="/about.html">Why I built this →</a>
+            </div>
             <nav class="toc" aria-label="On this page">
                 <span class="toc-label">On this page</span>
                 <ul>
@@ -586,6 +622,10 @@
                     <li><a href="#faq">Frequently asked questions</a></li>
                 </ul>
             </nav>
+        </aside>
+        <div class="article-body main-col">
+
+            <p>EPA 608 certification, formally the EPA Section 608 Technician Certification, is a federal credential issued under the Clean Air Act. The regulations at <a href="https://www.ecfr.gov/current/title-40/part-82" rel="nofollow noopener" target="_blank">40 CFR Part 82</a> Subpart F do not include an expiration provision. When you pass the exam and receive your certification card, that certification is permanent. I have read the rule directly to confirm this, because I would rather cite the regulation than repeat what other sites assume.</p>
 
             <h2 id="what-permanent-means">What permanent certification actually means</h2>
             <p>Permanent means no renewal cycle, no annual fee, and no retest requirement for the certification itself. Technicians who certified in 1992 when the program launched still hold valid certification today.</p>
@@ -716,14 +756,22 @@
             </div>
 
             <div class="cta">
-                <h2>Not certified yet? Start practicing free</h2>
-                <p>EPA 608 certification is permanent once you earn it, so make it count and pass the first time. You need 18 of 25, which is 72%, on each section.</p>
-                <div class="tool-grid">
-                    <a href="/universal.html" class="tool-btn">Universal practice test</a>
-                    <a href="/epa-608-certification-complete-guide.html" class="tool-btn dark">Full certification guide</a>
+                <h2>Where to go from here</h2>
+                <div class="cta-cols">
+                    <div class="cta-seg">
+                        <div class="seg-label">Already certified</div>
+                        <p>Your card is valid for life. Lost it? Request a replacement from your original certifying organization. New AIM Act refrigerant rules can still affect your day to day work.</p>
+                        <a href="/aim-act-changes.html" class="tool-btn dark">What the AIM Act changed</a>
+                    </div>
+                    <div class="cta-seg warm">
+                        <div class="seg-label">Not certified yet</div>
+                        <p>Pass once and you are certified for life. No renewal, no fees. Make the first attempt count: 18 of 25 (72%) per section.</p>
+                        <a href="/universal.html" class="tool-btn">Free practice test</a>
+                    </div>
                 </div>
             </div>
 
+        </div>
         </div>
     </main>
 
