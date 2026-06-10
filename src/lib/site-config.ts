@@ -11,12 +11,26 @@ const stripSlash = (u: string) => u.replace(/\/+$/, '')
 export const APP_URL = stripSlash(process.env.NEXT_PUBLIC_APP_URL ?? 'https://epa608practicetest.net')
 export const MARKETING_URL = stripSlash(process.env.NEXT_PUBLIC_MARKETING_URL ?? 'https://epa608practicetest.net')
 
-const ALLOWED_ORIGINS = [APP_URL, MARKETING_URL]
+// Extra origins allowed to call these APIs cross-origin (e.g. the Astro/Cloudflare
+// build of the marketing site on *.workers.dev, or a staging domain). Comma-separated.
+const EXTRA_ORIGINS = (process.env.NEXT_PUBLIC_EXTRA_ORIGINS ?? 'https://epa608-astro.thetrieu9587.workers.dev')
+  .split(',').map((u) => stripSlash(u.trim())).filter(Boolean)
+
+const ALLOWED_ORIGINS = [APP_URL, MARKETING_URL, ...EXTRA_ORIGINS]
 
 /**
- * CORS headers that reflect the request's Origin when it is the app OR the
- * marketing site (free tools on the marketing root call these APIs cross-origin
- * once the app moves to app.subdomain). Falls back to APP_URL.
+ * The request's Origin if it is on the allowlist, else the marketing URL.
+ * Use for reflecting CORS AND for Polar `embed_origin` (which must equal the
+ * Origin of the page that embeds the checkout iframe, on whichever host it runs).
+ */
+export function allowedOrigin(req: Request): string {
+  const origin = req.headers.get('origin') ?? ''
+  return ALLOWED_ORIGINS.includes(origin) ? origin : MARKETING_URL
+}
+
+/**
+ * CORS headers that reflect the request's Origin when it is the app, the
+ * marketing site, or an allowed extra origin (the Astro build). Falls back to APP_URL.
  */
 export function corsHeaders(req: Request, methods = 'POST, OPTIONS'): Record<string, string> {
   const origin = req.headers.get('origin') ?? ''

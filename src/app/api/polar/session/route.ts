@@ -10,7 +10,7 @@
 // Polar only postMessages checkout events to us.
 
 import { NextRequest, NextResponse } from 'next/server'
-import { APP_URL, MARKETING_URL, corsHeaders } from '@/lib/site-config'
+import { APP_URL, corsHeaders, allowedOrigin } from '@/lib/site-config'
 
 export const dynamic = 'force-dynamic'
 // Edge runtime — near-zero cold start so the checkout iframe can start loading
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       body: JSON.stringify({
         products: [productId],
         success_url: `${APP_URL}/login?purchased=1`,
-        embed_origin: MARKETING_URL,
+        embed_origin: allowedOrigin(request),
       }),
     })
     const data = await res.json().catch(() => ({}))
