@@ -49,7 +49,7 @@ gen-link.mjs
 gen-link2.mjs
 
 # Root-level PDF files (duplicates of public/ copies)
-*.pdf
+/*.pdf
 
 # public/ subdirectory build tooling (not part of app)
 public/node_modules/
