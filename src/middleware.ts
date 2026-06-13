@@ -37,7 +37,8 @@ export function tagNoindex(response: NextResponse, appHost: boolean): NextRespon
 }
 
 // Where the app-subdomain root ("/") sends a visitor: confirmed users go to the
-// dashboard, everyone else to login. The marketing root domain never uses this.
+// Study Path (the app home), everyone else to login. The marketing root domain
+// never uses this.
 export function appRootRedirectPath(isConfirmedUser: boolean): string {
   return isConfirmedUser ? '/learn' : '/login'
 }
@@ -128,7 +129,7 @@ export async function middleware(request: NextRequest) {
     return tagNoindex(NextResponse.redirect(loginUrl), appHost)
   }
 
-  // Authenticated user hitting an auth route → redirect to dashboard
+  // Authenticated user hitting an auth route → redirect to the Study Path home
   // BUT only if email is confirmed
   if (isAuthRoute && user && user.email_confirmed_at) {
     return tagNoindex(NextResponse.redirect(new URL('/learn', request.url)), appHost)
