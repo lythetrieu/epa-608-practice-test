@@ -146,7 +146,7 @@ export default async function WeakSpotsPage() {
                 <p className="text-xs text-blue-700 mt-0.5">Auto-builds a test targeting exactly your weak subtopics above.</p>
               </div>
               <Link
-                href={`${MARKETING_URL}/checkout.html`}
+                href={`/api/polar/checkout`}
                 className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
               >
                 Upgrade — $14.99
@@ -180,7 +180,7 @@ export default async function WeakSpotsPage() {
                   </div>
                   <p className="text-xs text-gray-500 mb-4">See your proficiency across all 8 topic areas at a glance.</p>
                   <Link
-                    href={`${MARKETING_URL}/checkout.html`}
+                    href={`/api/polar/checkout`}
                     className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
                   >
                     Upgrade — $14.99 lifetime

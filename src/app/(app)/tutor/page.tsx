@@ -40,7 +40,7 @@ export default async function TutorPage() {
             </p>
           </div>
           <Link
-            href={`${MARKETING_URL}/checkout.html`}
+            href={`/api/polar/checkout`}
             className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-bold hover:bg-blue-900 transition-colors"
           >
             Upgrade Now

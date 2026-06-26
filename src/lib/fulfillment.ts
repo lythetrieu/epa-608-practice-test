@@ -158,3 +158,47 @@ export async function grantProAccess(emailRaw: string, orderRef: string): Promis
 
   return { ok: true, email, status: 'created' }
 }
+
+/**
+ * Grant lifetime Pro to a KNOWN logged-in user, matched by their Supabase
+ * `user.id` (not by billing email). This is the authoritative path: the id comes
+ * from the authenticated checkout, so the buyer's Polar billing email is
+ * irrelevant — Pro always lands on the account they were signed into. Idempotent.
+ */
+export async function grantProAccessByUserId(userId: string, orderRef: string): Promise<FulfillmentResult> {
+  const id = (userId || '').trim()
+  if (!id) return { ok: false, error: 'missing_user_id' }
+
+  const admin = createAdminClient()
+
+  const { data: profile } = await admin
+    .from('users_profile')
+    .select('id, email, lifetime_access')
+    .eq('id', id)
+    .single()
+
+  if (!profile) return { ok: false, error: 'user_not_found' }
+
+  const email = (profile.email || '').toLowerCase().trim()
+  if (profile.lifetime_access) {
+    return { ok: true, email, status: 'already_pro' } // idempotent — no re-email
+  }
+
+  const { error: upgradeError } = await admin
+    .from('users_profile')
+    .update({ tier: 'starter', lifetime_access: true })
+    .eq('id', id)
+  if (upgradeError) {
+    console.error('grantProAccessByUserId upgrade failed:', upgradeError)
+    return { ok: false, error: 'upgrade_failed' }
+  }
+  if (email) await admin.from('pending_upgrades').delete().eq('email', email)
+
+  const resendKey = await getResendKey(admin)
+  if (resendKey && email) {
+    await sendProUpgradeEmail(resendKey, email).catch((e) => console.error('upgrade email (by id):', e))
+  } else if (!resendKey) {
+    console.error('NO resend_api_key in app_config — Pro upgraded (by id) but no email sent:', id, email)
+  }
+  return { ok: true, email, status: 'upgraded' }
+}

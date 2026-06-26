@@ -1,15 +1,18 @@
-// Server-side checkout redirect: creates a Polar checkout session and 302s the
-// browser straight to Polar's hosted checkout. This is a TOP-LEVEL navigation
-// (a plain <a href>), so there is NO client-side fetch, NO CORS, and NO iframe
-// embed_origin to get wrong — it works the same from any host/origin.
+// Server-side checkout redirect (AUTH-FIRST). Identifies the buyer by their
+// logged-in Supabase account and passes it to Polar as customer_external_id +
+// metadata.user_id, so Pro is granted to the RIGHT account regardless of which
+// email they use to pay (the billing email no longer matters for matching).
+// If the visitor is not signed in, we send them to log in and come right back.
 //
 // Needs: POLAR_ACCESS_TOKEN, POLAR_PRODUCT_ID on the server.
 
 import { NextRequest, NextResponse } from 'next/server'
 import { APP_URL } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
+// Node runtime: reads the Supabase session (SSR cookies) to identify the buyer.
+export const runtime = 'nodejs'
 
 const back = (q: string) => NextResponse.redirect(`${APP_URL}/pricing.html?checkout=${q}`, 302)
 
@@ -18,6 +21,30 @@ export async function GET(_request: NextRequest) {
   const productId = process.env.POLAR_PRODUCT_ID
   if (!token || !productId) return back('unavailable')
 
+  // Who is buying? Identify by the authenticated account, not the billing email.
+  let userId = ''
+  let userEmail = ''
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (user) {
+      userId = user.id
+      userEmail = (user.email ?? '').toLowerCase().trim()
+    }
+  } catch {
+    /* treated as logged-out below */
+  }
+
+  // Not signed in → log in first, then return straight to checkout.
+  if (!userId) {
+    return NextResponse.redirect(
+      `${APP_URL}/login?redirect=${encodeURIComponent('/api/polar/checkout')}`,
+      302,
+    )
+  }
+
   try {
     const res = await fetch('https://api.polar.sh/v1/checkouts/', {
       method: 'POST',
@@ -25,6 +52,9 @@ export async function GET(_request: NextRequest) {
       body: JSON.stringify({
         products: [productId],
         success_url: `${APP_URL}/api/polar/success?checkout_id={CHECKOUT_ID}`,
+        customer_external_id: userId,
+        ...(userEmail ? { customer_email: userEmail } : {}),
+        metadata: { user_id: userId },
       }),
     })
     const data = await res.json().catch(() => ({}))

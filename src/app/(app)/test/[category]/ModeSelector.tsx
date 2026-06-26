@@ -119,7 +119,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
                 </div>
               </div>
               <Link
-                href={`${MARKETING_URL}/checkout.html`}
+                href={`/api/polar/checkout`}
                 className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
               >
                 Unlock Timed Simulation — $14.99 lifetime
