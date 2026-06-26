@@ -86,6 +86,25 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Cross-subdomain login flag for the STATIC marketing nav. NOT the session —
+  // just "is someone signed in" — so marketing pages can show "Dashboard →" vs
+  // "Sign In". Shared across .epa608practicetest.net, JS-readable (no token); it
+  // never touches the real auth cookies, so it cannot break login.
+  const flagHost = (request.headers.get("host") ?? "").split(":")[0]
+  const flagProd = flagHost.endsWith("epa608practicetest.net")
+  const setAuthFlag = (resp: NextResponse): NextResponse => {
+    const loggedIn = Boolean(user && user.email_confirmed_at)
+    resp.cookies.set("epa608_auth", loggedIn ? "1" : "", {
+      domain: flagProd ? ".epa608practicetest.net" : undefined,
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+      secure: flagProd,
+      maxAge: loggedIn ? 60 * 60 * 24 * 30 : 0,
+    })
+    return resp
+  }
+
   const { pathname } = request.nextUrl
 
   // Public endpoints — skip all auth checks
@@ -135,7 +154,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Always return supabaseResponse so cookie mutations are preserved
-  return tagNoindex(supabaseResponse, appHost)
+  return tagNoindex(setAuthFlag(supabaseResponse), appHost)
 }
 
 export const config = {
