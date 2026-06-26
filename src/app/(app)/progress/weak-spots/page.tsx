@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { TIER_LIMITS } from '@/lib/tier'
 import { getSubtopicLabel, getSubtopicCategory, SUBTOPIC_GROUPS } from '@/lib/subtopics'
 import type { Tier, Category } from '@/types'
-import { MARKETING_URL } from '@/lib/site-config'
 import { RadarChart } from '../radar-chart'
 
 type BlindSpot = {

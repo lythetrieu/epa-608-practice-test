@@ -186,7 +186,7 @@ export async function grantProAccessByUserId(userId: string, orderRef: string): 
 
   const { error: upgradeError } = await admin
     .from('users_profile')
-    .update({ tier: 'starter', lifetime_access: true })
+    .update({ tier: 'starter', lifetime_access: true, ls_order_id: orderRef })
     .eq('id', id)
   if (upgradeError) {
     console.error('grantProAccessByUserId upgrade failed:', upgradeError)

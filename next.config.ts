@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // 'unsafe-inline' kept for Next.js + Google Tag Manager/Analytics
-              // inline bootstrap. Payment processor = Polar only (PayPal/Paddle removed).
+              // inline bootstrap. Payment processor = Polar only.
               process.env.NODE_ENV === 'development'
                 ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com"
                 : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",

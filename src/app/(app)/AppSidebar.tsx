@@ -4,7 +4,6 @@ import { useState, useEffect, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
-import { MARKETING_URL } from '@/lib/site-config'
 import type { Tier } from '@/types'
 import {
   BookOpen, Target, Settings, LogOut, Shield, Users, ChevronRight,

@@ -8,8 +8,8 @@
 >   AND a full **Next.js 15 SaaS app** in `src/` (Supabase auth, tiers, AI tutor, dashboard,
 >   certificates, teams, offline mode).
 > - **Not "free forever / no signup."** The app has required auth and **paid tiers**
->   (free + Pro). Payment is **PayPal only** (`src/app/api/paypal/**`,
->   static `public/checkout.html`). Paddle and LemonSqueezy were removed.
+>   (free + Pro). Payment is **Polar only** (Merchant of Record — `src/app/api/polar/**`,
+>   static `public/checkout.html`).
 > - The "13 live pages" list below is stale — there are ~40 static pages plus the app routes.
 > - Draft/legacy question JSON lives in `_archive/question-bank/`, not `public/`.
 >

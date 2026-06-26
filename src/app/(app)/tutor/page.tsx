@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier } from '@/types'
-import { MARKETING_URL } from '@/lib/site-config'
 import TutorChat from './TutorChat'
 
 export default async function TutorPage() {

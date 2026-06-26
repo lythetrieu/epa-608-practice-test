@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { BookOpen, Clock, AlertTriangle, Lock } from 'lucide-react'
-import { MARKETING_URL } from '@/lib/site-config'
 
 function getCorePassStatus(): boolean {
   try {

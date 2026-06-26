@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getTierLabel } from '@/lib/tier'
-import { MARKETING_URL } from '@/lib/site-config'
 import { History as HistoryIcon, BarChart3, ChevronRight } from 'lucide-react'
 import type { Tier } from '@/types'
 
