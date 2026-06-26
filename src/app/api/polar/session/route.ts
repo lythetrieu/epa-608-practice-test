@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         products: [productId],
-        success_url: `${APP_URL}/login?purchased=1`,
+        success_url: `${APP_URL}/api/polar/success?checkout_id={CHECKOUT_ID}`,
         embed_origin: embedOrigin,
       }),
     })
