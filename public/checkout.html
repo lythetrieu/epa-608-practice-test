@@ -11,8 +11,9 @@
     <link rel="preconnect" href="https://api.polar.sh" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <!-- Official Polar embedded-checkout SDK (overlay stays on THIS page) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@latest/dist/embed.global.js"></script>
+    <!-- Official Polar embedded-checkout SDK (overlay stays on THIS page).
+         Pinned to 0.3.x: it exposes window.Polar.EmbedCheckout (verified shape). -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.3/dist/embed.global.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
@@ -64,9 +65,11 @@
         // sale is never blocked by a slow/broken SDK or network.
         var guard = setTimeout(fallback, 8000);
 
+        // The global script exposes window.Polar.EmbedCheckout (NOT PolarEmbedCheckout).
+        function getEmbed() { return window.Polar && window.Polar.EmbedCheckout; }
         function whenSDKReady(cb, tries) {
             tries = tries || 0;
-            if (window.PolarEmbedCheckout) return cb();
+            if (getEmbed()) return cb();
             if (tries > 50) return fallback();          // ~5s waiting for the CDN script
             setTimeout(function () { whenSDKReady(cb, tries + 1); }, 100);
         }
@@ -84,7 +87,7 @@
                 hostedUrl = d.url;                          // remember for the embed fallback
 
                 whenSDKReady(function () {
-                    window.PolarEmbedCheckout.create(d.url, { theme: 'light' })
+                    getEmbed().create(d.url, { theme: 'light' })
                         .then(function (checkout) {
                             clearTimeout(guard);
                             setStatus('Complete your purchase in the secure window above.');
