@@ -156,27 +156,37 @@
 
 <script>
 (function () {
-    var clientSecret = null, hostedUrl = null, coId = '', fellBack = false;
-    function fallback() { if (fellBack) return; fellBack = true; window.location.replace(hostedUrl || '/api/polar/checkout'); }
+    var clientSecret = null, hostedUrl = null, coId = '', fellBack = false, revealed = false;
+    var L = function (m, x) { try { console.log('[checkout] ' + m, x === undefined ? '' : x); } catch (e) {} };
+    function fallback(why) { if (fellBack || revealed) return; fellBack = true; L('fallback → hosted', why); window.location.replace(hostedUrl || '/api/polar/checkout'); }
 
     var loading  = document.getElementById('pay-loading');
     var inlineEl = document.getElementById('pay-inline');
-    function hideLoading() { if (loading) loading.style.display = 'none'; }
+    function reveal() { if (revealed) return; revealed = true; clearTimeout(guard); if (loading) loading.style.display = 'none'; L('revealed inline checkout'); }
 
-    // The global script exposes window.Polar.EmbedCheckout (NOT PolarEmbedCheckout).
     function getEmbed() { return window.Polar && window.Polar.EmbedCheckout; }
     function whenSDKReady(cb, tries) {
         tries = tries || 0;
         if (getEmbed()) return cb();
-        if (tries > 50) return fallback();          // ~5s waiting for the CDN script
-        setTimeout(function () { whenSDKReady(cb, tries + 1); }, 100);
+        if (tries > 60) return fallback('sdk-timeout');     // ~3s waiting for the CDN script (50ms steps)
+        setTimeout(function () { whenSDKReady(cb, tries + 1); }, 50);
     }
 
-    // Safety net: if nothing has mounted in 10s, use the hosted redirect.
-    var guard = setTimeout(fallback, 10000);
+    // Reveal as soon as the SDK actually injects the iframe — don't depend solely
+    // on the onLoaded event (which sometimes doesn't fire), so it never stays stuck
+    // on "Loading…" with the real form hidden behind the overlay.
+    function watchForIframe(tries) {
+        tries = tries || 0;
+        if (revealed) return;
+        if (inlineEl && inlineEl.querySelector('iframe')) { setTimeout(reveal, 250); return; }
+        if (tries > 100) return;                            // give up watching after ~10s (guard handles fallback)
+        setTimeout(function () { watchForIframe(tries + 1); }, 100);
+    }
+
+    // Safety net: if the inline form never mounts in 12s, use the hosted page.
+    var guard = setTimeout(function () { fallback('mount-timeout'); }, 12000);
 
     function onSuccess(ev) {
-        // redirect:true → Polar navigates to success_url; else we go there ourselves.
         if (!ev || !ev.detail || ev.detail.redirect !== true) {
             window.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
         }
@@ -184,43 +194,40 @@
 
     function start() {
         var E = getEmbed();
-        // 1) INLINE — mount the checkout right inside the card (preferred).
+        L('sdk ready; createInline?', !!(E && E.createInline) + ' secret?' + !!clientSecret);
+        // INLINE ONLY — mount the checkout right inside the card. No popup/overlay.
         if (E.createInline && clientSecret) {
             try {
                 var inst = E.createInline({
                     sessionToken: clientSecret,
                     element: inlineEl,
                     theme: 'light',
-                    onLoaded: function () { clearTimeout(guard); hideLoading(); },
+                    onLoaded: reveal,
                 });
-                if (inst && inst.addEventListener) inst.addEventListener('success', onSuccess);
+                if (inst && inst.addEventListener) {
+                    inst.addEventListener('loaded', reveal);
+                    inst.addEventListener('success', onSuccess);
+                }
+                watchForIframe();                          // belt-and-suspenders reveal
                 return;
-            } catch (e) { /* fall through */ }
+            } catch (e) { L('createInline threw', '' + e); }
         }
-        // 2) Overlay — still in-page, if inline isn't available.
-        if (E.create && hostedUrl) {
-            try {
-                E.create(hostedUrl, { theme: 'light' })
-                    .then(function (c) { clearTimeout(guard); hideLoading();
-                        if (c && c.addEventListener) c.addEventListener('success', onSuccess); })
-                    .catch(fallback);
-                return;
-            } catch (e) { /* fall through */ }
-        }
-        // 3) Hosted redirect — last resort, never blocks a sale.
-        fallback();
+        // No inline available → go to the hosted page (still completes the sale).
+        fallback('no-inline');
     }
 
+    L('fetching session…');
     fetch('/api/polar/session?origin=' + encodeURIComponent(location.origin),
           { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.redirect) { clearTimeout(guard); window.location.replace(d.redirect); return; }  // login / already-Pro
-            if (!d || !d.url) { fallback(); return; }
+            if (d && d.redirect) { clearTimeout(guard); L('redirect', d.redirect); window.location.replace(d.redirect); return; }
+            if (!d || !d.url) { fallback('no-url'); return; }
             hostedUrl = d.url; clientSecret = d.clientSecret || null; coId = d.id || '';
+            L('session ok; hasSecret?', !!clientSecret);
             whenSDKReady(start);
         })
-        .catch(fallback);
+        .catch(function (e) { fallback('fetch-error'); });
 })();
 </script>
 
