@@ -186,12 +186,15 @@ export async function grantProAccessByUserId(userId: string, orderRef: string): 
 
   const { error: upgradeError } = await admin
     .from('users_profile')
-    .update({ tier: 'starter', lifetime_access: true, ls_order_id: orderRef })
+    .update({ tier: 'starter', lifetime_access: true })
     .eq('id', id)
   if (upgradeError) {
     console.error('grantProAccessByUserId upgrade failed:', upgradeError)
     return { ok: false, error: 'upgrade_failed' }
   }
+  // users_profile has no order-id column (ls_order_id lives on pending_upgrades),
+  // so the order ref is recorded in the log for audit, not written to the row.
+  console.log('grantProAccessByUserId: Pro granted', id, 'order', orderRef)
   if (email) await admin.from('pending_upgrades').delete().eq('email', email)
 
   const resendKey = await getResendKey(admin)
