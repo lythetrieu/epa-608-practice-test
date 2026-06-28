@@ -24,6 +24,7 @@ export async function GET(_request: NextRequest) {
   // Who is buying? Identify by the authenticated account, not the billing email.
   let userId = ''
   let userEmail = ''
+  let alreadyPro = false
   try {
     const supabase = await createClient()
     const {
@@ -32,6 +33,13 @@ export async function GET(_request: NextRequest) {
     if (user) {
       userId = user.id
       userEmail = (user.email ?? '').toLowerCase().trim()
+      // Already own lifetime Pro? Don't let them pay a second time.
+      const { data: profile } = await supabase
+        .from('users_profile')
+        .select('lifetime_access')
+        .eq('id', user.id)
+        .single()
+      alreadyPro = Boolean(profile?.lifetime_access)
     }
   } catch {
     /* treated as logged-out below */
@@ -43,6 +51,11 @@ export async function GET(_request: NextRequest) {
       `${APP_URL}/login?redirect=${encodeURIComponent('/api/polar/checkout')}`,
       302,
     )
+  }
+
+  // Already Pro → skip checkout entirely so we never double-charge an owner.
+  if (alreadyPro) {
+    return NextResponse.redirect(`${APP_URL}/dashboard?already=pro`, 302)
   }
 
   try {

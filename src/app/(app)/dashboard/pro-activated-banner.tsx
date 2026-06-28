@@ -7,6 +7,14 @@ export function ProActivatedBanner({ isPro }: { isPro: boolean }) {
 
   useEffect(() => {
     if (!isPro) return
+    // A fresh purchase (?purchased=1) always shows the congrats, even if the
+    // banner was dismissed before (e.g. after a manual upgrade).
+    const justPurchased = new URLSearchParams(window.location.search).get('purchased') === '1'
+    if (justPurchased) {
+      localStorage.removeItem('epa608_pro_banner_dismissed')
+      setShow(true)
+      return
+    }
     const dismissed = localStorage.getItem('epa608_pro_banner_dismissed')
     if (!dismissed) setShow(true)
   }, [isPro])

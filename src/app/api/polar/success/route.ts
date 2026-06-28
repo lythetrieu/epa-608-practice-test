@@ -29,7 +29,12 @@ type Checkout = {
 
 export async function GET(request: NextRequest) {
   const checkoutId = (new URL(request.url).searchParams.get('checkout_id') ?? '').trim()
-  const done = NextResponse.redirect(`${APP_URL}/login?purchased=1`, 302)
+  // Default landing = the legacy email path (buyer has no session yet): /login,
+  // which shows the temp-password instructions. Auth-first buyers are already
+  // signed in, so once we confirm a userId below we send them to /dashboard
+  // where ProActivatedBanner fires — otherwise middleware bounces /login →
+  // /dashboard and swallows the congrats.
+  let done = NextResponse.redirect(`${APP_URL}/login?purchased=1`, 302)
 
   const token = process.env.POLAR_ACCESS_TOKEN
   if (!checkoutId || !token) {
@@ -47,6 +52,9 @@ export async function GET(request: NextRequest) {
     const paid = res.ok && (status === 'succeeded' || status === 'confirmed')
     const userId = String(co.customer_external_id ?? co.customer?.external_id ?? co.metadata?.user_id ?? '').trim()
     const email = String(co.customer_email ?? co.customer?.email ?? '').toLowerCase().trim()
+
+    // Auth-first buyer is already logged in → land on /dashboard for the banner.
+    if (userId) done = NextResponse.redirect(`${APP_URL}/dashboard?purchased=1`, 302)
 
     if (paid && (userId || email)) {
       const result = userId
