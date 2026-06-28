@@ -148,7 +148,7 @@ export function ResultView({ result, category, questions, onRetake }: {
             <span className="text-amber-500 text-sm shrink-0">⚠</span>
             <p className="text-xs text-gray-500 flex-1">
               Failed {failCount}× on {category} —{' '}
-              <Link href={`/api/polar/checkout`}
+              <Link href={`/checkout.html`}
                 className="text-blue-700 font-medium hover:underline">
                 Blind Spot Drill targets your exact weak spots
               </Link>

@@ -324,7 +324,7 @@ export default function SettingsClient({
 
         {tier === 'free' && (
           <Link
-            href={`/api/polar/checkout`}
+            href={`/checkout.html`}
             className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
           >
             Upgrade to Pro

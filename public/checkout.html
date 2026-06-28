@@ -6,12 +6,13 @@
     <title>Get EPA 608 Pro — Lifetime Access | EPA 608 Practice Test</title>
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- No-JS fallback: bounce straight to the auth-first checkout. -->
-    <meta http-equiv="refresh" content="0;url=/api/polar/checkout">
-
-    <!-- Warm up the Polar connection so the hosted checkout starts faster -->
+    <!-- Warm up Polar so the embed starts faster -->
     <link rel="preconnect" href="https://polar.sh" crossorigin>
-    <link rel="dns-prefetch" href="https://polar.sh">
+    <link rel="preconnect" href="https://api.polar.sh" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Official Polar embedded-checkout SDK (overlay stays on THIS page) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@latest/dist/embed.global.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
@@ -23,33 +24,92 @@
     </script>
 
     <style>
-        :root { --sky:#0369a1; --ink:#0f172a; --muted:#64748b; }
+        :root { --sky:#0369a1; --sky-dk:#0c4a6e; --ink:#0f172a; --muted:#64748b; }
         * { box-sizing:border-box; }
         body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
                font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
                background:#f8fafc; color:var(--ink); text-align:center; padding:24px; }
-        .card { max-width:420px; }
+        .card { max-width:440px; }
         .spinner { width:38px; height:38px; margin:0 auto 20px; border:4px solid #e2e8f0;
                    border-top-color:var(--sky); border-radius:50%; animation:spin .8s linear infinite; }
         @keyframes spin { to { transform:rotate(360deg); } }
-        h1 { font-size:20px; margin:0 0 8px; }
-        p { color:var(--muted); font-size:14.5px; line-height:1.5; margin:0 0 18px; }
-        a.btn { display:inline-block; background:var(--sky); color:#fff; text-decoration:none;
-                font-weight:700; padding:12px 22px; border-radius:10px; font-size:15px; }
+        h1 { font-size:21px; margin:0 0 8px; }
+        p  { color:var(--muted); font-size:14.5px; line-height:1.5; margin:0 0 18px; }
+        .btn { display:inline-block; background:var(--sky); color:#fff; text-decoration:none;
+               font-weight:700; padding:12px 24px; border-radius:10px; font-size:15px; border:0; cursor:pointer; }
+        .btn:hover { background:var(--sky-dk); }
+        #retry { display:none; }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="spinner" aria-hidden="true"></div>
-        <h1>Taking you to secure checkout…</h1>
-        <p>Redirecting to our payment processor (Polar) to complete your EPA&nbsp;608 Pro purchase.</p>
-        <a class="btn" id="go" href="/api/polar/checkout">Continue to checkout →</a>
+        <h1>Opening secure checkout…</h1>
+        <p id="status">Loading your EPA&nbsp;608 Pro purchase — this stays right here on the page.</p>
+        <!-- Always-present manual path: works even if the embed/SDK fails -->
+        <a class="btn" id="manual" href="/api/polar/checkout">Continue to checkout →</a>
+        <button class="btn" id="retry" type="button" onclick="window.location.reload()">Reopen checkout</button>
     </div>
+
     <script>
-        // Auth-first checkout: identifies the logged-in buyer's account so Pro lands
-        // on the right person, then forwards to Polar's hosted checkout. Replace()
-        // keeps this redirect page out of the back-button history.
-        window.location.replace('/api/polar/checkout');
+    (function () {
+        var hostedUrl = null;                    // polar.sh hosted page, once we have a session
+        var fellBack = false;
+        // If the embed can't open, fall back to the hosted Polar page we already
+        // created (no second session); if we never got one, hit the redirect route.
+        function fallback() { if (fellBack) return; fellBack = true; window.location.replace(hostedUrl || '/api/polar/checkout'); }
+        function setStatus(t) { var s = document.getElementById('status'); if (s) s.textContent = t; }
+
+        // Safety net: if the embed hasn't opened in 8s, use the redirect flow so a
+        // sale is never blocked by a slow/broken SDK or network.
+        var guard = setTimeout(fallback, 8000);
+
+        function whenSDKReady(cb, tries) {
+            tries = tries || 0;
+            if (window.PolarEmbedCheckout) return cb();
+            if (tries > 50) return fallback();          // ~5s waiting for the CDN script
+            setTimeout(function () { whenSDKReady(cb, tries + 1); }, 100);
+        }
+
+        fetch('/api/polar/session?origin=' + encodeURIComponent(location.origin),
+              { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d && d.redirect) {            // not logged in, or already Pro
+                    clearTimeout(guard);
+                    window.location.replace(d.redirect);
+                    return;
+                }
+                if (!d || !d.url) { fallback(); return; }   // misconfig / Polar error → redirect flow
+                hostedUrl = d.url;                          // remember for the embed fallback
+
+                whenSDKReady(function () {
+                    window.PolarEmbedCheckout.create(d.url, { theme: 'light' })
+                        .then(function (checkout) {
+                            clearTimeout(guard);
+                            setStatus('Complete your purchase in the secure window above.');
+
+                            checkout.addEventListener('success', function (ev) {
+                                // redirect:true → Polar sends us to success_url itself.
+                                // redirect:false → we navigate to the success/reconcile route.
+                                if (!ev.detail || ev.detail.redirect !== true) {
+                                    window.location.href =
+                                        '/api/polar/success?checkout_id=' + encodeURIComponent(d.id);
+                                }
+                            });
+                            checkout.addEventListener('close', function () {
+                                setStatus('Checkout closed. You can reopen it any time.');
+                                var r = document.getElementById('retry');
+                                var m = document.getElementById('manual');
+                                if (r) r.style.display = 'inline-block';
+                                if (m) m.style.display = 'none';
+                            });
+                        })
+                        .catch(fallback);
+                });
+            })
+            .catch(fallback);
+    })();
     </script>
 </body>
 </html>

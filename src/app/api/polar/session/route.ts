@@ -1,21 +1,26 @@
-// Creates a Polar Checkout Session on demand so the checkout can be embedded
-// INLINE (the session URL polar.sh/checkout/... is iframe-able; the checkout
-// LINK is not, because it redirects through polar.sh which sends X-Frame: DENY).
+// Creates an account-linked Polar Checkout Session for the INLINE embed.
 //
-// Needs two env vars on the server:
-//   POLAR_ACCESS_TOKEN  — Organization Access Token (Polar → Settings → API Tokens)
-//   POLAR_PRODUCT_ID    — the product to sell (Polar → Products → the product's ID)
+// AUTH-FIRST: like /api/polar/checkout, we identify the buyer by their logged-in
+// Supabase account and pass it to Polar (customer_external_id + metadata.user_id),
+// so Pro is granted to the RIGHT account regardless of the billing email. The
+// difference from /api/polar/checkout is the response: this route returns JSON so
+// checkout.html can open the embed overlay in-page (no redirect to polar.sh).
 //
-// embed_origin must equal the Origin of the page that embeds the iframe, so
-// Polar only postMessages checkout events to us.
+// Returns one of:
+//   { redirect: "<url>" }  — not signed in (→ /login) or already Pro (→ /dashboard)
+//   { url, id }            — an embeddable checkout session (embed_origin set)
+//   { error: ... }         — misconfig / Polar failure (checkout.html falls back
+//                            to the /api/polar/checkout redirect flow)
+//
+// Needs on the server: POLAR_ACCESS_TOKEN, POLAR_PRODUCT_ID.
 
 import { NextRequest, NextResponse } from 'next/server'
 import { APP_URL, corsHeaders, allowedOrigin, isAllowedOrigin } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
-// Edge runtime — near-zero cold start so the checkout iframe can start loading
-// sooner. This route only does a fetch() to the Polar API, which is edge-safe.
-export const runtime = 'edge'
+// Node runtime: reads the Supabase session (SSR cookies) to identify the buyer.
+export const runtime = 'nodejs'
 
 export async function OPTIONS(request: Request) {
   return new NextResponse(null, {
@@ -36,20 +41,57 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  // The embedding page passes its own origin via ?origin= (a same-origin GET
-  // sends no Origin header). Validate it against the allowlist; fall back to the
-  // request Origin, then the marketing URL.
+  // Who is buying? Identify by the authenticated account, not the billing email.
+  let userId = ''
+  let userEmail = ''
+  let alreadyPro = false
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (user) {
+      userId = user.id
+      userEmail = (user.email ?? '').toLowerCase().trim()
+      const { data: profile } = await supabase
+        .from('users_profile')
+        .select('lifetime_access')
+        .eq('id', user.id)
+        .single()
+      alreadyPro = Boolean(profile?.lifetime_access)
+    }
+  } catch {
+    /* treated as logged-out below */
+  }
+
+  // Not signed in → tell the page to send them to log in, then back to checkout.
+  if (!userId) {
+    return NextResponse.json(
+      { redirect: `${APP_URL}/login?redirect=${encodeURIComponent('/checkout.html')}` },
+      { headers },
+    )
+  }
+  // Already Pro → no second charge; bounce to the dashboard.
+  if (alreadyPro) {
+    return NextResponse.json({ redirect: `${APP_URL}/dashboard?already=pro` }, { headers })
+  }
+
+  // embed_origin must equal the Origin of the page that hosts the iframe. The page
+  // passes its own origin via ?origin= (a same-origin GET sends no Origin header).
   const qOrigin = new URL(request.url).searchParams.get('origin') ?? ''
   const embedOrigin = isAllowedOrigin(qOrigin) ? qOrigin : allowedOrigin(request)
 
   try {
     const res = await fetch('https://api.polar.sh/v1/checkouts/', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         products: [productId],
         success_url: `${APP_URL}/api/polar/success?checkout_id={CHECKOUT_ID}`,
         embed_origin: embedOrigin,
+        customer_external_id: userId,
+        ...(userEmail ? { customer_email: userEmail } : {}),
+        metadata: { user_id: userId },
       }),
     })
     const data = await res.json().catch(() => ({}))

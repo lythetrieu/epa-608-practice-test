@@ -206,7 +206,7 @@ export default async function DashboardPage() {
             <p className="font-bold text-sm">Unlock Pro features</p>
             <p className="text-blue-100 text-xs">$14.99 one-time — lifetime access</p>
           </div>
-          <Link href={`/api/polar/checkout`} className="shrink-0 px-4 py-2 bg-white rounded-lg font-bold text-xs min-h-[40px] inline-flex items-center" style={{color:'#003087'}}>
+          <Link href={`/checkout.html`} className="shrink-0 px-4 py-2 bg-white rounded-lg font-bold text-xs min-h-[40px] inline-flex items-center" style={{color:'#003087'}}>
             Upgrade
           </Link>
         </div>
