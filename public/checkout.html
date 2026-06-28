@@ -74,6 +74,11 @@
 
         .terms { text-align:center; font-size:12px; color:#94a3b8; margin-top:36px; line-height:1.7; }
         .terms a { color:#007acc; text-decoration:none; }
+
+        #done-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(255,255,255,.98);
+                        flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:14px; padding:24px; }
+        #done-overlay #done-msg { font-size:21px; font-weight:800; color:var(--ink); }
+        #done-overlay p { color:var(--muted); font-size:14.5px; max-width:34ch; }
     </style>
 </head>
 <body>
@@ -150,6 +155,16 @@
     </p>
 </div>
 
+<!-- Success screen: covers the whole page the moment payment confirms, so the
+     embedded iframe (which Polar tries to redirect to an X-Frame-DENY page)
+     never flashes "content blocked", and the buyer sees a proper congrats. -->
+<div id="done-overlay">
+    <div style="font-size:56px; line-height:1;">🎉</div>
+    <div id="done-msg">Payment successful — welcome to Pro!</div>
+    <p>Activating your access and taking you to your dashboard…</p>
+    <span class="spin"></span>
+</div>
+
 <script>
 (function () {
     var hostedUrl = null, coId = '', fellBack = false, revealed = false;
@@ -181,13 +196,27 @@
         inlineEl.appendChild(f);
         L('inline iframe mounted', src);
 
-        // Polar posts events from its origin: resize (auto-height) + success.
+        // Polar posts events from its origin: resize (auto-height), confirmed, success.
+        var done = false;
+        function celebrate(msg) {
+            var ov = document.getElementById('done-overlay');
+            if (msg) document.getElementById('done-msg').textContent = msg;
+            if (ov) ov.style.display = 'flex';   // covers the iframe → no "content blocked" flash
+        }
         window.addEventListener('message', function (e) {
             if (String(e.origin).indexOf('polar.sh') === -1) return;
             var d = e.data || {}; var ev = ((d.event || d.type || d.name || '') + '').toLowerCase();
             if (ev.indexOf('resize') !== -1 && d.height) { f.style.height = Math.max(560, Math.ceil(d.height)) + 'px'; }
-            if (ev.indexOf('success') !== -1 || d.status === 'succeeded' || d.success === true) {
-                L('success → reconcile'); window.top.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
+            // 'confirmed' = payment is processing → cover the iframe early.
+            if (ev.indexOf('confirm') !== -1 && !done) { celebrate('Processing your payment…'); }
+            // 'success' = paid → show congrats, then reconcile + go to dashboard.
+            if ((ev.indexOf('success') !== -1 || d.status === 'succeeded' || d.success === true) && !done) {
+                done = true;
+                L('success → celebrate + reconcile');
+                celebrate('Payment successful — welcome to Pro! 🎉');
+                setTimeout(function () {
+                    window.top.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
+                }, 1600);
             }
         });
     }
