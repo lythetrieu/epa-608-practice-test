@@ -11,10 +11,6 @@
     <link rel="preconnect" href="https://api.polar.sh" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <!-- Official Polar embedded-checkout SDK. Pinned to 0.3.x: exposes
-         window.Polar.EmbedCheckout with create() (overlay) + createInline(). -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.3/dist/embed.global.js"></script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -156,7 +152,7 @@
 
 <script>
 (function () {
-    var clientSecret = null, hostedUrl = null, coId = '', fellBack = false, revealed = false;
+    var hostedUrl = null, coId = '', fellBack = false, revealed = false;
     var L = function (m, x) { try { console.log('[checkout] ' + m, x === undefined ? '' : x); } catch (e) {} };
     function fallback(why) { if (fellBack || revealed) return; fellBack = true; L('fallback → hosted', why); window.location.replace(hostedUrl || '/api/polar/checkout'); }
 
@@ -164,56 +160,36 @@
     var inlineEl = document.getElementById('pay-inline');
     function reveal() { if (revealed) return; revealed = true; clearTimeout(guard); if (loading) loading.style.display = 'none'; L('revealed inline checkout'); }
 
-    function getEmbed() { return window.Polar && window.Polar.EmbedCheckout; }
-    function whenSDKReady(cb, tries) {
-        tries = tries || 0;
-        if (getEmbed()) return cb();
-        if (tries > 60) return fallback('sdk-timeout');     // ~3s waiting for the CDN script (50ms steps)
-        setTimeout(function () { whenSDKReady(cb, tries + 1); }, 50);
-    }
+    // If the iframe never loads in 12s, fall back to the hosted page (sale never blocked).
+    var guard = setTimeout(function () { fallback('load-timeout'); }, 12000);
 
-    // Reveal as soon as the SDK actually injects the iframe — don't depend solely
-    // on the onLoaded event (which sometimes doesn't fire), so it never stays stuck
-    // on "Loading…" with the real form hidden behind the overlay.
-    function watchForIframe(tries) {
-        tries = tries || 0;
-        if (revealed) return;
-        if (inlineEl && inlineEl.querySelector('iframe')) { setTimeout(reveal, 250); return; }
-        if (tries > 100) return;                            // give up watching after ~10s (guard handles fallback)
-        setTimeout(function () { watchForIframe(tries + 1); }, 100);
-    }
+    // Mount Polar's checkout as a plain iframe INLINE in the card. Same URL the
+    // SDK overlay loads (which worked) — embed=true + embed_origin make Polar allow
+    // the frame and switch to embed mode (no redirect inside the iframe).
+    function mountInline() {
+        var sep = hostedUrl.indexOf('?') === -1 ? '?' : '&';
+        var src = hostedUrl + sep + 'embed=true&embed_origin=' + encodeURIComponent(location.origin) + '&theme=light';
+        var f = document.createElement('iframe');
+        f.src = src;
+        f.title = 'Secure checkout';
+        f.setAttribute('allow', 'payment *');
+        f.style.width = '100%';
+        f.style.border = '0';
+        f.style.minHeight = '720px';
+        f.style.display = 'block';
+        f.onload = reveal;
+        inlineEl.appendChild(f);
+        L('inline iframe mounted', src);
 
-    // Safety net: if the inline form never mounts in 12s, use the hosted page.
-    var guard = setTimeout(function () { fallback('mount-timeout'); }, 12000);
-
-    function onSuccess(ev) {
-        if (!ev || !ev.detail || ev.detail.redirect !== true) {
-            window.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
-        }
-    }
-
-    function start() {
-        var E = getEmbed();
-        L('sdk ready; createInline?', !!(E && E.createInline) + ' secret?' + !!clientSecret);
-        // INLINE ONLY — mount the checkout right inside the card. No popup/overlay.
-        if (E.createInline && clientSecret) {
-            try {
-                var inst = E.createInline({
-                    sessionToken: clientSecret,
-                    element: inlineEl,
-                    theme: 'light',
-                    onLoaded: reveal,
-                });
-                if (inst && inst.addEventListener) {
-                    inst.addEventListener('loaded', reveal);
-                    inst.addEventListener('success', onSuccess);
-                }
-                watchForIframe();                          // belt-and-suspenders reveal
-                return;
-            } catch (e) { L('createInline threw', '' + e); }
-        }
-        // No inline available → go to the hosted page (still completes the sale).
-        fallback('no-inline');
+        // Polar posts events from its origin: resize (auto-height) + success.
+        window.addEventListener('message', function (e) {
+            if (String(e.origin).indexOf('polar.sh') === -1) return;
+            var d = e.data || {}; var ev = ((d.event || d.type || d.name || '') + '').toLowerCase();
+            if (ev.indexOf('resize') !== -1 && d.height) { f.style.height = Math.max(560, Math.ceil(d.height)) + 'px'; }
+            if (ev.indexOf('success') !== -1 || d.status === 'succeeded' || d.success === true) {
+                L('success → reconcile'); window.top.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
+            }
+        });
     }
 
     L('fetching session…');
@@ -223,9 +199,9 @@
         .then(function (d) {
             if (d && d.redirect) { clearTimeout(guard); L('redirect', d.redirect); window.location.replace(d.redirect); return; }
             if (!d || !d.url) { fallback('no-url'); return; }
-            hostedUrl = d.url; clientSecret = d.clientSecret || null; coId = d.id || '';
-            L('session ok; hasSecret?', !!clientSecret);
-            whenSDKReady(start);
+            hostedUrl = d.url; coId = d.id || '';
+            L('session ok → mounting inline');
+            mountInline();
         })
         .catch(function (e) { fallback('fetch-error'); });
 })();
