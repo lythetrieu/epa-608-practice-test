@@ -102,7 +102,12 @@ export async function GET(request: NextRequest) {
         { status: 502, headers },
       )
     }
-    return NextResponse.json({ url: data.url, id: data.id }, { headers })
+    // client_secret = the session token the embed SDK needs for INLINE mounting
+    // (createInline). url/id are kept for the overlay + hosted-redirect fallbacks.
+    return NextResponse.json(
+      { url: data.url, id: data.id, clientSecret: data.client_secret ?? null },
+      { headers },
+    )
   } catch (err) {
     console.error('Polar session route error:', err)
     return NextResponse.json({ error: 'network_error' }, { status: 502, headers })

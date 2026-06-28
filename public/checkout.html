@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://api.polar.sh" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <!-- Official Polar embedded-checkout SDK (overlay stays on THIS page).
-         Pinned to 0.3.x: it exposes window.Polar.EmbedCheckout (verified shape). -->
+    <!-- Official Polar embedded-checkout SDK. Pinned to 0.3.x: exposes
+         window.Polar.EmbedCheckout with create() (overlay) + createInline(). -->
     <script defer src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.3/dist/embed.global.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT"></script>
@@ -29,7 +29,6 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
 
-        /* Top bar */
         .topbar { border-bottom:1px solid var(--line); background:#fff; }
         .topbar .inner { max-width:1080px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; gap:10px; }
         .logo { width:34px; height:34px; border-radius:9px; background:var(--navy); color:#fff; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
@@ -37,12 +36,10 @@
         .brand-name span { color:var(--muted); font-weight:500; }
         .topbar .secure-pill { margin-left:auto; font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; }
 
-        /* Layout */
         .wrap { max-width:1080px; margin:0 auto; padding:44px 28px 72px; }
         .grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:48px; align-items:start; }
         @media (max-width:880px) { .wrap { padding:28px 18px 56px; } .grid { grid-template-columns:1fr; gap:32px; } }
 
-        /* Left — order summary */
         .eyebrow { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--cta-dk); }
         h1 { font-size:30px; line-height:1.15; font-weight:800; letter-spacing:-.025em; margin-top:8px; }
         .lead { color:var(--muted); font-size:15.5px; margin-top:12px; max-width:42ch; }
@@ -64,20 +61,18 @@
         .reassure { margin-top:24px; display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:var(--muted); }
         .reassure span { display:flex; align-items:center; gap:6px; }
 
-        /* Right — payment */
         .pay-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:10px; box-shadow:0 1px 3px rgba(0,0,0,.04), 0 18px 48px rgba(2,6,23,.08); position:sticky; top:24px; }
         .pay-head { padding:14px 16px 6px; }
         .pay-head h2 { font-size:15px; font-weight:700; }
         .pay-head p { font-size:13px; color:var(--muted); margin-top:2px; }
 
-        #pay-area { padding:26px 16px 22px; text-align:center; min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; }
+        #pay-area { padding:6px; position:relative; min-height:560px; }
+        #pay-loading { position:absolute; inset:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:#fff; border-radius:12px; z-index:2; text-align:center; color:var(--muted); font-size:14px; }
         .spin { display:inline-block; width:26px; height:26px; border:3px solid var(--line); border-top-color:var(--cta); border-radius:50%; animation:s .8s linear infinite; }
         @keyframes s { to { transform:rotate(360deg); } }
-        #pay-msg { font-size:14px; color:var(--muted); }
-        .open-btn { background:var(--cta); color:#fff; border:0; border-radius:11px; font-weight:800; font-size:15.5px;
-                    padding:14px 26px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.08); }
-        .open-btn:hover { background:var(--cta-dk); }
-        #pay-error { display:none; color:#b91c1c; font-size:14px; }
+        #pay-inline { width:100%; min-height:560px; border-radius:12px; overflow:hidden; }
+        #pay-inline iframe { width:100% !important; border:0; display:block; }
+        #pay-error { display:none; text-align:center; color:#b91c1c; font-size:14px; padding:60px 16px; }
         #pay-error a { color:var(--cta-dk); }
         .pay-foot { text-align:center; font-size:12.5px; color:#94a3b8; padding:8px 16px 14px; }
 
@@ -129,18 +124,20 @@
             </div>
         </div>
 
-        <!-- RIGHT: payment (Polar opens as an overlay over this page) -->
+        <!-- RIGHT: payment mounts INLINE here (no popup, no leaving the page) -->
         <div class="right">
             <div class="pay-card">
                 <div class="pay-head">
                     <h2>Complete your purchase</h2>
-                    <p>Card, Apple&nbsp;Pay &amp; more · enter a promo code in the window.</p>
+                    <p>Card, Apple&nbsp;Pay &amp; more · enter a promo code below.</p>
                 </div>
                 <div id="pay-area">
-                    <div id="pay-spin"><span class="spin"></span></div>
-                    <p id="pay-msg">Opening secure checkout&hellip;</p>
-                    <button id="open-btn" class="open-btn" type="button" style="display:none;">Open secure checkout →</button>
-                    <p id="pay-error">Couldn’t open the in-page checkout. <a id="fallback-link" href="/api/polar/checkout">Continue to secure checkout →</a></p>
+                    <div id="pay-loading">
+                        <span class="spin"></span>
+                        <span id="pay-msg">Loading secure checkout&hellip;</span>
+                    </div>
+                    <div id="pay-inline"></div>
+                    <p id="pay-error">Couldn’t load the in-page checkout. <a id="fallback-link" href="/api/polar/checkout">Continue to secure checkout →</a></p>
                 </div>
                 <div class="pay-foot">Powered by Polar · Merchant of Record</div>
             </div>
@@ -159,54 +156,59 @@
 
 <script>
 (function () {
-    var hostedUrl = null;                       // polar.sh hosted page, once we have a session
-    var fellBack  = false;
+    var clientSecret = null, hostedUrl = null, coId = '', fellBack = false;
     function fallback() { if (fellBack) return; fellBack = true; window.location.replace(hostedUrl || '/api/polar/checkout'); }
 
-    var spin   = document.getElementById('pay-spin');
-    var msg    = document.getElementById('pay-msg');
-    var openEl = document.getElementById('open-btn');
-    var errEl  = document.getElementById('pay-error');
-    function setMsg(t) { if (msg) msg.textContent = t; }
-    function showButton(label) {
-        if (spin) spin.style.display = 'none';
-        if (openEl) { openEl.textContent = label; openEl.style.display = 'inline-block'; }
-    }
+    var loading  = document.getElementById('pay-loading');
+    var inlineEl = document.getElementById('pay-inline');
+    function hideLoading() { if (loading) loading.style.display = 'none'; }
 
     // The global script exposes window.Polar.EmbedCheckout (NOT PolarEmbedCheckout).
     function getEmbed() { return window.Polar && window.Polar.EmbedCheckout; }
     function whenSDKReady(cb, tries) {
         tries = tries || 0;
         if (getEmbed()) return cb();
-        if (tries > 50) return fallback();       // ~5s waiting for the CDN script
+        if (tries > 50) return fallback();          // ~5s waiting for the CDN script
         setTimeout(function () { whenSDKReady(cb, tries + 1); }, 100);
     }
 
-    // Safety net: if the embed hasn't opened in 9s, use the hosted redirect so a
-    // sale is never blocked by a slow/broken SDK or network.
-    var guard = setTimeout(fallback, 9000);
+    // Safety net: if nothing has mounted in 10s, use the hosted redirect.
+    var guard = setTimeout(fallback, 10000);
 
-    function openOverlay() {
-        if (!hostedUrl) return;
-        setMsg('Opening secure checkout…');
-        if (spin) spin.style.display = 'inline-block';
-        if (openEl) openEl.style.display = 'none';
-        getEmbed().create(hostedUrl, { theme: 'light' })
-            .then(function (checkout) {
-                clearTimeout(guard);
-                setMsg('Complete your payment in the secure window.');
-                if (spin) spin.style.display = 'none';
-                checkout.addEventListener('success', function (ev) {
-                    if (!ev.detail || ev.detail.redirect !== true) {
-                        window.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(window.__coId || '');
-                    }
+    function onSuccess(ev) {
+        // redirect:true → Polar navigates to success_url; else we go there ourselves.
+        if (!ev || !ev.detail || ev.detail.redirect !== true) {
+            window.location.href = '/api/polar/success?checkout_id=' + encodeURIComponent(coId);
+        }
+    }
+
+    function start() {
+        var E = getEmbed();
+        // 1) INLINE — mount the checkout right inside the card (preferred).
+        if (E.createInline && clientSecret) {
+            try {
+                var inst = E.createInline({
+                    sessionToken: clientSecret,
+                    element: inlineEl,
+                    theme: 'light',
+                    onLoaded: function () { clearTimeout(guard); hideLoading(); },
                 });
-                checkout.addEventListener('close', function () {
-                    setMsg('Checkout closed.');
-                    showButton('Reopen checkout →');
-                });
-            })
-            .catch(fallback);
+                if (inst && inst.addEventListener) inst.addEventListener('success', onSuccess);
+                return;
+            } catch (e) { /* fall through */ }
+        }
+        // 2) Overlay — still in-page, if inline isn't available.
+        if (E.create && hostedUrl) {
+            try {
+                E.create(hostedUrl, { theme: 'light' })
+                    .then(function (c) { clearTimeout(guard); hideLoading();
+                        if (c && c.addEventListener) c.addEventListener('success', onSuccess); })
+                    .catch(fallback);
+                return;
+            } catch (e) { /* fall through */ }
+        }
+        // 3) Hosted redirect — last resort, never blocks a sale.
+        fallback();
     }
 
     fetch('/api/polar/session?origin=' + encodeURIComponent(location.origin),
@@ -215,13 +217,10 @@
         .then(function (d) {
             if (d && d.redirect) { clearTimeout(guard); window.location.replace(d.redirect); return; }  // login / already-Pro
             if (!d || !d.url) { fallback(); return; }
-            hostedUrl = d.url;
-            window.__coId = d.id || '';
-            whenSDKReady(openOverlay);
+            hostedUrl = d.url; clientSecret = d.clientSecret || null; coId = d.id || '';
+            whenSDKReady(start);
         })
         .catch(fallback);
-
-    if (openEl) openEl.addEventListener('click', openOverlay);
 })();
 </script>
 
