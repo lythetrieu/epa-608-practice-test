@@ -6,7 +6,9 @@
 // are set (e.g. NEXT_PUBLIC_APP_URL=https://app.epa608practicetest.net once the
 // subdomain is live on Vercel).
 
-const stripSlash = (u: string) => u.replace(/\/+$/, '')
+// Trim first: env vars sometimes arrive with a stray trailing newline/space,
+// which silently corrupts success_url sent to Polar and any string-built URL.
+const stripSlash = (u: string) => u.trim().replace(/\/+$/, '')
 
 export const APP_URL = stripSlash(process.env.NEXT_PUBLIC_APP_URL ?? 'https://epa608practicetest.net')
 export const MARKETING_URL = stripSlash(process.env.NEXT_PUBLIC_MARKETING_URL ?? 'https://epa608practicetest.net')
