@@ -242,10 +242,14 @@ export default function SettingsClient({
         </form>
       </section>
 
-      {/* Password Section - only for email users */}
-      {!isOAuthUser && (
+      {/* Password — always available: email users change it; OAuth-only users
+          can SET one (so they can also sign in with email + password). */}
+      {(
         <section className="bg-white border border-gray-200 rounded-xl p-5">
-          <h2 className="text-base font-bold text-gray-900 mb-4">Change Password</h2>
+          <h2 className="text-base font-bold text-gray-900 mb-4">{isOAuthUser ? 'Set a Password' : 'Change Password'}</h2>
+          {isOAuthUser && (
+            <p className="mb-4 -mt-2 text-sm text-gray-500">You signed in with Google. Set a password to also sign in with your email.</p>
+          )}
           <form onSubmit={handlePasswordChange} className="space-y-4">
             <div>
               <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
