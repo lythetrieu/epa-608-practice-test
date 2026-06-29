@@ -429,6 +429,13 @@ export default function StudyPathClient() {
                   </div>
                 </div>
 
+                {(conceptProg.bestScore ?? 0) > 0 && (
+                  <p className="mt-3 text-xs font-medium text-slate-400">
+                    Best score <span className="font-bold text-slate-600 tabular-nums">{conceptProg.bestScore}%</span>
+                    {(conceptProg.attempts ?? 0) > 1 ? ` · ${conceptProg.attempts} attempts` : ''}
+                  </p>
+                )}
+
                 <h2 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
                   {effectiveStatus === 'mastered' ? 'Concept mastered.' : effectiveStatus === 'reviewed' ? 'Pass 1 of 2.' : result.passed ? 'Nicely done.' : 'Almost there.'}
                 </h2>
@@ -679,10 +686,13 @@ export default function StudyPathClient() {
                     <div className="flex items-center gap-3">
                       <div className="min-w-0">
                         <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
-                        <p className="mt-0.5 text-xs text-slate-400">10 questions · pass 8/10</p>
+                        <p className="mt-0.5 text-xs text-slate-400">
+                          {progress[c.id]?.bestScore ? `Best ${progress[c.id].bestScore}%` : '10 questions · pass 8/10'}
+                          {progress[c.id]?.attempts ? ` · ${progress[c.id].attempts} ${progress[c.id].attempts === 1 ? 'try' : 'tries'}` : ''}
+                        </p>
                       </div>
                       <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">
-                        <Check size={12} strokeWidth={3} /> Cleared
+                        <Check size={12} strokeWidth={3} /> {progress[c.id]?.bestScore ? `${progress[c.id].bestScore}%` : 'Cleared'}
                       </span>
                     </div>
                   </button>
