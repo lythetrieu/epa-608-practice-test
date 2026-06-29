@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Check, X, ChevronRight, Lock, LayoutGrid, Bot, Trophy, ArrowRight } from 'lucide-react'
+import { ArrowLeft, Check, X, ChevronRight, Lock, LayoutGrid, Bot, Trophy, ArrowRight, Lightbulb, AlertTriangle, BookOpen } from 'lucide-react'
 import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
+import { CONCEPT_VISUALS } from './concept-visuals'
 
 // Per-question AI tutor — on-demand "explain simply" for any reviewed question.
 // Mirrors the PracticeClient pattern so every learning surface has the same tutor.
@@ -209,7 +210,7 @@ export default function StudyPathClient() {
   const openConcept = useCallback((prefix: string, conceptId: string) => {
     setActiveConceptPrefix(prefix)
     setActiveConceptId(conceptId)
-    setQuizPhase('quiz') // straight into the quiz — no lesson gate
+    setQuizPhase('lesson') // teach first (visual + key facts), then "Start quiz"
     setQuiz(null)
     setQuizIdx(0)
     setAnswers({})
@@ -321,6 +322,77 @@ export default function StudyPathClient() {
     return (
       <div className="min-h-screen flex justify-center px-3 sm:px-4 py-6" style={{ backgroundColor: '#f8fafc', backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.045) 1px, transparent 0)', backgroundSize: '22px 22px' }}>
         <div className="w-full max-w-2xl">
+
+          {/* LESSON — teach the concept before the quiz */}
+          {quizPhase === 'lesson' && (
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_10px_30px_-14px_rgba(15,23,42,.18)]">
+              <header className="border-b border-slate-100 px-5 py-4 sm:px-7">
+                <div className="flex items-center justify-between gap-3">
+                  <button onClick={closeModal} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900">
+                    <ArrowLeft size={16} /> Exit
+                  </button>
+                  <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide" style={{ background: '#eef2ff', color: '#4338ca' }}>
+                    <BookOpen size={13} /> Lesson
+                  </span>
+                </div>
+              </header>
+
+              <div className="px-5 py-6 sm:px-7 sm:py-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">{quiz.concept.category}</p>
+                <h2 className="mt-1 text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">{quiz.concept.title}</h2>
+
+                {CONCEPT_VISUALS[activeConceptId!] && (
+                  <div className="mt-5 overflow-x-auto rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                    {CONCEPT_VISUALS[activeConceptId!]()}
+                  </div>
+                )}
+
+                {quiz.lesson && <p className="mt-5 text-[15px] leading-relaxed text-slate-700">{quiz.lesson}</p>}
+
+                {quiz.keyNumbers?.length > 0 && (
+                  <div className="mt-5">
+                    <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Key numbers</p>
+                    <div className="flex flex-wrap gap-2">
+                      {quiz.keyNumbers.map((n, i) => (
+                        <span key={i} className="rounded-lg bg-indigo-50 px-2.5 py-1 text-[13px] font-semibold text-indigo-700">{n}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {quiz.memoryTrick && (
+                  <div className="mt-4 flex gap-3 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
+                    <Lightbulb size={18} className="mt-0.5 shrink-0 text-amber-500" />
+                    <p className="text-[14px] leading-relaxed text-amber-900"><span className="font-bold">Memory trick:</span> {quiz.memoryTrick}</p>
+                  </div>
+                )}
+
+                {quiz.examWarning && (
+                  <div className="mt-3 flex gap-3 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3">
+                    <AlertTriangle size={18} className="mt-0.5 shrink-0 text-rose-500" />
+                    <p className="text-[14px] leading-relaxed text-rose-900"><span className="font-bold">Exam watch-out:</span> {quiz.examWarning}</p>
+                  </div>
+                )}
+
+                {!quiz.lesson && quiz.facts?.length > 0 && (
+                  <ul className="mt-5 space-y-2">
+                    {quiz.facts.slice(0, 8).map((f, i) => (
+                      <li key={i} className="flex gap-2.5 text-[14px] leading-relaxed text-slate-700">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: A }} />{f}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <footer className="border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-7">
+                <button onClick={() => setQuizPhase('quiz')} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow transition hover:brightness-110" style={{ background: A }}>
+                  Start quiz — 10 questions <ArrowRight size={16} />
+                </button>
+                <p className="mt-2 text-center text-xs text-slate-400">Pass 8 of 10 to clear this level</p>
+              </footer>
+            </div>
+          )}
 
           {/* QUIZ */}
           {quizPhase === 'quiz' && q && (
