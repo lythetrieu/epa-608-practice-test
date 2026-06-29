@@ -217,7 +217,9 @@ export default function StudyPathClient() {
       if (passed) {
         existing.passCount = (existing.passCount || 0) + 1
         existing.lastPassed = new Date().toISOString()
-        existing.status = existing.passCount >= 2 ? 'mastered' : 'reviewed'
+        // One clean pass (8/10) clears the level → unlocks the next + shows
+        // "Next level". (Spaced-repetition 'review' after 3 days still applies.)
+        existing.status = 'mastered'
       } else {
         existing.status = 'weak'
         existing.passCount = 0
@@ -471,7 +473,7 @@ export default function StudyPathClient() {
   // MAIN VIEW
   // ═══════════════════════════════════════════════════════════════════════════
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
-  const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' }
+  const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' || st === 'reviewed' }
 
   const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[]; scene: [string, string, string] }> = {
     'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'], scene: ['#7dd3fc','#bae6fd','#e0f2fe'] },
