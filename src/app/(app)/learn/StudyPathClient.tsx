@@ -90,6 +90,9 @@ type ConceptProgress = {
   status: 'pending' | 'reviewed' | 'mastered' | 'weak'
   passCount: number
   lastPassed: string | null
+  bestScore?: number
+  lastScore?: number | null
+  attempts?: number
 }
 
 function getProgress(): Record<string, ConceptProgress> {
@@ -138,11 +141,34 @@ export default function StudyPathClient() {
   const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
 
   useEffect(() => {
-    setProgress(getProgress())
+    const local = getProgress()
+    setProgress(local)
     fetch('/api/public/study-path')
       .then(r => r.json())
       .then(data => { setConcepts(data.concepts || []); setLoading(false) })
       .catch(() => setLoading(false))
+
+    // Per-account progress (synced across devices). Server rows win over the
+    // local cache; the merged result is written back to localStorage for offline.
+    fetch('/api/study-path/progress')
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => {
+        if (!d || !Array.isArray(d.progress)) return
+        const merged: Record<string, ConceptProgress> = { ...local }
+        for (const row of d.progress) {
+          merged[row.concept_id] = {
+            status: row.status,
+            passCount: row.pass_count ?? 0,
+            lastPassed: row.last_passed ?? null,
+            bestScore: row.best_score ?? 0,
+            lastScore: row.last_score ?? null,
+            attempts: row.attempts ?? 0,
+          }
+        }
+        setProgress(merged)
+        saveProgress(merged)
+      })
+      .catch(() => {})
   }, [])
 
   // Ordered flat list: Core → Type I → Type II → Type III
@@ -225,9 +251,26 @@ export default function StudyPathClient() {
         existing.passCount = 0
       }
 
+      existing.lastScore = data.percentage
+      existing.bestScore = Math.max(existing.bestScore ?? 0, data.percentage)
+      existing.attempts = (existing.attempts ?? 0) + 1
       p[conceptId] = existing
       setProgress(p)
       saveProgress(p)
+
+      // Persist this attempt to the account (per-username, synced across devices).
+      fetch('/api/study-path/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          conceptId,
+          status: existing.status,
+          passCount: existing.passCount,
+          lastPassed: existing.lastPassed,
+          lastScore: data.percentage,
+        }),
+      }).catch(() => {})
+
       setResult({ percentage: data.percentage, passed, results: data.results })
       setQuizPhase('result')
     } catch {
