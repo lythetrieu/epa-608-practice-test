@@ -284,7 +284,7 @@ export default function StudyPathClient() {
             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_10px_30px_-14px_rgba(15,23,42,.18)]">
               <header className="border-b border-slate-100 px-5 py-4 sm:px-7">
                 <div className="flex items-center justify-between gap-3">
-                  <button onClick={closeModal} className="-ml-1.5 inline-flex items-center gap-1 rounded-lg px-1.5 py-1 text-sm font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50">
+                  <button onClick={closeModal} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900">
                     <ArrowLeft size={16} /> Exit
                   </button>
                   <p className="min-w-0 flex-1 truncate text-center text-sm font-semibold text-slate-900">{quiz.concept.category} · {quiz.concept.title}</p>
