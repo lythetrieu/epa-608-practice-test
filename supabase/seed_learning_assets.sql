@@ -1,0 +1,69 @@
+-- ============================================================================
+-- SEED: learning_assets  (video / pdf / infographic study materials)
+-- ----------------------------------------------------------------------------
+-- HOW TO USE:
+--   1. Run migration 20260630_learning_assets_engagement_events.sql FIRST.
+--   2. For each study material, fill in the columns below and run in Supabase
+--      SQL Editor. You can run this file as many times as you like — re-running
+--      inserts new rows, so only paste the rows you haven't added yet.
+--
+-- RULES:
+--   • url MUST be an ABSOLUTE URL (https://...), never a relative path —
+--     the iOS/Android app loads it directly. Use your CDN / storage URL.
+--   • type is one of: 'video' | 'pdf' | 'infographic'
+--   • concept_id MUST match an existing concept (full list at the bottom).
+--   • duration_sec: only for video (seconds). NULL for pdf/infographic.
+--   • is_pro: true = only Pro users see it; false = everyone. Default false.
+--   • sort_order: lower shows first within a concept (default 0).
+--
+-- TIP: thumbnail_url is optional (used for the video card image). NULL is fine.
+-- ============================================================================
+
+-- ---- EXAMPLE ROWS (uncomment + edit, or copy the pattern) -------------------
+-- INSERT INTO public.learning_assets
+--   (concept_id, type, title, url, thumbnail_url, duration_sec, sort_order, is_pro)
+-- VALUES
+--   ('core-ozone', 'video',
+--    'How CFCs Destroy the Ozone Layer',
+--    'https://cdn.epa608practicetest.net/videos/ozone-mechanism.mp4',
+--    'https://cdn.epa608practicetest.net/thumbs/ozone.jpg',
+--    420, 0, false),
+--
+--   ('core-ozone', 'pdf',
+--    'Ozone & Refrigerants — One-Page Cheat Sheet',
+--    'https://cdn.epa608practicetest.net/pdfs/ozone-cheatsheet.pdf',
+--    NULL, 1, false),
+--
+--   ('core-ozone', 'infographic',
+--    'Refrigerant Numbering System (Infographic)',
+--    'https://cdn.epa608practicetest.net/img/refrigerant-numbers.png',
+--    NULL, 2, false);
+-- ----------------------------------------------------------------------------
+
+
+-- ---- YOUR ROWS GO HERE ------------------------------------------------------
+-- Uncomment the INSERT below and add your real rows. While it stays commented,
+-- running this file does NOTHING (no error) — safe to run as-is.
+--
+-- INSERT INTO public.learning_assets
+--   (concept_id, type, title, url, thumbnail_url, duration_sec, sort_order, is_pro)
+-- VALUES
+--   ('core-ozone', 'video', 'Title here', 'https://cdn.../file.mp4', NULL, 300, 0, false),
+--   ('core-ozone', 'pdf',   'Title here', 'https://cdn.../file.pdf', NULL, NULL, 1, false);
+
+
+-- ============================================================================
+-- VALID concept_id VALUES (29 concepts — Core + Type I/II/III):
+-- ----------------------------------------------------------------------------
+-- CORE:    core-ozone, core-refrigerants, core-blends, core-oils, core-cycle,
+--          core-regulations, core-recovery, core-dehydration, core-equipment,
+--          core-safety, core-supplemental
+-- TYPE I:  t1-regulations, t1-recovery, t1-servicing, t1-safety, t1-supplemental
+-- TYPE II: t2-intro, t2-leak-repair, t2-recovery, t2-evac-charging,
+--          t2-repairs-safety, t2-supplemental
+-- TYPE III: t3-intro, t3-leak-detection, t3-leak-repair, t3-recovery,
+--          t3-evac-charging, t3-repairs-safety, t3-supplemental
+-- ============================================================================
+
+-- Verify after inserting:
+--   SELECT concept_id, type, title, url FROM public.learning_assets ORDER BY concept_id, sort_order;

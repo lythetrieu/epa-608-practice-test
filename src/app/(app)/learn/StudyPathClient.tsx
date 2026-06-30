@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { ArrowLeft, Check, X, ChevronRight, Lock, LayoutGrid, Bot, Trophy, ArrowRight, Lightbulb, AlertTriangle, BookOpen } from 'lucide-react'
 import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
 import { CONCEPT_VISUALS } from './concept-visuals'
+import { track } from '@/lib/track'
+import StudyMaterials from './StudyMaterials'
 
 // Per-question AI tutor — on-demand "explain simply" for any reviewed question.
 // Mirrors the PracticeClient pattern so every learning surface has the same tutor.
@@ -141,6 +143,20 @@ export default function StudyPathClient() {
   const [scoring, setScoring] = useState(false)
   const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
 
+  // One id per study session (generated once on mount) — stitches telemetry
+  // events together server-side. Memory only; not persisted.
+  const sessionIdRef = useRef<string>('')
+  if (!sessionIdRef.current) {
+    sessionIdRef.current =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `s_${Date.now()}_${Math.random().toString(36).slice(2)}`
+  }
+
+  // Per-question start timestamps (ms) for the active quiz, keyed by question id.
+  // Used to enrich /api/practice/track with timeMs. Best-effort; never required.
+  const qStartRef = useRef<Record<string, number>>({})
+
   useEffect(() => {
     const local = getProgress()
     setProgress(local)
@@ -171,6 +187,14 @@ export default function StudyPathClient() {
       })
       .catch(() => {})
   }, [])
+
+  // Stamp when each question first becomes visible so we can report timeMs.
+  // Only stamps once per question id (first view wins); cheap and best-effort.
+  useEffect(() => {
+    if (quizPhase !== 'quiz' || !quiz) return
+    const q = quiz.questions[quizIdx]
+    if (q && qStartRef.current[q.id] == null) qStartRef.current[q.id] = Date.now()
+  }, [quizPhase, quiz, quizIdx])
 
   // Ordered flat list: Core → Type I → Type II → Type III
   const sections = ['Core', 'Type I', 'Type II', 'Type III']
@@ -215,6 +239,10 @@ export default function StudyPathClient() {
     setQuizIdx(0)
     setAnswers({})
     setResult(null)
+    qStartRef.current = {}
+
+    // Telemetry: a lesson was opened. Fire-and-forget.
+    track('lesson_start', { conceptId, sessionId: sessionIdRef.current })
 
     fetch('/api/public/study-path', {
       method: 'POST',
@@ -259,19 +287,37 @@ export default function StudyPathClient() {
       setProgress(p)
       saveProgress(p)
 
+      // Telemetry: the quiz was submitted. Fire-and-forget.
+      track('quiz_submit', {
+        conceptId,
+        sessionId: sessionIdRef.current,
+        payload: { score: data.percentage, passed },
+      })
+
       // Record each question's result to user_progress so Weak Spots +
       // per-question stats include Study Path activity. Same question-id space
       // as the practice test (IDs come from the questions table). Fire-and-forget,
       // fail-open — never blocks the result screen for a logged-out/edge case.
+      // Enriched with OPTIONAL userAnswer / timeMs / attemptNo / source — the
+      // track route strips unknown fields if it hasn't been upgraded yet, so
+      // this stays backward-compatible.
       if (Array.isArray(data.results) && data.results.length > 0) {
+        const attemptNo = existing.attempts // already incremented above for this submit
         fetch('/api/practice/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            results: data.results.map((r: { questionId: string; correct: boolean }) => ({
-              questionId: r.questionId,
-              correct: r.correct,
-            })),
+            results: data.results.map((r: { questionId: string; correct: boolean; userAnswer?: string | null }) => {
+              const started = qStartRef.current[r.questionId]
+              return {
+                questionId: r.questionId,
+                correct: r.correct,
+                userAnswer: r.userAnswer ?? answers[r.questionId] ?? null,
+                ...(typeof started === 'number' ? { timeMs: Math.max(0, Date.now() - started) } : {}),
+                attemptNo,
+                source: 'study_path',
+              }
+            }),
           }),
         }).catch(() => {})
       }
@@ -299,9 +345,11 @@ export default function StudyPathClient() {
   }, [quiz, answers, activeConceptId, progress, scoring])
 
   const closeModal = useCallback(() => {
+    // Telemetry: leaving the concept. Fire-and-forget.
+    if (activeConceptId) track('exit', { conceptId: activeConceptId, sessionId: sessionIdRef.current })
     setActiveConceptPrefix(null)
     setActiveConceptId(null)
-  }, [])
+  }, [activeConceptId])
 
   if (loading) {
     return (
@@ -400,6 +448,10 @@ export default function StudyPathClient() {
                     ))}
                   </ul>
                 )}
+
+                {/* Optional video / PDF / infographic for this concept. Renders
+                    nothing when there are no seeded assets (graceful default). */}
+                <StudyMaterials conceptId={activeConceptId!} />
               </div>
 
               <footer className="border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-7">

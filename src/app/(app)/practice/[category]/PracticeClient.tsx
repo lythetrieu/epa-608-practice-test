@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { getOfflineQuestions, isOffline as checkOffline } from '@/lib/offline'
 import { Bot, BookOpen, Target, ArrowRight } from 'lucide-react'
@@ -137,6 +137,11 @@ export function PracticeClient({ category }: { category: string }) {
   const [offlineMode, setOfflineMode] = useState(false)
   const [showReview, setShowReview] = useState(false)
 
+  // Per-question answer + timing capture for enriching /api/practice/track.
+  // Best-effort: { questionId: { userAnswer, timeMs } }. Never blocks the UI.
+  const answerMetaRef = useRef<Record<string, { userAnswer: string; timeMs: number }>>({})
+  const qShownAtRef = useRef<number>(Date.now())
+
   // Load questions with weak topic weighting
   useEffect(() => {
     const count = category === 'Universal' ? 100 : 25
@@ -187,8 +192,12 @@ export function PracticeClient({ category }: { category: string }) {
   const q = questions[currentIdx]
   const isCorrect = selectedAnswer === q?.answer_text
 
+  // Reset the question timer whenever a new question is shown.
+  useEffect(() => { qShownAtRef.current = Date.now() }, [currentIdx])
+
   const handleSelect = useCallback((option: string) => {
     if (locked) return
+    if (q) answerMetaRef.current[q.id] = { userAnswer: option, timeMs: Math.max(0, Date.now() - qShownAtRef.current) }
     setSelectedAnswer(option)
     setLocked(true)
     setAnsweredCount(prev => prev + 1)
@@ -213,13 +222,22 @@ export function PracticeClient({ category }: { category: string }) {
       const weakPrefixes = [...new Set(wrongAnswers.map(w => w.subtopicPrefix))]
       if (weakPrefixes.length > 0) saveWeakTopics(weakPrefixes)
 
-      // Save to user_progress (fire and forget)
+      // Save to user_progress (fire and forget). Enriched with OPTIONAL
+      // userAnswer / timeMs / source — unknown fields are stripped by the track
+      // route if it hasn't been upgraded yet, so this stays backward-compatible.
       questions.forEach(qu => {
         const wasCorrect = !wrongAnswers.find(w => w.id === qu.id)
+        const meta = answerMetaRef.current[qu.id]
         fetch('/api/practice/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ questionId: qu.id, correct: wasCorrect }),
+          body: JSON.stringify({
+            questionId: qu.id,
+            correct: wasCorrect,
+            ...(meta?.userAnswer ? { userAnswer: meta.userAnswer } : {}),
+            ...(meta && typeof meta.timeMs === 'number' ? { timeMs: meta.timeMs } : {}),
+            source: 'practice',
+          }),
         }).catch(() => {})
       })
 
