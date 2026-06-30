@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { PracticeClient } from './PracticeClient'
+import { TestClient } from '../../test/[category]/TestClient'
 
 const VALID = ['core', 'type-1', 'type-2', 'type-3', 'universal']
 const CATEGORY_MAP: Record<string, string> = {
@@ -11,5 +11,6 @@ export default async function PracticePage({ params }: { params: Promise<{ categ
   const { category: slug } = await params
   if (!VALID.includes(slug)) notFound()
   const category = CATEGORY_MAP[slug]
-  return <PracticeClient category={category} />
+  // Practice = unified engine, untimed, inline explanations.
+  return <TestClient category={category} timed={false} showExplanations />
 }

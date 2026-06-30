@@ -26,11 +26,16 @@ export async function POST(
   if (!session) return NextResponse.json({ error: 'Session not found' }, { status: 404 })
   if (session.submitted_at) return NextResponse.json({ error: 'Already submitted' }, { status: 409 })
 
-  // Server-side timer enforcement (30s grace)
-  const elapsed = (Date.now() - new Date(session.started_at).getTime()) / 1000
-  if (elapsed > session.time_limit_secs + 30) {
-    await supabase.from('test_sessions').update({ is_expired: true }).eq('id', session.id)
-    return NextResponse.json({ error: 'Time expired' }, { status: 410 })
+  // Server-side timer enforcement (30s grace).
+  // Untimed practice sessions store time_limit_secs as null or sentinel 0 —
+  // skip all time-based enforcement for them (no auto-fail, no "time expired").
+  const isUntimed = session.time_limit_secs == null || session.time_limit_secs === 0
+  if (!isUntimed) {
+    const elapsed = (Date.now() - new Date(session.started_at).getTime()) / 1000
+    if (elapsed > session.time_limit_secs + 30) {
+      await supabase.from('test_sessions').update({ is_expired: true }).eq('id', session.id)
+      return NextResponse.json({ error: 'Time expired' }, { status: 410 })
+    }
   }
 
   const body = await request.json().catch(() => ({}))

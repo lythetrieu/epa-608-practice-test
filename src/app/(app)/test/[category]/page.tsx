@@ -35,13 +35,11 @@ export default async function TestPage({ params, searchParams }: {
   }
 
   if (mode === 'test' || mode === 'practice') {
+    const { TestClient } = await import('./TestClient')
     if (mode === 'test') {
-      const { TestClient } = await import('./TestClient')
-      return <TestClient category={category} />
-    } else {
-      const { PracticeClient } = await import('../../practice/[category]/PracticeClient')
-      return <PracticeClient category={category} />
+      return <TestClient category={category} timed showExplanations={false} />
     }
+    return <TestClient category={category} timed={false} showExplanations />
   }
 
   return <ModeSelector slug={slug} category={category} isPro={limits.hasTimedMode} />

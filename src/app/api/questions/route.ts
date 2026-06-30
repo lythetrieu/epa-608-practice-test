@@ -7,7 +7,7 @@ import { z } from 'zod'
 const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
   count: z.number().int().min(1).max(100).default(25),
-  mode: z.enum(['random', 'blind-spot']).default('random'),
+  mode: z.enum(['random', 'blind-spot', 'practice']).default('random'),
 })
 
 export async function POST(request: NextRequest) {
@@ -33,8 +33,9 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
 
-  // All categories open for all tiers (Universal included)
-  if (category !== 'Universal' && !canAccessCategory(tier, category)) {
+  // Practice is the free mode — open to ALL tiers and ALL categories. No gating.
+  // For timed ('random') and 'blind-spot', enforce category access.
+  if (mode !== 'practice' && category !== 'Universal' && !canAccessCategory(tier, category)) {
     return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
   }
 
@@ -86,10 +87,15 @@ export async function POST(request: NextRequest) {
     [questionIds[i], questionIds[j]] = [questionIds[j], questionIds[i]]
   }
 
-  // Create session with server-side timer
-  // Universal = 3 hours (100 questions), others = 30 min (25 questions)
+  // Create session with server-side timer.
+  // Practice = untimed (sentinel 0; surfaced as null). Blind-spot category = 'Weak Spots'.
+  // Universal = 3 hours (100 questions), others = 30 min (25 questions).
   const sessionCategory = mode === 'blind-spot' ? 'Weak Spots' : category
-  const timeLimitSecs = category === 'Universal' ? 10800 : 1800
+  // Sentinel 0 means "untimed". Works on the current NOT NULL schema (no migration
+  // required); the submit route treats 0 (and null) as untimed. The accompanying
+  // migration makes the column nullable so null can be stored later if desired.
+  const timeLimitSecs =
+    mode === 'practice' ? 0 : category === 'Universal' ? 10800 : 1800
   const { data: session, error: sessionErr } = await supabase
     .from('test_sessions')
     .insert({
@@ -106,10 +112,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to create session' }, { status: 500 })
   }
 
-  // Fetch question data — NO answer_text, NO explanation
+  // Practice is open-book: include answer_text + explanation with each question.
+  // Timed/blind-spot leak NOTHING (no answer_text, no explanation).
+  const isPractice = mode === 'practice'
+  const selectCols = isPractice
+    ? 'id, category, subtopic_id, question, options, difficulty, question_type, answer_text, explanation'
+    : 'id, category, subtopic_id, question, options, difficulty, question_type'
+
   const { data: questions } = await admin
     .from('questions')
-    .select('id, category, subtopic_id, question, options, difficulty, question_type')
+    .select(selectCols)
     .in('id', questionIds)
 
   // Return in shuffled order with shuffled options per question
@@ -122,13 +134,17 @@ export async function POST(request: NextRequest) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]
     }
-    return { ...q, options: shuffledOptions }
+    return { ...(q as any), options: shuffledOptions }
   }).filter(Boolean)
+
+  // Normalize sentinel 0 → null so practice consumers see an untimed session.
+  const timeLimitOut: number | null =
+    session.time_limit_secs === 0 ? null : session.time_limit_secs
 
   return NextResponse.json({
     sessionId: session.id,
     startedAt: session.started_at,
-    timeLimitSecs: session.time_limit_secs,
+    timeLimitSecs: timeLimitOut,
     questions: ordered,
   })
 }
