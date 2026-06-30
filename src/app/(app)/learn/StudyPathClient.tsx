@@ -90,7 +90,7 @@ type QuizData = {
 }
 
 type ConceptProgress = {
-  status: 'pending' | 'reviewed' | 'mastered' | 'weak'
+  status: 'pending' | 'mastered' | 'weak'
   passCount: number
   lastPassed: string | null
   bestScore?: number
@@ -105,7 +105,7 @@ function getProgress(): Record<string, ConceptProgress> {
     const parsed = JSON.parse(raw)
     for (const k of Object.keys(parsed)) {
       if (typeof parsed[k] === 'string') {
-        parsed[k] = { status: parsed[k], passCount: parsed[k] === 'mastered' ? 2 : 0, lastPassed: null }
+        parsed[k] = { status: parsed[k] === 'reviewed' ? 'mastered' : parsed[k], passCount: (parsed[k] === 'mastered' || parsed[k] === 'reviewed') ? 1 : 0, lastPassed: null }
       }
     }
     return parsed
@@ -117,12 +117,11 @@ function saveProgress(p: Record<string, ConceptProgress>) {
 }
 
 function getEffectiveStatus(prog: ConceptProgress): string {
-  const status = prog.status || 'pending'
-  if (status === 'mastered' && prog.lastPassed) {
-    const days = (Date.now() - new Date(prog.lastPassed).getTime()) / 86400000
-    if (days > 3) return 'review'
-  }
-  return status
+  // One clean pass (8/10) clears a concept for good — there is no two-pass
+  // 'reviewed' step and no spaced-repetition revert. Legacy 'reviewed' rows
+  // from the old model count as mastered.
+  const status = (prog.status as string) || 'pending'
+  return status === 'reviewed' ? 'mastered' : status
 }
 
 export default function StudyPathClient() {
@@ -273,7 +272,7 @@ export default function StudyPathClient() {
         existing.passCount = (existing.passCount || 0) + 1
         existing.lastPassed = new Date().toISOString()
         // One clean pass (8/10) clears the level → unlocks the next + shows
-        // "Next level". (Spaced-repetition 'review' after 3 days still applies.)
+        // "Next level". A pass is permanent — no spaced-repetition revert.
         existing.status = 'mastered'
       } else {
         existing.status = 'weak'
@@ -377,7 +376,6 @@ export default function StudyPathClient() {
 
   if (activeConceptPrefix && quiz) {
     const conceptProg = progress[activeConceptId!] || { status: 'pending', passCount: 0, lastPassed: null }
-    const effectiveStatus = getEffectiveStatus(conceptProg)
     const nextLesson = getNextLesson()
     const A = '#4f46e5'
     const q = quiz.questions[quizIdx]
@@ -554,7 +552,7 @@ export default function StudyPathClient() {
             <div className="space-y-4">
               <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_10px_30px_-14px_rgba(15,23,42,.18)] px-6 py-8 text-center sm:px-10 sm:py-10">
                 <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide" style={result.passed ? { background: '#ecfdf5', color: '#059669' } : { background: '#fff1f2', color: '#e11d48' }}>
-                  {result.passed ? <><Check size={14} strokeWidth={3} /> {effectiveStatus === 'mastered' ? 'Level mastered' : 'Level passed'}</> : <><X size={14} strokeWidth={3} /> Keep going</>}
+                  {result.passed ? <><Check size={14} strokeWidth={3} /> Level cleared</> : <><X size={14} strokeWidth={3} /> Keep going</>}
                 </span>
 
                 <div className="relative mx-auto mt-6 h-40 w-40">
@@ -578,23 +576,21 @@ export default function StudyPathClient() {
                 )}
 
                 <h2 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
-                  {effectiveStatus === 'mastered' ? 'Concept mastered.' : effectiveStatus === 'reviewed' ? 'Pass 1 of 2.' : result.passed ? 'Nicely done.' : 'Almost there.'}
+                  {result.passed ? 'Concept mastered.' : 'Almost there.'}
                 </h2>
                 <p className="mx-auto mt-1.5 max-w-sm text-sm leading-relaxed text-slate-500">
-                  {effectiveStatus === 'mastered' ? <>You mastered <span className="font-semibold text-slate-700">{quiz.concept.title}</span> — it&apos;ll come back for review in a few days.</>
-                  : effectiveStatus === 'reviewed' ? <>One more clean pass on <span className="font-semibold text-slate-700">{quiz.concept.title}</span> to master it.</>
-                  : result.passed ? <>You cleared <span className="font-semibold text-slate-700">{quiz.concept.title}</span> — passing mark is 80%.</>
+                  {result.passed ? <>You mastered <span className="font-semibold text-slate-700">{quiz.concept.title}</span> — passing mark is 80%. It stays cleared.</>
                   : <>You need 80% to clear this level. Review the misses below and try again.</>}
                 </p>
 
                 <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row-reverse">
-                  {effectiveStatus === 'mastered' && nextLesson ? (
+                  {result.passed && nextLesson ? (
                     <button onClick={() => openConcept(nextLesson.subtopicPrefix, nextLesson.id)} className="btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
                       Next level <ArrowRight size={16} />
                     </button>
-                  ) : effectiveStatus !== 'mastered' ? (
+                  ) : !result.passed ? (
                     <button onClick={() => openConcept(activeConceptPrefix!, activeConceptId!)} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
-                      {effectiveStatus === 'reviewed' ? 'Take quiz 2' : 'Try again'}
+                      Try again
                     </button>
                   ) : (
                     <button onClick={closeModal} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
@@ -664,7 +660,7 @@ export default function StudyPathClient() {
   // MAIN VIEW
   // ═══════════════════════════════════════════════════════════════════════════
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
-  const isCleared = (c: Concept) => { const st = getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }); return st === 'mastered' || st === 'review' || st === 'reviewed' }
+  const isCleared = (c: Concept) => getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }) === 'mastered'
 
   const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[]; scene: [string, string, string] }> = {
     'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'], scene: ['#7dd3fc','#bae6fd','#e0f2fe'] },
