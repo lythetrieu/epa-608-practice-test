@@ -775,12 +775,19 @@ export default function StudyPathClient() {
                       <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
                       </span>
-                      <span className="text-[11px] font-medium text-slate-400">Next up</span>
+                      {(progress[c.id]?.attempts ?? 0) > 0 ? (
+                        <span className="text-[11px] font-bold tabular-nums" style={{ color: '#e11d48' }}>Last {progress[c.id]?.lastScore}% · need 80%</span>
+                      ) : (
+                        <span className="text-[11px] font-medium text-slate-400">Next up</span>
+                      )}
                     </div>
                     <h3 className="mt-2.5 text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
-                    <p className="mt-0.5 text-xs text-slate-500">10 questions · pass 8/10</p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      10 questions · pass 8/10
+                      {(progress[c.id]?.attempts ?? 0) > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${progress[c.id]?.attempts} ${progress[c.id]?.attempts === 1 ? 'try' : 'tries'}` : ''}
+                    </p>
                     <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: ACCENT }}>
-                      Start level <ArrowRight size={16} />
+                      {(progress[c.id]?.attempts ?? 0) > 0 ? 'Try again' : 'Start level'} <ArrowRight size={16} />
                     </button>
                   </div>
                 )}
