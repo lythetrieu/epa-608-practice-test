@@ -55,3 +55,11 @@ gen-link2.mjs
 public/node_modules/
 public/package-lock.json
 backups/
+public/package*.json
+public/vercel.json
+public/bank-stats.json
+public/questions-draft*.json
+public/questions-flagged.json
+public/questions-validated.json
+public/questions-needs-verify.json
+public/questions-legacy-backup.json

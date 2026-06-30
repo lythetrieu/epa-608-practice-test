@@ -172,7 +172,7 @@
     },
     {
       "source": "/changelog",
-      "destination": "/changelog.html",
+      "destination": "/",
       "statusCode": 301
     },
     {

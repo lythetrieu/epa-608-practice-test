@@ -35,11 +35,17 @@ function getTopicLabel(subtopicId) {
 }
 
 function fetchFromSupabase(category) {
-  var select = 'id,category,question,options,answer_text,explanation,subtopic_id';
+  var select = 'id,category,question,options,answer_text,explanation,subtopic_id,question_type';
   var base = SUPABASE_URL + '/rest/v1/questions?select=' + select;
+  // Exam-format only: this is a single-answer, immediate-feedback test (the real
+  // EPA 608 exam is single-choice). question_type=eq.single_choice excludes BOTH
+  // true_false AND multi_select — multi_select stores answer_text as a JSON array,
+  // which the single-click grader can never match, so those questions would lock
+  // as "wrong" on first click. (The app's /test API filters them out the same way;
+  // multi-select questions live in Study mode, which supports them.)
   var filter = category === 'Universal'
-    ? '&question=not.like.True or False*&limit=500'
-    : '&category=eq.' + encodeURIComponent(category) + '&question=not.like.True or False*&limit=500';
+    ? '&question_type=eq.single_choice&limit=500'
+    : '&category=eq.' + encodeURIComponent(category) + '&question_type=eq.single_choice&limit=500';
   return fetch(base + filter, {
     headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
   }).then(function(res) {
@@ -102,6 +108,18 @@ function initTestEngine(config) {
     expDiv.style.display = 'none';
     ansList.parentNode.insertBefore(expDiv, ansList.nextSibling);
   }
+  // "Check answer" button for multi-select questions (created once, hidden by default)
+  if (ansList && !document.getElementById('checkBtn')) {
+    var cb = document.createElement('button');
+    cb.id = 'checkBtn';
+    cb.textContent = 'Check answer';
+    cb.className = 'answer-btn';
+    cb.style.cssText = 'display:none;margin-top:12px;background:#0369a1;color:#fff;font-weight:700;cursor:pointer';
+    cb.onclick = function(){ if (window.ctrl) window.ctrl.checkMulti(); };
+    var expRef = document.getElementById('inlineExplanation');
+    if (expRef) expRef.parentNode.insertBefore(cb, expRef);
+    else ansList.parentNode.insertBefore(cb, ansList.nextSibling);
+  }
 
   var ctrl = {
     questions: [],
@@ -114,55 +132,108 @@ function initTestEngine(config) {
 
     init: function() {
       var self = this;
-      fetchQuestions(CATEGORY).then(function(data) {
-        var pool;
-        if (CATEGORY === 'Universal') {
-          var cats = [
-            { name: 'Core', n: 30 }, { name: 'Type I', n: 20 },
-            { name: 'Type II', n: 25 }, { name: 'Type III', n: 25 }
-          ];
-          var picked = [];
-          cats.forEach(function(c) {
-            var catPool = data.filter(function(q) { return q.category === c.name; });
-            shuffle(catPool);
-            picked = picked.concat(catPool.slice(0, c.n));
-          });
-          self.questions = shuffle(picked);
-        } else {
-          pool = data.filter(function(q) { return q.category === CATEGORY; });
-          self.questions = shuffle([].concat(pool)).slice(0, QUESTIONS_PER_TEST);
-        }
-
+      var embedded = this.loadEmbedded();
+      var build = function(data) {
+        data = data || [];
+        var pool = (CATEGORY === 'Universal')
+          ? [].concat(data)
+          : data.filter(function(q){ return !q.category || q.category === CATEGORY; });
+        self.questions = shuffle([].concat(pool)).slice(0, QUESTIONS_PER_TEST);
         if (self.questions.length === 0) {
           document.getElementById('qText').textContent = 'No questions available.';
           return;
         }
-
-        self.shuffledOptions = self.questions.map(function(q) {
-          var opts = [].concat(q.options);
-          shuffle(opts);
-          return opts;
-        });
+        self.shuffledOptions = self.questions.map(function(q){ var o = [].concat(q.options); shuffle(o); return o; });
         self.answers = new Array(self.questions.length).fill(null);
+        self.pendingMulti = [];
         self.startedAt = Date.now();
         self.render();
         self.startTimer();
-
-        try {
-          if (!localStorage.getItem('epa608_anon_id')) {
-            localStorage.setItem('epa608_anon_id',
-              'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
-          }
-          fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
-          }).catch(function(){});
-        } catch(e) {}
-
+        self.trackStart();
+      };
+      // Primary source: the build-time-baked questions embedded in the page
+      // (the SAME content Google indexes). The user gets a randomized draw from it.
+      if (embedded) { build(embedded); return; }
+      // Fallback only if no embedded data: fetch single-answer from DB.
+      fetchQuestions(CATEGORY).then(function(data) {
+        data = (data || [])
+          .filter(function(q){ return !q.question_type || q.question_type === 'single_choice'; })
+          .map(function(q){ return self.normalize(q); });
+        build(data);
       }).catch(function() {
         document.getElementById('qText').innerHTML = 'Error loading questions. <button onclick="location.reload()">Retry</button>';
       });
+    },
+
+    loadEmbedded: function() {
+      var el = document.getElementById('pq-data');
+      if (!el) return null;
+      try {
+        var arr = JSON.parse(el.textContent);
+        if (!Array.isArray(arr) || !arr.length) return null;
+        return arr.map(function(d){
+          return { id:d.id, question:d.q, options:d.o, correct:d.c,
+                   answer_text:(d.c && d.c[0]) || '', explanation:d.e,
+                   question_type:d.t || 'single_choice', category:CATEGORY };
+        });
+      } catch(e) { return null; }
+    },
+
+    normalize: function(q) {
+      return { id:q.id, question:q.question, options:q.options,
+        correct:[q.answer_text], answer_text:q.answer_text,
+        explanation:q.explanation, question_type:q.question_type || 'single_choice',
+        category:q.category, subtopic_id:q.subtopic_id };
+    },
+
+    trackStart: function() {
+      try {
+        if (!localStorage.getItem('epa608_anon_id'))
+          localStorage.setItem('epa608_anon_id', 'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
+        fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
+        }).catch(function(){});
+      } catch(e) {}
+    },
+
+    // Format-aware correctness for question index i.
+    isCorrect: function(i) {
+      var q = this.questions[i], opts = this.shuffledOptions[i], a = this.answers[i];
+      if (a === null || a === undefined) return false;
+      var correct = (q.correct || [q.answer_text]).map(function(s){ return String(s).trim(); });
+      if (q.question_type === 'multi_select') {
+        var sel = (Array.isArray(a) ? a : []).map(function(idx){ return String(opts[idx]).trim(); });
+        if (sel.length !== correct.length) return false;
+        return correct.every(function(c){ return sel.indexOf(c) >= 0; });
+      }
+      return opts[a] !== undefined && String(opts[a]).trim() === correct[0];
+    },
+
+    toggleMulti: function(i) {
+      this.pendingMulti = this.pendingMulti || [];
+      var k = this.pendingMulti.indexOf(i);
+      if (k >= 0) this.pendingMulti.splice(k, 1); else this.pendingMulti.push(i);
+      this.render();
+    },
+
+    checkMulti: function() {
+      if (!this.pendingMulti || !this.pendingMulti.length) return;
+      this.answers[this.currentIdx] = this.pendingMulti.slice();
+      this.pendingMulti = [];
+      this.trackAnswer(this.currentIdx);
+      this.render();
+    },
+
+    trackAnswer: function(i) {
+      var q = this.questions[i];
+      if (isLoggedIn() && q.id) {
+        fetch('https://epa608practicetest.net/api/practice/track', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ questionId: q.id, correct: this.isCorrect(i) })
+        }).catch(function(){});
+      }
     },
 
     render: function() {
@@ -172,29 +243,48 @@ function initTestEngine(config) {
       var isLast = this.currentIdx === this.questions.length - 1;
       var alreadyAnswered = this.answers[this.currentIdx] !== null;
 
-      document.getElementById('qText').textContent = q.question;
+      var isMulti = q.question_type === 'multi_select';
+      var self = this;
+      this.pendingMulti = this.pendingMulti || [];
+
+      var qText = q.question;
+      if (isMulti && !/select all that apply/i.test(qText)) qText += '  (Select all that apply)';
+      document.getElementById('qText').textContent = qText;
       document.getElementById('questionNumber').textContent =
         'Question ' + (this.currentIdx + 1) + ' of ' + this.questions.length;
       document.getElementById('progressFill').style.width =
         ((this.currentIdx + 1) / this.questions.length * 100) + '%';
 
-      // Answer buttons
+      // Answer buttons (format-aware)
       var list = document.getElementById('ansList');
       list.innerHTML = '';
-      var self = this;
+      var correctSet = (q.correct || [q.answer_text]).map(function(s){ return String(s).trim(); });
       opts.forEach(function(opt, i) {
         var btn = document.createElement('button');
         btn.className = 'answer-btn';
         btn.textContent = opt;
         if (alreadyAnswered) {
           btn.disabled = true;
-          if (opts[i] === q.answer_text) btn.classList.add('correct');
-          else if (i === self.answers[self.currentIdx]) btn.classList.add('incorrect');
+          var isCorr = correctSet.indexOf(String(opt).trim()) >= 0;
+          var picked = isMulti ? ((self.answers[self.currentIdx] || []).indexOf(i) >= 0)
+                               : (i === self.answers[self.currentIdx]);
+          if (isCorr) btn.classList.add('correct');
+          else if (picked) btn.classList.add('incorrect');
+        } else if (isMulti) {
+          if (self.pendingMulti.indexOf(i) >= 0) { btn.classList.add('selected'); btn.style.outline = '2px solid #0369a1'; }
+          btn.onclick = function() { self.toggleMulti(i); };
         } else {
           btn.onclick = function() { self.selectAndReveal(i); };
         }
         list.appendChild(btn);
       });
+
+      // "Check answer" button: only for multi-select, before it's submitted
+      var checkBtn = document.getElementById('checkBtn');
+      if (checkBtn) {
+        checkBtn.style.display = (isMulti && !alreadyAnswered) ? 'block' : 'none';
+        checkBtn.disabled = this.pendingMulti.length === 0;
+      }
 
       // Navigation buttons
       document.getElementById('prevBtn').style.display = 'none'; // no going back in immediate mode
@@ -207,7 +297,7 @@ function initTestEngine(config) {
       var expEl = document.getElementById('inlineExplanation');
       if (expEl) {
         if (alreadyAnswered) {
-          this.renderExplanation(expEl, q, opts, this.answers[this.currentIdx]);
+          this.renderExplanation(expEl, q, opts);
           expEl.style.display = 'block';
         } else {
           expEl.style.display = 'none';
@@ -216,8 +306,8 @@ function initTestEngine(config) {
       }
     },
 
-    renderExplanation: function(el, q, opts, userAnsIdx) {
-      var isCorrect = opts[userAnsIdx] === q.answer_text;
+    renderExplanation: function(el, q, opts) {
+      var isCorrect = this.isCorrect(this.currentIdx);
       var html = '';
       if (isCorrect) {
         html = '<div style="margin-top:12px;padding:12px 16px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;display:flex;align-items:center;gap:10px">'
@@ -231,7 +321,7 @@ function initTestEngine(config) {
           + '<span style="font-size:15px;font-weight:700;color:#991b1b">Incorrect</span>'
           + '</div>'
           + '<div style="font-size:14px;color:#7f1d1d;margin-bottom:4px">'
-          + 'Correct answer: <strong style="color:#16a34a">' + q.answer_text + '</strong></div>';
+          + 'Correct answer: <strong style="color:#16a34a">' + (q.correct || [q.answer_text]).join(', ') + '</strong></div>';
         if (q.explanation) {
           html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid #fecaca;font-size:13px;color:#475569;line-height:1.6">'
             + '<strong style="color:#0f172a">Why: </strong>' + q.explanation + '</div>';
@@ -248,17 +338,7 @@ function initTestEngine(config) {
       var savedY = window.scrollY;
       this.answers[this.currentIdx] = i;
       // Track per-question answer for logged-in users (powers Weak Spots + Review Wrong)
-      var q = this.questions[this.currentIdx];
-      var opts = this.shuffledOptions[this.currentIdx];
-      var isCorrect = opts[i] === q.answer_text;
-      if (isLoggedIn() && q.id) {
-        fetch('https://epa608practicetest.net/api/practice/track', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ questionId: q.id, correct: isCorrect })
-        }).catch(function() {});
-      }
+      this.trackAnswer(this.currentIdx);
       this.render(); // re-render with locked state + feedback
       // Restore scroll position after render (stops any layout-shift-induced scroll)
       requestAnimationFrame(function() {
@@ -290,8 +370,7 @@ function initTestEngine(config) {
 
       this.questions.forEach(function(q, i) {
         var opts = self.shuffledOptions[i];
-        var userAnswer = self.answers[i] !== null ? opts[self.answers[i]] : null;
-        var isCorrect = userAnswer !== null && userAnswer.trim() === (q.answer_text || '').trim();
+        var isCorrect = self.isCorrect(i);
         if (isCorrect) score++;
 
         if (!isCorrect) {
@@ -306,7 +385,7 @@ function initTestEngine(config) {
           questionId: q.id || null,
           question: q.question,
           answers: opts,
-          correctAnswer: opts.indexOf(q.answer_text),
+          correctAnswer: opts.indexOf((q.correct || [q.answer_text])[0]),
           userAnswerIndex: self.answers[i],
           isCorrect: isCorrect,
           topic: q.subtopic_id || q.category || CATEGORY
@@ -314,7 +393,7 @@ function initTestEngine(config) {
       });
 
       var pct = Math.round((score / this.questions.length) * 100);
-      var passed = pct >= 70;
+      var passed = pct >= 72;
       recordAttempt(CATEGORY);
 
       document.getElementById('testView').style.display = 'none';
@@ -326,7 +405,7 @@ function initTestEngine(config) {
       document.getElementById('scoreValue').textContent = pct + '%';
       document.getElementById('feedbackText').innerHTML = passed
         ? '<span style="color:#16a34a;font-weight:700">✓ Passed!</span> ' + score + '/' + this.questions.length + ' correct'
-        : '<span style="color:#dc2626;font-weight:700">✗ Not passed</span> — ' + score + '/' + this.questions.length + ' correct · need ' + Math.ceil(this.questions.length * 0.7);
+        : '<span style="color:#dc2626;font-weight:700">✗ Not passed</span> — ' + score + '/' + this.questions.length + ' correct · need ' + Math.ceil(this.questions.length * 0.72);
 
       // Weak area analysis
       var html = '';
