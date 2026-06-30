@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
-import { MARKETING_URL } from '@/lib/site-config'
 import { ReportButton } from './ReportButton'
 import { MULTI_SEP } from '@/lib/multi'
 
@@ -114,15 +113,10 @@ export function ResultView({ result, category, questions, onRetake }: {
             )
           }
           if (!passed) {
-            const SLUG_MAP: Record<string, string> = {
-              'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2', 'Type III': 'type-3', 'Universal': 'universal'
-            }
-            const guideSlug = SLUG_MAP[category] ?? 'core'
             return (
-              <Link href={`${MARKETING_URL}/study-guide-${guideSlug}.html`}
-                target="_blank" rel="noopener"
+              <Link href="/learn"
                 className="block text-center py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors">
-                Study {category} Guide before retaking →
+                Study {category} in Study Path before retaking →
               </Link>
             )
           }

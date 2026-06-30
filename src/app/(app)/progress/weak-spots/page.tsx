@@ -63,6 +63,40 @@ export default async function WeakSpotsPage() {
   // Sort by error rate descending
   enriched.sort((a, b) => b.errorRate - a.errorRate)
 
+  // Fallback: get_blind_spots needs >=2 attempts on the SAME subtopic, which a
+  // single 10-question test almost never produces (its questions spread across
+  // many subtopics). When there are no subtopic-level spots yet, fall back to a
+  // category-level breakdown so weak areas still surface right after one test.
+  if (enriched.length === 0) {
+    const { data: rows } = await admin
+      .from('user_progress')
+      .select('correct, answered_at, questions!inner(category)')
+      .eq('user_id', user.id)
+      .limit(5000)
+    const byCat: Record<string, { wrong: number; total: number; last: string }> = {}
+    for (const r of rows ?? []) {
+      const cat = ((r.questions as unknown) as { category: string }).category || 'Core'
+      if (!byCat[cat]) byCat[cat] = { wrong: 0, total: 0, last: '' }
+      byCat[cat].total++
+      if (!r.correct) byCat[cat].wrong++
+      const at = (r as { answered_at?: string }).answered_at ?? ''
+      if (at > byCat[cat].last) byCat[cat].last = at
+    }
+    for (const [cat, s] of Object.entries(byCat)) {
+      if (s.total < 2) continue
+      enriched.push({
+        subtopic_id: `cat:${cat}`,
+        label: cat,
+        category: cat as Category,
+        totalAttempts: s.total,
+        correctCount: s.total - s.wrong,
+        errorRate: s.wrong / s.total,
+        lastAttempted: s.last || new Date().toISOString(),
+      })
+    }
+    enriched.sort((a, b) => b.errorRate - a.errorRate)
+  }
+
   // Group by category
   const grouped: Record<string, BlindSpot[]> = {}
   enriched.forEach((spot) => {
@@ -120,14 +154,14 @@ export default async function WeakSpotsPage() {
         </div>
       ) : (
         <>
-          {/* Review Wrong Answers — free for all */}
-          <a
-            href="/review.html"
+          {/* Study weak areas — free for all, in-app Study Path */}
+          <Link
+            href="/learn"
             className="mb-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-green-700 text-white rounded-xl font-semibold hover:bg-green-800 transition-colors text-center"
           >
-            <span>🔁</span>
-            <span>Review Wrong Answers</span>
-          </a>
+            <span>📚</span>
+            <span>Study These Topics</span>
+          </Link>
 
           {/* Drill CTA — Pro only */}
           {isPro ? (
