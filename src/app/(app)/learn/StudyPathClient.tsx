@@ -259,6 +259,23 @@ export default function StudyPathClient() {
       setProgress(p)
       saveProgress(p)
 
+      // Record each question's result to user_progress so Weak Spots +
+      // per-question stats include Study Path activity. Same question-id space
+      // as the practice test (IDs come from the questions table). Fire-and-forget,
+      // fail-open — never blocks the result screen for a logged-out/edge case.
+      if (Array.isArray(data.results) && data.results.length > 0) {
+        fetch('/api/practice/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            results: data.results.map((r: { questionId: string; correct: boolean }) => ({
+              questionId: r.questionId,
+              correct: r.correct,
+            })),
+          }),
+        }).catch(() => {})
+      }
+
       // Persist this attempt to the account (per-username, synced across devices).
       fetch('/api/study-path/progress', {
         method: 'POST',
