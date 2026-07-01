@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier, type Category } from '@/types'
@@ -23,15 +24,11 @@ const CATEGORIES: { slug: string; label: string; category: Category | 'Universal
 ]
 
 export default async function DashboardPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/dashboard')
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier, lifetime_access, ai_queries_today')
-    .eq('id', user.id)
-    .single()
+  const supabase = await createClient()
+  const profile = await getUserProfile(user.id)
 
   const tier = (profile?.tier ?? 'free') as Tier
   const isFree = tier === 'free'

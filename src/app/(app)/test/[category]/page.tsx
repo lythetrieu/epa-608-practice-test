@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { TIER_LIMITS, type Tier } from '@/types'
 import ModeSelector from './ModeSelector'
 
@@ -19,12 +19,10 @@ export default async function TestPage({ params, searchParams }: {
   const category = CATEGORY_MAP[slug]
 
   // Resolve tier
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   let tier: Tier = 'free'
   if (user) {
-    const { data: profile } = await supabase
-      .from('users_profile').select('tier').eq('id', user.id).single()
+    const profile = await getUserProfile(user.id)
     tier = (profile?.tier ?? 'free') as Tier
   }
   const limits = TIER_LIMITS[tier]

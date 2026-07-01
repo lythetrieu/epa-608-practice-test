@@ -1,4 +1,5 @@
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import type { Category } from '@/types'
@@ -13,11 +14,10 @@ type SessionRow = {
 }
 
 export default async function ProgressPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/progress')
+
+  const supabase = await createClient()
 
   const { data: sessions } = await supabase
     .from('test_sessions')

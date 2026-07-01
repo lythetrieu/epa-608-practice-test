@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
@@ -22,11 +23,10 @@ const SLUG_MAP: Record<string, string> = {
 }
 
 export default async function HistoryPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/history')
+
+  const supabase = await createClient()
 
   const { data: sessions } = await supabase
     .from('test_sessions')

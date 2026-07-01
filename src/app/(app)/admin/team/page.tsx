@@ -1,21 +1,17 @@
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import { TeamAdminClient } from './TeamAdminClient'
 
 export default async function TeamAdminPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('is_team_admin, team_id')
-    .eq('id', user.id)
-    .single()
+  const profile = await getUserProfile(user.id)
 
   if (!profile?.is_team_admin || !profile.team_id) redirect('/dashboard')
+
+  const supabase = await createClient()
 
   const { data: team } = await supabase
     .from('teams')

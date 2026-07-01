@@ -1,10 +1,9 @@
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import StudyPathClient from './StudyPathClient'
 
 export default async function LearnPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/learn')
 
   return <StudyPathClient />

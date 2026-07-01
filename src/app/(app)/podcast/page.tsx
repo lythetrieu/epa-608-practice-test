@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Headphones, ArrowLeft } from 'lucide-react'
@@ -8,8 +8,7 @@ export const metadata = {
 }
 
 export default async function PodcastPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
 
   return (

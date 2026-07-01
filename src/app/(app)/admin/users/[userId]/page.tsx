@@ -1,4 +1,5 @@
-import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 
@@ -21,12 +22,9 @@ export default async function UserDetailPage({
 }) {
   const { userId } = await params
 
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
-  const { data: adminCheck } = await supabase.from('users_profile').select('is_admin').eq('id', user.id).single()
+  const adminCheck = await getUserProfile(user.id)
   if (!adminCheck?.is_admin) redirect('/dashboard')
 
   const admin = createAdminClient()

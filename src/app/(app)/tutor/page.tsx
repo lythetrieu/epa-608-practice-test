@@ -1,21 +1,14 @@
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier } from '@/types'
 import TutorChat from './TutorChat'
 
 export default async function TutorPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/tutor')
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier, ai_queries_today')
-    .eq('id', user.id)
-    .single()
+  const profile = await getUserProfile(user.id)
 
   const tier = (profile?.tier ?? 'free') as Tier
   const limits = TIER_LIMITS[tier]

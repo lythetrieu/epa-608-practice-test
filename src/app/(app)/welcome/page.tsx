@@ -1,10 +1,9 @@
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import { WelcomeScreen } from './WelcomeScreen'
 
 export default async function WelcomePage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
 
   const { next } = await searchParams

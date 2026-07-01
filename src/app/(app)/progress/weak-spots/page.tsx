@@ -1,4 +1,5 @@
-import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS } from '@/lib/tier'
@@ -29,17 +30,10 @@ const RADAR_TOPICS: { label: string; groupKeys: string[] }[] = [
 ]
 
 export default async function WeakSpotsPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login?redirect=/progress/weak-spots')
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier')
-    .eq('id', user.id)
-    .single()
+  const profile = await getUserProfile(user.id)
 
   const tier = (profile?.tier ?? 'free') as Tier
   const isPro = TIER_LIMITS[tier].hasBlindSpot

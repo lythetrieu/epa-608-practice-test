@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
 import { LocaleProvider } from '@/lib/i18n-context'
@@ -15,18 +15,10 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier, is_team_admin, team_id, is_admin')
-    .eq('id', user.id)
-    .single()
-
+  const profile = await getUserProfile(user.id)
   const tier = (profile?.tier ?? 'free') as Tier
 
   return (
