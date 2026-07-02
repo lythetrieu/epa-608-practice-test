@@ -11,7 +11,7 @@ import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Target,
-  Bot, BarChart3, Flame, BookOpen, CheckCircle2, ArrowRight,
+  Bot, BarChart3, Flame, BookOpen, CheckCircle2, ArrowRight, Lock,
 } from 'lucide-react'
 
 const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode }[] = [
@@ -243,7 +243,7 @@ export default async function DashboardPage() {
 
       {/* ═══ QUICK ACCESS — tools ═══ */}
       <div className="grid grid-cols-3 gap-2 mb-3">
-        <ToolLink href="/learn" icon={<BookOpen size={18} />} label="Study Path" dataTour="learn" />
+        <ToolLink href="/learn" icon={<BookOpen size={18} />} label="Study Path" dataTour="learn" locked={isFree} />
         <ToolLink href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" />
         <ToolLink href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
       </div>
@@ -286,13 +286,18 @@ export default async function DashboardPage() {
   )
 }
 
-function ToolLink({ href, icon, label, dataTour }: { href: string; icon: ReactNode; label: string; dataTour?: string }) {
+function ToolLink({ href, icon, label, dataTour, locked }: { href: string; icon: ReactNode; label: string; dataTour?: string; locked?: boolean }) {
   return (
     <Link
       href={href}
       data-tour={dataTour}
-      className="flex flex-col items-center justify-center gap-1 min-h-[64px] rounded-xl bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all text-xs font-semibold text-gray-700"
+      className="relative flex flex-col items-center justify-center gap-1 min-h-[64px] rounded-xl bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all text-xs font-semibold text-gray-700"
     >
+      {locked && (
+        <span className="absolute top-1.5 right-1.5 inline-flex items-center gap-0.5 text-[9px] font-bold text-amber-600 bg-amber-50 rounded-full px-1.5 py-0.5">
+          <Lock size={9} /> Pro
+        </span>
+      )}
       <span className="text-gray-500">{icon}</span>
       {label}
     </Link>

@@ -1,26 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { getIdentifier } from '@/lib/ratelimit'
+import { getIdentifier, publicQuizRateLimit } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
-
-// Rate limit: 30 quiz starts per IP per hour (fallback in-memory if no Redis)
-const ipLimits = new Map<string, { count: number; reset: number }>()
-const LIMIT = 30
-const WINDOW = 3600000
-
-function checkLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = ipLimits.get(ip)
-  if (!entry || now > entry.reset) {
-    ipLimits.set(ip, { count: 1, reset: now + WINDOW })
-    return true
-  }
-  if (entry.count >= LIMIT) return false
-  entry.count++
-  return true
-}
 
 const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
@@ -56,8 +39,11 @@ async function getCategoryPool(
 
 export async function POST(request: NextRequest) {
   try {
+  // Rate limit by IP — Upstash-backed so the cap is shared across serverless
+  // instances (an in-memory Map resets per cold-start and never actually bounds abuse).
   const ip = getIdentifier(request)
-  if (!checkLimit(ip)) {
+  const rl = await publicQuizRateLimit.limit(ip)
+  if (!rl.success) {
     return NextResponse.json({ error: 'Too many requests. Try again later.' }, { status: 429 })
   }
 

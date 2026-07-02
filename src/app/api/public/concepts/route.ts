@@ -1,24 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getIdentifier } from '@/lib/ratelimit'
+import { getIdentifier, publicConceptsRateLimit } from '@/lib/ratelimit'
 import { z } from 'zod'
 import { buildConceptBreakdown, SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
-
-// Rate limit: 60 requests per IP per hour
-const ipLimits = new Map<string, { count: number; reset: number }>()
-const LIMIT = 60
-const WINDOW = 3600000
-
-function checkLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = ipLimits.get(ip)
-  if (!entry || now > entry.reset) {
-    ipLimits.set(ip, { count: 1, reset: now + WINDOW })
-    return true
-  }
-  if (entry.count >= LIMIT) return false
-  entry.count++
-  return true
-}
 
 const resultSchema = z.object({
   questionId: z.string(),
@@ -43,8 +26,10 @@ const schema = z.object({
  * If not provided, that question is skipped in concept analysis.
  */
 export async function POST(request: NextRequest) {
+  // Rate limit by IP — Upstash-backed, shared across serverless instances.
   const ip = getIdentifier(request)
-  if (!checkLimit(ip)) {
+  const rl = await publicConceptsRateLimit.limit(ip)
+  if (!rl.success) {
     return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
   }
 

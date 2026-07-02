@@ -3,9 +3,12 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { TIER_LIMITS, type Tier } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
+
+type SupabaseSSRClient = Awaited<ReturnType<typeof createClient>>
 
 type Row = {
   concept_id: string
@@ -17,11 +20,29 @@ type Row = {
   last_passed: string | null
 }
 
+// The full guided Study Path (saved progress + mastery tracking) is Pro-only.
+// Free users can still browse concepts / try samples via /api/public/study-path.
+// If the tier can't be read (missing profile row, etc.) we deny — the write path
+// is Pro-only, so failing closed is correct and safe.
+async function hasStudyPath(supabase: SupabaseSSRClient, userId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('users_profile')
+    .select('tier')
+    .eq('id', userId)
+    .single()
+  const tier = (data?.tier ?? 'free') as Tier
+  return TIER_LIMITS[tier].hasStudyPath
+}
+
 // GET → all of the signed-in user's concept progress.
 export async function GET() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+
+  if (!(await hasStudyPath(supabase, user.id))) {
+    return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
+  }
 
   const { data, error } = await supabase
     .from('study_path_progress')
@@ -40,6 +61,10 @@ export async function POST(request: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+
+  if (!(await hasStudyPath(supabase, user.id))) {
+    return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
+  }
 
   const body = await request.json().catch(() => ({}))
   const conceptId = String(body.conceptId ?? '').trim()

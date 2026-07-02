@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/server'
 import { getSubtopicLabel } from '@/lib/subtopics'
+import { SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
 
 export async function buildUserContext(userId: string): Promise<string> {
   const admin = createAdminClient()
@@ -11,10 +12,12 @@ export async function buildUserContext(userId: string): Promise<string> {
   })
   const topWeakSpots = (blindSpots ?? []).slice(0, 5)
 
-  // 2. Recent wrong answers (last 10) with question + explanation
+  // 2. Recent wrong answers (last 10) with question + explanation + what the
+  //    user actually picked. `user_answer` is a nullable column added in
+  //    20260630; if it's missing/null we omit the "You answered" part.
   const { data: recentWrong } = await admin
     .from('user_progress')
-    .select('question_id, answered_at')
+    .select('question_id, answered_at, user_answer')
     .eq('user_id', userId)
     .eq('correct', false)
     .order('answered_at', { ascending: false })
@@ -22,6 +25,13 @@ export async function buildUserContext(userId: string): Promise<string> {
 
   let wrongContext = ''
   if (recentWrong && recentWrong.length > 0) {
+    // Map each question to the answer the user gave (most recent wins).
+    const pickedByQ = new Map<string, string | null>()
+    for (const r of recentWrong) {
+      if (!pickedByQ.has(r.question_id)) {
+        pickedByQ.set(r.question_id, (r as { user_answer?: string | null }).user_answer ?? null)
+      }
+    }
     const qIds = recentWrong.map(r => r.question_id)
     const { data: questions } = await admin
       .from('questions')
@@ -29,9 +39,11 @@ export async function buildUserContext(userId: string): Promise<string> {
       .in('id', qIds)
 
     if (questions) {
-      wrongContext = questions.map(q =>
-        `- [${q.category} / ${getSubtopicLabel(q.subtopic_id)}] Q: "${q.question}" | Answer: ${q.answer_text} | ${q.explanation}`
-      ).join('\n')
+      wrongContext = questions.map(q => {
+        const picked = pickedByQ.get(q.id)
+        const pickedPart = picked ? `You answered: ${picked} | ` : ''
+        return `- [${q.category} / ${getSubtopicLabel(q.subtopic_id)}] Q: "${q.question}" | ${pickedPart}Correct: ${q.answer_text} | ${q.explanation}`
+      }).join('\n')
     }
   }
 
@@ -47,6 +59,53 @@ export async function buildUserContext(userId: string): Promise<string> {
     ? Math.round(sessions!.reduce((sum, s) => sum + ((s.score ?? 0) / s.total) * 100, 0) / totalTests)
     : 0
   const passCount = sessions?.filter(s => ((s.score ?? 0) / s.total) >= 0.70).length ?? 0
+
+  // 3b. Study Path progress. Reads study_path_progress (may be absent/empty).
+  //     Focuses "not yet started" on the user's weak categories so the coach
+  //     can point at the exact lesson to fix. Degrades to '' on any failure.
+  let studyPathContext = ''
+  try {
+    const conceptList = Object.values(SUBTOPIC_TO_CONCEPT) // 29 concepts
+    const totalConcepts = conceptList.length
+
+    const { data: spp } = await admin
+      .from('study_path_progress')
+      .select('concept_id, status')
+      .eq('user_id', userId)
+
+    const statusByConcept = new Map<string, string>()
+    for (const row of spp ?? []) statusByConcept.set(row.concept_id, row.status)
+
+    const masteredCount = conceptList.filter(
+      c => statusByConcept.get(c.id) === 'mastered'
+    ).length
+
+    // Weak categories = categories of the user's top blind spots.
+    const weakCategories = new Set(
+      topWeakSpots.map((s: any) => s.category).filter(Boolean)
+    )
+
+    // Concepts in weak categories the user hasn't started (no row, or 'pending').
+    const notStartedInWeak = conceptList
+      .filter(c => weakCategories.has(c.category))
+      .filter(c => {
+        const st = statusByConcept.get(c.id)
+        return !st || st === 'pending'
+      })
+      .map(c => c.title)
+
+    const lines = [`Mastered: ${masteredCount}/${totalConcepts}.`]
+    if (weakCategories.size > 0) {
+      lines.push(
+        notStartedInWeak.length > 0
+          ? `Not yet started in weak areas: ${notStartedInWeak.slice(0, 8).join('; ')}`
+          : 'All lessons in weak areas have been started.'
+      )
+    }
+    studyPathContext = lines.join('\n')
+  } catch {
+    studyPathContext = ''
+  }
 
   // 4. Assemble
   const weakLines = topWeakSpots.map((s: any) =>
@@ -64,6 +123,7 @@ ${weakLines || 'Not enough data yet.'}
 
 Recent wrong answers:
 ${wrongContext || 'None recorded yet.'}
+${studyPathContext ? `\nStudy Path status:\n${studyPathContext}` : ''}
 === END USER PERFORMANCE DATA ===`
 }
 

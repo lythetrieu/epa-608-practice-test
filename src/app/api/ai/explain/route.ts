@@ -40,27 +40,50 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // Daily limit check + increment
+  // Daily limit check + increment.
+  // Prefer the atomic RPC (race-free reset-check + increment in one statement);
+  // fall back to the original read-modify-write if the RPC isn't present yet
+  // (SAFE-DEPLOY: code ships before migration 030 runs).
   const admin = createAdminClient()
-  const now = new Date()
-  const resetAt = new Date(profile.ai_queries_reset_at)
-  const today = new Date(now.toISOString().split('T')[0])
+  // currentCount = count BEFORE this request, so downstream remaining =
+  // dailyLimit - currentCount - 1 stays identical to the pre-RPC semantics.
   let currentCount = profile.ai_queries_today
 
-  if (resetAt < today) {
-    await admin.from('users_profile').update({
-      ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
-    }).eq('id', user.id)
-    currentCount = 0
-  } else if (currentCount >= dailyLimit) {
-    return NextResponse.json(
-      { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
-      { status: 429 },
-    )
+  const { data: rpcData, error: rpcError } = await admin.rpc('increment_ai_usage', {
+    p_user_id: user.id,
+    p_limit: dailyLimit,
+  })
+  const rpcRow = Array.isArray(rpcData) ? rpcData[0] : rpcData
+
+  if (!rpcError && rpcRow) {
+    if (rpcRow.rejected) {
+      return NextResponse.json(
+        { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
+        { status: 429 },
+      )
+    }
+    currentCount = rpcRow.new_count - 1
   } else {
-    await admin.from('users_profile').update({
-      ai_queries_today: currentCount + 1,
-    }).eq('id', user.id)
+    // Fallback: original non-atomic logic.
+    const now = new Date()
+    const resetAt = new Date(profile.ai_queries_reset_at)
+    const today = new Date(now.toISOString().split('T')[0])
+
+    if (resetAt < today) {
+      await admin.from('users_profile').update({
+        ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
+      }).eq('id', user.id)
+      currentCount = 0
+    } else if (currentCount >= dailyLimit) {
+      return NextResponse.json(
+        { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
+        { status: 429 },
+      )
+    } else {
+      await admin.from('users_profile').update({
+        ai_queries_today: currentCount + 1,
+      }).eq('id', user.id)
+    }
   }
 
   // Parse request

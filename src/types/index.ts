@@ -19,11 +19,11 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: false,
+    hasStudyPath: false,         // Pro only — full guided Study Path (free = sample)
     hasRadarChart: false,        // Pro only — free sees raw scores only
     hasTimedMode: false,         // Pro only — timed simulation
     aiQueriesPerDay: 10,         // 10/day free; Pro gets 1000
     hasPDF: false,
-    hasCertificate: false,
   },
   starter: {
     questionsPerDay: Infinity,
@@ -32,11 +32,11 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: true,
+    hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
-    hasCertificate: true,
   },
   ultimate: {
     questionsPerDay: Infinity,
@@ -45,11 +45,11 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: true,
+    hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
-    hasCertificate: true,
   },
   pro: {
     questionsPerDay: Infinity,
@@ -58,11 +58,11 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: true,
+    hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
-    hasCertificate: true,
   },
 } as const
 

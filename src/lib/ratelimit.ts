@@ -58,6 +58,18 @@ export const aiRateLimit = makeRatelimit(20, '1 d', 'rl:ai')
 /** Guest (unauthenticated) AI — 10 requests per IP per day. Shared across serverless instances. */
 export const guestAiRateLimit = makeRatelimit(10, '1 d', 'rl:guest-ai')
 
+/** Public quiz start — 30 per IP per hour. Shared across serverless instances. */
+export const publicQuizRateLimit = makeRatelimit(30, '1 h', 'rl:public-quiz')
+
+/** Public drill start — 30 per IP per hour. */
+export const publicDrillRateLimit = makeRatelimit(30, '1 h', 'rl:public-drill')
+
+/** Public score submission — 30 per IP per hour. */
+export const publicScoreRateLimit = makeRatelimit(30, '1 h', 'rl:public-score')
+
+/** Public concept breakdown — 60 per IP per hour. */
+export const publicConceptsRateLimit = makeRatelimit(60, '1 h', 'rl:public-concepts')
+
 /** Session submission — 30 per hour per user. */
 export const submitRateLimit = makeRatelimit(30, '1 h', 'rl:submit')
 

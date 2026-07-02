@@ -4,7 +4,7 @@
 EPA 608 Practice Test (https://epa608practicetest.net) helps HVAC technicians
 prepare for EPA Section 608 certification. Freemium model: free practice tests
 (500 questions, no signup) + Pro $14.99 one-time lifetime (866 questions,
-unlimited AI Tutor, blind-spot drill, certificates, offline mode).
+unlimited AI Tutor, blind-spot drill, offline mode).
 
 ## Purpose
 This website provides:

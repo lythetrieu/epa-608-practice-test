@@ -63,7 +63,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
       {/* Nav — 3 primary tabs (+ Account in footer) */}
       <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-0.5">
 
-        <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} />
+        <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} badge={isPro ? undefined : 'Pro'} />
 
         {/* Practice Test — pick a category, then Practice or Exam mode */}
         <button

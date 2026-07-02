@@ -31,6 +31,16 @@
   ],
   "redirects": [
     {
+      "source": "/review.html",
+      "destination": "/weak-spots.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/review",
+      "destination": "/weak-spots.html",
+      "statusCode": 301
+    },
+    {
       "source": "/practice-test",
       "destination": "/universal.html",
       "statusCode": 301
@@ -158,11 +168,6 @@
     {
       "source": "/privacy",
       "destination": "/policy.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/review",
-      "destination": "/review.html",
       "statusCode": 301
     },
     {

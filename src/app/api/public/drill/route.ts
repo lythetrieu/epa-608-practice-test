@@ -1,18 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { getIdentifier } from '@/lib/ratelimit'
+import { getIdentifier, publicDrillRateLimit } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
-
-const ipLimits = new Map<string, { count: number; reset: number }>()
-function checkLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = ipLimits.get(ip)
-  if (!entry || now > entry.reset) { ipLimits.set(ip, { count: 1, reset: now + 3600000 }); return true }
-  if (entry.count >= 30) return false
-  entry.count++; return true
-}
 
 const schema = z.object({
   weakSubtopics: z.array(z.string()).min(1).max(20),
@@ -21,8 +12,10 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit by IP — Upstash-backed, shared across serverless instances.
     const ip = getIdentifier(request)
-    if (!checkLimit(ip)) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+    const rl = await publicDrillRateLimit.limit(ip)
+    if (!rl.success) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
     const body = await request.json().catch(() => ({}))
     const parsed = schema.safeParse(body)
