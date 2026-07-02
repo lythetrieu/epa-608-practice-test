@@ -16,9 +16,11 @@ export async function POST(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  // Explicit columns (was select('*')). Fields read below: id, submitted_at,
+  // time_limit_secs, started_at, category, question_ids.
   const { data: session } = await supabase
     .from('test_sessions')
-    .select('*')
+    .select('id, submitted_at, time_limit_secs, started_at, category, question_ids')
     .eq('id', sessionId)
     .eq('user_id', user.id)
     .single()

@@ -14,11 +14,20 @@ export const getCurrentUser = cache(async () => {
   return user
 })
 
+// Explicit column list instead of select('*'). Enumerated from EVERY caller of
+// getUserProfile across the repo (layout, dashboard, settings, tutor, test,
+// weak-spots, admin/analytics, admin/users, admin/users/[userId], admin/team):
+// fields actually read are tier, is_team_admin, is_admin, team_id,
+// lifetime_access, created_at, ai_queries_today. id/email/display_name are
+// included for safety (cheap, commonly needed by callers/components).
+// NOTE: `is_admin` is not defined in any migration file but exists in prod and
+// gates admin pages — it MUST stay in this list. If a new caller reads another
+// column, add it here.
 export const getUserProfile = cache(async (userId: string) => {
   const supabase = await createClient()
   const { data } = await supabase
     .from('users_profile')
-    .select('*')
+    .select('id, email, tier, lifetime_access, display_name, team_id, is_team_admin, is_admin, ai_queries_today, created_at')
     .eq('id', userId)
     .single()
   return data

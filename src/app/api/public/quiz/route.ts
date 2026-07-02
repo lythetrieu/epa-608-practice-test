@@ -29,6 +29,30 @@ const schema = z.object({
   mode: z.enum(['practice', 'test']).optional().default('practice'),
 })
 
+// ── Module-level question-pool cache, keyed by single category (not Universal).
+// The pool is identical for every request; only the per-request stratified
+// sampling/shuffle differs. Cache the DB reads so we don't re-pull the bank on
+// every quiz start (survives across requests on a warm lambda).
+type PoolQuestion = { id: string; category: string; subtopic_id: string; question: string; options: string[]; answer_text: string; difficulty: string }
+const POOL_TTL_MS = 10 * 60 * 1000 // 10 min
+const poolCache = new Map<string, { rows: PoolQuestion[]; at: number }>()
+
+async function getCategoryPool(
+  admin: ReturnType<typeof createAdminClient>,
+  cat: string,
+): Promise<PoolQuestion[]> {
+  const cached = poolCache.get(cat)
+  if (cached && Date.now() - cached.at < POOL_TTL_MS) return cached.rows
+  const { data } = await admin
+    .from('questions')
+    .select('id, category, subtopic_id, question, options, answer_text, difficulty')
+    .eq('category', cat)
+    .neq('question_type', 'multi_select')
+  const rows = (data ?? []) as PoolQuestion[]
+  poolCache.set(cat, { rows, at: Date.now() })
+  return rows
+}
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -51,26 +75,18 @@ export async function POST(request: NextRequest) {
   }
 
   // STRATIFIED SAMPLING: pick questions evenly across ALL subtopics
-  // This ensures every test covers every knowledge area
-  let allQuestions: { id: string; category: string; subtopic_id: string; question: string; options: string[]; answer_text: string; difficulty: string }[] = []
+  // This ensures every test covers every knowledge area.
+  // Pool rows come from the cached getCategoryPool (copied per-request because
+  // the sampling below mutates arrays via splice).
+  let allQuestions: PoolQuestion[] = []
 
   if (category === 'Universal') {
     const cats = ['Core', 'Type I', 'Type II', 'Type III']
     for (const cat of cats) {
-      const { data } = await admin
-        .from('questions')
-        .select('id, category, subtopic_id, question, options, answer_text, difficulty')
-        .eq('category', cat)
-        .neq('question_type', 'multi_select')
-      if (data) allQuestions.push(...data)
+      allQuestions.push(...(await getCategoryPool(admin, cat)))
     }
   } else {
-    const { data } = await admin
-      .from('questions')
-      .select('id, category, subtopic_id, question, options, answer_text, difficulty')
-      .eq('category', category)
-      .neq('question_type', 'multi_select')
-    if (data) allQuestions = data
+    allQuestions = [...(await getCategoryPool(admin, category))]
   }
 
   if (allQuestions.length === 0) {
@@ -200,6 +216,11 @@ export async function POST(request: NextRequest) {
     total: clientQuestions.length,
     category,
     timeLimit: category === 'Universal' ? 3600 : 1800,
+  }, {
+    // Each response is a unique randomized quiz with its own quizId, so it must
+    // NOT be shared by a CDN/edge cache. Bandwidth savings come from the
+    // module-level pool cache above, not from caching the response body.
+    headers: { 'Cache-Control': 'no-store' },
   })
   } catch (e) {
     console.error('Quiz API error:', e)

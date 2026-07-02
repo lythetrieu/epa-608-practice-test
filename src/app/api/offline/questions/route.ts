@@ -15,6 +15,16 @@ import type { Tier } from '@/types'
  * This endpoint is called once by the client-side sync logic and the response
  * is stored in IndexedDB/localStorage so the app works without network.
  */
+// ── Module-level question-pool cache (survives across requests on a warm
+// lambda). The offline bank is large and identical for every Pro user, so we
+// read it from the DB at most once per TTL window instead of per request.
+type OfflineQuestion = {
+  id: string; category: string; subtopic_id: string | null; question: string
+  options: string[]; answer_text: string; explanation: string; difficulty: string
+}
+const POOL_TTL_MS = 10 * 60 * 1000 // 10 min
+let offlineCache: { grouped: Record<string, OfflineQuestion[]>; total: number; at: number } | null = null
+
 export async function GET(request: Request) {
   // Auth check
   const supabase = await createClient()
@@ -44,32 +54,41 @@ export async function GET(request: Request) {
   const rl = await downloadRateLimit.limit(user.id || getIdentifier(request))
   if (!rl.success) return rateLimitResponse(rl.reset)
 
-  // Use admin client to bypass RLS and fetch all questions
-  const admin = createAdminClient()
+  // Serve from the in-memory pool cache when still fresh.
+  const now = Date.now()
+  if (!offlineCache || now - offlineCache.at > POOL_TTL_MS) {
+    // Use admin client to bypass RLS and fetch all questions
+    const admin = createAdminClient()
 
-  const { data: questions, error } = await admin
-    .from('questions')
-    .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
-    .neq('question_type', 'multi_select')
-    .order('category')
-    .order('id')
+    const { data: questions, error } = await admin
+      .from('questions')
+      .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
+      .neq('question_type', 'multi_select')
+      .order('category')
+      .order('id')
 
-  if (error) {
-    console.error('[offline/questions] DB error:', error.message)
-    return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 })
+    if (error) {
+      console.error('[offline/questions] DB error:', error.message)
+      return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 })
+    }
+
+    // Group by category for easier client-side use
+    const grouped: Record<string, OfflineQuestion[]> = {}
+    for (const q of (questions ?? []) as OfflineQuestion[]) {
+      const cat = q.category
+      if (!grouped[cat]) grouped[cat] = []
+      grouped[cat].push(q)
+    }
+    offlineCache = { grouped, total: questions?.length ?? 0, at: now }
   }
 
-  // Group by category for easier client-side use
-  const grouped: Record<string, typeof questions> = {}
-  for (const q of questions ?? []) {
-    const cat = q.category as string
-    if (!grouped[cat]) grouped[cat] = []
-    grouped[cat].push(q)
-  }
-
-  return NextResponse.json({
-    total: questions?.length ?? 0,
-    syncedAt: new Date().toISOString(),
-    categories: grouped,
-  })
+  return NextResponse.json(
+    {
+      total: offlineCache.total,
+      syncedAt: new Date(offlineCache.at).toISOString(),
+      categories: offlineCache.grouped,
+    },
+    // Auth-gated per-user response — keep it out of shared/CDN caches.
+    { headers: { 'Cache-Control': 'private, max-age=600' } },
+  )
 }

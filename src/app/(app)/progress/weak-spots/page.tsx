@@ -2,6 +2,7 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { ClipboardList, BookOpen, Target, Lock } from 'lucide-react'
 import { TIER_LIMITS } from '@/lib/tier'
 import { getSubtopicLabel, getSubtopicCategory, SUBTOPIC_GROUPS } from '@/lib/subtopics'
 import type { Tier, Category } from '@/types'
@@ -117,7 +118,7 @@ export default async function WeakSpotsPage() {
   }).filter((d) => d.maxScore > 0)
 
   return (
-    <div className="p-6 sm:p-8 max-w-3xl">
+    <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-2xl font-bold text-gray-900">Weak Spots Report</h1>
         <Link
@@ -133,7 +134,7 @@ export default async function WeakSpotsPage() {
 
       {enriched.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-100 p-10 text-center">
-          <div className="text-4xl mb-3">📋</div>
+          <ClipboardList size={40} className="text-gray-300 mx-auto mb-3" />
           <p className="text-gray-500 font-medium mb-2">No weak spots detected yet</p>
           <p className="text-gray-400 text-sm mb-6">
             Take a few tests first to identify your weak areas. We need at least 2 attempts per
@@ -153,7 +154,7 @@ export default async function WeakSpotsPage() {
             href="/learn"
             className="mb-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-green-700 text-white rounded-xl font-semibold hover:bg-green-800 transition-colors text-center"
           >
-            <span>📚</span>
+            <BookOpen size={18} aria-hidden />
             <span>Study These Topics</span>
           </Link>
 
@@ -163,7 +164,7 @@ export default async function WeakSpotsPage() {
               href="/test/weak-spots"
               className="mb-8 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors text-center"
             >
-              <span>🎯</span>
+              <Target size={18} aria-hidden />
               <span>Start Weak Spot Drill</span>
             </Link>
           ) : (
@@ -201,7 +202,7 @@ export default async function WeakSpotsPage() {
                       <RadarChart data={radarData} />
                     </div>
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                      <span className="text-2xl">🔒</span>
+                      <Lock size={24} className="text-gray-700" aria-hidden />
                       <p className="text-sm font-semibold text-gray-700">Radar Chart — Pro</p>
                     </div>
                   </div>
@@ -267,7 +268,7 @@ export default async function WeakSpotsPage() {
                           Study This Topic
                         </Link>
                         <Link href={`/test/${spot.category === 'Type I' ? 'type-1' : spot.category === 'Type II' ? 'type-2' : spot.category === 'Type III' ? 'type-3' : 'core'}?mode=practice`}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-green-50 text-green-700 font-medium hover:bg-green-100">
+                          className="text-xs px-3 py-1.5 rounded-lg text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-700">
                           Practice {spot.category}
                         </Link>
                       </div>

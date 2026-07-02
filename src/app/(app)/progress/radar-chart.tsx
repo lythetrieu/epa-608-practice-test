@@ -62,10 +62,10 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
   })
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto px-2">
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        className="w-full h-auto"
+        className="w-full h-auto overflow-visible"
         role="img"
         aria-label="Radar chart showing proficiency across topic areas"
       >
@@ -126,14 +126,14 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             textAnchor={l.anchor}
             dominantBaseline="central"
             className="fill-gray-700"
-            fontSize="11"
+            fontSize="10"
             fontWeight="500"
           >
             <tspan>{l.label}</tspan>
             <tspan
               x={l.x}
-              dy="14"
-              fontSize="11"
+              dy="13"
+              fontSize="10"
               fontWeight="700"
               className="fill-blue-800"
             >

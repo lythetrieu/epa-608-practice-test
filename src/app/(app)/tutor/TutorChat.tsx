@@ -338,14 +338,16 @@ export default function TutorChat({
               onClick={() => { setAutoRead(!autoRead); if (autoRead) stopSpeaking() }}
               className={`p-2 min-h-[40px] min-w-[40px] rounded-lg border transition-colors ${autoRead ? 'bg-blue-50 border-blue-300 text-blue-700' : 'border-gray-200 text-gray-500 hover:bg-gray-50'}`}
               title={autoRead ? 'Auto-read ON — tap to turn off' : 'Auto-read OFF — tap to read responses aloud'}
+              aria-label={autoRead ? 'Auto-read ON — tap to turn off' : 'Auto-read OFF — tap to read responses aloud'}
+              aria-pressed={autoRead}
             >
               {autoRead ? <Volume2 size={18} /> : <VolumeX size={18} />}
             </button>
           )}
-          <button onClick={startNewChat} className="p-2 min-h-[40px] min-w-[40px] rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" title="New chat">
+          <button onClick={startNewChat} className="p-2 min-h-[40px] min-w-[40px] rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" title="New chat" aria-label="New chat">
             <Plus size={18} />
           </button>
-          <button onClick={() => setShowHistory(!showHistory)} className="p-2 min-h-[40px] min-w-[40px] rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" title="History">
+          <button onClick={() => setShowHistory(!showHistory)} className="p-2 min-h-[40px] min-w-[40px] rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" title="History" aria-label="History">
             <Clock size={18} />
           </button>
           <div className={`text-xs px-3 py-1.5 rounded-full font-semibold ${limitReached ? 'bg-red-100 text-red-700' : 'bg-blue-50 text-blue-700'}`}>
@@ -416,6 +418,7 @@ export default function TutorChat({
                       onClick={() => isSpeaking ? stopSpeaking() : speakText(msg.content)}
                       className="p-1 rounded hover:bg-gray-100 transition-colors"
                       title={isSpeaking ? 'Stop reading' : 'Read aloud'}
+                      aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
                     >
                       {isSpeaking ? <VolumeX size={14} className="text-gray-400" /> : <Volume2 size={14} className="text-gray-400" />}
                     </button>
@@ -478,6 +481,7 @@ export default function TutorChat({
                 disabled={isLoading}
                 className="shrink-0 w-12 h-12 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40 transition-colors"
                 title="Tap to speak"
+                aria-label="Tap to speak"
               >
                 <Mic size={22} />
               </button>

@@ -8,23 +8,36 @@ export async function GET() {
 
   const admin = createAdminClient()
 
-  const { data, error } = await admin
-    .from('user_progress')
-    .select('correct, question_id, questions!inner(category)')
-    .eq('user_id', user.id)
-    .limit(5000)
-
-  if (error || !data) {
-    return NextResponse.json({ spots: [] })
-  }
-
   const catStats: Record<string, { wrong: number; total: number }> = {}
 
-  for (const row of data) {
-    const cat = ((row.questions as unknown) as { category: string }).category || 'Core'
-    if (!catStats[cat]) catStats[cat] = { wrong: 0, total: 0 }
-    catStats[cat].total++
-    if (!row.correct) catStats[cat].wrong++
+  // Fast path: aggregate GROUP BY category in Postgres (migration 029).
+  const { data: agg, error: rpcError } = await admin.rpc('weak_spots_by_category', {
+    p_user_id: user.id,
+  })
+
+  if (!rpcError && Array.isArray(agg)) {
+    for (const row of agg as { category: string; wrong: number; total: number }[]) {
+      const cat = row.category || 'Core'
+      catStats[cat] = { wrong: Number(row.wrong) || 0, total: Number(row.total) || 0 }
+    }
+  } else {
+    // Fallback: RPC not present yet — original per-row scan (capped at 5000).
+    const { data, error } = await admin
+      .from('user_progress')
+      .select('correct, question_id, questions!inner(category)')
+      .eq('user_id', user.id)
+      .limit(5000)
+
+    if (error || !data) {
+      return NextResponse.json({ spots: [] })
+    }
+
+    for (const row of data) {
+      const cat = ((row.questions as unknown) as { category: string }).category || 'Core'
+      if (!catStats[cat]) catStats[cat] = { wrong: 0, total: 0 }
+      catStats[cat].total++
+      if (!row.correct) catStats[cat].wrong++
+    }
   }
 
   const spots = Object.entries(catStats)

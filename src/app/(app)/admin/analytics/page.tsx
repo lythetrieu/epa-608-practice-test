@@ -19,31 +19,28 @@ export default async function AnalyticsPage() {
   const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString()
   const monthAgo = new Date(now.getTime() - 30 * 86400000).toISOString()
 
+  const fourteenAgo = new Date(now.getTime() - 14 * 86400000).toISOString()
+
   const [
     { count: totalUsers },
-    { data: tierCounts },
     { count: usersToday },
     { count: usersThisWeek },
     { count: usersThisMonth },
     { data: sessionStats },
-    { data: activeUsers7d },
-    { data: activeUsers30d },
     { count: pendingReports },
-    { data: aiUsageToday },
     { count: totalAiSessions },
     { count: aiSessionsThisWeek },
-    { data: failedQuestions },
     { data: recentSignups },
     { data: recentReports },
     { data: dailySignupData },
     { data: dailyTestData },
     { data: recentAiSessions },
     { data: topAiUsers },
+    summaryRes,
+    failedRes,
   ] = await Promise.all([
     // Total users
     admin.from('users_profile').select('*', { count: 'exact', head: true }),
-    // Users by tier
-    admin.from('users_profile').select('tier'),
     // New users today
     admin.from('users_profile').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
     // New users this week
@@ -52,28 +49,20 @@ export default async function AnalyticsPage() {
     admin.from('users_profile').select('*', { count: 'exact', head: true }).gte('created_at', monthAgo),
     // Test sessions (submitted only) - score and total for averages
     admin.from('test_sessions').select('score, total, submitted_at, user_id').not('submitted_at', 'is', null),
-    // Active users last 7 days (distinct user_ids from sessions)
-    admin.from('test_sessions').select('user_id').not('submitted_at', 'is', null).gte('submitted_at', weekAgo),
-    // Active users last 30 days
-    admin.from('test_sessions').select('user_id').not('submitted_at', 'is', null).gte('submitted_at', monthAgo),
     // Pending question reports
     admin.from('question_reports').select('*', { count: 'exact', head: true }),
-    // AI queries today (per user)
-    admin.from('users_profile').select('ai_queries_today'),
     // AI chat sessions total
     admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }),
     // AI chat sessions this week
     admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
-    // Most failed questions - get user_progress for incorrect answers
-    admin.from('user_progress').select('question_id, correct').eq('correct', false),
     // Recent signups
     admin.from('users_profile').select('id, email, tier, created_at').order('created_at', { ascending: false }).limit(10),
     // Recent reports
     admin.from('question_reports').select('id, question_id, reason, created_at').order('created_at', { ascending: false }).limit(10),
     // Daily signups (last 14 days)
-    admin.from('users_profile').select('created_at').gte('created_at', new Date(now.getTime() - 14 * 86400000).toISOString()),
+    admin.from('users_profile').select('created_at').gte('created_at', fourteenAgo),
     // Daily tests (last 14 days)
-    admin.from('test_sessions').select('submitted_at').not('submitted_at', 'is', null).gte('submitted_at', new Date(now.getTime() - 14 * 86400000).toISOString()),
+    admin.from('test_sessions').select('submitted_at').not('submitted_at', 'is', null).gte('submitted_at', fourteenAgo),
     // Recent AI chat sessions with user email
     admin.from('ai_chat_sessions')
       .select('id, user_id, title, messages, created_at, updated_at')
@@ -85,6 +74,10 @@ export default async function AnalyticsPage() {
       .gt('ai_queries_today', 0)
       .order('ai_queries_today', { ascending: false })
       .limit(10),
+    // Aggregate rollups (tier tally, active 7d/30d, distinct anon, ai today) — migration 028
+    admin.rpc('admin_analytics_summary', { p_week_ago: weekAgo, p_month_ago: monthAgo }),
+    // Top-5 most-failed questions (in-DB aggregate + join) — migration 028
+    admin.rpc('top_failed_questions', { p_limit: 5 }),
   ])
 
   // ── Anonymous sessions ──
@@ -93,20 +86,70 @@ export default async function AnalyticsPage() {
     { count: anonSessionsToday },
     { data: recentAnonSessions },
     { data: anonByCategory },
-    { data: allAnonIds },
     { count: totalAnonStarts },
   ] = await Promise.all([
     admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }),
     admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }).gte('submitted_at', todayStart),
     admin.from('anonymous_sessions').select('anonymous_id, category, score, total, submitted_at, city, time_spent').order('submitted_at', { ascending: false }).limit(20),
     admin.from('anonymous_sessions').select('category, score, total').gte('submitted_at', monthAgo),
-    admin.from('anonymous_sessions').select('anonymous_id'),
     admin.from('anonymous_starts').select('*', { count: 'exact', head: true }),
   ])
 
+  // ── Aggregate summary (migration 028) with graceful fallback ──
+  // If the RPCs aren't present yet, fall back to the original in-JS scans so
+  // the page never crashes before the migration runs.
+  type Summary = {
+    tier_free: number; tier_starter: number; tier_ultimate: number
+    active_7d: number; active_30d: number; unique_anon: number
+    ai_total_today: number; ai_users_today: number
+  }
+  let summary = (summaryRes.data as Summary | null) ?? null
+  if (summaryRes.error || !summary) {
+    const [tierCountsRes, active7dRes, active30dRes, aiUsageRes, anonIdsRes] = await Promise.all([
+      admin.from('users_profile').select('tier'),
+      admin.from('test_sessions').select('user_id').not('submitted_at', 'is', null).gte('submitted_at', weekAgo),
+      admin.from('test_sessions').select('user_id').not('submitted_at', 'is', null).gte('submitted_at', monthAgo),
+      admin.from('users_profile').select('ai_queries_today'),
+      admin.from('anonymous_sessions').select('anonymous_id'),
+    ])
+    const tm: Record<string, number> = { free: 0, starter: 0, ultimate: 0 }
+    tierCountsRes.data?.forEach((r: { tier: string }) => { tm[r.tier] = (tm[r.tier] || 0) + 1 })
+    const aiTotal = aiUsageRes.data?.reduce((s: number, r: { ai_queries_today: number }) => s + (r.ai_queries_today || 0), 0) ?? 0
+    const aiUsers = aiUsageRes.data?.filter((r: { ai_queries_today: number }) => (r.ai_queries_today || 0) > 0).length ?? 0
+    summary = {
+      tier_free: tm.free, tier_starter: tm.starter, tier_ultimate: tm.ultimate,
+      active_7d: new Set(active7dRes.data?.map((r: { user_id: string }) => r.user_id)).size,
+      active_30d: new Set(active30dRes.data?.map((r: { user_id: string }) => r.user_id)).size,
+      unique_anon: new Set(anonIdsRes.data?.map((r: { anonymous_id: string }) => r.anonymous_id)).size,
+      ai_total_today: aiTotal, ai_users_today: aiUsers,
+    }
+  }
+
+  // ── Top-5 failed questions (migration 028) with graceful fallback ──
+  let top5WithText: { id: string; question: string; fails: number }[] = []
+  if (!failedRes.error && Array.isArray(failedRes.data)) {
+    top5WithText = (failedRes.data as { id: string; question: string; fails: number }[])
+      .map((r) => ({ id: r.id, question: r.question ?? r.id, fails: Number(r.fails) || 0 }))
+  } else {
+    // Fallback: original scan of every wrong answer + in-JS tally + question lookup.
+    const { data: failedQuestions } = await admin.from('user_progress').select('question_id, correct').eq('correct', false)
+    const failMap: Record<string, number> = {}
+    failedQuestions?.forEach((r: { question_id: string }) => { failMap[r.question_id] = (failMap[r.question_id] || 0) + 1 })
+    const top5Failed = Object.entries(failMap).sort((a, b) => b[1] - a[1]).slice(0, 5)
+    if (top5Failed.length > 0) {
+      const { data: qTexts } = await admin.from('questions').select('id, question').in('id', top5Failed.map(([id]) => id))
+      const textMap: Record<string, string> = {}
+      qTexts?.forEach((q: { id: string; question: string }) => { textMap[q.id] = q.question })
+      top5WithText = top5Failed.map(([id, fails]) => ({ id, question: textMap[id] ?? id, fails }))
+    }
+  }
+
   // ── Calculate metrics ──
-  const tierMap: Record<string, number> = { free: 0, starter: 0, ultimate: 0 }
-  tierCounts?.forEach((r: { tier: string }) => { tierMap[r.tier] = (tierMap[r.tier] || 0) + 1 })
+  const tierMap: Record<string, number> = {
+    free: summary.tier_free,
+    starter: summary.tier_starter,
+    ultimate: summary.tier_ultimate,
+  }
 
   const totalTests = sessionStats?.length ?? 0
   const testsToday = sessionStats?.filter((s: { submitted_at: string }) => s.submitted_at >= todayStart).length ?? 0
@@ -120,11 +163,11 @@ export default async function AnalyticsPage() {
     passRate = Math.round((passed / sessionStats.length) * 100)
   }
 
-  const uniqueActive7d = new Set(activeUsers7d?.map((r: { user_id: string }) => r.user_id)).size
-  const uniqueActive30d = new Set(activeUsers30d?.map((r: { user_id: string }) => r.user_id)).size
+  const uniqueActive7d = summary.active_7d
+  const uniqueActive30d = summary.active_30d
 
   // Anonymous metrics
-  const uniqueAnonUsers = new Set(allAnonIds?.map((r: { anonymous_id: string }) => r.anonymous_id)).size
+  const uniqueAnonUsers = summary.unique_anon
   const completionRate = totalAnonStarts && totalAnonStarts > 0
     ? Math.round(((totalAnonSessions ?? 0) / totalAnonStarts) * 100)
     : null
@@ -138,28 +181,9 @@ export default async function AnalyticsPage() {
   type AiSession = { id: string; user_id: string; title: string; messages: unknown[]; created_at: string; updated_at: string }
   type TopAiUser = { id: string; email: string; ai_queries_today: number; tier: string }
 
-  const totalAiToday = aiUsageToday?.reduce((sum: number, r: { ai_queries_today: number }) => sum + (r.ai_queries_today || 0), 0) ?? 0
-  const aiUsersWithQueriesCount = aiUsageToday?.filter((r: { ai_queries_today: number }) => (r.ai_queries_today || 0) > 0).length ?? 0
+  const totalAiToday = summary.ai_total_today
+  const aiUsersWithQueriesCount = summary.ai_users_today
   const avgQueriesPerUser = aiUsersWithQueriesCount > 0 ? (totalAiToday / aiUsersWithQueriesCount).toFixed(1) : '0'
-
-  // Top 5 most-failed questions
-  const failMap: Record<string, number> = {}
-  failedQuestions?.forEach((r: { question_id: string }) => { failMap[r.question_id] = (failMap[r.question_id] || 0) + 1 })
-  const top5Failed = Object.entries(failMap)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-
-  // Fetch question text for top 5
-  let top5WithText: { id: string; question: string; fails: number }[] = []
-  if (top5Failed.length > 0) {
-    const { data: qTexts } = await admin
-      .from('questions')
-      .select('id, question')
-      .in('id', top5Failed.map(([id]) => id))
-    const textMap: Record<string, string> = {}
-    qTexts?.forEach((q: { id: string; question: string }) => { textMap[q.id] = q.question })
-    top5WithText = top5Failed.map(([id, fails]) => ({ id, question: textMap[id] ?? id, fails }))
-  }
 
   // Daily signups chart data (last 14 days)
   const signupsByDay: Record<string, number> = {}
