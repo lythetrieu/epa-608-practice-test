@@ -55,6 +55,9 @@ export const authRateLimit = makeRatelimit(10, '15 m', 'rl:auth')
 /** AI query endpoint — 20 requests per user per day (starter tier). */
 export const aiRateLimit = makeRatelimit(20, '1 d', 'rl:ai')
 
+/** Guest (unauthenticated) AI — 10 requests per IP per day. Shared across serverless instances. */
+export const guestAiRateLimit = makeRatelimit(10, '1 d', 'rl:guest-ai')
+
 /** Session submission — 30 per hour per user. */
 export const submitRateLimit = makeRatelimit(30, '1 h', 'rl:submit')
 

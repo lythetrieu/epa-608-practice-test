@@ -1,11 +1,8 @@
 import { NextRequest } from 'next/server'
-import { getIdentifier } from '@/lib/ratelimit'
+import { getIdentifier, guestAiRateLimit } from '@/lib/ratelimit'
 import { searchRelevantQuestions } from '@/lib/ai/context'
 import { SYSTEM_PROMPT, retrieveKnowledge, enforcePromptBudget } from '@/lib/ai/prompts'
 import { z } from 'zod'
-
-// Guest AI: 10 requests per IP per day, no auth, shorter responses
-const DAILY_LIMIT = 10
 
 // Use full knowledge base but with shorter response limit for guests
 const GUEST_SYSTEM_PROMPT = SYSTEM_PROMPT.replace(
@@ -17,50 +14,19 @@ const schema = z.object({
   message: z.string().min(1).max(1000),
 })
 
-// Simple in-memory rate limit (backed by edge runtime)
-// For production scale, use Upstash Redis
-const guestLimits = new Map<string, { count: number; date: string }>()
-
-function checkGuestLimit(ip: string): { allowed: boolean; remaining: number } {
-  const today = new Date().toISOString().slice(0, 10)
-  const entry = guestLimits.get(ip)
-
-  if (!entry || entry.date !== today) {
-    guestLimits.set(ip, { count: 1, date: today })
-    return { allowed: true, remaining: DAILY_LIMIT - 1 }
-  }
-
-  if (entry.count >= DAILY_LIMIT) {
-    return { allowed: false, remaining: 0 }
-  }
-
-  entry.count++
-  return { allowed: true, remaining: DAILY_LIMIT - entry.count }
-}
-
-// Clean old entries periodically (prevent memory leak)
-function cleanOldEntries() {
-  const today = new Date().toISOString().slice(0, 10)
-  for (const [key, val] of guestLimits) {
-    if (val.date !== today) guestLimits.delete(key)
-  }
-}
-
 export async function POST(request: NextRequest) {
-  // Rate limit by IP
+  // Rate limit by IP — Upstash-backed so the cap is shared across serverless
+  // instances (an in-memory Map resets per cold-start and never actually bounds cost).
   const ip = getIdentifier(request)
-  const limit = checkGuestLimit(ip)
+  const limit = await guestAiRateLimit.limit(ip)
 
-  if (!limit.allowed) {
+  if (!limit.success) {
     return Response.json({
       error: 'Daily limit reached (10 free questions per day). Get Pro for unlimited AI help.',
       remaining: 0,
       upgradeRequired: true,
     }, { status: 429 })
   }
-
-  // Clean stale entries every 100 requests
-  if (Math.random() < 0.01) cleanOldEntries()
 
   // Parse request
   const body = await request.json().catch(() => ({}))

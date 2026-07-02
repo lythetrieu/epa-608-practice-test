@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     await supabase.from('ai_chat_sessions').update({
       messages,
       updated_at: new Date().toISOString(),
-    }).eq('id', chatSessionId)
+    }).eq('id', chatSessionId).eq('user_id', user.id)
   } else {
     const { data: newSession } = await supabase.from('ai_chat_sessions').insert({
       user_id: user.id,
