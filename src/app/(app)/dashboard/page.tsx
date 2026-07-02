@@ -243,7 +243,7 @@ export default async function DashboardPage() {
 
       {/* ═══ QUICK ACCESS — tools ═══ */}
       <div className="grid grid-cols-3 gap-2 mb-3">
-        <ToolLink href="/learn" icon={<BookOpen size={18} />} label="Study Path" dataTour="learn" locked={isFree} />
+        <ToolLink href="/learn" icon={<BookOpen size={18} />} label="Study Path" dataTour="learn" locked={!TIER_LIMITS[tier].hasStudyPath} />
         <ToolLink href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" />
         <ToolLink href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
       </div>

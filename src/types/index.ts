@@ -19,7 +19,7 @@ export const TIER_LIMITS = {
     hasProgress: true,
     hasProgressLimit: Infinity,
     hasBlindSpot: false,
-    hasStudyPath: false,         // Pro only — full guided Study Path (free = sample)
+    hasStudyPath: true,          // OPEN to free for now (flip to false to make it Pro-only)
     hasRadarChart: false,        // Pro only — free sees raw scores only
     hasTimedMode: false,         // Pro only — timed simulation
     aiQueriesPerDay: 10,         // 10/day free; Pro gets 1000

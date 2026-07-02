@@ -4,7 +4,7 @@ import { useState, useEffect, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
-import type { Tier } from '@/types'
+import { TIER_LIMITS, type Tier } from '@/types'
 import {
   BookOpen, Target, Settings, LogOut, Shield, Users, ChevronRight,
   Snowflake, Wrench, Factory, FileText, Zap, Menu, X, BarChart3, ClipboardList,
@@ -63,7 +63,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
       {/* Nav — 3 primary tabs (+ Account in footer) */}
       <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-0.5">
 
-        <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} badge={isPro ? undefined : 'Pro'} />
+        <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} badge={TIER_LIMITS[tier].hasStudyPath ? undefined : 'Pro'} />
 
         {/* Practice Test — pick a category, then Practice or Exam mode */}
         <button
