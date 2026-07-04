@@ -17,7 +17,7 @@ export const TIER_RANK: Record<Tier, number> = {
 export const TIER_LIMITS = {
   free: {
     questionsPerDay: Infinity,
-    questionPoolLimit: 200,      // Free = fixed 200-question pool (50/category)
+    questionPoolLimit: Infinity, // Free = full 569 bank (Pro differentiates by features, not count)
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
