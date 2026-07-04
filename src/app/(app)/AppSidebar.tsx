@@ -7,7 +7,7 @@ import { getTierLabel } from '@/lib/tier'
 import { TIER_LIMITS, type Tier } from '@/types'
 import {
   BookOpen, Target, Settings, LogOut, Shield, Users, ChevronRight,
-  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, BarChart3, ClipboardList,
+  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, BarChart3, ClipboardList, Bot,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -92,6 +92,9 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         )}
 
         <NavItem href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" pathname={pathname} />
+
+        {/* AI Tutor — Pro-only chat; free sees a Pro lock badge (mirrors Study Path) */}
+        <NavItem href="/tutor" icon={<Bot size={18} />} label="AI Tutor" pathname={pathname} badge={isPro ? undefined : 'Pro'} />
 
         {/* Admin (admin-only — not part of the 4 learner tabs) */}
         {(isTeamAdmin || isAdmin) && (

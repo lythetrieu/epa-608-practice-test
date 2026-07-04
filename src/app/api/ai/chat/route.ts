@@ -28,6 +28,17 @@ export async function POST(request: NextRequest) {
   if (!profile) return Response.json({ error: 'Profile not found' }, { status: 404 })
 
   const tier = profile.tier as keyof typeof TIER_LIMITS
+
+  // AI Tutor CHAT is Pro-only. Free users get ELI5/Explain (see /api/ai/explain)
+  // but not open-ended chat. This gate runs BEFORE the increment so a blocked
+  // free request never consumes their daily ELI5 allowance.
+  if (!TIER_LIMITS[tier].hasAiChat) {
+    return Response.json(
+      { error: 'AI Tutor chat is a Pro feature. Upgrade to chat with the tutor.', upgradeRequired: true },
+      { status: 403 },
+    )
+  }
+
   const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
   if (dailyLimit <= 0) {
     return Response.json({ error: 'Daily AI limit reached. Upgrade for more conversations.', upgradeRequired: true }, { status: 403 })

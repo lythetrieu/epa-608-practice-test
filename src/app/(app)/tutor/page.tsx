@@ -13,7 +13,7 @@ export default async function TutorPage() {
   const tier = (profile?.tier ?? 'free') as Tier
   const limits = TIER_LIMITS[tier]
 
-  if (limits.aiQueriesPerDay <= 0) {
+  if (!limits.hasAiChat) {
     return (
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="max-w-md text-center">
@@ -25,10 +25,10 @@ export default async function TutorPage() {
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
             <p className="text-sm text-blue-800 font-medium mb-1">
-              Upgrade to unlock AI Tutor
+              AI Tutor is a Pro feature
             </p>
             <p className="text-xs text-blue-600">
-              Free accounts get 10 AI queries/day. Pro unlocks 1,000/day.
+              Free accounts get the AI Explain button on questions. Pro unlocks the full AI Tutor chat.
             </p>
           </div>
           <Link

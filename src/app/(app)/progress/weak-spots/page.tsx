@@ -168,17 +168,27 @@ export default async function WeakSpotsPage() {
               <span>Start Weak Spot Drill</span>
             </Link>
           ) : (
-            <div className="mb-8 bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold text-blue-900">Weak Spot Drill — Pro only</p>
-                <p className="text-xs text-blue-700 mt-0.5">Auto-builds a test targeting exactly your weak subtopics above.</p>
-              </div>
-              <Link
-                href={`/checkout.html`}
-                className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+            <div className="mb-8">
+              {/* Locked drill button — shown (not hidden) so free users see the tool exists */}
+              <div
+                className="flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-gray-100 text-gray-400 rounded-xl font-semibold border border-gray-200 cursor-not-allowed select-none"
+                aria-disabled="true"
               >
-                Upgrade — $14.99
-              </Link>
+                <Lock size={18} aria-hidden />
+                <span>Start Weak Spot Drill</span>
+              </div>
+              <div className="mt-2 bg-blue-50 border border-blue-200 rounded-xl px-5 py-3 flex items-center justify-between gap-4">
+                <p className="text-xs text-blue-800">
+                  You can see your weak spots — <span className="font-semibold">unlock the drill</span> to auto-build a
+                  test that fixes them.
+                </p>
+                <Link
+                  href={`/checkout.html`}
+                  className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+                >
+                  Upgrade — $14.99
+                </Link>
+              </div>
             </div>
           )}
 
@@ -197,16 +207,21 @@ export default async function WeakSpotsPage() {
                   <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                     Topic Proficiency
                   </h2>
+                  {/* Real radar rendered but BLURRED — free users see the insight exists */}
                   <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
-                    <div className="opacity-20 pointer-events-none select-none" aria-hidden>
+                    <div className="blur-md pointer-events-none select-none" aria-hidden>
                       <RadarChart data={radarData} />
                     </div>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                      <Lock size={24} className="text-gray-700" aria-hidden />
-                      <p className="text-sm font-semibold text-gray-700">Radar Chart — Pro</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/30 rounded-lg">
+                      <div className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center">
+                        <Lock size={20} className="text-blue-800" aria-hidden />
+                      </div>
+                      <p className="text-sm font-semibold text-gray-800">Radar Chart — Pro</p>
                     </div>
                   </div>
-                  <p className="text-xs text-gray-500 mb-4">See your proficiency across all 8 topic areas at a glance.</p>
+                  <p className="text-xs text-gray-500 mb-4">
+                    Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
+                  </p>
                   <Link
                     href={`/checkout.html`}
                     className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { questionRateLimit, getIdentifier } from '@/lib/ratelimit'
 import { canAccessCategory, TIER_LIMITS } from '@/lib/tier'
+import { isFreePool, filterRowsToPool } from '@/lib/question-pool'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -32,6 +33,9 @@ export async function POST(request: NextRequest) {
   if (!profile) return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
+  // Free users may only ever draw from the fixed 200-question pool. Unknown
+  // tiers resolve to the free (safer) pool inside isFreePool().
+  const freeOnly = isFreePool(tier)
 
   // Practice is the free mode — open to ALL tiers and ALL categories. No gating.
   // For timed ('random') and 'blind-spot', enforce category access.
@@ -51,6 +55,7 @@ export async function POST(request: NextRequest) {
     const { data: weakSpotData } = await admin.rpc('get_weak_spot_questions', {
       p_user_id: user.id,
       p_limit: count,
+      p_free_only: freeOnly,
     })
     questionIds = weakSpotData?.map((q: any) => q.id) ?? []
 
@@ -59,7 +64,7 @@ export async function POST(request: NextRequest) {
       const cats = TIER_LIMITS[tier].categories
       const perCat = Math.floor(count / cats.length)
       for (const cat of cats) {
-        const { data } = await admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat })
+        const { data } = await admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly })
         questionIds.push(...(data?.map((q: any) => q.id) ?? []))
       }
     }
@@ -68,13 +73,28 @@ export async function POST(request: NextRequest) {
     const perCat = Math.floor(count / cats.length)
     for (const cat of cats) {
       const { data } = await admin
-        .rpc('get_random_questions', { p_category: cat, p_limit: perCat })
+        .rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly })
       questionIds.push(...(data?.map((q: any) => q.id) ?? []))
     }
   } else {
     const { data } = await admin
-      .rpc('get_random_questions', { p_category: category, p_limit: count })
+      .rpc('get_random_questions', { p_category: category, p_limit: count, p_free_only: freeOnly })
     questionIds = data?.map((q: any) => q.id) ?? []
+  }
+
+  // Belt-and-braces free-pool guard: even if the RPC migration hasn't run yet
+  // (older get_random_questions ignores p_free_only and returns full-bank ids),
+  // reduce a free user's candidate ids to the 200-question pool here BEFORE the
+  // session is created, so the stored session, timer, and grading all agree.
+  if (freeOnly && questionIds.length > 0) {
+    const { data: catRows } = await admin
+      .from('questions')
+      .select('id, category')
+      .in('id', questionIds)
+    const allowed = new Set(
+      filterRowsToPool((catRows ?? []) as { id: string; category: string }[], tier).map(r => r.id),
+    )
+    questionIds = questionIds.filter(id => allowed.has(id))
   }
 
   if (questionIds.length === 0) {

@@ -11,9 +11,13 @@ export const TIER_RANK: Record<Tier, number> = {
   pro: 2,
 }
 
+// questionPoolLimit: how many DISTINCT questions from the bank a tier may ever
+// draw. Free = a fixed 200-question pool (deterministic, balanced 50/category);
+// paid = the full bank (Infinity). See lib/question-pool.ts for enforcement.
 export const TIER_LIMITS = {
   free: {
     questionsPerDay: Infinity,
+    questionPoolLimit: 200,      // Free = fixed 200-question pool (50/category)
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
@@ -22,11 +26,13 @@ export const TIER_LIMITS = {
     hasStudyPath: true,          // OPEN to free for now (flip to false to make it Pro-only)
     hasRadarChart: false,        // Pro only — free sees raw scores only
     hasTimedMode: false,         // Pro only — timed simulation
-    aiQueriesPerDay: 10,         // 10/day free; Pro gets 1000
+    hasAiChat: false,            // AI Tutor CHAT is Pro-only (explain/ELI5 stays free)
+    aiQueriesPerDay: 10,         // 10/day free (ELI5/Explain); Pro gets 1000
     hasPDF: false,
   },
   starter: {
     questionsPerDay: Infinity,
+    questionPoolLimit: Infinity, // Full 569-question bank
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
@@ -35,11 +41,13 @@ export const TIER_LIMITS = {
     hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
+    hasAiChat: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
   },
   ultimate: {
     questionsPerDay: Infinity,
+    questionPoolLimit: Infinity,
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
@@ -48,11 +56,13 @@ export const TIER_LIMITS = {
     hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
+    hasAiChat: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
   },
   pro: {
     questionsPerDay: Infinity,
+    questionPoolLimit: Infinity,
     categories: ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as Category[],
     hasExplanations: true,
     hasProgress: true,
@@ -61,6 +71,7 @@ export const TIER_LIMITS = {
     hasStudyPath: true,
     hasRadarChart: true,
     hasTimedMode: true,
+    hasAiChat: true,
     aiQueriesPerDay: 1000,
     hasPDF: true,
   },

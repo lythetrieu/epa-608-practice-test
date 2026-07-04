@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { questionRateLimit, getIdentifier } from '@/lib/ratelimit'
 import { canAccessCategory, TIER_LIMITS } from '@/lib/tier'
+import { isFreePool, restrictCategoryQueryToPool, filterRowsToPool } from '@/lib/question-pool'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -33,6 +34,9 @@ export async function POST(request: NextRequest) {
   if (!profile) return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
 
   const tier = profile.tier as 'free' | 'starter' | 'ultimate'
+  // Free users draw only from the fixed 200-question pool. Unknown tiers resolve
+  // to the free (safer) pool.
+  const freeOnly = isFreePool(tier)
 
   // Flashcards are free for everyone; the timed Practice test stays tier-gated.
   if (!flashcard && category !== 'Universal' && !canAccessCategory(tier, category)) {
@@ -48,21 +52,32 @@ export async function POST(request: NextRequest) {
   if (category === 'Universal') {
     const cats = TIER_LIMITS[tier].categories
     for (const cat of cats) {
-      const { data } = await admin
-        .from('questions')
-        .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
-        .eq('category', cat)
-        .neq('question_type', 'multi_select')
+      // Free users: restrict each category fetch to the 50-id free pool slice.
+      const { data } = await restrictCategoryQueryToPool(
+        admin
+          .from('questions')
+          .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
+          .eq('category', cat)
+          .neq('question_type', 'multi_select'),
+        tier,
+      )
       if (data) allQuestions.push(...(data as QRow[]))
     }
   } else {
-    const { data } = await admin
-      .from('questions')
-      .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
-      .eq('category', category)
-      .neq('question_type', 'multi_select')
+    const { data } = await restrictCategoryQueryToPool(
+      admin
+        .from('questions')
+        .select('id, category, subtopic_id, question, options, answer_text, explanation, difficulty')
+        .eq('category', category)
+        .neq('question_type', 'multi_select'),
+      tier,
+    )
     if (data) allQuestions = data as QRow[]
   }
+
+  // Belt-and-braces: guarantee free users never hold non-pool rows even if the
+  // query above changes. No-op for paid tiers.
+  if (freeOnly) allQuestions = filterRowsToPool(allQuestions, tier)
 
   if (allQuestions.length === 0) {
     return NextResponse.json({ error: 'No questions available' }, { status: 404 })

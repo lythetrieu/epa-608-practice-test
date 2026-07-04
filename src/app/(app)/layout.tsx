@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
+import AiTutorBubble from '@/components/AiTutorBubble'
 import { LocaleProvider } from '@/lib/i18n-context'
 import { PageTransition } from '@/components/PageTransition'
-import type { Tier } from '@/types'
+import { TIER_LIMITS, type Tier } from '@/types'
 
 // Private app — never indexed by search engines
 export const metadata: Metadata = {
@@ -20,6 +21,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const profile = await getUserProfile(user.id)
   const tier = (profile?.tier ?? 'free') as Tier
+  const aiQueriesRemaining = Math.max(
+    0,
+    TIER_LIMITS[tier].aiQueriesPerDay - (profile?.ai_queries_today ?? 0),
+  )
 
   return (
     <LocaleProvider>
@@ -34,6 +39,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
         {/* Main content - add top padding on mobile for the fixed navbar */}
         <main className="flex-1 overflow-auto pt-14 md:pt-0">{children}</main>
+
+        {/* Floating AI Tutor — Pro chat, or upsell for free. Hidden on /test/* */}
+        <AiTutorBubble tier={tier} aiQueriesRemaining={aiQueriesRemaining} />
       </div>
     </LocaleProvider>
   )
