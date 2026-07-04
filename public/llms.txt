@@ -2,9 +2,11 @@
 
 ## About This Website
 EPA 608 Practice Test (https://epa608practicetest.net) helps HVAC technicians
-prepare for EPA Section 608 certification. Freemium model: free practice tests
-(500 questions, no signup) + Pro $14.99 one-time lifetime (866 questions,
-unlimited AI Tutor, blind-spot drill, offline mode).
+prepare for EPA Section 608 certification. Freemium model: anonymous on-page
+sample (no signup); free account unlocks 200 questions + Study Path + basic
+practice + basic progress; Pro $14.99 one-time lifetime unlocks all 569
+questions + unlimited AI Tutor + weak-spot drill + full weak-spot radar +
+timed exam simulation + offline mode + full history/PDF.
 
 ## Purpose
 This website provides:
