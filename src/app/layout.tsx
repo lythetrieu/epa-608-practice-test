@@ -52,7 +52,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KSX9M3DD');` }} />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT" />
         <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KJ8X1DQ1GT');` }} />
-        <script dangerouslySetInnerHTML={{ __html: `(function(){var t=localStorage.getItem('epa608-theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')})()` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){if(localStorage.getItem('epa608-theme')==='dark')document.documentElement.classList.add('dark')})()` }} />
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
