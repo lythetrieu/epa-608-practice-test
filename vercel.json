@@ -102,6 +102,7 @@
     },
     {
       "source": "/test",
+      "has": [{ "type": "host", "value": "epa608practicetest.net" }],
       "destination": "/universal.html",
       "statusCode": 301
     },
