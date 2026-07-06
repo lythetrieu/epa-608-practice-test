@@ -1,30 +1,35 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { TIER_LIMITS, type Tier, type Category } from '@/types'
+import { TIER_LIMITS, type Tier } from '@/types'
 import { computeReadiness } from '@/lib/readiness'
+import {
+  SECTION_CATEGORIES,
+  totalConceptsByCategory,
+  masteredConceptsByCategory,
+} from '@/lib/section-progress'
 import { GuidedTour } from './guided-tour'
 import { Onboarding } from './onboarding'
 import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
-  FileText, Snowflake, Wrench, Factory, Target,
-  Bot, BarChart3, Flame, BookOpen, CheckCircle2, ArrowRight, Lock,
+  FileText, Snowflake, Wrench, Factory, Flame, Bot,
+  ArrowRight, Lightbulb, AlertTriangle, Lock,
 } from 'lucide-react'
 
-const CATEGORIES: { slug: string; label: string; category: Category | 'Universal'; icon: ReactNode }[] = [
-  { slug: 'core',      label: 'Core',      category: 'Core',      icon: <FileText size={22} /> },
-  { slug: 'type-1',   label: 'Type I',    category: 'Type I',    icon: <Snowflake size={22} /> },
-  { slug: 'type-2',   label: 'Type II',   category: 'Type II',   icon: <Wrench size={22} /> },
-  { slug: 'type-3',   label: 'Type III',  category: 'Type III',  icon: <Factory size={22} /> },
-  { slug: 'universal',label: 'Universal', category: 'Universal', icon: <Target size={22} /> },
-]
+// Icon + chip color per section (matches the prototype's colored icon chips)
+const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
+  Core:       { icon: <FileText size={16} />,  chip: 'bg-sky-100 text-sky-700' },
+  'Type I':   { icon: <Snowflake size={16} />, chip: 'bg-teal-100 text-teal-700' },
+  'Type II':  { icon: <Wrench size={16} />,    chip: 'bg-violet-100 text-violet-700' },
+  'Type III': { icon: <Factory size={16} />,   chip: 'bg-amber-100 text-amber-700' },
+}
 
-const SLUG_BY_CATEGORY: Record<string, string> = Object.fromEntries(
-  CATEGORIES.map(c => [c.category, c.slug])
-)
+// SVG progress-ring math (r=50 in a 120 viewBox, like the prototype)
+const RING_R = 50
+const RING_C = 2 * Math.PI * RING_R // ≈ 314.16
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
@@ -46,7 +51,6 @@ export default async function DashboardPage() {
     .order('submitted_at', { ascending: false })
 
   const totalTests = allSessions?.length ?? 0
-  const recentSessions = allSessions?.slice(0, 5) ?? []
 
   // Streak calculation
   let currentStreak = 0
@@ -75,53 +79,69 @@ export default async function DashboardPage() {
     }
   }
 
+  // Average score across all completed tests
+  let avgScore: number | null = null
+  const scored = (allSessions ?? []).filter(s => s.score !== null && s.total > 0)
+  if (scored.length > 0) {
+    avgScore = Math.round(
+      scored.reduce((sum, s) => sum + (s.score! / s.total) * 100, 0) / scored.length
+    )
+  }
+
   // ─── Exam readiness (real per-cert pass marks, shared lib) ───
   const pursue = [...TIER_LIMITS[tier].categories, 'Universal']
   const readiness = computeReadiness(allSessions ?? [], pursue)
-
   const overall = readiness.overall
-  const overallColor =
-    overall >= 70 ? 'text-green-600' : overall >= 50 ? 'text-orange-500' : 'text-red-500'
-  const overallBg =
-    overall >= 70 ? 'bg-green-50' : overall >= 50 ? 'bg-orange-50' : 'bg-red-50'
-  const barColor =
-    overall >= 70 ? 'bg-green-500' : overall >= 50 ? 'bg-orange-400' : 'bg-red-400'
 
-  // Best scores per category (for quick-access badges)
-  const bestScores: Record<string, number> = {}
-  if (allSessions) {
-    for (const s of allSessions) {
-      if (s.score === null) continue
-      const pct = Math.round((s.score / s.total) * 100)
-      if (!bestScores[s.category] || pct > bestScores[s.category]) bestScores[s.category] = pct
+  // ─── Study Path levels mastered per section (Study X/Y) ───
+  // Falls back to 0/Y if the table is missing or the query fails.
+  let masteredByCat: Record<string, number> = {}
+  try {
+    const { data: mastered } = await supabase
+      .from('study_path_progress')
+      .select('concept_id')
+      .eq('user_id', user.id)
+      .eq('status', 'mastered')
+    masteredByCat = masteredConceptsByCategory(
+      (mastered ?? []).map(r => r.concept_id as string)
+    )
+  } catch {
+    masteredByCat = {}
+  }
+  const totalsByCat = totalConceptsByCategory()
+
+  // ─── Questions practiced per section (RPC; omit the number on failure) ───
+  let practicedByCat: Record<string, number> | null = null
+  try {
+    const admin = createAdminClient()
+    const { data: agg, error: rpcError } = await admin.rpc('weak_spots_by_category', {
+      p_user_id: user.id,
+    })
+    if (!rpcError && Array.isArray(agg)) {
+      practicedByCat = {}
+      for (const row of agg as { category: string; wrong: number; total: number }[]) {
+        practicedByCat[row.category || 'Core'] = Number(row.total) || 0
+      }
     }
+  } catch {
+    practicedByCat = null
   }
 
-  // ─── Coach: the single clear next step ───
-  let coach: { title: string; detail: string; primary: { text: string; href: string }; secondary?: { text: string; href: string } }
+  // ─── Coach line: the single clear next step ───
+  let coachLine: string
   if (totalTests === 0) {
-    coach = {
-      title: 'Start with Core',
-      detail: 'Core covers the fundamentals every EPA 608 cert builds on. Begin in practice mode — no timer, instant feedback.',
-      primary: { text: 'Start Core Practice', href: '/test/core?mode=practice' },
-      secondary: { text: 'Learn first', href: '/learn' },
-    }
+    coachLine = 'Start with Core — the fundamentals every EPA 608 cert builds on.'
+  } else if (!readiness.enoughData) {
+    coachLine = 'Take a few tests to unlock your readiness score.'
   } else if (readiness.weakest && !readiness.weakest.ready) {
     const w = readiness.weakest
-    const slug = SLUG_BY_CATEGORY[w.category] ?? 'core'
-    coach = {
-      title: `Focus on ${w.category}`,
-      detail: `You're at ${w.avgPct}% and need ${w.threshold}% to pass. Study the concepts, then drill ${w.category} until you clear the bar.`,
-      primary: { text: 'Open Study Path', href: '/learn' },
-      secondary: { text: `Practice ${w.category}`, href: `/test/${slug}?mode=practice` },
-    }
+    coachLine = `Focus on ${w.category} — you're at ${w.avgPct}%, need ${w.threshold}%.`
   } else {
-    coach = {
-      title: "You're exam-ready",
-      detail: 'Your recent scores clear every pass mark you\'re pursuing. Lock it in with a full Universal timed simulation.',
-      primary: { text: 'Take Universal Simulation', href: '/test/universal' },
-    }
+    coachLine = "You're exam-ready. Lock it in with a Universal simulation."
   }
+
+  const showWeakestAlert =
+    readiness.enoughData && !!readiness.weakest && !readiness.weakest.ready
 
   return (
     <div className="p-3 sm:p-5 max-w-3xl mx-auto">
@@ -131,144 +151,178 @@ export default async function DashboardPage() {
       <ProActivatedBanner isPro={!isFree && !!profile?.lifetime_access} />
 
       {/* ═══ HEADER ═══ */}
-      <div className="flex items-center justify-between mb-4" data-tour="header">
+      <div className="flex items-center justify-between mb-3" data-tour="header">
         <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
-        {currentStreak > 0 && (
-          <span className="bg-orange-50 text-orange-600 px-2.5 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1 shrink-0 ml-3">
-            <Flame size={14} />{currentStreak}
-          </span>
-        )}
       </div>
 
-      {/* ═══ HOW YOU'RE DOING — Readiness hero ═══ */}
-      <section className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 mb-3" data-tour="readiness">
-        <div className="flex items-center gap-4">
-          <div className={`${overallBg} rounded-2xl px-4 py-3 text-center shrink-0`}>
-            <span className={`block text-3xl sm:text-4xl font-extrabold leading-none ${overallColor}`}>
-              {readiness.enoughData ? `${overall}%` : '—'}
-            </span>
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-gray-900">Exam Readiness</p>
-            <p className="text-xs text-gray-500 mt-0.5">
-              {readiness.enoughData
-                ? `Based on your ${readiness.confidence === 'high' ? 'many' : readiness.confidence === 'medium' ? 'recent' : 'few'} most recent tests`
-                : 'Measured against the real EPA 608 pass marks'}
-            </p>
-          </div>
-        </div>
-
-        {readiness.enoughData ? (
-          <div className="mt-4 space-y-3">
-            {readiness.byCategory.map(c => (
-              <div key={c.category}>
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-semibold text-gray-800">{c.category}</span>
-                  <span className={`inline-flex items-center gap-1 font-bold ${c.ready ? 'text-green-600' : 'text-gray-500'}`}>
-                    {c.ready
-                      ? <><CheckCircle2 size={13} /> Ready</>
-                      : <>Keep going</>}
-                    <span className="text-gray-400 font-medium ml-1">{c.avgPct}% / {c.threshold}%</span>
-                  </span>
-                </div>
-                <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${c.ready ? 'bg-green-500' : 'bg-orange-400'}`}
-                    style={{ width: `${c.readinessPct}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-4">
-            <div className="h-2 rounded-full bg-gray-100 overflow-hidden mb-3">
-              <div className={`h-full rounded-full ${barColor}`} style={{ width: `${overall}%` }} />
-            </div>
-            <p className="text-sm text-gray-600">Take a few tests to unlock your readiness score.</p>
-          </div>
-        )}
-      </section>
-
-      {/* ═══ WHAT TO DO NEXT — Coach ═══ */}
-      <section className="rounded-2xl px-4 py-4 mb-3 text-white" style={{ background: '#003087' }} data-tour="coach">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-blue-200 mb-1">Next step</p>
-        <p className="font-bold text-base">{coach.title}</p>
-        <p className="text-blue-100 text-xs mt-1 leading-relaxed">{coach.detail}</p>
-        <div className="flex flex-wrap gap-2 mt-3">
-          <Link
-            href={coach.primary.href}
-            className="inline-flex items-center gap-1.5 bg-white rounded-lg px-4 font-bold text-sm min-h-[44px]"
-            style={{ color: '#003087' }}
-          >
-            {coach.primary.text} <ArrowRight size={16} />
-          </Link>
-          {coach.secondary && (
-            <Link
-              href={coach.secondary.href}
-              className="inline-flex items-center rounded-lg px-4 font-bold text-sm min-h-[44px] border border-white/40 text-white hover:bg-white/10 transition-colors"
-            >
-              {coach.secondary.text}
-            </Link>
+      {/* ═══ READINESS HERO — navy card with progress ring ═══ */}
+      <section
+        className="flex items-center gap-4 rounded-2xl p-4 sm:p-5 mb-3 text-white"
+        style={{ background: '#001d57' }}
+        data-tour="readiness"
+      >
+        <svg
+          width="84"
+          height="84"
+          viewBox="0 0 120 120"
+          className="shrink-0"
+          role="img"
+          aria-label={
+            readiness.enoughData
+              ? `Exam readiness: ${overall}%`
+              : 'Exam readiness not yet available'
+          }
+        >
+          <circle cx="60" cy="60" r={RING_R} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="13" />
+          {readiness.enoughData && (
+            <circle
+              cx="60"
+              cy="60"
+              r={RING_R}
+              fill="none"
+              stroke="#38bdf8"
+              strokeWidth="13"
+              strokeLinecap="round"
+              strokeDasharray={RING_C.toFixed(1)}
+              strokeDashoffset={(RING_C * (1 - overall / 100)).toFixed(1)}
+              transform="rotate(-90 60 60)"
+            />
           )}
+          <text x="60" y="58" textAnchor="middle" fontSize="30" fontWeight="700" fill="#fff">
+            {readiness.enoughData ? `${overall}%` : '—'}
+          </text>
+          <text x="60" y="78" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.7)">
+            ready
+          </text>
+        </svg>
+        <div className="min-w-0">
+          <p className="text-xs text-blue-200 mb-1">Exam readiness</p>
+          <p className="text-sm font-medium leading-relaxed">
+            <Lightbulb size={15} className="inline align-[-2px] mr-1" aria-hidden="true" />
+            {coachLine}
+          </p>
         </div>
       </section>
 
-      {/* ═══ QUICK ACCESS — practice categories ═══ */}
-      <section className="mb-3" data-tour="core">
-        <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Practice</h2>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-          {CATEGORIES.map(c => {
-            const best = bestScores[c.category]
-            const threshold = c.category === 'Type I' ? 84 : c.category === 'Universal' ? 72 : 70
-            const passed = best !== undefined && best >= threshold
-            return (
-              <Link
-                key={c.slug}
-                href={`/test/${c.slug}`}
-                className="flex flex-col items-center p-3 rounded-xl text-center min-h-[88px] justify-center bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all"
-              >
-                <span className="mb-1 text-gray-700">{c.icon}</span>
-                <span className="font-bold text-xs text-gray-900">{c.label}</span>
-                {best !== undefined && (
-                  <span className={`text-[11px] font-bold mt-1 px-1.5 py-0.5 rounded-full ${passed ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
-                    {best}%
-                  </span>
-                )}
-              </Link>
-            )
-          })}
-        </div>
-      </section>
-
-      {/* ═══ QUICK ACCESS — tools ═══ */}
+      {/* ═══ STAT CARDS — streak · tests · avg score ═══ */}
       <div className="grid grid-cols-3 gap-2 mb-3">
-        <ToolLink href="/learn" icon={<BookOpen size={18} />} label="Study Path" dataTour="learn" locked={!TIER_LIMITS[tier].hasStudyPath} />
-        <ToolLink href="/tutor" icon={<Bot size={18} />} label="AI Tutor" dataTour="ai-tutor" locked={isFree} />
-        <ToolLink href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" />
+        <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
+          <p className="text-lg font-bold text-amber-600 inline-flex items-center justify-center gap-1">
+            <Flame size={16} aria-hidden="true" />{currentStreak}
+          </p>
+          <p className="text-[11px] text-gray-500">day streak</p>
+        </div>
+        <Link
+          href="/progress"
+          className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center hover:border-indigo-300 transition-colors"
+        >
+          <p className="text-lg font-bold text-gray-900">{totalTests}</p>
+          <p className="text-[11px] text-gray-500">tests</p>
+        </Link>
+        <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
+          <p className="text-lg font-bold text-gray-900">{avgScore !== null ? `${avgScore}%` : '—'}</p>
+          <p className="text-[11px] text-gray-500">avg score</p>
+        </div>
       </div>
 
-      {/* ═══ RECENT TESTS (inline, compact) ═══ */}
-      {recentSessions.length > 0 && (
-        <div className="flex items-center gap-2 mb-3 overflow-x-auto">
-          <span className="text-xs font-bold text-gray-500 uppercase shrink-0">Recent:</span>
-          {recentSessions.map(s => {
-            const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
-            const threshold = s.category === 'Type I' ? 84 : s.category === 'Universal' ? 72 : 70
-            const passed = pct >= threshold
-            return (
-              <span key={s.id} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium shrink-0 ${
-                passed ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'
-              }`}>
-                {s.category} {pct}%
+      {/* ═══ CONTINUE STUDYING ═══ */}
+      <Link
+        href="/learn"
+        data-tour="learn"
+        className="flex w-full items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-4 font-semibold text-[15px] min-h-[48px] transition-colors"
+      >
+        Continue studying <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+
+      {/* ═══ PROGRESS BY SECTION ═══ */}
+      <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-5 mb-2 px-0.5">
+        Progress by section
+      </h2>
+      {SECTION_CATEGORIES.map(category => {
+        const style = SECTION_STYLE[category]
+        const cat = readiness.byCategory.find(c => c.category === category)
+        const isWeakest =
+          !!readiness.weakest &&
+          readiness.weakest.category === category &&
+          !readiness.weakest.ready
+        const mastered = masteredByCat[category] ?? 0
+        const total = totalsByCat[category] ?? 0
+        // null = RPC failed → omit the number; otherwise missing category = 0 practiced
+        const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
+
+        return (
+          <Link
+            key={category}
+            href="/learn"
+            data-tour={category === 'Core' ? 'core' : undefined}
+            className={`block bg-white border rounded-2xl px-4 py-3.5 mb-2.5 transition-colors ${
+              isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'
+            }`}
+          >
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
+                {style.icon}
               </span>
-            )
-          })}
-          <Link href="/progress" className="inline-flex items-center gap-1 text-xs text-blue-700 shrink-0 hover:underline">
-            <BarChart3 size={13} /> All
+              <span className="text-[15px] font-semibold text-gray-900">{category}</span>
+              {isWeakest && (
+                <span className="text-[10px] font-bold uppercase bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
+                  weakest
+                </span>
+              )}
+              <span
+                className={`ml-auto text-sm font-bold ${
+                  !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
+                }`}
+              >
+                {cat ? `${cat.readinessPct}%` : '—'}
+              </span>
+            </div>
+            <div className="h-[7px] rounded-full bg-indigo-50 overflow-hidden">
+              <div
+                className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
+                style={{ width: `${cat?.readinessPct ?? 0}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-gray-400 mt-2">
+              <span>Study {mastered}/{total} levels</span>
+              {practiced !== undefined && <span>{practiced} practiced</span>}
+            </div>
           </Link>
-        </div>
+        )
+      })}
+
+      {/* ═══ WEAKEST ALERT ═══ */}
+      {showWeakestAlert && (
+        <Link
+          href="/progress"
+          className="flex items-center gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 mb-3 mt-3 min-h-[44px] hover:border-red-300 transition-colors"
+        >
+          <AlertTriangle size={17} className="text-red-600 shrink-0" aria-hidden="true" />
+          <span className="text-sm font-semibold text-red-700 truncate">
+            Weakest: {readiness.weakest!.category}
+          </span>
+          <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-xs font-bold text-red-600">
+            Fix now <ArrowRight size={14} aria-hidden="true" />
+          </span>
+        </Link>
       )}
+
+      {/* ═══ AI TUTOR (compact entry) ═══ */}
+      <Link
+        href="/tutor"
+        data-tour="ai-tutor"
+        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 mt-3 min-h-[44px] hover:border-indigo-300 transition-colors"
+      >
+        <Bot size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
+        <span className="text-sm font-semibold text-gray-800">AI Tutor</span>
+        {isFree ? (
+          <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 rounded-full px-2 py-0.5">
+            <Lock size={10} aria-hidden="true" /> Pro
+          </span>
+        ) : (
+          <ArrowRight size={16} className="ml-auto text-gray-400" aria-hidden="true" />
+        )}
+      </Link>
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
@@ -283,23 +337,5 @@ export default async function DashboardPage() {
         </div>
       )}
     </div>
-  )
-}
-
-function ToolLink({ href, icon, label, dataTour, locked }: { href: string; icon: ReactNode; label: string; dataTour?: string; locked?: boolean }) {
-  return (
-    <Link
-      href={href}
-      data-tour={dataTour}
-      className="relative flex flex-col items-center justify-center gap-1 min-h-[64px] rounded-xl bg-white border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all text-xs font-semibold text-gray-700"
-    >
-      {locked && (
-        <span className="absolute top-1.5 right-1.5 inline-flex items-center gap-0.5 text-[9px] font-bold text-amber-600 bg-amber-50 rounded-full px-1.5 py-0.5">
-          <Lock size={9} /> Pro
-        </span>
-      )}
-      <span className="text-gray-500">{icon}</span>
-      {label}
-    </Link>
   )
 }

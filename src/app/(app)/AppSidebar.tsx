@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation'
 import { getTierLabel } from '@/lib/tier'
 import { TIER_LIMITS, type Tier } from '@/types'
 import {
-  BookOpen, Target, Settings, LogOut, Shield, Users, ChevronRight,
-  Snowflake, Wrench, Factory, FileText, Zap, Menu, X, BarChart3, ClipboardList, Bot,
+  BookOpen, Settings, LogOut, Shield, Users, ChevronRight, Home,
+  Snowflake, Wrench, Factory, FileText, Zap, BarChart3, ClipboardList, Bot,
 } from 'lucide-react'
 
 type AppSidebarProps = {
@@ -27,16 +27,11 @@ const PRACTICE_ITEMS = [
   { href: '/test/universal', label: 'Universal', icon: <Zap size={15} /> },
 ]
 
+// Desktop-only sidebar. On mobile the app shell is MobileTopBar + BottomTabBar.
 export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSidebarProps) {
-  const [open, setOpen] = useState(false)
   const [practiceOpen, setPracticeOpen] = useState(false)
   const pathname = usePathname()
 
-  useEffect(() => { setOpen(false) }, [pathname])
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [open])
   useEffect(() => {
     if (pathname?.startsWith('/test')) setPracticeOpen(true)
   }, [pathname])
@@ -44,12 +39,12 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
   const isPro = tier !== 'free'
   const username = email.split('@')[0]
 
-  const sidebar = (
-    <div className="flex flex-col h-full" style={{ background: '#001d57' }}>
+  return (
+    <aside className="hidden md:flex w-56 flex-col shrink-0" style={{ background: '#001d57' }}>
 
-      {/* Logo → Study Path (home) */}
+      {/* Logo → Home */}
       <div className="px-4 py-4 border-b border-white/10">
-        <Link href="/learn" className="flex items-center gap-2.5">
+        <Link href="/dashboard" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0 bg-white/15">
             608
           </div>
@@ -60,8 +55,10 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         </Link>
       </div>
 
-      {/* Nav — 3 primary tabs (+ Account in footer) */}
+      {/* Nav — mirrors the 4 mobile tabs (+ AI Tutor, admin) */}
       <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-0.5">
+
+        <NavItem href="/dashboard" icon={<Home size={18} />} label="Home" pathname={pathname} />
 
         <NavItem href="/learn" icon={<BookOpen size={18} />} label="Study Path" pathname={pathname} badge={TIER_LIMITS[tier].hasStudyPath ? undefined : 'Pro'} />
 
@@ -91,7 +88,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </div>
         )}
 
-        <NavItem href="/progress/weak-spots" icon={<Target size={18} />} label="Weak Spots" pathname={pathname} />
+        <NavItem href="/progress" icon={<BarChart3 size={18} />} label="Progress" pathname={pathname} />
 
         {/* AI Tutor — Pro-only chat; free sees a Pro lock badge (mirrors Study Path) */}
         <NavItem href="/tutor" icon={<Bot size={18} />} label="AI Tutor" pathname={pathname} badge={isPro ? undefined : 'Pro'} />
@@ -119,7 +116,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         </div>
       )}
 
-      {/* Account footer (4th tab) */}
+      {/* Account footer */}
       <div className="px-2 py-3 border-t border-white/10 space-y-0.5">
         <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
           <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-bold shrink-0">
@@ -140,47 +137,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </button>
         </form>
       </div>
-    </div>
-  )
-
-  return (
-    <>
-      {/* Mobile top bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-14 px-4 border-b border-white/10" style={{ background: '#001d57' }}>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setOpen(true)} className="p-2 -ml-2 text-white/70" aria-label="Open menu">
-            <Menu size={22} />
-          </button>
-          <Link href="/learn" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center text-white text-xs font-bold">608</div>
-            <span className="font-bold text-white text-sm">EPA 608</span>
-          </Link>
-        </div>
-        {!isPro && (
-          <Link href={`/checkout.html`}
-            className="text-xs font-bold px-3 py-1.5 rounded-lg text-white"
-            style={{ background: '#e85d04' }}>
-            Go Pro
-          </Link>
-        )}
-      </div>
-
-      {/* Mobile overlay */}
-      {open && <div className="md:hidden fixed inset-0 z-40 bg-black/60" onClick={() => setOpen(false)} />}
-
-      {/* Sidebar */}
-      <aside className={`
-        fixed inset-y-0 left-0 z-50 w-56 flex flex-col shrink-0
-        transform transition-transform duration-200 ease-in-out
-        md:static md:translate-x-0
-        ${open ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
-      `}>
-        <button onClick={() => setOpen(false)} className="md:hidden absolute top-3 right-3 p-1.5 text-white/40 hover:text-white z-10" aria-label="Close">
-          <X size={18} />
-        </button>
-        {sidebar}
-      </aside>
-    </>
+    </aside>
   )
 }
 

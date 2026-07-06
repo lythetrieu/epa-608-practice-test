@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>EPA 608 · mobile shell (4-tab, compact)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css" />
+<style>
+  :root{ --navy:#001d57; --ind:#4f46e5; --ink:#0f172a; --sub:#64748b; --mut:#94a3b8; --bd:#e5e7eb; --amber:#e85d04; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; height:100%; }
+  body{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#e2e8f0; }
+  .app{ max-width:430px; margin:0 auto; min-height:100dvh; background:#f8fafc; display:flex; flex-direction:column; position:relative; box-shadow:0 0 40px rgba(0,0,0,.1); }
+  .topbar{ position:sticky; top:0; z-index:20; height:56px; flex:none; display:flex; align-items:center; gap:6px; padding:0 8px; background:var(--navy); color:#fff; }
+  .topbar button{ background:none; border:none; color:#fff; cursor:pointer; }
+  .icobtn{ width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; font-size:22px; }
+  .icobtn:active{ background:rgba(255,255,255,.12); }
+  .ttl{ flex:1; font-size:17px; font-weight:600; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .avatar{ width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; cursor:pointer; }
+  .content{ flex:1; overflow-y:auto; padding:16px 16px 92px; -webkit-overflow-scrolling:touch; }
+  .view{ display:none; } .view.on{ display:block; }
+  .h{ font-size:24px; font-weight:700; margin:2px 0 2px; } .sub{ font-size:14px; color:var(--sub); margin:0 0 16px; }
+  .card{ background:#fff; border:1px solid var(--bd); border-radius:16px; padding:16px; margin-bottom:12px; }
+  .hero{ background:var(--navy); color:#fff; border-radius:18px; padding:18px; margin-bottom:12px; }
+  .hero .n{ font-size:34px; font-weight:700; } .hero .bar{ height:8px; background:rgba(255,255,255,.2); border-radius:99px; margin:8px 0 10px; } .hero .bar i{ display:block; width:42%; height:100%; background:#38bdf8; border-radius:99px; }
+  .btn{ width:100%; background:var(--ind); color:#fff; border:none; border-radius:13px; padding:14px; font-size:15px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .tiles{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .tile{ background:#fff; border:1px solid var(--bd); border-radius:14px; padding:14px; cursor:pointer; }
+  .tile i{ font-size:22px; } .tile .t{ font-size:14px; font-weight:600; margin-top:8px; } .tile .s{ font-size:12px; color:var(--mut); }
+  .world{ border-radius:20px; padding:18px; color:#fff; margin-bottom:12px; cursor:pointer; }
+  .world h3{ margin:0 0 3px; font-size:19px; font-weight:600; } .world p{ margin:0 0 12px; font-size:13px; opacity:.9; }
+  .world .foot{ display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:600; } .world .go{ background:rgba(255,255,255,.22); padding:6px 13px; border-radius:99px; }
+  .row{ display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--bd); border-radius:14px; padding:14px; margin-bottom:10px; cursor:pointer; }
+  .row .ic{ width:44px; height:44px; flex:none; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .row .t{ font-size:15px; font-weight:600; } .row .s{ font-size:13px; color:var(--mut); } .row .chev{ color:var(--mut); font-size:20px; margin-left:auto; }
+  .seg{ font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin:18px 2px 8px; }
+  .bubble{ position:fixed; bottom:80px; right:calc(50% - 215px + 16px); z-index:30; width:52px; height:52px; border-radius:50%; background:var(--navy); color:#fff; border:none; display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 6px 16px rgba(0,0,0,.25); cursor:pointer; }
+  .bubble .lk{ position:absolute; top:-2px; right:-2px; width:18px; height:18px; border-radius:50%; background:#fbbf24; color:#001d57; display:flex; align-items:center; justify-content:center; font-size:10px; }
+  @media(max-width:430px){ .bubble{ right:16px; } }
+  .tabbar{ position:fixed; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; height:64px; background:#fff; border-top:1px solid var(--bd); display:flex; padding-bottom:env(safe-area-inset-bottom); z-index:20; }
+  .tab{ flex:1; background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; color:var(--mut); font-size:11px; font-weight:500; padding-top:9px; }
+  .tab i{ font-size:24px; } .tab.on{ color:var(--ind); }
+  .scrim{ position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:40; display:none; } .scrim.on{ display:block; }
+  .sheet{ position:fixed; left:0; right:0; bottom:0; max-width:430px; margin:0 auto; background:#fff; border-radius:20px 20px 0 0; z-index:41; padding:8px 16px calc(16px + env(safe-area-inset-bottom)); transform:translateY(100%); transition:transform .22s; }
+  .sheet.on{ transform:translateY(0); }
+  .grab{ width:38px; height:4px; background:#cbd5e1; border-radius:99px; margin:8px auto 12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="icobtn" id="backbtn" onclick="goBack()" style="display:none"><i class="ti ti-arrow-left"></i></button>
+    <span class="ttl" id="title">Home</span>
+    <button class="avatar" onclick="openSheet()">T</button>
+  </header>
+
+  <main class="content" id="content">
+
+    <div class="view on" data-title="Home" id="v-home">
+      <div class="hero"><div style="font-size:13px;opacity:.75">Exam readiness</div><div class="n">42%</div><div class="bar"><i></i></div><div style="font-size:13px;opacity:.9"><i class="ti ti-bulb" style="vertical-align:-2px"></i> Focus on Type II — you're at 61%, need 70%.</div></div>
+      <button class="btn" onclick="tab('learn','Study path')">Continue studying <i class="ti ti-arrow-right"></i></button>
+      <div class="tiles">
+        <div class="tile" onclick="tab('practice','Practice test')"><i class="ti ti-clipboard-text" style="color:#0369a1"></i><div class="t">Practice test</div><div class="s">Timed or untimed</div></div>
+        <div class="tile" onclick="tab('progress','Progress')"><i class="ti ti-target" style="color:#dc2626"></i><div class="t">Weak spots</div><div class="s">3 to fix</div></div>
+        <div class="tile" onclick="openBubble()"><i class="ti ti-robot" style="color:var(--ind)"></i><div class="t">AI tutor</div><div class="s">Pro</div></div>
+        <div class="tile" onclick="tab('progress','Progress')"><i class="ti ti-history" style="color:#475569"></i><div class="t">History</div><div class="s">12 sessions</div></div>
+      </div>
+    </div>
+
+    <div class="view" data-title="Study path" id="v-learn">
+      <div class="h">Study path</div><p class="sub">0/29 mastered · pick a certification</p>
+      <div class="world" style="background:linear-gradient(135deg,#38bdf8,#3b82f6)" onclick="nav('detail','Core levels')"><h3>☁️ Core</h3><p>Foundations — required for every cert</p><div class="foot"><span>0/11 levels</span><span class="go">Continue →</span></div></div>
+      <div class="world" style="background:linear-gradient(135deg,#2dd4bf,#06b6d4)" onclick="nav('detail','Type I levels')"><h3>❄️ Type I</h3><p>Small appliances</p><div class="foot"><span>0/5 levels</span><span class="go">Start →</span></div></div>
+      <div class="world" style="background:linear-gradient(135deg,#818cf8,#8b5cf6)" onclick="nav('detail','Type II levels')"><h3>🎛️ Type II</h3><p>High-pressure systems</p><div class="foot"><span>0/6 levels</span><span class="go">Start →</span></div></div>
+    </div>
+
+    <div class="view" data-title="Core levels" id="v-detail">
+      <div class="card" style="border:2px solid var(--ind)">
+        <span style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ind);background:#eef2ff;padding:3px 8px;border-radius:6px">You are here</span>
+        <div style="margin:10px 0 3px;font-size:17px;font-weight:600">Ozone &amp; ozone depletion</div>
+        <p style="margin:0 0 14px;font-size:13px;color:var(--sub)">10 questions · pass 8/10</p>
+        <button class="btn">Start quiz — 10 questions <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="row" style="opacity:.6"><span class="ic" style="background:#e2e8f0;color:#64748b"><i class="ti ti-lock"></i></span><span><span class="t" style="display:block">Refrigerant types</span><span class="s" style="display:block">Locked</span></span></div>
+    </div>
+
+    <div class="view" data-title="Practice test" id="v-practice">
+      <div class="h">Practice test</div><p class="sub">Pick a section — Practice or Exam mode</p>
+      <div class="row" onclick="nav('detail','Core')"><span class="ic" style="background:#e0f2fe;color:#0369a1"><i class="ti ti-file-text"></i></span><span><span class="t" style="display:block">Core</span><span class="s" style="display:block">50 questions · 90 min</span></span><i class="ti ti-chevron-right chev"></i></div>
+      <div class="row" onclick="nav('detail','Type I')"><span class="ic" style="background:#ccfbf1;color:#0f766e"><i class="ti ti-snowflake"></i></span><span><span class="t" style="display:block">Type I</span><span class="s" style="display:block">Small appliances</span></span><i class="ti ti-chevron-right chev"></i></div>
+      <div class="row" onclick="nav('detail','Type II')"><span class="ic" style="background:#ede9fe;color:#6d28d9"><i class="ti ti-tool"></i></span><span><span class="t" style="display:block">Type II</span><span class="s" style="display:block">High-pressure systems</span></span><i class="ti ti-chevron-right chev"></i></div>
+      <div class="row" onclick="nav('detail','Universal')"><span class="ic" style="background:#fef3c7;color:#b45309"><i class="ti ti-bolt"></i></span><span><span class="t" style="display:block">Universal</span><span class="s" style="display:block">All four combined</span></span><i class="ti ti-chevron-right chev"></i></div>
+    </div>
+
+    <div class="view" data-title="Progress" id="v-progress">
+      <div class="h">Progress</div><p class="sub">Weak spots &amp; test history in one place</p>
+      <p class="seg">Weak spots</p>
+      <div class="card"><div style="display:flex;justify-content:space-between"><span style="font-weight:600">Ozone depletion</span><span style="color:#dc2626;font-weight:600">100% errors</span></div><div style="height:6px;background:#fee2e2;border-radius:99px;margin-top:8px"><div style="width:100%;height:100%;background:#ef4444;border-radius:99px"></div></div></div>
+      <button class="btn" style="margin-bottom:6px">Start weak-spot drill <i class="ti ti-target"></i></button>
+      <p class="seg">Recent tests</p>
+      <div class="row" style="cursor:default"><span class="ic" style="background:#f1f5f9;color:#475569"><i class="ti ti-file-check"></i></span><span><span class="t" style="display:block">Core · exam</span><span class="s" style="display:block">Jul 4 · 34/50</span></span><span style="margin-left:auto;font-weight:600;color:#16a34a">68%</span></div>
+      <div class="row" style="cursor:default"><span class="ic" style="background:#f1f5f9;color:#475569"><i class="ti ti-file-check"></i></span><span><span class="t" style="display:block">Type I · practice</span><span class="s" style="display:block">Jul 3 · 22/25</span></span><span style="margin-left:auto;font-weight:600;color:#16a34a">88%</span></div>
+    </div>
+
+  </main>
+
+  <button class="bubble" onclick="openBubble()"><i class="ti ti-robot"></i><span class="lk"><i class="ti ti-lock"></i></span></button>
+
+  <nav class="tabbar">
+    <button class="tab on" data-tab="home" onclick="tab('home','Home')"><i class="ti ti-home"></i><span>Home</span></button>
+    <button class="tab" data-tab="learn" onclick="tab('learn','Study path')"><i class="ti ti-map-2"></i><span>Learn</span></button>
+    <button class="tab" data-tab="practice" onclick="tab('practice','Practice test')"><i class="ti ti-clipboard-text"></i><span>Practice</span></button>
+    <button class="tab" data-tab="progress" onclick="tab('progress','Progress')"><i class="ti ti-chart-bar"></i><span>Progress</span></button>
+  </nav>
+</div>
+
+<div class="scrim" id="scrim" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:6px 4px 14px;border-bottom:1px solid var(--bd);margin-bottom:8px">
+    <div style="width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600">T</div>
+    <div><div style="font-weight:600">trieu</div><span style="font-size:11px;font-weight:700;background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:99px">Free</span></div>
+  </div>
+  <div class="row" style="border:none;margin:0;background:none;padding:12px 4px"><i class="ti ti-settings" style="font-size:20px;color:#475569"></i><span class="t">Settings</span></div>
+  <div class="row" style="border:none;margin:0;background:none;padding:12px 4px"><i class="ti ti-history" style="font-size:20px;color:#475569"></i><span class="t">Test history</span></div>
+  <div class="row" style="border:none;margin:0;background:#fff7ed;padding:12px;border-radius:12px"><i class="ti ti-bolt" style="font-size:20px;color:var(--amber)"></i><span class="t" style="color:var(--amber)">Upgrade to Pro · $14.99</span></div>
+  <div class="row" style="border:none;margin:0;background:none;padding:12px 4px"><i class="ti ti-logout" style="font-size:20px;color:#dc2626"></i><span class="t" style="color:#dc2626">Sign out</span></div>
+</div>
+
+<script>
+  var current='home', backTo=null;
+  function render(view,title,showBack){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+    document.getElementById('v-'+view).classList.add('on');
+    document.getElementById('title').textContent=title;
+    document.getElementById('backbtn').style.display = showBack?'flex':'none';
+    document.getElementById('content').scrollTop=0;
+  }
+  function tab(view,title){ current=view; backTo=null; document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab')===view); }); render(view,title,false); }
+  function nav(view,title){ backTo=current; render(view,title,true); }
+  function goBack(){ if(backTo){ var b=backTo; backTo=null; render(b, document.getElementById('v-'+b).getAttribute('data-title'), false); document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab')===b); }); } }
+  function openSheet(){ document.getElementById('scrim').classList.add('on'); document.getElementById('sheet').classList.add('on'); }
+  function closeSheet(){ document.getElementById('scrim').classList.remove('on'); document.getElementById('sheet').classList.remove('on'); }
+  function openBubble(){ alert('AI Tutor is a Pro feature — Upgrade to chat.'); }
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EPA 608 · Study Path prototype — video lesson</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css" />
+<style>
+  :root{ --ind:#4f46e5; --ink:#0f172a; --sub:#64748b; --mut:#94a3b8; --bd:#e2e8f0; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink);
+        background:#f8fafc; background-image:radial-gradient(circle at 1px 1px, rgba(15,23,42,.05) 1px, transparent 0); background-size:22px 22px; }
+  .wrap{ max-width:560px; margin:0 auto; padding:20px 16px 60px; }
+  .topbar{ display:flex; align-items:center; gap:10px; padding:14px 4px; }
+  .topbar h1{ font-size:20px; font-weight:600; margin:0; }
+  .topbar span{ font-size:13px; color:var(--sub); }
+  .screen{ display:none; } .screen.on{ display:block; }
+  .lead{ font-size:15px; color:var(--sub); margin:6px 4px 18px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .cont{ display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; background:var(--ind); color:#fff; border:none; border-radius:16px; padding:16px 20px; font-size:16px; font-weight:600; cursor:pointer; margin-bottom:16px; text-align:left; }
+  .cont small{ display:block; font-weight:400; font-size:12px; opacity:.85; margin-top:2px; }
+  .world{ position:relative; overflow:hidden; border-radius:22px; padding:20px; color:#fff; text-align:left; border:none; cursor:pointer; box-shadow:0 8px 20px -12px rgba(15,23,42,.4); }
+  .world h3{ margin:0 0 4px; font-size:20px; font-weight:600; }
+  .world p{ margin:0 0 14px; font-size:13px; opacity:.9; }
+  .world .bar{ height:8px; background:rgba(255,255,255,.3); border-radius:99px; }
+  .world .foot{ display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:13px; font-weight:600; }
+  .world .go{ background:rgba(255,255,255,.25); padding:6px 14px; border-radius:99px; }
+  .card{ background:#fff; border:1px solid var(--bd); border-radius:16px; }
+  .btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:var(--ind); color:#fff; border:none; border-radius:12px; padding:13px; font-size:14px; font-weight:600; cursor:pointer; }
+  .btn.ghost{ background:#fff; color:#475569; border:1px solid var(--bd); }
+  .over{ font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ind); margin:0 0 2px; }
+  .h2{ font-size:22px; font-weight:600; margin:0 0 4px; }
+  .node{ display:flex; gap:14px; align-items:flex-start; padding-bottom:14px; position:relative; }
+  .dot{ width:44px; height:44px; flex:none; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; }
+  .dot.act{ border:3px solid var(--ind); } .dot.act i{ width:12px; height:12px; border-radius:50%; background:var(--ind); }
+  .dot.lock{ border:2px solid #cbd5e1; color:var(--mut); }
+  .pill{ font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--ind); background:#eef2ff; padding:3px 8px; border-radius:6px; }
+  .mat{ display:flex; align-items:center; gap:10px; border:1px solid var(--bd); border-radius:12px; background:#fff; padding:10px 12px; cursor:pointer; }
+  .mat.lock{ background:#f8fafc; }
+  .tile{ width:42px; height:42px; flex:none; border-radius:8px; display:flex; align-items:center; justify-content:center; }
+  .tile.vid{ background:#0f172a; color:#fff; } .tile.lk{ background:#e2e8f0; color:#64748b; }
+  .mat .t{ font-size:13px; font-weight:600; color:var(--ink); display:block; } .mat.lk-txt .t{ color:#334155; }
+  .mat .s{ font-size:12px; color:var(--mut); display:block; }
+  .matlbl{ font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin:0 0 8px; }
+  .opt{ text-align:left; border:1px solid var(--bd); background:#fff; border-radius:12px; padding:13px 14px; font-size:14px; color:var(--ink); cursor:pointer; display:flex; gap:10px; align-items:center; width:100%; }
+  .opt .k{ width:24px; height:24px; flex:none; border-radius:50%; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--sub); }
+  .back{ background:none; border:none; color:var(--sub); font-size:14px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:6px 0; margin-bottom:6px; }
+  .player{ position:relative; aspect-ratio:16/9; background:#0f172a; border-radius:14px 14px 0 0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .playbtn{ width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,.92); color:#0f172a; display:flex; align-items:center; justify-content:center; }
+  .scrub{ position:absolute; left:12px; right:12px; bottom:12px; display:flex; align-items:center; gap:8px; color:#fff; font-size:12px; }
+  .scrub .track{ flex:1; height:4px; background:rgba(255,255,255,.35); border-radius:99px; } .scrub .track i{ display:block; width:18%; height:100%; background:#fff; border-radius:99px; }
+  .lockwrap{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#fff; padding:16px; background:repeating-linear-gradient(45deg,#0f172a,#0f172a 12px,#111c33 12px,#111c33 24px); }
+  .tg{ display:inline-flex; gap:4px; background:#f1f5f9; border-radius:99px; padding:3px; margin-bottom:12px; }
+  .tg button{ border:none; background:none; font-size:13px; padding:6px 14px; border-radius:99px; cursor:pointer; color:var(--sub); font-weight:500; }
+  .tg button.on{ background:#fff; color:var(--ind); font-weight:600; box-shadow:0 1px 2px rgba(15,23,42,.1); }
+  ul.learn{ margin:12px 0 0; padding-left:18px; } ul.learn li{ font-size:14px; color:#334155; margin-bottom:6px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><h1>Study path</h1><span>0/29 mastered · 0%</span></div>
+
+  <div id="s-entry" class="screen on">
+    <button class="cont" onclick="show('s-quiz')"><span>Continue where you left off<small>Core · Ozone &amp; ozone depletion — jump straight in</small></span><i class="ti ti-arrow-right" style="font-size:22px"></i></button>
+    <p class="lead">Choose a certification to study</p>
+    <div class="grid">
+      <button class="world" style="background:linear-gradient(135deg,#38bdf8,#3b82f6)" onclick="show('s-path')"><h3>☁️ Core</h3><p>Foundations — required for every cert</p><div class="bar"></div><div class="foot"><span>0/11 levels</span><span class="go">Continue →</span></div></button>
+      <button class="world" style="background:linear-gradient(135deg,#2dd4bf,#06b6d4)" onclick="show('s-path')"><h3>❄️ Type I</h3><p>Small appliances</p><div class="bar"></div><div class="foot"><span>0/5 levels</span><span class="go">Start →</span></div></button>
+      <button class="world" style="background:linear-gradient(135deg,#818cf8,#8b5cf6)" onclick="show('s-path')"><h3>🎛️ Type II</h3><p>High-pressure systems</p><div class="bar"></div><div class="foot"><span>0/6 levels</span><span class="go">Start →</span></div></button>
+      <button class="world" style="background:linear-gradient(135deg,#34d399,#22c55e)" onclick="show('s-path')"><h3>💧 Type III</h3><p>Low-pressure chillers</p><div class="bar"></div><div class="foot"><span>0/7 levels</span><span class="go">Start →</span></div></button>
+    </div>
+  </div>
+
+  <div id="s-path" class="screen">
+    <button class="back" onclick="show('s-entry')"><i class="ti ti-arrow-left"></i> Sections</button>
+    <p class="over">EPA 608 · study route</p><div class="h2">Core levels</div>
+    <p class="lead">Clear each level with 8 of 10 to unlock the next one.</p>
+    <div style="position:relative;">
+      <div style="position:absolute;left:21px;top:24px;bottom:16px;width:2px;background:var(--bd)"></div>
+      <div class="node">
+        <span class="dot act"><i></i></span>
+        <div class="card" style="flex:1;border:2px solid var(--ind);padding:16px">
+          <span class="pill">You are here</span>
+          <div style="margin:10px 0 3px;font-size:17px;font-weight:600">Ozone &amp; ozone depletion</div>
+          <p style="margin:0 0 14px;font-size:13px;color:var(--sub)">10 questions · pass 8/10 · <span style="color:var(--ind);font-weight:600"><i class="ti ti-player-play" style="font-size:13px"></i> 1 video</span></p>
+          <p class="matlbl">Video lesson</p>
+          <div style="margin-bottom:16px" onclick="openVideo('s-path')">
+            <div class="mat"><span class="tile vid"><i class="ti ti-player-play" style="font-size:17px"></i></span><span style="flex:1"><span class="t">Ozone basics walkthrough</span><span class="s">Video · 4:00 · optional</span></span><span style="color:var(--ind);font-weight:600;font-size:13px">Watch</span></div>
+          </div>
+          <button class="btn" onclick="show('s-quiz')">Start quiz — 10 questions <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+      <div class="node">
+        <span class="dot lock"><i class="ti ti-lock" style="font-size:16px"></i></span>
+        <div style="flex:1;border:1px dashed #cbd5e1;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:10px">
+          <div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--mut)">Refrigerant types &amp; identification</div><p style="margin:2px 0 0;font-size:13px;color:#b0bac9">10 questions · no video</p></div>
+          <span style="border:1px solid var(--bd);border-radius:8px;padding:5px 10px;font-size:13px;color:var(--mut)"><i class="ti ti-lock" style="font-size:14px"></i> Locked</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-quiz" class="screen">
+    <button class="back" onclick="show('s-path')"><i class="ti ti-arrow-left"></i> Exit</button>
+    <div class="card" style="overflow:hidden">
+      <div style="padding:16px 18px 0;display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--mut)">Question 3 / 10</span><span style="flex:1;height:6px;background:#eef2ff;border-radius:99px;overflow:hidden"><span style="display:block;width:30%;height:100%;background:var(--ind)"></span></span></div>
+      <div style="padding:14px 18px 4px;font-size:16px;font-weight:600;line-height:1.5">A small appliance is recovered with post-1993 equipment while the compressor is NOT operating. To what level must it be recovered?</div>
+      <div style="padding:8px 18px 4px;display:flex;flex-direction:column;gap:8px">
+        <button class="opt" data-c="1"><span class="k">A</span> 80%</button>
+        <button class="opt" data-c="0"><span class="k">B</span> 90%</button>
+        <button class="opt" data-c="0"><span class="k">C</span> 100% recovery</button>
+        <button class="opt" data-c="0"><span class="k">D</span> 4 inches of vacuum</button>
+      </div>
+      <div id="ok" style="display:none;margin:10px 18px 18px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px">
+        <p style="margin:0 0 10px;font-size:14px;font-weight:600;color:#15803d"><i class="ti ti-circle-check"></i> Correct — 80% without a working compressor.</p>
+        <div style="display:flex;gap:8px"><button class="btn ghost reset" style="flex:none;width:auto;padding:10px 14px;font-size:13px"><i class="ti ti-refresh"></i> Try another</button><button class="btn" onclick="show('s-result')">Next question <i class="ti ti-arrow-right"></i></button></div>
+      </div>
+      <div id="fix" style="display:none;margin:10px 18px 18px">
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:13px 14px;margin-bottom:12px"><p style="margin:0;font-size:14px;font-weight:600;color:#b91c1c"><i class="ti ti-x"></i> Not quite — the answer is 80%.</p><p style="margin:6px 0 0;font-size:13px;color:#7f1d1d">Post-1993 equipment: 90% with a working compressor, 80% without.</p></div>
+        <p class="matlbl">Watch the 2-minute fix</p>
+        <div style="margin-bottom:12px" onclick="openVideo('s-quiz')"><div class="mat"><span class="tile vid"><i class="ti ti-player-play" style="font-size:17px"></i></span><span style="flex:1"><span class="t">Recovery levels in 2 minutes</span><span class="s">Video · 2:10</span></span><span style="color:var(--ind);font-weight:600;font-size:13px">Watch</span></div></div>
+        <div style="display:flex;gap:8px"><button class="btn ghost reset" style="flex:none;width:auto;padding:10px 14px;font-size:13px"><i class="ti ti-refresh"></i> Try another</button><button class="btn" onclick="show('s-result')">Next question <i class="ti ti-arrow-right"></i></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-video" class="screen">
+    <button class="back" onclick="show(backTo)"><i class="ti ti-arrow-left"></i> Back</button>
+    <div style="text-align:center"><div class="tg"><button id="tg-free" class="on" onclick="setTier('free')">View as free</button><button id="tg-pro" onclick="setTier('pro')">View as Pro-locked</button></div></div>
+    <div class="card" style="overflow:hidden">
+      <div class="player">
+        <div id="v-play"><div class="playbtn"><i class="ti ti-player-play" style="font-size:28px"></i></div><div class="scrub"><span>0:00</span><span class="track"><i></i></span><span>4:00</span></div></div>
+        <div id="v-lock" class="lockwrap" style="display:none">
+          <span style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:12px"><i class="ti ti-lock" style="font-size:24px"></i></span>
+          <div style="font-size:15px;font-weight:600">Video lessons are a Pro feature</div>
+          <div style="font-size:13px;opacity:.85;margin:4px 0 12px">$14.99 lifetime · learn every concept on video</div>
+          <span style="background:#fff;color:var(--ind);font-weight:600;font-size:14px;padding:9px 20px;border-radius:10px">Upgrade to Pro</span>
+        </div>
+      </div>
+      <div style="padding:16px 18px 18px">
+        <div style="font-size:17px;font-weight:600">Ozone basics walkthrough</div>
+        <p style="margin:3px 0 0;font-size:13px;color:var(--mut)">4:00 · Core · level 1</p>
+        <p class="matlbl" style="margin-top:14px">What you'll learn</p>
+        <ul class="learn"><li>Why ozone matters and how CFCs deplete it</li><li>The difference between ODP and GWP</li><li>How this shows up on the Core exam</li></ul>
+        <button class="btn" style="margin-top:16px" onclick="show(backTo)"><i class="ti ti-arrow-left"></i> Back to quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-result" class="screen">
+    <div class="card" style="padding:22px;text-align:center;margin-bottom:14px"><div style="font-size:34px;font-weight:600;color:var(--ind)">7 / 10</div><p style="margin:4px 0 0;font-size:14px;color:var(--sub)">Almost — you need 8 to clear this level.</p></div>
+    <p class="matlbl" style="margin-left:2px">Fix your 3 misses</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+      <div class="mat" onclick="openVideo('s-result')"><span class="tile vid"><i class="ti ti-player-play" style="font-size:17px"></i></span><span style="flex:1"><span class="t">Recovery levels in 2 minutes</span><span class="s">Video · fixes Q3</span></span><span style="color:var(--ind);font-weight:600;font-size:13px">Watch</span></div>
+      <div class="mat lk-txt" style="cursor:default"><span class="tile" style="background:#eef2ff;color:var(--ind)"><i class="ti ti-file-text" style="font-size:17px"></i></span><span style="flex:1"><span class="t">Leak rate thresholds</span><span class="s">No video · read the explanation for Q6</span></span></div>
+      <div class="mat lk-txt" style="cursor:default"><span class="tile" style="background:#eef2ff;color:var(--ind)"><i class="ti ti-file-text" style="font-size:17px"></i></span><span style="flex:1"><span class="t">Evacuation depth</span><span class="s">No video · read the explanation for Q9</span></span></div>
+    </div>
+    <div style="display:flex;gap:8px"><button class="btn ghost" style="flex:1" onclick="show('s-path')">Back to path</button><button class="btn" style="flex:1" onclick="reset();show('s-quiz')">Retry weak ones <i class="ti ti-refresh"></i></button></div>
+  </div>
+
+</div>
+<script>
+  var backTo='s-quiz';
+  function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('on'); }); document.getElementById(id).classList.add('on'); window.scrollTo(0,0); }
+  function openVideo(from){ backTo=from; setTier('free'); show('s-video'); }
+  function setTier(t){
+    document.getElementById('v-play').style.display = t==='pro'?'none':'block';
+    document.getElementById('v-lock').style.display = t==='pro'?'flex':'none';
+    document.getElementById('tg-free').classList.toggle('on', t!=='pro');
+    document.getElementById('tg-pro').classList.toggle('on', t==='pro');
+  }
+  var done=false;
+  function reset(){ done=false; document.getElementById('ok').style.display='none'; document.getElementById('fix').style.display='none'; document.querySelectorAll('.opt').forEach(function(x){ x.style.pointerEvents=''; x.style.borderColor='#e2e8f0'; x.style.background='#fff'; }); }
+  document.querySelectorAll('.opt').forEach(function(o){ o.addEventListener('click', function(){ if(done)return; done=true; var c=o.getAttribute('data-c')==='1'; document.querySelectorAll('.opt').forEach(function(x){ x.style.pointerEvents='none'; if(x.getAttribute('data-c')==='1'){ x.style.borderColor='#16a34a'; x.style.background='#f0fdf4'; } }); if(!c){ o.style.borderColor='#dc2626'; o.style.background='#fef2f2'; } document.getElementById(c?'ok':'fix').style.display='block'; }); });
+  document.querySelectorAll('.reset').forEach(function(b){ b.addEventListener('click', reset); });
+</script>
+</body>
+</html>

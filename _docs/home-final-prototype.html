@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>EPA 608 · Home (with per-section progress)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css" />
+<style>
+  :root{ --navy:#001d57; --ind:#4f46e5; --ink:#0f172a; --sub:#64748b; --mut:#94a3b8; --bd:#e5e7eb; --amber:#e85d04; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#e2e8f0; padding:24px 12px 40px; }
+  .phone{ max-width:400px; margin:0 auto; background:#f8fafc; border-radius:26px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.16); border:1px solid #cbd5e1; }
+  .bar{ height:54px; display:flex; align-items:center; padding:0 16px; background:var(--navy); color:#fff; }
+  .bar .ttl{ flex:1; font-weight:600; font-size:16px; } .bar .av{ width:31px; height:31px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; }
+  .body{ padding:16px; }
+  .btn{ width:100%; background:var(--ind); color:#fff; border:none; border-radius:14px; padding:14px; font-size:15px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .card{ background:#fff; border:1px solid var(--bd); border-radius:16px; padding:14px; }
+  .seg{ font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin:20px 2px 10px; }
+  .srow{ background:#fff; border:1px solid var(--bd); border-radius:14px; padding:13px 14px; margin-bottom:10px; }
+  .srow .top{ display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+  .srow .ic{ width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:17px; flex:none; }
+  .srow .nm{ font-size:15px; font-weight:600; flex:1; }
+  .srow .pct{ font-size:14px; font-weight:700; }
+  .track{ height:7px; background:#eef2ff; border-radius:99px; overflow:hidden; } .track i{ display:block; height:100%; border-radius:99px; }
+  .srow .meta{ display:flex; justify-content:space-between; font-size:12px; color:var(--mut); margin-top:8px; }
+  .tag{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:99px; }
+  .tabs{ height:62px; background:#fff; border-top:1px solid var(--bd); display:flex; }
+  .tb{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-size:11px; color:var(--mut); } .tb i{ font-size:23px; } .tb.on{ color:var(--ind); }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="bar"><span class="ttl">Home</span><span class="av">T</span></div>
+  <div class="body">
+
+    <div style="display:flex;align-items:center;gap:16px;background:var(--navy);color:#fff;border-radius:18px;padding:16px;margin-bottom:12px">
+      <svg width="86" height="86" viewBox="0 0 120 120" style="flex:none">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="13"/>
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#38bdf8" stroke-width="13" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="182.2" transform="rotate(-90 60 60)"/>
+        <text x="60" y="58" text-anchor="middle" font-size="30" font-weight="700" fill="#fff">42%</text>
+        <text x="60" y="78" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.7)">ready</text>
+      </svg>
+      <div>
+        <div style="font-size:12px;opacity:.7;margin-bottom:2px">Exam readiness</div>
+        <div style="font-size:14px;font-weight:500;line-height:1.4"><i class="ti ti-bulb" style="vertical-align:-2px"></i> Focus on Type II — you're at 61%, need 70%.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+      <div class="card" style="padding:11px;text-align:center"><div style="font-size:19px;font-weight:700;color:var(--amber)"><i class="ti ti-flame" style="font-size:16px;vertical-align:-1px"></i> 5</div><div style="font-size:11px;color:var(--mut)">day streak</div></div>
+      <div class="card" style="padding:11px;text-align:center"><div style="font-size:19px;font-weight:700">12</div><div style="font-size:11px;color:var(--mut)">tests</div></div>
+      <div class="card" style="padding:11px;text-align:center"><div style="font-size:19px;font-weight:700">74%</div><div style="font-size:11px;color:var(--mut)">avg score</div></div>
+    </div>
+
+    <button class="btn">Continue studying <i class="ti ti-arrow-right"></i></button>
+
+    <p class="seg">Progress by section</p>
+
+    <div class="srow">
+      <div class="top"><span class="ic" style="background:#e0f2fe;color:#0369a1"><i class="ti ti-file-text"></i></span><span class="nm">Core</span><span class="pct" style="color:#16a34a">68%</span></div>
+      <div class="track"><i style="width:68%;background:#16a34a"></i></div>
+      <div class="meta"><span><i class="ti ti-map-2" style="font-size:12px;vertical-align:-1px"></i> Study 3/11 levels</span><span><i class="ti ti-clipboard-text" style="font-size:12px;vertical-align:-1px"></i> 42 practiced</span></div>
+    </div>
+
+    <div class="srow">
+      <div class="top"><span class="ic" style="background:#ccfbf1;color:#0f766e"><i class="ti ti-snowflake"></i></span><span class="nm">Type I</span><span class="pct" style="color:#16a34a">88%</span></div>
+      <div class="track"><i style="width:88%;background:#16a34a"></i></div>
+      <div class="meta"><span><i class="ti ti-map-2" style="font-size:12px;vertical-align:-1px"></i> Study 0/5 levels</span><span><i class="ti ti-clipboard-text" style="font-size:12px;vertical-align:-1px"></i> 18 practiced</span></div>
+    </div>
+
+    <div class="srow" style="border-color:#fecaca">
+      <div class="top"><span class="ic" style="background:#ede9fe;color:#6d28d9"><i class="ti ti-tool"></i></span><span class="nm">Type II</span><span class="tag">weakest</span><span class="pct" style="color:#ea580c;margin-left:6px">61%</span></div>
+      <div class="track"><i style="width:61%;background:#f97316"></i></div>
+      <div class="meta"><span><i class="ti ti-map-2" style="font-size:12px;vertical-align:-1px"></i> Study 0/6 levels</span><span><i class="ti ti-clipboard-text" style="font-size:12px;vertical-align:-1px"></i> 24 practiced</span></div>
+    </div>
+
+    <div class="srow">
+      <div class="top"><span class="ic" style="background:#dcfce7;color:#15803d"><i class="ti ti-droplet"></i></span><span class="nm">Type III</span><span class="pct" style="color:var(--mut)">—</span></div>
+      <div class="track"><i style="width:4%;background:#cbd5e1"></i></div>
+      <div class="meta"><span><i class="ti ti-map-2" style="font-size:12px;vertical-align:-1px"></i> Study 0/7 levels</span><span style="color:#94a3b8">Not started</span></div>
+    </div>
+
+  </div>
+  <div class="tabs"><div class="tb on"><i class="ti ti-home"></i>Home</div><div class="tb"><i class="ti ti-map-2"></i>Learn</div><div class="tb"><i class="ti ti-clipboard-text"></i>Practice</div></div>
+</div>
+</body>
+</html>

@@ -140,7 +140,10 @@ export default function StudyPathClient() {
     results?: { questionId: string; correct: boolean; userAnswer: string | null; correctAnswer: string }[]
   } | null>(null)
   const [scoring, setScoring] = useState(false)
-  const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
+
+  // Ref to the current "You are here" card so we can auto-scroll returning
+  // users straight to where they left off on mount.
+  const currentCardRef = useRef<HTMLDivElement | null>(null)
 
   // One id per study session (generated once on mount) — stitches telemetry
   // events together server-side. Memory only; not persisted.
@@ -194,6 +197,17 @@ export default function StudyPathClient() {
     const q = quiz.questions[quizIdx]
     if (q && qStartRef.current[q.id] == null) qStartRef.current[q.id] = Date.now()
   }, [quizPhase, quiz, quizIdx])
+
+  // Once the journey has rendered (concepts loaded, not inside a concept),
+  // drop the returning user at their current level. `block:'center'` keeps the
+  // "You are here" card mid-screen; `behavior:'auto'` = no animated jump.
+  useEffect(() => {
+    if (loading || activeConceptPrefix) return
+    if (!currentCardRef.current) return
+    currentCardRef.current.scrollIntoView({ block: 'center', behavior: 'auto' })
+    // Run once concepts are in — progress changes shouldn't re-scroll the user.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, concepts.length])
 
   // Ordered flat list: Core → Type I → Type II → Type III
   const sections = ['Core', 'Type I', 'Type II', 'Type III']
@@ -655,9 +669,10 @@ export default function StudyPathClient() {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // MAIN VIEW
+  // MAIN VIEW — one continuous gamified journey (Core → Type I → II → III)
   // ═══════════════════════════════════════════════════════════════════════════
-    // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
+  // Linear skill-unlock: within a section the first non-cleared concept is the
+  // current level; later ones lock. Sections themselves are all accessible.
   const isCleared = (c: Concept) => getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }) === 'mastered'
 
   const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[]; scene: [string, string, string] }> = {
@@ -667,221 +682,174 @@ export default function StudyPathClient() {
     'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers', props: ['💧','🌀','🧊','⚙️','🚿','🌡️'], scene: ['#6ee7b7','#a7f3d0','#d1fae5'] },
   }
 
-  // ════════════════════════════════════════════════════════════════════
-  // /learn DASHBOARD — pick a World
-  // ════════════════════════════════════════════════════════════════════
-  if (!activeWorld) {
-    return (
-      <div className="min-h-screen bg-slate-100">
-        <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-          <div>
-            <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
-            <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
-          </div>
-          <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-            <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
-          </div>
-        </div>
-
-        <div className="px-4 py-6 max-w-3xl mx-auto">
-          <p className="text-sm text-gray-500 mb-4 font-medium">Choose a certification to study</p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {sections.map(cat => {
-              const items = grouped[cat] || []
-              if (!items.length) return null
-              const t = WORLD_THEME[cat] || WORLD_THEME['Core']
-              const done = items.filter(isCleared).length
-              const pct = items.length ? Math.round(done / items.length * 100) : 0
-              const started = items.some(c => progress[c.id])
-              const allDone = done === items.length
-              return (
-                <button key={cat} onClick={() => setActiveWorld(cat)}
-                  className={`relative overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg border-b-4 border-black/15 bg-gradient-to-br ${t.cardGrad} active:translate-y-0.5 transition-transform`}>
-                  <span aria-hidden className="absolute -right-3 -top-3 text-7xl opacity-20 select-none">{t.emoji}</span>
-                  <div className="relative">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-2xl">{t.emoji}</span>
-                      <h3 className="text-lg font-extrabold">{cat}</h3>
-                      {allDone && <Check size={18} className="ml-auto" strokeWidth={3} />}
-                    </div>
-                    <p className="text-xs text-white/80 mb-4">{t.sub}</p>
-                    <div className="h-2 bg-white/30 rounded-full overflow-hidden mb-1.5">
-                      <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-white/90">{done}/{items.length} levels mastered</span>
-                      <span className="text-xs font-extrabold bg-white/25 px-3 py-1 rounded-full">
-                        {allDone ? 'Review' : started ? 'Continue →' : 'Start →'}
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Flashcards */}
-          <a href="/flashcards"
-            className="mt-5 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
-            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-              <LayoutGrid size={18} className="text-purple-600" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900">Flashcards</p>
-              <p className="text-xs text-gray-400">Swipe-drill any section</p>
-            </div>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 shrink-0">Free</span>
-            <ChevronRight size={16} className="text-gray-300 shrink-0" />
-          </a>
-        </div>
-      </div>
-    )
+  const ACCENT = '#4f46e5' // indigo (study route)
+  // Section gradients matching the prototype banners.
+  const BANNER_GRAD: Record<string, string> = {
+    'Core':     'linear-gradient(135deg,#38bdf8,#3b82f6)',
+    'Type I':   'linear-gradient(135deg,#2dd4bf,#06b6d4)',
+    'Type II':  'linear-gradient(135deg,#818cf8,#8b5cf6)',
+    'Type III': 'linear-gradient(135deg,#34d399,#10b981)',
   }
 
-  // ════════════════════════════════════════════════════════════════════
-  // WORLD PATH — winding skill path for the selected cert
-  // ════════════════════════════════════════════════════════════════════
-  const worldItems = grouped[activeWorld] || []
-  const wt = WORLD_THEME[activeWorld] || WORLD_THEME['Core']
-  const worldDone = worldItems.filter(isCleared).length
-  let cur = worldItems.findIndex(c => !isCleared(c))
-  if (cur === -1) cur = worldItems.length
-
-  const ACCENT = '#4f46e5' // indigo (v3 "study route")
-  const statusAt = (i: number) => (i > cur ? 'locked' : i === cur ? 'current' : 'done')
+  // The single "You are here" concept across the WHOLE journey: the first
+  // non-cleared, unlocked concept in ordered sequence. Because each section
+  // unlocks sequentially and sections are all accessible, this is simply the
+  // first non-cleared concept in Core → Type I → II → III order.
+  const journeyCurrentId = orderedConcepts.find(c => !isCleared(c))?.id ?? null
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f8fafc', backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.045) 1px, transparent 0)', backgroundSize: '22px 22px' }}>
-      {/* header */}
+      {/* sticky overall header */}
       <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-slate-200">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-3 h-14">
-            <button onClick={() => setActiveWorld(null)} className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 shrink-0">
-              <ArrowLeft size={16} /> Sections
-            </button>
-            <div className="h-5 w-px bg-slate-200 shrink-0" />
-            <h1 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{wt.emoji} {activeWorld}</h1>
-            <span className="ml-auto shrink-0 text-xs font-semibold px-2 py-1 rounded-md tabular-nums" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>{worldDone} / {worldItems.length}</span>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-base font-extrabold text-slate-900">Study Path</h1>
+            <p className="text-[11px] text-slate-400 tabular-nums">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
           </div>
-          <div className="pb-3 -mt-0.5">
-            <div className="h-1.5 w-full rounded-full bg-slate-200 overflow-hidden">
-              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${worldItems.length ? Math.round(worldDone / worldItems.length * 100) : 0}%`, background: ACCENT }} />
-            </div>
+          <div className="w-24 h-2.5 bg-slate-100 rounded-full overflow-hidden shrink-0">
+            <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
           </div>
         </div>
       </div>
 
-      {/* title */}
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: ACCENT }}>EPA 608 · Study Route</p>
-        <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900">{activeWorld} levels</h2>
-        <p className="mt-1.5 text-sm text-slate-500 max-w-md">Clear each level with 8 of 10 to unlock the next one.</p>
-      </div>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-5 pb-24">
+        <p className="text-center text-[13px] font-medium text-slate-500">Your whole journey — one scroll</p>
 
-      {/* metro study line */}
-      <ol className="max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-24 relative">
-        {worldItems.map((c, i) => {
-          const s = statusAt(i)
-          const num = String(i + 1).padStart(2, '0')
-          const first = i === 0, last = i === worldItems.length - 1
-          const aboveFilled = i > 0 && (i - 1) < cur
-          const belowFilled = i < cur
+        {sections.map(cat => {
+          const items = grouped[cat] || []
+          if (!items.length) return null
+          const t = WORLD_THEME[cat] || WORLD_THEME['Core']
+          const done = items.filter(isCleared).length
+          // Within-section current level (mirrors old per-section unlock rule):
+          // first non-cleared index; everything after it locks.
+          let cur = items.findIndex(c => !isCleared(c))
+          if (cur === -1) cur = items.length
+
           return (
-            <li key={c.id} className="relative flex gap-3 sm:gap-5">
-              <div className="hidden sm:flex w-7 shrink-0 items-center justify-end pt-3">
-                <span className={`text-xs font-bold tabular-nums ${s === 'locked' ? 'text-slate-300' : 'text-slate-400'}`}>{num}</span>
-              </div>
-              <div className="relative flex flex-col items-center w-10 shrink-0 self-stretch">
-                {first ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: aboveFilled ? ACCENT : '#e2e8f0' }} />}
-                <div className="my-1">
-                  {s === 'done' && (
-                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full text-white ring-4 ring-white shadow-sm" style={{ background: ACCENT }}>
-                      <Check size={16} strokeWidth={3} />
-                    </span>
-                  )}
-                  {s === 'current' && (
-                    <span className="relative z-10 grid place-items-center w-10 h-10">
-                      <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}40` }} />
-                      <span className="relative grid place-items-center w-10 h-10 rounded-full bg-white shadow-md ring-4" style={{ ['--tw-ring-color' as unknown as string]: ACCENT }}>
-                        <span className="w-3 h-3 rounded-full" style={{ background: ACCENT }} />
-                      </span>
-                    </span>
-                  )}
-                  {s === 'locked' && (
-                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full bg-white border-2 border-slate-300 text-slate-400 ring-4 ring-white">
-                      <Lock size={15} />
-                    </span>
-                  )}
+            <section key={cat}>
+              {/* section banner */}
+              <div className="flex items-center gap-2.5 text-white rounded-2xl px-4 py-3 mt-5 mb-1 shadow-sm" style={{ background: BANNER_GRAD[cat] || BANNER_GRAD['Core'] }}>
+                <span className="text-[22px] leading-none" aria-hidden>{t.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-base font-extrabold leading-tight truncate">{cat}</h2>
+                  <p className="text-[11px] text-white/80 truncate">{t.sub}</p>
                 </div>
-                {last ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: belowFilled ? ACCENT : '#e2e8f0' }} />}
+                <span className="shrink-0 text-xs font-bold tabular-nums bg-white/25 px-2.5 py-1 rounded-full">{done}/{items.length}</span>
               </div>
-              <div className={`flex-1 min-w-0 ${s === 'current' ? 'py-1.5' : 'py-2.5'}`}>
-                {s === 'done' && (
-                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="w-full text-left rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md hover:border-slate-300 transition">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-0">
-                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
-                        <p className="mt-0.5 text-xs text-slate-400">
-                          {progress[c.id]?.bestScore ? `Best ${progress[c.id].bestScore}%` : '10 questions · pass 8/10'}
-                          {progress[c.id]?.attempts ? ` · ${progress[c.id].attempts} ${progress[c.id].attempts === 1 ? 'try' : 'tries'}` : ''}
-                        </p>
+
+              {/* vertical path with center connector */}
+              <div className="relative py-1">
+                {items.map((c, i) => {
+                  // done = cleared (i < cur), current = the global "you are here"
+                  // (only one across the journey), locked = i > cur within section.
+                  const cleared = i < cur
+                  const isCurrent = c.id === journeyCurrentId
+                  const first = i === 0, last = i === items.length - 1
+                  const attempts = progress[c.id]?.attempts ?? 0
+
+                  return (
+                    <div key={c.id} className="relative flex items-stretch gap-3.5 min-h-[52px]">
+                      {/* connector column */}
+                      <div className="relative flex flex-col items-center w-14 shrink-0">
+                        <span className="w-1 flex-1 rounded-full" style={{ background: first ? 'transparent' : (cleared || isCurrent ? ACCENT : '#e2e8f0') }} />
+                        <div className="my-1 z-10">
+                          {cleared ? (
+                            <button onClick={() => openConcept(c.subtopicPrefix, c.id)} aria-label={`Replay ${c.title}`}
+                              className="grid place-items-center w-9 h-9 rounded-full text-white ring-4 ring-white shadow-sm hover:brightness-110 transition" style={{ background: '#16a34a' }}>
+                              <Check size={16} strokeWidth={3} />
+                            </button>
+                          ) : isCurrent ? (
+                            <span className="relative grid place-items-center w-10 h-10">
+                              <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}40` }} />
+                              <span className="relative grid place-items-center w-10 h-10 rounded-full bg-white shadow-md ring-4" style={{ ['--tw-ring-color' as unknown as string]: ACCENT }}>
+                                <span className="w-3.5 h-3.5 rounded-full" style={{ background: ACCENT }} />
+                              </span>
+                            </span>
+                          ) : (
+                            <span className="grid place-items-center w-9 h-9 rounded-full bg-slate-200 text-slate-400 ring-4 ring-white">
+                              <Lock size={15} />
+                            </span>
+                          )}
+                        </div>
+                        <span className="w-1 flex-1 rounded-full" style={{ background: last ? 'transparent' : (cleared ? ACCENT : '#e2e8f0') }} />
                       </div>
-                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">
-                        <Check size={12} strokeWidth={3} /> {progress[c.id]?.bestScore ? `${progress[c.id].bestScore}%` : 'Cleared'}
-                      </span>
-                    </div>
-                  </button>
-                )}
-                {s === 'current' && (
-                  <div className="rounded-2xl border-2 bg-white px-4 py-4 sm:px-5" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(79,70,229,0.35)' }}>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
-                      </span>
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? (
-                        <span className="text-[11px] font-bold tabular-nums" style={{ color: '#e11d48' }}>Last {progress[c.id]?.lastScore}% · need 80%</span>
-                      ) : (
-                        <span className="text-[11px] font-medium text-slate-400">Next up</span>
-                      )}
-                    </div>
-                    <h3 className="mt-2.5 text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
-                    <p className="mt-0.5 text-xs text-slate-500">
-                      10 questions · pass 8/10
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${progress[c.id]?.attempts} ${progress[c.id]?.attempts === 1 ? 'try' : 'tries'}` : ''}
-                    </p>
-                    <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: ACCENT }}>
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? 'Try again' : 'Start level'} <ArrowRight size={16} />
-                    </button>
-                  </div>
-                )}
-                {s === 'locked' && (
-                  <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-0">
-                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-400 truncate">{c.title}</h3>
-                        <p className="mt-0.5 text-xs text-slate-300">10 questions</p>
+
+                      {/* node content */}
+                      <div className={`flex-1 min-w-0 flex ${isCurrent ? 'items-center' : 'items-center'} ${isCurrent ? 'py-2' : 'py-2.5'}`}>
+                        {cleared && (
+                          <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="w-full text-left flex items-center gap-3 group">
+                            <div className="min-w-0">
+                              <h3 className="text-[15px] font-semibold tracking-tight text-slate-800 truncate group-hover:text-slate-950">{c.title}</h3>
+                              <p className="text-[11px] text-emerald-600 font-medium">
+                                {progress[c.id]?.bestScore ? `Cleared · best ${progress[c.id].bestScore}%` : 'Cleared'} · tap to replay
+                              </p>
+                            </div>
+                          </button>
+                        )}
+
+                        {isCurrent && (
+                          <div ref={currentCardRef} className="w-full rounded-2xl border-2 bg-white px-4 py-4" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(79,70,229,0.35)' }}>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
+                              </span>
+                              {attempts > 0 ? (
+                                <span className="text-[11px] font-bold tabular-nums" style={{ color: '#e11d48' }}>Last {progress[c.id]?.lastScore}% · need 80%</span>
+                              ) : (
+                                <span className="text-[11px] font-medium text-slate-400">Next up</span>
+                              )}
+                            </div>
+                            <h3 className="mt-2.5 text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
+                            <p className="mt-0.5 text-xs text-slate-500">
+                              10 questions · pass 8/10
+                              {attempts > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${attempts} ${attempts === 1 ? 'try' : 'tries'}` : ''}
+                            </p>
+                            <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center justify-center gap-1.5 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm w-full hover:brightness-110 transition" style={{ background: ACCENT }}>
+                              {attempts > 0 ? 'Try again' : 'Start'} — 10 questions <ArrowRight size={16} />
+                            </button>
+                          </div>
+                        )}
+
+                        {!cleared && !isCurrent && (
+                          <div className="min-w-0">
+                            <h3 className="text-[15px] font-semibold tracking-tight text-slate-400 truncate">{c.title}</h3>
+                            <p className="text-[11px] text-slate-300">Locked · clear the level above</p>
+                          </div>
+                        )}
                       </div>
-                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 bg-white border border-slate-200 px-2 py-1 rounded-md">
-                        <Lock size={12} /> Locked
-                      </span>
                     </div>
-                  </div>
-                )}
+                  )
+                })}
               </div>
-            </li>
+            </section>
           )
         })}
-      </ol>
 
-      {cur >= worldItems.length && (
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">
-          <div className="text-center bg-white border border-emerald-200 rounded-2xl p-6">
-            <Trophy size={32} className="text-amber-500 mx-auto mb-2" />
-            <p className="text-slate-900 font-extrabold text-lg">{activeWorld} complete</p>
-            <p className="text-slate-500 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>
+        {/* Journey complete */}
+        {journeyCurrentId === null && concepts.length > 0 && (
+          <div className="mt-6">
+            <div className="text-center bg-white border border-emerald-200 rounded-2xl p-6">
+              <Trophy size={32} className="text-amber-500 mx-auto mb-2" />
+              <p className="text-slate-900 font-extrabold text-lg">Every level mastered</p>
+              <p className="text-slate-500 text-sm mt-1">Take a full practice test to confirm you&rsquo;re exam-ready.</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* Flashcards — small row at the bottom of the journey */}
+        <a href="/flashcards"
+          className="mt-6 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+          <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+            <LayoutGrid size={18} className="text-purple-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-gray-900">Flashcards</p>
+            <p className="text-xs text-gray-400">Swipe-drill any section</p>
+          </div>
+          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 shrink-0">Free</span>
+          <ChevronRight size={16} className="text-gray-300 shrink-0" />
+        </a>
+      </div>
     </div>
   )
 }

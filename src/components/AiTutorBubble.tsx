@@ -30,12 +30,12 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
 
   return (
     <>
-      {/* Floating launcher — bottom-right, above the safe-area inset */}
+      {/* Floating launcher — bottom-right; sits above the mobile tab bar (bottom-20) */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
           aria-label="Open AI Tutor"
-          className="fixed z-40 right-4 bottom-4 md:right-6 md:bottom-6 flex items-center justify-center w-14 h-14 rounded-full text-white shadow-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"
+          className="fixed z-40 right-4 bottom-20 md:right-6 md:bottom-6 flex items-center justify-center w-14 h-14 rounded-full text-white shadow-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"
           style={{ background: '#001d57', marginBottom: 'env(safe-area-inset-bottom)' }}
         >
           <Bot size={26} aria-hidden />

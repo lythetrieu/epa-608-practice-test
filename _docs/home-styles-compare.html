@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EPA 608 · Home dashboard — 3 styles</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css" />
+<style>
+  :root{ --navy:#001d57; --ind:#4f46e5; --ink:#0f172a; --sub:#64748b; --mut:#94a3b8; --bd:#e5e7eb; --amber:#e85d04; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#e2e8f0; padding:24px 12px 60px; }
+  .stage{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; align-items:flex-start; }
+  .col{ width:360px; }
+  .cap{ text-align:center; font-weight:700; font-size:15px; margin-bottom:4px; } .cap small{ display:block; font-weight:400; font-size:12px; color:var(--sub); }
+  .phone{ background:#f8fafc; border-radius:26px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.14); border:1px solid #cbd5e1; }
+  .bar{ height:52px; display:flex; align-items:center; padding:0 16px; background:var(--navy); color:#fff; }
+  .bar .ttl{ flex:1; font-weight:600; font-size:16px; } .bar .av{ width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; }
+  .body{ padding:16px; min-height:520px; }
+  .tabs{ height:60px; background:#fff; border-top:1px solid var(--bd); display:flex; }
+  .tb{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-size:11px; color:var(--mut); } .tb i{ font-size:22px; } .tb.on{ color:var(--ind); }
+  .btn{ width:100%; background:var(--ind); color:#fff; border:none; border-radius:13px; padding:13px; font-size:15px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .card{ background:#fff; border:1px solid var(--bd); border-radius:16px; padding:14px; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="col">
+    <div class="cap">A — Bold data hub<small>navy hero, stat cards, motivational</small></div>
+    <div class="phone">
+      <div class="bar"><span class="ttl">Home</span><span class="av">T</span></div>
+      <div class="body">
+        <div style="background:var(--navy);color:#fff;border-radius:18px;padding:16px;margin-bottom:12px">
+          <div style="font-size:12px;opacity:.7">Exam readiness</div>
+          <div style="font-size:38px;font-weight:700;line-height:1.1">42%</div>
+          <div style="height:8px;background:rgba(255,255,255,.2);border-radius:99px;margin:8px 0 10px"><div style="width:42%;height:100%;background:#38bdf8;border-radius:99px"></div></div>
+          <div style="font-size:13px;opacity:.9"><i class="ti ti-bulb" style="vertical-align:-2px"></i> Focus on Type II — 61%, need 70%.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+          <div class="card" style="padding:12px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--amber)">5</div><div style="font-size:11px;color:var(--mut)">day streak</div></div>
+          <div class="card" style="padding:12px;text-align:center"><div style="font-size:20px;font-weight:700">12</div><div style="font-size:11px;color:var(--mut)">tests</div></div>
+          <div class="card" style="padding:12px;text-align:center"><div style="font-size:20px;font-weight:700">74%</div><div style="font-size:11px;color:var(--mut)">avg</div></div>
+        </div>
+        <button class="btn" style="margin-bottom:12px">Continue studying <i class="ti ti-arrow-right"></i></button>
+        <div class="card" style="display:flex;align-items:center;gap:10px;border-color:#fecaca;background:#fef2f2"><i class="ti ti-alert-triangle" style="color:#dc2626;font-size:20px"></i><span style="flex:1;font-size:13px"><b>Weakest: Ozone</b> · 100% errors</span><i class="ti ti-chevron-right" style="color:#94a3b8"></i></div>
+      </div>
+      <div class="tabs"><div class="tb on"><i class="ti ti-home"></i>Home</div><div class="tb"><i class="ti ti-map-2"></i>Learn</div><div class="tb"><i class="ti ti-clipboard-text"></i>Practice</div></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="cap">B — Minimal / calm<small>Claude-like, typographic, airy</small></div>
+    <div class="phone">
+      <div class="bar" style="background:#fff;color:var(--ink);border-bottom:1px solid var(--bd)"><span class="ttl">Home</span><span class="av" style="background:#e2e8f0;color:#334155">T</span></div>
+      <div class="body">
+        <p style="font-size:13px;color:var(--mut);margin:6px 0 2px">You're</p>
+        <div style="font-size:44px;font-weight:700;line-height:1">42% <span style="font-size:18px;font-weight:500;color:var(--sub)">ready</span></div>
+        <div style="height:5px;background:#eef2ff;border-radius:99px;margin:14px 0 18px"><div style="width:42%;height:100%;background:var(--ind);border-radius:99px"></div></div>
+        <div style="font-size:14px;color:var(--sub);margin-bottom:22px"><i class="ti ti-flame" style="color:var(--amber);vertical-align:-2px"></i> 5-day streak · 12 tests · 74% avg</div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:0 0 8px">Next up</p>
+        <div class="card" style="margin-bottom:10px"><div style="font-size:15px;font-weight:600">Ozone &amp; ozone depletion</div><p style="margin:2px 0 12px;font-size:13px;color:var(--sub)">Core · level 1 · 10 questions</p><button class="btn">Continue <i class="ti ti-arrow-right"></i></button></div>
+        <div style="font-size:14px;color:var(--sub);padding:10px 2px"><i class="ti ti-target" style="color:#dc2626;vertical-align:-2px"></i> Weakest: Ozone (100%) <span style="color:var(--ind);float:right">Review →</span></div>
+      </div>
+      <div class="tabs"><div class="tb on"><i class="ti ti-home"></i>Home</div><div class="tb"><i class="ti ti-map-2"></i>Learn</div><div class="tb"><i class="ti ti-clipboard-text"></i>Practice</div></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="cap">C — Gamified / playful<small>progress ring, colorful, Duolingo-ish</small></div>
+    <div class="phone">
+      <div class="bar"><span class="ttl">Home</span><span class="av">T</span></div>
+      <div class="body">
+        <div style="text-align:center;margin:6px 0 14px">
+          <svg width="150" height="150" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#4f46e5" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="189.5" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" font-size="30" font-weight="700" fill="#0f172a">42%</text>
+            <text x="60" y="76" text-anchor="middle" font-size="12" fill="#94a3b8">ready</text>
+          </svg>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <div style="flex:1;background:#fff7ed;border-radius:14px;padding:12px;text-align:center"><div style="font-size:22px">🔥</div><div style="font-weight:700;color:var(--amber)">5</div><div style="font-size:11px;color:#9a3412">streak</div></div>
+          <div style="flex:1;background:#eff6ff;border-radius:14px;padding:12px;text-align:center"><div style="font-size:22px">📝</div><div style="font-weight:700;color:#1d4ed8">12</div><div style="font-size:11px;color:#1e40af">tests</div></div>
+          <div style="flex:1;background:#f0fdf4;border-radius:14px;padding:12px;text-align:center"><div style="font-size:22px">🎯</div><div style="font-weight:700;color:#15803d">74%</div><div style="font-size:11px;color:#166534">avg</div></div>
+        </div>
+        <div style="font-size:13px;color:var(--sub);margin-bottom:6px">Mastered 6/29</div>
+        <div style="display:flex;gap:3px;margin-bottom:14px">
+          <div style="flex:6;height:8px;background:#4f46e5;border-radius:99px"></div><div style="flex:23;height:8px;background:#e2e8f0;border-radius:99px"></div>
+        </div>
+        <button class="btn" style="border-radius:16px;padding:15px;box-shadow:0 4px 0 #3730a3">Continue studying <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="tabs"><div class="tb on"><i class="ti ti-home"></i>Home</div><div class="tb"><i class="ti ti-map-2"></i>Learn</div><div class="tb"><i class="ti ti-clipboard-text"></i>Practice</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

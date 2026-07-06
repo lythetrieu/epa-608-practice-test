@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 import AppSidebar from './AppSidebar'
+import MobileTopBar from './MobileTopBar'
+import BottomTabBar from './BottomTabBar'
 import AiTutorBubble from '@/components/AiTutorBubble'
 import { LocaleProvider } from '@/lib/i18n-context'
 import { PageTransition } from '@/components/PageTransition'
@@ -30,6 +32,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <LocaleProvider>
       <PageTransition />
       <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950 overflow-x-hidden">
+        {/* Mobile shell: navy top bar (back / title / account sheet) + bottom tab bar */}
+        <MobileTopBar email={user.email ?? ''} tier={tier} />
+
+        {/* Desktop sidebar */}
         <AppSidebar
           email={user.email ?? ''}
           tier={tier}
@@ -37,8 +43,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           isAdmin={!!profile?.is_admin}
         />
 
-        {/* Main content - add top padding on mobile for the fixed navbar */}
-        <main className="flex-1 overflow-auto pt-14 md:pt-0">{children}</main>
+        {/* Main content — mobile padding clears the fixed top bar + bottom tab bar */}
+        <main className="flex-1 overflow-auto pt-14 md:pt-0 pb-20 md:pb-0">{children}</main>
+
+        <BottomTabBar />
 
         {/* Floating AI Tutor — Pro chat, or upsell for free. Hidden on /test/* */}
         <AiTutorBubble tier={tier} aiQueriesRemaining={aiQueriesRemaining} />
