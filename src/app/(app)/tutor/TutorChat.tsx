@@ -63,6 +63,14 @@ export default function TutorChat({
     setTtsSupported(hasSpeechSynthesis())
   }, [])
 
+  // Continue a conversation handed over from the floating bubble
+  // (/tutor?session=<id>) — messages are persisted server-side per session,
+  // so loading by id restores exactly what the user saw in the bubble.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('session')
+    if (id) loadChatById(id)
+  }, [loadChatById])
+
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])

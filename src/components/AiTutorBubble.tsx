@@ -99,7 +99,7 @@ function BubbleChat({
   aiQueriesRemaining: number
   onClose: () => void
 }) {
-  const { messages, isLoading, remaining, error, sendMessage } = useTutorChat({
+  const { messages, isLoading, remaining, error, sendMessage, chatSessionId } = useTutorChat({
     initialRemaining: aiQueriesRemaining,
   })
   const [input, setInput] = useState('')
@@ -130,7 +130,7 @@ function BubbleChat({
         </div>
         <div className="flex items-center gap-1">
           <Link
-            href="/tutor"
+            href={chatSessionId ? `/tutor?session=${chatSessionId}` : '/tutor'}
             onClick={onClose}
             className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
             title="Open full tutor (voice + history)"

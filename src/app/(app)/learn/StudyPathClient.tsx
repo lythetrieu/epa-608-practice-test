@@ -233,7 +233,7 @@ export default function StudyPathClient() {
   const openConcept = useCallback((prefix: string, conceptId: string) => {
     setActiveConceptPrefix(prefix)
     setActiveConceptId(conceptId)
-    setQuizPhase('lesson') // teach first (visual + key facts), then "Start quiz"
+    setQuizPhase('quiz') // straight into the questions — no interstitial lesson screen
     setQuiz(null)
     setQuizIdx(0)
     setAnswers({})
