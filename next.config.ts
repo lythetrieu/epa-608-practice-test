@@ -1,6 +1,12 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Client router cache: reuse RSC payloads for 30s so switching between the
+    // app's bottom tabs is instant instead of a full server round-trip per tap
+    // (Next 15 defaults dynamic to 0 = always refetch).
+    staleTimes: { dynamic: 30, static: 180 },
+  },
   // Security headers applied to every route
   async headers() {
     return [

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, Map, ClipboardList, BarChart3 } from 'lucide-react'
@@ -15,10 +16,20 @@ const TABS = [
 
 export default function BottomTabBar() {
   const pathname = usePathname()
+  // Optimistic highlight: move the active state the instant a tab is tapped,
+  // instead of waiting for the server round-trip to update the pathname.
+  const [pending, setPending] = useState<string | null>(null)
+
+  // Reconcile once navigation actually lands (or is abandoned).
+  useEffect(() => { setPending(null) }, [pathname])
 
   // Hide during an actual quiz (/test/<category> is full-screen dvh).
   // The /test index (Practice picker) keeps the tab bar.
   if (pathname?.startsWith('/test/')) return null
+
+  const activeHref =
+    pending ??
+    TABS.find(({ href }) => pathname === href || (pathname?.startsWith(href + '/') ?? false))?.href
 
   return (
     <nav
@@ -27,11 +38,12 @@ export default function BottomTabBar() {
     >
       <div className="flex h-16">
         {TABS.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (pathname?.startsWith(href + '/') ?? false)
+          const active = href === activeHref
           return (
             <Link
               key={href}
               href={href}
+              onClick={() => setPending(href)}
               aria-current={active ? 'page' : undefined}
               className={`flex-1 flex flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors ${
                 active ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'
