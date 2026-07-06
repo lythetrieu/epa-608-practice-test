@@ -86,6 +86,16 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // getUser() may have ROTATED the refresh token, writing new auth cookies into
+  // supabaseResponse. EVERY response we return from here on must carry those
+  // cookies — returning a fresh NextResponse without them strands the browser
+  // on a revoked refresh token and silently kills the session (user gets asked
+  // to log in again on their next visit).
+  const withSessionCookies = <T extends NextResponse>(resp: T): T => {
+    supabaseResponse.cookies.getAll().forEach((cookie) => resp.cookies.set(cookie))
+    return resp
+  }
+
   // Cross-subdomain login flag for the STATIC marketing nav. NOT the session —
   // just "is someone signed in" — so marketing pages can show "Dashboard →" vs
   // "Sign In". Shared across .epa608practicetest.net, JS-readable (no token); it
@@ -109,7 +119,7 @@ export async function middleware(request: NextRequest) {
 
   // Public endpoints — skip all auth checks
   if (pathname === '/api/ai/guest-chat' || pathname.startsWith('/api/public/')) {
-    return tagNoindex(NextResponse.next(), appHost)
+    return tagNoindex(withSessionCookies(NextResponse.next({ request })), appHost)
   }
 
   // App subdomain root → route users INTO the app instead of serving the 108KB
@@ -120,7 +130,7 @@ export async function middleware(request: NextRequest) {
     const dest = request.nextUrl.clone()
     dest.pathname = appRootRedirectPath(Boolean(user && user.email_confirmed_at))
     dest.search = ''
-    return tagNoindex(NextResponse.redirect(dest), appHost)
+    return tagNoindex(withSessionCookies(NextResponse.redirect(dest)), appHost)
   }
 
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route))
@@ -130,27 +140,27 @@ export async function middleware(request: NextRequest) {
   if (isProtected && (!user || !user.email_confirmed_at)) {
     // API routes: return 401 JSON (not redirect)
     if (pathname.startsWith('/api/')) {
-      return tagNoindex(new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      return tagNoindex(withSessionCookies(new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
-      }), appHost)
+      })), appHost)
     }
     if (user && !user.email_confirmed_at) {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/signup'
       loginUrl.searchParams.set('error', 'Please confirm your email first')
-      return tagNoindex(NextResponse.redirect(loginUrl), appHost)
+      return tagNoindex(withSessionCookies(NextResponse.redirect(loginUrl)), appHost)
     }
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/login'
     loginUrl.searchParams.set('redirect', pathname)
-    return tagNoindex(NextResponse.redirect(loginUrl), appHost)
+    return tagNoindex(withSessionCookies(NextResponse.redirect(loginUrl)), appHost)
   }
 
   // Authenticated user hitting an auth route → redirect to dashboard
   // BUT only if email is confirmed
   if (isAuthRoute && user && user.email_confirmed_at) {
-    return tagNoindex(NextResponse.redirect(new URL('/learn', request.url)), appHost)
+    return tagNoindex(withSessionCookies(NextResponse.redirect(new URL('/learn', request.url))), appHost)
   }
 
   // Always return supabaseResponse so cookie mutations are preserved
