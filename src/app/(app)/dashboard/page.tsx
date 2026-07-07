@@ -253,7 +253,7 @@ export default async function DashboardPage() {
         return (
           <Link
             key={category}
-            href="/learn"
+            href={`/learn?section=${encodeURIComponent(category)}`}
             data-tour={category === 'Core' ? 'core' : undefined}
             className={`block bg-white border rounded-2xl px-4 py-3.5 mb-2.5 transition-colors ${
               isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'

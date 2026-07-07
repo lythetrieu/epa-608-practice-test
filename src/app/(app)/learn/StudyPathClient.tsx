@@ -142,6 +142,15 @@ export default function StudyPathClient() {
   const [scoring, setScoring] = useState(false)
   const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
 
+  // Deep link: /learn?section=Core (Home's section cards) opens that world's
+  // path directly instead of landing on the section picker again.
+  useEffect(() => {
+    const section = new URLSearchParams(window.location.search).get('section')
+    if (section && ['Core', 'Type I', 'Type II', 'Type III'].includes(section)) {
+      setActiveWorld(section)
+    }
+  }, [])
+
   // One id per study session (generated once on mount) — stitches telemetry
   // events together server-side. Memory only; not persisted.
   const sessionIdRef = useRef<string>('')
