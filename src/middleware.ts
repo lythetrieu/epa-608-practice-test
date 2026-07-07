@@ -13,6 +13,7 @@ const PROTECTED_ROUTES = [
   '/api/sessions',
   '/api/ai',
   '/api/downloads',
+  '/api/app',
 ]
 
 // Routes that authenticated users should be redirected away from

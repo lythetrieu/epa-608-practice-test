@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Settings, LogOut, Zap } from 'lucide-react'
+import { clearLocalFirstCache } from '@/lib/local-first'
 import { getTierLabel } from '@/lib/tier'
 import type { Tier } from '@/types'
 
@@ -75,7 +76,9 @@ export default function AccountSheet({ open, onClose, username, tier }: AccountS
           </Link>
         )}
 
-        <form action="/auth/signout" method="post">
+        {/* Wipe local-first snapshots before the sign-out POST navigates away —
+            the next account on this device must never see this user's data. */}
+        <form action="/auth/signout" method="post" onSubmit={() => clearLocalFirstCache()}>
           <button
             type="submit"
             className="w-full flex items-center gap-3 px-1 py-3 min-h-[44px] text-sm font-semibold text-red-600 text-left rounded-xl"

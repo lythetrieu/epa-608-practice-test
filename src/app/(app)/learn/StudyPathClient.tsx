@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import Link from 'next/link'
 import { ArrowLeft, Check, X, ChevronRight, Lock, LayoutGrid, Bot, Trophy, ArrowRight, Lightbulb, AlertTriangle, BookOpen } from 'lucide-react'
 import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
+import { useLocalFirst } from '@/lib/local-first'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { track } from '@/lib/track'
 import StudyMaterials from './StudyMaterials'
@@ -157,17 +159,21 @@ function rowsToProgress(
 
 export default function StudyPathClient({
   initialConcepts,
-  initialProgress,
+  userId,
 }: {
-  // Both optional: when provided (from the /learn server component) we render
-  // real state on first paint and SKIP the two mount fetches. When absent, the
-  // component falls back to fetching on mount exactly as before.
-  initialConcepts?: Concept[]
-  initialProgress?: ProgressRow[]
-} = {}) {
-  const [concepts, setConcepts] = useState<Concept[]>(initialConcepts ?? [])
-  // If concepts arrived as a prop there is nothing to wait for → not loading.
-  const [loading, setLoading] = useState(!initialConcepts)
+  // Concepts are pure synchronous local computation on the server — always
+  // present, so the worlds grid renders immediately with zero fetches.
+  initialConcepts: Concept[]
+  userId: string
+}) {
+  const concepts = initialConcepts
+  // Local-first account progress + tier gate: render instantly from the last
+  // localStorage snapshot (0 network), revalidate in the background. `fresh`
+  // gates the upgrade screen so a stale cache never locks a Pro user out.
+  const { data: serverData, fresh } = useLocalFirst<{ hasStudyPath: boolean; progress: ProgressRow[] }>(
+    `study-progress:${userId}`,
+    '/api/app/study-progress',
+  )
   const [progress, setProgress] = useState<Record<string, ConceptProgress>>({})
   const [activeConceptPrefix, setActiveConceptPrefix] = useState<string | null>(null)
   const [activeConceptId, setActiveConceptId] = useState<string | null>(null)
@@ -206,43 +212,23 @@ export default function StudyPathClient({
   // Used to enrich /api/practice/track with timeMs. Best-effort; never required.
   const qStartRef = useRef<Record<string, number>>({})
 
+  // Seed from localStorage first so the grid shows something on the very first
+  // frame (0% for brand-new users — never a spinner).
   useEffect(() => {
-    const local = getProgress()
-
-    // ── Concepts: use the SSR prop if we have it, else fetch (fallback path) ──
-    if (initialConcepts) {
-      // already seeded into state via useState initializer; nothing to fetch
-    } else {
-      fetch('/api/public/study-path')
-        .then(r => r.json())
-        .then(data => { setConcepts(data.concepts || []); setLoading(false) })
-        .catch(() => setLoading(false))
-    }
-
-    // ── Progress: SSR rows win over local cache when provided, else fetch. ──
-    // Either way, server rows are merged ON TOP of localStorage and the result
-    // is written back to localStorage for offline — identical merge semantics.
-    if (initialProgress) {
-      const merged = rowsToProgress(initialProgress, local)
-      setProgress(merged)
-      saveProgress(merged)
-    } else {
-      // Seed with the local cache first so we render something before the fetch.
-      setProgress(local)
-      // Per-account progress (synced across devices). Server rows win over the
-      // local cache; the merged result is written back to localStorage for offline.
-      fetch('/api/study-path/progress')
-        .then(r => (r.ok ? r.json() : null))
-        .then(d => {
-          if (!d || !Array.isArray(d.progress)) return
-          const merged = rowsToProgress(d.progress as ProgressRow[], local)
-          setProgress(merged)
-          saveProgress(merged)
-        })
-        .catch(() => {})
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setProgress(getProgress())
   }, [])
+
+  // When the server snapshot lands (cached first, then the fresh payload),
+  // merge its rows ON TOP of localStorage — identical semantics to the old
+  // initialProgress / mount-fetch paths. Only the FRESH merge is written back
+  // to localStorage so a stale cached snapshot can't overwrite newer offline
+  // progress permanently.
+  useEffect(() => {
+    if (!serverData || !Array.isArray(serverData.progress)) return
+    const merged = rowsToProgress(serverData.progress, getProgress())
+    setProgress(merged)
+    if (fresh) saveProgress(merged)
+  }, [serverData, fresh])
 
   // Stamp when each question first becomes visible so we can report timeMs.
   // Only stamps once per question id (first view wins); cheap and best-effort.
@@ -407,10 +393,36 @@ export default function StudyPathClient({
     setActiveConceptId(null)
   }, [activeConceptId])
 
-  if (loading) {
+  // Tier gate — moved here from the /learn server component. Only rendered on
+  // a FRESH server answer (never on a stale cached snapshot), so a Pro user is
+  // never flashed the upgrade screen by an outdated cache.
+  if (fresh && serverData && !serverData.hasStudyPath) {
     return (
-      <div className="p-6 flex items-center justify-center min-h-[400px]">
-        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+      <div className="flex-1 flex items-center justify-center p-6">
+        <div className="max-w-md text-center">
+          <div className="text-5xl mb-4">🗺️</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Study Path</h1>
+          <p className="text-gray-500 mb-6">
+            A guided, concept-by-concept path through every EPA 608 topic — with
+            mini-lessons, key numbers, and a 10-question mastery check for each
+            concept. Your progress is tracked across the whole path.
+          </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
+            <p className="text-sm text-blue-800 font-medium mb-1">
+              Upgrade to unlock the full Study Path
+            </p>
+            <p className="text-xs text-blue-600">
+              Free accounts can browse concepts and try samples. Pro unlocks the
+              full guided path with saved progress and mastery tracking.
+            </p>
+          </div>
+          <Link
+            href={`/checkout.html`}
+            className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-bold hover:bg-blue-900 transition-colors"
+          >
+            Upgrade Now
+          </Link>
+        </div>
       </div>
     )
   }

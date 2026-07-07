@@ -3,6 +3,7 @@
 import { useState, useEffect, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { clearLocalFirstCache } from '@/lib/local-first'
 import { getTierLabel } from '@/lib/tier'
 import { TIER_LIMITS, type Tier } from '@/types'
 import {
@@ -130,7 +131,9 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </div>
         </div>
         <NavItem href="/settings" icon={<Settings size={18} />} label="Account" pathname={pathname} />
-        <form action="/auth/signout" method="post">
+        {/* Wipe local-first snapshots before the sign-out POST navigates away —
+            the next account on this device must never see this user's data. */}
+        <form action="/auth/signout" method="post" onSubmit={() => clearLocalFirstCache()}>
           <button type="submit" className="w-full text-left text-sm text-white/50 hover:text-red-400 px-3 py-2.5 rounded-lg hover:bg-red-500/10 transition-colors flex items-center gap-2.5">
             <LogOut size={17} />
             Sign Out

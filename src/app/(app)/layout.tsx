@@ -46,7 +46,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {/* Main content — mobile padding clears the fixed top bar + bottom tab bar */}
         <main className="flex-1 overflow-auto pt-14 md:pt-0 pb-20 md:pb-0">{children}</main>
 
-        <BottomTabBar />
+        <BottomTabBar userId={user.id} />
 
         {/* Floating AI Tutor — Pro chat, or upsell for free. Hidden on /test/* */}
         <AiTutorBubble tier={tier} aiQueriesRemaining={aiQueriesRemaining} />

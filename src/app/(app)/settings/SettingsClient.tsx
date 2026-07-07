@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { clearLocalFirstCache } from '@/lib/local-first'
 import { getTierLabel } from '@/lib/tier'
 import type { Tier } from '@/types'
 
@@ -139,7 +140,9 @@ export default function SettingsClient({
         throw new Error(data.error || 'Failed to delete account')
       }
 
-      // Sign out and redirect
+      // Sign out and redirect (wipe local-first snapshots so the next account
+      // on this device never sees this user's cached data)
+      clearLocalFirstCache()
       const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
       await supabase.auth.signOut()
@@ -325,7 +328,7 @@ export default function SettingsClient({
       <section className="bg-white border border-gray-200 rounded-xl p-5">
         <h2 className="text-base font-bold text-gray-900 mb-4">Account</h2>
         <div className="space-y-3">
-          <form action="/auth/signout" method="post">
+          <form action="/auth/signout" method="post" onSubmit={() => clearLocalFirstCache()}>
             <button
               type="submit"
               className="px-4 py-2 border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
