@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 
 type Team = {
   name: string
@@ -70,6 +69,7 @@ export function TeamAdminClient({
     setRemovingId(userId)
     setRemoveError(null)
     try {
+      const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
       const { error } = await supabase.rpc('remove_team_member', {
         p_target_user_id: userId,

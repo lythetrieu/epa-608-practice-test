@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import { getTierLabel } from '@/lib/tier'
 import type { Tier } from '@/types'
 
@@ -35,7 +34,6 @@ export default function SettingsClient({
   stats,
 }: Props) {
   const router = useRouter()
-  const supabase = createClient()
 
   // Profile state
   const [displayName, setDisplayName] = useState(initialDisplayName)
@@ -110,6 +108,8 @@ export default function SettingsClient({
     }
 
     try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
       const { error } = await supabase.auth.updateUser({ password: newPassword })
       if (error) throw error
       setPasswordMsg({ type: 'success', text: 'Password updated successfully.' })
@@ -140,6 +140,8 @@ export default function SettingsClient({
       }
 
       // Sign out and redirect
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
       await supabase.auth.signOut()
       window.location.href = '/login'
     } catch (err: unknown) {

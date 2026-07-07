@@ -1,14 +1,23 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import { establishRecoverySession } from '@/lib/auth/recovery-session'
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+// Lazily import + memoize the browser Supabase client so @supabase/supabase-js
+// stays out of this route's first-load JS. Created on first use (mount effect).
+let _clientPromise: Promise<SupabaseClient> | null = null
+function getClient(): Promise<SupabaseClient> {
+  if (!_clientPromise) {
+    _clientPromise = import('@/lib/supabase/client').then(m => m.createClient())
+  }
+  return _clientPromise
+}
 
 export default function ResetPasswordForm() {
   const router = useRouter()
-  const supabase = useMemo(() => createClient(), [])
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -34,6 +43,7 @@ export default function ResetPasswordForm() {
     let cancelled = false
 
     async function run() {
+      const supabase = await getClient()
       const result = await establishRecoverySession(supabase.auth, window.location.href)
       if (cancelled) return
       if (result.state === 'ready') {
@@ -48,7 +58,7 @@ export default function ResetPasswordForm() {
     return () => {
       cancelled = true
     }
-  }, [supabase])
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -67,6 +77,7 @@ export default function ResetPasswordForm() {
     setLoading(true)
 
     try {
+      const supabase = await getClient()
       const { error } = await supabase.auth.updateUser({ password })
 
       if (error) {

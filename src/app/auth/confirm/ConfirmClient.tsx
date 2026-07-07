@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import type { EmailOtpType } from '@supabase/supabase-js'
 
 // Email-confirmation landing page. Shows a "Confirming…" screen IMMEDIATELY
@@ -22,6 +21,7 @@ export default function ConfirmClient() {
       const code = params.get('code')
       const type = (params.get('type') ?? 'signup') as EmailOtpType
       const next = params.get('next') ?? '/dashboard'
+      const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
 
       try {

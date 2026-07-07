@@ -12,9 +12,10 @@ const schema = z.object({
 })
 
 export async function POST(request: NextRequest) {
-  const { success: ok } = await questionRateLimit.limit(getIdentifier(request))
-  if (!ok) return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
-
+  // Auth must resolve first (rate-limit + profile depend on the user), but the
+  // ratelimit check and the profile fetch are independent of each other and run
+  // concurrently below. Rate-limit 429 semantics are preserved: we still 429
+  // before touching any question data.
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -24,11 +25,13 @@ export async function POST(request: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   const { category, count, mode } = parsed.data
 
-  const { data: profile } = await supabase
-    .from('users_profile')
-    .select('tier')
-    .eq('id', user.id)
-    .single()
+  // Run the Upstash rate-limit check and the profile fetch in parallel.
+  const [{ success: ok }, { data: profile }] = await Promise.all([
+    questionRateLimit.limit(getIdentifier(request)),
+    supabase.from('users_profile').select('tier').eq('id', user.id).single(),
+  ])
+
+  if (!ok) return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
 
   if (!profile) return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
 
@@ -63,17 +66,30 @@ export async function POST(request: NextRequest) {
     if (questionIds.length === 0) {
       const cats = TIER_LIMITS[tier].categories
       const perCat = Math.floor(count / cats.length)
-      for (const cat of cats) {
-        const { data } = await admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly })
+      // Fetch per-category pools concurrently, then flatten in deterministic
+      // category order (results[i] matches cats[i]).
+      const results = await Promise.all(
+        cats.map(cat =>
+          admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly }),
+        ),
+      )
+      for (const { data } of results) {
         questionIds.push(...(data?.map((q: any) => q.id) ?? []))
       }
     }
   } else if (category === 'Universal') {
     const cats = TIER_LIMITS[tier].categories
     const perCat = Math.floor(count / cats.length)
-    for (const cat of cats) {
-      const { data } = await admin
-        .rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly })
+    // Replace the 4-sequential-RPC loop with one concurrent batch. Results are
+    // flattened in deterministic category order (results[i] matches cats[i]) so
+    // the id set is identical to the previous serial version (a subsequent
+    // Fisher-Yates shuffle randomizes order regardless).
+    const results = await Promise.all(
+      cats.map(cat =>
+        admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly }),
+      ),
+    )
+    for (const { data } of results) {
       questionIds.push(...(data?.map((q: any) => q.id) ?? []))
     }
   } else {
@@ -116,21 +132,6 @@ export async function POST(request: NextRequest) {
   // migration makes the column nullable so null can be stored later if desired.
   const timeLimitSecs =
     mode === 'practice' ? 0 : category === 'Universal' ? 10800 : 1800
-  const { data: session, error: sessionErr } = await supabase
-    .from('test_sessions')
-    .insert({
-      user_id: user.id,
-      category: sessionCategory,
-      question_ids: questionIds,
-      time_limit_secs: timeLimitSecs,
-      total: questionIds.length,
-    })
-    .select('id, started_at, time_limit_secs')
-    .single()
-
-  if (sessionErr || !session) {
-    return NextResponse.json({ error: 'Failed to create session' }, { status: 500 })
-  }
 
   // Practice is open-book: include answer_text + explanation with each question.
   // Timed/blind-spot leak NOTHING (no answer_text, no explanation).
@@ -139,10 +140,35 @@ export async function POST(request: NextRequest) {
     ? 'id, category, subtopic_id, question, options, difficulty, question_type, answer_text, explanation'
     : 'id, category, subtopic_id, question, options, difficulty, question_type'
 
-  const { data: questions } = await admin
-    .from('questions')
-    .select(selectCols)
-    .in('id', questionIds)
+  // The question ids are already finalized, so the session INSERT and the
+  // question SELECT are independent and run concurrently. Failure semantics are
+  // preserved: we check the insert result FIRST and error out (returning nothing)
+  // if it failed, so a failed insert can never leak answers even though the
+  // SELECT ran in parallel.
+  const [
+    { data: session, error: sessionErr },
+    { data: questions },
+  ] = await Promise.all([
+    supabase
+      .from('test_sessions')
+      .insert({
+        user_id: user.id,
+        category: sessionCategory,
+        question_ids: questionIds,
+        time_limit_secs: timeLimitSecs,
+        total: questionIds.length,
+      })
+      .select('id, started_at, time_limit_secs')
+      .single(),
+    admin
+      .from('questions')
+      .select(selectCols)
+      .in('id', questionIds),
+  ])
+
+  if (sessionErr || !session) {
+    return NextResponse.json({ error: 'Failed to create session' }, { status: 500 })
+  }
 
   // Return in shuffled order with shuffled options per question
   const ordered = questionIds.map(id => {
