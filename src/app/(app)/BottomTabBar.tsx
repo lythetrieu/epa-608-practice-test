@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, Map, ClipboardList, BarChart3 } from 'lucide-react'
 import { prefetchLocalFirst } from '@/lib/local-first'
+import { ensureQuestionBank } from '@/lib/question-bank'
 
 // The 4 primary mobile tabs. A tab is active on its root route and any sub-route
 // (e.g. /progress/weak-spots → Progress, /test/core → Practice).
@@ -32,6 +33,9 @@ export default function BottomTabBar({ userId }: { userId: string }) {
       void prefetchLocalFirst(`dashboard:${userId}`, '/api/app/dashboard')
       void prefetchLocalFirst(`progress:${userId}`, '/api/app/progress')
       void prefetchLocalFirst(`study-progress:${userId}`, '/api/app/study-progress')
+      // Warm the local question bank (Quiz Engine v2) so quizzes start with
+      // zero network. No-op network-wise when the cached bank is <24h old.
+      void ensureQuestionBank(userId)
     }
     if (typeof requestIdleCallback === 'function') {
       const id = requestIdleCallback(warm, { timeout: 3000 })

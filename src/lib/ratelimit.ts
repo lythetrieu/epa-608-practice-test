@@ -73,6 +73,9 @@ export const publicConceptsRateLimit = makeRatelimit(60, '1 h', 'rl:public-conce
 /** Session submission — 30 per hour per user. */
 export const submitRateLimit = makeRatelimit(30, '1 h', 'rl:submit')
 
+/** Full question-bank download — 10 per user per hour (~300KB payload, refreshed ~daily). */
+export const questionBankRateLimit = makeRatelimit(10, '1 h', 'rl:qbank')
+
 /** PDF download endpoint — 10 downloads per user per day. */
 export const downloadRateLimit = makeRatelimit(10, '1 d', 'rl:download')
 

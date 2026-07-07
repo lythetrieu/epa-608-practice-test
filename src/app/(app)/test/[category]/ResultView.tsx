@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
-import { ReportButton } from './ReportButton'
+import { ReportButton } from '@/components/quiz/ReportButton'
 import { MULTI_SEP } from '@/lib/multi'
 
 // Track consecutive fails per category — show gentle Pro hint after 2

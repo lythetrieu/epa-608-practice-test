@@ -39,6 +39,14 @@ export function writeCache<T>(key: string, data: T): void {
   }
 }
 
+export function removeCache(key: string): void {
+  try {
+    localStorage.removeItem(PREFIX + key)
+  } catch {
+    /* ignore */
+  }
+}
+
 export function clearLocalFirstCache(): void {
   try {
     for (let i = localStorage.length - 1; i >= 0; i--) {

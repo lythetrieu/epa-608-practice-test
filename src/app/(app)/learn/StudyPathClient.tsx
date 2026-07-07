@@ -3,8 +3,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, X, ChevronRight, Lock, LayoutGrid, Bot, Trophy, ArrowRight, Lightbulb, AlertTriangle, BookOpen } from 'lucide-react'
-import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
+import { MULTI_SEP } from '@/lib/multi'
 import { useLocalFirst } from '@/lib/local-first'
+import { readQuestionBank, ensureQuestionBank, pickQuestions } from '@/lib/question-bank'
+import { QuizEngine } from '@/components/quiz/QuizEngine'
+import type { QuizOutcome, QuizQuestion } from '@/components/quiz/types'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { track } from '@/lib/track'
 import StudyMaterials from './StudyMaterials'
@@ -58,6 +61,26 @@ function ExplainButton({ questionText, correctAnswer }: { questionText: string; 
   )
 }
 
+// Quiz Engine v2: register a CLIENT-picked (local-bank) mastery check with the
+// server so the unchanged /api/public/score grading flow has a quizId to grade
+// against. Answers are looked up server-side from the DB — this call carries
+// ids only. Returns null on any failure (submit will retry once, then fail
+// into the existing catch path).
+async function registerLocalStudyQuiz(conceptPrefix: string, questionIds: string[]): Promise<string | null> {
+  try {
+    const res = await fetch('/api/public/study-path', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ conceptPrefix, count: 10, questionIds }),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return typeof data.quizId === 'string' && data.quizId ? data.quizId : null
+  } catch {
+    return null
+  }
+}
+
 type Concept = {
   id: string
   title: string
@@ -68,15 +91,6 @@ type Concept = {
   keyNumbers: string[]
   memoryTrick: string
   examWarning: string
-}
-
-type QuizQuestion = {
-  id: string
-  category: string
-  question: string
-  options: string[]
-  difficulty: string
-  question_type?: string
 }
 
 type QuizData = {
@@ -178,15 +192,12 @@ export default function StudyPathClient({
   const [activeConceptPrefix, setActiveConceptPrefix] = useState<string | null>(null)
   const [activeConceptId, setActiveConceptId] = useState<string | null>(null)
   const [quiz, setQuiz] = useState<QuizData | null>(null)
-  const [quizIdx, setQuizIdx] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, string>>({})
   const [quizPhase, setQuizPhase] = useState<'lesson' | 'quiz' | 'result'>('lesson')
   const [result, setResult] = useState<{
     percentage: number
     passed: boolean
     results?: { questionId: string; correct: boolean; userAnswer: string | null; correctAnswer: string }[]
   } | null>(null)
-  const [scoring, setScoring] = useState(false)
   const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
 
   // Deep link: /learn?section=Core (Home's section cards) opens that world's
@@ -208,10 +219,6 @@ export default function StudyPathClient({
         : `s_${Date.now()}_${Math.random().toString(36).slice(2)}`
   }
 
-  // Per-question start timestamps (ms) for the active quiz, keyed by question id.
-  // Used to enrich /api/practice/track with timeMs. Best-effort; never required.
-  const qStartRef = useRef<Record<string, number>>({})
-
   // Seed from localStorage first so the grid shows something on the very first
   // frame (0% for brand-new users — never a spinner).
   useEffect(() => {
@@ -229,14 +236,6 @@ export default function StudyPathClient({
     setProgress(merged)
     if (fresh) saveProgress(merged)
   }, [serverData, fresh])
-
-  // Stamp when each question first becomes visible so we can report timeMs.
-  // Only stamps once per question id (first view wins); cheap and best-effort.
-  useEffect(() => {
-    if (quizPhase !== 'quiz' || !quiz) return
-    const q = quiz.questions[quizIdx]
-    if (q && qStartRef.current[q.id] == null) qStartRef.current[q.id] = Date.now()
-  }, [quizPhase, quiz, quizIdx])
 
   // Ordered flat list: Core → Type I → Type II → Type III
   const sections = ['Core', 'Type I', 'Type II', 'Type III']
@@ -273,37 +272,102 @@ export default function StudyPathClient({
     return null
   }, [activeConceptId, orderedConcepts, progress])
 
+  // Monotonic open counter + current local pick — guards the background
+  // quizId registration against a concept switch mid-flight, and lets
+  // submitQuiz retry the registration once if it hadn't landed by submit time.
+  const openSeqRef = useRef(0)
+  const localPickRef = useRef<{ prefix: string; ids: string[] } | null>(null)
+
   const openConcept = useCallback((prefix: string, conceptId: string) => {
     setActiveConceptPrefix(prefix)
     setActiveConceptId(conceptId)
     setQuizPhase('quiz') // straight into the questions — no interstitial lesson screen
     setQuiz(null)
-    setQuizIdx(0)
-    setAnswers({})
     setResult(null)
-    qStartRef.current = {}
+    const seq = ++openSeqRef.current
+    localPickRef.current = null
 
     // Telemetry: a lesson was opened. Fire-and-forget.
     track('lesson_start', { conceptId, sessionId: sessionIdRef.current })
 
+    // ── Local-bank fast path: pick this concept's 10 questions ON-DEVICE ──
+    // Replicates the server's selection exactly (subtopic_id LIKE `${prefix}-%`,
+    // count 10, random sample + option shuffle — see /api/public/study-path).
+    // The quiz renders with ZERO network; the fetch below then runs in the
+    // background only to register the picked ids for /api/public/score.
+    const bank = readQuestionBank(userId)
+    const concept = concepts.find(c => c.id === conceptId)
+    if (bank && concept) {
+      const subs = new Set<string>()
+      for (const q of bank) {
+        if (q.subtopic_id && q.subtopic_id.startsWith(`${prefix}-`)) subs.add(q.subtopic_id)
+      }
+      const picked = subs.size > 0 ? pickQuestions(bank, { count: 10, subtopicIds: [...subs] }) : []
+      // The registration endpoint requires ≥3 ids — below that, use the server flow.
+      if (picked.length >= 3) {
+        const ids = picked.map(q => q.id)
+        localPickRef.current = { prefix, ids }
+        setQuiz({
+          quizId: '', // filled by the background registration below
+          concept: { id: concept.id, title: concept.title, category: concept.category, subtopicPrefix: prefix },
+          lesson: concept.lesson,
+          keyNumbers: concept.keyNumbers,
+          memoryTrick: concept.memoryTrick,
+          examWarning: concept.examWarning,
+          facts: [],
+          questions: picked.map(q => ({
+            id: q.id,
+            category: q.category,
+            question: q.question,
+            options: q.options,
+            difficulty: q.difficulty,
+            question_type: q.question_type ?? undefined,
+          })),
+          total: picked.length,
+        })
+        // Keep the bank ≤24h stale; never blocks the quiz.
+        void ensureQuestionBank(userId)
+        // Background registration → quizId for the byte-identical submit path.
+        void registerLocalStudyQuiz(prefix, ids).then(quizId => {
+          if (quizId && openSeqRef.current === seq) {
+            setQuiz(q => (q ? { ...q, quizId } : q))
+          }
+        })
+        return
+      }
+    }
+    if (!bank) void ensureQuestionBank(userId) // download for next time
+
+    // ── Fallback: today's server-picked flow, unchanged ──
     fetch('/api/public/study-path', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ conceptPrefix: prefix, count: 10 }),
     })
       .then(r => r.json())
-      .then(data => setQuiz(data))
+      .then(data => { if (openSeqRef.current === seq) setQuiz(data) })
       .catch(() => {})
-  }, [])
+  }, [userId, concepts])
 
-  const submitQuiz = useCallback(async () => {
-    if (!quiz || scoring) return
-    setScoring(true)
+  // Called by the QuizEngine when the mastery check is submitted. The engine
+  // hands over the collected answers + per-question first-view timestamps
+  // (previously qStartRef); all scoring/tracking POSTs are unchanged.
+  const submitQuiz = useCallback(async (outcome: QuizOutcome) => {
+    if (!quiz) return
     try {
+      // Local-bank start: the quizId arrives from the background registration.
+      // If it hasn't landed by submit time (slow/failed request), retry the
+      // registration ONCE inline; if that also fails, fall into the existing
+      // catch below — same behavior as an expired server quiz today.
+      let quizId = quiz.quizId
+      if (!quizId && localPickRef.current) {
+        quizId = (await registerLocalStudyQuiz(localPickRef.current.prefix, localPickRef.current.ids)) ?? ''
+      }
+      if (!quizId) throw new Error('quiz not registered')
       const res = await fetch('/api/public/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quizId: quiz.quizId, answers }),
+        body: JSON.stringify({ quizId, answers: outcome.answersMap }),
       })
       const data = await res.json()
       const passed = data.percentage >= 80
@@ -345,16 +409,20 @@ export default function StudyPathClient({
       // this stays backward-compatible.
       if (Array.isArray(data.results) && data.results.length > 0) {
         const attemptNo = existing.attempts // already incremented above for this submit
+        const firstViewed: Record<string, number> = {}
+        for (const a of outcome.answers) {
+          if (typeof a.firstViewedAt === 'number') firstViewed[a.questionId] = a.firstViewedAt
+        }
         fetch('/api/practice/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             results: data.results.map((r: { questionId: string; correct: boolean; userAnswer?: string | null }) => {
-              const started = qStartRef.current[r.questionId]
+              const started = firstViewed[r.questionId]
               return {
                 questionId: r.questionId,
                 correct: r.correct,
-                userAnswer: r.userAnswer ?? answers[r.questionId] ?? null,
+                userAnswer: r.userAnswer ?? outcome.answersMap[r.questionId] ?? null,
                 ...(typeof started === 'number' ? { timeMs: Math.max(0, Date.now() - started) } : {}),
                 attemptNo,
                 source: 'study_path',
@@ -383,8 +451,7 @@ export default function StudyPathClient({
       setResult({ percentage: 0, passed: false })
       setQuizPhase('result')
     }
-    setScoring(false)
-  }, [quiz, answers, activeConceptId, progress, scoring])
+  }, [quiz, activeConceptId, progress])
 
   const closeModal = useCallback(() => {
     // Telemetry: leaving the concept. Fire-and-forget.
@@ -445,8 +512,6 @@ export default function StudyPathClient({
     const conceptProg = progress[activeConceptId!] || { status: 'pending', passCount: 0, lastPassed: null }
     const nextLesson = getNextLesson()
     const A = '#4f46e5'
-    const q = quiz.questions[quizIdx]
-    const total = quiz.total
     const C = 2 * Math.PI * 52 // ring circumference
 
     return (
@@ -528,90 +593,19 @@ export default function StudyPathClient({
             </div>
           )}
 
-          {/* QUIZ */}
-          {quizPhase === 'quiz' && q && (
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_10px_30px_-14px_rgba(15,23,42,.18)]">
-              <header className="border-b border-slate-100 px-5 py-4 sm:px-7">
-                <div className="flex items-center justify-between gap-3">
-                  <button onClick={closeModal} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900">
-                    <ArrowLeft size={16} /> Exit
-                  </button>
-                  <p className="min-w-0 flex-1 truncate text-center text-sm font-semibold text-slate-900">{quiz.concept.category} · {quiz.concept.title}</p>
-                  <span className="shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold tabular-nums" style={{ background: '#eef2ff', color: '#4338ca' }}>{quizIdx + 1} / {total}</span>
-                </div>
-                <div className="mt-3">
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full transition-all" style={{ width: `${((quizIdx + 1) / total) * 100}%`, background: A }} />
-                  </div>
-                  <div className="mt-2.5 flex items-center gap-1.5 flex-wrap">
-                    {quiz.questions.map((qq, i) => (
-                      <span key={i} className={`rounded-full ${i === quizIdx ? 'h-2.5 w-2.5 ring-4' : 'h-2 w-2'}`} style={{ background: (i === quizIdx || answers[qq.id]) ? A : '#e2e8f0', ['--tw-ring-color' as unknown as string]: '#eef2ff' }} />
-                    ))}
-                  </div>
-                </div>
-              </header>
-
-              <div className="px-5 py-6 sm:px-7 sm:py-8">
-                <div className="flex items-center gap-2">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">Question {quizIdx + 1}</p>
-                  {q.question_type === 'multi_select' && <span className="rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style={{ background: '#eef2ff', color: '#4338ca' }}>Select all that apply</span>}
-                  {q.question_type === 'true_false' && <span className="text-[11px] font-semibold text-slate-400">· True or False</span>}
-                </div>
-                <h2 className="mt-2 text-lg font-bold leading-snug text-slate-900 sm:text-xl">{q.question}</h2>
-
-                {(() => {
-                  const multi = q.question_type === 'multi_select'
-                  const tf = q.question_type === 'true_false'
-                  const current = answers[q.id] ? answers[q.id].split(MULTI_SEP) : []
-                  const pick = (opt: string) => setAnswers(prev => {
-                    if (!multi) return { ...prev, [q.id]: opt }
-                    const set = new Set(current); if (set.has(opt)) set.delete(opt); else set.add(opt)
-                    return { ...prev, [q.id]: canonicalMulti([...set]) }
-                  })
-                  if (tf) {
-                    return (
-                      <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {q.options.map((opt, i) => {
-                          const sel = answers[q.id] === opt
-                          return (
-                            <button key={i} onClick={() => pick(opt)} className="flex min-h-[80px] items-center justify-center gap-3 rounded-2xl border-2 px-5 py-5 transition" style={sel ? { borderColor: A, background: 'rgba(238,242,255,.6)' } : { borderColor: '#e2e8f0' }}>
-                              <span className="text-lg font-bold" style={sel ? { color: '#0f172a' } : { color: '#64748b' }}>{opt}</span>
-                            </button>
-                          )
-                        })}
-                      </div>
-                    )
-                  }
-                  const letters = ['A', 'B', 'C', 'D', 'E']
-                  return (
-                    <div className="mt-6 space-y-3">
-                      {q.options.map((opt, i) => {
-                        const sel = multi ? current.includes(opt) : answers[q.id] === opt
-                        return (
-                          <button key={i} onClick={() => pick(opt)} className="w-full text-left flex min-h-[56px] items-center gap-4 rounded-xl border-2 px-4 py-3.5 transition hover:border-indigo-200" style={sel ? { borderColor: A, background: 'rgba(238,242,255,.6)' } : { borderColor: '#e2e8f0', background: '#fff' }}>
-                            {multi ? (
-                              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border-2" style={sel ? { borderColor: A, background: A, color: '#fff' } : { borderColor: '#e2e8f0', color: 'transparent' }}><Check size={16} strokeWidth={2.5} /></span>
-                            ) : (
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border-2 text-sm font-bold" style={sel ? { borderColor: A, background: A, color: '#fff' } : { borderColor: '#e2e8f0', color: '#64748b' }}>{letters[i]}</span>
-                            )}
-                            <span className={`text-[15px] ${sel ? 'font-semibold text-slate-900' : 'font-medium text-slate-700'}`}>{opt}</span>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  )
-                })()}
-              </div>
-
-              <footer className="flex items-center gap-3 border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-7">
-                {quizIdx > 0 ? <button onClick={() => setQuizIdx(quizIdx - 1)} className="text-sm font-medium text-slate-500 hover:text-slate-900">Back</button> : <span />}
-                <div className="flex-1" />
-                <button disabled={!answers[q.id] || scoring} onClick={() => { if (quizIdx < total - 1) setQuizIdx(quizIdx + 1); else submitQuiz() }}
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow disabled:opacity-40 disabled:cursor-not-allowed transition" style={{ background: answers[q.id] ? A : '#94a3b8' }}>
-                  {scoring ? 'Scoring…' : quizIdx === total - 1 ? 'Submit answers' : 'Next question'} <ArrowRight size={16} />
+          {/* QUIZ — shared engine, Study Path chrome (mode="study") */}
+          {quizPhase === 'quiz' && (
+            <QuizEngine
+              questions={quiz.questions}
+              mode="study"
+              title={`${quiz.concept.category} · ${quiz.concept.title}`}
+              header={
+                <button onClick={closeModal} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900">
+                  <ArrowLeft size={16} /> Exit
                 </button>
-              </footer>
-            </div>
+              }
+              onComplete={submitQuiz}
+            />
           )}
 
           {/* RESULT */}

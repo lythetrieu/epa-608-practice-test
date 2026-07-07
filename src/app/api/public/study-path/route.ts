@@ -108,10 +108,19 @@ export async function GET(request: NextRequest) {
   )
 }
 
-// POST: Start a mini-quiz for a specific concept
+// POST: Start a mini-quiz for a specific concept.
+//
+// Quiz Engine v2: `questionIds` (optional) registers a CLIENT-picked quiz —
+// the local-bank Study Path start (src/lib/question-bank.ts) renders its
+// questions instantly on-device, then calls this in the background purely to
+// obtain a quizId so the unchanged /api/public/score grading flow works. The
+// ids must all belong to the concept (same LIKE filter as the random pick) and
+// the ANSWERS are still looked up server-side — the client never supplies them,
+// so grading integrity is identical to a server-picked quiz.
 const quizSchema = z.object({
   conceptPrefix: z.string().min(2).max(20),
   count: z.number().int().min(3).max(10).default(5),
+  questionIds: z.array(z.string().min(1).max(100)).min(3).max(10).optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -123,7 +132,7 @@ export async function POST(request: NextRequest) {
     const parsed = quizSchema.safeParse(body)
     if (!parsed.success) return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
 
-    const { conceptPrefix, count } = parsed.data
+    const { conceptPrefix, count, questionIds } = parsed.data
 
     let admin
     try { admin = createAdminClient() } catch { return NextResponse.json({ error: 'Service unavailable' }, { status: 503 }) }
@@ -142,12 +151,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No questions for this concept' }, { status: 404 })
     }
 
-    // Shuffle and pick
-    for (let i = questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [questions[i], questions[j]] = [questions[j], questions[i]]
+    let picked = questions
+    if (questionIds && questionIds.length > 0) {
+      // Client-picked registration: every id must be a distinct question of
+      // THIS concept (already fetched via the LIKE filter above) or the whole
+      // request is rejected — no cross-concept or unknown ids.
+      const byId = new Map(questions.map(q => [q.id, q]))
+      const chosen = questionIds.flatMap(id => {
+        const q = byId.get(id)
+        return q ? [q] : []
+      })
+      if (chosen.length !== questionIds.length || new Set(questionIds).size !== questionIds.length) {
+        return NextResponse.json({ error: 'Invalid question ids' }, { status: 400 })
+      }
+      picked = chosen
+    } else {
+      // Shuffle and pick
+      for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]]
+      }
+      picked = questions.slice(0, count)
     }
-    const picked = questions.slice(0, count)
 
     // Store quiz
     const quizId = randomUUID()

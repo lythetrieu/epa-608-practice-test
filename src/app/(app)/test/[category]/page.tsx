@@ -34,10 +34,13 @@ export default async function TestPage({ params, searchParams }: {
 
   if (mode === 'test' || mode === 'practice') {
     const { TestClient } = await import('./TestClient')
+    // userId enables the local-bank instant start (user already resolved above
+    // — no extra await).
+    const userId = user?.id ?? null
     if (mode === 'test') {
-      return <TestClient category={category} timed showExplanations={false} />
+      return <TestClient category={category} timed showExplanations={false} userId={userId} />
     }
-    return <TestClient category={category} timed={false} showExplanations />
+    return <TestClient category={category} timed={false} showExplanations userId={userId} />
   }
 
   return <ModeSelector slug={slug} category={category} isPro={limits.hasTimedMode} />
