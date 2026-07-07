@@ -142,8 +142,46 @@ export async function POST(request: NextRequest) {
         }),
       })
 
-      if (res.ok) {
-        return new Response(res.body, {
+      if (res.ok && res.body) {
+        // Tee the SSE stream: forward chunks to the client unchanged while
+        // accumulating the assistant's full reply, then persist it to the chat
+        // session when the stream ends. Without this the stored session always
+        // lagged one assistant message behind — reopening a chat (bubble expand,
+        // history) showed the user's question but not the generated answer.
+        let sseBuffer = ''
+        let assistantContent = ''
+        const decoder = new TextDecoder()
+        const sessionId = activeSessionId
+        const persist = new TransformStream<Uint8Array, Uint8Array>({
+          transform(chunk, controller) {
+            controller.enqueue(chunk)
+            sseBuffer += decoder.decode(chunk, { stream: true })
+            const lines = sseBuffer.split('\n')
+            sseBuffer = lines.pop() ?? ''
+            for (const line of lines) {
+              if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+                try {
+                  const content = JSON.parse(line.slice(6)).choices?.[0]?.delta?.content
+                  if (content) assistantContent += content
+                } catch { /* skip malformed SSE line */ }
+              }
+            }
+          },
+          async flush() {
+            if (!sessionId || !assistantContent) return
+            try {
+              await supabase
+                .from('ai_chat_sessions')
+                .update({
+                  messages: [...messages, { role: 'assistant', content: assistantContent }],
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', sessionId)
+                .eq('user_id', user.id)
+            } catch { /* never break the stream over a persistence failure */ }
+          },
+        })
+        return new Response(res.body.pipeThrough(persist), {
           headers: {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',

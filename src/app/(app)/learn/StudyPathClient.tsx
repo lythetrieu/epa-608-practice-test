@@ -709,7 +709,7 @@ export default function StudyPathClient() {
                       <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-white/90">{done}/{items.length} levels mastered</span>
+                      <span className="text-[11px] font-semibold text-white/90">{done}/{items.length} levels · {pct}%</span>
                       <span className="text-xs font-extrabold bg-white/25 px-3 py-1 rounded-full">
                         {allDone ? 'Review' : started ? 'Continue →' : 'Start →'}
                       </span>

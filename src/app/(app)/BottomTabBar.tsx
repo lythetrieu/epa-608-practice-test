@@ -9,7 +9,7 @@ import { Home, Map, ClipboardList, BarChart3 } from 'lucide-react'
 // (e.g. /progress/weak-spots → Progress, /test/core → Practice).
 const TABS = [
   { href: '/dashboard', label: 'Home',     icon: Home },
-  { href: '/learn',     label: 'Learn',    icon: Map },
+  { href: '/learn',     label: 'Study Path', icon: Map },
   { href: '/test',      label: 'Practice', icon: ClipboardList },
   { href: '/progress',  label: 'Progress', icon: BarChart3 },
 ]
