@@ -1,8 +1,10 @@
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TIER_LIMITS, type Tier } from '@/types'
-import StudyPathClient from './StudyPathClient'
+import { buildStudyPathConcepts } from '@/lib/study-path-data'
+import StudyPathClient, { type ProgressRow as StudyPathProgressRow } from './StudyPathClient'
 
 export default async function LearnPage() {
   const user = await getCurrentUser()
@@ -42,5 +44,33 @@ export default async function LearnPage() {
     )
   }
 
-  return <StudyPathClient />
+  // ── Server-side data: kill the post-hydration double waterfall ──
+  // The concept list is purely local computation — no reason to make the client
+  // refetch /api/public/study-path after hydrating an empty shell. And the
+  // account's progress rows are read here (RLS-safe SSR client) so the client
+  // can render its true state on first paint instead of after two round-trips.
+  // Both are passed as props; StudyPathClient skips its mount fetches when they
+  // are present and still merges localStorage on top exactly as before.
+  const initialConcepts = buildStudyPathConcepts()
+
+  const supabase = await createClient()
+  // Gate already passed above (hasStudyPath), so returning rows here is safe.
+  // Degrade gracefully to [] if the table is missing / the query fails.
+  let initialProgress: StudyPathProgressRow[] = []
+  try {
+    const { data } = await supabase
+      .from('study_path_progress')
+      .select('concept_id, status, pass_count, attempts, best_score, last_score, last_passed')
+      .eq('user_id', user.id)
+    initialProgress = (data ?? []) as StudyPathProgressRow[]
+  } catch {
+    initialProgress = []
+  }
+
+  return (
+    <StudyPathClient
+      initialConcepts={initialConcepts}
+      initialProgress={initialProgress}
+    />
+  )
 }

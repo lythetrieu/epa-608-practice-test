@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -49,9 +48,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* Google Tag Manager — the GTM container (GTM-KSX9M3DD) fires GA4.
+            The previously-duplicated direct gtag.js + inline gtag config for
+            G-KJ8X1DQ1GT were removed: configure that GA4 tag inside GTM instead
+            of loading a second, parallel analytics pipeline on every page. */}
         <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KSX9M3DD');` }} />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ8X1DQ1GT" />
-        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KJ8X1DQ1GT');` }} />
         <script dangerouslySetInnerHTML={{ __html: `(function(){if(localStorage.getItem('epa608-theme')==='dark')document.documentElement.classList.add('dark')})()` }} />
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,7 +62,6 @@ export default function RootLayout({
       <body className="font-sans bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSX9M3DD" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} /></noscript>
         {children}
-        <ServiceWorkerRegistration />
       </body>
     </html>
   )

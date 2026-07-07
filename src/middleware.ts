@@ -54,6 +54,18 @@ export async function middleware(request: NextRequest) {
     return tagNoindex(NextResponse.next(), appHost)
   }
 
+  // Public endpoints — skip ALL auth work (no getUser round-trip). These routes
+  // never read the session, so paying for createServerClient + getUser here was
+  // pure latency. Moved ABOVE the Supabase block for that reason. No session
+  // cookies to forward (getUser hasn't run), so this mirrors the .html early
+  // return: just tagNoindex.
+  if (
+    request.nextUrl.pathname === '/api/ai/guest-chat' ||
+    request.nextUrl.pathname.startsWith('/api/public/')
+  ) {
+    return tagNoindex(NextResponse.next({ request }), appHost)
+  }
+
   // During build or if env vars are missing, skip auth checks
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return tagNoindex(supabaseResponse, appHost)
@@ -117,10 +129,7 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
-  // Public endpoints — skip all auth checks
-  if (pathname === '/api/ai/guest-chat' || pathname.startsWith('/api/public/')) {
-    return tagNoindex(withSessionCookies(NextResponse.next({ request })), appHost)
-  }
+  // (Public-endpoint bypass moved above the Supabase block — see top of fn.)
 
   // App subdomain root → route users INTO the app instead of serving the 108KB
   // marketing homepage (which belongs to the marketing root domain). Host-gated:

@@ -36,19 +36,43 @@ export default async function DashboardPage() {
   if (!user) redirect('/login?redirect=/dashboard')
 
   const supabase = await createClient()
-  const profile = await getUserProfile(user.id)
+
+  // ── One Promise.all instead of 4 serial round-trips ──
+  // profile, sessions, study-path progress, and the weak-spots RPC only need
+  // user.id and are independent of each other, so fire them concurrently. Every
+  // downstream computation (tier, readiness, streak, mastery) runs after this
+  // single await. The study-path + RPC calls stay individually try/caught below
+  // so a missing table degrades gracefully; here we just parallelize the fetches.
+  const admin = createAdminClient()
+  const [profile, sessionsRes, masteredRes, rpcRes] = await Promise.all([
+    getUserProfile(user.id),
+    // Cap the sessions scan: readiness only uses the last 6 per category and the
+    // streak just scans dates — 500 newest sessions is ample and keeps this
+    // query bounded as the table grows forever.
+    supabase
+      .from('test_sessions')
+      .select('id, category, score, total, started_at, submitted_at')
+      .eq('user_id', user.id)
+      .not('submitted_at', 'is', null)
+      .order('submitted_at', { ascending: false })
+      .limit(500),
+    supabase
+      .from('study_path_progress')
+      .select('concept_id')
+      .eq('user_id', user.id)
+      .eq('status', 'mastered')
+      .then(r => r, () => ({ data: null })),
+    admin
+      .rpc('weak_spots_by_category', { p_user_id: user.id })
+      .then(r => r, () => ({ data: null, error: true as unknown })),
+  ])
 
   const tier = (profile?.tier ?? 'free') as Tier
   const isFree = tier === 'free'
   const name = user.email?.split('@')[0] ?? 'there'
 
-  // All completed sessions (newest-first)
-  const { data: allSessions } = await supabase
-    .from('test_sessions')
-    .select('id, category, score, total, started_at, submitted_at')
-    .eq('user_id', user.id)
-    .not('submitted_at', 'is', null)
-    .order('submitted_at', { ascending: false })
+  // All completed sessions (newest-first), capped at 500
+  const allSessions = sessionsRes.data
 
   const totalTests = allSessions?.length ?? 0
 
@@ -94,16 +118,13 @@ export default async function DashboardPage() {
   const overall = readiness.overall
 
   // ─── Study Path levels mastered per section (Study X/Y) ───
-  // Falls back to 0/Y if the table is missing or the query fails.
+  // Falls back to 0/Y if the table is missing or the query failed (masteredRes
+  // resolves to { data: null } in that case — see the Promise.all above).
   let masteredByCat: Record<string, number> = {}
   try {
-    const { data: mastered } = await supabase
-      .from('study_path_progress')
-      .select('concept_id')
-      .eq('user_id', user.id)
-      .eq('status', 'mastered')
+    const mastered = masteredRes.data as { concept_id: string }[] | null
     masteredByCat = masteredConceptsByCategory(
-      (mastered ?? []).map(r => r.concept_id as string)
+      (mastered ?? []).map(r => r.concept_id)
     )
   } catch {
     masteredByCat = {}
@@ -112,19 +133,15 @@ export default async function DashboardPage() {
 
   // ─── Questions practiced per section (RPC; omit the number on failure) ───
   let practicedByCat: Record<string, number> | null = null
-  try {
-    const admin = createAdminClient()
-    const { data: agg, error: rpcError } = await admin.rpc('weak_spots_by_category', {
-      p_user_id: user.id,
-    })
-    if (!rpcError && Array.isArray(agg)) {
-      practicedByCat = {}
-      for (const row of agg as { category: string; wrong: number; total: number }[]) {
-        practicedByCat[row.category || 'Core'] = Number(row.total) || 0
-      }
+  const { data: agg, error: rpcError } = rpcRes as {
+    data: unknown
+    error?: unknown
+  }
+  if (!rpcError && Array.isArray(agg)) {
+    practicedByCat = {}
+    for (const row of agg as { category: string; wrong: number; total: number }[]) {
+      practicedByCat[row.category || 'Core'] = Number(row.total) || 0
     }
-  } catch {
-    practicedByCat = null
   }
 
   // ─── Coach line: the single clear next step ───

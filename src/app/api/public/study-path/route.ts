@@ -3,13 +3,15 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { getIdentifier } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { SUBTOPIC_TO_CONCEPT } from '@/lib/concept-map'
+import { buildStudyPathConcepts, groupConceptsByCategory } from '@/lib/study-path-data'
 import { canonicalMulti, isMulti } from '@/lib/multi'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
-// Load micro-lessons (teaching content for each concept)
+// Load micro-lessons (teaching content for each concept). Used only by POST —
+// the GET concept overview now comes from the shared buildStudyPathConcepts().
 type MicroLesson = { title: string; lesson: string; keyNumbers: string[]; memoryTrick: string; examWarning: string }
 let MICRO_LESSONS: Record<string, MicroLesson> = {}
 try {
@@ -17,8 +19,7 @@ try {
   MICRO_LESSONS = JSON.parse(raw)
 } catch { /* lessons not available */ }
 
-// Load knowledge base and extract facts per section
-const KNOWLEDGE_SECTIONS: Record<string, string> = {}
+// Load knowledge base and extract facts per section (used by POST's getFactsForConcept)
 const KB_FACTS: Record<string, string[]> = {} // section title → array of fact strings
 try {
   const kb = readFileSync(join(process.cwd(), 'src/lib/ai/knowledge-base.txt'), 'utf-8')
@@ -27,7 +28,6 @@ try {
     const lines = section.split('\n')
     const title = lines[0]?.replace(/^#+\s*/, '').trim().toUpperCase()
     if (title) {
-      KNOWLEDGE_SECTIONS[title] = lines.slice(1).join('\n').trim()
       KB_FACTS[title] = lines.slice(1).filter(l => l.trim().startsWith('-')).map(l => l.trim().replace(/^-\s*/, ''))
     }
   }
@@ -79,52 +79,33 @@ function checkLimit(ip: string): boolean {
   entry.count++; return true
 }
 
-// GET: Return all concepts with their summaries (study path overview)
+// GET: Return all concepts with their summaries (study path overview).
+// The concept list is PURELY LOCAL (concept-map + micro-lessons + knowledge
+// base) and identical for every caller, so it's cacheable at the CDN. The
+// server component on /learn calls buildStudyPathConcepts() directly and skips
+// this fetch entirely; mobile clients still hit this endpoint.
 export async function GET(request: NextRequest) {
   const ip = getIdentifier(request)
   if (!checkLimit(ip)) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
-  // Build concept list from our mapping
-  const concepts = Object.entries(SUBTOPIC_TO_CONCEPT).map(([prefix, info]) => {
-    // Find matching knowledge section
-    let summary = ''
-    for (const [title, content] of Object.entries(KNOWLEDGE_SECTIONS)) {
-      if (title.includes(info.title.toUpperCase().split(' ')[0]) ||
-          title.includes(info.title.toUpperCase().split('&')[0].trim())) {
-        // Extract first 200 words as summary
-        summary = content.split(/\s+/).slice(0, 50).join(' ') + '...'
-        break
-      }
-    }
+  // Shared local computation (also used server-side by /learn/page.tsx)
+  const concepts = buildStudyPathConcepts()
+  const grouped = groupConceptsByCategory(concepts)
 
-    // Get micro-lesson if available
-    const microLesson = MICRO_LESSONS[prefix]
-
-    return {
-      id: info.id,
-      title: info.title,
-      category: info.category,
-      subtopicPrefix: prefix,
-      summary: summary || `Study material for ${info.title}`,
-      lesson: microLesson?.lesson || '',
-      keyNumbers: microLesson?.keyNumbers || [],
-      memoryTrick: microLesson?.memoryTrick || '',
-      examWarning: microLesson?.examWarning || '',
-    }
-  })
-
-  // Group by category
-  const grouped: Record<string, typeof concepts> = {}
-  for (const c of concepts) {
-    if (!grouped[c.category]) grouped[c.category] = []
-    grouped[c.category].push(c)
-  }
-
-  return NextResponse.json({
-    concepts,
-    grouped,
-    totalConcepts: concepts.length,
-  })
+  return NextResponse.json(
+    {
+      concepts,
+      grouped,
+      totalConcepts: concepts.length,
+    },
+    {
+      // Static-ish content: cache at the edge for 1h, serve stale for 24h while
+      // revalidating. Mobile clients still call this route.
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      },
+    },
+  )
 }
 
 // POST: Start a mini-quiz for a specific concept

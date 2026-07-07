@@ -40,15 +40,23 @@ export async function GET() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
 
-  if (!(await hasStudyPath(supabase, user.id))) {
+  // Run the Pro gate check and the progress read concurrently. The 403 gate is
+  // still evaluated FIRST below, so a non-Pro user never gets data — we just
+  // don't wait serially for the tier lookup before starting the select. RLS
+  // already scopes the select to the user's own rows regardless.
+  const [allowed, progressRes] = await Promise.all([
+    hasStudyPath(supabase, user.id),
+    supabase
+      .from('study_path_progress')
+      .select('concept_id, status, pass_count, attempts, best_score, last_score, last_passed')
+      .eq('user_id', user.id),
+  ])
+
+  if (!allowed) {
     return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
   }
 
-  const { data, error } = await supabase
-    .from('study_path_progress')
-    .select('concept_id, status, pass_count, attempts, best_score, last_score, last_passed')
-    .eq('user_id', user.id)
-
+  const { data, error } = progressRes
   if (error) {
     console.error('study-path progress GET:', error)
     return NextResponse.json({ error: 'load_failed' }, { status: 500 })
@@ -62,10 +70,6 @@ export async function POST(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
 
-  if (!(await hasStudyPath(supabase, user.id))) {
-    return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
-  }
-
   const body = await request.json().catch(() => ({}))
   const conceptId = String(body.conceptId ?? '').trim()
   const status = String(body.status ?? 'pending')
@@ -74,13 +78,27 @@ export async function POST(request: NextRequest) {
   const lastPassed = body.lastPassed ? String(body.lastPassed) : null
   if (!conceptId) return NextResponse.json({ error: 'missing_concept' }, { status: 400 })
 
-  // Read current row (RLS: own row) to keep best_score + attempts authoritative.
-  const { data: existing } = await supabase
-    .from('study_path_progress')
-    .select('attempts, best_score')
-    .eq('user_id', user.id)
-    .eq('concept_id', conceptId)
-    .maybeSingle()
+  // The Pro gate and the current-row read both only need user.id and are read-
+  // only, so run them concurrently. The 403 gate is still evaluated BEFORE any
+  // write — a non-Pro user never reaches the upsert. The existing-row read is
+  // RLS-scoped to the user's own row, so pre-fetching it leaks nothing even if
+  // the gate then denies.
+  const [allowed, existingRes] = await Promise.all([
+    hasStudyPath(supabase, user.id),
+    supabase
+      .from('study_path_progress')
+      .select('attempts, best_score')
+      .eq('user_id', user.id)
+      .eq('concept_id', conceptId)
+      .maybeSingle(),
+  ])
+
+  if (!allowed) {
+    return NextResponse.json({ error: 'Upgrade required', upgradeRequired: true }, { status: 403 })
+  }
+
+  // Current row (RLS: own row) — keeps best_score + attempts authoritative.
+  const existing = existingRes.data
 
   const row: Row & { user_id: string; updated_at: string } = {
     user_id: user.id,

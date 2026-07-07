@@ -124,9 +124,50 @@ function getEffectiveStatus(prog: ConceptProgress): string {
   return status === 'reviewed' ? 'mastered' : status
 }
 
-export default function StudyPathClient() {
-  const [concepts, setConcepts] = useState<Concept[]>([])
-  const [loading, setLoading] = useState(true)
+// Raw account progress row shape (snake_case, straight from study_path_progress).
+export type ProgressRow = {
+  concept_id: string
+  status: string
+  pass_count?: number | null
+  last_passed?: string | null
+  best_score?: number | null
+  last_score?: number | null
+  attempts?: number | null
+}
+
+// Map raw DB rows → the client's ConceptProgress map. Same mapping the mount
+// fetch used, so the SSR-provided rows behave identically.
+function rowsToProgress(
+  rows: ProgressRow[],
+  base: Record<string, ConceptProgress> = {},
+): Record<string, ConceptProgress> {
+  const merged: Record<string, ConceptProgress> = { ...base }
+  for (const row of rows) {
+    merged[row.concept_id] = {
+      status: row.status as ConceptProgress['status'],
+      passCount: row.pass_count ?? 0,
+      lastPassed: row.last_passed ?? null,
+      bestScore: row.best_score ?? 0,
+      lastScore: row.last_score ?? null,
+      attempts: row.attempts ?? 0,
+    }
+  }
+  return merged
+}
+
+export default function StudyPathClient({
+  initialConcepts,
+  initialProgress,
+}: {
+  // Both optional: when provided (from the /learn server component) we render
+  // real state on first paint and SKIP the two mount fetches. When absent, the
+  // component falls back to fetching on mount exactly as before.
+  initialConcepts?: Concept[]
+  initialProgress?: ProgressRow[]
+} = {}) {
+  const [concepts, setConcepts] = useState<Concept[]>(initialConcepts ?? [])
+  // If concepts arrived as a prop there is nothing to wait for → not loading.
+  const [loading, setLoading] = useState(!initialConcepts)
   const [progress, setProgress] = useState<Record<string, ConceptProgress>>({})
   const [activeConceptPrefix, setActiveConceptPrefix] = useState<string | null>(null)
   const [activeConceptId, setActiveConceptId] = useState<string | null>(null)
@@ -167,33 +208,40 @@ export default function StudyPathClient() {
 
   useEffect(() => {
     const local = getProgress()
-    setProgress(local)
-    fetch('/api/public/study-path')
-      .then(r => r.json())
-      .then(data => { setConcepts(data.concepts || []); setLoading(false) })
-      .catch(() => setLoading(false))
 
-    // Per-account progress (synced across devices). Server rows win over the
-    // local cache; the merged result is written back to localStorage for offline.
-    fetch('/api/study-path/progress')
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => {
-        if (!d || !Array.isArray(d.progress)) return
-        const merged: Record<string, ConceptProgress> = { ...local }
-        for (const row of d.progress) {
-          merged[row.concept_id] = {
-            status: row.status,
-            passCount: row.pass_count ?? 0,
-            lastPassed: row.last_passed ?? null,
-            bestScore: row.best_score ?? 0,
-            lastScore: row.last_score ?? null,
-            attempts: row.attempts ?? 0,
-          }
-        }
-        setProgress(merged)
-        saveProgress(merged)
-      })
-      .catch(() => {})
+    // ── Concepts: use the SSR prop if we have it, else fetch (fallback path) ──
+    if (initialConcepts) {
+      // already seeded into state via useState initializer; nothing to fetch
+    } else {
+      fetch('/api/public/study-path')
+        .then(r => r.json())
+        .then(data => { setConcepts(data.concepts || []); setLoading(false) })
+        .catch(() => setLoading(false))
+    }
+
+    // ── Progress: SSR rows win over local cache when provided, else fetch. ──
+    // Either way, server rows are merged ON TOP of localStorage and the result
+    // is written back to localStorage for offline — identical merge semantics.
+    if (initialProgress) {
+      const merged = rowsToProgress(initialProgress, local)
+      setProgress(merged)
+      saveProgress(merged)
+    } else {
+      // Seed with the local cache first so we render something before the fetch.
+      setProgress(local)
+      // Per-account progress (synced across devices). Server rows win over the
+      // local cache; the merged result is written back to localStorage for offline.
+      fetch('/api/study-path/progress')
+        .then(r => (r.ok ? r.json() : null))
+        .then(d => {
+          if (!d || !Array.isArray(d.progress)) return
+          const merged = rowsToProgress(d.progress as ProgressRow[], local)
+          setProgress(merged)
+          saveProgress(merged)
+        })
+        .catch(() => {})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Stamp when each question first becomes visible so we can report timeMs.
