@@ -283,7 +283,7 @@ function BubbleUpsell({ onClose }: { onClose: () => void }) {
           href="/checkout.html"
           onClick={onClose}
           className="w-full max-w-xs px-5 py-3 rounded-xl font-bold text-white text-center transition-opacity hover:opacity-90"
-          style={{ background: '#e85d04' }}
+          style={{ background: '#F97316' }}
         >
           Upgrade to Pro — $14.99
         </Link>

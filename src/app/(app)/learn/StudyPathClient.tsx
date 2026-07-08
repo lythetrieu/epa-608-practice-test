@@ -511,7 +511,7 @@ export default function StudyPathClient({
   if (activeConceptPrefix && quiz) {
     const conceptProg = progress[activeConceptId!] || { status: 'pending', passCount: 0, lastPassed: null }
     const nextLesson = getNextLesson()
-    const A = '#4f46e5'
+    const A = '#003087'
     const C = 2 * Math.PI * 52 // ring circumference
 
     return (
@@ -526,7 +526,7 @@ export default function StudyPathClient({
                   <button onClick={closeModal} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900">
                     <ArrowLeft size={16} /> Exit
                   </button>
-                  <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide" style={{ background: '#eef2ff', color: '#4338ca' }}>
+                  <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide" style={{ background: '#eef4fb', color: '#003087' }}>
                     <BookOpen size={13} /> Lesson
                   </span>
                 </div>
@@ -549,7 +549,7 @@ export default function StudyPathClient({
                     <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Key numbers</p>
                     <div className="flex flex-wrap gap-2">
                       {quiz.keyNumbers.map((n, i) => (
-                        <span key={i} className="rounded-lg bg-indigo-50 px-2.5 py-1 text-[13px] font-semibold text-indigo-700">{n}</span>
+                        <span key={i} className="rounded-lg bg-blue-50 px-2.5 py-1 text-[13px] font-semibold text-blue-800">{n}</span>
                       ))}
                     </div>
                   </div>
@@ -810,7 +810,7 @@ export default function StudyPathClient({
   let cur = worldItems.findIndex(c => !isCleared(c))
   if (cur === -1) cur = worldItems.length
 
-  const ACCENT = '#4f46e5' // indigo (v3 "study route")
+  const ACCENT = '#003087' // brand navy (v3 "study route")
   const statusAt = (i: number) => (i > cur ? 'locked' : i === cur ? 'current' : 'done')
 
   return (
@@ -824,7 +824,7 @@ export default function StudyPathClient({
             </button>
             <div className="h-5 w-px bg-slate-200 shrink-0" />
             <h1 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{wt.emoji} {activeWorld}</h1>
-            <span className="ml-auto shrink-0 text-xs font-semibold px-2 py-1 rounded-md tabular-nums" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>{worldDone} / {worldItems.length}</span>
+            <span className="ml-auto shrink-0 text-xs font-semibold px-2 py-1 rounded-md tabular-nums" style={{ color: ACCENT, backgroundColor: '#eef4fb' }}>{worldDone} / {worldItems.length}</span>
           </div>
           <div className="pb-3 -mt-0.5">
             <div className="h-1.5 w-full rounded-full bg-slate-200 overflow-hidden">
@@ -896,9 +896,9 @@ export default function StudyPathClient({
                   </button>
                 )}
                 {s === 'current' && (
-                  <div className="rounded-2xl border-2 bg-white px-4 py-4 sm:px-5" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(79,70,229,0.35)' }}>
+                  <div className="rounded-2xl border-2 bg-white px-4 py-4 sm:px-5" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(0,48,135,0.35)' }}>
                     <div className="flex items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef2ff' }}>
+                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef4fb' }}>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
                       </span>
                       {(progress[c.id]?.attempts ?? 0) > 0 ? (

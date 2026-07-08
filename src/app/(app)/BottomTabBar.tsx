@@ -68,7 +68,7 @@ export default function BottomTabBar({ userId }: { userId: string }) {
               onClick={() => setPending(href)}
               aria-current={active ? 'page' : undefined}
               className={`flex-1 flex flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors ${
-                active ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'
+                active ? 'text-blue-800' : 'text-gray-400 hover:text-gray-600'
               }`}
             >
               <Icon size={23} aria-hidden />

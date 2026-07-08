@@ -10,6 +10,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Brand-navy ramp anchored on #003087 — overrides Tailwind's default
+        // blue so every existing `blue-*` utility resolves to brand colors.
+        blue: {
+          50: '#eef4fb',
+          100: '#d9e6f7',
+          200: '#b3cdee',
+          300: '#86aede',
+          400: '#6694d3',
+          500: '#4f7ac7',
+          600: '#2f5fb3',
+          700: '#1a4a9e', // links
+          800: '#003087', // BRAND PRIMARY
+          900: '#00205c', // pressed/hover dark
+          950: '#000f2e',
+        },
         primary: {
           DEFAULT: '#003087', // HVAC Navy (Carrier/ESCO standard)
           50: '#eef3ff',

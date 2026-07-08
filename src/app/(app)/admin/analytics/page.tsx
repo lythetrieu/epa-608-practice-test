@@ -261,7 +261,7 @@ export default async function AnalyticsPage() {
             <div className="text-xs text-gray-400">~5K in + 1K out tokens/query</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-indigo-600">{avgQueriesPerUser}</div>
+            <div className="text-2xl font-bold text-blue-800">{avgQueriesPerUser}</div>
             <div className="text-xs text-gray-500">Avg Queries/User Today</div>
             <div className="text-xs text-gray-400">{aiUsersWithQueriesCount} active users</div>
           </div>
@@ -390,7 +390,7 @@ export default async function AnalyticsPage() {
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Guest Sessions (No Account)</h3>
             <div className="flex gap-4">
               <span className="text-xs text-gray-400">Total: <span className="font-semibold text-gray-700">{totalAnonSessions ?? 0}</span></span>
-              <span className="text-xs text-gray-400">Today: <span className="font-semibold text-indigo-600">{anonSessionsToday ?? 0}</span></span>
+              <span className="text-xs text-gray-400">Today: <span className="font-semibold text-blue-800">{anonSessionsToday ?? 0}</span></span>
               <span className="text-xs text-gray-400">Unique guests: <span className="font-semibold text-gray-700">{uniqueAnonUsers}</span></span>
               <span className="text-xs text-gray-400">Avg: <span className="font-semibold text-gray-700">{anonAvgScore}%</span></span>
               <span className="text-xs text-gray-400">Pass: <span className="font-semibold text-green-600">{anonPassRate}%</span></span>
@@ -525,7 +525,7 @@ export default async function AnalyticsPage() {
                     <tr key={u.id}>
                       <td className="py-1.5 text-gray-700 truncate max-w-[240px]">{u.email}</td>
                       <td className="py-1.5">
-                        <span className="text-sm font-bold text-indigo-600">{u.ai_queries_today}</span>
+                        <span className="text-sm font-bold text-blue-800">{u.ai_queries_today}</span>
                       </td>
                       <td className="py-1.5">
                         <TierBadge tier={u.tier} />

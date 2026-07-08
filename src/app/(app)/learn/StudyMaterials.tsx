@@ -9,7 +9,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { Play, FileText, ImageIcon, Lock, ExternalLink } from 'lucide-react'
 import { track } from '@/lib/track'
 
-const A = '#4f46e5' // indigo accent — matches the lesson screen
+const A = '#003087' // brand navy accent — matches the lesson screen
 
 type Asset = {
   id: string
@@ -101,7 +101,7 @@ function VideoCard({ asset, conceptId, canPlay }: { asset: Asset; conceptId: str
     <button
       type="button"
       onClick={() => { setOpen(true); handlePlay() }}
-      className="group flex w-full items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 text-left shadow-sm transition hover:border-indigo-200 hover:shadow-md"
+      className="group flex w-full items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 text-left shadow-sm transition hover:border-blue-200 hover:shadow-md"
     >
       <span
         className="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-lg bg-slate-900 text-white"
@@ -144,16 +144,16 @@ function DocCard({ asset, conceptId, canOpen }: { asset: Asset; conceptId: strin
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => { engage(asset.id, 'view'); track('pdf_open', { assetId: asset.id, conceptId }) }}
-      className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm transition hover:border-indigo-200 hover:shadow-md"
+      className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm transition hover:border-blue-200 hover:shadow-md"
     >
-      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg" style={{ background: '#eef2ff', color: A }}>
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg" style={{ background: '#eef4fb', color: A }}>
         <Icon size={20} />
       </span>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-slate-900">{asset.title}</p>
         <p className="text-xs text-slate-400">{label}</p>
       </div>
-      <ExternalLink size={16} className="shrink-0 text-slate-300 group-hover:text-indigo-400" />
+      <ExternalLink size={16} className="shrink-0 text-slate-300 group-hover:text-blue-400" />
     </a>
   )
 }

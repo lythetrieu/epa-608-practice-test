@@ -96,8 +96,8 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
         {/* Data polygon */}
         <polygon
           points={dataPolygon}
-          fill="rgba(30, 64, 175, 0.15)"
-          stroke="#1e3a8a"
+          fill="rgba(0, 48, 135, 0.15)"
+          stroke="#00205c"
           strokeWidth="2"
         />
 
@@ -110,7 +110,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
               cx={px}
               cy={py}
               r="3.5"
-              fill="#1e40af"
+              fill="#003087"
               stroke="white"
               strokeWidth="1.5"
             />
@@ -198,8 +198,8 @@ export function RadarChartMini({ data, size = 160 }: RadarChartProps) {
       {/* Data polygon */}
       <polygon
         points={dataPolygon}
-        fill="rgba(30, 64, 175, 0.18)"
-        stroke="#1e3a8a"
+        fill="rgba(0, 48, 135, 0.18)"
+        stroke="#00205c"
         strokeWidth="1.5"
       />
 
@@ -212,7 +212,7 @@ export function RadarChartMini({ data, size = 160 }: RadarChartProps) {
             cx={px}
             cy={py}
             r="2.5"
-            fill="#1e40af"
+            fill="#003087"
             stroke="white"
             strokeWidth="1"
           />

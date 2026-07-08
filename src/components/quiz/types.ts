@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
  *  - 'exam'     : countdown timer, deferred feedback (results after submit)
  *  - 'drill'    : Weak Spots blind-spot drill — behaves like 'exam'
  *  - 'study'    : Study Path 10-question mastery check — untimed, deferred
- *                 feedback, Study Path visual chrome (indigo card)
+ *                 feedback, Study Path visual chrome (brand navy card)
  */
 export type QuizMode = 'practice' | 'exam' | 'drill' | 'study'
 

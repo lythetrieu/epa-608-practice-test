@@ -168,7 +168,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </div>
         <Link
           href="/progress"
-          className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center hover:border-indigo-300 transition-colors"
+          className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center hover:border-blue-300 transition-colors"
         >
           <p className="text-lg font-bold text-gray-900">{totalTests}</p>
           <p className="text-[11px] text-gray-500">tests</p>
@@ -184,7 +184,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         Progress by section
       </h2>
       {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
-          Exactly ONE tile gets the "Next up" highlight (indigo ring):
+          Exactly ONE tile gets the "Next up" highlight (brand navy ring):
           1) the weakest attempted section when it isn't ready yet;
           2) else the first section (SECTION_CATEGORIES order) with an
              unfinished study path (mastered < total) or no readiness data;
@@ -223,8 +223,8 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   href={`/learn?section=${encodeURIComponent(category)}`}
                   data-tour={category === 'Core' ? 'core' : undefined}
                   className={`block bg-white border rounded-2xl px-4 py-4 transition-colors ${
-                    isNext ? 'ring-2 ring-indigo-500 ' : ''
-                  }${isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'}`}
+                    isNext ? 'ring-2 ring-blue-800 ' : ''
+                  }${isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-blue-300'}`}
                 >
                   <div className="flex items-center gap-1.5 mb-2">
                     <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
@@ -237,7 +237,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                         weakest
                       </span>
                     ) : isNext ? (
-                      <span className="shrink-0 text-[9px] font-bold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-full">
+                      <span className="shrink-0 text-[9px] font-bold bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">
                         Start here →
                       </span>
                     ) : null}
@@ -249,7 +249,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       {cat ? `${cat.readinessPct}%` : '—'}
                     </span>
                   </div>
-                  <div className="h-2 rounded-full bg-indigo-50 overflow-hidden">
+                  <div className="h-2 rounded-full bg-blue-50 overflow-hidden">
                     <div
                       className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
@@ -277,7 +277,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {paceMs !== null && (
         <Link
           href="/progress"
-          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
+          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-blue-300 transition-colors"
         >
           <div className="flex items-center gap-3">
             <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />

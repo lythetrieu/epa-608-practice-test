@@ -57,7 +57,7 @@ function PatternExplanation({ text }: { text: string }) {
  *  - Timed Simulation ('exam')  : countdown + auto-submit at 0, deferred feedback.
  *  - Weak Spots ('drill')       : identical behavior to 'exam'.
  *  - Study Path ('study')       : untimed, deferred feedback, Study Path chrome
- *                                 (indigo card, dot progress, Back/Next footer).
+ *                                 (brand navy card, dot progress, Back/Next footer).
  *
  * The engine owns ONLY the quiz loop (question display, answer state, timer,
  * keyboard shortcuts, progress). Callers fetch questions, submit answers on
@@ -287,10 +287,10 @@ export function QuizEngine({
   if (!q) return null
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // STUDY CHROME — Study Path mastery check (indigo card, deferred feedback)
+  // STUDY CHROME — Study Path mastery check (brand navy card, deferred feedback)
   // ═══════════════════════════════════════════════════════════════════════════
   if (isStudy) {
-    const A = '#4f46e5'
+    const A = '#003087'
     const total = questions.length
     return (
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_10px_30px_-14px_rgba(15,23,42,.18)]">
@@ -298,7 +298,7 @@ export function QuizEngine({
           <div className="flex items-center justify-between gap-3">
             {header}
             <p className="min-w-0 flex-1 truncate text-center text-sm font-semibold text-slate-900">{title}</p>
-            <span className="shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold tabular-nums" style={{ background: '#eef2ff', color: '#4338ca' }}>{currentIdx + 1} / {total}</span>
+            <span className="shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold tabular-nums" style={{ background: '#eef4fb', color: '#003087' }}>{currentIdx + 1} / {total}</span>
           </div>
           <div className="mt-3">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
@@ -306,7 +306,7 @@ export function QuizEngine({
             </div>
             <div className="mt-2.5 flex items-center gap-1.5 flex-wrap">
               {questions.map((qq, i) => (
-                <span key={i} className={`rounded-full ${i === currentIdx ? 'h-2.5 w-2.5 ring-4' : 'h-2 w-2'}`} style={{ background: (i === currentIdx || answers[qq.id]) ? A : '#e2e8f0', ['--tw-ring-color' as unknown as string]: '#eef2ff' }} />
+                <span key={i} className={`rounded-full ${i === currentIdx ? 'h-2.5 w-2.5 ring-4' : 'h-2 w-2'}`} style={{ background: (i === currentIdx || answers[qq.id]) ? A : '#e2e8f0', ['--tw-ring-color' as unknown as string]: '#eef4fb' }} />
               ))}
             </div>
           </div>
@@ -315,7 +315,7 @@ export function QuizEngine({
         <div className="px-5 py-6 sm:px-7 sm:py-8">
           <div className="flex items-center gap-2">
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">Question {currentIdx + 1}</p>
-            {q.question_type === 'multi_select' && <span className="rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style={{ background: '#eef2ff', color: '#4338ca' }}>Select all that apply</span>}
+            {q.question_type === 'multi_select' && <span className="rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style={{ background: '#eef4fb', color: '#003087' }}>Select all that apply</span>}
             {q.question_type === 'true_false' && <span className="text-[11px] font-semibold text-slate-400">· True or False</span>}
           </div>
           <h2 className="mt-2 text-lg font-bold leading-snug text-slate-900 sm:text-xl">{q.question}</h2>
@@ -330,7 +330,7 @@ export function QuizEngine({
                   {q.options.map((opt, i) => {
                     const sel = answers[q.id] === opt
                     return (
-                      <button key={i} onClick={() => pickOption(q, opt)} className="flex min-h-[80px] items-center justify-center gap-3 rounded-2xl border-2 px-5 py-5 transition" style={sel ? { borderColor: A, background: 'rgba(238,242,255,.6)' } : { borderColor: '#e2e8f0' }}>
+                      <button key={i} onClick={() => pickOption(q, opt)} className="flex min-h-[80px] items-center justify-center gap-3 rounded-2xl border-2 px-5 py-5 transition" style={sel ? { borderColor: A, background: 'rgba(238,244,251,.6)' } : { borderColor: '#e2e8f0' }}>
                         <span className="text-lg font-bold" style={sel ? { color: '#0f172a' } : { color: '#64748b' }}>{opt}</span>
                       </button>
                     )
@@ -344,7 +344,7 @@ export function QuizEngine({
                 {q.options.map((opt, i) => {
                   const sel = multi ? current.includes(opt) : answers[q.id] === opt
                   return (
-                    <button key={i} onClick={() => pickOption(q, opt)} className="w-full text-left flex min-h-[56px] items-center gap-4 rounded-xl border-2 px-4 py-3.5 transition hover:border-indigo-200" style={sel ? { borderColor: A, background: 'rgba(238,242,255,.6)' } : { borderColor: '#e2e8f0', background: '#fff' }}>
+                    <button key={i} onClick={() => pickOption(q, opt)} className="w-full text-left flex min-h-[56px] items-center gap-4 rounded-xl border-2 px-4 py-3.5 transition hover:border-blue-200" style={sel ? { borderColor: A, background: 'rgba(238,244,251,.6)' } : { borderColor: '#e2e8f0', background: '#fff' }}>
                       {multi ? (
                         <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border-2" style={sel ? { borderColor: A, background: A, color: '#fff' } : { borderColor: '#e2e8f0', color: 'transparent' }}><Check size={16} strokeWidth={2.5} /></span>
                       ) : (

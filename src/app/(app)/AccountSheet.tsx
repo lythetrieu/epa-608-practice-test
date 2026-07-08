@@ -69,7 +69,7 @@ export default function AccountSheet({ open, onClose, username, tier }: AccountS
             href="/checkout.html"
             onClick={onClose}
             className="flex items-center gap-3 px-3 py-3 min-h-[44px] text-sm font-semibold rounded-xl bg-orange-50"
-            style={{ color: '#e85d04' }}
+            style={{ color: '#F97316' }}
           >
             <Zap size={20} className="shrink-0" aria-hidden />
             Upgrade to Pro · $14.99

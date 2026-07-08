@@ -110,7 +110,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         <div className="px-3 pb-2">
           <Link href={`/checkout.html`}
             className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
-            style={{ background: '#e85d04' }}>
+            style={{ background: '#F97316' }}>
             <span className="text-white">⚡ Upgrade to Pro</span>
             <span className="text-white/70 text-xs font-normal">$14.99</span>
           </Link>
