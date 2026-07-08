@@ -88,12 +88,38 @@ export function QuizEngine({
   const startedAtRef = useRef(Date.now())
   // First-view timestamp per question id — enriches per-question tracking (timeMs).
   const firstViewedRef = useRef<Record<string, number>>({})
+  // Per-question ACTIVE viewing ms, accumulated across revisits. Only the
+  // question currently on screen accrues time; the open segment is flushed
+  // whenever the user leaves it or answers it. Refs + Date.now() only — no
+  // per-second state updates.
+  const timeSpentRef = useRef<Record<string, number>>({})
+  // Snapshot of accumulated active time at each question's LAST answer pick —
+  // this is the timeMs shipped in the outcome (post-answer review, e.g. reading
+  // a practice explanation, doesn't count toward answering time).
+  const answeredTimeRef = useRef<Record<string, number>>({})
+  // The question currently accruing time and when its open segment started.
+  const activeViewRef = useRef<{ id: string; since: number } | null>(null)
 
-  // Stamp when each question first becomes visible. First view wins.
+  // Close the open viewing segment: bank its elapsed ms and restart the clock.
+  const flushActiveView = useCallback(() => {
+    const av = activeViewRef.current
+    if (!av) return
+    const now = Date.now()
+    timeSpentRef.current[av.id] = (timeSpentRef.current[av.id] ?? 0) + (now - av.since)
+    av.since = now
+  }, [])
+
+  // On question change: stamp first view (first view wins) and switch the
+  // active-time accrual to the newly visible question.
   useEffect(() => {
     const cur = questions[currentIdx]
-    if (cur && firstViewedRef.current[cur.id] == null) firstViewedRef.current[cur.id] = Date.now()
-  }, [currentIdx, questions])
+    if (!cur) return
+    if (firstViewedRef.current[cur.id] == null) firstViewedRef.current[cur.id] = Date.now()
+    if (activeViewRef.current?.id !== cur.id) {
+      flushActiveView()
+      activeViewRef.current = { id: cur.id, since: Date.now() }
+    }
+  }, [currentIdx, questions, flushActiveView])
 
   const buildOutcome = useCallback((): QuizOutcome => {
     const records: AnswerRecord[] = questions.map(qq => {
@@ -103,6 +129,8 @@ export function QuizEngine({
       if (showExplanations && qq.answer_text !== undefined) record.correct = answer === qq.answer_text
       const viewed = firstViewedRef.current[qq.id]
       if (viewed != null) record.firstViewedAt = viewed
+      const timeMs = answeredTimeRef.current[qq.id]
+      if (timeMs != null) record.timeMs = timeMs
       return record
     })
     return {
@@ -148,21 +176,54 @@ export function QuizEngine({
     return () => clearInterval(t)
   }, [mode])
 
+  // ── Live pace check — TIMED ONLY (untimed learners get no pressure chip) ──
+  // "Behind pace" once the user has fallen a FULL question behind the budget
+  // (timeLimitSecs / questions.length per question) — the <1-question slack
+  // stops the chip flickering while a question is being read. Recomputed on
+  // answer/navigation plus a coarse 15s tick, never per second; setState with
+  // an unchanged boolean is a no-op render for React.
+  const [behindPace, setBehindPace] = useState(false)
+  const answeredCount = Object.keys(answers).length
+  const recomputePace = useCallback(() => {
+    if (!timed || questions.length === 0) return
+    const budgetMsPerQ = ((timeLimitSecs ?? 1800) * 1000) / questions.length
+    const expectedAnswered = (Date.now() - startedAtRef.current) / budgetMsPerQ
+    setBehindPace(expectedAnswered - answeredCount >= 1)
+  }, [timed, questions.length, timeLimitSecs, answeredCount])
+
+  useEffect(() => { recomputePace() }, [recomputePace, currentIdx])
+  const paceRef = useRef(recomputePace)
+  useEffect(() => { paceRef.current = recomputePace }, [recomputePace])
+  useEffect(() => {
+    if (!timed) return
+    const t = setInterval(() => paceRef.current(), 15_000)
+    return () => clearInterval(t)
+  }, [timed])
+
   const q = questions[currentIdx]
   const isRevealed = revealed.has(currentIdx)
   const isMulti = q?.question_type === 'multi_select'
 
   // Shared pick: set/toggle the option, then notify the optional per-answer hook.
   const pickOption = useCallback((question: QuizQuestion, opt: string) => {
+    // Bank the current viewing segment, then snapshot the question's TOTAL
+    // active time as its answer time. Re-picking later (a revisit) simply
+    // overwrites the snapshot with the larger accumulated total — so timeMs
+    // always reflects first view → FINAL answer lock, active viewing only.
+    if (activeViewRef.current?.id === question.id) flushActiveView()
+    answeredTimeRef.current[question.id] = Math.round(timeSpentRef.current[question.id] ?? 0)
+
     const next = applyPick(answers, question, opt)
     setAnswers(next)
     if (onQuestionAnswered) {
       const record: AnswerRecord = { questionId: question.id, answer: next[question.id] ?? null }
       const viewed = firstViewedRef.current[question.id]
       if (viewed != null) record.firstViewedAt = viewed
+      const timeMs = answeredTimeRef.current[question.id]
+      if (timeMs != null) record.timeMs = timeMs
       onQuestionAnswered(record)
     }
-  }, [answers, onQuestionAnswered])
+  }, [answers, onQuestionAnswered, flushActiveView])
 
   // Practice: lock the current question's answer and reveal correct/explanation.
   // Multi-select reveals on an explicit "Check answer"; single reveals on pick.
@@ -222,7 +283,6 @@ export function QuizEngine({
   }, [currentIdx, isStudy])
 
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
-  const answeredCount = Object.keys(answers).length
 
   if (!q) return null
 
@@ -336,10 +396,18 @@ export function QuizEngine({
               : `${answeredCount}/${questions.length} answered`}
           </div>
 
-          {/* Right: countdown (timed) or elapsed clock (practice) */}
+          {/* Right: pace chip + countdown (timed) or elapsed clock (practice) */}
           {timed ? (
-            <div className={`text-base font-mono font-bold tabular-nums shrink-0 ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
-              {formatTime(timeLeft)}
+            <div className="flex items-center gap-2 shrink-0">
+              <span
+                className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${behindPace ? 'bg-amber-50 text-amber-700' : 'bg-green-50 text-green-700'}`}
+                aria-live="polite"
+              >
+                {behindPace ? 'Behind pace' : 'On pace'}
+              </span>
+              <div className={`text-base font-mono font-bold tabular-nums ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
+                {formatTime(timeLeft)}
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-2 shrink-0">

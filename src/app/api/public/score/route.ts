@@ -66,12 +66,9 @@ export async function POST(request: NextRequest) {
   const total = quiz.questionIds.length
   const percentage = Math.round((score / total) * 100)
 
-  let passed: boolean
-  if (quiz.category === 'Type I') {
-    passed = percentage >= 84
-  } else {
-    passed = percentage >= 70
-  }
+  // Real proctored EPA 608 exam: 25Q/section, pass = 72%; 84% applies only to
+  // the mail-in open-book Type I path, which we don't simulate.
+  const passed: boolean = percentage >= 72
 
   const weakAreas: { topic: string; accuracy: number; prefix: string }[] = []
   const strongAreas: { topic: string; accuracy: number }[] = []

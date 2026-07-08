@@ -38,6 +38,12 @@ export type AnswerRecord = {
   correct?: boolean
   /** Epoch ms when the question was first shown — powers per-question timeMs tracking. */
   firstViewedAt?: number
+  /**
+   * ACTIVE viewing ms from first view to the final answer lock, accumulated
+   * across revisits (time spent looking at OTHER questions never counts).
+   * Absent when the question was never answered.
+   */
+  timeMs?: number
 }
 
 export type QuizOutcome = {

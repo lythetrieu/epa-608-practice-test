@@ -4,6 +4,8 @@ import type { SessionResult, QuestionPublic } from '@/types'
 import Link from 'next/link'
 import { ReportButton } from '@/components/quiz/ReportButton'
 import { MULTI_SEP } from '@/lib/multi'
+import type { QuizOutcome } from '@/components/quiz/types'
+import { computePacing, formatSecs } from '@/components/quiz/pacing'
 
 // Track consecutive fails per category — show gentle Pro hint after 2
 function useFailStreak(category: string, passed: boolean) {
@@ -37,17 +39,31 @@ function useFailStreak(category: string, passed: boolean) {
   return { showHint, failCount, dismiss }
 }
 
-export function ResultView({ result, category, questions, onRetake }: {
+export function ResultView({ result, category, questions, onRetake, outcome = null, budgetPerQMs = 72_000 }: {
   result: SessionResult
   category: string
   questions: QuestionPublic[]
   onRetake: () => void
+  /** Client-side quiz outcome — the only source of per-question timing. */
+  outcome?: QuizOutcome | null
+  /** Exam pace budget per question in ms (per-test timeLimitSecs / questionCount). */
+  budgetPerQMs?: number
 }) {
   const { score, total, percentage, passed, results, sectionScores } = result
   const { showHint, failCount, dismiss } = useFailStreak(category, passed)
 
   const wrongResults = results.filter(r => !r.correct)
   const questionTextMap = new Map(questions.map(q => [q.id, q.question]))
+
+  // ── Pacing (client-side outcome, works on both submit flows) ──
+  const pacing = outcome ? computePacing(outcome.answers, budgetPerQMs, total) : null
+  const correctMap = new Map(results.map(r => [r.questionId, r.correct]))
+  const slowest = outcome
+    ? outcome.answers
+        .filter(a => a.timeMs != null)
+        .sort((a, b) => (b.timeMs ?? 0) - (a.timeMs ?? 0))
+        .slice(0, 3)
+    : []
 
   // Share text — one small link only
   const shareText = encodeURIComponent(`I scored ${percentage}% on the EPA 608 ${category} Practice Test! Free prep:`)
@@ -62,8 +78,7 @@ export function ResultView({ result, category, questions, onRetake }: {
           <div className="text-5xl sm:text-6xl font-bold mb-1">{percentage}%</div>
           <div className="text-xl font-semibold mb-1">{passed ? 'Passed' : 'Not Passed'}</div>
           <div className="text-white/75 text-sm">
-            {score}/{total} correct · passing score 70%
-            {sectionScores ? ' per section' : ''}
+            {score}/{total} correct · Pass mark: 72% per section, same as the real exam
           </div>
           {/* Share — single discreet link */}
           <a
@@ -93,6 +108,45 @@ export function ResultView({ result, category, questions, onRetake }: {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* ── Pacing ── */}
+        {pacing && (
+          <div className="rounded-xl border border-gray-200 bg-white p-4 sm:p-5">
+            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Pacing</h2>
+            <div className="flex items-baseline justify-between gap-3 mb-1">
+              <span className="text-sm text-gray-600">Your average</span>
+              <span className="text-sm font-bold text-gray-900 tabular-nums">{formatSecs(pacing.avgMs)}/question</span>
+            </div>
+            <div className="flex items-baseline justify-between gap-3 mb-2">
+              <span className="text-sm text-gray-600">Exam pace</span>
+              <span className="text-sm text-gray-500 tabular-nums">{Math.round(pacing.budgetMs / 1000)}s/question</span>
+            </div>
+            <p className={`text-xs font-medium ${pacing.spareMs >= 0 ? 'text-green-600' : 'text-amber-600'}`}>
+              {pacing.verdict}
+            </p>
+            {slowest.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-gray-100">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Slowest questions</p>
+                <div className="space-y-1.5">
+                  {slowest.map(a => {
+                    const wasCorrect = correctMap.get(a.questionId)
+                    return (
+                      <div key={a.questionId} className="flex items-center gap-2 text-xs">
+                        <span className={`shrink-0 ${wasCorrect ? 'text-green-500' : 'text-red-400'}`} aria-label={wasCorrect ? 'Correct' : 'Wrong'}>
+                          {wasCorrect ? '✓' : '✗'}
+                        </span>
+                        <span className="text-gray-600 truncate flex-1 min-w-0">
+                          {questionTextMap.get(a.questionId) ?? 'Question'}
+                        </span>
+                        <span className="font-semibold text-gray-800 tabular-nums shrink-0">{formatSecs(a.timeMs ?? 0)}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

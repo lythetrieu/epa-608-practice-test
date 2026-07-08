@@ -11,6 +11,14 @@ const schema = z.object({
   mode: z.enum(['random', 'blind-spot', 'practice']).default('random'),
 })
 
+// The real exam's sections. 'Universal' is a composite (all four sections),
+// never a question category — mixed draws MUST iterate this list, not
+// TIER_LIMITS[tier].categories (which includes 'Universal' and would shrink
+// the per-section share: the old floor(count/5) loop made a 100-question
+// Universal exam return only 80). Real proctored exam: 25 MCQs per section,
+// Universal = 25 x 4 = 100.
+const EXAM_SECTIONS = ['Core', 'Type I', 'Type II', 'Type III'] as const
+
 export async function POST(request: NextRequest) {
   // Auth must resolve first (rate-limit + profile depend on the user), but the
   // ratelimit check and the profile fetch are independent of each other and run
@@ -62,14 +70,15 @@ export async function POST(request: NextRequest) {
     })
     questionIds = weakSpotData?.map((q: any) => q.id) ?? []
 
-    // Fall back to random questions if no weak spots found
+    // Fall back to a balanced random mix across the real sections if no weak
+    // spots found (same fix as the Universal branch: never iterate the tier
+    // category list, whose 'Universal' entry matches no questions).
     if (questionIds.length === 0) {
-      const cats = TIER_LIMITS[tier].categories
-      const perCat = Math.floor(count / cats.length)
-      // Fetch per-category pools concurrently, then flatten in deterministic
-      // category order (results[i] matches cats[i]).
+      const perCat = Math.floor(count / EXAM_SECTIONS.length)
+      // Fetch per-section pools concurrently, then flatten in deterministic
+      // section order (results[i] matches EXAM_SECTIONS[i]).
       const results = await Promise.all(
-        cats.map(cat =>
+        EXAM_SECTIONS.map(cat =>
           admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly }),
         ),
       )
@@ -78,14 +87,14 @@ export async function POST(request: NextRequest) {
       }
     }
   } else if (category === 'Universal') {
-    const cats = TIER_LIMITS[tier].categories
-    const perCat = Math.floor(count / cats.length)
-    // Replace the 4-sequential-RPC loop with one concurrent batch. Results are
-    // flattened in deterministic category order (results[i] matches cats[i]) so
-    // the id set is identical to the previous serial version (a subsequent
-    // Fisher-Yates shuffle randomizes order regardless).
+    // True-to-exam Universal: floor(count/4) from EACH real section, so the
+    // default 100-question exam is a 25/25/25/25 split (Core, Type I, II, III).
+    const perCat = Math.floor(count / EXAM_SECTIONS.length)
+    // One concurrent RPC batch; results are flattened in deterministic section
+    // order (results[i] matches EXAM_SECTIONS[i]) — a subsequent Fisher-Yates
+    // shuffle randomizes order regardless.
     const results = await Promise.all(
-      cats.map(cat =>
+      EXAM_SECTIONS.map(cat =>
         admin.rpc('get_random_questions', { p_category: cat, p_limit: perCat, p_free_only: freeOnly }),
       ),
     )

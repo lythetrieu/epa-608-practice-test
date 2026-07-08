@@ -197,7 +197,7 @@ export type SessionResult = {
   total: number
   percentage: number
   results: SubmitAnswerResult[]
-  passed: boolean // >= 70%
+  passed: boolean // >= 72% (real proctored pass mark; Universal = every section >= 72%)
   sectionScores?: SectionScore[]
 }
 

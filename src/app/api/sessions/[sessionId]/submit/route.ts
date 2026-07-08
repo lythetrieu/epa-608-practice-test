@@ -7,6 +7,10 @@ const schema = z.object({
   answers: z.record(z.string(), z.string()),
 })
 
+// Real proctored EPA 608 exam: 25Q/section, pass = 72% for EVERY section;
+// 84% applies only to the mail-in open-book Type I path, which we don't simulate.
+const PASS_PCT = 72
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ sessionId: string }> }
@@ -88,18 +92,15 @@ export async function POST(
     sectionScores = Object.entries(sections).map(([cat, items]) => {
       const sectionScore = items.filter(r => r.correct).length
       const sectionPct = Math.round((sectionScore / items.length) * 100)
-      // Type I is open-book: requires 84% (21/25). All others: 70% (18/25)
-      const passThreshold = cat === 'Type I' ? 84 : 70
-      return { category: cat, score: sectionScore, total: items.length, percentage: sectionPct, passed: sectionPct >= passThreshold }
+      // Universal passes only if EVERY section scores >= 72% (18/25).
+      return { category: cat, score: sectionScore, total: items.length, percentage: sectionPct, passed: sectionPct >= PASS_PCT }
     })
     // Sort: Core, Type I, Type II, Type III
     const ORDER = ['Core', 'Type I', 'Type II', 'Type III']
     sectionScores.sort((a, b) => ORDER.indexOf(a.category) - ORDER.indexOf(b.category))
     passed = sectionScores.every(s => s.passed)
   } else {
-    // Type I requires 84% (open-book), others 70%
-    const passThreshold = session.category === 'Type I' ? 84 : 70
-    passed = percentage >= passThreshold
+    passed = percentage >= PASS_PCT
   }
 
   // Save session result (use admin client to bypass RLS for reliable update)

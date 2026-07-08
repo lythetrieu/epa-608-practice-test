@@ -1,13 +1,15 @@
 import type { Category } from '@/types'
 
 // EPA 608 pass marks — mirrors the scoring in
-// src/app/api/sessions/[sessionId]/submit/route.ts:
-// Type I is open-book → 84% (21/25); Universal is per-section 72%; others 70%.
+// src/app/api/sessions/[sessionId]/submit/route.ts and /api/app/submit:
+// real proctored exam is 25Q/section, pass = 72% for every section (Universal
+// = every section >= 72%); 84% applies only to the mail-in open-book Type I
+// path, which we don't simulate.
 export const PASS_THRESHOLD: Record<string, number> = {
-  Core: 70,
-  'Type I': 84,
-  'Type II': 70,
-  'Type III': 70,
+  Core: 72,
+  'Type I': 72,
+  'Type II': 72,
+  'Type III': 72,
   Universal: 72,
 }
 
@@ -32,9 +34,9 @@ type Session = { category: string; score: number | null; total: number; submitte
 
 /**
  * Honest exam-readiness: for each cert the user pursues, take their recent
- * scores (newest weighted most) and measure them against the REAL pass mark —
- * not a flat 70%. readinessPct = avg / threshold, capped at 100. Overall is
- * attempt-weighted so a cert you've barely touched doesn't dominate.
+ * scores (newest weighted most) and measure them against the REAL proctored
+ * pass mark (72% per section). readinessPct = avg / threshold, capped at 100.
+ * Overall is attempt-weighted so a cert you've barely touched doesn't dominate.
  *
  * `sessions` must be newest-first (dashboard already orders by submitted_at desc).
  */
@@ -58,7 +60,7 @@ export function computeReadiness(sessions: Session[], pursue: (Category | 'Unive
       wTotal += weight
     })
     const avgPct = Math.round(wSum / wTotal)
-    const threshold = PASS_THRESHOLD[category] ?? 70
+    const threshold = PASS_THRESHOLD[category] ?? 72
     const readinessPct = Math.max(0, Math.min(100, Math.round((avgPct / threshold) * 100)))
     byCategory.push({ category, avgPct, threshold, readinessPct, ready: avgPct >= threshold, attempts: list.length })
     totalAttempts += list.length

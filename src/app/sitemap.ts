@@ -50,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/exam-day.html`, lastModified: D, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/exam-rules.html`, lastModified: D, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/test-locations.html`, lastModified: D, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/where-to-take-epa-608-test.html`, lastModified: D, changeFrequency: 'monthly', priority: 0.7 },
 
     // Study tools & resources
     { url: `${baseUrl}/flashcards.html`, lastModified: D, changeFrequency: 'monthly', priority: 0.7 },

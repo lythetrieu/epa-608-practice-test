@@ -42,15 +42,15 @@ describe('pickQuestions', () => {
     expect(new Set(picked.map((q) => q.id)).size).toBe(10)
   })
 
-  it("replicates the server's Universal mix: floor(count/5) per real category", () => {
-    // Mirrors src/app/api/questions/route.ts (Universal branch): the tier
-    // category list has 5 entries incl. 'Universal' itself, so count=100
-    // yields 20 per real category = 80 total.
+  it("replicates the server's Universal mix: floor(count/4) per real section", () => {
+    // Mirrors src/app/api/questions/route.ts (Universal branch): the real
+    // proctored exam is 25 MCQs per section, so count=100 yields a
+    // 25/25/25/25 split across Core, Type I, Type II, Type III = 100 total.
     const bank = makeBank(30)
     const picked = pickQuestions(bank, { count: 100, category: 'Universal' })
-    expect(picked).toHaveLength(80)
+    expect(picked).toHaveLength(100)
     for (const cat of CATS) {
-      expect(picked.filter((q) => q.category === cat)).toHaveLength(20)
+      expect(picked.filter((q) => q.category === cat)).toHaveLength(25)
     }
   })
 

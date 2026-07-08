@@ -23,7 +23,7 @@ export const dynamic = 'force-dynamic'
 //      (get_weak_spot_questions RPC + progress pages) and per-question stats.
 //      Rich columns (user_answer/source, migration 20260630) with a minimal
 //      fallback, matching /api/practice/track.
-//   4. Universal per-section pass rules and Type I 84% (open-book) threshold,
+//   4. Universal per-section pass rules (every section >= PASS_PCT),
 //      identical to the legacy submit route.
 //
 // 'study' mode is intentionally NOT accepted: Study Path mastery submits go
@@ -34,6 +34,10 @@ export const dynamic = 'force-dynamic'
 // Server-side timer enforcement is NOT possible here (the session is created
 // at submit time; started_at is client-reported and only stored for stats,
 // clamped to a sane window).
+
+// Real proctored EPA 608 exam: 25Q/section, pass = 72% for EVERY section;
+// 84% applies only to the mail-in open-book Type I path, which we don't simulate.
+const PASS_PCT = 72
 
 const MODES = ['practice', 'exam', 'drill'] as const
 // 'Weak Spots' is the stored category for drill sessions (matches the
@@ -52,6 +56,9 @@ const schema = z.object({
         // Same format the legacy submit uses: option text, or canonicalMulti()
         // of the selected set for multi_select questions.
         selected: z.string().max(4000),
+        // Per-question time from the client timer (ms, capped at 1h).
+        // Persisted to user_progress.time_ms (migration 20260630).
+        time_ms: z.number().int().min(0).max(3_600_000).optional(),
       }),
     )
     .min(1)
@@ -78,8 +85,10 @@ export async function POST(request: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
 
   // Last answer wins per question (Record semantics of the legacy route).
-  const answerByQuestion = new Map<string, string>()
-  for (const a of answers) answerByQuestion.set(a.question_id, a.selected)
+  const answerByQuestion = new Map<string, { selected: string; time_ms?: number }>()
+  for (const a of answers) {
+    answerByQuestion.set(a.question_id, { selected: a.selected, time_ms: a.time_ms })
+  }
   const questionIds = Array.from(answerByQuestion.keys())
 
   const admin = createAdminClient()
@@ -113,7 +122,8 @@ export async function POST(request: NextRequest) {
     const correctAnswer = isMulti(q.question_type)
       ? canonicalMulti(q.correct_answers as string[])
       : (q.answer_text as string)
-    const userAnswer = answerByQuestion.get(q.id) ?? ''
+    const entry = answerByQuestion.get(q.id)
+    const userAnswer = entry?.selected ?? ''
     return {
       questionId: q.id as string,
       category: q.category as string,
@@ -122,6 +132,7 @@ export async function POST(request: NextRequest) {
       explanation: (q.explanation as string) ?? '',
       sourceRef: (q.source_ref as string) ?? '',
       userAnswer: userAnswer || null,
+      timeMs: entry?.time_ms,
     }
   })
 
@@ -144,22 +155,20 @@ export async function POST(request: NextRequest) {
     sectionScores = Object.entries(sections).map(([cat, items]) => {
       const sectionScore = items.filter((r) => r.correct).length
       const sectionPct = Math.round((sectionScore / items.length) * 100)
-      // Type I is open-book: requires 84%. All others: 70%.
-      const passThreshold = cat === 'Type I' ? 84 : 70
+      // Universal passes only if EVERY section scores >= PASS_PCT (72%).
       return {
         category: cat,
         score: sectionScore,
         total: items.length,
         percentage: sectionPct,
-        passed: sectionPct >= passThreshold,
+        passed: sectionPct >= PASS_PCT,
       }
     })
     const ORDER = ['Core', 'Type I', 'Type II', 'Type III']
     sectionScores.sort((a, b) => ORDER.indexOf(a.category) - ORDER.indexOf(b.category))
     passed = sectionScores.every((s) => s.passed)
   } else {
-    const passThreshold = category === 'Type I' ? 84 : 70
-    passed = percentage >= passThreshold
+    passed = percentage >= PASS_PCT
   }
 
   // started_at is client-reported: clamp to [now - 24h, now] for sane stats.
@@ -202,6 +211,7 @@ export async function POST(request: NextRequest) {
     question_id: r.questionId,
     correct: r.correct,
     ...(r.userAnswer !== null ? { user_answer: r.userAnswer } : {}),
+    ...(typeof r.timeMs === 'number' ? { time_ms: r.timeMs } : {}),
     source: `local-${mode}`,
   }))
   const { error: progressErr } = await admin.from('user_progress').insert(richRows)

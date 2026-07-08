@@ -12,6 +12,8 @@ import {
 } from '@/lib/question-bank'
 import { savePendingSubmit, flushPendingSubmit } from '@/lib/pending-submit'
 import { canonicalMulti, isMulti } from '@/lib/multi'
+import { computePacing, lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
+import { writeCache } from '@/lib/local-first'
 
 type Phase = 'loading' | 'active' | 'error'
 
@@ -124,6 +126,9 @@ export function TestClient({
   const [questions, setQuestions] = useState<EngineQuestion[]>([])
   const [timeLimitSecs, setTimeLimitSecs] = useState(1800)
   const [result, setResult] = useState<SessionResult | null>(null)
+  // Client-side outcome kept for the ResultView pacing card — works on BOTH the
+  // local-bank and legacy submit flows (the server response has no timing).
+  const [outcome, setOutcome] = useState<QuizOutcome | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   // Set when this quiz started from the LOCAL bank (no server session exists):
   // submit goes to /api/app/submit with these client-side session parameters.
@@ -195,8 +200,36 @@ export function TestClient({
       .catch(() => { setErrorMsg('Failed to load questions.'); setPhase('error') })
   }, [category, mode, showExplanations, userId])
 
+  // Exam pace budget per question, ms. Timed tests use their own limit; untimed
+  // practice is measured against the REAL exam budget for the category
+  // (Universal 10800s/100Q, sections 1800s/25Q → 72s/question either way).
+  const budgetPerQMs = questions.length > 0
+    ? ((timed ? timeLimitSecs : category === 'Universal' ? 10800 : 1800) * 1000) / questions.length
+    : 72_000
+
   const handleSubmit = useCallback(async (outcome: QuizOutcome) => {
     const local = localStartRef.current
+    setOutcome(outcome)
+
+    // Persist a pacing summary of this completed test for the Progress page's
+    // "Last test pace" card (localStorage only — the progress API has no timing).
+    const pacing = computePacing(outcome.answers, budgetPerQMs, questions.length)
+    if (pacing && userId) {
+      const summary: LastPacing = {
+        date: new Date().toISOString(),
+        category,
+        avgMs: pacing.avgMs,
+        budgetMs: pacing.budgetMs,
+        verdict: pacing.verdict,
+      }
+      writeCache(lastPacingKey(userId), summary)
+    }
+
+    // Per-question timing → /api/app/submit only (the legacy endpoint's zod
+    // schema is a strict string→string record and would reject extra shapes).
+    const timeByQ = new Map(
+      outcome.answers.filter(a => a.timeMs != null).map(a => [a.questionId, a.timeMs as number])
+    )
 
     // ── Local-bank start → single server round-trip to /api/app/submit ──
     if (local) {
@@ -208,10 +241,14 @@ export function TestClient({
         mode: (showExplanations ? 'practice' : 'exam') as 'practice' | 'exam',
         time_limit_secs: local.timeLimitSecs,
         started_at: local.startedAt,
-        answers: questions.map(q => ({
-          question_id: q.id,
-          selected: outcome.answersMap[q.id] ?? '',
-        })),
+        answers: questions.map(q => {
+          const timeMs = timeByQ.get(q.id)
+          return {
+            question_id: q.id,
+            selected: outcome.answersMap[q.id] ?? '',
+            ...(timeMs != null ? { time_ms: timeMs } : {}),
+          }
+        }),
       }
       try {
         const r = await fetch('/api/app/submit', {
@@ -249,7 +286,7 @@ export function TestClient({
     } catch {
       setErrorMsg('Submit failed.'); setPhase('error')
     }
-  }, [sessionId, category, showExplanations, questions, userId])
+  }, [sessionId, category, showExplanations, questions, userId, budgetPerQMs])
 
   if (phase === 'loading') return (
     <div className="min-h-screen flex items-center justify-center">
@@ -270,7 +307,16 @@ export function TestClient({
     </div>
   )
 
-  if (result) return <ResultView result={result} category={category} questions={questions} onRetake={handleRetake} />
+  if (result) return (
+    <ResultView
+      result={result}
+      category={category}
+      questions={questions}
+      onRetake={handleRetake}
+      outcome={outcome}
+      budgetPerQMs={budgetPerQMs}
+    />
+  )
 
   return (
     <QuizEngine

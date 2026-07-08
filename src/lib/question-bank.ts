@@ -100,15 +100,13 @@ function fisherYates<T>(arr: T[]): T[] {
   return arr
 }
 
-// UNIVERSAL MIX — copied verbatim from the `category === 'Universal'` branch
-// of src/app/api/questions/route.ts: it iterates
-// TIER_LIMITS[tier].categories = ['Core','Type I','Type II','Type III','Universal']
-// (identical for every tier) and draws Math.floor(count / cats.length) random
-// questions PER entry. 'Universal' itself matches no bank rows, so a
-// count=100 Universal exam draws floor(100/5)=20 per real category = 80
-// questions total. That quirk is intentional here — the local pick must be
-// indistinguishable from the server's.
-const UNIVERSAL_MIX_CATEGORIES = ['Core', 'Type I', 'Type II', 'Type III', 'Universal'] as const
+// UNIVERSAL MIX — mirrors the `category === 'Universal'` branch of
+// src/app/api/questions/route.ts (EXAM_SECTIONS there): a true-to-exam
+// Universal draws Math.floor(count / 4) random questions from EACH real
+// section, so a count=100 exam is a 25/25/25/25 split (Core, Type I, II, III)
+// = 100 questions — matching the real proctored EPA 608 exam (25 MCQs per
+// section). 'Universal' is a composite label, never a question category.
+const UNIVERSAL_MIX_CATEGORIES = ['Core', 'Type I', 'Type II', 'Type III'] as const
 
 /**
  * Picks a quiz's questions from the local bank — the client-side equivalent
@@ -124,7 +122,7 @@ export function pickQuestions(
   bank: BankQuestion[],
   opts: {
     count: number
-    /** 'Universal' = the same 4-category mix /api/questions builds (see above). */
+    /** 'Universal' = the same 25/25/25/25 4-section mix /api/questions builds (see above). */
     category?: string
     /** For weak-spot drills / Study Path concepts. */
     subtopicIds?: string[]

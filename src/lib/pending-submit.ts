@@ -20,7 +20,7 @@ export type PendingSubmitPayload = {
   mode: 'practice' | 'exam' | 'drill'
   time_limit_secs: number | null
   started_at: string
-  answers: { question_id: string; selected: string }[]
+  answers: { question_id: string; selected: string; time_ms?: number }[]
 }
 
 type PendingSubmit = {
