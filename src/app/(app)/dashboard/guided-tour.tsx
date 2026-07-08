@@ -47,27 +47,11 @@ export function GuidedTour() {
         ],
       })
 
-      tour.addStep({
-        id: 'tools',
-        title: 'Study Tools',
-        text: 'Flashcards, Podcast, AI Tutor, Progress tracking — all free for Core!',
-        attachTo: { element: '[data-tour="tools"]', on: 'top' },
-        buttons: [
-          { text: '← Back', action: tour.back, classes: 'shepherd-button-secondary' },
-          { text: 'Next →', action: tour.next },
-        ],
-      })
+      // ('tools' step removed — its data-tour="tools" anchor no longer exists
+      // on the dashboard, so the step floated unanchored mid-screen.)
 
-      tour.addStep({
-        id: 'ai-tutor',
-        title: 'AI Tutor',
-        text: 'Stuck on a question? Ask the AI — 10 free queries per day.',
-        attachTo: { element: '[data-tour="ai-tutor"]', on: 'top' },
-        buttons: [
-          { text: '← Back', action: tour.back, classes: 'shepherd-button-secondary' },
-          { text: 'Got it! →', action: tour.next },
-        ],
-      })
+      // (AI Tutor step removed — its Home card is gone; the floating bubble is
+      // the AI entry point and needs no tour anchor.)
 
       tour.addStep({
         id: 'ready',

@@ -15,8 +15,8 @@ import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
-  FileText, Snowflake, Wrench, Factory, Flame, Bot,
-  ArrowRight, Lightbulb, AlertTriangle, Lock, Timer,
+  FileText, Snowflake, Wrench, Factory, Flame,
+  ArrowRight, Lightbulb, AlertTriangle, Timer,
 } from 'lucide-react'
 import { formatSecsLong, paceDelta } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
@@ -220,58 +220,61 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-5 mb-2 px-0.5">
         Progress by section
       </h2>
-      {SECTION_CATEGORIES.map(category => {
-        const style = SECTION_STYLE[category]
-        const cat = readiness.byCategory.find(c => c.category === category)
-        const isWeakest =
-          !!readiness.weakest &&
-          readiness.weakest.category === category &&
-          !readiness.weakest.ready
-        const mastered = masteredByCat[category] ?? 0
-        const total = totalsByCat[category] ?? 0
-        // null = RPC failed → omit the number; otherwise missing category = 0 practiced
-        const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
+      {/* Compact 2×2 grid — the whole overview fits one screen with less scrolling */}
+      <div className="grid grid-cols-2 gap-2">
+        {SECTION_CATEGORIES.map(category => {
+          const style = SECTION_STYLE[category]
+          const cat = readiness.byCategory.find(c => c.category === category)
+          const isWeakest =
+            !!readiness.weakest &&
+            readiness.weakest.category === category &&
+            !readiness.weakest.ready
+          const mastered = masteredByCat[category] ?? 0
+          const total = totalsByCat[category] ?? 0
+          // null = RPC failed → omit the number; otherwise missing category = 0 practiced
+          const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
 
-        return (
-          <Link
-            key={category}
-            href={`/learn?section=${encodeURIComponent(category)}`}
-            data-tour={category === 'Core' ? 'core' : undefined}
-            className={`block bg-white border rounded-2xl px-4 py-3.5 mb-2.5 transition-colors ${
-              isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'
-            }`}
-          >
-            <div className="flex items-center gap-2.5 mb-2.5">
-              <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
-                {style.icon}
-              </span>
-              <span className="text-[15px] font-semibold text-gray-900">{category}</span>
+          return (
+            <Link
+              key={category}
+              href={`/learn?section=${encodeURIComponent(category)}`}
+              data-tour={category === 'Core' ? 'core' : undefined}
+              className={`block bg-white border rounded-2xl px-3 py-2.5 transition-colors ${
+                isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
+                  {style.icon}
+                </span>
+                <span className="text-[13px] font-semibold text-gray-900 truncate">{category}</span>
+                <span
+                  className={`ml-auto text-[13px] font-bold ${
+                    !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
+                  }`}
+                >
+                  {cat ? `${cat.readinessPct}%` : '—'}
+                </span>
+              </div>
               {isWeakest && (
-                <span className="text-[10px] font-bold uppercase bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
+                <span className="inline-block text-[9px] font-bold uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full mb-1.5">
                   weakest
                 </span>
               )}
-              <span
-                className={`ml-auto text-sm font-bold ${
-                  !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
-                }`}
-              >
-                {cat ? `${cat.readinessPct}%` : '—'}
-              </span>
-            </div>
-            <div className="h-[7px] rounded-full bg-indigo-50 overflow-hidden">
-              <div
-                className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
-                style={{ width: `${cat?.readinessPct ?? 0}%` }}
-              />
-            </div>
-            <div className="flex justify-between text-xs text-gray-400 mt-2">
-              <span>Study {mastered}/{total} levels</span>
-              {practiced !== undefined && <span>{practiced} practiced</span>}
-            </div>
-          </Link>
-        )
-      })}
+              <div className="h-[6px] rounded-full bg-indigo-50 overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
+                  style={{ width: `${cat?.readinessPct ?? 0}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px] text-gray-400 mt-1.5">
+                <span>Study {mastered}/{total}</span>
+                {practiced !== undefined && <span>{practiced} practiced</span>}
+              </div>
+            </Link>
+          )
+        })}
+      </div>
 
       {/* ═══ WEAKEST ALERT ═══ */}
       {showWeakestAlert && (
@@ -289,22 +292,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </Link>
       )}
 
-      {/* ═══ AI TUTOR (compact entry) ═══ */}
-      <Link
-        href="/tutor"
-        data-tour="ai-tutor"
-        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 mt-3 min-h-[44px] hover:border-indigo-300 transition-colors"
-      >
-        <Bot size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
-        <span className="text-sm font-semibold text-gray-800">AI Tutor</span>
-        {isFree ? (
-          <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 rounded-full px-2 py-0.5">
-            <Lock size={10} aria-hidden="true" /> Pro
-          </span>
-        ) : (
-          <ArrowRight size={16} className="ml-auto text-gray-400" aria-hidden="true" />
-        )}
-      </Link>
+      {/* AI Tutor entry removed — the floating bubble is the AI surface.
+          (data-tour="ai-tutor" step, if still defined in GuidedTour, must not
+          block on a missing anchor — verified below.) */}
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
