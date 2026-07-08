@@ -7,12 +7,13 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { ClipboardList, FileCheck, Lock, Target, Timer } from 'lucide-react'
+import { ClipboardList, FileCheck, Lock, Target } from 'lucide-react'
 import { readCache, useLocalFirst } from '@/lib/local-first'
-import { formatSecs, lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
+import { lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
 // Type-only import — erased at compile time, pulls no server code.
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
 import { RadarChart } from './radar-chart'
+import { LastPacingCard, PacingSection, type PacingAnalytics } from './pacing-section'
 
 type SessionRow = {
   category: string
@@ -27,6 +28,9 @@ type ProgressData = {
   spots: BlindSpot[]
   radarData: RadarDatum[]
   recentSessions: SessionRow[]
+  // Optional: old cached snapshots (and pre-rollout API responses) lack this
+  // field entirely — every read must be guarded so a stale payload can't crash.
+  pacing?: PacingAnalytics | null
 }
 
 const CATEGORY_SLUGS: Record<string, string> = {
@@ -239,42 +243,20 @@ export function ProgressClient({ userId }: { userId: string }) {
         </section>
       )}
 
-      {/* ── Last test pace (localStorage, written by TestClient) ───────── */}
-      {lastPacing && (
-        <section className="mb-6">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
-            Last test pace
-          </h2>
-          <div className="bg-white rounded-xl border border-gray-200 px-5 py-4">
-            <div className="flex items-center gap-3">
-              <span className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                <Timer size={18} aria-hidden />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-medium text-gray-800 truncate">
-                  {lastPacing.category} ·{' '}
-                  {new Date(lastPacing.date).toLocaleDateString(undefined, {
-                    month: 'short',
-                    day: 'numeric',
-                  })}
-                </div>
-                <div className="text-xs text-gray-400">
-                  Exam pace: {Math.round(lastPacing.budgetMs / 1000)}s/question
-                </div>
-              </div>
-              <span className="text-sm font-bold text-gray-900 tabular-nums shrink-0">
-                {formatSecs(lastPacing.avgMs)}/question
-              </span>
-            </div>
-            <p
-              className={`mt-2 text-xs font-medium ${
-                lastPacing.avgMs <= lastPacing.budgetMs ? 'text-green-600' : 'text-amber-600'
-              }`}
-            >
-              {lastPacing.verdict}
-            </p>
-          </div>
-        </section>
+      {/* ── Pacing analytics (server) + most recent test (localStorage) ── */}
+      {data.pacing ? (
+        <PacingSection pacing={data.pacing} lastPacing={lastPacing} />
+      ) : (
+        // Stale cached payloads (or pre-rollout API) have no `pacing` field —
+        // keep the localStorage-only pace card so nothing regresses meanwhile.
+        lastPacing && (
+          <section className="mb-6">
+            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              Pacing
+            </h2>
+            <LastPacingCard lastPacing={lastPacing} />
+          </section>
+        )
       )}
 
       {/* ── Recent tests ────────────────────────────────────────────── */}

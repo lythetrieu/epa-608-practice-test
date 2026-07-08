@@ -36,6 +36,27 @@ export function formatSecs(ms: number): string {
   return `${Math.floor(secs / 60)}m${String(secs % 60).padStart(2, '0')}s`
 }
 
+/** Spaced variant for display headlines: 72_000 → "1m 12s", 48_000 → "48s". */
+export function formatSecsLong(ms: number): string {
+  const secs = Math.round(ms / 1000)
+  if (secs < 60) return `${secs}s`
+  return `${Math.floor(secs / 60)}m ${secs % 60}s`
+}
+
+/** Traffic-light bucket vs the exam budget. */
+export type PaceDelta = 'green' | 'amber' | 'red'
+
+/**
+ * green  → at or under budget
+ * amber  → over budget but within +25%
+ * red    → more than 25% over budget
+ */
+export function paceDelta(avgMs: number, budgetMs: number): PaceDelta {
+  if (avgMs <= budgetMs) return 'green'
+  if (avgMs <= budgetMs * 1.25) return 'amber'
+  return 'red'
+}
+
 /**
  * Compute the pacing summary from a quiz outcome's answer records.
  * Returns null when no answer carried timing data (e.g. legacy sessions).

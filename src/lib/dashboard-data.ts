@@ -13,6 +13,7 @@ import {
   totalConceptsByCategory,
   masteredConceptsByCategory,
 } from '@/lib/section-progress'
+import { getPacingData, EXAM_BUDGET_MS } from '@/lib/pacing-server'
 
 export type DashboardData = {
   tier: Tier
@@ -27,6 +28,7 @@ export type DashboardData = {
   practicedByCat: Record<string, number> | null
   coachLine: string
   showWeakestAlert: boolean
+  paceMs: number | null
 }
 
 export async function getDashboardData(userId: string): Promise<DashboardData> {
@@ -39,7 +41,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   // single await. The study-path + RPC calls stay individually try/caught below
   // so a missing table degrades gracefully; here we just parallelize the fetches.
   const admin = createAdminClient()
-  const [profile, sessionsRes, masteredRes, rpcRes] = await Promise.all([
+  const [profile, sessionsRes, masteredRes, rpcRes, pacing] = await Promise.all([
     getUserProfile(userId),
     // Cap the sessions scan: readiness only uses the last 6 per category and the
     // streak just scans dates — 500 newest sessions is ample and keeps this
@@ -60,6 +62,10 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     admin
       .rpc('weak_spots_by_category', { p_user_id: userId })
       .then(r => r, () => ({ data: null, error: true as unknown })),
+    // Lighter pacing variant: overall average only, no subtopic join (the
+    // full slowTopics breakdown lives on /api/app/progress). Already returns
+    // null on any error / missing time_ms data.
+    getPacingData(userId, { topics: false }).then(r => r, () => null),
   ])
 
   const tier = (profile?.tier ?? 'free') as Tier
@@ -138,7 +144,13 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     }
   }
 
+  // ─── Pacing (overall avg ms per question; null = no timed data) ───
+  const paceMs = pacing?.avgMs ?? null
+
   // ─── Coach line: the single clear next step ───
+  // Accuracy beats speed: the weakest-category message always wins. Only when
+  // the user is otherwise exam-ready does a slow pace (>15% over the 72s/Q
+  // exam budget) swap in the speed message.
   let coachLine: string
   if (totalTests === 0) {
     coachLine = 'Start with Core — the fundamentals every EPA 608 cert builds on.'
@@ -147,6 +159,9 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   } else if (readiness.weakest && !readiness.weakest.ready) {
     const w = readiness.weakest
     coachLine = `Focus on ${w.category} — you're at ${w.avgPct}%, need ${w.threshold}%.`
+  } else if (paceMs !== null && paceMs > EXAM_BUDGET_MS * 1.15) {
+    const slowerPct = Math.round((paceMs / EXAM_BUDGET_MS - 1) * 100)
+    coachLine = `You're accurate but ~${slowerPct}% slower than exam pace — drill for faster recall.`
   } else {
     coachLine = "You're exam-ready. Lock it in with a Universal simulation."
   }
@@ -167,5 +182,6 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     practicedByCat,
     coachLine,
     showWeakestAlert,
+    paceMs,
   }
 }
