@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Send, Plus, Clock, Bot, Mic, Volume2, VolumeX } from 'lucide-react'
 import type { Tier } from '@/types'
-import { useTutorChat, renderMarkdown } from '@/components/tutor/useTutorChat'
+import { useTutorChat, renderMarkdown, TUTOR_HANDOFF_KEY, type ChatMessage } from '@/components/tutor/useTutorChat'
 
 type TutorChatProps = {
   email: string
@@ -40,7 +40,7 @@ export default function TutorChat({
 }: TutorChatProps) {
   const {
     messages, isLoading, chatSessionId, history, remaining, error, setError,
-    loadChat: loadChatById, startNewChat: resetChat, sendMessage: sendMessageDirect,
+    loadChat: loadChatById, adoptSession, startNewChat: resetChat, sendMessage: sendMessageDirect,
   } = useTutorChat({ initialRemaining, loadHistory: true })
   const [input, setInput] = useState('')
   const [showHistory, setShowHistory] = useState(false)
@@ -63,13 +63,41 @@ export default function TutorChat({
     setTtsSupported(hasSpeechSynthesis())
   }, [])
 
-  // Continue a conversation handed over from the floating bubble
-  // (/tutor?session=<id>) — messages are persisted server-side per session,
-  // so loading by id restores exactly what the user saw in the bubble.
+  // Continue a conversation handed over from the floating bubble.
+  // Two sources, in order:
+  //  1. sessionStorage handoff — the EXACT messages the user saw in the bubble,
+  //     shown instantly (covers the reply still streaming / not yet persisted).
+  //  2. The server copy (?session=<id>) — merged on top only when it is at
+  //     least as complete, retrying a few times because the assistant reply is
+  //     persisted only when its stream finishes server-side.
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get('session')
-    if (id) loadChatById(id)
-  }, [loadChatById])
+    let handoff: { sessionId?: string | null; messages?: ChatMessage[] } | null = null
+    try {
+      const raw = sessionStorage.getItem(TUTOR_HANDOFF_KEY)
+      if (raw) {
+        handoff = JSON.parse(raw)
+        sessionStorage.removeItem(TUTOR_HANDOFF_KEY)
+      }
+    } catch { /* ignore */ }
+
+    const sid = id ?? handoff?.sessionId ?? null
+    if (handoff?.messages?.length && (!id || handoff.sessionId === id)) {
+      adoptSession(sid, handoff.messages)
+    }
+    if (!sid) return
+
+    let cancelled = false
+    let attempts = 0
+    const tryLoad = async () => {
+      const server = await loadChatById(sid, { mergeSafe: true })
+      const last = server?.[server.length - 1]
+      const complete = !!(last && last.role === 'assistant' && last.content)
+      if (!cancelled && !complete && ++attempts < 12) setTimeout(tryLoad, 2500)
+    }
+    void tryLoad()
+    return () => { cancelled = true }
+  }, [loadChatById, adoptSession])
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })

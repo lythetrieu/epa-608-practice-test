@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Bot, Send, X, Maximize2, Lock } from 'lucide-react'
 import { TIER_LIMITS, type Tier } from '@/types'
-import { useTutorChat, renderMarkdown } from '@/components/tutor/useTutorChat'
+import { useTutorChat, renderMarkdown, TUTOR_HANDOFF_KEY } from '@/components/tutor/useTutorChat'
 
 type AiTutorBubbleProps = {
   tier: Tier
@@ -131,7 +131,19 @@ function BubbleChat({
         <div className="flex items-center gap-1">
           <Link
             href={chatSessionId ? `/tutor?session=${chatSessionId}` : '/tutor'}
-            onClick={onClose}
+            onClick={() => {
+              // Hand the LIVE conversation to the full page. The server only
+              // persists the assistant reply when its stream finishes, so the
+              // full page could otherwise load a snapshot without the answer
+              // (especially when expanding mid-stream).
+              try {
+                sessionStorage.setItem(
+                  TUTOR_HANDOFF_KEY,
+                  JSON.stringify({ sessionId: chatSessionId, messages }),
+                )
+              } catch { /* best-effort */ }
+              onClose()
+            }}
             className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
             title="Open full tutor (voice + history)"
             aria-label="Open full tutor"

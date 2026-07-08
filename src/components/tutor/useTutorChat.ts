@@ -39,14 +39,40 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
       .catch(() => {})
   }, [loadHistory])
 
-  const loadChat = useCallback(async (id: string) => {
-    const res = await fetch(`/api/ai/history?id=${id}`)
-    const data = await res.json()
-    if (data?.messages) {
-      const parsed = typeof data.messages === 'string' ? JSON.parse(data.messages) : data.messages
-      setMessages(parsed)
+  // Load a session from the server. With `mergeSafe`, the server copy is only
+  // applied when it is at least as complete as what's on screen — the persisted
+  // assistant reply is written when the SSE stream FINISHES server-side, so a
+  // load fired right after (or during) streaming can race it and come back
+  // missing the answer. Returns the parsed server copy so callers can retry
+  // until it contains the completed reply.
+  const loadChat = useCallback(async (id: string, opts?: { mergeSafe?: boolean }): Promise<ChatMessage[] | null> => {
+    try {
+      const res = await fetch(`/api/ai/history?id=${id}`)
+      const data = await res.json()
+      if (!data?.messages) return null
+      const parsed: ChatMessage[] =
+        typeof data.messages === 'string' ? JSON.parse(data.messages) : data.messages
       setChatSessionId(id)
+      setMessages((prev) => {
+        if (!opts?.mergeSafe) return parsed
+        if (parsed.length > prev.length) return parsed
+        if (
+          parsed.length === prev.length &&
+          (parsed[parsed.length - 1]?.content?.length ?? 0) >= (prev[prev.length - 1]?.content?.length ?? 0)
+        )
+          return parsed
+        return prev // local copy (e.g. handed over mid-stream) is ahead — keep it
+      })
+      return parsed
+    } catch {
+      return null
     }
+  }, [])
+
+  // Seed the chat from an in-memory handoff (bubble → full page) without a fetch.
+  const adoptSession = useCallback((id: string | null, msgs: ChatMessage[]) => {
+    setChatSessionId(id)
+    setMessages(msgs)
   }, [])
 
   const startNewChat = useCallback(() => {
@@ -133,10 +159,14 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
     error,
     setError,
     loadChat,
+    adoptSession,
     startNewChat,
     sendMessage,
   }
 }
+
+// sessionStorage key for handing the live bubble conversation to /tutor.
+export const TUTOR_HANDOFF_KEY = 'epa608:tutorHandoff'
 
 // ─── Markdown rendering (shared between full page + bubble) ──────────────────
 
