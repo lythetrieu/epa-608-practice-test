@@ -204,9 +204,6 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </Link>
       )}
 
-      {/* ═══ ACTIVITY (GitHub-style heatmap; older cached payloads lack the key) ═══ */}
-      {data.activity ? <ActivityHeatmap activity={data.activity} /> : null}
-
       {/* ═══ CONTINUE STUDYING ═══ */}
       <Link
         href="/learn"
@@ -292,9 +289,13 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </Link>
       )}
 
-      {/* AI Tutor entry removed — the floating bubble is the AI surface.
-          (data-tour="ai-tutor" step, if still defined in GuidedTour, must not
-          block on a missing anchor — verified below.) */}
+      {/* ═══ ACTIVITY (GitHub-style heatmap — below the fold by design; the
+          section grid is the priority content up top) ═══ */}
+      {data.activity ? (
+        <div className="mt-3">
+          <ActivityHeatmap activity={data.activity} />
+        </div>
+      ) : null}
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
