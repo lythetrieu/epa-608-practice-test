@@ -16,8 +16,9 @@ import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory, Flame, Bot,
-  ArrowRight, Lightbulb, AlertTriangle, Lock,
+  ArrowRight, Lightbulb, AlertTriangle, Lock, Timer,
 } from 'lucide-react'
+import { formatSecsLong, paceDelta } from '@/components/quiz/pacing'
 
 // Icon + chip color per section (matches the prototype's colored icon chips)
 const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
@@ -84,6 +85,8 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
     isFree, lifetimeAccess, totalTests, currentStreak, avgScore, readiness,
     masteredByCat, totalsByCat, practicedByCat, coachLine, showWeakestAlert,
   } = data
+  // Optional-chained: cached payloads from before pacing-v2 lack this key.
+  const paceMs = data.paceMs ?? null
   const overall = readiness.overall
   const name = userName
 
@@ -172,6 +175,29 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           <p className="text-[11px] text-gray-500">avg score</p>
         </div>
       </div>
+
+      {/* ═══ PACE (vs the real exam's 72s/question) ═══ */}
+      {paceMs !== null && (
+        <Link
+          href="/progress"
+          className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
+        >
+          <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
+          <span className="text-sm font-semibold text-gray-800">Pace</span>
+          <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
+          <span
+            className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+              paceDelta(paceMs, 72_000) === 'green'
+                ? 'bg-green-50 text-green-700'
+                : paceDelta(paceMs, 72_000) === 'amber'
+                  ? 'bg-amber-50 text-amber-700'
+                  : 'bg-red-50 text-red-600'
+            }`}
+          >
+            {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
+          </span>
+        </Link>
+      )}
 
       {/* ═══ CONTINUE STUDYING ═══ */}
       <Link
