@@ -14,6 +14,7 @@ import { lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
 import { RadarChart } from './radar-chart'
 import { LastPacingCard, PacingSection, type PacingAnalytics } from './pacing-section'
+import { MistakesSection, type MistakesData } from './mistakes-section'
 
 type SessionRow = {
   category: string
@@ -31,6 +32,9 @@ type ProgressData = {
   // Optional: old cached snapshots (and pre-rollout API responses) lack this
   // field entirely — every read must be guarded so a stale payload can't crash.
   pacing?: PacingAnalytics | null
+  // Same deal: absent on stale payloads, null when the server has no data —
+  // both cases render nothing.
+  mistakes?: MistakesData | null
 }
 
 const CATEGORY_SLUGS: Record<string, string> = {
@@ -242,6 +246,9 @@ export function ProgressClient({ userId }: { userId: string }) {
           )}
         </section>
       )}
+
+      {/* ── Mistakes (server) — absent/null on stale payloads → render nothing ── */}
+      {data.mistakes ? <MistakesSection mistakes={data.mistakes} /> : null}
 
       {/* ── Pacing analytics (server) + most recent test (localStorage) ── */}
       {data.pacing ? (

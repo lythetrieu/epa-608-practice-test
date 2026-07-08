@@ -178,47 +178,12 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </div>
       </div>
 
-      {/* ═══ PACE (vs the real exam's 72s/question) ═══ */}
-      {paceMs !== null && (
-        <Link
-          href="/progress"
-          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
-            <span className="text-sm font-semibold text-gray-800">Pace</span>
-            <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
-            <span
-              className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                paceDelta(paceMs, 72_000) === 'green'
-                  ? 'bg-green-50 text-green-700'
-                  : paceDelta(paceMs, 72_000) === 'amber'
-                    ? 'bg-amber-50 text-amber-700'
-                    : 'bg-red-50 text-red-600'
-              }`}
-            >
-              {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
-            </span>
-          </div>
-          <PaceBar avgMs={paceMs} />
-        </Link>
-      )}
-
-      {/* ═══ CONTINUE STUDYING ═══ */}
-      <Link
-        href="/learn"
-        data-tour="learn"
-        className="flex w-full items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-4 font-semibold text-[15px] min-h-[48px] transition-colors"
-      >
-        Continue studying <ArrowRight size={18} aria-hidden="true" />
-      </Link>
-
       {/* ═══ PROGRESS BY SECTION ═══ */}
-      <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-5 mb-2 px-0.5">
+      <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1 mb-2 px-0.5">
         Progress by section
       </h2>
       {/* Compact 2×2 grid — the whole overview fits one screen with less scrolling */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 mb-3">
         {SECTION_CATEGORIES.map(category => {
           const style = SECTION_STYLE[category]
           const cat = readiness.byCategory.find(c => c.category === category)
@@ -272,6 +237,41 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           )
         })}
       </div>
+
+      {/* ═══ CONTINUE STUDYING ═══ */}
+      <Link
+        href="/learn"
+        data-tour="learn"
+        className="flex w-full items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-4 mb-3 font-semibold text-[15px] min-h-[48px] transition-colors"
+      >
+        Continue studying <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+
+      {/* ═══ PACE (vs the real exam's 72s/question) ═══ */}
+      {paceMs !== null && (
+        <Link
+          href="/progress"
+          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
+            <span className="text-sm font-semibold text-gray-800">Pace</span>
+            <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
+            <span
+              className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+                paceDelta(paceMs, 72_000) === 'green'
+                  ? 'bg-green-50 text-green-700'
+                  : paceDelta(paceMs, 72_000) === 'amber'
+                    ? 'bg-amber-50 text-amber-700'
+                    : 'bg-red-50 text-red-600'
+              }`}
+            >
+              {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
+            </span>
+          </div>
+          <PaceBar avgMs={paceMs} />
+        </Link>
+      )}
 
       {/* ═══ WEAKEST ALERT ═══ */}
       {showWeakestAlert && (

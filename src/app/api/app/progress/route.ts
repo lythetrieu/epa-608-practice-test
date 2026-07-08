@@ -5,6 +5,7 @@ import { TIER_LIMITS } from '@/lib/tier'
 import type { Tier } from '@/types'
 import { getWeakSpotsData } from '@/app/(app)/progress/weak-spots-data'
 import { getPacingData } from '@/lib/pacing-server'
+import { getMistakesData } from '@/lib/mistakes-server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -25,7 +26,7 @@ export async function GET() {
   const isPro = TIER_LIMITS[tier].hasBlindSpot
 
   const supabase = await createClient()
-  const [{ spots, radarData }, { data: sessions }, pacing] = await Promise.all([
+  const [{ spots, radarData }, { data: sessions }, pacing, mistakes] = await Promise.all([
     getWeakSpotsData(user.id),
     supabase
       .from('test_sessions')
@@ -38,6 +39,12 @@ export async function GET() {
     // exists (or the 20260630 migration hasn't run). Old cached client payloads
     // simply lack the key; ProgressClient guards with optional chaining.
     getPacingData(user.id),
+    // Mistakes analysis (repeat-wrong questions + per-section clustering) —
+    // null on any query failure or when the user has no wrong answers.
+    // Includes correctAnswer/explanation: this endpoint is authenticated-only
+    // (middleware 401 + getCurrentUser above), so accounts are entitled to
+    // answers, same as /api/app/submit results.
+    getMistakesData(user.id),
   ])
 
   return NextResponse.json({
@@ -46,5 +53,6 @@ export async function GET() {
     radarData,
     recentSessions: sessions ?? [],
     pacing,
+    mistakes,
   })
 }
