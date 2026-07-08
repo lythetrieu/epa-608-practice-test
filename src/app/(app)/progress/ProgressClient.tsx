@@ -35,6 +35,9 @@ type ProgressData = {
   // Same deal: absent on stale payloads, null when the server has no data —
   // both cases render nothing.
   mistakes?: MistakesData | null
+  // Optional 4-axis Core/Type I/II/III fallback radar. Absent on stale cached
+  // payloads → falls through to today's ">=3 subtopic axes or caption" logic.
+  sectionRadar?: RadarDatum[]
 }
 
 const CATEGORY_SLUGS: Record<string, string> = {
@@ -94,20 +97,36 @@ export function ProgressClient({ userId }: { userId: string }) {
   const { isPro, spots, radarData, recentSessions } = data
   const topSpots = spots.slice(0, 8)
 
+  // Radar render decision:
+  //   1. >=3 subtopic-level axes → detailed topic radar (richer, unchanged).
+  //   2. Else, if the payload carries the 4-axis section radar AND the user has
+  //      at least one recorded attempt → section-level fallback so every active
+  //      user sees a chart. (Stale cached payloads lack `sectionRadar` and keep
+  //      today's behavior until the background refresh lands.)
+  //   3. Else → the existing "take more tests" caption / nothing.
+  const hasAnyAttempts = (data.sectionRadar ?? []).some((d) => d.maxScore > 0)
+  const useSectionFallback = radarData.length < 3 && !!data.sectionRadar && hasAnyAttempts
+  const chartData = radarData.length >= 3 ? radarData : useSectionFallback ? data.sectionRadar! : null
+
   return (
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Progress</h1>
       <p className="text-gray-500 text-sm mb-6">Your weak spots &amp; test history</p>
 
       {/* ── Topic Proficiency radar ─────────────────────────────────── */}
-      {radarData.length >= 3 ? (
+      {chartData ? (
         <section className="mb-6">
           {isPro ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
                 Topic Proficiency
               </h2>
-              <RadarChart data={radarData} />
+              <RadarChart data={chartData} />
+              {useSectionFallback && (
+                <p className="text-[11px] text-gray-400 mt-2 text-center">
+                  By section — practice more topics to unlock the detailed topic radar.
+                </p>
+              )}
             </div>
           ) : (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center">
@@ -117,7 +136,7 @@ export function ProgressClient({ userId }: { userId: string }) {
               {/* Real radar rendered but BLURRED — free users see the insight exists */}
               <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
                 <div className="blur-md pointer-events-none select-none" aria-hidden>
-                  <RadarChart data={radarData} />
+                  <RadarChart data={chartData} />
                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/30 rounded-lg">
                   <div className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center">
@@ -126,6 +145,11 @@ export function ProgressClient({ userId }: { userId: string }) {
                   <p className="text-sm font-semibold text-gray-800">Radar Chart — Pro</p>
                 </div>
               </div>
+              {useSectionFallback && (
+                <p className="text-[11px] text-gray-400 -mt-2 mb-3">
+                  By section — practice more topics to unlock the detailed topic radar.
+                </p>
+              )}
               <p className="text-xs text-gray-500 mb-4">
                 Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
               </p>

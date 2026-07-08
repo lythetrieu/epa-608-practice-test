@@ -14,6 +14,10 @@ export type BlindSpot = {
 
 export type RadarDatum = { label: string; score: number; maxScore: number }
 
+// The 4 exam sections — always all 4 axes so the fallback radar has a shape
+// even when some sections have zero attempts (score 0, maxScore 0 → 0%).
+const SECTION_AXES: Category[] = ['Core', 'Type I', 'Type II', 'Type III']
+
 // Collapse 23 subtopic groups into 8 major radar axes
 const RADAR_TOPICS: { label: string; groupKeys: string[] }[] = [
   { label: 'Environment', groupKeys: ['core-env'] },
@@ -30,11 +34,13 @@ const RADAR_TOPICS: { label: string; groupKeys: string[] }[] = [
  * Loads the user's weak spots (get_blind_spots RPC, min 2 attempts per
  * subtopic) enriched with labels/categories, with a category-level fallback
  * when no subtopic has enough attempts yet, plus radar chart data aggregated
- * into the 8 major topic axes. Server-only.
+ * into the 8 major topic axes, plus a 4-axis section-level radar (Core /
+ * Type I / Type II / Type III) used as a fallback when the subtopic radar has
+ * too few axes. Server-only.
  */
 export async function getWeakSpotsData(
   userId: string
-): Promise<{ spots: BlindSpot[]; radarData: RadarDatum[] }> {
+): Promise<{ spots: BlindSpot[]; radarData: RadarDatum[]; sectionRadar: RadarDatum[] }> {
   const admin = createAdminClient()
   const { data: rpcSpots } = await admin.rpc('get_blind_spots', {
     p_user_id: userId,
@@ -59,6 +65,11 @@ export async function getWeakSpotsData(
 
   enriched.sort((a, b) => b.errorRate - a.errorRate)
 
+  // Section-level accuracy (correct/total per category). Filled from whichever
+  // rows this function already fetched — RPC subtopic spots above, or the
+  // category fallback query below — so it costs ZERO extra DB round-trips.
+  const sectionAgg: Partial<Record<Category, { correct: number; total: number }>> = {}
+
   // Fallback: get_blind_spots needs >=2 attempts on the SAME subtopic, which a
   // single 10-question test almost never produces (its questions spread across
   // many subtopics). When there are no subtopic-level spots yet, fall back to a
@@ -79,6 +90,9 @@ export async function getWeakSpotsData(
       if (at > byCat[cat].last) byCat[cat].last = at
     }
     for (const [cat, s] of Object.entries(byCat)) {
+      // Section radar counts every attempt (even a single one) — a spot below
+      // still requires >=2 attempts to be meaningful as a "weak spot".
+      sectionAgg[cat as Category] = { correct: s.total - s.wrong, total: s.total }
       if (s.total < 2) continue
       enriched.push({
         subtopic_id: `cat:${cat}`,
@@ -109,5 +123,25 @@ export async function getWeakSpotsData(
     }
   }).filter((d) => d.maxScore > 0)
 
-  return { spots: enriched, radarData }
+  // When the RPC returned subtopic spots, the category fallback query never
+  // ran — aggregate the sections from those spots instead.
+  if (Object.keys(sectionAgg).length === 0) {
+    for (const s of enriched) {
+      const agg = sectionAgg[s.category] ?? { correct: 0, total: 0 }
+      agg.correct += s.correctCount
+      agg.total += s.totalAttempts
+      sectionAgg[s.category] = agg
+    }
+  }
+
+  // 4-axis section radar — ALWAYS all 4 axes (a spider needs shape); sections
+  // with no attempts render at 0. Used by the Progress page as a fallback when
+  // the subtopic radar above has fewer than 3 axes.
+  const sectionRadar: RadarDatum[] = SECTION_AXES.map((label) => ({
+    label,
+    score: sectionAgg[label]?.correct ?? 0,
+    maxScore: sectionAgg[label]?.total ?? 0,
+  }))
+
+  return { spots: enriched, radarData, sectionRadar }
 }

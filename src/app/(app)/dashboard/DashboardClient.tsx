@@ -18,7 +18,7 @@ import {
   FileText, Snowflake, Wrench, Factory, Flame,
   ArrowRight, Lightbulb, AlertTriangle, Timer,
 } from 'lucide-react'
-import { formatSecsLong, paceDelta } from '@/components/quiz/pacing'
+import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
 import { ActivityHeatmap } from './ActivityHeatmap'
 
@@ -35,7 +35,7 @@ const RING_R = 50
 const RING_C = 2 * Math.PI * RING_R // ≈ 314.16
 
 // First-ever-visit skeleton (no cached snapshot yet): navy hero block,
-// 3 stat placeholders, 4 section card placeholders.
+// 3 stat placeholders, 2×2 grid of section tile placeholders.
 function DashboardSkeleton() {
   return (
     <div className="animate-pulse" aria-hidden>
@@ -46,11 +46,12 @@ function DashboardSkeleton() {
         <div className="bg-gray-100 rounded-xl h-[70px]" />
         <div className="bg-gray-100 rounded-xl h-[70px]" />
       </div>
-      <div className="bg-gray-200 rounded-2xl h-12 mb-5" />
-      <div className="bg-gray-100 rounded-2xl h-[104px] mb-2.5" />
-      <div className="bg-gray-100 rounded-2xl h-[104px] mb-2.5" />
-      <div className="bg-gray-100 rounded-2xl h-[104px] mb-2.5" />
-      <div className="bg-gray-100 rounded-2xl h-[104px] mb-2.5" />
+      <div className="grid grid-cols-2 gap-2 mb-3">
+        <div className="bg-gray-100 rounded-2xl h-[140px]" />
+        <div className="bg-gray-100 rounded-2xl h-[140px]" />
+        <div className="bg-gray-100 rounded-2xl h-[140px]" />
+        <div className="bg-gray-100 rounded-2xl h-[140px]" />
+      </div>
     </div>
   )
 }
@@ -178,76 +179,101 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         </div>
       </div>
 
-      {/* ═══ PROGRESS BY SECTION ═══ */}
+      {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
       <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1 mb-2 px-0.5">
         Progress by section
       </h2>
-      {/* Compact 2×2 grid — the whole overview fits one screen with less scrolling */}
-      <div className="grid grid-cols-2 gap-2 mb-3">
-        {SECTION_CATEGORIES.map(category => {
-          const style = SECTION_STYLE[category]
-          const cat = readiness.byCategory.find(c => c.category === category)
-          const isWeakest =
-            !!readiness.weakest &&
-            readiness.weakest.category === category &&
-            !readiness.weakest.ready
-          const mastered = masteredByCat[category] ?? 0
-          const total = totalsByCat[category] ?? 0
-          // null = RPC failed → omit the number; otherwise missing category = 0 practiced
-          const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
+      {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
+          Exactly ONE tile gets the "Next up" highlight (indigo ring):
+          1) the weakest attempted section when it isn't ready yet;
+          2) else the first section (SECTION_CATEGORIES order) with an
+             unfinished study path (mastered < total) or no readiness data;
+          3) else none — everything is mastered and ready. */}
+      {(() => {
+        const nextUp: string | null =
+          (readiness.weakest && !readiness.weakest.ready
+            ? readiness.weakest.category
+            : null) ??
+          SECTION_CATEGORIES.find(category => {
+            const cat = readiness.byCategory.find(c => c.category === category)
+            const mastered = masteredByCat[category] ?? 0
+            const total = totalsByCat[category] ?? 0
+            return mastered < total || !cat
+          }) ??
+          null
 
-          return (
-            <Link
-              key={category}
-              href={`/learn?section=${encodeURIComponent(category)}`}
-              data-tour={category === 'Core' ? 'core' : undefined}
-              className={`block bg-white border rounded-2xl px-3 py-2.5 transition-colors ${
-                isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'
-              }`}
-            >
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <span className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
-                  {style.icon}
-                </span>
-                <span className="text-[13px] font-semibold text-gray-900 truncate">{category}</span>
-                <span
-                  className={`ml-auto text-[13px] font-bold ${
-                    !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
-                  }`}
+        return (
+          <div className="grid grid-cols-2 gap-2 mb-3" data-tour="sections">
+            {SECTION_CATEGORIES.map(category => {
+              const style = SECTION_STYLE[category]
+              const cat = readiness.byCategory.find(c => c.category === category)
+              const isWeakest =
+                !!readiness.weakest &&
+                readiness.weakest.category === category &&
+                !readiness.weakest.ready
+              const isNext = nextUp === category
+              const mastered = masteredByCat[category] ?? 0
+              const total = totalsByCat[category] ?? 0
+              // null = RPC failed → omit the number; otherwise missing category = 0 practiced
+              const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
+
+              return (
+                <Link
+                  key={category}
+                  href={`/learn?section=${encodeURIComponent(category)}`}
+                  data-tour={category === 'Core' ? 'core' : undefined}
+                  className={`block bg-white border rounded-2xl px-4 py-4 transition-colors ${
+                    isNext ? 'ring-2 ring-indigo-500 ' : ''
+                  }${isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-indigo-300'}`}
                 >
-                  {cat ? `${cat.readinessPct}%` : '—'}
-                </span>
-              </div>
-              {isWeakest && (
-                <span className="inline-block text-[9px] font-bold uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full mb-1.5">
-                  weakest
-                </span>
-              )}
-              <div className="h-[6px] rounded-full bg-indigo-50 overflow-hidden">
-                <div
-                  className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
-                  style={{ width: `${cat?.readinessPct ?? 0}%` }}
-                />
-              </div>
-              <div className="flex justify-between text-[10px] text-gray-400 mt-1.5">
-                <span>Study {mastered}/{total}</span>
-                {practiced !== undefined && <span>{practiced} practiced</span>}
-              </div>
-            </Link>
-          )
-        })}
-      </div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
+                      {style.icon}
+                    </span>
+                    <span className="text-[15px] font-semibold text-gray-900 truncate">{category}</span>
+                    {/* Weakest pill wins over Start-here (the ring already marks Next up) */}
+                    {isWeakest ? (
+                      <span className="shrink-0 text-[9px] font-bold uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">
+                        weakest
+                      </span>
+                    ) : isNext ? (
+                      <span className="shrink-0 text-[9px] font-bold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-full">
+                        Start here →
+                      </span>
+                    ) : null}
+                    <span
+                      className={`ml-auto text-xl font-bold ${
+                        !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
+                      }`}
+                    >
+                      {cat ? `${cat.readinessPct}%` : '—'}
+                    </span>
+                  </div>
+                  <div className="h-2 rounded-full bg-indigo-50 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
+                      style={{ width: `${cat?.readinessPct ?? 0}%` }}
+                    />
+                  </div>
+                  <div className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                    <p>Study path: {mastered}/{total} levels</p>
+                    {practiced !== undefined && <p>{practiced} questions practiced</p>}
+                  </div>
+                  <p
+                    className={`text-[11px] font-semibold mt-1.5 ${
+                      cat?.ready ? 'text-green-600' : cat ? 'text-orange-500' : 'text-gray-400'
+                    }`}
+                  >
+                    {cat?.ready ? 'Ready ✓' : cat ? 'Keep practicing' : 'Not started'}
+                  </p>
+                </Link>
+              )
+            })}
+          </div>
+        )
+      })()}
 
-      {/* ═══ CONTINUE STUDYING ═══ */}
-      <Link
-        href="/learn"
-        data-tour="learn"
-        className="flex w-full items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-4 mb-3 font-semibold text-[15px] min-h-[48px] transition-colors"
-      >
-        Continue studying <ArrowRight size={18} aria-hidden="true" />
-      </Link>
-
-      {/* ═══ PACE (vs the real exam's 72s/question) ═══ */}
+      {/* ═══ PACE (72s/question is a hard LIMIT — over it you won't finish) ═══ */}
       {paceMs !== null && (
         <Link
           href="/progress"
@@ -259,14 +285,10 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
             <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
             <span
               className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                paceDelta(paceMs, 72_000) === 'green'
-                  ? 'bg-green-50 text-green-700'
-                  : paceDelta(paceMs, 72_000) === 'amber'
-                    ? 'bg-amber-50 text-amber-700'
-                    : 'bg-red-50 text-red-600'
+                paceMs <= 72_000 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
               }`}
             >
-              {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
+              {paceMs <= 72_000 ? 'will finish in time' : "won't finish in time"}
             </span>
           </div>
           <PaceBar avgMs={paceMs} />

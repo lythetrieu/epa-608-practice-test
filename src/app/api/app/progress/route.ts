@@ -26,7 +26,7 @@ export async function GET() {
   const isPro = TIER_LIMITS[tier].hasBlindSpot
 
   const supabase = await createClient()
-  const [{ spots, radarData }, { data: sessions }, pacing, mistakes] = await Promise.all([
+  const [{ spots, radarData, sectionRadar }, { data: sessions }, pacing, mistakes] = await Promise.all([
     getWeakSpotsData(user.id),
     supabase
       .from('test_sessions')
@@ -51,6 +51,9 @@ export async function GET() {
     isPro,
     spots,
     radarData,
+    // 4-axis Core/Type I/II/III fallback radar — optional on the client so
+    // stale cached payloads (which lack the key) keep today's behavior.
+    sectionRadar,
     recentSessions: sessions ?? [],
     pacing,
     mistakes,

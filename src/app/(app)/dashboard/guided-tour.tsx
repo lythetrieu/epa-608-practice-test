@@ -39,8 +39,8 @@ export function GuidedTour() {
       tour.addStep({
         id: 'learn-section',
         title: 'Learn First, Then Practice',
-        text: 'Start with the Study Path — it teaches you every concept step by step with mini-quizzes. Then come back here to practice full tests.',
-        attachTo: { element: '[data-tour="learn"]', on: 'bottom' },
+        text: 'Pick a section to study — Core is where everyone starts.',
+        attachTo: { element: '[data-tour="sections"]', on: 'bottom' },
         buttons: [
           { text: '← Back', action: tour.back, classes: 'shepherd-button-secondary' },
           { text: 'Next →', action: tour.next },

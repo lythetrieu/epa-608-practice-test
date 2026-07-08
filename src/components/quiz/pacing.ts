@@ -43,6 +43,22 @@ export function formatSecsLong(ms: number): string {
   return `${Math.floor(secs / 60)}m ${secs % 60}s`
 }
 
+/** Question count of the real EPA 608 section exam (25 questions in 30 min). */
+export const EXAM_QUESTIONS = 25
+
+/**
+ * Finish-margin magnitude in minutes projected over a full EXAM_QUESTIONS-
+ * question exam at the user's average pace: |budget − avg| × 25 questions.
+ * Returns a display string rounded to a whole number or 1 decimal ("5",
+ * "2.5"). Direction (spare vs short) comes from comparing avgMs to budgetMs
+ * at the call site.
+ */
+export function finishMarginMinutes(avgMs: number, budgetMs: number): string {
+  const mins = (Math.abs(budgetMs - avgMs) * EXAM_QUESTIONS) / 60_000
+  const rounded = Math.round(mins * 10) / 10
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)
+}
+
 /** Traffic-light bucket vs the exam budget. */
 export type PaceDelta = 'green' | 'amber' | 'red'
 

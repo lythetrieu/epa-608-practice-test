@@ -403,7 +403,7 @@ export function QuizEngine({
                 className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${behindPace ? 'bg-amber-50 text-amber-700' : 'bg-green-50 text-green-700'}`}
                 aria-live="polite"
               >
-                {behindPace ? 'Behind pace' : 'On pace'}
+                {behindPace ? "Too slow — won't finish" : 'On pace'}
               </span>
               <div className={`text-base font-mono font-bold tabular-nums ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
                 {formatTime(timeLeft)}
