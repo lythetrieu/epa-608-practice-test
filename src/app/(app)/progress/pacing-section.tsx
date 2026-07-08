@@ -14,6 +14,7 @@ import {
   type LastPacing,
   type PaceDelta,
 } from '@/components/quiz/pacing'
+import { PaceBar } from '@/components/quiz/pacing-bar'
 import { SUBTOPIC_LABELS } from '@/lib/subtopics'
 
 // ── Local copy of the /api/app/progress pacing contract ─────────────────────
@@ -129,9 +130,12 @@ export function PacingSection({
             {deltaChipText(avgMs, examBudgetMs)}
           </span>
         </div>
-        <div className="flex items-center justify-between mt-1.5 text-xs text-gray-400">
-          <span>Exam pace: {Math.round(examBudgetMs / 1000)}s</span>
-          <span>based on {sampleSize} answers</span>
+        {/* Target bar: fill = user's average, marker = the 72s exam budget */}
+        <div className="mt-3">
+          <PaceBar avgMs={avgMs} budgetMs={examBudgetMs} />
+        </div>
+        <div className="mt-1.5 text-right text-xs text-gray-400">
+          based on {sampleSize} answers
         </div>
 
         {/* ── Trend: one bar per day, oldest → newest ─────────────────── */}

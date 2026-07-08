@@ -19,6 +19,8 @@ import {
   ArrowRight, Lightbulb, AlertTriangle, Lock, Timer,
 } from 'lucide-react'
 import { formatSecsLong, paceDelta } from '@/components/quiz/pacing'
+import { PaceBar } from '@/components/quiz/pacing-bar'
+import { ActivityHeatmap } from './ActivityHeatmap'
 
 // Icon + chip color per section (matches the prototype's colored icon chips)
 const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
@@ -180,24 +182,30 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {paceMs !== null && (
         <Link
           href="/progress"
-          className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
+          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-indigo-300 transition-colors"
         >
-          <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
-          <span className="text-sm font-semibold text-gray-800">Pace</span>
-          <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
-          <span
-            className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-              paceDelta(paceMs, 72_000) === 'green'
-                ? 'bg-green-50 text-green-700'
-                : paceDelta(paceMs, 72_000) === 'amber'
-                  ? 'bg-amber-50 text-amber-700'
-                  : 'bg-red-50 text-red-600'
-            }`}
-          >
-            {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
-          </span>
+          <div className="flex items-center gap-3">
+            <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
+            <span className="text-sm font-semibold text-gray-800">Pace</span>
+            <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
+            <span
+              className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+                paceDelta(paceMs, 72_000) === 'green'
+                  ? 'bg-green-50 text-green-700'
+                  : paceDelta(paceMs, 72_000) === 'amber'
+                    ? 'bg-amber-50 text-amber-700'
+                    : 'bg-red-50 text-red-600'
+              }`}
+            >
+              {paceDelta(paceMs, 72_000) === 'green' ? 'on pace' : 'behind exam pace'}
+            </span>
+          </div>
+          <PaceBar avgMs={paceMs} />
         </Link>
       )}
+
+      {/* ═══ ACTIVITY (GitHub-style heatmap; older cached payloads lack the key) ═══ */}
+      {data.activity ? <ActivityHeatmap activity={data.activity} /> : null}
 
       {/* ═══ CONTINUE STUDYING ═══ */}
       <Link

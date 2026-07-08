@@ -29,7 +29,16 @@ export type DashboardData = {
   coachLine: string
   showWeakestAlert: boolean
   paceMs: number | null
+  /** Per-day answer counts (UTC YYYY-MM-DD) for the activity heatmap; null on query error. */
+  activity: {
+    days: Record<string, number>
+    activeDays: number
+    windowDays: number
+  } | null
 }
+
+// Heatmap window: 16 weeks (matches the 16-column GitHub-style grid on Home).
+const ACTIVITY_WINDOW_DAYS = 112
 
 export async function getDashboardData(userId: string): Promise<DashboardData> {
   const supabase = await createClient()
@@ -41,7 +50,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   // single await. The study-path + RPC calls stay individually try/caught below
   // so a missing table degrades gracefully; here we just parallelize the fetches.
   const admin = createAdminClient()
-  const [profile, sessionsRes, masteredRes, rpcRes, pacing] = await Promise.all([
+  const [profile, sessionsRes, masteredRes, rpcRes, pacing, activityRes] = await Promise.all([
     getUserProfile(userId),
     // Cap the sessions scan: readiness only uses the last 6 per category and the
     // streak just scans dates — 500 newest sessions is ample and keeps this
@@ -66,6 +75,17 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     // full slowTopics breakdown lives on /api/app/progress). Already returns
     // null on any error / missing time_ms data.
     getPacingData(userId, { topics: false }).then(r => r, () => null),
+    // Activity heatmap: answered_at ONLY (tiny payload) from user_progress —
+    // one row per answered question (incl. Study Path), so it captures every
+    // practice day. Uses the (user_id, answered_at DESC) index; 1500 rows is
+    // ample for a 112-day window. Failure → activity: null in the payload.
+    supabase
+      .from('user_progress')
+      .select('answered_at')
+      .eq('user_id', userId)
+      .order('answered_at', { ascending: false })
+      .limit(1500)
+      .then(r => r, () => ({ data: null, error: true as unknown })),
   ])
 
   const tier = (profile?.tier ?? 'free') as Tier
@@ -147,6 +167,37 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   // ─── Pacing (overall avg ms per question; null = no timed data) ───
   const paceMs = pacing?.avgMs ?? null
 
+  // ─── Activity heatmap: per-day answer counts, last 112 days (UTC) ───
+  // Counts come from user_progress.answered_at; session dates (already
+  // fetched) are merged in with at-least-1 counts so old test days beyond the
+  // 1500-row user_progress window still light up.
+  let activity: DashboardData['activity'] = null
+  const { data: activityRows, error: activityError } = activityRes as {
+    data: { answered_at: string | null }[] | null
+    error?: unknown
+  }
+  if (!activityError && Array.isArray(activityRows)) {
+    const minDate = new Date(Date.now() - (ACTIVITY_WINDOW_DAYS - 1) * 86_400_000)
+      .toISOString()
+      .slice(0, 10)
+    const days: Record<string, number> = {}
+    for (const row of activityRows) {
+      const day = (row.answered_at ?? '').slice(0, 10)
+      if (day.length === 10 && day >= minDate) days[day] = (days[day] ?? 0) + 1
+    }
+    for (const s of allSessions ?? []) {
+      for (const iso of [s.started_at, s.submitted_at]) {
+        const day = (iso ?? '').slice(0, 10)
+        if (day.length === 10 && day >= minDate && !(day in days)) days[day] = 1
+      }
+    }
+    activity = {
+      days,
+      activeDays: Object.keys(days).length,
+      windowDays: ACTIVITY_WINDOW_DAYS,
+    }
+  }
+
   // ─── Coach line: the single clear next step ───
   // Accuracy beats speed: the weakest-category message always wins. Only when
   // the user is otherwise exam-ready does a slow pace (>15% over the 72s/Q
@@ -183,5 +234,6 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     coachLine,
     showWeakestAlert,
     paceMs,
+    activity,
   }
 }
