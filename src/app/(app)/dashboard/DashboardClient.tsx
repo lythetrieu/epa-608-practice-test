@@ -15,7 +15,7 @@ import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
-  FileText, Snowflake, Wrench, Factory, Flame,
+  FileText, Snowflake, Wrench, Factory,
   ArrowRight, Lightbulb, AlertTriangle, Timer,
 } from 'lucide-react'
 import { formatSecsLong } from '@/components/quiz/pacing'
@@ -37,18 +37,13 @@ const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
 const RING_R = 50
 const RING_C = 2 * Math.PI * RING_R // ≈ 314.16
 
-// First-ever-visit skeleton (no cached snapshot yet): navy hero block,
-// 3 stat placeholders, 2×2 grid of section tile placeholders.
+// First-ever-visit skeleton (no cached snapshot yet): one tall navy hero
+// block (welcome + ring + stat chips all live inside it now) and the 2×2
+// grid of section tile placeholders.
 function DashboardSkeleton() {
   return (
     <div className="animate-pulse" aria-hidden>
-      <div className="h-6 w-48 bg-gray-200 rounded mb-3" />
-      <div className="rounded-2xl mb-3 h-[124px]" style={{ background: '#001d57' }} />
-      <div className="grid grid-cols-3 gap-2 mb-3">
-        <div className="bg-gray-100 rounded-xl h-[70px]" />
-        <div className="bg-gray-100 rounded-xl h-[70px]" />
-        <div className="bg-gray-100 rounded-xl h-[70px]" />
-      </div>
+      <div className="rounded-2xl mb-3 h-[170px]" style={{ background: '#001d57' }} />
       <div className="grid grid-cols-2 gap-2 mb-3">
         <div className="bg-gray-100 rounded-2xl h-[140px]" />
         <div className="bg-gray-100 rounded-2xl h-[140px]" />
@@ -109,50 +104,38 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       <Onboarding show={isNewUser} />
       <ProActivatedBanner isPro={!isFree && lifetimeAccess} />
 
-      {/* ═══ HEADER ═══ */}
-      <div className="flex items-center justify-between mb-3" data-tour="header">
-        <h1 className="font-serif text-xl sm:text-2xl font-black text-gray-900 truncate">Welcome, {name}!</h1>
-      </div>
-
-      {/* ═══ RANK STRIP — slim one-liner, links to Progress (achievements live there).
-          Guarded: pre-achievements cached payloads render nothing. ═══ */}
-      {achievements && (() => {
-        const { xp, rank } = achievements
-        const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
-        const pct =
-          span === null || span <= 0
-            ? 100
-            : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
-        return (
-          <Link
-            href="/progress"
-            className="flex items-center gap-2 mb-3 px-0.5 min-h-[44px] rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label={`Rank: ${rank.label}, ${xp.toLocaleString()} XP — view achievements`}
-          >
-            <RankInsignia rank={rank.id} size={20} />
-            <span className="text-xs font-semibold shrink-0" style={{ color: '#001d57' }}>
-              {rank.label}
-            </span>
-            <span className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden" aria-hidden="true">
-              <span
-                className="block h-full rounded-full"
-                style={{ width: `${pct}%`, background: '#003087' }}
-              />
-            </span>
-            <span className="text-[11px] text-gray-500 shrink-0 font-mono tabular-nums">
-              {xp.toLocaleString()}
-              {rank.nextMinXp !== null ? ` / ${rank.nextMinXp.toLocaleString()}` : ''} XP
-            </span>
-          </Link>
-        )
-      })()}
-
-      {/* ═══ READINESS HERO — navy card with progress ring ═══ */}
+      {/* ═══ HERO — welcome + rank, readiness ring + coach, stat chips: one navy card.
+          (Standalone header row, rank strip, and white stat-card grid all merged here.) ═══ */}
       <section
-        className="flex items-center gap-4 rounded-2xl p-4 sm:p-5 mb-3 text-white"
+        className="rounded-2xl p-4 sm:p-5 mb-3 text-white"
         style={{ background: '#001d57' }}
-        data-tour="readiness"
+        data-tour="header"
       >
+        {/* Row 1: welcome (left) + compact rank cluster (right → Progress).
+            Guarded: pre-achievements cached payloads render no cluster.
+            The full XP bar lives on /progress; only the numbers show here. */}
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <h1 className="font-serif text-xl sm:text-2xl font-black text-white truncate">Welcome, {name}!</h1>
+          {achievements && (
+            <Link
+              href="/progress"
+              className="flex items-center gap-1.5 shrink-0 min-h-[44px] -my-2 px-1.5 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label={`Rank: ${achievements.rank.label}, ${achievements.xp.toLocaleString()} XP — view achievements`}
+            >
+              <RankInsignia rank={achievements.rank.id} size={18} />
+              <span className="text-xs font-semibold">{achievements.rank.label}</span>
+              <span className="text-[10px] font-mono tabular-nums text-white/70">
+                {achievements.xp.toLocaleString()}
+                {achievements.rank.nextMinXp !== null
+                  ? `/${achievements.rank.nextMinXp.toLocaleString()}`
+                  : ''} XP
+              </span>
+            </Link>
+          )}
+        </div>
+
+        {/* Row 2: readiness ring + coach line (unchanged) */}
+        <div className="flex items-center gap-4" data-tour="readiness">
         <svg
           width="84"
           height="84"
@@ -194,28 +177,33 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
             {coachLine}
           </p>
         </div>
-      </section>
+        </div>
 
-      {/* ═══ STAT CARDS — streak · tests · avg score ═══ */}
-      <div className="grid grid-cols-3 gap-2 mb-3">
-        <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
-          <p className="text-lg font-bold font-mono text-primary-900 inline-flex items-center justify-center gap-1">
-            <Flame size={16} aria-hidden="true" />{currentStreak}
-          </p>
-          <p className="text-[11px] text-gray-500">day streak</p>
+        {/* Row 3: compact stat chips — streak · tests · avg (replaced the white
+            stat-card grid). Numbers mono white; labels small white/70. */}
+        <div className="flex flex-wrap items-center gap-2 mt-3">
+          <span className="inline-flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 text-[10px] text-white/70">
+            <span aria-hidden="true">🔥</span>
+            <span className="font-mono font-bold text-xs text-white tabular-nums">{currentStreak}</span>
+            day streak
+          </span>
+          {/* after:-inset-y-2 grows the tap target past 40px without inflating the pill */}
+          <Link
+            href="/progress"
+            className="relative inline-flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 text-[10px] text-white/70 hover:bg-white/20 transition-colors after:absolute after:-inset-y-2 after:inset-x-0 after:content-['']"
+            aria-label={`${totalTests} tests taken — view progress`}
+          >
+            <span className="font-mono font-bold text-xs text-white tabular-nums">{totalTests}</span>
+            tests
+          </Link>
+          <span className="inline-flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 text-[10px] text-white/70">
+            <span className="font-mono font-bold text-xs text-white tabular-nums">
+              {avgScore !== null ? `${avgScore}%` : '—'}
+            </span>
+            avg
+          </span>
         </div>
-        <Link
-          href="/progress"
-          className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center hover:border-blue-300 transition-colors"
-        >
-          <p className="text-lg font-bold font-mono text-primary-900">{totalTests}</p>
-          <p className="text-[11px] text-gray-500">tests</p>
-        </Link>
-        <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
-          <p className="text-lg font-bold font-mono text-primary-900">{avgScore !== null ? `${avgScore}%` : '—'}</p>
-          <p className="text-[11px] text-gray-500">avg score</p>
-        </div>
-      </div>
+      </section>
 
       {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
       <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1 mb-2 px-0.5">

@@ -25,10 +25,12 @@ export function GuidedTour() {
         },
       })
 
+      // Single merged intro step: data-tour="header" now sits on the navy hero
+      // card (welcome + readiness ring + stat chips), so one step covers it all.
       tour.addStep({
         id: 'welcome',
-        title: 'Welcome to EPA 608!',
-        text: 'Let me show you around. This tour takes 30 seconds.',
+        title: 'Your dashboard',
+        text: 'Your exam readiness, streak, and scores at a glance. This tour takes 30 seconds.',
         attachTo: { element: '[data-tour="header"]', on: 'bottom' },
         buttons: [
           { text: 'Skip', action: tour.cancel, classes: 'shepherd-button-secondary' },

@@ -1,62 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { BookOpen, Clock, AlertTriangle, Lock } from 'lucide-react'
-
-function getCorePassStatus(): boolean {
-  try {
-    const data = JSON.parse(localStorage.getItem('epa608CorePass') || 'null')
-    return data?.passed === true
-  } catch { return false }
-}
+import { BookOpen, Clock, Lock } from 'lucide-react'
 
 export default function ModeSelector({ slug, category, isPro }: { slug: string; category: string; isPro: boolean }) {
-  const [showGate, setShowGate] = useState(false)
-  const [checked, setChecked] = useState(false)
-
-  useEffect(() => {
-    // Only gate non-Core categories
-    if (slug !== 'core') {
-      const passed = getCorePassStatus()
-      if (!passed) setShowGate(true)
-    }
-    setChecked(true)
-  }, [slug])
-
-  if (!checked) return null
-
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
         <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">{category}</h1>
         <p className="text-gray-600 text-center mb-8">How do you want to study?</p>
-
-        {/* Core-first soft gate — muted navy-tint info (approved skin) */}
-        {showGate && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle size={20} className="text-blue-800 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-blue-900 text-sm mb-1">Core First — Recommended</p>
-                <p className="text-xs text-blue-800 leading-relaxed mb-3">
-                  On the real EPA 608 exam, you must pass Core to earn any certification.
-                  Core covers the fundamentals that {category} builds on.
-                </p>
-                <div className="flex gap-2">
-                  <Link href="/test/core?mode=practice"
-                    className="px-4 py-2 bg-blue-800 text-white rounded-lg text-xs font-bold hover:bg-blue-900 min-h-[40px] inline-flex items-center">
-                    Practice Core First
-                  </Link>
-                  <button onClick={() => setShowGate(false)}
-                    className="px-4 py-2 bg-white border border-blue-200 text-blue-800 rounded-lg text-xs font-medium hover:bg-blue-50 min-h-[40px]">
-                    I know Core — Continue
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         <div className="space-y-3">
           {/* Practice Mode — always free */}
