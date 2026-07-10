@@ -44,6 +44,17 @@ export const ALL_BADGE_IDS = [
 
 export type AchievementBadgeId = (typeof ALL_BADGE_IDS)[number]
 
+// Rarity DISPLAY labels only — rarity assignment and XP values live on the
+// server (achievements payload); this file never hardcodes XP numbers.
+export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary'
+
+export const RARITY_LABELS: Record<BadgeRarity, string> = {
+  common: 'Common',
+  rare: 'Rare',
+  epic: 'Epic',
+  legendary: 'Legendary',
+}
+
 export const BADGE_TITLES: Record<AchievementBadgeId, string> = {
   'core-ready': 'Core Ready',
   'type1-ready': 'Type I Ready',

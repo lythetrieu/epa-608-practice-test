@@ -18,6 +18,7 @@ import {
   buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
+  countActiveDays,
   countDistinctQuestions,
   countFixedQuestions,
   fetchAchievementCounts,
@@ -221,6 +222,10 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
         maxAnswersInADay: maxAnswersInOneDay(activityRows),
         // world-* badges: pair the Study X/Y maps computed above.
         worldCompletion: buildWorldCompletion(masteredByCat, totalsByCat),
+        // activeDays XP: distinct UTC days in the same 2000-row answer window,
+        // merged with session dates exactly like the heatmap above — old test
+        // days beyond the window still count. No cutoff, no new query.
+        activeDays: countActiveDays(activityRows, allSessions ?? []),
       })
     }
   } catch {

@@ -11,6 +11,9 @@
 //      +  3 × wrong answers          (effort counts; correct = false)
 //      + 50 × completed test sessions (test_sessions.submitted_at NOT NULL)
 //      +100 × Study Path levels mastered (study_path_progress.status = 'mastered')
+//      + 20 × active days             (distinct UTC days with ≥1 answer, see
+//                                      countActiveDays — bounded-window input)
+//      +  Σ BADGE_XP[id].xp over unlocked badges (rarity-tiered bonuses)
 //
 // Rank thresholds: 0 / 500 / 1500 / 3500 / 7000 (see RANKS below).
 //
@@ -36,6 +39,7 @@ export const XP_PER_CORRECT = 10
 export const XP_PER_WRONG = 3
 export const XP_PER_TEST = 50
 export const XP_PER_LEVEL = 100
+export const XP_PER_ACTIVE_DAY = 20
 
 export const RANKS = [
   { id: 'apprentice', label: 'Apprentice', minXp: 0 },
@@ -88,6 +92,54 @@ export const BADGE_IDS = [
 ] as const
 
 export type BadgeId = (typeof BADGE_IDS)[number]
+
+// ─── Badge XP economy (rarity-tiered bonuses added to the XP total) ─────────
+//
+// Every badge id MUST have an entry (contract-tested). Unlocking a badge adds
+// its xp to the user's total — deterministic and replayable like everything
+// else here: badges are derived, so their XP re-derives identically.
+
+export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary'
+
+export const BADGE_XP: Record<BadgeId, { rarity: BadgeRarity; xp: number }> = {
+  // ── common ──
+  'first-test': { rarity: 'common', xp: 25 },
+  'first-level': { rarity: 'common', xp: 25 },
+  'streak-3': { rarity: 'common', xp: 50 },
+  century: { rarity: 'common', xp: 50 },
+  'night-owl': { rarity: 'common', xp: 50 },
+  'weekend-warrior': { rarity: 'common', xp: 50 },
+  // ── rare ──
+  'streak-7': { rarity: 'rare', xp: 150 },
+  'hat-trick': { rarity: 'rare', xp: 150 },
+  'comeback-kid': { rarity: 'rare', xp: 150 },
+  sharpshooter: { rarity: 'rare', xp: 150 },
+  fixer: { rarity: 'rare', xp: 150 },
+  'half-bank': { rarity: 'rare', xp: 150 },
+  'perfect-10': { rarity: 'rare', xp: 150 },
+  // ── epic ──
+  'core-ready': { rarity: 'epic', xp: 200 },
+  'type1-ready': { rarity: 'epic', xp: 200 },
+  'type2-ready': { rarity: 'epic', xp: 200 },
+  'type3-ready': { rarity: 'epic', xp: 200 },
+  'boss-down': { rarity: 'epic', xp: 200 },
+  'beat-the-clock': { rarity: 'epic', xp: 200 },
+  'marathon-day': { rarity: 'epic', xp: 200 },
+  'world-core': { rarity: 'epic', xp: 250 },
+  'world-type1': { rarity: 'epic', xp: 250 },
+  'world-type2': { rarity: 'epic', xp: 250 },
+  'world-type3': { rarity: 'epic', xp: 250 },
+  'streak-14': { rarity: 'epic', xp: 300 },
+  'speed-runner': { rarity: 'epic', xp: 300 },
+  'fix-master': { rarity: 'epic', xp: 300 },
+  'flawless-exam': { rarity: 'epic', xp: 300 },
+  // ── legendary ──
+  'universal-ready': { rarity: 'legendary', xp: 500 },
+  'full-bank': { rarity: 'legendary', xp: 500 },
+  'iron-streak-30': { rarity: 'legendary', xp: 500 },
+  'path-complete': { rarity: 'legendary', xp: 750 },
+  'universal-boss': { rarity: 'legendary', xp: 1000 },
+}
 
 // ─── Badge criteria constants ────────────────────────────────────────────────
 
@@ -177,12 +229,21 @@ export type AchievementInputs = {
    * mastered/total per-category maps; this just pairs them up.
    */
   worldCompletion: Record<string, { mastered: number; total: number }>
+  /**
+   * Distinct UTC days with ≥1 answer (countActiveDays over the bounded
+   * 2000-row answer window both callers already fetch, merged with session
+   * dates — same honest window limitation as countDistinctQuestions: can
+   * only undercount, never over).
+   */
+  activeDays: number
 }
 
 export type Achievements = {
   xp: number
+  /** XP earned from unlocked badges alone (already included in `xp`). */
+  badgeXp: number
   rank: { id: RankId; label: string; minXp: number; nextMinXp: number | null }
-  badges: { id: BadgeId; unlocked: boolean }[]
+  badges: { id: BadgeId; unlocked: boolean; rarity: BadgeRarity; xp: number }[]
 }
 
 // ─── Pure computation ────────────────────────────────────────────────────────
@@ -193,24 +254,14 @@ export type Achievements = {
  * — this function never touches the network.
  */
 export function computeAchievements(inputs: AchievementInputs): Achievements {
-  const xp =
+  // Activity XP. Badge bonuses are added AFTER the badge scan below — badges
+  // never depend on XP (only on activity inputs), so this is not circular.
+  const baseXp =
     XP_PER_CORRECT * Math.max(0, inputs.correctCount) +
     XP_PER_WRONG * Math.max(0, inputs.wrongCount) +
     XP_PER_TEST * Math.max(0, inputs.completedTests) +
-    XP_PER_LEVEL * Math.max(0, inputs.masteredLevels)
-
-  // Highest rank whose threshold the XP meets (RANKS is minXp-ascending).
-  let rankIdx = 0
-  for (let i = 0; i < RANKS.length; i++) {
-    if (xp >= RANKS[i].minXp) rankIdx = i
-  }
-  const r = RANKS[rankIdx]
-  const rank = {
-    id: r.id as RankId,
-    label: r.label as string,
-    minXp: r.minXp as number,
-    nextMinXp: (RANKS[rankIdx + 1]?.minXp ?? null) as number | null,
-  }
+    XP_PER_LEVEL * Math.max(0, inputs.masteredLevels) +
+    XP_PER_ACTIVE_DAY * Math.max(0, inputs.activeDays)
 
   // ── Section readiness (core/type1/type2/type3-ready + universal-ready) ──
   const readyByCat = new Map<string, boolean>()
@@ -367,11 +418,30 @@ export function computeAchievements(inputs: AchievementInputs): Achievements {
     'universal-boss': universalBoss,
   }
 
-  return {
-    xp,
-    rank,
-    badges: BADGE_IDS.map(id => ({ id, unlocked: unlockedById[id] })),
+  // ── Total XP = activity XP + rarity-tiered badge bonuses, then rank ──────
+  const badges = BADGE_IDS.map(id => ({
+    id,
+    unlocked: unlockedById[id],
+    rarity: BADGE_XP[id].rarity,
+    xp: BADGE_XP[id].xp,
+  }))
+  const badgeXp = badges.reduce((sum, b) => sum + (b.unlocked ? b.xp : 0), 0)
+  const xp = baseXp + badgeXp
+
+  // Highest rank whose threshold the XP meets (RANKS is minXp-ascending).
+  let rankIdx = 0
+  for (let i = 0; i < RANKS.length; i++) {
+    if (xp >= RANKS[i].minXp) rankIdx = i
   }
+  const r = RANKS[rankIdx]
+  const rank = {
+    id: r.id as RankId,
+    label: r.label as string,
+    minXp: r.minXp as number,
+    nextMinXp: (RANKS[rankIdx + 1]?.minXp ?? null) as number | null,
+  }
+
+  return { xp, badgeXp, rank, badges }
 }
 
 // ─── Shared pure helpers ─────────────────────────────────────────────────────
@@ -465,6 +535,32 @@ export function maxAnswersInOneDay(rows: { answered_at?: string | null }[]): num
     if (n > max) max = n
   }
   return max
+}
+
+/**
+ * "Active days" XP input: distinct UTC days with ≥1 answer. Runs over the
+ * SAME bounded newest-first 2000-row answer window the callers already fetch,
+ * MERGED with the session dates they also already have (started_at +
+ * submitted_at) — exactly like the dashboard heatmap merges session days —
+ * so old test days whose per-question rows fell out of the window still
+ * count. Zero new queries; same honest window limitation as
+ * countDistinctQuestions (can only undercount, never over).
+ */
+export function countActiveDays(
+  answerRows: { answered_at?: string | null }[],
+  sessions: { started_at?: string | null; submitted_at?: string | null }[] = [],
+): number {
+  const days = new Set<string>()
+  const add = (iso?: string | null) => {
+    const day = (iso ?? '').slice(0, 10)
+    if (day.length === 10) days.add(day)
+  }
+  for (const r of answerRows) add(r.answered_at)
+  for (const s of sessions) {
+    add(s.started_at)
+    add(s.submitted_at)
+  }
+  return days.size
 }
 
 /**

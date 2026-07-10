@@ -24,8 +24,23 @@ import { readCache, writeCache } from '@/lib/local-first'
 
 // Minimal structural subset of the server `Achievements` payload — accepts
 // data.achievements from either page without importing server types.
+// rarity/xp are OPTIONAL: payloads cached before the server sent them lack
+// the keys, so toasts fall back to the XP-less line.
 type AchievementsLike = {
-  badges: ReadonlyArray<{ id: string; unlocked: boolean }>
+  badges: ReadonlyArray<{
+    id: string
+    unlocked: boolean
+    rarity?: 'common' | 'rare' | 'epic' | 'legendary'
+    xp?: number
+  }>
+}
+
+// One queued toast: id plus whatever rarity/xp the triggering payload carried,
+// captured at diff time so a later payload swap can't change a visible toast.
+type ToastEntry = {
+  id: BadgeId
+  rarity?: 'common' | 'rare' | 'epic' | 'legendary'
+  xp?: number
 }
 
 // Survives client-side navigation between Home and Progress (module scope),
@@ -46,7 +61,7 @@ export function BadgeToasts({
   /** Pass ONLY fresh payloads (null while stale/absent) — see call sites. */
   achievements: AchievementsLike | null | undefined
 }) {
-  const [queue, setQueue] = useState<BadgeId[]>([])
+  const [queue, setQueue] = useState<ToastEntry[]>([])
 
   useEffect(() => {
     if (!achievements) return
@@ -54,6 +69,8 @@ export function BadgeToasts({
       .filter(b => b.unlocked)
       .map(b => b.id)
       .filter(isBadgeId)
+    // id → payload badge, so newly diffed ids pick up their rarity/xp.
+    const badgeById = new Map(achievements.badges.map(b => [b.id, b]))
 
     const key = `badgesSeen:${userId}`
     const seen = readCache<string[]>(key)
@@ -74,7 +91,16 @@ export function BadgeToasts({
     const toShow = newly.filter(id => !announcedThisSession.has(`${userId}:${id}`))
     if (toShow.length === 0) return
     for (const id of toShow) announcedThisSession.add(`${userId}:${id}`)
-    setQueue(q => [...q, ...toShow.filter(id => !q.includes(id))])
+    setQueue(q => {
+      const queued = new Set(q.map(e => e.id))
+      const additions: ToastEntry[] = toShow
+        .filter(id => !queued.has(id))
+        .map(id => {
+          const b = badgeById.get(id)
+          return { id, rarity: b?.rarity, xp: b?.xp }
+        })
+      return [...q, ...additions]
+    })
   }, [achievements, userId])
 
   // Auto-dismiss: the oldest visible toast leaves after 4s; the queue drains
@@ -93,14 +119,20 @@ export function BadgeToasts({
       aria-live="polite"
       className="fixed inset-x-0 z-50 flex flex-col items-center gap-2 px-4 pointer-events-none bottom-[calc(4.5rem+env(safe-area-inset-bottom))] md:bottom-6"
     >
-      {visible.map(id => (
+      {visible.map(({ id, xp }) => (
         <div
           key={id}
           className="flex items-center gap-3 rounded-xl px-4 py-3 text-white shadow-lg"
           style={{ background: '#001d57' }}
         >
           <BadgeIcon id={id} size={32} />
-          <span className="text-sm font-semibold">Badge unlocked — {BADGE_TITLES[id]}</span>
+          <span className="text-sm font-semibold">
+            {/* Fresh payloads carry per-badge xp; old cached shapes don't —
+                fall back to the original XP-less line. */}
+            {typeof xp === 'number'
+              ? `Badge unlocked — ${BADGE_TITLES[id]} +${xp} XP`
+              : `Badge unlocked — ${BADGE_TITLES[id]}`}
+          </span>
         </div>
       ))}
     </div>

@@ -5,7 +5,8 @@
 // grouped under small kickers (locked badges grayed). Tapping a badge reveals
 // a one-line plain-English unlock condition. Muted design system:
 // navy/ink/white/slate only — the gold lives inside the approved badge art,
-// never in surrounding UI.
+// never in surrounding UI. Sole warm exception: the legendary rarity TEXT
+// label uses amber (gold-for-achievement rule).
 
 import { useState } from 'react'
 import {
@@ -19,7 +20,9 @@ import {
   BADGE_CAPTIONS,
   BADGE_GROUPS,
   BADGE_TITLES,
+  RARITY_LABELS,
   type AchievementBadgeId,
+  type BadgeRarity,
 } from '@/components/gamification/badge-meta'
 // Type-only import — erased at compile time, pulls no server code.
 import type { Achievements } from '@/lib/achievements-server'
@@ -27,13 +30,40 @@ import type { Achievements } from '@/lib/achievements-server'
 const INK = '#001d57'
 const NAVY = '#003087'
 
-export function AchievementsSection({ achievements }: { achievements: Achievements }) {
+// Rarity is rendered as muted TEXT only — no colored chips/bars. Legendary
+// amber is the single warm exception (gold-for-achievement rule; matches the
+// gold inside the badge art).
+const RARITY_CLASS: Record<BadgeRarity, string> = {
+  common: 'text-gray-400',
+  rare: 'text-blue-700',
+  epic: 'text-[#001d57] font-semibold',
+  legendary: 'text-amber-600 font-semibold',
+}
+
+// Local view of the payload. rarity / xp / badgeXp are OPTIONAL: payloads
+// cached (local-first) before the server started sending them lack the keys
+// entirely, so every read below is guarded — old caches render exactly the
+// pre-rarity UI instead of crashing.
+type AchievementsView = Omit<Achievements, 'badges'> & {
+  badges: ReadonlyArray<{
+    id: string
+    unlocked: boolean
+    rarity?: BadgeRarity
+    xp?: number
+  }>
+  badgeXp?: number
+}
+
+export function AchievementsSection({ achievements }: { achievements: AchievementsView }) {
   const [selected, setSelected] = useState<AchievementBadgeId | null>(null)
   const { xp, rank } = achievements
   const unlockedSet = new Set<string>(
     achievements.badges.filter(b => b.unlocked).map(b => b.id),
   )
   const unlockedCount = ALL_BADGE_IDS.filter(id => unlockedSet.has(id)).length
+  // id → payload badge, for the per-badge rarity/XP line (absent on old caches).
+  const badgeById = new Map(achievements.badges.map(b => [b.id, b]))
+  const badgeXp = achievements.badgeXp ?? 0
 
   // Progress within the current rank band (minXp → nextMinXp). Top rank = full.
   const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
@@ -71,7 +101,14 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
           <p className="text-lg font-bold tabular-nums" style={{ color: INK }}>
             {xp.toLocaleString()} XP
           </p>
-          <p className="text-xs text-gray-500 text-right">{caption}</p>
+          <div className="text-right">
+            <p className="text-xs text-gray-500">{caption}</p>
+            {badgeXp > 0 && (
+              <p className="text-[11px] text-gray-400">
+                including {badgeXp.toLocaleString()} XP from badges
+              </p>
+            )}
+          </div>
         </div>
         {/* Bar is decorative — the number + caption above carry the information. */}
         <div className="h-2 rounded-full bg-gray-100 overflow-hidden" aria-hidden="true">
@@ -94,6 +131,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
               {group.ids.map(id => {
                 const unlocked = unlockedSet.has(id)
                 const isSelected = selected === id
+                const badge = badgeById.get(id)
                 return (
                   <li key={id}>
                     <button
@@ -111,6 +149,17 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
                       <span className="text-[10px] text-gray-500 text-center leading-tight">
                         {BADGE_TITLES[id]}
                       </span>
+                      {/* Rarity + XP line — guarded: old cached payloads have
+                          badges without rarity/xp, so this row simply
+                          disappears instead of crashing. */}
+                      {badge?.rarity ? (
+                        <span
+                          className={`text-[9px] leading-none text-center ${RARITY_CLASS[badge.rarity]}`}
+                        >
+                          {RARITY_LABELS[badge.rarity]}
+                          {typeof badge.xp === 'number' ? ` · +${badge.xp} XP` : ''}
+                        </span>
+                      ) : null}
                     </button>
                   </li>
                 )

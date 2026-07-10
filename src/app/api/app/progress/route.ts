@@ -16,6 +16,7 @@ import {
   buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
+  countActiveDays,
   countDistinctQuestions,
   countFixedQuestions,
   fetchAchievementCounts,
@@ -127,6 +128,10 @@ export async function GET() {
         // marathon-day: bucket the same 2000-row window by UTC day.
         maxAnswersInADay: maxAnswersInOneDay(answerRows),
         worldCompletion: buildWorldCompletion(masteredByCat, totalConceptsByCategory()),
+        // activeDays XP: same derivation as dashboard-data — distinct UTC days
+        // in the 2000-row answer window merged with session dates, so both
+        // endpoints report identical XP for the same account.
+        activeDays: countActiveDays(answerRows, allSessions),
       })
     }
   } catch {

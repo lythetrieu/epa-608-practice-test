@@ -3,10 +3,12 @@ import {
   buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
+  countActiveDays,
   countDistinctQuestions,
   countFixedQuestions,
   maxAnswersInOneDay,
   BADGE_IDS,
+  BADGE_XP,
   RANKS,
   FULL_BANK_SIZE,
   HALF_BANK_SIZE,
@@ -33,6 +35,7 @@ function baseInputs(overrides: Partial<AchievementInputs> = {}): AchievementInpu
     fixedCount: 0,
     maxAnswersInADay: 0,
     worldCompletion: {},
+    activeDays: 0,
     ...overrides,
   }
 }
@@ -84,11 +87,19 @@ describe('computeAchievements — XP', () => {
     expect(computeAchievements(baseInputs()).xp).toBe(0)
   })
 
-  it('applies 10/correct + 3/wrong + 50/test + 100/level', () => {
+  it('applies 10/correct + 3/wrong + 50/test + 100/level + 20/active-day + badge bonuses', () => {
     const a = computeAchievements(
-      baseInputs({ correctCount: 7, wrongCount: 5, completedTests: 3, masteredLevels: 2 }),
+      baseInputs({
+        correctCount: 7,
+        wrongCount: 5,
+        completedTests: 3,
+        masteredLevels: 2,
+        activeDays: 4,
+      }),
     )
-    expect(a.xp).toBe(7 * 10 + 5 * 3 + 3 * 50 + 2 * 100) // 70+15+150+200 = 435
+    // These inputs also unlock first-test (25) + first-level (25) → badgeXp 50.
+    expect(a.badgeXp).toBe(50)
+    expect(a.xp).toBe(7 * 10 + 5 * 3 + 3 * 50 + 2 * 100 + 4 * 20 + 50) // 70+15+150+200+80+50 = 565
   })
 
   it('counts wrong answers (effort) but less than correct ones', () => {
@@ -98,9 +109,32 @@ describe('computeAchievements — XP', () => {
     expect(correctOnly.xp).toBe(100)
   })
 
+  it('awards 20 XP per active day (and activeDays alone unlocks no badge)', () => {
+    const a = computeAchievements(baseInputs({ activeDays: 3 }))
+    expect(a.xp).toBe(60)
+    expect(a.badgeXp).toBe(0)
+  })
+
+  it('adds unlocked-badge bonuses into xp and reports them as badgeXp', () => {
+    // 100 correct answers → century unlocks (common, 50 XP), nothing else.
+    const a = computeAchievements(baseInputs({ correctCount: 100 }))
+    expect(a.badgeXp).toBe(BADGE_XP.century.xp)
+    expect(a.xp).toBe(100 * 10 + BADGE_XP.century.xp) // 1050
+  })
+
+  it('badge XP counts toward rank thresholds', () => {
+    // 490 base XP + perfect-10 (rare, 150) = 640 → crosses the 500 mark.
+    const a = computeAchievements(baseInputs({ correctCount: 49, hasPerfectLevel: true }))
+    expect(a.xp).toBe(640)
+    expect(a.rank.id).toBe('tech-in-training')
+  })
+
   it('clamps negative inputs to 0 instead of producing negative XP', () => {
-    const a = computeAchievements(baseInputs({ correctCount: -5, wrongCount: -1 }))
+    const a = computeAchievements(
+      baseInputs({ correctCount: -5, wrongCount: -1, activeDays: -3 }),
+    )
     expect(a.xp).toBe(0)
+    expect(a.badgeXp).toBe(0)
   })
 })
 
@@ -111,19 +145,21 @@ describe('computeAchievements — rank', () => {
     expect(RANKS.map(r => r.minXp)).toEqual([0, 500, 1500, 3500, 7000])
   })
 
-  // Exact-XP recipes: 10×correct + 3×wrong lets us hit any target
-  // (n mod 10 covered by wrongCount multiples of 3: 499 = 49×10 + 3×3).
+  // Exact-XP recipes that unlock ZERO badges (badge bonuses would shift the
+  // total): activeDays carries the bulk at 20/day and never unlocks anything;
+  // correct+wrong stays under the 100-answer century mark
+  // (odd remainders via 10×correct + 3×wrong: 99 = 9×10 + 3×3).
   const cases: [number, Partial<AchievementInputs>, string, number | null][] = [
     [0, {}, 'apprentice', 500],
-    [499, { correctCount: 49, wrongCount: 3 }, 'apprentice', 500],
+    [499, { correctCount: 1, wrongCount: 3, activeDays: 24 }, 'apprentice', 500],
     [500, { correctCount: 50 }, 'tech-in-training', 1500],
-    [1499, { correctCount: 149, wrongCount: 3 }, 'tech-in-training', 1500],
-    [1500, { correctCount: 150 }, 'journeyman', 3500],
-    [3499, { correctCount: 349, wrongCount: 3 }, 'journeyman', 3500],
-    [3500, { correctCount: 350 }, 'senior-tech', 7000],
-    [6999, { correctCount: 699, wrongCount: 3 }, 'senior-tech', 7000],
-    [7000, { correctCount: 700 }, 'master-tech', null],
-    [99999, { correctCount: 9999, wrongCount: 3 }, 'master-tech', null],
+    [1499, { correctCount: 9, wrongCount: 3, activeDays: 70 }, 'tech-in-training', 1500],
+    [1500, { activeDays: 75 }, 'journeyman', 3500],
+    [3499, { correctCount: 9, wrongCount: 3, activeDays: 170 }, 'journeyman', 3500],
+    [3500, { activeDays: 175 }, 'senior-tech', 7000],
+    [6999, { correctCount: 9, wrongCount: 3, activeDays: 345 }, 'senior-tech', 7000],
+    [7000, { activeDays: 350 }, 'master-tech', null],
+    [99999, { correctCount: 9, wrongCount: 3, activeDays: 4995 }, 'master-tech', null],
   ]
 
   it.each(cases)('xp=%i → %s', (xp, overrides, rankId, nextMinXp) => {
@@ -144,6 +180,62 @@ describe('computeAchievements — badge payload', () => {
     const a = computeAchievements(baseInputs())
     expect(a.badges.map(b => b.id)).toEqual([...BADGE_IDS])
     expect(a.badges.every(b => b.unlocked === false)).toBe(true)
+  })
+
+  it('every badge item carries its BADGE_XP rarity and xp (locked or not)', () => {
+    const a = computeAchievements(baseInputs())
+    for (const b of a.badges) {
+      expect(b.rarity).toBe(BADGE_XP[b.id].rarity)
+      expect(b.xp).toBe(BADGE_XP[b.id].xp)
+    }
+  })
+})
+
+// ─── BADGE_XP economy contract ───────────────────────────────────────────────
+
+describe('BADGE_XP — economy contract', () => {
+  it('maps every one of the 33 badge ids, no extras', () => {
+    expect(BADGE_IDS).toHaveLength(33)
+    expect(Object.keys(BADGE_XP).sort()).toEqual([...BADGE_IDS].sort())
+  })
+
+  it('uses only the four rarities, with XP tiered strictly by rarity band', () => {
+    const bands = {
+      common: [25, 50],
+      rare: [150, 150],
+      epic: [200, 300],
+      legendary: [500, 1000],
+    } as const
+    for (const id of BADGE_IDS) {
+      const { rarity, xp } = BADGE_XP[id]
+      expect(Object.keys(bands)).toContain(rarity)
+      const [min, max] = bands[rarity]
+      expect(xp).toBeGreaterThanOrEqual(min)
+      expect(xp).toBeLessThanOrEqual(max)
+    }
+  })
+
+  it('spot-checks the pinned rarity/xp table', () => {
+    expect(BADGE_XP['first-test']).toEqual({ rarity: 'common', xp: 25 })
+    expect(BADGE_XP['streak-3']).toEqual({ rarity: 'common', xp: 50 })
+    expect(BADGE_XP['night-owl']).toEqual({ rarity: 'common', xp: 50 })
+    expect(BADGE_XP['streak-7']).toEqual({ rarity: 'rare', xp: 150 })
+    expect(BADGE_XP['perfect-10']).toEqual({ rarity: 'rare', xp: 150 })
+    expect(BADGE_XP['half-bank']).toEqual({ rarity: 'rare', xp: 150 })
+    expect(BADGE_XP['core-ready']).toEqual({ rarity: 'epic', xp: 200 })
+    expect(BADGE_XP['marathon-day']).toEqual({ rarity: 'epic', xp: 200 })
+    expect(BADGE_XP['world-core']).toEqual({ rarity: 'epic', xp: 250 })
+    expect(BADGE_XP['streak-14']).toEqual({ rarity: 'epic', xp: 300 })
+    expect(BADGE_XP['flawless-exam']).toEqual({ rarity: 'epic', xp: 300 })
+    expect(BADGE_XP['universal-ready']).toEqual({ rarity: 'legendary', xp: 500 })
+    expect(BADGE_XP['iron-streak-30']).toEqual({ rarity: 'legendary', xp: 500 })
+    expect(BADGE_XP['path-complete']).toEqual({ rarity: 'legendary', xp: 750 })
+    expect(BADGE_XP['universal-boss']).toEqual({ rarity: 'legendary', xp: 1000 })
+  })
+
+  it('pins the total economy: all 33 badges are worth 8150 XP combined', () => {
+    const total = Object.values(BADGE_XP).reduce((s, v) => s + v.xp, 0)
+    expect(total).toBe(8150)
   })
 })
 
@@ -322,6 +414,11 @@ describe('computeAchievements — remaining badges', () => {
     const locked = a.badges.filter(b => !b.unlocked).map(b => b.id)
     expect(locked).toEqual([])
     expect(a.badges).toHaveLength(33)
+    // With every badge unlocked, badgeXp = the whole 8150 economy, all of it
+    // included in the total on top of the activity XP.
+    const allBadgeXp = Object.values(BADGE_XP).reduce((s, v) => s + v.xp, 0)
+    expect(a.badgeXp).toBe(allBadgeXp)
+    expect(a.xp - a.badgeXp).toBe(700 * 10 + 1 * 50 + 1 * 100) // activity XP alone
     expect(a.rank.id).toBe('master-tech')
   })
 })
@@ -812,6 +909,52 @@ describe('maxAnswersInOneDay', () => {
     const max = maxAnswersInOneDay(rows)
     expect(max).toBe(100)
     expect(badge(computeAchievements(baseInputs({ maxAnswersInADay: max })), 'marathon-day')).toBe(true)
+  })
+})
+
+// ─── countActiveDays (activeDays XP input) ───────────────────────────────────
+
+describe('countActiveDays', () => {
+  it('counts distinct UTC days across answer rows and session timestamps', () => {
+    const answers = [
+      { answered_at: '2026-07-08T10:00:00.000Z' },
+      { answered_at: '2026-07-08T22:00:00.000Z' }, // same day — dedupes
+      { answered_at: '2026-07-09T01:00:00.000Z' },
+    ]
+    const sessions = [
+      // started_at on a third day, submitted_at overlapping an answer day
+      { started_at: '2026-07-01T10:00:00.000Z', submitted_at: '2026-07-09T02:00:00.000Z' },
+    ]
+    expect(countActiveDays(answers, sessions)).toBe(3) // 07-01, 07-08, 07-09
+  })
+
+  it('splits on the UTC midnight boundary', () => {
+    const answers = [
+      { answered_at: '2026-07-08T23:59:59.000Z' },
+      { answered_at: '2026-07-09T00:00:00.000Z' },
+    ]
+    expect(countActiveDays(answers)).toBe(2)
+  })
+
+  it('skips null/missing timestamps on both inputs', () => {
+    const answers = [{ answered_at: '2026-07-08T10:00:00.000Z' }, { answered_at: null }, {}]
+    const sessions = [{ started_at: null, submitted_at: null }, {}]
+    expect(countActiveDays(answers, sessions)).toBe(1)
+  })
+
+  it('sessions default to none, and empty inputs give 0', () => {
+    expect(countActiveDays([])).toBe(0)
+    expect(countActiveDays([], [])).toBe(0)
+  })
+
+  it('feeds the 20 XP/day term end-to-end', () => {
+    const answers = [
+      { answered_at: '2026-07-07T10:00:00.000Z' },
+      { answered_at: '2026-07-08T10:00:00.000Z' },
+    ]
+    const activeDays = countActiveDays(answers)
+    expect(activeDays).toBe(2)
+    expect(computeAchievements(baseInputs({ activeDays })).xp).toBe(40)
   })
 })
 
