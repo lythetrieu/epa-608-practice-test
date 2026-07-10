@@ -36,14 +36,14 @@ export function PracticeRows({ userId }: { userId: string | null }) {
   }, [userId])
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       {CATEGORIES.map(({ href, label, desc, emoji }) => {
         const isWeakest = weakest?.category === label
         return (
           <Link
             key={href}
             href={href}
-            className={`relative flex items-center gap-3 bg-white rounded-xl p-4 min-h-[72px] transition-all hover:shadow-md ${
+            className={`relative flex items-center gap-3 bg-white rounded-xl px-4 py-3 min-h-[60px] transition-all hover:shadow-md ${
               isWeakest
                 ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
                 : 'border border-gray-200 hover:border-blue-300'
@@ -56,14 +56,14 @@ export function PracticeRows({ userId }: { userId: string | null }) {
               </span>
             )}
             <span
-              className="w-11 h-11 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[21px] shrink-0"
+              className="w-10 h-10 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[19px] shrink-0"
               aria-hidden="true"
             >
               {emoji}
             </span>
             <span className="flex-1 min-w-0">
-              <span className="block font-extrabold text-gray-900">{label}</span>
-              <span className="block text-sm text-gray-500">
+              <span className="block font-extrabold text-gray-900 leading-tight">{label}</span>
+              <span className="block text-[13px] text-gray-500 leading-snug">
                 {desc}
                 {isWeakest && weakest && (
                   <>

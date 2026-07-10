@@ -242,7 +242,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       </section>
 
       {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
-      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mt-1 mb-2 px-0.5">
+      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mt-1 mb-1.5 px-0.5">
         Progress by section
       </h2>
       {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
@@ -265,7 +265,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           null
 
         return (
-          <div className="grid grid-cols-2 gap-2 mb-3" data-tour="sections">
+          <div className="grid grid-cols-2 gap-2 mb-2.5" data-tour="sections">
             {SECTION_CATEGORIES.map(category => {
               const emoji = SECTION_EMOJI[category] ?? '📋'
               const cat = readiness.byCategory.find(c => c.category === category)
@@ -284,7 +284,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   key={category}
                   href={`/learn?section=${encodeURIComponent(category)}`}
                   data-tour={category === 'Core' ? 'core' : undefined}
-                  className={`relative block bg-white rounded-2xl px-4 py-4 transition-colors ${
+                  className={`relative block bg-white rounded-2xl px-4 py-3 transition-colors ${
                     isNext
                       ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
                       : isWeakest
@@ -298,9 +298,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       Start here →
                     </span>
                   )}
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2 mb-1.5">
                     <span
-                      className="w-9 h-9 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-lg shrink-0"
+                      className="w-8 h-8 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-base shrink-0"
                       aria-hidden="true"
                     >
                       {emoji}
@@ -312,8 +312,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       </span>
                     )}
                   </div>
-                  {/* Numbers: one ink color, HUGE — state lives in the small label below */}
-                  <p className="font-mono text-3xl font-bold text-primary-900 leading-none mb-2">
+                  {/* Numbers: one ink color, HUGE (the tile's dominant element —
+                      ~1.6× the name row) — state lives in the small label below */}
+                  <p className="font-mono text-[26px] font-bold text-primary-900 leading-none mb-1.5">
                     {cat ? `${cat.readinessPct}%` : '—'}
                   </p>
                   <div className="h-2 rounded-full bg-blue-50 overflow-hidden">
@@ -322,12 +323,12 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
                     />
                   </div>
-                  <div className="text-xs text-gray-500 mt-2 leading-relaxed">
+                  <div className="text-[12px] text-gray-500 mt-1.5 leading-snug">
                     <p>Study path: {mastered}/{total} levels</p>
                     {practiced !== undefined && <p>{practiced} questions practiced</p>}
                   </div>
                   <p
-                    className={`text-xs font-bold mt-1.5 ${
+                    className={`text-[12px] font-bold mt-1 ${
                       cat?.ready ? 'text-green-600' : isWeakest ? 'text-red-600' : cat ? 'text-primary-900' : 'text-gray-400'
                     }`}
                   >
@@ -345,7 +346,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           one orange BUTTON remains the Start-here tile) ═══ */}
       <Link
         href="/tutor"
-        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[56px] hover:border-orange-300 transition-colors"
+        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 mb-2.5 min-h-[56px] hover:border-orange-300 transition-colors"
       >
         <span className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
           <Bot size={20} aria-hidden="true" />
@@ -371,7 +372,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {paceMs !== null && (
         <Link
           href="/progress"
-          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-blue-300 transition-colors"
+          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-2.5 min-h-[44px] hover:border-blue-300 transition-colors"
         >
           <div className="flex items-center gap-2">
             <span className="text-base shrink-0" aria-hidden="true">⏱</span>
@@ -390,7 +391,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               {paceMs <= 72_000 ? 'Will finish in time' : "Won't finish in time"}
             </span>
           </div>
-          <div className="mt-2.5">
+          <div className="mt-2">
             <PaceBar avgMs={paceMs} />
           </div>
         </Link>
@@ -400,7 +401,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {showWeakestAlert && (
         <Link
           href="/progress"
-          className="flex items-center gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 mb-3 mt-3 min-h-[44px] hover:border-red-300 transition-colors"
+          className="flex items-center gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-2.5 mb-2.5 min-h-[44px] hover:border-red-300 transition-colors"
         >
           <AlertTriangle size={17} className="text-red-600 shrink-0" aria-hidden="true" />
           <span className="text-sm font-semibold text-red-700 truncate">
@@ -414,11 +415,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
 
       {/* ═══ ACTIVITY (GitHub-style heatmap — below the fold by design; the
           section grid is the priority content up top) ═══ */}
-      {data.activity ? (
-        <div className="mt-3">
-          <ActivityHeatmap activity={data.activity} />
-        </div>
-      ) : null}
+      {data.activity ? <ActivityHeatmap activity={data.activity} /> : null}
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (

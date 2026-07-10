@@ -57,14 +57,14 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
 
   return (
     <>
-      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mb-2 px-0.5">
+      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mb-1.5 px-0.5">
         Activity — last {WEEKS} weeks
       </h2>
-      <section className="bg-white border border-gray-200 rounded-2xl p-4 mb-3">
+      <section className="bg-white border border-gray-200 rounded-2xl p-3 mb-2.5">
         {/* 14 equal columns, edge-to-edge — cells are aspect-square so they
             scale chunky with the card width (no dead whitespace). */}
         <div
-          className="grid gap-1"
+          className="grid gap-[3px]"
           style={{ gridTemplateColumns: `repeat(${WEEKS}, minmax(0, 1fr))` }}
           role="img"
           aria-label={`Practice activity: ${activity.activeDays} active days in the last ${WEEKS} weeks`}
@@ -93,7 +93,7 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
 
         {/* Legend — mono LESS/MORE row, per the mockup frame */}
         <div
-          className="flex items-center gap-1 mt-2.5 font-mono text-[9px] leading-none text-gray-400"
+          className="flex items-center gap-1 mt-1.5 font-mono text-[9px] leading-none text-gray-400"
           aria-hidden="true"
         >
           <span>LESS</span>

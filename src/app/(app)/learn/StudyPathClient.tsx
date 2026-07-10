@@ -760,7 +760,7 @@ export default function StudyPathClient({
   if (!activeWorld) {
     return (
       <div className="min-h-screen bg-slate-100">
-        <div className="px-4 py-6 max-w-3xl mx-auto">
+        <div className="px-4 py-5 max-w-3xl mx-auto">
           {/* Mockup STUDY PATH frame: kicker + Fraunces title + overall bar row */}
           <p className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] px-0.5">
             EPA 608 · Study Route
@@ -768,7 +768,7 @@ export default function StudyPathClient({
           <h1 className="mt-1 font-serif text-2xl font-black tracking-tight text-gray-900">
             Pick your section
           </h1>
-          <div className="mt-3 mb-5 flex items-center gap-2.5">
+          <div className="mt-1.5 mb-3.5 flex items-center gap-2.5">
             <div className="flex-1 h-2 bg-blue-50 rounded-full overflow-hidden">
               <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
             </div>
@@ -776,7 +776,7 @@ export default function StudyPathClient({
               {totalMastered}/{concepts.length} · {overallPct}%
             </span>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-2.5 sm:grid-cols-2">
             {sections.map(cat => {
               const items = grouped[cat] || []
               if (!items.length) return null
@@ -789,14 +789,14 @@ export default function StudyPathClient({
               const starsPossible = items.length * 3
               return (
                 <button key={cat} onClick={() => setActiveWorld(cat)}
-                  className="rounded-2xl border border-gray-200 bg-white p-5 text-left shadow-sm hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="w-11 h-11 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[21px] shrink-0" aria-hidden>
+                  className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-left shadow-sm hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
+                  <div className="flex items-center gap-3">
+                    <span className="w-10 h-10 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[19px] shrink-0" aria-hidden>
                       {t.emoji}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-lg font-extrabold text-gray-900 truncate">{cat}</h3>
-                      <p className="text-xs text-gray-500 truncate">{t.sub}</p>
+                      <h3 className="text-[17px] font-extrabold text-gray-900 leading-tight truncate">{cat}</h3>
+                      <p className="text-[13px] text-gray-500 leading-snug truncate">{t.sub}</p>
                     </div>
                     {/* Status lives in the small mono pill — green ONLY when done */}
                     <span className={`shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${
@@ -809,10 +809,10 @@ export default function StudyPathClient({
                       {allDone ? '✓ Review' : started ? 'Continue →' : 'Start →'}
                     </span>
                   </div>
-                  <div className="h-2 bg-blue-50 rounded-full overflow-hidden mb-1.5">
+                  <div className="h-2 bg-blue-50 rounded-full overflow-hidden mt-2">
                     <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                   </div>
-                  <span className="font-mono text-[11px] font-semibold text-gray-500 tabular-nums">
+                  <span className="block mt-1.5 font-mono text-[11px] font-semibold text-gray-500 tabular-nums">
                     {done}/{items.length} levels · <span className="text-primary-900">{pct}%</span> ·{' '}
                     <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
                     <span> {starsEarned}/{starsPossible}</span>
@@ -825,7 +825,7 @@ export default function StudyPathClient({
 
           {/* Flashcards */}
           <a href="/flashcards"
-            className="mt-5 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+            className="mt-3 flex items-center gap-3 bg-white rounded-xl border border-gray-200 px-3 py-2.5 min-h-[56px] hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
             <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
               <LayoutGrid size={18} className="text-blue-800" />
             </div>

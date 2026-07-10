@@ -15,15 +15,15 @@ export default async function PracticeIndexPage() {
         <p className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mb-1.5">
           Real exam format · A–D
         </p>
-        <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Practice Test</h1>
-        <p className="text-gray-600 mb-6">Pick a section, then choose Practice or Exam mode.</p>
+        <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-0.5">Practice Test</h1>
+        <p className="text-gray-600 mb-4">Pick a section, then choose Practice or Exam mode.</p>
 
         <PracticeRows userId={user?.id ?? null} />
 
         {/* Exam-rules footer card (mockup PRACTICE frame) */}
-        <div className="mt-4 flex items-start gap-2.5 bg-white border border-gray-200 rounded-xl px-4 py-3.5">
+        <div className="mt-3 flex items-start gap-2.5 bg-white border border-gray-200 rounded-xl px-4 py-2.5">
           <span className="text-base shrink-0" aria-hidden="true">⏱</span>
-          <p className="text-[13px] text-gray-500 leading-relaxed">
+          <p className="text-[13px] text-gray-500 leading-snug">
             <b className="text-gray-900">Exam mode</b> = 25 questions ·{' '}
             <span className="font-mono tabular-nums">30:00</span> timer ·{' '}
             <span className="font-mono tabular-nums">72s</span>/question pace. Same rules as test day.
