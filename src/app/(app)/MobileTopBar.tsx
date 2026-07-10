@@ -9,6 +9,7 @@ import AccountSheet from './AccountSheet'
 type MobileTopBarProps = {
   email: string
   tier: Tier
+  userId: string
 }
 
 // The 4 tab roots — no back button on these (the tab bar is the navigation).
@@ -36,7 +37,7 @@ function titleFor(pathname: string | null): string {
   return hit ? hit[1] : 'EPA 608'
 }
 
-export default function MobileTopBar({ email, tier }: MobileTopBarProps) {
+export default function MobileTopBar({ email, tier, userId }: MobileTopBarProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -85,7 +86,7 @@ export default function MobileTopBar({ email, tier }: MobileTopBarProps) {
         </button>
       </header>
 
-      <AccountSheet open={sheetOpen} onClose={() => setSheetOpen(false)} username={username} tier={tier} />
+      <AccountSheet open={sheetOpen} onClose={() => setSheetOpen(false)} username={username} tier={tier} userId={userId} />
     </>
   )
 }

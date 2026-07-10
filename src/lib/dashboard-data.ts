@@ -14,6 +14,14 @@ import {
   masteredConceptsByCategory,
 } from '@/lib/section-progress'
 import { getPacingData, EXAM_BUDGET_MS } from '@/lib/pacing-server'
+import {
+  computeAchievements,
+  computeCurrentStreak,
+  countDistinctQuestions,
+  countFixedQuestions,
+  fetchAchievementCounts,
+  type Achievements,
+} from '@/lib/achievements-server'
 
 export type DashboardData = {
   tier: Tier
@@ -35,6 +43,11 @@ export type DashboardData = {
     activeDays: number
     windowDays: number
   } | null
+  /**
+   * XP + rank + derived badges (achievements-server). null on any error —
+   * old cached client payloads simply lack the key, so clients must guard.
+   */
+  achievements: Achievements | null
 }
 
 // Heatmap window: 16 weeks (matches the 16-column GitHub-style grid on Home).
@@ -50,14 +63,15 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   // single await. The study-path + RPC calls stay individually try/caught below
   // so a missing table degrades gracefully; here we just parallelize the fetches.
   const admin = createAdminClient()
-  const [profile, sessionsRes, masteredRes, rpcRes, pacing, activityRes] = await Promise.all([
+  const [profile, sessionsRes, masteredRes, rpcRes, pacing, activityRes, achievementCounts] = await Promise.all([
     getUserProfile(userId),
     // Cap the sessions scan: readiness only uses the last 6 per category and the
     // streak just scans dates — 500 newest sessions is ample and keeps this
-    // query bounded as the table grows forever.
+    // query bounded as the table grows forever. time_limit_secs feeds the
+    // boss-down badge (timed 25Q section exam passed).
     supabase
       .from('test_sessions')
-      .select('id, category, score, total, started_at, submitted_at')
+      .select('id, category, score, total, started_at, submitted_at, time_limit_secs')
       .eq('user_id', userId)
       .not('submitted_at', 'is', null)
       .order('submitted_at', { ascending: false })
@@ -75,17 +89,22 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     // full slowTopics breakdown lives on /api/app/progress). Already returns
     // null on any error / missing time_ms data.
     getPacingData(userId, { topics: false }).then(r => r, () => null),
-    // Activity heatmap: answered_at ONLY (tiny payload) from user_progress —
-    // one row per answered question (incl. Study Path), so it captures every
-    // practice day. Uses the (user_id, answered_at DESC) index; 1500 rows is
-    // ample for a 112-day window. Failure → activity: null in the payload.
+    // Answer window from user_progress — one row per answered question (incl.
+    // Study Path). Triple duty: activity heatmap (answered_at), full-bank
+    // distinct question count and the fixer badge (question_id + correct).
+    // Uses the (user_id, answered_at DESC) index; 2000 rows is ample for the
+    // 112-day heatmap window and is the bounded window the full-bank count is
+    // exact within. Failure → activity: null AND achievements: null.
     supabase
       .from('user_progress')
-      .select('answered_at')
+      .select('question_id, correct, answered_at')
       .eq('user_id', userId)
       .order('answered_at', { ascending: false })
-      .limit(1500)
+      .limit(2000)
       .then(r => r, () => ({ data: null, error: true as unknown })),
+    // 2 head:true counts on user_progress + 1 on study_path_progress — the
+    // only NEW queries achievements adds. null → achievements: null.
+    fetchAchievementCounts(supabase, userId),
   ])
 
   const tier = (profile?.tier ?? 'free') as Tier
@@ -97,32 +116,8 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
 
   const totalTests = allSessions?.length ?? 0
 
-  // Streak calculation
-  let currentStreak = 0
-  if (allSessions) {
-    const dateSet = new Set<string>()
-    for (const s of allSessions) {
-      if (s.started_at) dateSet.add(s.started_at.slice(0, 10))
-      if (s.submitted_at) dateSet.add(s.submitted_at.slice(0, 10))
-    }
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const d = new Date(today)
-    const fmt = (dt: Date) => dt.toISOString().slice(0, 10)
-    while (dateSet.has(fmt(d))) {
-      currentStreak++
-      d.setDate(d.getDate() - 1)
-    }
-    if (currentStreak === 0) {
-      const yesterday = new Date(today)
-      yesterday.setDate(yesterday.getDate() - 1)
-      const y = new Date(yesterday)
-      while (dateSet.has(fmt(y))) {
-        currentStreak++
-        y.setDate(y.getDate() - 1)
-      }
-    }
-  }
+  // Streak calculation (shared with /api/app/progress — one implementation)
+  const currentStreak = computeCurrentStreak(allSessions ?? [])
 
   // Average score across all completed tests
   let avgScore: number | null = null
@@ -173,7 +168,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   // 1500-row user_progress window still light up.
   let activity: DashboardData['activity'] = null
   const { data: activityRows, error: activityError } = activityRes as {
-    data: { answered_at: string | null }[] | null
+    data: { question_id: string; correct: boolean; answered_at: string | null }[] | null
     error?: unknown
   }
   if (!activityError && Array.isArray(activityRows)) {
@@ -196,6 +191,32 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       activeDays: Object.keys(days).length,
       windowDays: ACTIVITY_WINDOW_DAYS,
     }
+  }
+
+  // ─── Achievements: XP + rank + derived badges (achievements-server) ───
+  // Pure computation over pieces already fetched above (sessions, readiness,
+  // streak, pacing, mastered levels, the user_progress window) plus the
+  // head-count queries from the Promise.all. Any missing core input → null;
+  // clients guard for the absent key (old cached payloads lack it anyway).
+  let achievements: Achievements | null = null
+  try {
+    if (achievementCounts && !activityError && Array.isArray(activityRows)) {
+      achievements = computeAchievements({
+        correctCount: achievementCounts.correctCount,
+        wrongCount: achievementCounts.wrongCount,
+        completedTests: totalTests,
+        masteredLevels: Object.values(masteredByCat).reduce((a, b) => a + b, 0),
+        sessions: allSessions ?? [],
+        readiness,
+        currentStreak,
+        hasPerfectLevel: achievementCounts.hasPerfectLevel,
+        distinctQuestionsAnswered: countDistinctQuestions(activityRows),
+        pacing: pacing ? { avgMs: pacing.avgMs, sampleSize: pacing.sampleSize } : null,
+        fixedCount: countFixedQuestions(activityRows),
+      })
+    }
+  } catch {
+    achievements = null
   }
 
   // ─── Coach line: the single clear next step ───
@@ -235,5 +256,6 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     showWeakestAlert,
     paceMs,
     activity,
+    achievements,
   }
 }

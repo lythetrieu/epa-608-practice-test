@@ -21,6 +21,8 @@ import {
 import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
 import { ActivityHeatmap } from './ActivityHeatmap'
+import { RankInsignia } from '@/components/gamification/BadgeIcons'
+import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
 // Icon + chip color per section (matches the prototype's colored icon chips)
 const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
@@ -90,6 +92,8 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
   } = data
   // Optional-chained: cached payloads from before pacing-v2 lack this key.
   const paceMs = data.paceMs ?? null
+  // Same guard: pre-achievements cached payloads lack this key entirely.
+  const achievements = data.achievements ?? null
   const overall = readiness.overall
   const name = userName
 
@@ -108,6 +112,39 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       <div className="flex items-center justify-between mb-3" data-tour="header">
         <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
       </div>
+
+      {/* ═══ RANK STRIP — slim one-liner, links to Progress (achievements live there).
+          Guarded: pre-achievements cached payloads render nothing. ═══ */}
+      {achievements && (() => {
+        const { xp, rank } = achievements
+        const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
+        const pct =
+          span === null || span <= 0
+            ? 100
+            : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
+        return (
+          <Link
+            href="/progress"
+            className="flex items-center gap-2 mb-3 px-0.5 min-h-[44px] rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label={`Rank: ${rank.label}, ${xp.toLocaleString()} XP — view achievements`}
+          >
+            <RankInsignia rank={rank.id} size={20} />
+            <span className="text-xs font-semibold shrink-0" style={{ color: '#001d57' }}>
+              {rank.label}
+            </span>
+            <span className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden" aria-hidden="true">
+              <span
+                className="block h-full rounded-full"
+                style={{ width: `${pct}%`, background: '#003087' }}
+              />
+            </span>
+            <span className="text-[11px] text-gray-500 shrink-0 tabular-nums">
+              {xp.toLocaleString()}
+              {rank.nextMinXp !== null ? ` / ${rank.nextMinXp.toLocaleString()}` : ''} XP
+            </span>
+          </Link>
+        )
+      })()}
 
       {/* ═══ READINESS HERO — navy card with progress ring ═══ */}
       <section
@@ -331,6 +368,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           </Link>
         </div>
       )}
+
+      {/* Unlock toasts — diff only on FRESH payloads (stale cache was already seen) */}
+      <BadgeToasts userId={userId} achievements={fresh ? achievements : null} />
     </div>
   )
 }

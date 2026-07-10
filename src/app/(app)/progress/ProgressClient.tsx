@@ -10,11 +10,14 @@ import { useEffect, useState } from 'react'
 import { ClipboardList, FileCheck, Lock, Target } from 'lucide-react'
 import { readCache, useLocalFirst } from '@/lib/local-first'
 import { lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
-// Type-only import — erased at compile time, pulls no server code.
+// Type-only imports — erased at compile time, pull no server code.
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
+import type { Achievements } from '@/lib/achievements-server'
 import { RadarChart } from './radar-chart'
 import { LastPacingCard, PacingSection, type PacingAnalytics } from './pacing-section'
 import { MistakesSection, type MistakesData } from './mistakes-section'
+import { AchievementsSection } from './achievements-section'
+import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
 type SessionRow = {
   category: string
@@ -38,6 +41,9 @@ type ProgressData = {
   // Optional 4-axis Core/Type I/II/III fallback radar. Absent on stale cached
   // payloads → falls through to today's ">=3 subtopic axes or caption" logic.
   sectionRadar?: RadarDatum[]
+  // XP + rank + badges. Absent on stale cached payloads, null when the server
+  // couldn't compute — both render nothing.
+  achievements?: Achievements | null
 }
 
 const CATEGORY_SLUGS: Record<string, string> = {
@@ -60,7 +66,7 @@ function ProgressSkeleton() {
 }
 
 export function ProgressClient({ userId }: { userId: string }) {
-  const { data, error, refresh } = useLocalFirst<ProgressData>(
+  const { data, fresh, error, refresh } = useLocalFirst<ProgressData>(
     `progress:${userId}`,
     '/api/app/progress'
   )
@@ -339,6 +345,12 @@ export function ProgressClient({ userId }: { userId: string }) {
           </div>
         )}
       </section>
+
+      {/* ── Achievements (LAST) — absent/null on stale payloads → render nothing ── */}
+      {data.achievements ? <AchievementsSection achievements={data.achievements} /> : null}
+
+      {/* Unlock toasts — diff only on FRESH payloads (stale cache was already seen) */}
+      <BadgeToasts userId={userId} achievements={fresh ? data.achievements : null} />
     </div>
   )
 }

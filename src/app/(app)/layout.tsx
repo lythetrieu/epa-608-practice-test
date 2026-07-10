@@ -33,7 +33,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <PageTransition />
       <div className="min-h-screen flex bg-gray-50 dark:bg-gray-950 overflow-x-hidden">
         {/* Mobile shell: navy top bar (back / title / account sheet) + bottom tab bar */}
-        <MobileTopBar email={user.email ?? ''} tier={tier} />
+        <MobileTopBar email={user.email ?? ''} tier={tier} userId={user.id} />
 
         {/* Desktop sidebar */}
         <AppSidebar

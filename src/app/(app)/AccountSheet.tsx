@@ -1,9 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { Settings, LogOut, Zap } from 'lucide-react'
-import { clearLocalFirstCache } from '@/lib/local-first'
+import { clearLocalFirstCache, readCache } from '@/lib/local-first'
 import { getTierLabel } from '@/lib/tier'
+import { RankInsignia } from '@/components/gamification/BadgeIcons'
+// Type-only import — erased at compile time, pulls no server code.
+import type { Achievements } from '@/lib/achievements-server'
 import type { Tier } from '@/types'
 
 type AccountSheetProps = {
@@ -11,12 +15,23 @@ type AccountSheetProps = {
   onClose: () => void
   username: string
   tier: Tier
+  userId: string
 }
 
 // Mobile account bottom sheet — opened from the avatar in the top bar.
 // Always mounted so the slide-up transition can play; hidden via translate-y.
-export default function AccountSheet({ open, onClose, username, tier }: AccountSheetProps) {
+export default function AccountSheet({ open, onClose, username, tier, userId }: AccountSheetProps) {
   const isPro = tier !== 'free'
+
+  // Rank line reads the dashboard's local-first snapshot (no extra fetch).
+  // Re-read on each open so it tracks the latest cached payload; missing
+  // cache or a pre-achievements snapshot → the row simply doesn't render.
+  const [achievements, setAchievements] = useState<Achievements | null>(null)
+  useEffect(() => {
+    if (!open) return
+    const snap = readCache<{ achievements?: Achievements | null }>(`dashboard:${userId}`)
+    setAchievements(snap?.achievements ?? null)
+  }, [open, userId])
 
   return (
     <>
@@ -54,6 +69,23 @@ export default function AccountSheet({ open, onClose, username, tier }: AccountS
             </span>
           </div>
         </div>
+
+        {/* Rank + XP — from the cached dashboard snapshot; hidden when absent */}
+        {achievements && (
+          <Link
+            href="/progress"
+            onClick={onClose}
+            className="flex items-center gap-3 px-1 py-3 min-h-[44px] text-sm font-semibold text-gray-800 dark:text-gray-200 rounded-xl"
+          >
+            <span className="w-5 shrink-0 flex justify-center" aria-hidden>
+              <RankInsignia rank={achievements.rank.id} size={20} />
+            </span>
+            {achievements.rank.label}
+            <span className="ml-auto text-xs font-semibold text-gray-500 tabular-nums">
+              {achievements.xp.toLocaleString()} XP
+            </span>
+          </Link>
+        )}
 
         <Link
           href="/settings"
