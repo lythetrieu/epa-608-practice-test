@@ -84,7 +84,7 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
           rest. Width is CAPPED and centered — full-bleed cells read chunky, so
           the grid sits at a calm ~13px/cell and the card keeps its air. */}
       <div
-        className="grid gap-[2px] max-w-[288px] mx-auto"
+        className="grid gap-[2px] max-w-[310px] mx-auto"
         style={{ gridTemplateColumns: `auto repeat(${WEEKS}, minmax(0, 1fr))` }}
         role="img"
         aria-label={`Practice activity: ${activity.activeDays} active days in the last 16 weeks`}

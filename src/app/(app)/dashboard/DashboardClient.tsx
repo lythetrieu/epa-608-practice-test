@@ -111,100 +111,105 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         style={{ background: '#001d57' }}
         data-tour="header"
       >
-        {/* Row 1: rank (left) + welcome (right corner). Row 1.5: full-width XP
-            bar → the whole block links to /progress. Guarded: pre-achievements
-            cached payloads show only the welcome line. */}
-        {achievements ? (
-          <Link
-            href="/progress"
-            className="block mb-3 rounded-lg -m-1 p-1 hover:bg-white/10 transition-colors"
-            aria-label={`Rank: ${achievements.rank.label}, ${achievements.xp.toLocaleString()} XP — view achievements`}
-          >
-            <div className="flex items-center justify-between gap-3 mb-2">
-              <span className="flex items-center gap-1.5 min-w-0">
-                <RankInsignia rank={achievements.rank.id} size={18} />
-                <span className="text-sm font-bold truncate">{achievements.rank.label}</span>
-              </span>
-              <span className="font-serif text-base sm:text-lg font-black text-white/90 truncate shrink-0">
-                Welcome, {name}!
-              </span>
+        {/* Row 1: readiness ring (left) + gold kicker + big status word — with
+            "Hi, {name} 👋" in the top-right corner. */}
+        <div className="flex items-start justify-between gap-3" data-tour="readiness">
+          <div className="flex items-center gap-4 min-w-0">
+            <svg
+              width="84"
+              height="84"
+              viewBox="0 0 120 120"
+              className="shrink-0"
+              role="img"
+              aria-label={
+                readiness.enoughData
+                  ? `Exam readiness: ${overall}%`
+                  : 'Exam readiness not yet available'
+              }
+            >
+              <circle cx="60" cy="60" r={RING_R} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="13" />
+              {readiness.enoughData && (
+                <circle
+                  cx="60"
+                  cy="60"
+                  r={RING_R}
+                  fill="none"
+                  stroke="#f5b840"
+                  strokeWidth="13"
+                  strokeLinecap="round"
+                  strokeDasharray={RING_C.toFixed(1)}
+                  strokeDashoffset={(RING_C * (1 - overall / 100)).toFixed(1)}
+                  transform="rotate(-90 60 60)"
+                />
+              )}
+              <text x="60" y="58" textAnchor="middle" fontSize="28" fontWeight="700" fill="#fff" className="font-mono">
+                {readiness.enoughData ? `${overall}%` : '—'}
+              </text>
+              <text x="60" y="78" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.7)">
+                ready
+              </text>
+            </svg>
+            <div className="min-w-0">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[#f5b840] mb-0.5">
+                Readiness
+              </p>
+              <p className="font-serif text-2xl font-black leading-tight">
+                {!readiness.enoughData
+                  ? 'Warming up'
+                  : overall >= 72
+                    ? 'Exam ready'
+                    : overall >= 50
+                      ? 'Almost there'
+                      : 'Building'}
+              </p>
             </div>
-            {(() => {
-              const { xp, rank } = achievements
-              const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
-              const pct =
-                span === null || span <= 0
-                  ? 100
-                  : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
-              return (
-                <div className="flex items-center gap-2">
-                  <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden" aria-hidden="true">
-                    <span
-                      className="block h-full rounded-full bg-[#f5b840]"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </span>
-                  <span className="text-[10px] font-mono tabular-nums text-white/70 shrink-0">
-                    {xp.toLocaleString()}
-                    {rank.nextMinXp !== null ? ` / ${rank.nextMinXp.toLocaleString()}` : ''} XP
-                  </span>
-                </div>
-              )
-            })()}
-          </Link>
-        ) : (
-          <div className="mb-3">
-            <h1 className="font-serif text-xl sm:text-2xl font-black text-white truncate">Welcome, {name}!</h1>
           </div>
-        )}
-
-        {/* Row 2: readiness ring + coach line (unchanged) */}
-        <div className="flex items-center gap-4" data-tour="readiness">
-        <svg
-          width="84"
-          height="84"
-          viewBox="0 0 120 120"
-          className="shrink-0"
-          role="img"
-          aria-label={
-            readiness.enoughData
-              ? `Exam readiness: ${overall}%`
-              : 'Exam readiness not yet available'
-          }
-        >
-          <circle cx="60" cy="60" r={RING_R} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="13" />
-          {readiness.enoughData && (
-            <circle
-              cx="60"
-              cy="60"
-              r={RING_R}
-              fill="none"
-              stroke="#f5b840"
-              strokeWidth="13"
-              strokeLinecap="round"
-              strokeDasharray={RING_C.toFixed(1)}
-              strokeDashoffset={(RING_C * (1 - overall / 100)).toFixed(1)}
-              transform="rotate(-90 60 60)"
-            />
-          )}
-          <text x="60" y="58" textAnchor="middle" fontSize="28" fontWeight="700" fill="#fff" className="font-mono">
-            {readiness.enoughData ? `${overall}%` : '—'}
-          </text>
-          <text x="60" y="78" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.7)">
-            ready
-          </text>
-        </svg>
-        <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-1">Exam readiness</p>
-          <p className="text-sm font-medium leading-relaxed">
-            <Lightbulb size={15} className="inline align-[-2px] mr-1" aria-hidden="true" />
-            {coachLine}
-          </p>
-        </div>
+          <div className="text-right shrink-0">
+            <p className="font-serif text-lg font-black leading-tight">
+              Hi, {name}! <span aria-hidden="true">👋</span>
+            </p>
+            <p className="text-[11px] text-white/60">Ready for today&apos;s session?</p>
+          </div>
         </div>
 
-        {/* Row 3: compact stat chips — streak · tests · avg (replaced the white
-            stat-card grid). Numbers mono white; labels small white/70. */}
+        {/* Coach line — the single next step, full width under the ring row */}
+        <p className="text-sm font-medium leading-relaxed mt-2">
+          <Lightbulb size={15} className="inline align-[-2px] mr-1" aria-hidden="true" />
+          {coachLine}
+        </p>
+
+        {/* Rank bar row: [insignia + rank] ————bar———— [gold %] → /progress */}
+        {achievements && (() => {
+          const { xp, rank } = achievements
+          const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
+          const pct =
+            span === null || span <= 0
+              ? 100
+              : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
+          return (
+            <Link
+              href="/progress"
+              className="flex items-center gap-2.5 mt-4 rounded-lg -mx-1 px-1 py-1 min-h-[40px] hover:bg-white/10 transition-colors"
+              aria-label={`Rank: ${rank.label}, ${xp.toLocaleString()} XP, ${Math.round(pct)}% to next rank — view achievements`}
+            >
+              <span className="flex items-center gap-1.5 shrink-0">
+                <RankInsignia rank={rank.id} size={18} />
+                <span className="text-xs font-bold">{rank.label}</span>
+              </span>
+              <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden" aria-hidden="true">
+                <span
+                  className="block h-full rounded-full bg-[#f5b840]"
+                  style={{ width: `${pct}%` }}
+                />
+              </span>
+              <span className="font-mono text-xs font-bold tabular-nums text-[#f5b840] shrink-0">
+                {Math.round(pct)}%
+              </span>
+            </Link>
+          )
+        })()}
+
+        {/* Chips row: streak · tests · avg · XP */}
         <div className="flex flex-wrap items-center gap-2 mt-3">
           <span className="inline-flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 text-[10px] text-white/70">
             <span aria-hidden="true">🔥</span>
@@ -226,6 +231,15 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
             </span>
             avg
           </span>
+          {achievements && (
+            <span className="inline-flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 text-[10px] text-white/70">
+              <span aria-hidden="true">⭐</span>
+              <span className="font-mono font-bold text-xs text-white tabular-nums">
+                {achievements.xp.toLocaleString()}
+              </span>
+              XP
+            </span>
+          )}
         </div>
       </section>
 
