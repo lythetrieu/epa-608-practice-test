@@ -1,11 +1,50 @@
 // Badge display metadata shared by the Progress achievements section and the
-// unlock toasts. Titles match the art registry in BadgeIcons.tsx; captions are
-// one-line plain-English restatements of the REAL unlock criteria in
-// src/lib/achievements-server.ts — keep both in sync if criteria change.
+// unlock toasts. This file is the SINGLE SOURCE for the pinned badge id list
+// (ALL_BADGE_IDS) — the art registry in BadgeIcons.tsx and the criteria in
+// src/lib/achievements-server.ts must carry the same 33 ids. Captions are
+// one-line plain-English restatements of the REAL unlock criteria — keep both
+// in sync if criteria change.
 
-import type { BadgeId } from './BadgeIcons'
+// Pinned order: the original 13, then the 20 newer badges appended.
+export const ALL_BADGE_IDS = [
+  'core-ready',
+  'type1-ready',
+  'type2-ready',
+  'type3-ready',
+  'universal-ready',
+  'boss-down',
+  'perfect-10',
+  'streak-3',
+  'streak-7',
+  'streak-14',
+  'full-bank',
+  'beat-the-clock',
+  'fixer',
+  'first-test',
+  'first-level',
+  'sharpshooter',
+  'flawless-exam',
+  'speed-runner',
+  'hat-trick',
+  'comeback-kid',
+  'night-owl',
+  'weekend-warrior',
+  'century',
+  'half-bank',
+  'marathon-day',
+  'iron-streak-30',
+  'fix-master',
+  'world-core',
+  'world-type1',
+  'world-type2',
+  'world-type3',
+  'path-complete',
+  'universal-boss',
+] as const
 
-export const BADGE_TITLES: Record<BadgeId, string> = {
+export type AchievementBadgeId = (typeof ALL_BADGE_IDS)[number]
+
+export const BADGE_TITLES: Record<AchievementBadgeId, string> = {
   'core-ready': 'Core Ready',
   'type1-ready': 'Type I Ready',
   'type2-ready': 'Type II Ready',
@@ -19,10 +58,30 @@ export const BADGE_TITLES: Record<BadgeId, string> = {
   'full-bank': 'Full Bank',
   'beat-the-clock': 'Beat the Clock',
   fixer: 'Fixer',
+  'first-test': 'First Test',
+  'first-level': 'First Level',
+  sharpshooter: 'Sharpshooter',
+  'flawless-exam': 'Flawless Exam',
+  'speed-runner': 'Speed Runner',
+  'hat-trick': 'Hat Trick',
+  'comeback-kid': 'Comeback Kid',
+  'night-owl': 'Night Owl',
+  'weekend-warrior': 'Weekend Warrior',
+  century: 'Century',
+  'half-bank': 'Half Bank',
+  'marathon-day': 'Marathon Day',
+  'iron-streak-30': 'Iron Streak',
+  'fix-master': 'Fix Master',
+  'world-core': 'Core Conquered',
+  'world-type1': 'Type I Conquered',
+  'world-type2': 'Type II Conquered',
+  'world-type3': 'Type III Conquered',
+  'path-complete': 'Path Complete',
+  'universal-boss': 'Universal Boss',
 }
 
 // Criteria source of truth: computeAchievements() in achievements-server.ts.
-export const BADGE_CAPTIONS: Record<BadgeId, string> = {
+export const BADGE_CAPTIONS: Record<AchievementBadgeId, string> = {
   'core-ready': 'Reach “Ready” status in the Core section.',
   'type1-ready': 'Reach “Ready” status in the Type I section.',
   'type2-ready': 'Reach “Ready” status in the Type II section.',
@@ -36,4 +95,82 @@ export const BADGE_CAPTIONS: Record<BadgeId, string> = {
   'full-bank': 'Answer all 569 questions in the question bank at least once.',
   'beat-the-clock': 'Average 72 seconds or less per question across 25+ timed answers.',
   fixer: 'Turn 10 questions you once missed into correct answers on your latest try.',
+  'first-test': 'Complete your first practice test.',
+  'first-level': 'Master your first Study Path level.',
+  sharpshooter: 'Score 90% or higher on a 25-question test.',
+  'flawless-exam': 'Score a perfect 25/25 on a 25-question test.',
+  'speed-runner': 'Pass a timed test averaging under 50 seconds per question.',
+  'hat-trick': 'Pass 3 tests in a single day.',
+  'comeback-kid': 'Pass a section you previously failed.',
+  'night-owl': 'Finish a test late at night.',
+  'weekend-warrior': 'Take a test on both Saturday and Sunday.',
+  century: 'Answer 100 questions.',
+  'half-bank': 'Answer 285 different questions.',
+  'marathon-day': 'Answer 100 questions in a single day.',
+  'iron-streak-30': 'Practice 30 days in a row.',
+  'fix-master': 'Turn 25 questions you once missed into correct answers.',
+  'world-core': 'Complete every level in the Core world.',
+  'world-type1': 'Complete every level in the Type I world.',
+  'world-type2': 'Complete every level in the Type II world.',
+  'world-type3': 'Complete every level in the Type III world.',
+  'path-complete': 'Complete the entire Study Path.',
+  'universal-boss': 'Pass the full 100-question timed Universal exam.',
 }
+
+// Display grouping for the Progress badge grid. Every id in ALL_BADGE_IDS
+// appears in exactly one group — update both together.
+export const BADGE_GROUPS: readonly { label: string; ids: readonly AchievementBadgeId[] }[] = [
+  {
+    label: 'Exam Ready',
+    ids: [
+      'core-ready',
+      'type1-ready',
+      'type2-ready',
+      'type3-ready',
+      'universal-ready',
+      'boss-down',
+      'universal-boss',
+    ],
+  },
+  {
+    label: 'Skill',
+    ids: [
+      'perfect-10',
+      'sharpshooter',
+      'flawless-exam',
+      'speed-runner',
+      'beat-the-clock',
+      'fixer',
+      'fix-master',
+      'comeback-kid',
+    ],
+  },
+  {
+    label: 'Consistency',
+    ids: [
+      'streak-3',
+      'streak-7',
+      'streak-14',
+      'iron-streak-30',
+      'night-owl',
+      'weekend-warrior',
+      'hat-trick',
+      'marathon-day',
+    ],
+  },
+  {
+    label: 'Explorer',
+    ids: [
+      'first-test',
+      'first-level',
+      'century',
+      'half-bank',
+      'full-bank',
+      'world-core',
+      'world-type1',
+      'world-type2',
+      'world-type3',
+      'path-complete',
+    ],
+  },
+]

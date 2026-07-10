@@ -132,6 +132,27 @@ function saveProgress(p: Record<string, ConceptProgress>) {
   localStorage.setItem('epa608StudyPath', JSON.stringify(p))
 }
 
+// Stars per level, from best_score (0-100): 80-89 → 1, 90-99 → 2, 100 → 3.
+// Below the 80% passing mark there are no stars.
+function starsFor(score: number | null | undefined): number {
+  if (!score || score < 80) return 0
+  if (score >= 100) return 3
+  if (score >= 90) return 2
+  return 1
+}
+
+// Small gold star row for a level node. The gold lives ONLY inside the star
+// glyphs (approved achievement/star art) — never in surrounding UI.
+function Stars({ score }: { score?: number | null }) {
+  const n = starsFor(score)
+  if (n === 0) return null
+  return (
+    <span aria-label={`${n} of 3 stars`} className="shrink-0 text-[13px] leading-none" style={{ color: '#f5b840' }}>
+      {'★'.repeat(n)}
+    </span>
+  )
+}
+
 function getEffectiveStatus(prog: ConceptProgress): string {
   // One clean pass (8/10) clears a concept for good — there is no two-pass
   // 'reviewed' step and no spaced-repetition revert. Legacy 'reviewed' rows
@@ -757,6 +778,8 @@ export default function StudyPathClient({
               const pct = items.length ? Math.round(done / items.length * 100) : 0
               const started = items.some(c => progress[c.id])
               const allDone = done === items.length
+              const starsEarned = items.reduce((sum, c) => sum + starsFor(progress[c.id]?.bestScore), 0)
+              const starsPossible = items.length * 3
               return (
                 <button key={cat} onClick={() => setActiveWorld(cat)}
                   className={`relative overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg border-b-4 border-black/15 bg-gradient-to-br ${t.cardGrad} active:translate-y-0.5 transition-transform`}>
@@ -772,7 +795,12 @@ export default function StudyPathClient({
                       <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-white/90">{done}/{items.length} levels · {pct}%</span>
+                      <span className="text-[11px] font-semibold text-white/90">
+                        {done}/{items.length} levels · {pct}% ·{' '}
+                        <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
+                        <span className="tabular-nums"> {starsEarned}/{starsPossible}</span>
+                        <span className="sr-only"> stars</span>
+                      </span>
                       <span className="text-xs font-extrabold bg-white/25 px-3 py-1 rounded-full">
                         {allDone ? 'Review' : started ? 'Continue →' : 'Start →'}
                       </span>
@@ -813,6 +841,12 @@ export default function StudyPathClient({
   const ACCENT = '#003087' // brand navy (v3 "study route")
   const statusAt = (i: number) => (i > cur ? 'locked' : i === cur ? 'current' : 'done')
 
+  // Boss Exam link — slugs verified against /test/[category]/page.tsx VALID list.
+  // Timed mode is Pro-gated ON the test page itself (free users are redirected
+  // to the mode selector with the upgrade path) — no client gating here.
+  const WORLD_SLUGS: Record<string, string> = { 'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2', 'Type III': 'type-3' }
+  const bossSlug = WORLD_SLUGS[activeWorld] ?? 'core'
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f8fafc', backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.045) 1px, transparent 0)', backgroundSize: '22px 22px' }}>
       {/* header */}
@@ -846,7 +880,7 @@ export default function StudyPathClient({
         {worldItems.map((c, i) => {
           const s = statusAt(i)
           const num = String(i + 1).padStart(2, '0')
-          const first = i === 0, last = i === worldItems.length - 1
+          const first = i === 0
           const aboveFilled = i > 0 && (i - 1) < cur
           const belowFilled = i < cur
           return (
@@ -876,14 +910,18 @@ export default function StudyPathClient({
                     </span>
                   )}
                 </div>
-                {last ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: belowFilled ? ACCENT : '#e2e8f0' }} />}
+                {/* Always a bottom connector — the Boss Exam node follows the last level. */}
+                <span className="w-[3px] flex-1 rounded-full" style={{ background: belowFilled ? ACCENT : '#e2e8f0' }} />
               </div>
               <div className={`flex-1 min-w-0 ${s === 'current' ? 'py-1.5' : 'py-2.5'}`}>
                 {s === 'done' && (
                   <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="w-full text-left rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md hover:border-slate-300 transition">
                     <div className="flex items-center gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
+                          <Stars score={progress[c.id]?.bestScore} />
+                        </div>
                         <p className="mt-0.5 text-xs text-slate-400">
                           {progress[c.id]?.bestScore ? `Best ${progress[c.id].bestScore}%` : '10 questions · pass 8/10'}
                           {progress[c.id]?.attempts ? ` · ${progress[c.id].attempts} ${progress[c.id].attempts === 1 ? 'try' : 'tries'}` : ''}
@@ -907,7 +945,10 @@ export default function StudyPathClient({
                         <span className="text-[11px] font-medium text-slate-400">Next up</span>
                       )}
                     </div>
-                    <h3 className="mt-2.5 text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
+                    <div className="mt-2.5 flex items-center gap-1.5 min-w-0">
+                      <h3 className="text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
+                      <Stars score={progress[c.id]?.bestScore} />
+                    </div>
                     <p className="mt-0.5 text-xs text-slate-500">
                       10 questions · pass 8/10
                       {(progress[c.id]?.attempts ?? 0) > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${progress[c.id]?.attempts} ${progress[c.id]?.attempts === 1 ? 'try' : 'tries'}` : ''}
@@ -934,6 +975,35 @@ export default function StudyPathClient({
             </li>
           )
         })}
+
+        {/* BOSS EXAM — final node of the world: the real timed section exam */}
+        <li className="relative flex gap-3 sm:gap-5">
+          <div className="hidden sm:flex w-7 shrink-0" aria-hidden="true" />
+          <div className="relative flex flex-col items-center w-10 shrink-0 self-stretch">
+            <span className="w-[3px] flex-1 rounded-full" style={{ background: cur >= worldItems.length && worldItems.length > 0 ? ACCENT : '#e2e8f0' }} />
+            <div className="my-1">
+              <span aria-hidden="true" className="relative z-10 grid place-items-center w-10 h-10 rounded-full text-lg text-white ring-4 ring-white shadow-sm" style={{ background: '#001d57' }}>
+                🏰
+              </span>
+            </div>
+            <span className="flex-1" />
+          </div>
+          <div className="flex-1 min-w-0 py-1.5">
+            <Link
+              href={`/test/${bossSlug}?mode=test`}
+              className="block rounded-2xl px-4 py-4 sm:px-5 text-white shadow-md border-b-4 border-black/25 hover:brightness-110 active:translate-y-0.5 transition"
+              style={{ background: '#001d57' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="min-w-0">
+                  <h3 className="text-[15px] sm:text-base font-bold tracking-tight">Boss Exam — 25 questions, 72% to pass, timed</h3>
+                  <p className="mt-0.5 text-xs text-white/70">The real exam, simulated</p>
+                </div>
+                <ArrowRight size={18} className="ml-auto shrink-0 text-white/80" />
+              </div>
+            </Link>
+          </div>
+        </li>
       </ol>
 
       {cur >= worldItems.length && (

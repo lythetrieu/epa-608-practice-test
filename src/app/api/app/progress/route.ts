@@ -7,13 +7,19 @@ import { getWeakSpotsData } from '@/app/(app)/progress/weak-spots-data'
 import { getPacingData } from '@/lib/pacing-server'
 import { getMistakesData } from '@/lib/mistakes-server'
 import { computeReadiness } from '@/lib/readiness'
-import { SECTION_CATEGORIES, masteredConceptsByCategory } from '@/lib/section-progress'
 import {
+  SECTION_CATEGORIES,
+  masteredConceptsByCategory,
+  totalConceptsByCategory,
+} from '@/lib/section-progress'
+import {
+  buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
   countDistinctQuestions,
   countFixedQuestions,
   fetchAchievementCounts,
+  maxAnswersInOneDay,
   type Achievements,
 } from '@/lib/achievements-server'
 
@@ -77,10 +83,12 @@ export async function GET() {
       .eq('user_id', user.id)
       .eq('status', 'mastered')
       .then(r => r, () => ({ data: null })),
-    // Newest-first answer window: full-bank distinct count + fixer badge.
+    // Newest-first answer window: full-bank distinct count, fixer badge, and
+    // (answered_at) the marathon-day per-UTC-day bucketing — same 2000-row
+    // window, one extra selected column, zero extra queries.
     supabase
       .from('user_progress')
-      .select('question_id, correct')
+      .select('question_id, correct, answered_at')
       .eq('user_id', user.id)
       .order('answered_at', { ascending: false })
       .limit(2000)
@@ -94,7 +102,7 @@ export async function GET() {
   let achievements: Achievements | null = null
   try {
     const { data: answerRows, error: answersError } = answersRes as {
-      data: { question_id: string; correct: boolean }[] | null
+      data: { question_id: string; correct: boolean; answered_at: string | null }[] | null
       error?: unknown
     }
     if (achievementCounts && !answersError && Array.isArray(answerRows)) {
@@ -102,14 +110,13 @@ export async function GET() {
       const masteredIds = ((masteredRes.data ?? []) as { concept_id: string }[]).map(
         r => r.concept_id,
       )
+      // Same maps dashboard-data pairs into worldCompletion (Study X/Y).
+      const masteredByCat = masteredConceptsByCategory(masteredIds)
       achievements = computeAchievements({
         correctCount: achievementCounts.correctCount,
         wrongCount: achievementCounts.wrongCount,
         completedTests: allSessions.length,
-        masteredLevels: Object.values(masteredConceptsByCategory(masteredIds)).reduce(
-          (a, b) => a + b,
-          0,
-        ),
+        masteredLevels: Object.values(masteredByCat).reduce((a, b) => a + b, 0),
         sessions: allSessions,
         readiness: computeReadiness(allSessions, [...SECTION_CATEGORIES]),
         currentStreak: computeCurrentStreak(allSessions),
@@ -117,6 +124,9 @@ export async function GET() {
         distinctQuestionsAnswered: countDistinctQuestions(answerRows),
         pacing: pacing ? { avgMs: pacing.avgMs, sampleSize: pacing.sampleSize } : null,
         fixedCount: countFixedQuestions(answerRows),
+        // marathon-day: bucket the same 2000-row window by UTC day.
+        maxAnswersInADay: maxAnswersInOneDay(answerRows),
+        worldCompletion: buildWorldCompletion(masteredByCat, totalConceptsByCategory()),
       })
     }
   } catch {

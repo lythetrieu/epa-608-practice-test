@@ -1,12 +1,15 @@
 import { describe, it, expect } from 'vitest'
 import {
+  buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
   countDistinctQuestions,
   countFixedQuestions,
+  maxAnswersInOneDay,
   BADGE_IDS,
   RANKS,
   FULL_BANK_SIZE,
+  HALF_BANK_SIZE,
   type AchievementInputs,
   type Achievements,
   type BadgeId,
@@ -28,6 +31,8 @@ function baseInputs(overrides: Partial<AchievementInputs> = {}): AchievementInpu
     distinctQuestionsAnswered: 0,
     pacing: null,
     fixedCount: 0,
+    maxAnswersInADay: 0,
+    worldCompletion: {},
     ...overrides,
   }
 }
@@ -42,6 +47,16 @@ function readiness(readyCats: string[]) {
       ready: readyCats.includes(category),
     })),
   }
+}
+
+/** worldCompletion stub: listed categories fully mastered, the rest partial. */
+function worlds(completeCats: string[]) {
+  return Object.fromEntries(
+    SECTIONS.map(cat => [
+      cat,
+      completeCats.includes(cat) ? { mastered: 3, total: 3 } : { mastered: 1, total: 3 },
+    ]),
+  )
 }
 
 function badge(a: Achievements, id: BadgeId): boolean {
@@ -269,21 +284,564 @@ describe('computeAchievements — remaining badges', () => {
     expect(badge(computeAchievements(baseInputs({ fixedCount: 10 })), 'fixer')).toBe(true)
   })
 
-  it('a fully-loaded account unlocks all badges at once', () => {
+  it('a fully-loaded account unlocks all 33 badges at once', () => {
     const a = computeAchievements(
       baseInputs({
-        correctCount: 700,
+        correctCount: 700, // also covers century (≥100 answers)
+        completedTests: 1, // first-test
+        masteredLevels: 1, // first-level
         readiness: readiness([...SECTIONS]),
-        sessions: [bossSession()],
+        sessions: [
+          // 2026-07-01: an early Core fail → comeback-kid setup
+          bossSession({ score: 0, submitted_at: '2026-07-01T15:00:00.000Z' }),
+          // Sat 2026-07-04 + Sun 2026-07-05 → weekend-warrior
+          bossSession({ submitted_at: '2026-07-04T15:00:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-05T15:00:00.000Z' }),
+          // 2026-07-08: three passes on one UTC day → hat-trick; the later
+          // Core passes also complete comeback-kid.
+          // 03:30 UTC → night-owl. Also a flawless 25/25 → sharpshooter too.
+          bossSession({ score: 25, submitted_at: '2026-07-08T03:30:00.000Z' }),
+          // 48s/question timed pass → speed-runner
+          bossSession({
+            started_at: '2026-07-08T10:00:00.000Z',
+            submitted_at: '2026-07-08T10:20:00.000Z',
+          }),
+          bossSession({ submitted_at: '2026-07-08T15:00:00.000Z' }),
+          // timed 100Q Universal pass → universal-boss
+          bossSession({ category: 'Universal', score: 100, total: 100, time_limit_secs: 7200 }),
+        ],
         hasPerfectLevel: true,
-        currentStreak: 14,
-        distinctQuestionsAnswered: FULL_BANK_SIZE,
+        currentStreak: 30, // streak-3/7/14 + iron-streak-30
+        distinctQuestionsAnswered: FULL_BANK_SIZE, // full-bank + half-bank
         pacing: { avgMs: 60_000, sampleSize: 100 },
-        fixedCount: 12,
+        fixedCount: 25, // fixer + fix-master
+        maxAnswersInADay: 100, // marathon-day
+        worldCompletion: worlds([...SECTIONS]), // world-* + path-complete
       }),
     )
-    expect(a.badges.every(b => b.unlocked)).toBe(true)
+    const locked = a.badges.filter(b => !b.unlocked).map(b => b.id)
+    expect(locked).toEqual([])
+    expect(a.badges).toHaveLength(33)
     expect(a.rank.id).toBe('master-tech')
+  })
+})
+
+// ─── Wave 2: badge order contract ────────────────────────────────────────────
+
+describe('computeAchievements — wave-2 badge order', () => {
+  it('pins all 33 ids: the original 13 first, then the 20 new ones', () => {
+    expect([...BADGE_IDS]).toEqual([
+      'core-ready',
+      'type1-ready',
+      'type2-ready',
+      'type3-ready',
+      'universal-ready',
+      'boss-down',
+      'perfect-10',
+      'streak-3',
+      'streak-7',
+      'streak-14',
+      'full-bank',
+      'beat-the-clock',
+      'fixer',
+      'first-test',
+      'first-level',
+      'sharpshooter',
+      'flawless-exam',
+      'speed-runner',
+      'hat-trick',
+      'comeback-kid',
+      'night-owl',
+      'weekend-warrior',
+      'century',
+      'half-bank',
+      'marathon-day',
+      'iron-streak-30',
+      'fix-master',
+      'world-core',
+      'world-type1',
+      'world-type2',
+      'world-type3',
+      'path-complete',
+      'universal-boss',
+    ])
+  })
+})
+
+// ─── Wave 2: simple counter thresholds ───────────────────────────────────────
+
+describe('computeAchievements — wave-2 counter badges', () => {
+  it('first-test unlocks at 1 completed test', () => {
+    expect(badge(computeAchievements(baseInputs({ completedTests: 0 })), 'first-test')).toBe(false)
+    expect(badge(computeAchievements(baseInputs({ completedTests: 1 })), 'first-test')).toBe(true)
+  })
+
+  it('first-level unlocks at 1 mastered level', () => {
+    expect(badge(computeAchievements(baseInputs({ masteredLevels: 0 })), 'first-level')).toBe(false)
+    expect(badge(computeAchievements(baseInputs({ masteredLevels: 1 })), 'first-level')).toBe(true)
+  })
+
+  it('century unlocks at 100 total answers (correct + wrong combined)', () => {
+    expect(
+      badge(computeAchievements(baseInputs({ correctCount: 50, wrongCount: 49 })), 'century'),
+    ).toBe(false)
+    expect(
+      badge(computeAchievements(baseInputs({ correctCount: 50, wrongCount: 50 })), 'century'),
+    ).toBe(true)
+    expect(badge(computeAchievements(baseInputs({ wrongCount: 100 })), 'century')).toBe(true)
+  })
+
+  it('half-bank unlocks at exactly 285 distinct questions', () => {
+    expect(HALF_BANK_SIZE).toBe(285)
+    expect(
+      badge(computeAchievements(baseInputs({ distinctQuestionsAnswered: 284 })), 'half-bank'),
+    ).toBe(false)
+    expect(
+      badge(computeAchievements(baseInputs({ distinctQuestionsAnswered: 285 })), 'half-bank'),
+    ).toBe(true)
+  })
+
+  it('marathon-day unlocks at 100 answers in one UTC day', () => {
+    expect(badge(computeAchievements(baseInputs({ maxAnswersInADay: 99 })), 'marathon-day')).toBe(false)
+    expect(badge(computeAchievements(baseInputs({ maxAnswersInADay: 100 })), 'marathon-day')).toBe(true)
+  })
+
+  it('iron-streak-30 unlocks at a 30-day streak', () => {
+    expect(badge(computeAchievements(baseInputs({ currentStreak: 29 })), 'iron-streak-30')).toBe(false)
+    expect(badge(computeAchievements(baseInputs({ currentStreak: 30 })), 'iron-streak-30')).toBe(true)
+  })
+
+  it('fix-master unlocks at 25 fixed questions (fixer already unlocked)', () => {
+    const at24 = computeAchievements(baseInputs({ fixedCount: 24 }))
+    expect(badge(at24, 'fixer')).toBe(true)
+    expect(badge(at24, 'fix-master')).toBe(false)
+    expect(badge(computeAchievements(baseInputs({ fixedCount: 25 })), 'fix-master')).toBe(true)
+  })
+})
+
+// ─── Wave 2: single-session badges ───────────────────────────────────────────
+
+describe('computeAchievements — sharpshooter / flawless-exam', () => {
+  it('sharpshooter needs ≥90% on a 25Q+ session', () => {
+    const hit = computeAchievements(
+      baseInputs({ sessions: [bossSession({ score: 23 })] }), // 23/25 = 92%
+    )
+    expect(badge(hit, 'sharpshooter')).toBe(true)
+
+    const miss = computeAchievements(
+      baseInputs({ sessions: [bossSession({ score: 22 })] }), // 88%
+    )
+    expect(badge(miss, 'sharpshooter')).toBe(false)
+
+    const tooSmall = computeAchievements(
+      baseInputs({ sessions: [bossSession({ score: 24, total: 24 })] }),
+    )
+    expect(badge(tooSmall, 'sharpshooter')).toBe(false)
+  })
+
+  it('sharpshooter ignores time limits and category (unlike boss-down)', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [bossSession({ category: 'Universal', score: 23, time_limit_secs: null })],
+      }),
+    )
+    expect(badge(a, 'sharpshooter')).toBe(true)
+    expect(badge(a, 'boss-down')).toBe(false)
+  })
+
+  it('flawless-exam needs a perfect score on a 25Q+ session', () => {
+    const perfect = computeAchievements(baseInputs({ sessions: [bossSession({ score: 25 })] }))
+    expect(badge(perfect, 'flawless-exam')).toBe(true)
+
+    const oneOff = computeAchievements(baseInputs({ sessions: [bossSession({ score: 24 })] }))
+    expect(badge(oneOff, 'flawless-exam')).toBe(false)
+
+    const smallPerfect = computeAchievements(
+      baseInputs({ sessions: [bossSession({ score: 10, total: 10 })] }),
+    )
+    expect(badge(smallPerfect, 'flawless-exam')).toBe(false)
+
+    const unscored = computeAchievements(baseInputs({ sessions: [bossSession({ score: null })] }))
+    expect(badge(unscored, 'flawless-exam')).toBe(false)
+  })
+})
+
+describe('computeAchievements — speed-runner', () => {
+  /** A passed, timed 25Q session; duration set via overrides. */
+  function timedRun(startISO: string, endISO: string, overrides = {}) {
+    return bossSession({ started_at: startISO, submitted_at: endISO, ...overrides })
+  }
+
+  it('unlocks at exactly 50s/question on a passed timed exam', () => {
+    // 25 × 50s = 1250s
+    const exact = computeAchievements(
+      baseInputs({
+        sessions: [timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:20:50.000Z')],
+      }),
+    )
+    expect(badge(exact, 'speed-runner')).toBe(true)
+  })
+
+  it('stays locked one second over the 50s/question budget', () => {
+    const over = computeAchievements(
+      baseInputs({
+        sessions: [timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:20:51.000Z')],
+      }),
+    )
+    expect(badge(over, 'speed-runner')).toBe(false)
+  })
+
+  const lockedCases: [string, ReturnType<typeof bossSession>][] = [
+    [
+      'the session was failed (17/25)',
+      timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:10:00.000Z', { score: 17 }),
+    ],
+    [
+      'the session is untimed',
+      timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:10:00.000Z', { time_limit_secs: 0 }),
+    ],
+    [
+      'fewer than 25 questions',
+      timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:10:00.000Z', { score: 18, total: 24 }),
+    ],
+    ['started_at is missing', bossSession({ started_at: null })],
+    ['submitted_at is missing', bossSession({ started_at: '2026-07-08T10:00:00.000Z', submitted_at: null })],
+    [
+      'duration is zero',
+      timedRun('2026-07-08T10:00:00.000Z', '2026-07-08T10:00:00.000Z'),
+    ],
+    [
+      'duration is negative (clock skew)',
+      timedRun('2026-07-08T10:20:00.000Z', '2026-07-08T10:00:00.000Z'),
+    ],
+  ]
+
+  it.each(lockedCases)('stays locked when %s', (_label, session) => {
+    const a = computeAchievements(baseInputs({ sessions: [session] }))
+    expect(badge(a, 'speed-runner')).toBe(false)
+  })
+})
+
+// ─── Wave 2: multi-session badges ────────────────────────────────────────────
+
+describe('computeAchievements — hat-trick', () => {
+  it('unlocks on 3 passed sessions submitted the same UTC day', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ submitted_at: '2026-07-08T01:00:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-08T12:00:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-08T23:59:59.000Z' }),
+        ],
+      }),
+    )
+    expect(badge(a, 'hat-trick')).toBe(true)
+  })
+
+  it('counts a pass at exactly the 72% boundary (18/25)', () => {
+    // bossSession default score IS 18/25 = 0.72 — the previous test relies on it.
+    expect(18 / 25).toBe(0.72)
+  })
+
+  it('does not straddle the UTC midnight boundary', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ submitted_at: '2026-07-08T23:58:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-08T23:59:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-09T00:00:00.000Z' }), // next UTC day
+        ],
+      }),
+    )
+    expect(badge(a, 'hat-trick')).toBe(false)
+  })
+
+  it('failed sessions on the same day do not count', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ submitted_at: '2026-07-08T01:00:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-08T12:00:00.000Z' }),
+          bossSession({ submitted_at: '2026-07-08T13:00:00.000Z', score: 17 }), // 68% fail
+        ],
+      }),
+    )
+    expect(badge(a, 'hat-trick')).toBe(false)
+  })
+})
+
+describe('computeAchievements — comeback-kid', () => {
+  it('unlocks when a category has a fail and a LATER pass', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ score: 10, submitted_at: '2026-07-01T10:00:00.000Z' }), // fail
+          bossSession({ submitted_at: '2026-07-02T10:00:00.000Z' }), // later pass
+        ],
+      }),
+    )
+    expect(badge(a, 'comeback-kid')).toBe(true)
+  })
+
+  it('a fail at 17/25 (68%) followed by a pass at exactly 72% qualifies', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ score: 17, submitted_at: '2026-07-01T10:00:00.000Z' }),
+          bossSession({ score: 18, submitted_at: '2026-07-02T10:00:00.000Z' }),
+        ],
+      }),
+    )
+    expect(badge(a, 'comeback-kid')).toBe(true)
+  })
+
+  const lockedCases: [string, ReturnType<typeof bossSession>[]][] = [
+    [
+      'the pass came BEFORE the fail',
+      [
+        bossSession({ submitted_at: '2026-07-01T10:00:00.000Z' }),
+        bossSession({ score: 10, submitted_at: '2026-07-02T10:00:00.000Z' }),
+      ],
+    ],
+    [
+      'the fail and pass are in different categories',
+      [
+        bossSession({ category: 'Type I', score: 10, submitted_at: '2026-07-01T10:00:00.000Z' }),
+        bossSession({ category: 'Type II', submitted_at: '2026-07-02T10:00:00.000Z' }),
+      ],
+    ],
+    [
+      'the fail and pass share the same submitted_at (not strictly later)',
+      [
+        bossSession({ score: 10, submitted_at: '2026-07-01T10:00:00.000Z' }),
+        bossSession({ submitted_at: '2026-07-01T10:00:00.000Z' }),
+      ],
+    ],
+    ['there are only passes', [bossSession(), bossSession()]],
+    ['there are only fails', [bossSession({ score: 10 }), bossSession({ score: 5 })]],
+  ]
+
+  it.each(lockedCases)('stays locked when %s', (_label, sessions) => {
+    expect(badge(computeAchievements(baseInputs({ sessions })), 'comeback-kid')).toBe(false)
+  })
+})
+
+describe('computeAchievements — night-owl (03:00–09:59 UTC, a US-night approximation)', () => {
+  it.each([
+    ['03:00:00 (window start)', '2026-07-08T03:00:00.000Z', true],
+    ['09:59:59 (window end)', '2026-07-08T09:59:59.000Z', true],
+    ['02:59:59 (just before)', '2026-07-08T02:59:59.000Z', false],
+    ['10:00:00 (just after)', '2026-07-08T10:00:00.000Z', false],
+  ])('submitted at %s UTC → %s', (_label, iso, expected) => {
+    const a = computeAchievements(baseInputs({ sessions: [bossSession({ submitted_at: iso })] }))
+    expect(badge(a, 'night-owl')).toBe(expected)
+  })
+
+  it('even a failed session counts (showing up at night is the badge)', () => {
+    const a = computeAchievements(
+      baseInputs({ sessions: [bossSession({ score: 0, submitted_at: '2026-07-08T04:00:00.000Z' })] }),
+    )
+    expect(badge(a, 'night-owl')).toBe(true)
+  })
+})
+
+describe('computeAchievements — weekend-warrior (UTC weekdays)', () => {
+  // 2026-07-04 is a Saturday, 2026-07-05 a Sunday, 2026-07-11 the next Saturday.
+  const SAT = '2026-07-04T15:00:00.000Z'
+  const SUN = '2026-07-05T15:00:00.000Z'
+  const SAT2 = '2026-07-11T15:00:00.000Z'
+
+  it('unlocks with sessions on both a Saturday and a Sunday', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [bossSession({ submitted_at: SAT }), bossSession({ submitted_at: SUN })],
+      }),
+    )
+    expect(badge(a, 'weekend-warrior')).toBe(true)
+  })
+
+  it('the Saturday and Sunday need not be the same weekend, and fails count', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [
+          bossSession({ score: 0, submitted_at: SAT2 }),
+          bossSession({ score: 0, submitted_at: SUN }),
+        ],
+      }),
+    )
+    expect(badge(a, 'weekend-warrior')).toBe(true)
+  })
+
+  it('two Saturdays are not enough', () => {
+    const a = computeAchievements(
+      baseInputs({
+        sessions: [bossSession({ submitted_at: SAT }), bossSession({ submitted_at: SAT2 })],
+      }),
+    )
+    expect(badge(a, 'weekend-warrior')).toBe(false)
+  })
+
+  it('a Sunday alone is not enough', () => {
+    const a = computeAchievements(baseInputs({ sessions: [bossSession({ submitted_at: SUN })] }))
+    expect(badge(a, 'weekend-warrior')).toBe(false)
+  })
+})
+
+// ─── Wave 2: world completion + path-complete ────────────────────────────────
+
+describe('computeAchievements — world-* / path-complete', () => {
+  const WORLD_BADGES = ['world-core', 'world-type1', 'world-type2', 'world-type3'] as const
+
+  it('unlocks each world badge when mastered ≥ total (total > 0)', () => {
+    const a = computeAchievements(baseInputs({ worldCompletion: worlds(['Core', 'Type II']) }))
+    expect(badge(a, 'world-core')).toBe(true)
+    expect(badge(a, 'world-type1')).toBe(false)
+    expect(badge(a, 'world-type2')).toBe(true)
+    expect(badge(a, 'world-type3')).toBe(false)
+    expect(badge(a, 'path-complete')).toBe(false)
+  })
+
+  it('path-complete requires ALL four worlds', () => {
+    const three = computeAchievements(
+      baseInputs({ worldCompletion: worlds(['Core', 'Type I', 'Type II']) }),
+    )
+    expect(badge(three, 'path-complete')).toBe(false)
+
+    const four = computeAchievements(baseInputs({ worldCompletion: worlds([...SECTIONS]) }))
+    for (const id of WORLD_BADGES) expect(badge(four, id)).toBe(true)
+    expect(badge(four, 'path-complete')).toBe(true)
+  })
+
+  it('total = 0 NEVER unlocks, even with mastered ≥ total', () => {
+    const a = computeAchievements(
+      baseInputs({
+        worldCompletion: {
+          Core: { mastered: 0, total: 0 },
+          'Type I': { mastered: 5, total: 0 }, // corrupt data — still locked
+        },
+      }),
+    )
+    expect(badge(a, 'world-core')).toBe(false)
+    expect(badge(a, 'world-type1')).toBe(false)
+    expect(badge(a, 'path-complete')).toBe(false)
+  })
+
+  it('an empty worldCompletion record locks everything', () => {
+    const a = computeAchievements(baseInputs({ worldCompletion: {} }))
+    for (const id of WORLD_BADGES) expect(badge(a, id)).toBe(false)
+    expect(badge(a, 'path-complete')).toBe(false)
+  })
+})
+
+// ─── Wave 2: universal-boss ──────────────────────────────────────────────────
+
+describe('computeAchievements — universal-boss', () => {
+  function universalExam(overrides: Partial<ReturnType<typeof bossSession>> = {}) {
+    return bossSession({
+      category: 'Universal',
+      score: 90,
+      total: 100,
+      time_limit_secs: 7200,
+      ...overrides,
+    })
+  }
+
+  it('unlocks on a passed, timed, 100Q Universal exam', () => {
+    const a = computeAchievements(baseInputs({ sessions: [universalExam()] }))
+    expect(badge(a, 'universal-boss')).toBe(true)
+  })
+
+  it('passes at exactly the 72% boundary (72/100)', () => {
+    const a = computeAchievements(baseInputs({ sessions: [universalExam({ score: 72 })] }))
+    expect(badge(a, 'universal-boss')).toBe(true)
+  })
+
+  const lockedCases: [string, Partial<ReturnType<typeof bossSession>>][] = [
+    ['the score is below 72% (71/100)', { score: 71 }],
+    ['there are fewer than 100 questions', { score: 90, total: 99 }],
+    ['the exam is untimed (0 sentinel)', { time_limit_secs: 0 }],
+    ['the exam is untimed (null)', { time_limit_secs: null }],
+    ['the category is a section, not Universal', { category: 'Core' }],
+    ['the session is unscored', { score: null }],
+  ]
+
+  it.each(lockedCases)('stays locked when %s', (_label, overrides) => {
+    const a = computeAchievements(baseInputs({ sessions: [universalExam(overrides)] }))
+    expect(badge(a, 'universal-boss')).toBe(false)
+  })
+})
+
+// ─── maxAnswersInOneDay (marathon-day input) ─────────────────────────────────
+
+describe('maxAnswersInOneDay', () => {
+  it('returns the busiest UTC day count', () => {
+    const rows = [
+      { answered_at: '2026-07-08T10:00:00.000Z' },
+      { answered_at: '2026-07-08T11:00:00.000Z' },
+      { answered_at: '2026-07-08T12:00:00.000Z' },
+      { answered_at: '2026-07-09T10:00:00.000Z' },
+    ]
+    expect(maxAnswersInOneDay(rows)).toBe(3)
+  })
+
+  it('splits on the UTC midnight boundary', () => {
+    const rows = [
+      { answered_at: '2026-07-08T23:59:59.000Z' },
+      { answered_at: '2026-07-09T00:00:00.000Z' },
+    ]
+    expect(maxAnswersInOneDay(rows)).toBe(1)
+  })
+
+  it('skips rows with missing/null answered_at', () => {
+    const rows = [
+      { answered_at: '2026-07-08T10:00:00.000Z' },
+      { answered_at: null },
+      {},
+    ]
+    expect(maxAnswersInOneDay(rows)).toBe(1)
+  })
+
+  it('is 0 for an empty window', () => {
+    expect(maxAnswersInOneDay([])).toBe(0)
+  })
+
+  it('feeds marathon-day end-to-end at the 100-answer threshold', () => {
+    const rows = Array.from({ length: 100 }, (_, i) => ({
+      answered_at: `2026-07-08T10:${String(i % 60).padStart(2, '0')}:00.000Z`,
+    }))
+    const max = maxAnswersInOneDay(rows)
+    expect(max).toBe(100)
+    expect(badge(computeAchievements(baseInputs({ maxAnswersInADay: max })), 'marathon-day')).toBe(true)
+  })
+})
+
+// ─── buildWorldCompletion (world-* input) ────────────────────────────────────
+
+describe('buildWorldCompletion', () => {
+  it('pairs the mastered/total maps for all four sections', () => {
+    const wc = buildWorldCompletion(
+      { Core: 3, 'Type I': 1 },
+      { Core: 3, 'Type I': 4, 'Type II': 5, 'Type III': 2 },
+    )
+    expect(wc).toEqual({
+      Core: { mastered: 3, total: 3 },
+      'Type I': { mastered: 1, total: 4 },
+      'Type II': { mastered: 0, total: 5 },
+      'Type III': { mastered: 0, total: 2 },
+    })
+  })
+
+  it('degrades missing categories to 0 (and 0-total worlds never unlock)', () => {
+    const wc = buildWorldCompletion({}, {})
+    expect(wc).toEqual({
+      Core: { mastered: 0, total: 0 },
+      'Type I': { mastered: 0, total: 0 },
+      'Type II': { mastered: 0, total: 0 },
+      'Type III': { mastered: 0, total: 0 },
+    })
+    const a = computeAchievements(baseInputs({ worldCompletion: wc }))
+    expect(badge(a, 'world-core')).toBe(false)
+    expect(badge(a, 'path-complete')).toBe(false)
   })
 })
 

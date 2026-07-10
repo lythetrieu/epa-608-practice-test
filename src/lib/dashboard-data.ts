@@ -15,11 +15,13 @@ import {
 } from '@/lib/section-progress'
 import { getPacingData, EXAM_BUDGET_MS } from '@/lib/pacing-server'
 import {
+  buildWorldCompletion,
   computeAchievements,
   computeCurrentStreak,
   countDistinctQuestions,
   countFixedQuestions,
   fetchAchievementCounts,
+  maxAnswersInOneDay,
   type Achievements,
 } from '@/lib/achievements-server'
 
@@ -213,6 +215,12 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
         distinctQuestionsAnswered: countDistinctQuestions(activityRows),
         pacing: pacing ? { avgMs: pacing.avgMs, sampleSize: pacing.sampleSize } : null,
         fixedCount: countFixedQuestions(activityRows),
+        // marathon-day: bucket the SAME 2000-row answer window the heatmap
+        // uses by UTC day — no window cutoff here (the badge is lifetime-ish
+        // within the bounded window), no new query.
+        maxAnswersInADay: maxAnswersInOneDay(activityRows),
+        // world-* badges: pair the Study X/Y maps computed above.
+        worldCompletion: buildWorldCompletion(masteredByCat, totalsByCat),
       })
     }
   } catch {
