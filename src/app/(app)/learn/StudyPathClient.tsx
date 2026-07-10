@@ -748,10 +748,10 @@ export default function StudyPathClient({
   // Approved skin: world cards are WHITE with a single muted navy-tint icon
   // chip — no per-world gradients/hues (the emoji carries the identity).
   const WORLD_THEME: Record<string, { emoji: string; sub: string }> = {
-    'Core':     { emoji: '☁️', sub: 'Foundations — required for every cert' },
+    'Core':     { emoji: '📋', sub: 'Foundations — required for every cert' },
     'Type I':   { emoji: '❄️', sub: 'Small appliances' },
-    'Type II':  { emoji: '🎛️', sub: 'High-pressure systems' },
-    'Type III': { emoji: '💧', sub: 'Low-pressure chillers' },
+    'Type II':  { emoji: '🔧', sub: 'High-pressure systems' },
+    'Type III': { emoji: '🏭', sub: 'Low-pressure chillers' },
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -760,18 +760,22 @@ export default function StudyPathClient({
   if (!activeWorld) {
     return (
       <div className="min-h-screen bg-slate-100">
-        <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-          <div>
-            <h1 className="font-serif text-lg font-black text-gray-900">Study Path</h1>
-            <p className="text-[11px] text-gray-400 font-mono tabular-nums">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
-          </div>
-          <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
-          </div>
-        </div>
-
         <div className="px-4 py-6 max-w-3xl mx-auto">
-          <p className="text-sm text-gray-500 mb-4 font-medium">Choose a certification to study</p>
+          {/* Mockup STUDY PATH frame: kicker + Fraunces title + overall bar row */}
+          <p className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] px-0.5">
+            EPA 608 · Study Route
+          </p>
+          <h1 className="mt-1 font-serif text-2xl font-black tracking-tight text-gray-900">
+            Pick your section
+          </h1>
+          <div className="mt-3 mb-5 flex items-center gap-2.5">
+            <div className="flex-1 h-2 bg-blue-50 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
+            </div>
+            <span className="shrink-0 font-mono text-[13px] font-bold text-primary-900 tabular-nums">
+              {totalMastered}/{concepts.length} · {overallPct}%
+            </span>
+          </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {sections.map(cat => {
               const items = grouped[cat] || []
@@ -787,15 +791,15 @@ export default function StudyPathClient({
                 <button key={cat} onClick={() => setActiveWorld(cat)}
                   className="rounded-2xl border border-gray-200 bg-white p-5 text-left shadow-sm hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-xl shrink-0" aria-hidden>
+                    <span className="w-11 h-11 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[21px] shrink-0" aria-hidden>
                       {t.emoji}
                     </span>
                     <div className="min-w-0 flex-1">
                       <h3 className="text-lg font-extrabold text-gray-900 truncate">{cat}</h3>
                       <p className="text-xs text-gray-500 truncate">{t.sub}</p>
                     </div>
-                    {/* Status lives in the small pill — green ONLY when done */}
-                    <span className={`shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+                    {/* Status lives in the small mono pill — green ONLY when done */}
+                    <span className={`shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${
                       allDone
                         ? 'bg-green-50 text-green-700 border-green-200'
                         : started
@@ -805,13 +809,13 @@ export default function StudyPathClient({
                       {allDone ? '✓ Review' : started ? 'Continue →' : 'Start →'}
                     </span>
                   </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1.5">
+                  <div className="h-2 bg-blue-50 rounded-full overflow-hidden mb-1.5">
                     <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                   </div>
-                  <span className="text-[11px] font-semibold text-gray-500">
-                    {done}/{items.length} levels · <span className="font-mono text-primary-900 tabular-nums">{pct}%</span> ·{' '}
+                  <span className="font-mono text-[11px] font-semibold text-gray-500 tabular-nums">
+                    {done}/{items.length} levels · <span className="text-primary-900">{pct}%</span> ·{' '}
                     <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
-                    <span className="font-mono tabular-nums"> {starsEarned}/{starsPossible}</span>
+                    <span> {starsEarned}/{starsPossible}</span>
                     <span className="sr-only"> stars</span>
                   </span>
                 </button>

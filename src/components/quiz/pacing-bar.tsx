@@ -2,10 +2,11 @@
 
 // Horizontal LIMIT bar for pacing cards (Home PACE card + Progress pacing
 // summary). The 72s/question budget is a hard limit, not a target: go over it
-// and you will NOT finish the real exam in time. Approved skin: the fill is
-// ALWAYS solid navy (state lives in the labels/copy, never the fill), the
-// over-limit zone is a neutral gray tint, and only the LIMIT marker line +
-// its label stay red.
+// and you will NOT finish the real exam in time. Approved skin (mockup pace
+// card): solid navy fill with a round navy NEEDLE dot at the user's position,
+// a red tick at the 72s LIMIT, a diagonal-hatch danger zone past it, and a
+// mono scale row (0s · 72s LIMIT · max) underneath. State lives in the
+// labels/copy, never in the fill.
 
 import { finishMarginMinutes } from './pacing'
 
@@ -23,6 +24,7 @@ export function PaceBar({
   const limitPct = maxMs > 0 ? (budgetMs / maxMs) * 100 : 0
   const over = avgMs > budgetMs
   const budgetSecs = Math.round(budgetMs / 1000)
+  const maxSecs = Math.round(maxMs / 1000)
   const marginMin = finishMarginMinutes(avgMs, budgetMs)
 
   const copy = over
@@ -32,28 +34,44 @@ export function PaceBar({
   return (
     <div className="w-full">
       {/* Bar is decorative — the copy line below carries the information. */}
-      <div className="relative pt-4" aria-hidden="true">
-        <span
-          className="absolute top-0 text-[10px] font-semibold leading-none text-red-600 whitespace-nowrap"
-          style={{ left: `${limitPct}%`, transform: 'translateX(-50%)' }}
-        >
-          {budgetSecs}s limit
-        </span>
-        <div className="relative h-2 rounded-full bg-gray-100">
-          {/* Over-limit zone: neutral gray tint — the red lives in the marker only */}
+      <div aria-hidden="true">
+        <div className="relative h-3 rounded-md bg-blue-50 border border-gray-200">
+          {/* Danger zone past the limit: neutral diagonal hatch (red lives in
+              the LIMIT marker only) */}
           <div
-            className="absolute inset-y-0 right-0 rounded-r-full bg-gray-200"
-            style={{ left: `${limitPct}%` }}
+            className="absolute inset-y-0 right-0 rounded-r-md"
+            style={{
+              left: `${limitPct}%`,
+              background:
+                'repeating-linear-gradient(135deg, rgba(15,31,61,.12) 0 3px, transparent 3px 7px)',
+            }}
           />
+          {/* Navy fill up to the user's average */}
           <div
-            className="relative h-full rounded-full bg-blue-800"
+            className="absolute inset-y-0 left-0 rounded-md bg-blue-800"
             style={{ width: `${fillPct}%` }}
           />
-          {/* Vertical marker at the hard limit */}
+          {/* Red tick at the hard limit */}
           <div
-            className="absolute -inset-y-0.5 w-px bg-red-400"
+            className="absolute -top-0.5 -bottom-0.5 w-0.5 bg-red-600"
             style={{ left: `${limitPct}%` }}
           />
+          {/* Round navy needle at the user's position */}
+          <div
+            className="absolute top-1/2 w-3.5 h-3.5 rounded-full bg-blue-800 border-[3px] border-white shadow -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${fillPct}%` }}
+          />
+        </div>
+        {/* Scale row: 0s left · red "72s LIMIT" under the tick · max right */}
+        <div className="relative mt-1.5 h-3 font-mono text-[9px] leading-none text-gray-400">
+          <span className="absolute left-0 top-0">0s</span>
+          <span className="absolute right-0 top-0">{maxSecs}s</span>
+          <span
+            className="absolute top-0 -translate-x-1/2 font-bold text-red-600 whitespace-nowrap"
+            style={{ left: `${limitPct}%` }}
+          >
+            {budgetSecs}s LIMIT
+          </span>
         </div>
       </div>
       <p className={`mt-1.5 text-xs ${over ? 'text-red-600' : 'text-gray-500'}`}>{copy}</p>

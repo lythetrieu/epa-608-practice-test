@@ -13,10 +13,8 @@ import { GuidedTour } from './guided-tour'
 import { Onboarding } from './onboarding'
 import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
-import type { ReactNode } from 'react'
 import {
-  FileText, Snowflake, Wrench, Factory,
-  ArrowRight, Lightbulb, AlertTriangle, Timer, Bot, Lock,
+  ArrowRight, Lightbulb, AlertTriangle, Bot, Lock,
 } from 'lucide-react'
 import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
@@ -24,13 +22,13 @@ import { ActivityHeatmap } from './ActivityHeatmap'
 import { RankInsignia } from '@/components/gamification/BadgeIcons'
 import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
-// Icon per section — chips share ONE muted navy-tint family (approved skin:
-// fewer hues; state lives in labels, never in decorative chip colors).
-const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
-  Core:       { icon: <FileText size={16} />,  chip: 'bg-blue-50 text-blue-800' },
-  'Type I':   { icon: <Snowflake size={16} />, chip: 'bg-blue-50 text-blue-800' },
-  'Type II':  { icon: <Wrench size={16} />,    chip: 'bg-blue-50 text-blue-800' },
-  'Type III': { icon: <Factory size={16} />,   chip: 'bg-blue-50 text-blue-800' },
+// Emoji per section — chips sit in ONE soft slate/navy-tint square (approved
+// skin: fewer hues; state lives in labels, never in decorative chip colors).
+const SECTION_EMOJI: Record<string, string> = {
+  Core: '📋',
+  'Type I': '❄️',
+  'Type II': '🔧',
+  'Type III': '🏭',
 }
 
 // SVG progress-ring math (r=50 in a 120 viewBox, like the prototype)
@@ -244,7 +242,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       </section>
 
       {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
-      <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1 mb-2 px-0.5">
+      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mt-1 mb-2 px-0.5">
         Progress by section
       </h2>
       {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
@@ -269,7 +267,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         return (
           <div className="grid grid-cols-2 gap-2 mb-3" data-tour="sections">
             {SECTION_CATEGORIES.map(category => {
-              const style = SECTION_STYLE[category]
+              const emoji = SECTION_EMOJI[category] ?? '📋'
               const cat = readiness.byCategory.find(c => c.category === category)
               const isWeakest =
                 !!readiness.weakest &&
@@ -300,34 +298,37 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       Start here →
                     </span>
                   )}
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
-                      {style.icon}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className="w-9 h-9 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-lg shrink-0"
+                      aria-hidden="true"
+                    >
+                      {emoji}
                     </span>
-                    <span className="text-[15px] font-semibold text-gray-900 truncate">{category}</span>
+                    <span className="text-[15px] font-extrabold text-gray-900 truncate">{category}</span>
                     {isWeakest && (
-                      <span className="shrink-0 text-[9px] font-bold uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">
+                      <span className="shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded-full">
                         weakest
                       </span>
                     )}
-                    {/* Numbers: one ink color — state lives in the small label below */}
-                    <span className="ml-auto text-xl font-bold font-mono text-primary-900">
-                      {cat ? `${cat.readinessPct}%` : '—'}
-                    </span>
                   </div>
+                  {/* Numbers: one ink color, HUGE — state lives in the small label below */}
+                  <p className="font-mono text-3xl font-bold text-primary-900 leading-none mb-2">
+                    {cat ? `${cat.readinessPct}%` : '—'}
+                  </p>
                   <div className="h-2 rounded-full bg-blue-50 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-blue-800"
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
                     />
                   </div>
-                  <div className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                  <div className="text-xs text-gray-500 mt-2 leading-relaxed">
                     <p>Study path: {mastered}/{total} levels</p>
                     {practiced !== undefined && <p>{practiced} questions practiced</p>}
                   </div>
                   <p
-                    className={`text-[11px] font-semibold mt-1.5 ${
-                      cat?.ready ? 'text-green-600' : isWeakest ? 'text-red-600' : cat ? 'text-gray-500' : 'text-gray-400'
+                    className={`text-xs font-bold mt-1.5 ${
+                      cat?.ready ? 'text-green-600' : isWeakest ? 'text-red-600' : cat ? 'text-primary-900' : 'text-gray-400'
                     }`}
                   >
                     {cat?.ready ? 'Ready ✓' : cat ? 'Keep practicing' : 'Not started'}
@@ -372,19 +373,26 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           href="/progress"
           className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[44px] hover:border-blue-300 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
-            <span className="text-sm font-semibold text-gray-800">Pace</span>
-            <span className="text-sm font-bold font-mono text-primary-900">{formatSecsLong(paceMs)}/question</span>
+          <div className="flex items-center gap-2">
+            <span className="text-base shrink-0" aria-hidden="true">⏱</span>
+            <span className="text-[15px] font-extrabold text-gray-900">Pace</span>
+            <span className="font-mono text-lg font-bold text-primary-900">
+              {formatSecsLong(paceMs)}
+              <span className="text-[13px] font-semibold text-gray-400">/question</span>
+            </span>
             <span
-              className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                paceMs <= 72_000 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+              className={`ml-auto shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                paceMs <= 72_000
+                  ? 'bg-green-50 text-green-700 border-green-200'
+                  : 'bg-red-50 text-red-600 border-red-200'
               }`}
             >
-              {paceMs <= 72_000 ? 'will finish in time' : "won't finish in time"}
+              {paceMs <= 72_000 ? 'Will finish in time' : "Won't finish in time"}
             </span>
           </div>
-          <PaceBar avgMs={paceMs} />
+          <div className="mt-2.5">
+            <PaceBar avgMs={paceMs} />
+          </div>
         </Link>
       )}
 
