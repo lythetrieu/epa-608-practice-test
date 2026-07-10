@@ -111,28 +111,52 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         style={{ background: '#001d57' }}
         data-tour="header"
       >
-        {/* Row 1: welcome (left) + compact rank cluster (right → Progress).
-            Guarded: pre-achievements cached payloads render no cluster.
-            The full XP bar lives on /progress; only the numbers show here. */}
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <h1 className="font-serif text-xl sm:text-2xl font-black text-white truncate">Welcome, {name}!</h1>
-          {achievements && (
-            <Link
-              href="/progress"
-              className="flex items-center gap-1.5 shrink-0 min-h-[44px] -my-2 px-1.5 rounded-lg hover:bg-white/10 transition-colors"
-              aria-label={`Rank: ${achievements.rank.label}, ${achievements.xp.toLocaleString()} XP — view achievements`}
-            >
-              <RankInsignia rank={achievements.rank.id} size={18} />
-              <span className="text-xs font-semibold">{achievements.rank.label}</span>
-              <span className="text-[10px] font-mono tabular-nums text-white/70">
-                {achievements.xp.toLocaleString()}
-                {achievements.rank.nextMinXp !== null
-                  ? `/${achievements.rank.nextMinXp.toLocaleString()}`
-                  : ''} XP
+        {/* Row 1: rank (left) + welcome (right corner). Row 1.5: full-width XP
+            bar → the whole block links to /progress. Guarded: pre-achievements
+            cached payloads show only the welcome line. */}
+        {achievements ? (
+          <Link
+            href="/progress"
+            className="block mb-3 rounded-lg -m-1 p-1 hover:bg-white/10 transition-colors"
+            aria-label={`Rank: ${achievements.rank.label}, ${achievements.xp.toLocaleString()} XP — view achievements`}
+          >
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <span className="flex items-center gap-1.5 min-w-0">
+                <RankInsignia rank={achievements.rank.id} size={18} />
+                <span className="text-sm font-bold truncate">{achievements.rank.label}</span>
               </span>
-            </Link>
-          )}
-        </div>
+              <span className="font-serif text-base sm:text-lg font-black text-white/90 truncate shrink-0">
+                Welcome, {name}!
+              </span>
+            </div>
+            {(() => {
+              const { xp, rank } = achievements
+              const span = rank.nextMinXp === null ? null : rank.nextMinXp - rank.minXp
+              const pct =
+                span === null || span <= 0
+                  ? 100
+                  : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
+              return (
+                <div className="flex items-center gap-2">
+                  <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden" aria-hidden="true">
+                    <span
+                      className="block h-full rounded-full bg-[#f5b840]"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </span>
+                  <span className="text-[10px] font-mono tabular-nums text-white/70 shrink-0">
+                    {xp.toLocaleString()}
+                    {rank.nextMinXp !== null ? ` / ${rank.nextMinXp.toLocaleString()}` : ''} XP
+                  </span>
+                </div>
+              )
+            })()}
+          </Link>
+        ) : (
+          <div className="mb-3">
+            <h1 className="font-serif text-xl sm:text-2xl font-black text-white truncate">Welcome, {name}!</h1>
+          </div>
+        )}
 
         {/* Row 2: readiness ring + coach line (unchanged) */}
         <div className="flex items-center gap-4" data-tour="readiness">
