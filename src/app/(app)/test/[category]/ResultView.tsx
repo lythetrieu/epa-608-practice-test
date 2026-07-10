@@ -75,7 +75,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
 
         {/* ── Score card ── */}
         <div className={`rounded-2xl p-5 sm:p-8 text-center ${passed ? 'bg-green-600' : 'bg-red-500'} text-white`}>
-          <div className="text-5xl sm:text-6xl font-bold mb-1">{percentage}%</div>
+          <div className="text-5xl sm:text-6xl font-bold font-mono mb-1">{percentage}%</div>
           <div className="text-xl font-semibold mb-1">{passed ? 'Passed' : 'Not Passed'}</div>
           <div className="text-white/75 text-sm">
             {score}/{total} correct · Pass mark: 72% per section, same as the real exam
@@ -102,7 +102,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
                     </span>
                     <span className="text-sm font-medium text-gray-800">{s.category}</span>
                   </div>
-                  <span className={`text-sm font-bold ${s.passed ? 'text-green-600' : 'text-red-500'}`}>
+                  <span className="text-sm font-bold font-mono text-primary-900">
                     {s.percentage}% <span className="font-normal text-gray-400 text-xs">({s.score}/{s.total})</span>
                   </span>
                 </div>
@@ -117,11 +117,11 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Pacing</h2>
             <div className="flex items-baseline justify-between gap-3 mb-1">
               <span className="text-sm text-gray-600">Your average</span>
-              <span className="text-sm font-bold text-gray-900 tabular-nums">{formatSecs(pacing.avgMs)}/question</span>
+              <span className="text-sm font-bold font-mono text-primary-900 tabular-nums">{formatSecs(pacing.avgMs)}/question</span>
             </div>
             <div className="flex items-baseline justify-between gap-3 mb-2">
               <span className="text-sm text-gray-600">Exam pace</span>
-              <span className="text-sm text-gray-500 tabular-nums">{Math.round(pacing.budgetMs / 1000)}s/question</span>
+              <span className="text-sm text-gray-500 font-mono tabular-nums">{Math.round(pacing.budgetMs / 1000)}s/question</span>
             </div>
             <p className={`text-xs font-medium ${pacing.spareMs >= 0 ? 'text-green-600' : 'text-amber-600'}`}>
               {pacing.verdict}
@@ -140,7 +140,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
                         <span className="text-gray-600 truncate flex-1 min-w-0">
                           {questionTextMap.get(a.questionId) ?? 'Question'}
                         </span>
-                        <span className="font-semibold text-gray-800 tabular-nums shrink-0">{formatSecs(a.timeMs ?? 0)}</span>
+                        <span className="font-semibold font-mono text-primary-900 tabular-nums shrink-0">{formatSecs(a.timeMs ?? 0)}</span>
                       </div>
                     )
                   })}
@@ -158,10 +158,11 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
           }
           const nextHref = NEXT_MAP[category]
           const nextLabel = NEXT_MAP[category]?.replace('/test/', '').replace('-', ' ').replace(/^\w/, c => c.toUpperCase())
+          // Next-step CTA = the result screen's ONE orange (only one renders)
           if (passed && nextHref) {
             return (
               <Link href={nextHref}
-                className="block text-center py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors">
+                className="block text-center py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors">
                 Next: {nextLabel} →
               </Link>
             )
@@ -169,7 +170,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
           if (!passed) {
             return (
               <Link href="/learn"
-                className="block text-center py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors">
+                className="block text-center py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors">
                 Study {category} in Study Path before retaking →
               </Link>
             )

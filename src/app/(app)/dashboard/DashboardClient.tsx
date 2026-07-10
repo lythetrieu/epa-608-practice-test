@@ -24,12 +24,13 @@ import { ActivityHeatmap } from './ActivityHeatmap'
 import { RankInsignia } from '@/components/gamification/BadgeIcons'
 import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
-// Icon + chip color per section (matches the prototype's colored icon chips)
+// Icon per section — chips share ONE muted navy-tint family (approved skin:
+// fewer hues; state lives in labels, never in decorative chip colors).
 const SECTION_STYLE: Record<string, { icon: ReactNode; chip: string }> = {
-  Core:       { icon: <FileText size={16} />,  chip: 'bg-sky-100 text-sky-700' },
-  'Type I':   { icon: <Snowflake size={16} />, chip: 'bg-teal-100 text-teal-700' },
-  'Type II':  { icon: <Wrench size={16} />,    chip: 'bg-violet-100 text-violet-700' },
-  'Type III': { icon: <Factory size={16} />,   chip: 'bg-amber-100 text-amber-700' },
+  Core:       { icon: <FileText size={16} />,  chip: 'bg-blue-50 text-blue-800' },
+  'Type I':   { icon: <Snowflake size={16} />, chip: 'bg-blue-50 text-blue-800' },
+  'Type II':  { icon: <Wrench size={16} />,    chip: 'bg-blue-50 text-blue-800' },
+  'Type III': { icon: <Factory size={16} />,   chip: 'bg-blue-50 text-blue-800' },
 }
 
 // SVG progress-ring math (r=50 in a 120 viewBox, like the prototype)
@@ -110,7 +111,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
 
       {/* ═══ HEADER ═══ */}
       <div className="flex items-center justify-between mb-3" data-tour="header">
-        <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Welcome, {name}!</h1>
+        <h1 className="font-serif text-xl sm:text-2xl font-black text-gray-900 truncate">Welcome, {name}!</h1>
       </div>
 
       {/* ═══ RANK STRIP — slim one-liner, links to Progress (achievements live there).
@@ -138,7 +139,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                 style={{ width: `${pct}%`, background: '#003087' }}
               />
             </span>
-            <span className="text-[11px] text-gray-500 shrink-0 tabular-nums">
+            <span className="text-[11px] text-gray-500 shrink-0 font-mono tabular-nums">
               {xp.toLocaleString()}
               {rank.nextMinXp !== null ? ` / ${rank.nextMinXp.toLocaleString()}` : ''} XP
             </span>
@@ -171,7 +172,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               cy="60"
               r={RING_R}
               fill="none"
-              stroke="#38bdf8"
+              stroke="#f5b840"
               strokeWidth="13"
               strokeLinecap="round"
               strokeDasharray={RING_C.toFixed(1)}
@@ -179,7 +180,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               transform="rotate(-90 60 60)"
             />
           )}
-          <text x="60" y="58" textAnchor="middle" fontSize="30" fontWeight="700" fill="#fff">
+          <text x="60" y="58" textAnchor="middle" fontSize="28" fontWeight="700" fill="#fff" className="font-mono">
             {readiness.enoughData ? `${overall}%` : '—'}
           </text>
           <text x="60" y="78" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.7)">
@@ -187,7 +188,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           </text>
         </svg>
         <div className="min-w-0">
-          <p className="text-xs text-blue-200 mb-1">Exam readiness</p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-1">Exam readiness</p>
           <p className="text-sm font-medium leading-relaxed">
             <Lightbulb size={15} className="inline align-[-2px] mr-1" aria-hidden="true" />
             {coachLine}
@@ -198,7 +199,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {/* ═══ STAT CARDS — streak · tests · avg score ═══ */}
       <div className="grid grid-cols-3 gap-2 mb-3">
         <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
-          <p className="text-lg font-bold text-amber-600 inline-flex items-center justify-center gap-1">
+          <p className="text-lg font-bold font-mono text-primary-900 inline-flex items-center justify-center gap-1">
             <Flame size={16} aria-hidden="true" />{currentStreak}
           </p>
           <p className="text-[11px] text-gray-500">day streak</p>
@@ -207,11 +208,11 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           href="/progress"
           className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center hover:border-blue-300 transition-colors"
         >
-          <p className="text-lg font-bold text-gray-900">{totalTests}</p>
+          <p className="text-lg font-bold font-mono text-primary-900">{totalTests}</p>
           <p className="text-[11px] text-gray-500">tests</p>
         </Link>
         <div className="bg-white border border-gray-200 rounded-xl px-2 py-3 text-center">
-          <p className="text-lg font-bold text-gray-900">{avgScore !== null ? `${avgScore}%` : '—'}</p>
+          <p className="text-lg font-bold font-mono text-primary-900">{avgScore !== null ? `${avgScore}%` : '—'}</p>
           <p className="text-[11px] text-gray-500">avg score</p>
         </div>
       </div>
@@ -259,36 +260,38 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   key={category}
                   href={`/learn?section=${encodeURIComponent(category)}`}
                   data-tour={category === 'Core' ? 'core' : undefined}
-                  className={`block bg-white border rounded-2xl px-4 py-4 transition-colors ${
-                    isNext ? 'ring-2 ring-blue-800 ' : ''
-                  }${isWeakest ? 'border-red-200 hover:border-red-300' : 'border-gray-200 hover:border-blue-300'}`}
+                  className={`relative block bg-white rounded-2xl px-4 py-4 transition-colors ${
+                    isNext
+                      ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
+                      : isWeakest
+                        ? 'border border-red-200 hover:border-red-300'
+                        : 'border border-gray-200 hover:border-blue-300'
+                  }`}
                 >
+                  {/* Featured "Start here" — slim orange border + small tag (approved skin) */}
+                  {isNext && (
+                    <span className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                      Start here →
+                    </span>
+                  )}
                   <div className="flex items-center gap-1.5 mb-2">
                     <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${style.chip}`}>
                       {style.icon}
                     </span>
                     <span className="text-[15px] font-semibold text-gray-900 truncate">{category}</span>
-                    {/* Weakest pill wins over Start-here (the ring already marks Next up) */}
-                    {isWeakest ? (
+                    {isWeakest && (
                       <span className="shrink-0 text-[9px] font-bold uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">
                         weakest
                       </span>
-                    ) : isNext ? (
-                      <span className="shrink-0 text-[9px] font-bold bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">
-                        Start here →
-                      </span>
-                    ) : null}
-                    <span
-                      className={`ml-auto text-xl font-bold ${
-                        !cat ? 'text-gray-400' : cat.ready ? 'text-green-600' : 'text-orange-500'
-                      }`}
-                    >
+                    )}
+                    {/* Numbers: one ink color — state lives in the small label below */}
+                    <span className="ml-auto text-xl font-bold font-mono text-primary-900">
                       {cat ? `${cat.readinessPct}%` : '—'}
                     </span>
                   </div>
                   <div className="h-2 rounded-full bg-blue-50 overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${cat?.ready ? 'bg-green-600' : 'bg-orange-500'}`}
+                      className="h-full rounded-full bg-blue-800"
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
                     />
                   </div>
@@ -298,7 +301,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   </div>
                   <p
                     className={`text-[11px] font-semibold mt-1.5 ${
-                      cat?.ready ? 'text-green-600' : cat ? 'text-orange-500' : 'text-gray-400'
+                      cat?.ready ? 'text-green-600' : isWeakest ? 'text-red-600' : cat ? 'text-gray-500' : 'text-gray-400'
                     }`}
                   >
                     {cat?.ready ? 'Ready ✓' : cat ? 'Keep practicing' : 'Not started'}
@@ -319,7 +322,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           <div className="flex items-center gap-3">
             <Timer size={18} className="text-gray-500 shrink-0" aria-hidden="true" />
             <span className="text-sm font-semibold text-gray-800">Pace</span>
-            <span className="text-sm font-bold text-gray-900">{formatSecsLong(paceMs)}/question</span>
+            <span className="text-sm font-bold font-mono text-primary-900">{formatSecsLong(paceMs)}/question</span>
             <span
               className={`ml-auto shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
                 paceMs <= 72_000 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
@@ -358,10 +361,10 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (
-        <div className="rounded-xl px-4 py-3 text-white flex items-center justify-between gap-3" style={{ background: 'linear-gradient(to right, #003087, #0077b6)' }}>
+        <div className="rounded-xl px-4 py-3 text-white flex items-center justify-between gap-3" style={{ background: '#001d57' }}>
           <div>
             <p className="font-bold text-sm">Unlock Pro features</p>
-            <p className="text-blue-100 text-xs">$14.99 one-time — lifetime access</p>
+            <p className="text-blue-100 text-xs"><span className="font-mono">$14.99</span> one-time — lifetime access</p>
           </div>
           <Link href="/checkout.html" className="shrink-0 px-4 bg-white rounded-lg font-bold text-xs min-h-[44px] inline-flex items-center" style={{ color: '#003087' }}>
             Upgrade

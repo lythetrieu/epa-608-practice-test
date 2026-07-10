@@ -56,6 +56,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        // Fraunces — screen titles + hero moments ONLY (approved skin)
+        serif: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        // JetBrains Mono — big stat numbers (readiness %, tile %s, pace, timer, XP)
+        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       borderRadius: {
         '4xl': '2rem',

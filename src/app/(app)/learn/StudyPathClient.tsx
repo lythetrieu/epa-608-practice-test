@@ -37,21 +37,21 @@ function ExplainButton({ questionText, correctAnswer }: { questionText: string; 
 
   if (state === 'done') {
     return (
-      <div className="mt-2.5 bg-purple-50 border border-purple-200 rounded-lg p-3">
+      <div className="mt-2.5 bg-blue-50 border border-blue-200 rounded-lg p-3">
         <div className="flex items-center gap-1.5 mb-1">
-          <Bot size={13} className="text-purple-600" />
-          <span className="font-semibold text-purple-700 text-[11px] uppercase tracking-wide">AI Tutor</span>
+          <Bot size={13} className="text-blue-800" />
+          <span className="font-semibold text-blue-800 text-[11px] uppercase tracking-wide">AI Tutor</span>
         </div>
-        <p className="text-sm text-purple-900 leading-relaxed">{explanation}</p>
+        <p className="text-sm text-primary-900 leading-relaxed">{explanation}</p>
       </div>
     )
   }
 
   return (
     <button onClick={handleClick} disabled={state === 'loading'}
-      className="mt-2.5 inline-flex items-center gap-1.5 text-xs px-3 py-2 min-h-[40px] rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 font-medium">
+      className="mt-2.5 inline-flex items-center gap-1.5 text-xs px-3 py-2 min-h-[40px] rounded-lg border border-gray-300 bg-white text-blue-800 hover:bg-blue-50 disabled:opacity-50 font-medium">
       {state === 'loading' ? (
-        <><span className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" /> Explaining...</>
+        <><span className="w-3 h-3 border-2 border-blue-300 border-t-transparent rounded-full animate-spin" /> Explaining...</>
       ) : state === 'error' ? (
         <><Bot size={14} /> Try again</>
       ) : (
@@ -606,7 +606,7 @@ export default function StudyPathClient({
               </div>
 
               <footer className="border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-7">
-                <button onClick={() => setQuizPhase('quiz')} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow transition hover:brightness-110" style={{ background: A }}>
+                <button onClick={() => setQuizPhase('quiz')} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow transition hover:brightness-110" style={{ background: '#F97316' }}>
                   Start quiz — 10 questions <ArrowRight size={16} />
                 </button>
                 <p className="mt-2 text-center text-xs text-slate-400">Pass 8 of 10 to clear this level</p>
@@ -665,17 +665,18 @@ export default function StudyPathClient({
                   : <>You need 80% to clear this level. Review the misses below and try again.</>}
                 </p>
 
+                {/* Primary action = the screen's ONE orange (only one of the three renders) */}
                 <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row-reverse">
                   {result.passed && nextLesson ? (
-                    <button onClick={() => openConcept(nextLesson.subtopicPrefix, nextLesson.id)} className="btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
+                    <button onClick={() => openConcept(nextLesson.subtopicPrefix, nextLesson.id)} className="btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: '#F97316' }}>
                       Next level <ArrowRight size={16} />
                     </button>
                   ) : !result.passed ? (
-                    <button onClick={() => openConcept(activeConceptPrefix!, activeConceptId!)} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
+                    <button onClick={() => openConcept(activeConceptPrefix!, activeConceptId!)} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: '#F97316' }}>
                       Try again
                     </button>
                   ) : (
-                    <button onClick={closeModal} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: A }}>
+                    <button onClick={closeModal} className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow hover:brightness-110" style={{ background: '#F97316' }}>
                       Back to route <ArrowRight size={16} />
                     </button>
                   )}
@@ -744,11 +745,13 @@ export default function StudyPathClient({
     // Linear skill-unlock: first non-cleared concept is the current level; later ones lock.
   const isCleared = (c: Concept) => getEffectiveStatus(progress[c.id] || { status: 'pending', passCount: 0, lastPassed: null }) === 'mastered'
 
-  const WORLD_THEME: Record<string, { grad: string; cardGrad: string; pill: string; blob: string; emoji: string; sub: string; props: string[]; scene: [string, string, string] }> = {
-    'Core':     { grad: 'from-sky-200 via-sky-100 to-blue-100',     cardGrad: 'from-sky-400 to-blue-500',       pill: 'bg-sky-600',     blob: 'bg-sky-400',     emoji: '☁️', sub: 'Foundations — required for every cert', props: ['☁️','🌍','♻️','🧪','📋','⚗️'], scene: ['#7dd3fc','#bae6fd','#e0f2fe'] },
-    'Type I':   { grad: 'from-cyan-200 via-teal-100 to-emerald-100', cardGrad: 'from-teal-400 to-cyan-500',      pill: 'bg-teal-600',    blob: 'bg-teal-400',    emoji: '❄️', sub: 'Small appliances', props: ['❄️','🧊','🔧','🧰','🥶','🛠️'], scene: ['#5eead4','#99f6e4','#cffafe'] },
-    'Type II':  { grad: 'from-violet-200 via-indigo-100 to-blue-100',cardGrad: 'from-indigo-400 to-violet-500',  pill: 'bg-indigo-600',  blob: 'bg-indigo-400',  emoji: '🎛️', sub: 'High-pressure systems', props: ['🎛️','🌡️','⚙️','🔩','🧯','📈'], scene: ['#a5b4fc','#c7d2fe','#e0e7ff'] },
-    'Type III': { grad: 'from-emerald-200 via-green-100 to-teal-100',cardGrad: 'from-emerald-400 to-green-500',  pill: 'bg-emerald-600', blob: 'bg-emerald-400', emoji: '💧', sub: 'Low-pressure chillers', props: ['💧','🌀','🧊','⚙️','🚿','🌡️'], scene: ['#6ee7b7','#a7f3d0','#d1fae5'] },
+  // Approved skin: world cards are WHITE with a single muted navy-tint icon
+  // chip — no per-world gradients/hues (the emoji carries the identity).
+  const WORLD_THEME: Record<string, { emoji: string; sub: string }> = {
+    'Core':     { emoji: '☁️', sub: 'Foundations — required for every cert' },
+    'Type I':   { emoji: '❄️', sub: 'Small appliances' },
+    'Type II':  { emoji: '🎛️', sub: 'High-pressure systems' },
+    'Type III': { emoji: '💧', sub: 'Low-pressure chillers' },
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -759,11 +762,11 @@ export default function StudyPathClient({
       <div className="min-h-screen bg-slate-100">
         <div className="sticky top-0 z-20 bg-white/85 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
           <div>
-            <h1 className="text-base font-extrabold text-gray-900">Study Path</h1>
-            <p className="text-[11px] text-gray-400">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
+            <h1 className="font-serif text-lg font-black text-gray-900">Study Path</h1>
+            <p className="text-[11px] text-gray-400 font-mono tabular-nums">{totalMastered}/{concepts.length} mastered · {overallPct}%</p>
           </div>
           <div className="w-24 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-            <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
+            <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
           </div>
         </div>
 
@@ -782,30 +785,35 @@ export default function StudyPathClient({
               const starsPossible = items.length * 3
               return (
                 <button key={cat} onClick={() => setActiveWorld(cat)}
-                  className={`relative overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg border-b-4 border-black/15 bg-gradient-to-br ${t.cardGrad} active:translate-y-0.5 transition-transform`}>
-                  <span aria-hidden className="absolute -right-3 -top-3 text-7xl opacity-20 select-none">{t.emoji}</span>
-                  <div className="relative">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-2xl">{t.emoji}</span>
-                      <h3 className="text-lg font-extrabold">{cat}</h3>
-                      {allDone && <Check size={18} className="ml-auto" strokeWidth={3} />}
+                  className="rounded-2xl border border-gray-200 bg-white p-5 text-left shadow-sm hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-xl shrink-0" aria-hidden>
+                      {t.emoji}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-lg font-extrabold text-gray-900 truncate">{cat}</h3>
+                      <p className="text-xs text-gray-500 truncate">{t.sub}</p>
                     </div>
-                    <p className="text-xs text-white/80 mb-4">{t.sub}</p>
-                    <div className="h-2 bg-white/30 rounded-full overflow-hidden mb-1.5">
-                      <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-white/90">
-                        {done}/{items.length} levels · {pct}% ·{' '}
-                        <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
-                        <span className="tabular-nums"> {starsEarned}/{starsPossible}</span>
-                        <span className="sr-only"> stars</span>
-                      </span>
-                      <span className="text-xs font-extrabold bg-white/25 px-3 py-1 rounded-full">
-                        {allDone ? 'Review' : started ? 'Continue →' : 'Start →'}
-                      </span>
-                    </div>
+                    {/* Status lives in the small pill — green ONLY when done */}
+                    <span className={`shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+                      allDone
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : started
+                          ? 'bg-blue-50 text-blue-800 border-blue-100'
+                          : 'bg-gray-100 text-gray-600 border-gray-200'
+                    }`}>
+                      {allDone ? '✓ Review' : started ? 'Continue →' : 'Start →'}
+                    </span>
                   </div>
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1.5">
+                    <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
+                  </div>
+                  <span className="text-[11px] font-semibold text-gray-500">
+                    {done}/{items.length} levels · <span className="font-mono text-primary-900 tabular-nums">{pct}%</span> ·{' '}
+                    <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
+                    <span className="font-mono tabular-nums"> {starsEarned}/{starsPossible}</span>
+                    <span className="sr-only"> stars</span>
+                  </span>
                 </button>
               )
             })}
@@ -814,14 +822,14 @@ export default function StudyPathClient({
           {/* Flashcards */}
           <a href="/flashcards"
             className="mt-5 flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
-            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-              <LayoutGrid size={18} className="text-purple-600" />
+            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+              <LayoutGrid size={18} className="text-blue-800" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-900">Flashcards</p>
               <p className="text-xs text-gray-400">Swipe-drill any section</p>
             </div>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 shrink-0">Free</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-600 shrink-0">Free</span>
             <ChevronRight size={16} className="text-gray-300 shrink-0" />
           </a>
         </div>
@@ -870,8 +878,8 @@ export default function StudyPathClient({
 
       {/* title */}
       <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: ACCENT }}>EPA 608 · Study Route</p>
-        <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900">{activeWorld} levels</h2>
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: ACCENT }}>EPA 608 · Study Route</p>
+        <h2 className="mt-1.5 font-serif text-2xl font-black tracking-tight text-slate-900">{activeWorld} levels</h2>
         <p className="mt-1.5 text-sm text-slate-500 max-w-md">Clear each level with 8 of 10 to unlock the next one.</p>
       </div>
 
@@ -927,14 +935,16 @@ export default function StudyPathClient({
                           {progress[c.id]?.attempts ? ` · ${progress[c.id].attempts} ${progress[c.id].attempts === 1 ? 'try' : 'tries'}` : ''}
                         </p>
                       </div>
-                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">
+                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold font-mono tabular-nums text-blue-800 bg-blue-50 border border-blue-100 px-2 py-1 rounded-md">
                         <Check size={12} strokeWidth={3} /> {progress[c.id]?.bestScore ? `${progress[c.id].bestScore}%` : 'Cleared'}
                       </span>
                     </div>
                   </button>
                 )}
                 {s === 'current' && (
-                  <div className="rounded-2xl border-2 bg-white px-4 py-4 sm:px-5" style={{ borderColor: ACCENT, boxShadow: '0 8px 24px -8px rgba(0,48,135,0.35)' }}>
+                  // Featured card: slim 1.5px ORANGE border (approved skin) — the
+                  // "You are here" pill stays navy, danger note stays rose.
+                  <div className="rounded-2xl border-[1.5px] bg-white px-4 py-4 sm:px-5" style={{ borderColor: '#F97316', boxShadow: '0 8px 24px -8px rgba(15,23,42,0.18)' }}>
                     <div className="flex items-center justify-between gap-3">
                       <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef4fb' }}>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
@@ -953,7 +963,8 @@ export default function StudyPathClient({
                       10 questions · pass 8/10
                       {(progress[c.id]?.attempts ?? 0) > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${progress[c.id]?.attempts} ${progress[c.id]?.attempts === 1 ? 'try' : 'tries'}` : ''}
                     </p>
-                    <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: ACCENT }}>
+                    {/* Current-level action = the Study Path screen's ONE orange */}
+                    <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: '#F97316' }}>
                       {(progress[c.id]?.attempts ?? 0) > 0 ? 'Try again' : 'Start level'} <ArrowRight size={16} />
                     </button>
                   </div>
@@ -1008,7 +1019,7 @@ export default function StudyPathClient({
 
       {cur >= worldItems.length && (
         <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">
-          <div className="text-center bg-white border border-emerald-200 rounded-2xl p-6">
+          <div className="text-center bg-white border border-gray-200 rounded-2xl p-6">
             <Trophy size={32} className="text-amber-500 mx-auto mb-2" />
             <p className="text-slate-900 font-extrabold text-lg">{activeWorld} complete</p>
             <p className="text-slate-500 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>

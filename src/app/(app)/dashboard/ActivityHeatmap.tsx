@@ -16,12 +16,13 @@ type Activity = {
 const WEEKS = 16
 const DAY_MS = 86_400_000
 
-// Color levels: 10 answers ≈ one quiz.
+// Color levels: 10 answers ≈ one quiz. Navy-tint ramp (approved skin —
+// navy is the single workhorse fill; green is reserved for status labels).
 function levelClass(count: number): string {
   if (count === 0) return 'bg-gray-100'
-  if (count <= 2) return 'bg-green-200'
-  if (count <= 9) return 'bg-green-400'
-  return 'bg-green-600'
+  if (count <= 2) return 'bg-blue-100'
+  if (count <= 9) return 'bg-blue-300'
+  return 'bg-blue-800'
 }
 
 export function ActivityHeatmap({ activity }: { activity: Activity }) {

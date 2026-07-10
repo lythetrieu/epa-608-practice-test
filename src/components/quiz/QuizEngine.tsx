@@ -363,7 +363,7 @@ export function QuizEngine({
           {currentIdx > 0 ? <button onClick={() => setCurrentIdx(currentIdx - 1)} className="text-sm font-medium text-slate-500 hover:text-slate-900">Back</button> : <span />}
           <div className="flex-1" />
           <button disabled={!answers[q.id] || submitting} onClick={() => { if (currentIdx < total - 1) setCurrentIdx(currentIdx + 1); else handleSubmit() }}
-            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow disabled:opacity-40 disabled:cursor-not-allowed transition" style={{ background: answers[q.id] ? A : '#94a3b8' }}>
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow disabled:opacity-40 disabled:cursor-not-allowed transition" style={{ background: answers[q.id] ? '#F97316' : '#94a3b8' }}>
             {submitting ? 'Scoring…' : currentIdx === total - 1 ? 'Submit answers' : 'Next question'} <ArrowRight size={16} />
           </button>
         </footer>
@@ -385,7 +385,7 @@ export function QuizEngine({
           <div className="flex items-center gap-2 min-w-0">
             {header}
             <span className="text-sm font-semibold text-gray-600 uppercase tracking-wider shrink-0">{title}</span>
-            <span className="text-base font-bold text-gray-900">
+            <span className="text-base font-bold font-mono text-primary-900">
               {currentIdx + 1}<span className="text-gray-500 font-normal">/{questions.length}</span>
             </span>
           </div>
@@ -405,14 +405,14 @@ export function QuizEngine({
               >
                 {behindPace ? "Too slow — won't finish" : 'On pace'}
               </span>
-              <div className={`text-base font-mono font-bold tabular-nums ${timeLeft < 300 ? 'text-red-600' : 'text-gray-700'}`}>
+              <div className={`text-base font-mono font-bold tabular-nums ${timeLeft < 300 ? 'text-red-600' : 'text-primary-900'}`}>
                 {formatTime(timeLeft)}
               </div>
             </div>
           ) : (
             <div className="flex items-center gap-2 shrink-0">
               <span className="text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full font-medium hidden sm:inline">Practice</span>
-              <span className="text-base font-mono font-bold tabular-nums text-gray-400">{formatTime(elapsed)}</span>
+              <span className="text-base font-mono font-bold tabular-nums text-primary-900">{formatTime(elapsed)}</span>
             </div>
           )}
         </div>
@@ -443,7 +443,7 @@ export function QuizEngine({
             <ReportButton questionId={q.id} />
           </div>
           {isMulti && (
-            <p className="text-xs font-bold text-purple-600 mb-3">Select all that apply</p>
+            <p className="text-xs font-bold text-blue-800 mb-3">Select all that apply</p>
           )}
 
           <div className="space-y-2.5 sm:space-y-3 mt-3">
@@ -531,16 +531,16 @@ export function QuizEngine({
               {showExplanations ? `${revealed.size}/${questions.length} answered` : `${answeredCount}/${questions.length} answered`}
             </p>
             <div className="h-1.5 bg-gray-200 rounded-full mt-1 mx-auto max-w-[200px]">
-              <div className="h-full bg-green-500 rounded-full transition-all" style={{ width: `${((showExplanations ? revealed.size : answeredCount) / questions.length) * 100}%` }} />
+              <div className="h-full bg-blue-800 rounded-full transition-all" style={{ width: `${((showExplanations ? revealed.size : answeredCount) / questions.length) * 100}%` }} />
             </div>
           </div>
 
-          {/* Practice multi-select needs an explicit "Check" before reveal */}
+          {/* Primary action = the screen's ONE orange (only one of these renders) */}
           {showExplanations && isMulti && !isRevealed ? (
             <button
               onClick={revealCurrent}
               disabled={!answers[q?.id]}
-              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-blue-800 text-white rounded-xl hover:bg-blue-900 disabled:opacity-40 text-base font-medium"
+              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-orange-500 text-white rounded-xl hover:bg-orange-600 disabled:opacity-40 text-base font-medium"
             >
               Check
             </button>
@@ -548,7 +548,7 @@ export function QuizEngine({
             <button
               onClick={() => setCurrentIdx(i => i + 1)}
               disabled={showExplanations && !isRevealed}
-              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-blue-800 text-white rounded-xl hover:bg-blue-900 disabled:opacity-40 text-base font-medium"
+              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-orange-500 text-white rounded-xl hover:bg-orange-600 disabled:opacity-40 text-base font-medium"
             >
               Next →
             </button>
@@ -556,7 +556,7 @@ export function QuizEngine({
             <button
               onClick={handleSubmit}
               disabled={submitting || (showExplanations && !isRevealed)}
-              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-green-600 text-white rounded-xl hover:bg-green-700 font-bold disabled:opacity-50 text-base"
+              className="px-4 py-2.5 min-h-[48px] min-w-[72px] bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-bold disabled:opacity-50 text-base"
             >
               {submitting ? '...' : 'Submit'}
             </button>

@@ -98,7 +98,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
       {/* XP bar card */}
       <div className="bg-white rounded-xl border border-gray-200 px-5 py-4 mb-3">
         <div className="flex items-baseline justify-between gap-3 mb-2">
-          <p className="text-lg font-bold tabular-nums" style={{ color: INK }}>
+          <p className="text-lg font-bold font-mono tabular-nums" style={{ color: INK }}>
             {xp.toLocaleString()} XP
           </p>
           <div className="text-right">

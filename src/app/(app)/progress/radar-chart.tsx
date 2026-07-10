@@ -135,7 +135,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
               dy="13"
               fontSize="10"
               fontWeight="700"
-              className="fill-blue-800"
+              className="fill-blue-800 font-mono"
             >
               {l.pct}%
             </tspan>

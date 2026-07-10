@@ -2,10 +2,10 @@
 
 // Horizontal LIMIT bar for pacing cards (Home PACE card + Progress pacing
 // summary). The 72s/question budget is a hard limit, not a target: go over it
-// and you will NOT finish the real exam in time. The track paints the zone
-// beyond the limit red so the bar reads "safe zone | danger zone", the fill is
-// green under the limit and red over it, and the copy line projects the
-// finish margin over a full 25-question exam.
+// and you will NOT finish the real exam in time. Approved skin: the fill is
+// ALWAYS solid navy (state lives in the labels/copy, never the fill), the
+// over-limit zone is a neutral gray tint, and only the LIMIT marker line +
+// its label stay red.
 
 import { finishMarginMinutes } from './pacing'
 
@@ -40,13 +40,13 @@ export function PaceBar({
           {budgetSecs}s limit
         </span>
         <div className="relative h-2 rounded-full bg-gray-100">
-          {/* Danger zone: past the limit you won't finish the exam */}
+          {/* Over-limit zone: neutral gray tint — the red lives in the marker only */}
           <div
-            className="absolute inset-y-0 right-0 rounded-r-full bg-red-100"
+            className="absolute inset-y-0 right-0 rounded-r-full bg-gray-200"
             style={{ left: `${limitPct}%` }}
           />
           <div
-            className={`relative h-full rounded-full ${over ? 'bg-red-500' : 'bg-green-500'}`}
+            className="relative h-full rounded-full bg-blue-800"
             style={{ width: `${fillPct}%` }}
           />
           {/* Vertical marker at the hard limit */}

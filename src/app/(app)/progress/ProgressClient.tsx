@@ -116,7 +116,7 @@ export function ProgressClient({ userId }: { userId: string }) {
 
   return (
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">Progress</h1>
+      <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Progress</h1>
       <p className="text-gray-500 text-sm mb-6">Your weak spots &amp; test history</p>
 
       {/* ── Topic Proficiency radar ─────────────────────────────────── */}
@@ -200,21 +200,18 @@ export function ProgressClient({ userId }: { userId: string }) {
           <div className="space-y-2">
             {topSpots.map((spot) => {
               const errorPct = Math.round(spot.errorRate * 100)
-              const barColor =
-                errorPct > 50 ? 'bg-red-500' : errorPct >= 30 ? 'bg-orange-400' : 'bg-green-500'
-              const labelColor =
-                errorPct > 50 ? 'text-red-600' : errorPct >= 30 ? 'text-orange-500' : 'text-green-600'
               const slug = CATEGORY_SLUGS[spot.category] ?? 'core'
 
               return (
                 <div key={spot.subtopic_id} className="bg-white rounded-xl border border-gray-200 px-5 py-4">
                   <div className="flex items-center justify-between gap-3 mb-2">
                     <span className="font-medium text-gray-800 text-sm">{spot.label}</span>
-                    <span className={`text-sm font-bold shrink-0 ${labelColor}`}>{errorPct}% errors</span>
+                    {/* Numbers: one ink color — severity reads from the bar length */}
+                    <span className="text-sm font-bold font-mono text-primary-900 shrink-0">{errorPct}% errors</span>
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1.5">
                     <div
-                      className={`h-full rounded-full transition-all ${barColor}`}
+                      className="h-full rounded-full transition-all bg-blue-800"
                       style={{ width: `${errorPct}%` }}
                     />
                   </div>
@@ -243,9 +240,10 @@ export function ProgressClient({ userId }: { userId: string }) {
 
           {/* Weak Spot Drill CTA */}
           {isPro ? (
+            // Progress screen's ONE orange primary action
             <Link
               href="/test/weak-spots"
-              className="mt-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-blue-800 text-white rounded-xl font-semibold hover:bg-blue-900 transition-colors text-center"
+              className="mt-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors text-center"
             >
               <Target size={18} aria-hidden />
               <span>Start Weak Spot Drill</span>
@@ -336,7 +334,7 @@ export function ProgressClient({ userId }: { userId: string }) {
                       · {s.score ?? 0}/{s.total}
                     </div>
                   </div>
-                  <span className={`text-sm font-bold shrink-0 ${pct >= 70 ? 'text-green-600' : 'text-orange-500'}`}>
+                  <span className="text-sm font-bold font-mono text-primary-900 shrink-0">
                     {pct}%
                   </span>
                 </div>

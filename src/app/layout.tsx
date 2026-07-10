@@ -1,10 +1,24 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+// Approved skin (see _docs/app-homepage-skin-mockup.html):
+// Fraunces = screen titles + hero moments ONLY; JetBrains Mono = big stat numbers.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
   display: 'swap',
 })
 
@@ -46,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}>
       <head>
         {/* Google Tag Manager — the GTM container (GTM-KSX9M3DD) fires GA4.
             The previously-duplicated direct gtag.js + inline gtag config for

@@ -105,14 +105,15 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
         )}
       </nav>
 
-      {/* Upgrade */}
+      {/* Upgrade — white-on-navy (approved skin: orange is reserved for each
+          screen's ONE primary action, and the sidebar is on every screen) */}
       {!isPro && (
         <div className="px-3 pb-2">
           <Link href={`/checkout.html`}
-            className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
-            style={{ background: '#F97316' }}>
-            <span className="text-white">⚡ Upgrade to Pro</span>
-            <span className="text-white/70 text-xs font-normal">$14.99</span>
+            className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold bg-white transition-opacity hover:opacity-90"
+          >
+            <span style={{ color: '#003087' }}>⚡ Upgrade to Pro</span>
+            <span className="text-gray-500 text-xs font-normal font-mono">$14.99</span>
           </Link>
         </div>
       )}

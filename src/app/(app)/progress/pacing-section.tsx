@@ -36,16 +36,17 @@ export type PacingAnalytics = {
   slowTopics: PacingSlowTopic[]
 }
 
-// Tailwind classes per delta bucket (chip + trend bars share the same rule).
+// Tailwind classes per delta bucket — CHIPS keep their semantic colors (state
+// lives in labels), but ALL bar fills are solid navy per the approved skin.
 const CHIP_CLASSES: Record<PaceDelta, string> = {
   green: 'bg-green-50 text-green-700',
   amber: 'bg-amber-50 text-amber-700',
   red: 'bg-red-50 text-red-600',
 }
 const BAR_CLASSES: Record<PaceDelta, string> = {
-  green: 'bg-green-500',
-  amber: 'bg-amber-400',
-  red: 'bg-red-500',
+  green: 'bg-blue-800',
+  amber: 'bg-blue-800',
+  red: 'bg-blue-800',
 }
 
 function deltaChipText(avgMs: number, budgetMs: number): string {
@@ -75,7 +76,7 @@ export function LastPacingCard({ lastPacing }: { lastPacing: LastPacing }) {
             Exam pace: {Math.round(lastPacing.budgetMs / 1000)}s/question
           </div>
         </div>
-        <span className="text-sm font-bold text-gray-900 tabular-nums shrink-0">
+        <span className="text-sm font-bold font-mono text-primary-900 tabular-nums shrink-0">
           {formatSecs(lastPacing.avgMs)}/question
         </span>
       </div>
@@ -120,9 +121,9 @@ export function PacingSection({
       {/* ── Summary card ──────────────────────────────────────────────── */}
       <div className="bg-white rounded-xl border border-gray-200 px-5 py-4 mb-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-2xl font-bold text-gray-900 tabular-nums">
+          <span className="text-2xl font-bold font-mono text-primary-900 tabular-nums">
             {formatSecsLong(avgMs)}
-            <span className="text-sm font-medium text-gray-500"> / question</span>
+            <span className="text-sm font-medium font-sans text-gray-500"> / question</span>
           </span>
           <span
             className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CHIP_CLASSES[overallDelta]}`}
@@ -201,7 +202,7 @@ export function PacingSection({
                 >
                   <div className="flex items-center justify-between gap-3 mb-1">
                     <span className="font-medium text-gray-800 text-sm">{label}</span>
-                    <span className="text-sm font-bold text-gray-900 tabular-nums shrink-0">
+                    <span className="text-sm font-bold font-mono text-primary-900 tabular-nums shrink-0">
                       {formatSecs(topic.avgMs)}/question
                     </span>
                   </div>
