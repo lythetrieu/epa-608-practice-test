@@ -43,10 +43,10 @@ function DashboardSkeleton() {
     <div className="animate-pulse" aria-hidden>
       <div className="rounded-2xl mb-3 h-[170px]" style={{ background: '#001d57' }} />
       <div className="grid grid-cols-2 gap-2 mb-3">
-        <div className="bg-gray-100 rounded-2xl h-[140px]" />
-        <div className="bg-gray-100 rounded-2xl h-[140px]" />
-        <div className="bg-gray-100 rounded-2xl h-[140px]" />
-        <div className="bg-gray-100 rounded-2xl h-[140px]" />
+        <div className="bg-gray-100 rounded-xl h-[140px]" />
+        <div className="bg-gray-100 rounded-xl h-[140px]" />
+        <div className="bg-gray-100 rounded-xl h-[140px]" />
+        <div className="bg-gray-100 rounded-xl h-[140px]" />
       </div>
     </div>
   )
@@ -64,11 +64,11 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       <div className="p-3 sm:p-5 max-w-3xl mx-auto">
         <AnonymousMigrator />
         {error ? (
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center">
-            <p className="text-sm text-gray-500 mb-4">Couldn&apos;t load your dashboard.</p>
+          <div className="bg-white border border-line rounded-xl shadow-card p-8 text-center">
+            <p className="text-sm text-steel mb-4">Couldn&apos;t load your dashboard.</p>
             <button
               onClick={() => void refresh()}
-              className="px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+              className="px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
             >
               Retry
             </button>
@@ -242,7 +242,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       </section>
 
       {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
-      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mt-1 mb-1.5 px-0.5">
+      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mt-1 mb-1.5 px-0.5">
         Progress by section
       </h2>
       {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
@@ -284,12 +284,12 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   key={category}
                   href={`/learn?section=${encodeURIComponent(category)}`}
                   data-tour={category === 'Core' ? 'core' : undefined}
-                  className={`relative block bg-white rounded-2xl px-4 py-3 transition-colors ${
+                  className={`relative block bg-white rounded-xl shadow-card px-4 py-3 transition-colors ${
                     isNext
                       ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
                       : isWeakest
                         ? 'border border-red-200 hover:border-red-300'
-                        : 'border border-gray-200 hover:border-blue-300'
+                        : 'border border-line hover:border-blue-300'
                   }`}
                 >
                   {/* Featured "Start here" — slim orange border + small tag (approved skin) */}
@@ -300,7 +300,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   )}
                   <div className="flex items-center gap-2 mb-1.5">
                     <span
-                      className="w-8 h-8 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-base shrink-0"
+                      className="w-8 h-8 rounded-[7px] bg-blue-50 border border-line flex items-center justify-center text-base shrink-0"
                       aria-hidden="true"
                     >
                       {emoji}
@@ -323,7 +323,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
                     />
                   </div>
-                  <div className="text-[12px] text-gray-500 mt-1.5 leading-snug">
+                  <div className="text-[12px] text-steel mt-1.5 leading-snug">
                     <p>Study path: {mastered}/{total} levels</p>
                     {practiced !== undefined && <p>{practiced} questions practiced</p>}
                   </div>
@@ -346,14 +346,14 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           one orange BUTTON remains the Start-here tile) ═══ */}
       <Link
         href="/tutor"
-        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 mb-2.5 min-h-[56px] hover:border-orange-300 transition-colors"
+        className="flex items-center gap-3 bg-white border border-line rounded-xl shadow-card px-4 py-2.5 mb-2.5 min-h-[56px] hover:border-orange-300 transition-colors"
       >
-        <span className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+        <span className="w-9 h-9 rounded-[7px] bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
           <Bot size={20} aria-hidden="true" />
         </span>
         <span className="min-w-0">
           <span className="block text-sm font-bold text-gray-900">AI Tutor</span>
-          <span className="block text-[11px] text-gray-500 truncate">
+          <span className="block text-[11px] text-steel truncate">
             Stuck on a concept? Ask anything about EPA 608
           </span>
         </span>
@@ -372,14 +372,14 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {paceMs !== null && (
         <Link
           href="/progress"
-          className="block bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-2.5 min-h-[44px] hover:border-blue-300 transition-colors"
+          className="block bg-white border border-line rounded-xl shadow-card px-4 py-3 mb-2.5 min-h-[44px] hover:border-blue-300 transition-colors"
         >
           <div className="flex items-center gap-2">
             <span className="text-base shrink-0" aria-hidden="true">⏱</span>
             <span className="text-[15px] font-extrabold text-gray-900">Pace</span>
             <span className="font-mono text-lg font-bold text-primary-900">
               {formatSecsLong(paceMs)}
-              <span className="text-[13px] font-semibold text-gray-400">/question</span>
+              <span className="text-[13px] font-semibold text-steel">/question</span>
             </span>
             <span
               className={`ml-auto shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
@@ -401,7 +401,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       {showWeakestAlert && (
         <Link
           href="/progress"
-          className="flex items-center gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-2.5 mb-2.5 min-h-[44px] hover:border-red-300 transition-colors"
+          className="flex items-center gap-2.5 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 mb-2.5 min-h-[44px] hover:border-red-300 transition-colors"
         >
           <AlertTriangle size={17} className="text-red-600 shrink-0" aria-hidden="true" />
           <span className="text-sm font-semibold text-red-700 truncate">
@@ -424,7 +424,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
             <p className="font-bold text-sm">Unlock Pro features</p>
             <p className="text-blue-100 text-xs"><span className="font-mono">$14.99</span> one-time — lifetime access</p>
           </div>
-          <Link href="/checkout.html" className="shrink-0 px-4 bg-white rounded-lg font-bold text-xs min-h-[44px] inline-flex items-center" style={{ color: '#003087' }}>
+          <Link href="/checkout.html" className="shrink-0 px-4 bg-white rounded-[7px] font-bold text-xs min-h-[44px] inline-flex items-center" style={{ color: '#003087' }}>
             Upgrade
           </Link>
         </div>

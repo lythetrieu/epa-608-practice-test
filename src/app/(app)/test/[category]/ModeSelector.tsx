@@ -14,7 +14,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
           {/* Practice Mode — always free */}
           <Link
             href={`/test/${slug}?mode=practice`}
-            className="block w-full rounded-xl border-2 border-gray-200 bg-white p-5 hover:border-blue-300 hover:shadow-md transition-all group"
+            className="block w-full rounded-xl border-2 border-line bg-white shadow-card p-5 hover:border-blue-300 hover:shadow-md transition-all group"
           >
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100">
@@ -22,7 +22,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
               </div>
               <div>
                 <p className="font-bold text-lg text-gray-900">Practice</p>
-                <p className="text-sm text-gray-600">No timer. See answers immediately after each question. Best for learning.</p>
+                <p className="text-sm text-steel">No timer. See answers immediately after each question. Best for learning.</p>
               </div>
             </div>
           </Link>
@@ -31,7 +31,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
           {isPro ? (
             <Link
               href={`/test/${slug}?mode=test`}
-              className="block w-full rounded-xl border-2 border-gray-200 bg-white p-5 hover:border-blue-300 hover:shadow-md transition-all group"
+              className="block w-full rounded-xl border-2 border-line bg-white shadow-card p-5 hover:border-blue-300 hover:shadow-md transition-all group"
             >
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100">
@@ -39,7 +39,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
                 </div>
                 <div>
                   <p className="font-bold text-lg text-gray-900">Timed Simulation</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-steel">
                     {category === 'Universal'
                       ? '100 questions, ~2 hours. No hints. Results at the end. Mirrors the real exam.'
                       : `25 questions, 30 minutes. No hints. Results at the end. ${category === 'Type I' ? 'Pass: 84%.' : 'Pass: 70%.'}`
@@ -49,7 +49,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
               </div>
             </Link>
           ) : (
-            <div className="relative block w-full rounded-xl border-2 border-gray-200 bg-white p-5 opacity-75">
+            <div className="relative block w-full rounded-xl border-2 border-line bg-white shadow-card p-5 opacity-75">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
                   <Clock size={28} className="text-gray-400" />
@@ -71,7 +71,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
               </div>
               <Link
                 href={`/checkout.html`}
-                className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+                className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
               >
                 Unlock Timed Simulation — $14.99 lifetime
               </Link>
@@ -80,7 +80,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
         </div>
 
         <div className="mt-6 text-center">
-          <Link href="/learn" className="text-sm text-gray-500 hover:text-gray-700">
+          <Link href="/learn" className="text-sm text-steel hover:text-gray-700">
             ← Back to Study Path
           </Link>
         </div>

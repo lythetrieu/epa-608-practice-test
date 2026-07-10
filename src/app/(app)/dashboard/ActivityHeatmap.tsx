@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react'
 
-// GitHub-style activity heatmap for the Home dashboard. 14 week columns
+// GitHub-style activity heatmap for the Home dashboard. 16 week columns
 // (ending this week) × 7 weekday rows (Sun on top), each cell colored by how
 // many questions the user answered that day. Data comes from
 // DashboardData.activity (server-computed UTC YYYY-MM-DD counts) — this
@@ -10,9 +10,10 @@ import { Fragment } from 'react'
 // to stay consistent with the server's keys and the streak logic.
 //
 // Approved skin (mockup ACTIVITY frame): the header lives OUTSIDE the card as
-// a mono kicker ("ACTIVITY — LAST 14 WEEKS"), the card holds only the grid —
-// big rounded cells stretched edge-to-edge, light navy ramp — plus a small
-// mono LESS/MORE legend. No month/weekday labels.
+// a mono kicker ("ACTIVITY — LAST 16 WEEKS"), the card holds only the grid —
+// true GitHub-compact cells: fixed 11px squares, 3px gap, 2px radius,
+// LEFT-aligned (16 weeks ≈ 221px wide) — plus a right-aligned mono LESS/MORE
+// legend. No month/weekday labels.
 
 type Activity = {
   days: Record<string, number>
@@ -20,8 +21,11 @@ type Activity = {
   windowDays: number
 }
 
-const WEEKS = 14
+const WEEKS = 16
 const DAY_MS = 86_400_000
+
+// Fixed GitHub-small cell: 11px square, 2px radius.
+const CELL = 'w-[11px] h-[11px] rounded-[2px]'
 
 // Color levels: 10 answers ≈ one quiz. Navy-tint ramp (approved skin —
 // navy is the single workhorse fill; green is reserved for status labels).
@@ -37,7 +41,7 @@ function levelClass(count: number): string {
 export function ActivityHeatmap({ activity }: { activity: Activity }) {
   const now = Date.now()
   const todayStr = new Date(now).toISOString().slice(0, 10)
-  // Sunday of the current UTC week, then back 13 more weeks → grid start.
+  // Sunday of the current UTC week, then back (WEEKS-1) more weeks → grid start.
   const startMs =
     now - new Date(now).getUTCDay() * DAY_MS - (WEEKS - 1) * 7 * DAY_MS
 
@@ -57,15 +61,14 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
 
   return (
     <>
-      <h2 className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] mb-1.5 px-0.5">
+      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-1.5 px-0.5">
         Activity — last {WEEKS} weeks
       </h2>
-      <section className="bg-white border border-gray-200 rounded-2xl p-3 mb-2.5">
-        {/* 14 equal columns, edge-to-edge — cells are aspect-square so they
-            scale chunky with the card width (no dead whitespace). */}
+      <section className="bg-white border border-line rounded-xl shadow-card p-3 mb-2.5">
+        {/* Fixed 11px columns, left-aligned inside the card (no stretching) */}
         <div
-          className="grid gap-[3px]"
-          style={{ gridTemplateColumns: `repeat(${WEEKS}, minmax(0, 1fr))` }}
+          className="grid gap-[3px] justify-start"
+          style={{ gridTemplateColumns: `repeat(${WEEKS}, 11px)` }}
           role="img"
           aria-label={`Practice activity: ${activity.activeDays} active days in the last ${WEEKS} weeks`}
         >
@@ -76,7 +79,7 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
                 return (
                   <div
                     key={cell.dateStr}
-                    className={`aspect-square w-full rounded-md ${
+                    className={`${CELL} ${
                       cell.future ? 'opacity-0' : levelClass(cell.count)
                     }`}
                     title={
@@ -91,14 +94,14 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
           ))}
         </div>
 
-        {/* Legend — mono LESS/MORE row, per the mockup frame */}
+        {/* Legend — mono LESS/MORE row, right-aligned (mockup frame) */}
         <div
-          className="flex items-center gap-1 mt-1.5 font-mono text-[9px] leading-none text-gray-400"
+          className="flex items-center justify-end gap-1 mt-1.5 font-mono text-[9px] leading-none text-steel"
           aria-hidden="true"
         >
           <span>LESS</span>
           {RAMP.map(cls => (
-            <span key={cls} className={`w-2.5 h-2.5 rounded-[3px] ${cls}`} />
+            <span key={cls} className={`${CELL} ${cls}`} />
           ))}
           <span>MORE</span>
         </div>

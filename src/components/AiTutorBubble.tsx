@@ -120,12 +120,12 @@ function BubbleChat({
   return (
     <>
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
         <div className="flex items-center gap-2">
           <Bot size={20} className="text-blue-800" aria-hidden />
           <div className="leading-tight">
             <p className="font-bold text-gray-900 text-sm">AI Tutor</p>
-            <p className="text-[11px] text-gray-500">{limitReached ? 'Daily limit reached' : `${remaining} left today`}</p>
+            <p className="text-[11px] text-steel">{limitReached ? 'Daily limit reached' : `${remaining} left today`}</p>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -166,7 +166,7 @@ function BubbleChat({
           <div className="h-full flex flex-col items-center justify-center text-center px-4">
             <Bot size={36} className="text-blue-800 mb-3" aria-hidden />
             <p className="text-sm font-semibold text-gray-800 mb-1">Ask me anything about EPA 608</p>
-            <p className="text-xs text-gray-500 mb-4">Recovery, refrigerants, regulations, safety…</p>
+            <p className="text-xs text-steel mb-4">Recovery, refrigerants, regulations, safety…</p>
             <div className="w-full space-y-2">
               {[
                 'What is the de minimis release rule?',
@@ -175,7 +175,7 @@ function BubbleChat({
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="w-full text-left text-xs bg-blue-50 text-blue-700 px-3 py-2.5 rounded-lg hover:bg-blue-100 transition-colors"
+                  className="w-full text-left text-xs bg-blue-50 text-blue-700 px-3 py-2.5 rounded-[7px] hover:bg-blue-100 transition-colors"
                 >
                   {q}
                 </button>
@@ -188,7 +188,7 @@ function BubbleChat({
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
               className={`max-w-[85%] rounded-2xl px-3 py-2 ${
-                msg.role === 'user' ? 'bg-blue-800 text-white' : 'bg-gray-50 border border-gray-200 text-gray-800'
+                msg.role === 'user' ? 'bg-blue-800 text-white' : 'bg-gray-50 border border-line text-gray-800'
               }`}
             >
               {msg.role === 'assistant' ? (
@@ -217,9 +217,9 @@ function BubbleChat({
       </div>
 
       {/* Input */}
-      <div className="border-t border-gray-100 px-3 py-3 shrink-0">
+      <div className="border-t border-line px-3 py-3 shrink-0">
         {limitReached ? (
-          <p className="text-center text-xs text-gray-500 py-1">Daily limit reached. Resets at midnight UTC.</p>
+          <p className="text-center text-xs text-steel py-1">Daily limit reached. Resets at midnight UTC.</p>
         ) : (
           <div className="flex items-end gap-2">
             <textarea
@@ -234,7 +234,7 @@ function BubbleChat({
               placeholder="Ask a question…"
               rows={1}
               disabled={isLoading}
-              className="flex-1 resize-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 disabled:opacity-50 max-h-24"
+              className="flex-1 resize-none rounded-xl border border-line bg-gray-50 px-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 disabled:opacity-50 max-h-24"
             />
             <button
               onClick={submit}
@@ -256,7 +256,7 @@ function BubbleChat({
 function BubbleUpsell({ onClose }: { onClose: () => void }) {
   return (
     <>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
         <div className="flex items-center gap-2">
           <Bot size={20} className="text-blue-800" aria-hidden />
           <p className="font-bold text-gray-900 text-sm">AI Tutor</p>
@@ -275,7 +275,7 @@ function BubbleUpsell({ onClose }: { onClose: () => void }) {
           <Lock size={26} className="text-blue-800" aria-hidden />
         </div>
         <h2 className="text-base font-bold text-gray-900 mb-1">🔒 AI Tutor — unlock with Pro</h2>
-        <p className="text-sm text-gray-500 mb-6 max-w-xs">
+        <p className="text-sm text-steel mb-6 max-w-xs">
           Get instant, personalized answers on refrigerants, regulations, recovery and safety —
           plus voice, chat history, and 1,000 questions a day.
         </p>

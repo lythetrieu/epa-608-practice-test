@@ -758,11 +758,19 @@ export default function StudyPathClient({
   // /learn DASHBOARD — pick a World
   // ════════════════════════════════════════════════════════════════════
   if (!activeWorld) {
+    // The picker's ONE orange accent: the recommended world = the FIRST section
+    // with unfinished levels gets an orange-tinted pill (border+text). Exactly
+    // one card — the orange BUTTON of Study Path stays inside the level path.
+    const recommendedWorld = sections.find(cat => {
+      const items = grouped[cat] || []
+      return items.length > 0 && items.filter(isCleared).length < items.length
+    }) ?? null
+
     return (
       <div className="min-h-screen bg-slate-100">
         <div className="px-4 py-5 max-w-3xl mx-auto">
           {/* Mockup STUDY PATH frame: kicker + Fraunces title + overall bar row */}
-          <p className="font-mono text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em] px-0.5">
+          <p className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] px-0.5">
             EPA 608 · Study Route
           </p>
           <h1 className="mt-1 font-serif text-2xl font-black tracking-tight text-gray-900">
@@ -789,22 +797,25 @@ export default function StudyPathClient({
               const starsPossible = items.length * 3
               return (
                 <button key={cat} onClick={() => setActiveWorld(cat)}
-                  className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-left shadow-sm hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
+                  className="rounded-xl border border-line bg-white px-4 py-3 text-left shadow-card hover:border-blue-300 hover:shadow-md active:translate-y-0.5 transition">
                   <div className="flex items-center gap-3">
-                    <span className="w-10 h-10 rounded-[10px] bg-blue-50 border border-gray-200 flex items-center justify-center text-[19px] shrink-0" aria-hidden>
+                    <span className="w-10 h-10 rounded-[7px] bg-blue-50 border border-line flex items-center justify-center text-[19px] shrink-0" aria-hidden>
                       {t.emoji}
                     </span>
                     <div className="min-w-0 flex-1">
                       <h3 className="text-[17px] font-extrabold text-gray-900 leading-tight truncate">{cat}</h3>
-                      <p className="text-[13px] text-gray-500 leading-snug truncate">{t.sub}</p>
+                      <p className="text-[13px] text-steel leading-snug truncate">{t.sub}</p>
                     </div>
-                    {/* Status lives in the small mono pill — green ONLY when done */}
+                    {/* Status lives in the small mono pill — green ONLY when done;
+                        the recommended world's pill is the picker's one orange accent */}
                     <span className={`shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${
                       allDone
                         ? 'bg-green-50 text-green-700 border-green-200'
-                        : started
-                          ? 'bg-blue-50 text-blue-800 border-blue-100'
-                          : 'bg-gray-100 text-gray-600 border-gray-200'
+                        : cat === recommendedWorld
+                          ? 'bg-orange-50 text-orange-600 border-orange-300'
+                          : started
+                            ? 'bg-blue-50 text-blue-800 border-blue-100'
+                            : 'bg-gray-100 text-gray-600 border-gray-200'
                     }`}>
                       {allDone ? '✓ Review' : started ? 'Continue →' : 'Start →'}
                     </span>
@@ -812,7 +823,7 @@ export default function StudyPathClient({
                   <div className="h-2 bg-blue-50 rounded-full overflow-hidden mt-2">
                     <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                   </div>
-                  <span className="block mt-1.5 font-mono text-[11px] font-semibold text-gray-500 tabular-nums">
+                  <span className="block mt-1.5 font-mono text-[11px] font-semibold text-steel tabular-nums">
                     {done}/{items.length} levels · <span className="text-primary-900">{pct}%</span> ·{' '}
                     <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
                     <span> {starsEarned}/{starsPossible}</span>
@@ -825,13 +836,13 @@ export default function StudyPathClient({
 
           {/* Flashcards */}
           <a href="/flashcards"
-            className="mt-3 flex items-center gap-3 bg-white rounded-xl border border-gray-200 px-3 py-2.5 min-h-[56px] hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
-            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+            className="mt-3 flex items-center gap-3 bg-white rounded-xl border border-line shadow-card px-3 py-2.5 min-h-[56px] hover:border-blue-300 hover:bg-blue-50/50 transition-colors">
+            <div className="w-9 h-9 rounded-[7px] bg-blue-50 flex items-center justify-center shrink-0">
               <LayoutGrid size={18} className="text-blue-800" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-900">Flashcards</p>
-              <p className="text-xs text-gray-400">Swipe-drill any section</p>
+              <p className="text-xs text-steel">Swipe-drill any section</p>
             </div>
             <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-600 shrink-0">Free</span>
             <ChevronRight size={16} className="text-gray-300 shrink-0" />
@@ -1023,7 +1034,7 @@ export default function StudyPathClient({
 
       {cur >= worldItems.length && (
         <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">
-          <div className="text-center bg-white border border-gray-200 rounded-2xl p-6">
+          <div className="text-center bg-white border border-line rounded-xl shadow-card p-6">
             <Trophy size={32} className="text-amber-500 mx-auto mb-2" />
             <p className="text-slate-900 font-extrabold text-lg">{activeWorld} complete</p>
             <p className="text-slate-500 text-sm mt-1">Take the {activeWorld} practice test to confirm.</p>

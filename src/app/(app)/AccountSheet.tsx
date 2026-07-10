@@ -56,7 +56,7 @@ export default function AccountSheet({ open, onClose, username, tier, userId }: 
         <div className="w-10 h-1 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto my-3" aria-hidden />
 
         {/* User row */}
-        <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-800 mb-1">
+        <div className="flex items-center gap-3 pb-4 border-b border-line dark:border-gray-800 mb-1">
           <div className="w-11 h-11 rounded-full flex items-center justify-center text-white font-semibold shrink-0" style={{ background: '#001d57' }}>
             {username.charAt(0).toUpperCase()}
           </div>
@@ -81,7 +81,7 @@ export default function AccountSheet({ open, onClose, username, tier, userId }: 
               <RankInsignia rank={achievements.rank.id} size={20} />
             </span>
             {achievements.rank.label}
-            <span className="ml-auto text-xs font-semibold text-gray-500 tabular-nums">
+            <span className="ml-auto font-mono text-xs font-bold text-primary-900 dark:text-white tabular-nums">
               {achievements.xp.toLocaleString()} XP
             </span>
           </Link>

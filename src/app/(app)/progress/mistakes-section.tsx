@@ -41,7 +41,7 @@ function MistakeCard({ q }: { q: MistakeQuestion }) {
   const stillMissing = q.lastCorrect === false
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 px-4 py-3">
+    <div className="bg-white rounded-xl border border-line shadow-card px-4 py-3">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -56,7 +56,7 @@ function MistakeCard({ q }: { q: MistakeQuestion }) {
           {stillMissing ? 'still missing' : 'fixed last try'}
         </span>
         <p className="text-sm font-medium text-gray-800 line-clamp-2">{q.question}</p>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-xs text-steel mt-1">
           &#x2717; {q.wrongCount}/{q.attempts} attempts · {getSubtopicLabel(q.subtopic_id)} ·{' '}
           {q.category}
         </p>
@@ -74,7 +74,7 @@ function MistakeCard({ q }: { q: MistakeQuestion }) {
       <div className="flex gap-2 mt-2">
         <Link
           href={`/learn?section=${encodeURIComponent(q.category)}`}
-          className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
+          className="text-xs px-3 py-1.5 rounded-[7px] bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
         >
           Study This Topic
         </Link>
@@ -91,17 +91,17 @@ export function MistakesSection({ mistakes }: { mistakes: MistakesData }) {
   if (questions.length === 0 && allClean) {
     return (
       <section className="mb-6">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+        <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
           Mistakes — exact questions you&apos;re missing
         </h2>
-        <p className="text-xs text-gray-400">No wrong answers in your recent practice 🎉</p>
+        <p className="text-xs text-steel">No wrong answers in your recent practice 🎉</p>
       </section>
     )
   }
 
   return (
     <section className="mb-6">
-      <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
         Mistakes — exact questions you&apos;re missing
       </h2>
 

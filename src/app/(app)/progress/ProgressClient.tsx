@@ -84,11 +84,11 @@ export function ProgressClient({ userId }: { userId: string }) {
     return (
       <div className="p-4 sm:p-6 max-w-3xl mx-auto">
         {error ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-            <p className="text-sm text-gray-500 mb-4">Couldn&apos;t load your progress.</p>
+          <div className="bg-white border border-line rounded-xl shadow-card p-8 text-center">
+            <p className="text-sm text-steel mb-4">Couldn&apos;t load your progress.</p>
             <button
               onClick={() => void refresh()}
-              className="px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+              className="px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
             >
               Retry
             </button>
@@ -117,26 +117,26 @@ export function ProgressClient({ userId }: { userId: string }) {
   return (
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Progress</h1>
-      <p className="text-gray-500 text-sm mb-6">Your weak spots &amp; test history</p>
+      <p className="text-steel text-sm mb-6">Your weak spots &amp; test history</p>
 
       {/* ── Topic Proficiency radar ─────────────────────────────────── */}
       {chartData ? (
         <section className="mb-6">
           {isPro ? (
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
+            <div className="bg-white rounded-xl border border-line shadow-card p-6">
+              <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-4 text-center">
                 Topic Proficiency
               </h2>
               <RadarChart data={chartData} />
               {useSectionFallback && (
-                <p className="text-[11px] text-gray-400 mt-2 text-center">
+                <p className="text-[11px] text-steel mt-2 text-center">
                   By section — practice more topics to unlock the detailed topic radar.
                 </p>
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-xl border border-gray-200 p-6 text-center">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="bg-white rounded-xl border border-line shadow-card p-6 text-center">
+              <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
                 Topic Proficiency
               </h2>
               {/* Real radar rendered but BLURRED — free users see the insight exists */}
@@ -152,16 +152,16 @@ export function ProgressClient({ userId }: { userId: string }) {
                 </div>
               </div>
               {useSectionFallback && (
-                <p className="text-[11px] text-gray-400 -mt-2 mb-3">
+                <p className="text-[11px] text-steel -mt-2 mb-3">
                   By section — practice more topics to unlock the detailed topic radar.
                 </p>
               )}
-              <p className="text-xs text-gray-500 mb-4">
+              <p className="text-xs text-steel mb-4">
                 Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
               </p>
               <Link
                 href={`/checkout.html`}
-                className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+                className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
               >
                 Upgrade — $14.99 lifetime
               </Link>
@@ -170,7 +170,7 @@ export function ProgressClient({ userId }: { userId: string }) {
         </section>
       ) : (
         spots.length > 0 && (
-          <p className="text-xs text-gray-400 mb-6">
+          <p className="text-xs text-steel mb-6">
             Take tests across more sections to unlock your topic proficiency radar.
           </p>
         )
@@ -178,23 +178,23 @@ export function ProgressClient({ userId }: { userId: string }) {
 
       {/* ── Weak spots ──────────────────────────────────────────────── */}
       {topSpots.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-10 text-center mb-8">
+        <div className="bg-white rounded-xl border border-line shadow-card p-10 text-center mb-8">
           <ClipboardList size={40} className="text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500 font-medium mb-2">No weak spots detected yet</p>
-          <p className="text-gray-400 text-sm mb-6">
+          <p className="text-steel font-medium mb-2">No weak spots detected yet</p>
+          <p className="text-steel text-sm mb-6">
             Take a few tests first to identify your weak areas. We need at least 2 attempts per
             subtopic.
           </p>
           <Link
             href="/dashboard"
-            className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+            className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
           >
             Start a Practice Test
           </Link>
         </div>
       ) : (
         <section className="mb-6">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+          <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
             Weak Spots — by error rate
           </h2>
           <div className="space-y-2">
@@ -203,7 +203,7 @@ export function ProgressClient({ userId }: { userId: string }) {
               const slug = CATEGORY_SLUGS[spot.category] ?? 'core'
 
               return (
-                <div key={spot.subtopic_id} className="bg-white rounded-xl border border-gray-200 px-5 py-4">
+                <div key={spot.subtopic_id} className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
                   <div className="flex items-center justify-between gap-3 mb-2">
                     <span className="font-medium text-gray-800 text-sm">{spot.label}</span>
                     {/* Numbers: one ink color — severity reads from the bar length */}
@@ -215,20 +215,20 @@ export function ProgressClient({ userId }: { userId: string }) {
                       style={{ width: `${errorPct}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
+                  <div className="flex items-center justify-between text-xs text-steel mb-2">
                     <span>{spot.correctCount}/{spot.totalAttempts} correct</span>
                     <span>{spot.category}</span>
                   </div>
                   <div className="flex gap-2">
                     <Link
                       href="/learn"
-                      className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
+                      className="text-xs px-3 py-1.5 rounded-[7px] bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
                     >
                       Study This Topic
                     </Link>
                     <Link
                       href={`/test/${slug}?mode=practice`}
-                      className="text-xs px-3 py-1.5 rounded-lg text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-700"
+                      className="text-xs px-3 py-1.5 rounded-[7px] text-steel font-medium hover:bg-gray-50 hover:text-gray-700"
                     >
                       Practice {spot.category}
                     </Link>
@@ -265,7 +265,7 @@ export function ProgressClient({ userId }: { userId: string }) {
                 </p>
                 <Link
                   href={`/checkout.html`}
-                  className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
+                  className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
                 >
                   Upgrade — $14.99
                 </Link>
@@ -286,7 +286,7 @@ export function ProgressClient({ userId }: { userId: string }) {
         // keep the localStorage-only pace card so nothing regresses meanwhile.
         lastPacing && (
           <section className="mb-6">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
               Pacing
             </h2>
             <LastPacingCard lastPacing={lastPacing} />
@@ -297,14 +297,14 @@ export function ProgressClient({ userId }: { userId: string }) {
       {/* ── Recent tests ────────────────────────────────────────────── */}
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Recent Tests</h2>
+          <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">Recent Tests</h2>
           <Link href="/history" className="text-xs text-blue-700 hover:underline font-medium">
             Full history &rarr;
           </Link>
         </div>
         {recentSessions.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-100 p-6 text-center">
-            <p className="text-gray-400 text-sm">
+          <div className="bg-white rounded-xl border border-line shadow-card p-6 text-center">
+            <p className="text-steel text-sm">
               No tests yet — <Link href="/dashboard" className="text-blue-700 hover:underline">start one</Link>
             </p>
           </div>
@@ -317,16 +317,16 @@ export function ProgressClient({ userId }: { userId: string }) {
               return (
                 <div
                   key={i}
-                  className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center gap-3"
+                  className="bg-white rounded-xl border border-line shadow-card px-4 py-3 flex items-center gap-3"
                 >
-                  <span className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                  <span className="w-9 h-9 rounded-[7px] bg-gray-100 text-steel flex items-center justify-center shrink-0">
                     <FileCheck size={18} aria-hidden />
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-gray-800 truncate">
                       {s.category} · {mode}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-steel">
                       {new Date(s.submitted_at!).toLocaleDateString(undefined, {
                         month: 'short',
                         day: 'numeric',

@@ -81,9 +81,9 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
     <section className="mt-6">
       {/* Header row — sibling style + unlock count + right-aligned rank chip */}
       <div className="flex items-center justify-between gap-3 mb-3">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+        <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">
           Achievements
-          <span className="ml-2 normal-case tracking-normal font-medium text-xs text-gray-400 tabular-nums">
+          <span className="ml-2 tracking-normal font-medium text-[10px] text-steel tabular-nums">
             {unlockedCount}/{ALL_BADGE_IDS.length} unlocked
           </span>
         </h2>
@@ -96,15 +96,15 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
       </div>
 
       {/* XP bar card */}
-      <div className="bg-white rounded-xl border border-gray-200 px-5 py-4 mb-3">
+      <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4 mb-3">
         <div className="flex items-baseline justify-between gap-3 mb-2">
           <p className="text-lg font-bold font-mono tabular-nums" style={{ color: INK }}>
             {xp.toLocaleString()} XP
           </p>
           <div className="text-right">
-            <p className="text-xs text-gray-500">{caption}</p>
+            <p className="text-xs text-steel">{caption}</p>
             {badgeXp > 0 && (
-              <p className="text-[11px] text-gray-400">
+              <p className="text-[11px] text-steel">
                 including {badgeXp.toLocaleString()} XP from badges
               </p>
             )}
@@ -121,10 +121,10 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
 
       {/* Badge grid — all 33 grouped under small kickers, locked grayed; tap
           for the unlock condition */}
-      <div className="bg-white rounded-xl border border-gray-200 px-3 py-4">
+      <div className="bg-white rounded-xl border border-line shadow-card px-3 py-4">
         {BADGE_GROUPS.map((group, gi) => (
           <div key={group.label} className={gi > 0 ? 'mt-5' : undefined}>
-            <h3 className="px-1 mb-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+            <h3 className="px-1 mb-2 font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">
               {group.label}
             </h3>
             <ul className="grid grid-cols-4 sm:grid-cols-5 gap-x-1 gap-y-3">

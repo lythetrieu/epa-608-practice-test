@@ -58,10 +58,10 @@ function deltaChipText(avgMs: number, budgetMs: number): string {
 /** The "Most recent test" card (localStorage pace written by TestClient). */
 export function LastPacingCard({ lastPacing }: { lastPacing: LastPacing }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 px-5 py-4">
-      <p className="text-xs font-semibold text-gray-500 mb-2">Most recent test</p>
+    <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
+      <p className="text-xs font-semibold text-steel mb-2">Most recent test</p>
       <div className="flex items-center gap-3">
-        <span className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+        <span className="w-9 h-9 rounded-[7px] bg-gray-100 text-steel flex items-center justify-center shrink-0">
           <Timer size={18} aria-hidden />
         </span>
         <div className="min-w-0 flex-1">
@@ -72,7 +72,7 @@ export function LastPacingCard({ lastPacing }: { lastPacing: LastPacing }) {
               day: 'numeric',
             })}
           </div>
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-steel">
             Exam pace: {Math.round(lastPacing.budgetMs / 1000)}s/question
           </div>
         </div>
@@ -114,16 +114,16 @@ export function PacingSection({
 
   return (
     <section className="mb-6">
-      <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
         Pacing
       </h2>
 
       {/* ── Summary card ──────────────────────────────────────────────── */}
-      <div className="bg-white rounded-xl border border-gray-200 px-5 py-4 mb-2">
+      <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4 mb-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-2xl font-bold font-mono text-primary-900 tabular-nums">
             {formatSecsLong(avgMs)}
-            <span className="text-sm font-medium font-sans text-gray-500"> / question</span>
+            <span className="text-sm font-medium font-sans text-steel"> / question</span>
           </span>
           <span
             className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CHIP_CLASSES[overallDelta]}`}
@@ -135,7 +135,7 @@ export function PacingSection({
         <div className="mt-3">
           <PaceBar avgMs={avgMs} budgetMs={examBudgetMs} />
         </div>
-        <div className="mt-1.5 text-right text-xs text-gray-400">
+        <div className="mt-1.5 text-right text-xs text-steel">
           based on {sampleSize} answers
         </div>
 
@@ -169,7 +169,7 @@ export function PacingSection({
                 ))}
               </div>
             </div>
-            <div className="flex items-center justify-between mt-1 text-[10px] text-gray-400">
+            <div className="flex items-center justify-between mt-1 text-[10px] text-steel">
               <span>{fmtDay(trend[0].date)}</span>
               <span>{fmtDay(trend[trend.length - 1].date)}</span>
             </div>
@@ -187,8 +187,8 @@ export function PacingSection({
       {/* ── Slow topics ───────────────────────────────────────────────── */}
       {slowTopics.length > 0 && (
         <div className="mt-4">
-          <h3 className="text-xs font-semibold text-gray-700 mb-1">Slow topics</h3>
-          <p className="text-xs text-gray-400 mb-2">
+          <h3 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-1">Slow topics</h3>
+          <p className="text-xs text-steel mb-2">
             Slow topics cost you exam time. Slow + wrong topics cost you the exam.
           </p>
           <div className="space-y-2">
@@ -198,7 +198,7 @@ export function PacingSection({
               return (
                 <div
                   key={topic.subtopic_id}
-                  className="bg-white rounded-xl border border-gray-200 px-5 py-4"
+                  className="bg-white rounded-xl border border-line shadow-card px-5 py-4"
                 >
                   <div className="flex items-center justify-between gap-3 mb-1">
                     <span className="font-medium text-gray-800 text-sm">{label}</span>
@@ -206,7 +206,7 @@ export function PacingSection({
                       {formatSecs(topic.avgMs)}/question
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
+                  <div className="flex items-center gap-2 text-xs text-steel mb-2">
                     <span>{topic.attempts} attempts</span>
                     {slowAndWrong && (
                       <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-600">
@@ -217,7 +217,7 @@ export function PacingSection({
                   <div className="flex gap-2">
                     <Link
                       href="/learn"
-                      className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
+                      className="text-xs px-3 py-1.5 rounded-[7px] bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
                     >
                       Study This Topic
                     </Link>

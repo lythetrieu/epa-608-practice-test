@@ -56,7 +56,7 @@ export default function BottomTabBar({ userId }: { userId: string }) {
   return (
     <nav
       aria-label="Primary"
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 pb-[env(safe-area-inset-bottom)]"
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-line dark:border-gray-800 pb-[env(safe-area-inset-bottom)]"
     >
       <div className="flex h-16">
         {TABS.map(({ href, label, icon: Icon }) => {
@@ -68,7 +68,7 @@ export default function BottomTabBar({ userId }: { userId: string }) {
               onClick={() => setPending(href)}
               aria-current={active ? 'page' : undefined}
               className={`flex-1 flex flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors ${
-                active ? 'text-blue-800' : 'text-gray-400 hover:text-gray-600'
+                active ? 'text-blue-800' : 'text-steel hover:text-blue-800'
               }`}
             >
               <Icon size={23} aria-hidden />

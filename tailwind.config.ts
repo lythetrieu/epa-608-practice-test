@@ -10,6 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Approved-skin tokens (mockup legend): the ONE border color and the
+        // ONE secondary-text color used across all (app) screens.
+        line: '#e2eaf5', // card/row borders
+        steel: '#4a6690', // secondary/descriptive text + kickers
         // Brand-navy ramp anchored on #003087 — overrides Tailwind's default
         // blue so every existing `blue-*` utility resolves to brand colors.
         blue: {
@@ -63,6 +67,10 @@ const config: Config = {
       },
       borderRadius: {
         '4xl': '2rem',
+      },
+      boxShadow: {
+        // Approved-skin card shadow (mockup legend)
+        card: '0 2px 8px rgba(15,31,61,.06)',
       },
     },
   },

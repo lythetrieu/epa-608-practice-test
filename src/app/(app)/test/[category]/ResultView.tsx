@@ -92,7 +92,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
 
         {/* ── Universal section breakdown ── */}
         {sectionScores && (
-          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
+          <div className="rounded-xl border border-line bg-white shadow-card overflow-hidden">
             <div className="divide-y divide-gray-100">
               {sectionScores.map(s => (
                 <div key={s.category} className="flex items-center justify-between px-4 py-2.5">
@@ -113,22 +113,22 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
 
         {/* ── Pacing ── */}
         {pacing && (
-          <div className="rounded-xl border border-gray-200 bg-white p-4 sm:p-5">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Pacing</h2>
+          <div className="rounded-xl border border-line bg-white shadow-card p-4 sm:p-5">
+            <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">Pacing</h2>
             <div className="flex items-baseline justify-between gap-3 mb-1">
-              <span className="text-sm text-gray-600">Your average</span>
+              <span className="text-sm text-steel">Your average</span>
               <span className="text-sm font-bold font-mono text-primary-900 tabular-nums">{formatSecs(pacing.avgMs)}/question</span>
             </div>
             <div className="flex items-baseline justify-between gap-3 mb-2">
-              <span className="text-sm text-gray-600">Exam pace</span>
-              <span className="text-sm text-gray-500 font-mono tabular-nums">{Math.round(pacing.budgetMs / 1000)}s/question</span>
+              <span className="text-sm text-steel">Exam pace</span>
+              <span className="text-sm text-primary-900 font-mono tabular-nums">{Math.round(pacing.budgetMs / 1000)}s/question</span>
             </div>
             <p className={`text-xs font-medium ${pacing.spareMs >= 0 ? 'text-green-600' : 'text-amber-600'}`}>
               {pacing.verdict}
             </p>
             {slowest.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-gray-100">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Slowest questions</p>
+              <div className="mt-3 pt-3 border-t border-line">
+                <p className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-2">Slowest questions</p>
                 <div className="space-y-1.5">
                   {slowest.map(a => {
                     const wasCorrect = correctMap.get(a.questionId)
@@ -186,7 +186,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
             Retake Test
           </button>
           <Link href="/dashboard"
-            className="flex-1 text-center py-3 border-2 border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+            className="flex-1 text-center py-3 border-2 border-line text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
             Dashboard
           </Link>
         </div>
@@ -195,7 +195,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
         {showHint && (
           <div className="flex items-center gap-2 px-1">
             <span className="text-amber-500 text-sm shrink-0">⚠</span>
-            <p className="text-xs text-gray-500 flex-1">
+            <p className="text-xs text-steel flex-1">
               Failed {failCount}× on {category} —{' '}
               <Link href={`/checkout.html`}
                 className="text-blue-700 font-medium hover:underline">
@@ -213,7 +213,7 @@ export function ResultView({ result, category, questions, onRetake, outcome = nu
           </div>
         ) : (
           <div>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
               {wrongResults.length} to review
             </h2>
             <div className="space-y-3">

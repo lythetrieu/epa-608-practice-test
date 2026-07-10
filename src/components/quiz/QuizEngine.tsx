@@ -380,17 +380,17 @@ export function QuizEngine({
   return (
     <div className="h-[calc(100dvh-3.5rem)] md:h-dvh bg-gray-50 flex flex-col overflow-hidden">
       {/* ═══ COMPACT HEADER: Category + Question Counter + Timer/Clock ═══ */}
-      <header className="bg-white border-b px-3 sm:px-6 py-2.5 shrink-0">
+      <header className="bg-white border-b border-line px-3 sm:px-6 py-2.5 shrink-0">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
             {header}
-            <span className="text-sm font-semibold text-gray-600 uppercase tracking-wider shrink-0">{title}</span>
+            <span className="text-sm font-semibold text-steel uppercase tracking-wider shrink-0">{title}</span>
             <span className="text-base font-bold font-mono text-primary-900">
-              {currentIdx + 1}<span className="text-gray-500 font-normal">/{questions.length}</span>
+              {currentIdx + 1}<span className="text-steel font-normal">/{questions.length}</span>
             </span>
           </div>
 
-          <div className="text-sm text-gray-600 hidden sm:block">
+          <div className="text-sm text-steel hidden sm:block">
             {showExplanations
               ? `${revealed.size}/${questions.length} answered`
               : `${answeredCount}/${questions.length} answered`}
@@ -428,7 +428,7 @@ export function QuizEngine({
 
       {/* ═══ SECTION INDICATOR (Universal only) ═══ */}
       {showQuestionCategory && q.category && (
-        <div className="bg-gray-50 border-b px-4 py-1.5 shrink-0">
+        <div className="bg-gray-50 border-b border-line px-4 py-1.5 shrink-0">
           <p className="text-xs text-gray-500 text-center font-medium">
             Section: <span className="text-gray-800 font-bold">{q.category}</span>
           </p>
@@ -456,7 +456,7 @@ export function QuizEngine({
               // Styling: practice reveal overrides selection colors.
               let btnClass = selected
                 ? 'border-blue-800 bg-blue-50 text-blue-900'
-                : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-gray-800'
+                : 'border-line bg-white hover:border-blue-300 hover:bg-blue-50/50 text-gray-800'
               if (showExplanations && isRevealed) {
                 if (isCorrectOption) btnClass = 'border-green-500 bg-green-50 text-green-900'
                 else if (isWrongPick) btnClass = 'border-red-500 bg-red-50 text-red-900'
@@ -516,7 +516,7 @@ export function QuizEngine({
       </main>
 
       {/* ═══ FOOTER: nav buttons + progress ═══ */}
-      <footer className="bg-white border-t px-3 sm:px-6 py-2.5 shrink-0" style={{ paddingBottom: 'max(10px, env(safe-area-inset-bottom))' }}>
+      <footer className="bg-white border-t border-line px-3 sm:px-6 py-2.5 shrink-0" style={{ paddingBottom: 'max(10px, env(safe-area-inset-bottom))' }}>
         <div className="flex justify-between items-center gap-3 max-w-2xl mx-auto">
           <button
             onClick={() => setCurrentIdx(i => Math.max(0, i - 1))}

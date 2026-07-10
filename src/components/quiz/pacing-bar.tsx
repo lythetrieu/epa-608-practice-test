@@ -35,7 +35,7 @@ export function PaceBar({
     <div className="w-full">
       {/* Bar is decorative — the copy line below carries the information. */}
       <div aria-hidden="true">
-        <div className="relative h-3 rounded-md bg-blue-50 border border-gray-200">
+        <div className="relative h-3 rounded-md bg-blue-50 border border-line">
           {/* Danger zone past the limit: neutral diagonal hatch (red lives in
               the LIMIT marker only) */}
           <div
@@ -63,7 +63,7 @@ export function PaceBar({
           />
         </div>
         {/* Scale row: 0s left · red "72s LIMIT" under the tick · max right */}
-        <div className="relative mt-1 h-2.5 font-mono text-[9px] leading-none text-gray-400">
+        <div className="relative mt-1 h-2.5 font-mono text-[9px] leading-none text-steel">
           <span className="absolute left-0 top-0">0s</span>
           <span className="absolute right-0 top-0">{maxSecs}s</span>
           <span
@@ -76,7 +76,7 @@ export function PaceBar({
       </div>
       {/* Kept (not duplicate of the will/won't chip): carries the projected
           minutes short/spare number. Shrunk for density. */}
-      <p className={`mt-1 text-[11px] leading-snug ${over ? 'text-red-600' : 'text-gray-500'}`}>{copy}</p>
+      <p className={`mt-1 text-[11px] leading-snug ${over ? 'text-red-600' : 'text-steel'}`}>{copy}</p>
     </div>
   )
 }
