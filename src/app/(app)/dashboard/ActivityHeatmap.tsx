@@ -80,9 +80,11 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
         </span>
       </div>
 
-      {/* auto column = weekday hints; auto row = month labels; cells fill the rest */}
+      {/* auto column = weekday hints; auto row = month labels; cells fill the
+          rest. Width is CAPPED and centered — full-bleed cells read chunky, so
+          the grid sits at a calm ~13px/cell and the card keeps its air. */}
       <div
-        className="grid gap-[3px]"
+        className="grid gap-[2px] max-w-[288px] mx-auto"
         style={{ gridTemplateColumns: `auto repeat(${WEEKS}, minmax(0, 1fr))` }}
         role="img"
         aria-label={`Practice activity: ${activity.activeDays} active days in the last 16 weeks`}
@@ -113,7 +115,7 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
               return (
                 <div
                   key={cell.dateStr}
-                  className={`aspect-square w-full rounded-[3px] ${
+                  className={`aspect-square w-full rounded-[2px] ${
                     cell.future ? 'opacity-0' : levelClass(cell.count)
                   }`}
                   title={

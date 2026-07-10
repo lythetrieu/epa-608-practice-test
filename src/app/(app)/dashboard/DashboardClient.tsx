@@ -16,7 +16,7 @@ import { AnonymousMigrator } from './anonymous-migrator'
 import type { ReactNode } from 'react'
 import {
   FileText, Snowflake, Wrench, Factory,
-  ArrowRight, Lightbulb, AlertTriangle, Timer,
+  ArrowRight, Lightbulb, AlertTriangle, Timer, Bot, Lock,
 } from 'lucide-react'
 import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
@@ -324,6 +324,33 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           </div>
         )
       })()}
+
+      {/* ═══ AI TUTOR — prominent entry with the orange accent (owner wants the
+          AI feature visible on Home; icon + "Ask →" are accents, the screen's
+          one orange BUTTON remains the Start-here tile) ═══ */}
+      <Link
+        href="/tutor"
+        className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-3 mb-3 min-h-[56px] hover:border-orange-300 transition-colors"
+      >
+        <span className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+          <Bot size={20} aria-hidden="true" />
+        </span>
+        <span className="min-w-0">
+          <span className="block text-sm font-bold text-gray-900">AI Tutor</span>
+          <span className="block text-[11px] text-gray-500 truncate">
+            Stuck on a concept? Ask anything about EPA 608
+          </span>
+        </span>
+        {isFree ? (
+          <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 rounded-full px-2 py-0.5">
+            <Lock size={10} aria-hidden="true" /> Pro
+          </span>
+        ) : (
+          <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-xs font-bold text-orange-600">
+            Ask <ArrowRight size={14} aria-hidden="true" />
+          </span>
+        )}
+      </Link>
 
       {/* ═══ PACE (72s/question is a hard LIMIT — over it you won't finish) ═══ */}
       {paceMs !== null && (
