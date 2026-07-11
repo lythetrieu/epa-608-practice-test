@@ -23,7 +23,24 @@ function isHiddenRoute(pathname: string | null): boolean {
 export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbleProps) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  // Prompt handed over by an `epa608:open-tutor` event (Home fix-plan notes).
+  // Pro users get it PREFILLED in the input (never auto-sent); free users just
+  // see the upsell panel open — that's the conversion surface, on purpose.
+  const [prefill, setPrefill] = useState<string | null>(null)
   const hasAiChat = TIER_LIMITS[tier].hasAiChat
+
+  // Open-on-demand: other surfaces (e.g. the dashboard fix-plan note) dispatch
+  // `epa608:open-tutor` with an optional { prompt }. The bubble is hidden on
+  // /test/* and /tutor, but the event only fires from Home so that's fine.
+  useEffect(() => {
+    const onOpenTutor = (e: Event) => {
+      const detail = (e as CustomEvent<{ prompt?: string }>).detail
+      setPrefill(detail?.prompt ?? null)
+      setOpen(true)
+    }
+    window.addEventListener('epa608:open-tutor', onOpenTutor)
+    return () => window.removeEventListener('epa608:open-tutor', onOpenTutor)
+  }, [])
 
   // Don't render during timed tests, or on the full /tutor page (redundant there).
   if (isHiddenRoute(pathname)) return null
@@ -51,7 +68,11 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
         <BubblePanel
           hasAiChat={hasAiChat}
           aiQueriesRemaining={aiQueriesRemaining}
-          onClose={() => setOpen(false)}
+          prefill={prefill}
+          onClose={() => {
+            setOpen(false)
+            setPrefill(null) // don't resurface a stale prompt on the next open
+          }}
         />
       )}
     </>
@@ -61,10 +82,12 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
 function BubblePanel({
   hasAiChat,
   aiQueriesRemaining,
+  prefill,
   onClose,
 }: {
   hasAiChat: boolean
   aiQueriesRemaining: number
+  prefill: string | null
   onClose: () => void
 }) {
   return (
@@ -81,7 +104,7 @@ function BubblePanel({
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         {hasAiChat ? (
-          <BubbleChat aiQueriesRemaining={aiQueriesRemaining} onClose={onClose} />
+          <BubbleChat aiQueriesRemaining={aiQueriesRemaining} prefill={prefill} onClose={onClose} />
         ) : (
           <BubbleUpsell onClose={onClose} />
         )}
@@ -94,17 +117,25 @@ function BubblePanel({
 
 function BubbleChat({
   aiQueriesRemaining,
+  prefill,
   onClose,
 }: {
   aiQueriesRemaining: number
+  prefill: string | null
   onClose: () => void
 }) {
   const { messages, isLoading, remaining, error, sendMessage, chatSessionId } = useTutorChat({
     initialRemaining: aiQueriesRemaining,
   })
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(prefill ?? '')
   const endRef = useRef<HTMLDivElement>(null)
   const limitReached = remaining <= 0
+
+  // A fix-plan "Ask AI Tutor" fired while the panel was already open: refresh
+  // the prefilled draft (user still has to press Send — never auto-send).
+  useEffect(() => {
+    if (prefill) setInput(prefill)
+  }, [prefill])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })

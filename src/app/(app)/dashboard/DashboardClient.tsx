@@ -6,6 +6,7 @@
 // old server page.tsx — only the data source changed.
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { useLocalFirst } from '@/lib/local-first'
 import type { DashboardData } from '@/lib/dashboard-data'
 import { SECTION_CATEGORIES } from '@/lib/section-progress'
@@ -19,6 +20,7 @@ import {
 import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
 import { ActivityHeatmap } from './ActivityHeatmap'
+import { FixPlanNote, type FixPlanData } from './FixPlanNote'
 import { RankInsignia } from '@/components/gamification/BadgeIcons'
 import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
@@ -57,6 +59,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
     `dashboard:${userId}`,
     '/api/app/dashboard'
   )
+
+  // Needs-work "fix plan" note — which flagged section's note is open (null = closed).
+  const [fixPlan, setFixPlan] = useState<FixPlanData | null>(null)
 
   // No snapshot yet (first-ever visit) — skeleton, or a retry prompt on failure.
   if (data === null) {
@@ -278,23 +283,35 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               const total = totalsByCat[category] ?? 0
               // null = RPC failed → omit the number; otherwise missing category = 0 practiced
               const practiced = practicedByCat === null ? undefined : (practicedByCat[category] ?? 0)
+              // Needs-work flag: HAS readiness data but sits below the 72% mark.
+              // Border priority: featured "Start here" (orange-500) wins over the
+              // needs-work orange-300; the weakest section keeps its rose pill.
+              const needsWork = !!cat && !cat.ready
 
+              // A <Link> can't contain a <button> (invalid nested interactive
+              // content), so the tile is a relative <div>: a stretched Link
+              // overlay (absolute inset-0) makes the whole card tappable, and
+              // the FIX PLAN chip sits above it with z-10.
               return (
-                <Link
+                <div
                   key={category}
-                  href={`/learn?section=${encodeURIComponent(category)}`}
                   data-tour={category === 'Core' ? 'core' : undefined}
-                  className={`relative block bg-white rounded-xl shadow-card px-4 py-3 transition-colors ${
+                  className={`relative bg-white rounded-xl shadow-card px-4 py-3 transition-colors ${
                     isNext
                       ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
-                      : isWeakest
-                        ? 'border border-red-200 hover:border-red-300'
+                      : needsWork
+                        ? 'border-[1.5px] border-orange-300 hover:border-orange-400'
                         : 'border border-line hover:border-blue-300'
                   }`}
                 >
+                  <Link
+                    href={`/learn?section=${encodeURIComponent(category)}`}
+                    className="absolute inset-0 z-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800"
+                    aria-label={`${category}: ${cat ? `${cat.readinessPct}% ready` : 'not started'}, study path ${mastered}/${total} levels — open study path`}
+                  />
                   {/* Featured "Start here" — slim orange border + small tag (approved skin) */}
                   {isNext && (
-                    <span className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                    <span className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded pointer-events-none">
                       Start here →
                     </span>
                   )}
@@ -334,7 +351,27 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   >
                     {cat?.ready ? 'Ready ✓' : cat ? 'Keep practicing' : 'Not started'}
                   </p>
-                </Link>
+                  {/* Needs-work chip — sibling of the Link overlay (never nested
+                      inside it); after:-inset keeps the tap target ≥40px tall. */}
+                  {needsWork && cat && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFixPlan({
+                          category,
+                          readinessPct: cat.readinessPct,
+                          mastered,
+                          total,
+                          practiced,
+                        })
+                      }
+                      className="relative z-10 mt-1.5 inline-flex items-center gap-1 font-mono text-[9px] font-bold uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200 px-2 py-1 rounded-full hover:bg-orange-100 transition-colors after:absolute after:-inset-y-2.5 after:-inset-x-2 after:content-['']"
+                      aria-label={`Open fix plan for ${category}`}
+                    >
+                      <span aria-hidden="true">💡</span> Fix plan
+                    </button>
+                  )}
+                </div>
               )
             })}
           </div>
@@ -404,6 +441,9 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           </Link>
         </div>
       )}
+
+      {/* Needs-work fix-plan note (opened from a flagged tile's 💡 chip) */}
+      {fixPlan && <FixPlanNote plan={fixPlan} onClose={() => setFixPlan(null)} />}
 
       {/* Unlock toasts — diff only on FRESH payloads (stale cache was already seen) */}
       <BadgeToasts userId={userId} achievements={fresh ? achievements : null} />
