@@ -35,6 +35,9 @@ export type Improvement = {
 
 const SECTIONS = ['Core', 'Type I', 'Type II', 'Type III'] as const
 
+// Circled rank glyphs for the compact section chips ("① Type II · 52%").
+const RANK_GLYPHS = ['①', '②', '③', '④'] as const
+
 /** Navy "Practice" pill — right side of every recommendation row. */
 function PracticePill({ slug, name }: { slug: string; name: string }) {
   return (
@@ -59,7 +62,7 @@ export function PracticeNextSection({
   mistakes?: MistakesData | null
   isPro: boolean
 }) {
-  // ── FIX THESE TOPICS FIRST — top 5 subtopics by LOWEST accuracy ──────────
+  // ── FIX THESE FIRST — top 3 subtopics by LOWEST accuracy ─────────────────
   // Requires ≥3 attempts so a single lucky/unlucky answer can't rank a topic.
   const topics = spots
     .filter((s) => s.totalAttempts >= 3)
@@ -68,7 +71,7 @@ export function PracticeNextSection({
       accuracy: Math.max(0, Math.min(100, Math.round(100 - s.errorRate * 100))),
     }))
     .sort((a, b) => a.accuracy - b.accuracy)
-    .slice(0, 5)
+    .slice(0, 3)
 
   // ── BY SECTION — accuracy per exam section, weakest first ────────────────
   // Source of truth: sectionRadar (correct/total per axis) when the payload
@@ -108,22 +111,15 @@ export function PracticeNextSection({
     )
   }
 
-  const sectionSubtitle = (rank: number, pct: number | null): string => {
-    const suffix = `${pct ?? 0}% so far`
-    if (rank === 0) return `Start here — your weakest section · ${suffix}`
-    if (rank === 1) return `Next priority · ${suffix}`
-    return `Later · ${suffix}`
-  }
-
   return (
     <section className="mb-6">
       <h2 className="font-serif text-xl font-black text-gray-900 mb-3">What to practice next</h2>
 
-      {/* ── Fix these topics first ─────────────────────────────────────── */}
+      {/* ── Fix these first ────────────────────────────────────────────── */}
       {topics.length > 0 && (
         <div className="mb-5">
           <h3 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-            Fix these topics first
+            Fix these first
           </h3>
           <div className="space-y-2.5">
             {topics.map((t) => (
@@ -147,30 +143,32 @@ export function PracticeNextSection({
         </div>
       )}
 
-      {/* ── By section, weakest first ──────────────────────────────────── */}
+      {/* ── Your sections, worst → best — one row of 4 ranked chips ────── */}
       <div>
         <h3 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-          By section · weakest first
+          Your sections, worst &rarr; best
         </h3>
-        <div className="space-y-2.5">
+        <div className="flex flex-wrap gap-2">
           {sections.map((s, i) => (
-            <div
+            <Link
               key={s.name}
-              className="bg-white border border-line rounded-xl shadow-card px-4 py-3 flex items-center gap-3"
+              href={`/test/${CATEGORY_SLUGS[s.name] ?? 'core'}?mode=practice`}
+              aria-label={`Practice ${s.name} — ranked ${i + 1} of ${sections.length}, ${s.pct ?? 0}% so far`}
+              className={`inline-flex items-center gap-1.5 min-h-[44px] px-3.5 bg-white rounded-xl shadow-card border transition-colors hover:bg-gray-50 ${
+                i === 0 ? 'border-rose-300' : 'border-line'
+              }`}
             >
               <span
-                className={`w-12 h-12 rounded-full font-mono text-[13px] font-bold flex items-center justify-center shrink-0 ${
-                  i === 0 ? 'bg-primary-900 text-white' : 'bg-gray-300 text-white'
-                }`}
+                className={`text-sm font-semibold ${i === 0 ? 'text-rose-600' : 'text-steel'}`}
+                aria-hidden
               >
-                {i + 1}
+                {RANK_GLYPHS[i]}
               </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-bold text-gray-900">{s.name}</p>
-                <p className="text-xs text-steel">{sectionSubtitle(i, s.pct)}</p>
-              </div>
-              <PracticePill slug={CATEGORY_SLUGS[s.name] ?? 'core'} name={s.name} />
-            </div>
+              <span className="text-sm font-bold text-gray-900">{s.name}</span>
+              <span className="text-sm font-bold font-mono text-primary-900 tabular-nums">
+                · {s.pct ?? 0}%
+              </span>
+            </Link>
           ))}
         </div>
       </div>
@@ -219,7 +217,7 @@ export function ImprovementSection({ improvement }: { improvement: Improvement }
   return (
     <section className="mb-6">
       <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-        Improvement — every {blockSize} questions
+        Improvement
       </h2>
 
       <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
@@ -262,9 +260,7 @@ export function ImprovementSection({ improvement }: { improvement: Improvement }
                 </div>
               ))}
             </div>
-            <p className="mt-1 text-[10px] text-steel">
-              each bar = {blockSize} questions, oldest → newest
-            </p>
+            <p className="mt-1 text-[10px] text-steel">every {blockSize} answers</p>
           </div>
         ) : (
           <p className="mt-2 text-xs text-steel">

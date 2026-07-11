@@ -1,8 +1,10 @@
 'use client'
 
-// Achievements section — rendered LAST on the Progress page. Shows the rank
-// chip, an XP progress bar toward the next rank, and the full 33-badge grid
-// grouped under small kickers (locked badges grayed). Tapping a badge reveals
+// Achievements section — rendered LAST on the Progress page. COLLAPSED by
+// default: rank chip + XP progress bar + a single preview row of up to 6
+// badges (unlocked first, in list order; locked placeholders fill the row).
+// "View all 33 →" expands the full grouped 33-badge grid in place (locked
+// badges grayed); "Show less" collapses it again. Tapping a badge reveals
 // a one-line plain-English unlock condition. Muted design system:
 // navy/ink/white/slate only — the gold lives inside the approved badge art,
 // never in surrounding UI. Sole warm exception: the legendary rarity TEXT
@@ -55,6 +57,8 @@ type AchievementsView = Omit<Achievements, 'badges'> & {
 
 export function AchievementsSection({ achievements }: { achievements: AchievementsView }) {
   const [selected, setSelected] = useState<AchievementBadgeId | null>(null)
+  // Collapsed by default — "View all 33 →" expands the grouped grid in place.
+  const [expanded, setExpanded] = useState(false)
   const { xp, rank } = achievements
   const unlockedSet = new Set<string>(
     achievements.badges.filter(b => b.unlocked).map(b => b.id),
@@ -70,6 +74,13 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
     span === null || span <= 0
       ? 100
       : Math.min(100, Math.max(0, ((xp - rank.minXp) / span) * 100))
+  // Collapsed preview row: first 6 unlocked badges in list order; if fewer
+  // than 6 are unlocked, locked placeholders (also in list order) fill the row.
+  const previewIds = [
+    ...ALL_BADGE_IDS.filter(id => unlockedSet.has(id)),
+    ...ALL_BADGE_IDS.filter(id => !unlockedSet.has(id)),
+  ].slice(0, 6)
+
   const nextRank = rank.nextMinXp === null ? null : RANKS.find(r => r.minXp === rank.nextMinXp)
   const caption =
     rank.nextMinXp === null || !nextRank
@@ -118,10 +129,33 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
         </div>
       </div>
 
-      {/* Badge grid — all 33 grouped under small kickers, locked grayed; tap
-          for the unlock condition */}
+      {/* Badges — collapsed: one preview row of 6; expanded: all 33 grouped
+          under small kickers, locked grayed. Tap a badge for its condition. */}
       <div className="bg-white rounded-xl border border-line shadow-card px-3 py-4">
-        {BADGE_GROUPS.map((group, gi) => (
+        {!expanded && (
+          <ul className="flex justify-between gap-1">
+            {previewIds.map(id => {
+              const unlocked = unlockedSet.has(id)
+              const isSelected = selected === id
+              return (
+                <li key={id} className="flex-1 min-w-0">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(isSelected ? null : id)}
+                    aria-pressed={isSelected}
+                    aria-label={`${BADGE_TITLES[id]}${unlocked ? '' : ' (locked)'}`}
+                    className={`w-full flex items-center justify-center min-h-[44px] px-1 py-1.5 rounded-xl transition-colors ${
+                      isSelected ? 'bg-gray-100' : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    <BadgeIcon id={id as BadgeId} size={44} locked={!unlocked} />
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+        {expanded && BADGE_GROUPS.map((group, gi) => (
           <div key={group.label} className={gi > 0 ? 'mt-5' : undefined}>
             <h3 className="px-1 mb-2 font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">
               {group.label}
@@ -174,6 +208,15 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
             {unlockedSet.has(selected) ? ' (unlocked)' : ' (locked)'} — {BADGE_CAPTIONS[selected]}
           </p>
         )}
+        {/* Ghost navy expand/collapse toggle — full grid stays one tap away */}
+        <button
+          type="button"
+          onClick={() => setExpanded(v => !v)}
+          aria-expanded={expanded}
+          className="mt-3 w-full min-h-[44px] bg-white border border-line rounded-xl text-sm font-semibold text-primary-900 hover:bg-gray-50 transition-colors"
+        >
+          {expanded ? 'Show less' : `View all ${ALL_BADGE_IDS.length} →`}
+        </button>
       </div>
     </section>
   )

@@ -9,9 +9,9 @@
 //   2. What to practice next — topics + sections + the Weak Spot Drill CTA
 //   3. Improvement        — delta chip + per-block trend bars
 //   4. Mistakes           — the exact questions going wrong
-//   5. Pacing             — summary + trend + slow topics
-//   6. Recent tests
-//   7. Achievements
+//   5. Pacing             — summary + slow topics
+//   6. Recent tests (last 5)
+//   7. Achievements (collapsed — rank + XP + badge preview, expandable)
 
 import Link from 'next/link'
 import { FileCheck, Lock } from 'lucide-react'
@@ -82,8 +82,8 @@ function ProgressSkeleton() {
   )
 }
 
-/** One cell of the 2x2 overview stat grid — mono numbers, one ink color. */
-function OverviewStat({
+/** sm+ overview stat — one compact vertical-stack row: mono number + steel label. */
+function OverviewRow({
   value,
   label,
   sub,
@@ -93,10 +93,22 @@ function OverviewStat({
   sub?: string
 }) {
   return (
-    <div>
-      <div className="text-2xl font-bold font-mono text-primary-900 tabular-nums">{value}</div>
-      <div className="text-xs text-steel">{label}</div>
-      {sub && <div className="text-[10px] font-mono text-steel tabular-nums">{sub}</div>}
+    <div className="flex items-baseline gap-2">
+      <span className="text-xl font-bold font-mono text-primary-900 tabular-nums">{value}</span>
+      <span className="text-xs text-steel">{label}</span>
+      {sub && <span className="text-[10px] font-mono text-steel tabular-nums">{sub}</span>}
+    </div>
+  )
+}
+
+/** Mobile overview stat — mini chip (number over tiny label), 4 across in one row. */
+function OverviewChip({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="text-center min-w-0">
+      <div className="text-lg font-bold font-mono text-primary-900 tabular-nums leading-tight">
+        {value}
+      </div>
+      <div className="text-[10px] text-steel">{label}</div>
     </div>
   )
 }
@@ -160,10 +172,12 @@ export function ProgressClient({ userId }: { userId: string }) {
             <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-4">
               Analysis Overview
             </h2>
+            {/* Golden-ratio split on sm+: radar hero column ~62%, stats ~38%.
+                Mobile stacks: radar centered on top, stats as one chip row. */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-6">
               {/* Radar — Pro sees it plain, free sees it blurred behind a lock */}
               {chartData ? (
-                <div className="sm:flex-1 min-w-0 text-center">
+                <div className="sm:flex-[1.62] min-w-0 text-center">
                   {isPro ? (
                     <>
                       <RadarChart data={chartData} />
@@ -202,7 +216,7 @@ export function ProgressClient({ userId }: { userId: string }) {
                 </div>
               ) : (
                 spots.length > 0 && (
-                  <div className="sm:flex-1 min-w-0 flex items-center">
+                  <div className="sm:flex-[1.62] min-w-0 flex items-center">
                     <p className="text-xs text-steel">
                       Take tests across more sections to unlock your topic proficiency radar.
                     </p>
@@ -210,17 +224,30 @@ export function ProgressClient({ userId }: { userId: string }) {
                 )
               )}
 
-              {/* 2x2 headline stat grid — absent on stale payloads → radar alone */}
+              {/* Headline stats — absent on stale payloads → radar alone.
+                  sm+: 4 compact rows stacked vertically in the narrow column.
+                  <sm: one horizontal row of 4 mini chips under the radar. */}
               {overview && (
-                <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:w-56 shrink-0">
-                  <OverviewStat value={String(overview.totalTests)} label="tests" />
-                  <OverviewStat value={String(overview.answered)} label="answered" />
-                  <OverviewStat
-                    value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
-                    label="accuracy"
-                    sub={`${overview.correct}✓ ${overview.wrong}✗`}
-                  />
-                  <OverviewStat value={String(overview.activeDays)} label="active days" />
+                <div className="sm:flex-1 min-w-0">
+                  <div className="hidden sm:flex flex-col gap-3.5">
+                    <OverviewRow value={String(overview.totalTests)} label="tests" />
+                    <OverviewRow value={String(overview.answered)} label="answered" />
+                    <OverviewRow
+                      value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
+                      label="accuracy"
+                      sub={`${overview.correct}✓ ${overview.wrong}✗`}
+                    />
+                    <OverviewRow value={String(overview.activeDays)} label="active days" />
+                  </div>
+                  <div className="flex sm:hidden justify-between gap-2">
+                    <OverviewChip value={String(overview.totalTests)} label="tests" />
+                    <OverviewChip value={String(overview.answered)} label="answered" />
+                    <OverviewChip
+                      value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
+                      label="accuracy"
+                    />
+                    <OverviewChip value={String(overview.activeDays)} label="active days" />
+                  </div>
                 </div>
               )}
             </div>
@@ -267,7 +294,7 @@ export function ProgressClient({ userId }: { userId: string }) {
           </div>
         ) : (
           <div className="space-y-1.5">
-            {recentSessions.map((s, i) => {
+            {recentSessions.slice(0, 5).map((s, i) => {
               const pct = s.score !== null ? Math.round((s.score / s.total) * 100) : 0
               const mode =
                 s.category === 'Weak Spots' ? 'drill' : s.time_limit_secs === 0 ? 'practice' : 'exam'

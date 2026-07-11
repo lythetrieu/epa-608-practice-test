@@ -62,10 +62,11 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
   })
 
   return (
-    // max-w-[280px] (was max-w-md/448px) — ~37% smaller footprint. Label font
-    // size below is bumped 10 → 13 viewBox units to compensate, so rendered
-    // text stays ~9px legible; label anchors/geometry are unchanged.
-    <div className="w-full max-w-[280px] mx-auto px-2">
+    // max-w-[220px] (golden-ratio overview rebalance — radar is the hero of a
+    // wider column, not a bigger chart). Label font size below is bumped
+    // 13 → 16 viewBox units to compensate, so rendered text stays ~9px
+    // legible; label anchors/geometry are unchanged.
+    <div className="w-full max-w-[220px] mx-auto px-2">
       <svg
         viewBox={`0 0 ${size} ${size}`}
         className="w-full h-auto overflow-visible"
@@ -129,14 +130,14 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             textAnchor={l.anchor}
             dominantBaseline="central"
             className="fill-gray-700"
-            fontSize="13"
+            fontSize="16"
             fontWeight="500"
           >
             <tspan>{l.label}</tspan>
             <tspan
               x={l.x}
-              dy="16"
-              fontSize="13"
+              dy="19"
+              fontSize="16"
               fontWeight="700"
               className="fill-blue-800 font-mono"
             >

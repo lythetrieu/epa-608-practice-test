@@ -86,6 +86,10 @@ function MistakeCard({ q }: { q: MistakeQuestion }) {
 export function MistakesSection({ mistakes }: { mistakes: MistakesData }) {
   const { byCategory, questions } = mistakes
   const allClean = byCategory.every((c) => c.wrongQuestions === 0)
+  // Collapsed by default: 3 cards (still-missing already sort first server-side);
+  // "Show all N →" expands the full list in place — no route change.
+  const [showAll, setShowAll] = useState(false)
+  const visible = showAll ? questions : questions.slice(0, 3)
 
   // Nothing wrong anywhere and no question cards — celebrate instead of chips.
   if (questions.length === 0 && allClean) {
@@ -107,11 +111,22 @@ export function MistakesSection({ mistakes }: { mistakes: MistakesData }) {
 
       {/* ── Which EXACT QUESTIONS keep going wrong ────────────────────── */}
       {questions.length > 0 && (
-        <div className="space-y-2">
-          {questions.map((q) => (
-            <MistakeCard key={q.question_id} q={q} />
-          ))}
-        </div>
+        <>
+          <div className="space-y-2">
+            {visible.map((q) => (
+              <MistakeCard key={q.question_id} q={q} />
+            ))}
+          </div>
+          {questions.length > 3 && (
+            <button
+              type="button"
+              onClick={() => setShowAll((v) => !v)}
+              className="mt-2 w-full min-h-[44px] bg-white border border-line rounded-xl text-sm font-semibold text-primary-900 hover:bg-gray-50 transition-colors"
+            >
+              {showAll ? 'Show less' : `Show all ${questions.length} →`}
+            </button>
+          )}
+        </>
       )}
     </section>
   )

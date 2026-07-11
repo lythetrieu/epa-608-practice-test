@@ -1,10 +1,11 @@
 'use client'
 
 // Pacing analytics section for the Progress page. Renders the server-computed
-// pacing payload (avg speed vs exam budget, per-day trend bars, slowest
-// topics). Everything here is presentational — the math lives server-side and
-// in quiz/pacing.ts. (The localStorage "most recent test" card was removed —
-// ResultView already shows that detail right after each test.)
+// pacing payload (avg speed vs exam budget + slowest topics). Everything here
+// is presentational — the math lives server-side and in quiz/pacing.ts.
+// (The per-day trend bars were removed — the Improvement section's block bars
+// tell the progress-over-time story. The localStorage "most recent test" card
+// was removed earlier — ResultView shows that detail right after each test.)
 
 import Link from 'next/link'
 import {
@@ -35,17 +36,12 @@ export type PacingAnalytics = {
   slowTopics: PacingSlowTopic[]
 }
 
-// Tailwind classes per delta bucket — CHIPS keep their semantic colors (state
-// lives in labels), but ALL bar fills are solid navy per the approved skin.
+// Tailwind classes per delta bucket — chips keep their semantic colors (state
+// lives in labels).
 const CHIP_CLASSES: Record<PaceDelta, string> = {
   green: 'bg-green-50 text-green-700',
   amber: 'bg-amber-50 text-amber-700',
   red: 'bg-red-50 text-red-600',
-}
-const BAR_CLASSES: Record<PaceDelta, string> = {
-  green: 'bg-orange-500',
-  amber: 'bg-orange-500',
-  red: 'bg-orange-500',
 }
 
 function deltaChipText(avgMs: number, budgetMs: number): string {
@@ -55,19 +51,8 @@ function deltaChipText(avgMs: number, budgetMs: number): string {
 }
 
 export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
-  const { sampleSize, avgMs, examBudgetMs, trend, slowTopics } = pacing
+  const { sampleSize, avgMs, examBudgetMs, slowTopics } = pacing
   const overallDelta = paceDelta(avgMs, examBudgetMs)
-
-  // Trend bars scale against the slowest day OR the budget, whichever is
-  // larger, so the budget line always fits inside the plot.
-  const trendMax = Math.max(examBudgetMs, ...trend.map((t) => t.avgMs))
-  const budgetPct = trendMax > 0 ? (examBudgetMs / trendMax) * 100 : 0
-
-  const fmtDay = (iso: string) =>
-    new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, {
-      month: 'short',
-      day: 'numeric',
-    })
 
   return (
     <section className="mb-6">
@@ -95,43 +80,6 @@ export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
         <div className="mt-1.5 text-right text-xs text-steel">
           based on {sampleSize} answers
         </div>
-
-        {/* ── Trend: one bar per day, oldest → newest ─────────────────── */}
-        {trend.length > 1 && (
-          <div className="mt-4">
-            <div
-              className="relative h-16"
-              role="img"
-              aria-label={`Average seconds per question by day, oldest to newest: ${trend
-                .map((t) => `${fmtDay(t.date)} ${Math.round(t.avgMs / 1000)}s`)
-                .join(', ')}`}
-            >
-              {/* Exam-budget guide line */}
-              <div
-                className="absolute inset-x-0 border-t border-dashed border-gray-300"
-                style={{ bottom: `${budgetPct}%` }}
-                aria-hidden
-              />
-              <div className="flex items-end gap-1 h-full" aria-hidden>
-                {trend.map((t) => (
-                  <div key={t.date} className="flex-1 flex items-end h-full">
-                    <div
-                      className={`w-full rounded-t-sm ${BAR_CLASSES[paceDelta(t.avgMs, examBudgetMs)]}`}
-                      style={{
-                        height: `${trendMax > 0 ? Math.max((t.avgMs / trendMax) * 100, 4) : 4}%`,
-                      }}
-                      title={`${fmtDay(t.date)}: ${formatSecs(t.avgMs)} avg (${t.n} answers)`}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center justify-between mt-1 text-[10px] text-steel">
-              <span>{fmtDay(trend[0].date)}</span>
-              <span>{fmtDay(trend[trend.length - 1].date)}</span>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* ── Slow topics ───────────────────────────────────────────────── */}
@@ -142,7 +90,7 @@ export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
             Slow topics cost you exam time. Slow + wrong topics cost you the exam.
           </p>
           <div className="space-y-2">
-            {slowTopics.map((topic) => {
+            {slowTopics.slice(0, 3).map((topic) => {
               const label = SUBTOPIC_LABELS[topic.subtopic_id] ?? topic.subtopic_id
               const slowAndWrong = topic.errorRate >= 0.3
               return (
