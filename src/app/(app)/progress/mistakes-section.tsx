@@ -1,10 +1,10 @@
 'use client'
 
 // "Mistakes" section for the Progress page: the exact questions the user is
-// getting wrong. Two layers of answer to "where am I failing?":
-//   1. Category chips  → which SECTION the mistakes cluster in
-//   2. Question cards  → which EXACT QUESTIONS keep going wrong
-// Everything here is presentational — aggregation lives in mistakes-server.ts.
+// getting wrong, as expandable question cards. (Per-section clustering lives
+// in "What to practice next" — byCategory is only read here for the all-clean
+// celebration check.) Everything is presentational — aggregation lives in
+// mistakes-server.ts.
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -104,25 +104,6 @@ export function MistakesSection({ mistakes }: { mistakes: MistakesData }) {
       <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
         Mistakes — exact questions you&apos;re missing
       </h2>
-
-      {/* ── Which SECTION the mistakes cluster in ─────────────────────── */}
-      {byCategory.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {byCategory.map((c) => {
-            const hot = c.seenQuestions > 0 && c.wrongQuestions / c.seenQuestions >= 0.3
-            return (
-              <span
-                key={c.category}
-                className={`rounded-full text-[11px] font-medium px-2.5 py-1 ${
-                  hot ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-600'
-                }`}
-              >
-                {c.category} · {c.wrongQuestions}/{c.seenQuestions} wrong
-              </span>
-            )
-          })}
-        </div>
-      )}
 
       {/* ── Which EXACT QUESTIONS keep going wrong ────────────────────── */}
       {questions.length > 0 && (

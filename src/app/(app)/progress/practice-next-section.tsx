@@ -6,6 +6,7 @@
 // mistakes.byCategory, improvement).
 
 import Link from 'next/link'
+import { ClipboardList, Lock, Target } from 'lucide-react'
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
 import type { MistakesData } from './mistakes-section'
 
@@ -51,10 +52,12 @@ export function PracticeNextSection({
   spots,
   sectionRadar,
   mistakes,
+  isPro,
 }: {
   spots: BlindSpot[]
   sectionRadar?: RadarDatum[]
   mistakes?: MistakesData | null
+  isPro: boolean
 }) {
   // ── FIX THESE TOPICS FIRST — top 5 subtopics by LOWEST accuracy ──────────
   // Requires ≥3 attempts so a single lucky/unlucky answer can't rank a topic.
@@ -84,9 +87,26 @@ export function PracticeNextSection({
     (a, b) => (a.pct ?? Number.POSITIVE_INFINITY) - (b.pct ?? Number.POSITIVE_INFINITY)
   )
 
-  // Brand-new account (no topics, no section data anywhere) — the existing
-  // "No weak spots detected yet" empty card covers this; render nothing.
-  if (topics.length === 0 && sections.every((s) => s.pct === null)) return null
+  // Brand-new account (no topics, no section data anywhere) — show the
+  // empty-state card in place of the recommendations.
+  if (topics.length === 0 && sections.every((s) => s.pct === null)) {
+    return (
+      <div className="bg-white rounded-xl border border-line shadow-card p-10 text-center mb-8">
+        <ClipboardList size={40} className="text-gray-300 mx-auto mb-3" />
+        <p className="text-steel font-medium mb-2">No weak spots detected yet</p>
+        <p className="text-steel text-sm mb-6">
+          Take a few tests first to identify your weak areas. We need at least 2 attempts per
+          subtopic.
+        </p>
+        <Link
+          href="/dashboard"
+          className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
+        >
+          Start a Practice Test
+        </Link>
+      </div>
+    )
+  }
 
   const sectionSubtitle = (rank: number, pct: number | null): string => {
     const suffix = `${pct ?? 0}% so far`
@@ -154,12 +174,47 @@ export function PracticeNextSection({
           ))}
         </div>
       </div>
+
+      {/* ── Weak Spot Drill CTA — the action that pairs with the list ──── */}
+      {isPro ? (
+        // Progress screen's ONE orange primary action
+        <Link
+          href="/test/weak-spots"
+          className="mt-5 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors text-center"
+        >
+          <Target size={18} aria-hidden />
+          <span>Start Weak Spot Drill</span>
+        </Link>
+      ) : (
+        <div className="mt-5">
+          {/* Locked drill button — shown (not hidden) so free users see the tool exists */}
+          <div
+            className="flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-gray-100 text-gray-400 rounded-xl font-semibold border border-gray-200 cursor-not-allowed select-none"
+            aria-disabled="true"
+          >
+            <Lock size={18} aria-hidden />
+            <span>Start Weak Spot Drill</span>
+          </div>
+          <div className="mt-2 bg-blue-50 border border-blue-200 rounded-xl px-5 py-3 flex items-center justify-between gap-4">
+            <p className="text-xs text-blue-800">
+              You can see your weak spots — <span className="font-semibold">unlock the drill</span> to
+              auto-build a test that fixes them.
+            </p>
+            <Link
+              href={`/checkout.html`}
+              className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
+            >
+              Upgrade — $14.99
+            </Link>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
 
 export function ImprovementSection({ improvement }: { improvement: Improvement }) {
-  const { blockSize, blocks, last100, deltaPct } = improvement
+  const { blockSize, blocks, deltaPct } = improvement
 
   return (
     <section className="mb-6">
@@ -168,40 +223,28 @@ export function ImprovementSection({ improvement }: { improvement: Improvement }
       </h2>
 
       <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
-        {/* ── Headline: accuracy over the last 100 answers + delta chip ── */}
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          {last100 !== null ? (
-            <>
-              <span className="text-2xl font-bold font-mono text-primary-900 tabular-nums">
-                {last100}%
-              </span>
-              <span className="text-sm text-steel">accuracy · last 100 questions</span>
-            </>
-          ) : (
-            <span className="text-sm text-steel">accuracy · last 100 questions — not enough data yet</span>
-          )}
-          {deltaPct !== null && (
-            <span
-              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                deltaPct > 0
-                  ? 'bg-green-50 text-green-700'
-                  : deltaPct < 0
-                    ? 'bg-red-50 text-red-600'
-                    : 'bg-gray-100 text-gray-600'
-              }`}
-            >
-              {deltaPct > 0
-                ? `+${deltaPct}% vs previous 100`
+        {/* ── Delta chip only — the accuracy headline lives in the overview ── */}
+        {deltaPct !== null && (
+          <span
+            className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full ${
+              deltaPct > 0
+                ? 'bg-green-50 text-green-700'
                 : deltaPct < 0
-                  ? `${deltaPct}% vs previous 100`
-                  : 'no change vs previous 100'}
-            </span>
-          )}
-        </div>
+                  ? 'bg-red-50 text-red-600'
+                  : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {deltaPct > 0
+              ? `+${deltaPct}% vs previous 100`
+              : deltaPct < 0
+                ? `${deltaPct}% vs previous 100`
+                : 'no change vs previous 100'}
+          </span>
+        )}
 
         {/* ── Trend: one bar per block of answers, oldest → newest ──────── */}
         {blocks.length >= 2 ? (
-          <div className="mt-4">
+          <div className={deltaPct !== null ? 'mt-3' : ''}>
             <div
               className="flex items-end gap-1 h-16"
               role="img"

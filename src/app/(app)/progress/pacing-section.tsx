@@ -2,16 +2,15 @@
 
 // Pacing analytics section for the Progress page. Renders the server-computed
 // pacing payload (avg speed vs exam budget, per-day trend bars, slowest
-// topics) plus the localStorage "most recent test" pace card. Everything here
-// is presentational — the math lives server-side and in quiz/pacing.ts.
+// topics). Everything here is presentational — the math lives server-side and
+// in quiz/pacing.ts. (The localStorage "most recent test" card was removed —
+// ResultView already shows that detail right after each test.)
 
 import Link from 'next/link'
-import { Timer } from 'lucide-react'
 import {
   formatSecs,
   formatSecsLong,
   paceDelta,
-  type LastPacing,
   type PaceDelta,
 } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
@@ -55,49 +54,7 @@ function deltaChipText(avgMs: number, budgetMs: number): string {
   return deltaSecs > 0 ? `+${deltaSecs}s over` : `${-deltaSecs}s under`
 }
 
-/** The "Most recent test" card (localStorage pace written by TestClient). */
-export function LastPacingCard({ lastPacing }: { lastPacing: LastPacing }) {
-  return (
-    <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
-      <p className="text-xs font-semibold text-steel mb-2">Most recent test</p>
-      <div className="flex items-center gap-3">
-        <span className="w-9 h-9 rounded-[7px] bg-gray-100 text-steel flex items-center justify-center shrink-0">
-          <Timer size={18} aria-hidden />
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="text-sm font-medium text-gray-800 truncate">
-            {lastPacing.category} ·{' '}
-            {new Date(lastPacing.date).toLocaleDateString(undefined, {
-              month: 'short',
-              day: 'numeric',
-            })}
-          </div>
-          <div className="text-xs text-steel">
-            Exam pace: {Math.round(lastPacing.budgetMs / 1000)}s/question
-          </div>
-        </div>
-        <span className="text-sm font-bold font-mono text-primary-900 tabular-nums shrink-0">
-          {formatSecs(lastPacing.avgMs)}/question
-        </span>
-      </div>
-      <p
-        className={`mt-2 text-xs font-medium ${
-          lastPacing.avgMs <= lastPacing.budgetMs ? 'text-green-600' : 'text-amber-600'
-        }`}
-      >
-        {lastPacing.verdict}
-      </p>
-    </div>
-  )
-}
-
-export function PacingSection({
-  pacing,
-  lastPacing,
-}: {
-  pacing: PacingAnalytics
-  lastPacing: LastPacing | null
-}) {
+export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
   const { sampleSize, avgMs, examBudgetMs, trend, slowTopics } = pacing
   const overallDelta = paceDelta(avgMs, examBudgetMs)
 
@@ -176,13 +133,6 @@ export function PacingSection({
           </div>
         )}
       </div>
-
-      {/* ── Most recent test (localStorage, written by TestClient) ─────── */}
-      {lastPacing && (
-        <div className="mb-2">
-          <LastPacingCard lastPacing={lastPacing} />
-        </div>
-      )}
 
       {/* ── Slow topics ───────────────────────────────────────────────── */}
       {slowTopics.length > 0 && (

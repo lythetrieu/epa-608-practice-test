@@ -142,6 +142,38 @@ export async function GET() {
     achievements = null
   }
 
+  // ─── Overview head counts: pure derivation over data already fetched
+  // above (session window, achievementCounts, answer window) — zero extra
+  // queries. Null when the counts or answer window failed to load, or on any
+  // error; old cached client payloads simply lack the key, so clients guard.
+  let overview: {
+    totalTests: number
+    answered: number
+    correct: number
+    wrong: number
+    accuracyPct: number | null
+    activeDays: number
+  } | null = null
+  try {
+    if (achievementCounts && !answersError && Array.isArray(answerRows)) {
+      const correct = achievementCounts.correctCount
+      const wrong = achievementCounts.wrongCount
+      const answered = correct + wrong
+      overview = {
+        // Completed sessions within the same 500-cap window achievements use.
+        totalTests: (sessions ?? []).length,
+        answered,
+        correct,
+        wrong,
+        accuracyPct: answered > 0 ? Math.round((correct / answered) * 100) : null,
+        // Same derivation as the achievements activeDays XP input above.
+        activeDays: countActiveDays(answerRows, sessions ?? []),
+      }
+    }
+  } catch {
+    overview = null
+  }
+
   // ─── Improvement tracking: accuracy per 50-answer block + last100 vs
   // prev100 (improvement-server). Pure derivation over the SAME answer
   // window — zero extra queries. Null when the window failed to load, the
@@ -179,5 +211,6 @@ export async function GET() {
     mistakes,
     achievements,
     improvement,
+    overview,
   })
 }

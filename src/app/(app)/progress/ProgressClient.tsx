@@ -2,25 +2,26 @@
 
 // Local-first Progress page (Perf Phase 3). Renders the last cached snapshot
 // from localStorage instantly, fetches /api/app/progress in the background,
-// and re-renders silently when fresh data lands. JSX is moved verbatim from
-// the old server page.tsx — only the data source changed.
+// and re-renders silently when fresh data lands.
+//
+// Section order (analysis center, deduped):
+//   1. Analysis Overview  — radar + headline stats at a glance
+//   2. What to practice next — topics + sections + the Weak Spot Drill CTA
+//   3. Improvement        — delta chip + per-block trend bars
+//   4. Mistakes           — the exact questions going wrong
+//   5. Pacing             — summary + trend + slow topics
+//   6. Recent tests
+//   7. Achievements
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { ClipboardList, FileCheck, Lock, Target } from 'lucide-react'
-import { readCache, useLocalFirst } from '@/lib/local-first'
-import { lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
+import { FileCheck, Lock } from 'lucide-react'
+import { useLocalFirst } from '@/lib/local-first'
 // Type-only imports — erased at compile time, pull no server code.
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
 import type { Achievements } from '@/lib/achievements-server'
 import { RadarChart } from './radar-chart'
-import {
-  CATEGORY_SLUGS,
-  ImprovementSection,
-  PracticeNextSection,
-  type Improvement,
-} from './practice-next-section'
-import { LastPacingCard, PacingSection, type PacingAnalytics } from './pacing-section'
+import { ImprovementSection, PracticeNextSection, type Improvement } from './practice-next-section'
+import { PacingSection, type PacingAnalytics } from './pacing-section'
 import { MistakesSection, type MistakesData } from './mistakes-section'
 import { AchievementsSection } from './achievements-section'
 import { BadgeToasts } from '@/components/gamification/BadgeToasts'
@@ -31,6 +32,17 @@ type SessionRow = {
   total: number
   submitted_at: string | null
   time_limit_secs: number | null
+}
+
+// ── Local copy of the /api/app/progress overview contract ────────────────────
+// Typed here (not imported from the API route) so the UI compiles independently.
+type Overview = {
+  totalTests: number
+  answered: number
+  correct: number
+  wrong: number
+  accuracyPct: number | null
+  activeDays: number
 }
 
 type ProgressData = {
@@ -53,6 +65,9 @@ type ProgressData = {
   // Accuracy trend in 50-question blocks. Absent on stale cached payloads,
   // null when the server has no data — both render nothing.
   improvement?: Improvement | null
+  // Headline stats for the Analysis Overview card. Absent on stale cached
+  // payloads, null when the server has no data — both render the radar alone.
+  overview?: Overview | null
 }
 
 // First-ever-visit skeleton (no cached snapshot yet): title + 2 card blocks.
@@ -67,19 +82,30 @@ function ProgressSkeleton() {
   )
 }
 
+/** One cell of the 2x2 overview stat grid — mono numbers, one ink color. */
+function OverviewStat({
+  value,
+  label,
+  sub,
+}: {
+  value: string
+  label: string
+  sub?: string
+}) {
+  return (
+    <div>
+      <div className="text-2xl font-bold font-mono text-primary-900 tabular-nums">{value}</div>
+      <div className="text-xs text-steel">{label}</div>
+      {sub && <div className="text-[10px] font-mono text-steel tabular-nums">{sub}</div>}
+    </div>
+  )
+}
+
 export function ProgressClient({ userId }: { userId: string }) {
   const { data, fresh, error, refresh } = useLocalFirst<ProgressData>(
     `progress:${userId}`,
     '/api/app/progress'
   )
-
-  // "Last test pace" — written by TestClient after each completed test. The
-  // progress API carries no timing, so this is localStorage-only. Read in an
-  // effect (client-only) to avoid a hydration mismatch.
-  const [lastPacing, setLastPacing] = useState<LastPacing | null>(null)
-  useEffect(() => {
-    setLastPacing(readCache<LastPacing>(lastPacingKey(userId)))
-  }, [userId])
 
   // No snapshot yet (first-ever visit) — skeleton, or a retry prompt on failure.
   if (data === null) {
@@ -103,7 +129,7 @@ export function ProgressClient({ userId }: { userId: string }) {
   }
 
   const { isPro, spots, radarData, recentSessions } = data
-  const topSpots = spots.slice(0, 8)
+  const overview = data.overview ?? null
 
   // Radar render decision:
   //   1. >=3 subtopic-level axes → detailed topic radar (richer, unchanged).
@@ -116,65 +142,89 @@ export function ProgressClient({ userId }: { userId: string }) {
   const useSectionFallback = radarData.length < 3 && !!data.sectionRadar && hasAnyAttempts
   const chartData = radarData.length >= 3 ? radarData : useSectionFallback ? data.sectionRadar! : null
 
+  const fallbackCaption = useSectionFallback && (
+    <p className="text-[11px] text-steel mt-2 text-center">
+      By section — practice more topics to unlock the detailed topic radar.
+    </p>
+  )
+
   return (
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Progress</h1>
       <p className="text-steel text-sm mb-6">Your weak spots &amp; test history</p>
 
-      {/* ── What to practice next — recommendation hub (TOP) ───────────── */}
-      <PracticeNextSection spots={spots} sectionRadar={data.sectionRadar} mistakes={data.mistakes} />
-
-      {/* ── Improvement trend — absent/null on stale payloads → nothing ── */}
-      {data.improvement ? <ImprovementSection improvement={data.improvement} /> : null}
-
-      {/* ── Topic Proficiency radar ─────────────────────────────────── */}
-      {chartData ? (
+      {/* ── 1. Analysis Overview — radar + headline stats (TOP) ────────── */}
+      {chartData || overview ? (
         <section className="mb-6">
-          {isPro ? (
-            <div className="bg-white rounded-xl border border-line shadow-card p-6">
-              <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-4 text-center">
-                Topic Proficiency
-              </h2>
-              <RadarChart data={chartData} />
-              {useSectionFallback && (
-                <p className="text-[11px] text-steel mt-2 text-center">
-                  By section — practice more topics to unlock the detailed topic radar.
-                </p>
-              )}
-            </div>
-          ) : (
-            <div className="bg-white rounded-xl border border-line shadow-card p-6 text-center">
-              <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-                Topic Proficiency
-              </h2>
-              {/* Real radar rendered but BLURRED — free users see the insight exists */}
-              <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
-                <div className="blur-md pointer-events-none select-none" aria-hidden>
-                  <RadarChart data={chartData} />
+          <div className="bg-white rounded-xl border border-line shadow-card p-6">
+            <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-4">
+              Analysis Overview
+            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+              {/* Radar — Pro sees it plain, free sees it blurred behind a lock */}
+              {chartData ? (
+                <div className="sm:flex-1 min-w-0 text-center">
+                  {isPro ? (
+                    <>
+                      <RadarChart data={chartData} />
+                      {fallbackCaption}
+                    </>
+                  ) : (
+                    <>
+                      {/* Real radar rendered but BLURRED — free users see the insight exists */}
+                      <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
+                        <div className="blur-md pointer-events-none select-none" aria-hidden>
+                          <RadarChart data={chartData} />
+                        </div>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/30 rounded-lg">
+                          <div className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center">
+                            <Lock size={20} className="text-blue-800" aria-hidden />
+                          </div>
+                          <p className="text-sm font-semibold text-gray-800">Radar Chart — Pro</p>
+                        </div>
+                      </div>
+                      {useSectionFallback && (
+                        <p className="text-[11px] text-steel -mt-2 mb-3">
+                          By section — practice more topics to unlock the detailed topic radar.
+                        </p>
+                      )}
+                      <p className="text-xs text-steel mb-4">
+                        Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
+                      </p>
+                      <Link
+                        href={`/checkout.html`}
+                        className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
+                      >
+                        Upgrade — $14.99 lifetime
+                      </Link>
+                    </>
+                  )}
                 </div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/30 rounded-lg">
-                  <div className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center">
-                    <Lock size={20} className="text-blue-800" aria-hidden />
+              ) : (
+                spots.length > 0 && (
+                  <div className="sm:flex-1 min-w-0 flex items-center">
+                    <p className="text-xs text-steel">
+                      Take tests across more sections to unlock your topic proficiency radar.
+                    </p>
                   </div>
-                  <p className="text-sm font-semibold text-gray-800">Radar Chart — Pro</p>
-                </div>
-              </div>
-              {useSectionFallback && (
-                <p className="text-[11px] text-steel -mt-2 mb-3">
-                  By section — practice more topics to unlock the detailed topic radar.
-                </p>
+                )
               )}
-              <p className="text-xs text-steel mb-4">
-                Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
-              </p>
-              <Link
-                href={`/checkout.html`}
-                className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
-              >
-                Upgrade — $14.99 lifetime
-              </Link>
+
+              {/* 2x2 headline stat grid — absent on stale payloads → radar alone */}
+              {overview && (
+                <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:w-56 shrink-0">
+                  <OverviewStat value={String(overview.totalTests)} label="tests" />
+                  <OverviewStat value={String(overview.answered)} label="answered" />
+                  <OverviewStat
+                    value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
+                    label="accuracy"
+                    sub={`${overview.correct}✓ ${overview.wrong}✗`}
+                  />
+                  <OverviewStat value={String(overview.activeDays)} label="active days" />
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </section>
       ) : (
         spots.length > 0 && (
@@ -184,125 +234,24 @@ export function ProgressClient({ userId }: { userId: string }) {
         )
       )}
 
-      {/* ── Weak spots ──────────────────────────────────────────────── */}
-      {topSpots.length === 0 ? (
-        <div className="bg-white rounded-xl border border-line shadow-card p-10 text-center mb-8">
-          <ClipboardList size={40} className="text-gray-300 mx-auto mb-3" />
-          <p className="text-steel font-medium mb-2">No weak spots detected yet</p>
-          <p className="text-steel text-sm mb-6">
-            Take a few tests first to identify your weak areas. We need at least 2 attempts per
-            subtopic.
-          </p>
-          <Link
-            href="/dashboard"
-            className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
-          >
-            Start a Practice Test
-          </Link>
-        </div>
-      ) : (
-        <section className="mb-6">
-          <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-            Weak Spots — by error rate
-          </h2>
-          <div className="space-y-2">
-            {topSpots.map((spot) => {
-              const errorPct = Math.round(spot.errorRate * 100)
-              const slug = CATEGORY_SLUGS[spot.category] ?? 'core'
+      {/* ── 2. What to practice next — recommendations + Drill CTA ─────── */}
+      <PracticeNextSection
+        spots={spots}
+        sectionRadar={data.sectionRadar}
+        mistakes={data.mistakes}
+        isPro={isPro}
+      />
 
-              return (
-                <div key={spot.subtopic_id} className="bg-white rounded-xl border border-line shadow-card px-5 py-4">
-                  <div className="flex items-center justify-between gap-3 mb-2">
-                    <span className="font-medium text-gray-800 text-sm">{spot.label}</span>
-                    {/* Numbers: one ink color — severity reads from the bar length */}
-                    <span className="text-sm font-bold font-mono text-primary-900 shrink-0">{errorPct}% errors</span>
-                  </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1.5">
-                    <div
-                      className="h-full rounded-full transition-all bg-orange-500"
-                      style={{ width: `${errorPct}%` }}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-steel mb-2">
-                    <span>{spot.correctCount}/{spot.totalAttempts} correct</span>
-                    <span>{spot.category}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Link
-                      href="/learn"
-                      className="text-xs px-3 py-1.5 rounded-[7px] bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
-                    >
-                      Study This Topic
-                    </Link>
-                    <Link
-                      href={`/test/${slug}?mode=practice`}
-                      className="text-xs px-3 py-1.5 rounded-[7px] text-steel font-medium hover:bg-gray-50 hover:text-gray-700"
-                    >
-                      Practice {spot.category}
-                    </Link>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+      {/* ── 3. Improvement trend — absent/null on stale payloads → nothing ── */}
+      {data.improvement ? <ImprovementSection improvement={data.improvement} /> : null}
 
-          {/* Weak Spot Drill CTA */}
-          {isPro ? (
-            // Progress screen's ONE orange primary action
-            <Link
-              href="/test/weak-spots"
-              className="mt-4 flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors text-center"
-            >
-              <Target size={18} aria-hidden />
-              <span>Start Weak Spot Drill</span>
-            </Link>
-          ) : (
-            <div className="mt-4">
-              {/* Locked drill button — shown (not hidden) so free users see the tool exists */}
-              <div
-                className="flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-gray-100 text-gray-400 rounded-xl font-semibold border border-gray-200 cursor-not-allowed select-none"
-                aria-disabled="true"
-              >
-                <Lock size={18} aria-hidden />
-                <span>Start Weak Spot Drill</span>
-              </div>
-              <div className="mt-2 bg-blue-50 border border-blue-200 rounded-xl px-5 py-3 flex items-center justify-between gap-4">
-                <p className="text-xs text-blue-800">
-                  You can see your weak spots — <span className="font-semibold">unlock the drill</span> to
-                  auto-build a test that fixes them.
-                </p>
-                <Link
-                  href={`/checkout.html`}
-                  className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
-                >
-                  Upgrade — $14.99
-                </Link>
-              </div>
-            </div>
-          )}
-        </section>
-      )}
-
-      {/* ── Mistakes (server) — absent/null on stale payloads → render nothing ── */}
+      {/* ── 4. Mistakes (server) — absent/null on stale payloads → nothing ── */}
       {data.mistakes ? <MistakesSection mistakes={data.mistakes} /> : null}
 
-      {/* ── Pacing analytics (server) + most recent test (localStorage) ── */}
-      {data.pacing ? (
-        <PacingSection pacing={data.pacing} lastPacing={lastPacing} />
-      ) : (
-        // Stale cached payloads (or pre-rollout API) have no `pacing` field —
-        // keep the localStorage-only pace card so nothing regresses meanwhile.
-        lastPacing && (
-          <section className="mb-6">
-            <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
-              Pacing
-            </h2>
-            <LastPacingCard lastPacing={lastPacing} />
-          </section>
-        )
-      )}
+      {/* ── 5. Pacing analytics — absent/null on stale payloads → nothing ── */}
+      {data.pacing ? <PacingSection pacing={data.pacing} /> : null}
 
-      {/* ── Recent tests ────────────────────────────────────────────── */}
+      {/* ── 6. Recent tests ─────────────────────────────────────────────── */}
       <section>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">Recent Tests</h2>
@@ -352,7 +301,7 @@ export function ProgressClient({ userId }: { userId: string }) {
         )}
       </section>
 
-      {/* ── Achievements (LAST) — absent/null on stale payloads → render nothing ── */}
+      {/* ── 7. Achievements (LAST) — absent/null on stale payloads → nothing ── */}
       {data.achievements ? <AchievementsSection achievements={data.achievements} /> : null}
 
       {/* Unlock toasts — diff only on FRESH payloads (stale cache was already seen) */}
