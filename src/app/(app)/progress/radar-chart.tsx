@@ -16,10 +16,15 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
 
   const cx = size / 2
   const cy = size / 2
-  const radius = size * 0.28 // more room for labels
+  const radius = size * 0.3 // labels get their room from the padded viewBox
   const levels = [0.25, 0.5, 0.75, 1.0]
   const n = data.length
   const labelRadius = radius + 45
+  // Horizontal/vertical viewBox padding so the bumped-up label font (20 units)
+  // never clips at the edges — side labels ("Leak & Repair") extend well past
+  // the bare chart square.
+  const padX = 50
+  const padY = 10
 
   function getPoint(index: number, value: number): [number, number] {
     const angle = (2 * Math.PI * index) / n - Math.PI / 2
@@ -62,13 +67,11 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
   })
 
   return (
-    // max-w-[220px] (golden-ratio overview rebalance — radar is the hero of a
-    // wider column, not a bigger chart). Label font size below is bumped
-    // 13 → 16 viewBox units to compensate, so rendered text stays ~9px
-    // legible; label anchors/geometry are unchanged.
-    <div className="w-full max-w-[220px] mx-auto px-2">
+    // max-w-[300px] — the radar is the Overview hero and the page's main
+    // visual; label font is 20 viewBox units (~12px rendered at 300px wide).
+    <div className="w-full max-w-[300px] mx-auto px-2">
       <svg
-        viewBox={`0 0 ${size} ${size}`}
+        viewBox={`${-padX} ${-padY} ${size + padX * 2} ${size + padY * 2}`}
         className="w-full h-auto overflow-visible"
         role="img"
         aria-label="Radar chart showing proficiency across topic areas"
@@ -80,7 +83,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             points={polygonPoints(level)}
             fill="none"
             stroke="#e5e7eb"
-            strokeWidth="1"
+            strokeWidth="1.75"
           />
         ))}
 
@@ -93,7 +96,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             x2={a.x2}
             y2={a.y2}
             stroke="#e5e7eb"
-            strokeWidth="1"
+            strokeWidth="1.75"
           />
         ))}
 
@@ -102,7 +105,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
           points={dataPolygon}
           fill="rgba(0, 48, 135, 0.15)"
           stroke="#00205c"
-          strokeWidth="2"
+          strokeWidth="3"
         />
 
         {/* Data points */}
@@ -113,10 +116,10 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
               key={i}
               cx={px}
               cy={py}
-              r="3.5"
+              r="4.5"
               fill="#003087"
               stroke="white"
-              strokeWidth="1.5"
+              strokeWidth="2"
             />
           )
         })}
@@ -130,14 +133,14 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             textAnchor={l.anchor}
             dominantBaseline="central"
             className="fill-gray-700"
-            fontSize="16"
+            fontSize="20"
             fontWeight="500"
           >
             <tspan>{l.label}</tspan>
             <tspan
               x={l.x}
-              dy="19"
-              fontSize="16"
+              dy="24"
+              fontSize="20"
               fontWeight="700"
               className="fill-blue-800 font-mono"
             >

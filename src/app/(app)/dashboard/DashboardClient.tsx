@@ -381,33 +381,52 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
 
       {/* (AI Tutor Home row removed — the floating bubble is the AI entry.) */}
 
-      {/* ═══ PACE (72s/question is a hard LIMIT — over it you won't finish) ═══ */}
-      {paceMs !== null && (
-        <Link
-          href="/progress"
-          className="block bg-white border border-line rounded-xl shadow-card px-4 py-3 mb-2.5 min-h-[44px] hover:border-blue-300 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-base shrink-0" aria-hidden="true">⏱</span>
-            <span className="text-[15px] font-extrabold text-gray-900">Pace</span>
-            <span className="font-mono text-lg font-bold text-primary-900">
-              {formatSecsLong(paceMs)}
-              <span className="text-[13px] font-semibold text-steel">/question</span>
-            </span>
-            <span
-              className={`ml-auto shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
-                paceMs <= 72_000
-                  ? 'bg-green-50 text-green-700 border-green-200'
-                  : 'bg-red-50 text-red-600 border-red-200'
-              }`}
-            >
-              {paceMs <= 72_000 ? 'Will finish in time' : "Won't finish in time"}
-            </span>
+      {/* ═══ PACE & ACTIVITY — one row, two half-width cards (2 cols even at
+          390px; each card is narrow-safe). 72s/question is a hard LIMIT. ═══ */}
+      {(paceMs !== null || data.activity) && (
+        <>
+          <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mt-1 mb-1.5 px-0.5">
+            Pace &amp; Activity
+          </h2>
+          <div className="grid grid-cols-2 gap-2 mb-2.5">
+            {paceMs !== null && (
+              <Link
+                href="/progress"
+                aria-label={`Average pace ${formatSecsLong(paceMs)} per question — view pacing details`}
+                className={`block bg-white border border-line rounded-xl shadow-card px-3 py-2.5 min-w-0 min-h-[44px] hover:border-blue-300 transition-colors ${
+                  data.activity ? '' : 'col-span-2'
+                }`}
+              >
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                  <span className="font-mono text-lg font-bold text-primary-900 leading-none">
+                    {formatSecsLong(paceMs)}
+                    <span className="text-[11px] font-semibold text-steel">/q</span>
+                  </span>
+                  {/* Short pill — the long "Will finish in time" overflows half-width */}
+                  <span
+                    className={`font-mono text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${
+                      paceMs <= 72_000
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : 'bg-red-50 text-red-600 border-red-200'
+                    }`}
+                  >
+                    {paceMs <= 72_000 ? 'on time' : 'too slow'}
+                  </span>
+                </div>
+                <div className="mt-2">
+                  {/* compact: no scale numbers at ~160px — red limit tick stays */}
+                  <PaceBar avgMs={paceMs} compact />
+                </div>
+              </Link>
+            )}
+            {data.activity && (
+              <ActivityHeatmap
+                activity={data.activity}
+                className={paceMs !== null ? '' : 'col-span-2'}
+              />
+            )}
           </div>
-          <div className="mt-2">
-            <PaceBar avgMs={paceMs} />
-          </div>
-        </Link>
+        </>
       )}
 
       {/* ═══ WEAKEST ALERT ═══ */}
@@ -425,10 +444,6 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           </span>
         </Link>
       )}
-
-      {/* ═══ ACTIVITY (GitHub-style heatmap — below the fold by design; the
-          section grid is the priority content up top) ═══ */}
-      {data.activity ? <ActivityHeatmap activity={data.activity} /> : null}
 
       {/* ═══ UPGRADE (free only, compact) ═══ */}
       {isFree && (

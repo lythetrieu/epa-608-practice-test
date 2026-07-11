@@ -4,14 +4,12 @@
 // from localStorage instantly, fetches /api/app/progress in the background,
 // and re-renders silently when fresh data lands.
 //
-// Section order (analysis center, deduped):
+// Section order (analysis center, deduped, compacted):
 //   1. Analysis Overview  — radar + headline stats at a glance
 //   2. What to practice next — topics + sections + the Weak Spot Drill CTA
-//   3. Improvement        — delta chip + per-block trend bars
-//   4. Mistakes           — the exact questions going wrong
-//   5. Pacing             — summary + slow topics
-//   6. Recent tests (last 5)
-//   7. Achievements (collapsed — rank + XP + badge preview, expandable)
+//   3. Pacing             — ONE card, 50/50: pace summary | slow topics
+//   4. Improvement + Recent tests — side-by-side on sm+, stacked on mobile
+//   5. Achievements (collapsed — rank + XP + badge preview, expandable)
 
 import Link from 'next/link'
 import { FileCheck, Lock } from 'lucide-react'
@@ -22,7 +20,7 @@ import type { Achievements } from '@/lib/achievements-server'
 import { RadarChart } from './radar-chart'
 import { ImprovementSection, PracticeNextSection, type Improvement } from './practice-next-section'
 import { PacingSection, type PacingAnalytics } from './pacing-section'
-import { MistakesSection, type MistakesData } from './mistakes-section'
+import type { MistakesData } from './mistakes-section'
 import { AchievementsSection } from './achievements-section'
 import { BadgeToasts } from '@/components/gamification/BadgeToasts'
 
@@ -269,17 +267,17 @@ export function ProgressClient({ userId }: { userId: string }) {
         isPro={isPro}
       />
 
-      {/* ── 3. Improvement trend — absent/null on stale payloads → nothing ── */}
-      {data.improvement ? <ImprovementSection improvement={data.improvement} /> : null}
+      {/* Mistakes UI removed — `data.mistakes` still feeds the DB, the Weak Spot Drill targeting, and the AI tutor (and PracticeNextSection above). */}
 
-      {/* ── 4. Mistakes (server) — absent/null on stale payloads → nothing ── */}
-      {data.mistakes ? <MistakesSection mistakes={data.mistakes} /> : null}
-
-      {/* ── 5. Pacing analytics — absent/null on stale payloads → nothing ── */}
+      {/* ── 3. Pacing — one 50/50 card; absent/null on stale payloads → nothing ── */}
       {data.pacing ? <PacingSection pacing={data.pacing} /> : null}
 
-      {/* ── 6. Recent tests ─────────────────────────────────────────────── */}
-      <section>
+      {/* ── 4. Improvement + Recent tests — paired on sm+ (stacked <sm).
+             Improvement absent/null on stale payloads → Recent tests full width. ── */}
+      <div className={data.improvement ? 'sm:grid sm:grid-cols-2 sm:gap-3' : undefined}>
+        {data.improvement ? <ImprovementSection improvement={data.improvement} /> : null}
+
+        <section className="min-w-0">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em]">Recent Tests</h2>
           <Link href="/history" className="text-xs text-blue-700 hover:underline font-medium">
@@ -326,9 +324,10 @@ export function ProgressClient({ userId }: { userId: string }) {
             })}
           </div>
         )}
-      </section>
+        </section>
+      </div>
 
-      {/* ── 7. Achievements (LAST) — absent/null on stale payloads → nothing ── */}
+      {/* ── 5. Achievements (LAST) — absent/null on stale payloads → nothing ── */}
       {data.achievements ? <AchievementsSection achievements={data.achievements} /> : null}
 
       {/* Unlock toasts — diff only on FRESH payloads (stale cache was already seen) */}

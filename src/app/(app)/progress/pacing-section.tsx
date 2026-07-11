@@ -1,19 +1,12 @@
 'use client'
 
-// Pacing analytics section for the Progress page. Renders the server-computed
-// pacing payload (avg speed vs exam budget + slowest topics). Everything here
-// is presentational — the math lives server-side and in quiz/pacing.ts.
-// (The per-day trend bars were removed — the Improvement section's block bars
-// tell the progress-over-time story. The localStorage "most recent test" card
-// was removed earlier — ResultView shows that detail right after each test.)
+// Pacing analytics for the Progress page — ONE short card, split 50/50:
+// LEFT = pace summary (mono avg + will/won't-finish pill + compact PaceBar),
+// RIGHT = top 3 slow topics as bare one-line rows (informational only — the
+// practice actions live in "Fix these first" above). Everything here is
+// presentational — the math lives server-side and in quiz/pacing.ts.
 
-import Link from 'next/link'
-import {
-  formatSecs,
-  formatSecsLong,
-  paceDelta,
-  type PaceDelta,
-} from '@/components/quiz/pacing'
+import { formatSecs, formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
 import { SUBTOPIC_LABELS } from '@/lib/subtopics'
 
@@ -36,23 +29,9 @@ export type PacingAnalytics = {
   slowTopics: PacingSlowTopic[]
 }
 
-// Tailwind classes per delta bucket — chips keep their semantic colors (state
-// lives in labels).
-const CHIP_CLASSES: Record<PaceDelta, string> = {
-  green: 'bg-green-50 text-green-700',
-  amber: 'bg-amber-50 text-amber-700',
-  red: 'bg-red-50 text-red-600',
-}
-
-function deltaChipText(avgMs: number, budgetMs: number): string {
-  const deltaSecs = Math.round((avgMs - budgetMs) / 1000)
-  if (deltaSecs === 0) return 'on pace'
-  return deltaSecs > 0 ? `+${deltaSecs}s over` : `${-deltaSecs}s under`
-}
-
 export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
   const { sampleSize, avgMs, examBudgetMs, slowTopics } = pacing
-  const overallDelta = paceDelta(avgMs, examBudgetMs)
+  const onPace = avgMs <= examBudgetMs
 
   return (
     <section className="mb-6">
@@ -60,72 +39,73 @@ export function PacingSection({ pacing }: { pacing: PacingAnalytics }) {
         Pacing
       </h2>
 
-      {/* ── Summary card ──────────────────────────────────────────────── */}
-      <div className="bg-white rounded-xl border border-line shadow-card px-5 py-4 mb-2">
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-2xl font-bold font-mono text-primary-900 tabular-nums">
-            {formatSecsLong(avgMs)}
-            <span className="text-sm font-medium font-sans text-steel"> / question</span>
-          </span>
-          <span
-            className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CHIP_CLASSES[overallDelta]}`}
-          >
-            {deltaChipText(avgMs, examBudgetMs)}
-          </span>
-        </div>
-        {/* Target bar: fill = user's average, marker = the 72s exam budget */}
-        <div className="mt-3">
-          <PaceBar avgMs={avgMs} budgetMs={examBudgetMs} />
-        </div>
-        <div className="mt-1.5 text-right text-xs text-steel">
-          based on {sampleSize} answers
-        </div>
-      </div>
+      {/* One card, 2 columns even on mobile — each half stays narrow-safe. */}
+      <div className="bg-white rounded-xl border border-line shadow-card p-4">
+        <div className="grid grid-cols-2 gap-4">
+          {/* ── LEFT: pace summary ─────────────────────────────────────── */}
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="font-mono text-xl font-bold text-primary-900 tabular-nums leading-none">
+                {formatSecsLong(avgMs)}
+                <span className="font-sans text-xs font-semibold text-steel">/q</span>
+              </span>
+              <span
+                className={`font-mono text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${
+                  onPace
+                    ? 'bg-green-50 text-green-700 border-green-200'
+                    : 'bg-red-50 text-red-600 border-red-200'
+                }`}
+              >
+                {onPace ? 'will finish' : "won't finish"}
+              </span>
+            </div>
+            <div className="mt-2.5">
+              <PaceBar avgMs={avgMs} budgetMs={examBudgetMs} compact />
+            </div>
+            <p className="mt-1.5 font-mono text-[10px] text-steel tabular-nums">
+              {sampleSize} answers
+            </p>
+          </div>
 
-      {/* ── Slow topics ───────────────────────────────────────────────── */}
-      {slowTopics.length > 0 && (
-        <div className="mt-4">
-          <h3 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-1">Slow topics</h3>
-          <p className="text-xs text-steel mb-2">
-            Slow topics cost you exam time. Slow + wrong topics cost you the exam.
-          </p>
-          <div className="space-y-2">
-            {slowTopics.slice(0, 3).map((topic) => {
-              const label = SUBTOPIC_LABELS[topic.subtopic_id] ?? topic.subtopic_id
-              const slowAndWrong = topic.errorRate >= 0.3
-              return (
-                <div
-                  key={topic.subtopic_id}
-                  className="bg-white rounded-xl border border-line shadow-card px-5 py-4"
-                >
-                  <div className="flex items-center justify-between gap-3 mb-1">
-                    <span className="font-medium text-gray-800 text-sm">{label}</span>
-                    <span className="text-sm font-bold font-mono text-primary-900 tabular-nums shrink-0">
-                      {formatSecs(topic.avgMs)}/question
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-steel mb-2">
-                    <span>{topic.attempts} attempts</span>
-                    {slowAndWrong && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-600">
-                        slow + wrong
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex gap-2">
-                    <Link
-                      href="/learn"
-                      className="text-xs px-3 py-1.5 rounded-[7px] bg-blue-50 text-blue-700 font-medium hover:bg-blue-100"
+          {/* ── RIGHT: slow topics — bare compact lines, no actions ────── */}
+          <div className="min-w-0">
+            <h3 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-2">
+              Slow topics
+            </h3>
+            {slowTopics.length === 0 ? (
+              <p className="text-[12px] text-steel">No slow topics — pace looks good.</p>
+            ) : (
+              <ul className="space-y-1.5">
+                {slowTopics.slice(0, 3).map((topic) => {
+                  const label = SUBTOPIC_LABELS[topic.subtopic_id] ?? topic.subtopic_id
+                  const slowAndWrong = topic.errorRate >= 0.3
+                  return (
+                    <li
+                      key={topic.subtopic_id}
+                      className="flex items-center gap-1.5 text-[12px] min-w-0"
+                      title={slowAndWrong ? `${label} — slow and often wrong` : label}
                     >
-                      Study This Topic
-                    </Link>
-                  </div>
-                </div>
-              )
-            })}
+                      {slowAndWrong && (
+                        <>
+                          <span
+                            className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"
+                            aria-hidden
+                          />
+                          <span className="sr-only">slow and wrong:</span>
+                        </>
+                      )}
+                      <span className="truncate text-gray-800">{label}</span>
+                      <span className="font-mono font-semibold text-primary-900 tabular-nums shrink-0">
+                        · {formatSecs(topic.avgMs)}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </section>
   )
 }

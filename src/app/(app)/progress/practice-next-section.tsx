@@ -215,7 +215,9 @@ export function ImprovementSection({ improvement }: { improvement: Improvement }
   const { blockSize, blocks, deltaPct } = improvement
 
   return (
-    <section className="mb-6">
+    // mb-6 only when stacked (<sm) — on sm+ it sits in a 2-col grid next to
+    // Recent Tests (ProgressClient) and the grid gap owns the spacing.
+    <section className="mb-6 sm:mb-0 min-w-0">
       <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-3">
         Improvement
       </h2>

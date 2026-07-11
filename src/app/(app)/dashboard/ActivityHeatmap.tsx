@@ -2,18 +2,19 @@
 
 import { Fragment } from 'react'
 
-// GitHub-style activity heatmap for the Home dashboard. 16 week columns
-// (ending this week) × 7 weekday rows (Sun on top), each cell colored by how
-// many questions the user answered that day. Data comes from
+// GitHub-style activity heatmap for the Home dashboard — compact half-width
+// card (right column of the PACE & ACTIVITY row, only used there). 12 week
+// columns (ending this week) × 7 weekday rows (Sun on top), each cell colored
+// by how many questions the user answered that day. Data comes from
 // DashboardData.activity (server-computed UTC YYYY-MM-DD counts) — this
 // component only lays out the grid. All date math is UTC (toISOString slices)
 // to stay consistent with the server's keys and the streak logic.
 //
-// Approved skin (mockup ACTIVITY frame): the header lives OUTSIDE the card as
-// a mono kicker ("ACTIVITY — LAST 16 WEEKS"), the card holds only the grid —
-// true GitHub-compact cells: fixed 11px squares, 3px gap, 2px radius,
-// LEFT-aligned (16 weeks ≈ 221px wide) — plus a right-aligned mono LESS/MORE
-// legend. No month/weekday labels.
+// Sizing: fixed 10px squares, 2px gap → 12×10 + 11×2 = 142px wide, safe
+// inside a half-width card at 390px viewports. The kicker lives on the parent
+// row ("PACE & ACTIVITY"); the card holds the grid + an "N active days"
+// caption (the LESS/MORE legend was dropped for the compact size). Per-day
+// tooltips (title) kept.
 
 type Activity = {
   days: Record<string, number>
@@ -21,11 +22,11 @@ type Activity = {
   windowDays: number
 }
 
-const WEEKS = 16
+const WEEKS = 12
 const DAY_MS = 86_400_000
 
-// Fixed GitHub-small cell: 11px square, 2px radius.
-const CELL = 'w-[11px] h-[11px] rounded-[2px]'
+// Compact cell: 10px square, 2px radius.
+const CELL = 'w-[10px] h-[10px] rounded-[2px]'
 
 // Color levels: 10 answers ≈ one quiz. Navy-tint ramp (approved skin —
 // navy is the single workhorse fill; green is reserved for status labels).
@@ -38,7 +39,13 @@ function levelClass(count: number): string {
   return RAMP[3]
 }
 
-export function ActivityHeatmap({ activity }: { activity: Activity }) {
+export function ActivityHeatmap({
+  activity,
+  className = '',
+}: {
+  activity: Activity
+  className?: string
+}) {
   const now = Date.now()
   const todayStr = new Date(now).toISOString().slice(0, 10)
   // Sunday of the current UTC week, then back (WEEKS-1) more weeks → grid start.
@@ -60,52 +67,42 @@ export function ActivityHeatmap({ activity }: { activity: Activity }) {
   )
 
   return (
-    <>
-      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mb-1.5 px-0.5">
-        Activity — last {WEEKS} weeks
-      </h2>
-      <section className="bg-white border border-line rounded-xl shadow-card p-3 mb-2.5">
-        {/* Fixed 11px columns, left-aligned inside the card (no stretching) */}
-        <div
-          className="grid gap-[3px] justify-start"
-          style={{ gridTemplateColumns: `repeat(${WEEKS}, 11px)` }}
-          role="img"
-          aria-label={`Practice activity: ${activity.activeDays} active days in the last ${WEEKS} weeks`}
-        >
-          {Array.from({ length: 7 }, (_, d) => (
-            <Fragment key={d}>
-              {weeks.map(week => {
-                const cell = week[d]
-                return (
-                  <div
-                    key={cell.dateStr}
-                    className={`${CELL} ${
-                      cell.future ? 'opacity-0' : levelClass(cell.count)
-                    }`}
-                    title={
-                      cell.future
-                        ? undefined
-                        : `${cell.dateStr} · ${cell.count} answer${cell.count === 1 ? '' : 's'}`
-                    }
-                  />
-                )
-              })}
-            </Fragment>
-          ))}
-        </div>
+    <section
+      className={`bg-white border border-line rounded-xl shadow-card px-3 py-2.5 min-w-0 ${className}`}
+    >
+      {/* Fixed 10px columns, left-aligned inside the card (no stretching) */}
+      <div
+        className="grid gap-[2px] justify-start"
+        style={{ gridTemplateColumns: `repeat(${WEEKS}, 10px)` }}
+        role="img"
+        aria-label={`Practice activity heatmap, last ${WEEKS} weeks — ${activity.activeDays} active days`}
+      >
+        {Array.from({ length: 7 }, (_, d) => (
+          <Fragment key={d}>
+            {weeks.map(week => {
+              const cell = week[d]
+              return (
+                <div
+                  key={cell.dateStr}
+                  className={`${CELL} ${
+                    cell.future ? 'opacity-0' : levelClass(cell.count)
+                  }`}
+                  title={
+                    cell.future
+                      ? undefined
+                      : `${cell.dateStr} · ${cell.count} answer${cell.count === 1 ? '' : 's'}`
+                  }
+                />
+              )
+            })}
+          </Fragment>
+        ))}
+      </div>
 
-        {/* Legend — mono LESS/MORE row, right-aligned (mockup frame) */}
-        <div
-          className="flex items-center justify-end gap-1 mt-1.5 font-mono text-[9px] leading-none text-steel"
-          aria-hidden="true"
-        >
-          <span>LESS</span>
-          {RAMP.map(cls => (
-            <span key={cls} className={`${CELL} ${cls}`} />
-          ))}
-          <span>MORE</span>
-        </div>
-      </section>
-    </>
+      {/* Caption replaces the LESS/MORE legend at this size */}
+      <p className="mt-1.5 font-mono text-[10px] leading-none text-steel tabular-nums">
+        {activity.activeDays} active days
+      </p>
+    </section>
   )
 }

@@ -13,9 +13,14 @@ import { finishMarginMinutes } from './pacing'
 export function PaceBar({
   avgMs,
   budgetMs = 72_000,
+  compact = false,
 }: {
   avgMs: number
   budgetMs?: number
+  /** Half-width cards (~160px): bar + limit tick only — the 0s/72s/max scale
+      row and the projected-minutes copy line are hidden (the surrounding
+      card's will/won't pill carries the verdict). */
+  compact?: boolean
 }) {
   // Scale: 0 → max(avgMs, 1.25×budget) — 90s at the default 72s budget — so
   // the limit marker always sits inside the track and a slow average still fits.
@@ -62,21 +67,28 @@ export function PaceBar({
             style={{ left: `${fillPct}%` }}
           />
         </div>
-        {/* Scale row: 0s left · red "72s LIMIT" under the tick · max right */}
-        <div className="relative mt-1 h-2.5 font-mono text-[9px] leading-none text-steel">
-          <span className="absolute left-0 top-0">0s</span>
-          <span className="absolute right-0 top-0">{maxSecs}s</span>
-          <span
-            className="absolute top-0 -translate-x-1/2 font-bold text-red-600 whitespace-nowrap"
-            style={{ left: `${limitPct}%` }}
-          >
-            {budgetSecs}s LIMIT
-          </span>
-        </div>
+        {/* Scale row: 0s left · red "72s LIMIT" under the tick · max right —
+            hidden in compact mode (too cramped at half-card width). */}
+        {!compact && (
+          <div className="relative mt-1 h-2.5 font-mono text-[9px] leading-none text-steel">
+            <span className="absolute left-0 top-0">0s</span>
+            <span className="absolute right-0 top-0">{maxSecs}s</span>
+            <span
+              className="absolute top-0 -translate-x-1/2 font-bold text-red-600 whitespace-nowrap"
+              style={{ left: `${limitPct}%` }}
+            >
+              {budgetSecs}s LIMIT
+            </span>
+          </div>
+        )}
       </div>
       {/* Kept (not duplicate of the will/won't chip): carries the projected
           minutes short/spare number. Shrunk for density. */}
-      <p className={`mt-1 text-[11px] leading-snug ${over ? 'text-red-600' : 'text-steel'}`}>{copy}</p>
+      {!compact && (
+        <p className={`mt-1 text-[11px] leading-snug ${over ? 'text-red-600' : 'text-steel'}`}>
+          {copy}
+        </p>
+      )}
     </div>
   )
 }
