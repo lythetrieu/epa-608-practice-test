@@ -309,12 +309,33 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                     className="absolute inset-0 z-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800"
                     aria-label={`${category}: ${cat ? `${cat.readinessPct}% ready` : 'not started'}, study path ${mastered}/${total} levels — open study path`}
                   />
-                  {/* Featured "Start here" — slim orange border + small tag (approved skin) */}
-                  {isNext && (
+                  {/* Floating edge tag (one per tile):
+                      needs-work → "FIX THIS →" BUTTON opening the fix-plan note
+                      (the note itself carries the Study-now action);
+                      healthy featured → "START HERE →" (pure marker, the
+                      stretched Link underneath handles the tap). */}
+                  {needsWork && cat ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFixPlan({
+                          category,
+                          readinessPct: cat.readinessPct,
+                          mastered,
+                          total,
+                          practiced,
+                        })
+                      }
+                      className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded hover:bg-orange-600 transition-colors after:absolute after:-inset-2 after:content-['']"
+                      aria-label={`Open fix plan for ${category}`}
+                    >
+                      Fix this →
+                    </button>
+                  ) : isNext ? (
                     <span className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded pointer-events-none">
                       Start here →
                     </span>
-                  )}
+                  ) : null}
                   <div className="flex items-center gap-2 mb-1.5">
                     <span
                       className="w-8 h-8 rounded-[7px] bg-blue-50 border border-line flex items-center justify-center text-base shrink-0"
@@ -351,26 +372,6 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   >
                     {cat?.ready ? 'Ready ✓' : cat ? 'Keep practicing' : 'Not started'}
                   </p>
-                  {/* Needs-work chip — sibling of the Link overlay (never nested
-                      inside it); after:-inset keeps the tap target ≥40px tall. */}
-                  {needsWork && cat && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setFixPlan({
-                          category,
-                          readinessPct: cat.readinessPct,
-                          mastered,
-                          total,
-                          practiced,
-                        })
-                      }
-                      className="relative z-10 mt-1.5 inline-flex items-center gap-1 font-mono text-[9px] font-bold uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200 px-2 py-1 rounded-full hover:bg-orange-100 transition-colors after:absolute after:-inset-y-2.5 after:-inset-x-2 after:content-['']"
-                      aria-label={`Open fix plan for ${category}`}
-                    >
-                      <span aria-hidden="true">💡</span> Fix plan
-                    </button>
-                  )}
                 </div>
               )
             })}
