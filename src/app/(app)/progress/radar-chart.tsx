@@ -31,8 +31,8 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
   const levels = [0.25, 0.5, 0.75, 1.0]
   // The 4-axis section radar (common case) gets a bigger label; dense 8-axis
   // topic radars step down so eight long single-line labels still fit.
-  const fontSize = n <= 5 ? 20 : 17
-  const labelRadius = radius + (n <= 5 ? 36 : 26)
+  const fontSize = n <= 5 ? 24 : 20
+  const labelRadius = radius + (n <= 5 ? 42 : 30)
 
   function getPoint(index: number, value: number): [number, number] {
     const angle = (2 * Math.PI * index) / n - Math.PI / 2
@@ -91,7 +91,9 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
   const padY = fontSize // headroom for the top/bottom centered labels
 
   return (
-    <div className="w-full max-w-[300px] mx-auto">
+    // No max-width cap — the chart fills whatever card slot it's given
+    // (~300-330px at a desktop half-card, ~340px full-width mobile).
+    <div className="w-full">
       <svg
         viewBox={`${minX - pad} ${-padY} ${maxX - minX + pad * 2} ${size + padY * 2}`}
         className="w-full h-auto"
