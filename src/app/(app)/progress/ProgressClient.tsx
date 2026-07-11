@@ -14,6 +14,12 @@ import { lastPacingKey, type LastPacing } from '@/components/quiz/pacing'
 import type { BlindSpot, RadarDatum } from './weak-spots-data'
 import type { Achievements } from '@/lib/achievements-server'
 import { RadarChart } from './radar-chart'
+import {
+  CATEGORY_SLUGS,
+  ImprovementSection,
+  PracticeNextSection,
+  type Improvement,
+} from './practice-next-section'
 import { LastPacingCard, PacingSection, type PacingAnalytics } from './pacing-section'
 import { MistakesSection, type MistakesData } from './mistakes-section'
 import { AchievementsSection } from './achievements-section'
@@ -44,13 +50,9 @@ type ProgressData = {
   // XP + rank + badges. Absent on stale cached payloads, null when the server
   // couldn't compute — both render nothing.
   achievements?: Achievements | null
-}
-
-const CATEGORY_SLUGS: Record<string, string> = {
-  'Core': 'core',
-  'Type I': 'type-1',
-  'Type II': 'type-2',
-  'Type III': 'type-3',
+  // Accuracy trend in 50-question blocks. Absent on stale cached payloads,
+  // null when the server has no data — both render nothing.
+  improvement?: Improvement | null
 }
 
 // First-ever-visit skeleton (no cached snapshot yet): title + 2 card blocks.
@@ -118,6 +120,12 @@ export function ProgressClient({ userId }: { userId: string }) {
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Progress</h1>
       <p className="text-steel text-sm mb-6">Your weak spots &amp; test history</p>
+
+      {/* ── What to practice next — recommendation hub (TOP) ───────────── */}
+      <PracticeNextSection spots={spots} sectionRadar={data.sectionRadar} mistakes={data.mistakes} />
+
+      {/* ── Improvement trend — absent/null on stale payloads → nothing ── */}
+      {data.improvement ? <ImprovementSection improvement={data.improvement} /> : null}
 
       {/* ── Topic Proficiency radar ─────────────────────────────────── */}
       {chartData ? (

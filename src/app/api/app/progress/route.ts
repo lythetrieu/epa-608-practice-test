@@ -12,6 +12,7 @@ import {
   masteredConceptsByCategory,
   totalConceptsByCategory,
 } from '@/lib/section-progress'
+import { computeImprovement, type ImprovementData } from '@/lib/improvement-server'
 import {
   buildWorldCompletion,
   computeAchievements,
@@ -96,16 +97,19 @@ export async function GET() {
       .then(r => r, () => ({ data: null, error: true as unknown })),
   ])
 
+  // Shared newest-first 2000-row answer window (fetched above) — reused by
+  // both achievements and improvement below; no additional queries.
+  const { data: answerRows, error: answersError } = answersRes as {
+    data: { question_id: string; correct: boolean; answered_at: string | null }[] | null
+    error?: unknown
+  }
+
   // ─── Achievements: XP + rank + derived badges (achievements-server) ───
   // Same computation dashboard-data runs; null on any error. Old cached
   // client payloads simply lack the key, so clients guard — and the
   // local-first VERSION is intentionally NOT bumped.
   let achievements: Achievements | null = null
   try {
-    const { data: answerRows, error: answersError } = answersRes as {
-      data: { question_id: string; correct: boolean; answered_at: string | null }[] | null
-      error?: unknown
-    }
     if (achievementCounts && !answersError && Array.isArray(answerRows)) {
       const allSessions = sessions ?? []
       const masteredIds = ((masteredRes.data ?? []) as { concept_id: string }[]).map(
@@ -138,6 +142,21 @@ export async function GET() {
     achievements = null
   }
 
+  // ─── Improvement tracking: accuracy per 50-answer block + last100 vs
+  // prev100 (improvement-server). Pure derivation over the SAME answer
+  // window — zero extra queries. Null when the window failed to load, the
+  // user has <20 answers, or on any error; old cached client payloads simply
+  // lack the key, so clients guard with optional chaining.
+  let improvement: ImprovementData | null = null
+  try {
+    improvement =
+      !answersError && Array.isArray(answerRows)
+        ? computeImprovement(answerRows)
+        : null
+  } catch {
+    improvement = null
+  }
+
   return NextResponse.json({
     isPro,
     spots,
@@ -159,5 +178,6 @@ export async function GET() {
     pacing,
     mistakes,
     achievements,
+    improvement,
   })
 }
