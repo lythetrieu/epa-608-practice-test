@@ -9,10 +9,57 @@ type RadarDataPoint = {
 type RadarChartProps = {
   data: RadarDataPoint[]
   size?: number
+  /** 'dark' renders light-on-ink for the navy hero card (Progress overview). */
+  variant?: 'light' | 'dark'
+  /** Tint the weakest axis (label + vertex dot) rose — a status signal only. */
+  highlightWeakest?: boolean
 }
 
-export function RadarChart({ data, size = 400 }: RadarChartProps) {
+export function RadarChart({
+  data,
+  size = 400,
+  variant = 'light',
+  highlightWeakest = false,
+}: RadarChartProps) {
   if (data.length < 3) return null
+
+  // Palette per variant. Light matches the previous hardcoded rendering
+  // exactly (fill-gray-700 = #374151, fill-blue-800 = brand #003087); dark is
+  // the ink-hero treatment: soft white grid, orange data polygon (small
+  // non-button accent), white labels, rose reserved for the weakest axis.
+  const dark = variant === 'dark'
+  const c = dark
+    ? {
+        grid: 'rgba(255,255,255,0.22)',
+        polyFill: 'rgba(249,115,22,0.22)',
+        polyStroke: '#F97316',
+        dot: '#F97316',
+        dotRing: '#001d57',
+        label: 'rgba(255,255,255,0.78)',
+        pct: '#ffffff',
+        rose: '#fda4af',
+      }
+    : {
+        grid: '#e5e7eb',
+        polyFill: 'rgba(0, 48, 135, 0.15)',
+        polyStroke: '#00205c',
+        dot: '#003087',
+        dotRing: '#ffffff',
+        label: '#374151',
+        pct: '#003087',
+        rose: '#e11d48',
+      }
+
+  // Weakest axis (lowest %) — only when requested, at least 2 attempted axes,
+  // and not all equal (no "weakest" in a flat profile).
+  let weakestIdx = -1
+  if (highlightWeakest) {
+    const pcts = data.map((d) => (d.maxScore > 0 ? d.score / d.maxScore : null))
+    const valid = pcts.filter((p): p is number => p !== null)
+    if (valid.length >= 2 && Math.min(...valid) !== Math.max(...valid)) {
+      weakestIdx = pcts.findIndex((p) => p === Math.min(...valid))
+    }
+  }
 
   const cx = size / 2
   const cy = size / 2
@@ -76,13 +123,13 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
         role="img"
         aria-label="Radar chart showing proficiency across topic areas"
       >
-        {/* Concentric reference polygons */}
+        {/* Concentric reference polygons — soft radial grid */}
         {levels.map((level) => (
           <polygon
             key={level}
             points={polygonPoints(level)}
             fill="none"
-            stroke="#e5e7eb"
+            stroke={c.grid}
             strokeWidth="1.75"
           />
         ))}
@@ -95,7 +142,7 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
             y1={a.y1}
             x2={a.x2}
             y2={a.y2}
-            stroke="#e5e7eb"
+            stroke={c.grid}
             strokeWidth="1.75"
           />
         ))}
@@ -103,51 +150,57 @@ export function RadarChart({ data, size = 400 }: RadarChartProps) {
         {/* Data polygon */}
         <polygon
           points={dataPolygon}
-          fill="rgba(0, 48, 135, 0.15)"
-          stroke="#00205c"
+          fill={c.polyFill}
+          stroke={c.polyStroke}
           strokeWidth="3"
+          strokeLinejoin="round"
         />
 
-        {/* Data points */}
+        {/* Vertex dots — weakest axis punched out in rose (status signal) */}
         {normalized.map((val, i) => {
           const [px, py] = getPoint(i, val)
+          const weakest = i === weakestIdx
           return (
             <circle
               key={i}
               cx={px}
               cy={py}
-              r="4.5"
-              fill="#003087"
-              stroke="white"
+              r={weakest ? 5.5 : 4.5}
+              fill={weakest ? c.rose : c.dot}
+              stroke={c.dotRing}
               strokeWidth="2"
             />
           )
         })}
 
         {/* Labels */}
-        {labels.map((l, i) => (
-          <text
-            key={i}
-            x={l.x}
-            y={l.y}
-            textAnchor={l.anchor}
-            dominantBaseline="central"
-            className="fill-gray-700"
-            fontSize="20"
-            fontWeight="500"
-          >
-            <tspan>{l.label}</tspan>
-            <tspan
+        {labels.map((l, i) => {
+          const weakest = i === weakestIdx
+          return (
+            <text
+              key={i}
               x={l.x}
-              dy="24"
+              y={l.y}
+              textAnchor={l.anchor}
+              dominantBaseline="central"
+              fill={weakest ? c.rose : c.label}
               fontSize="20"
-              fontWeight="700"
-              className="fill-blue-800 font-mono"
+              fontWeight="500"
             >
-              {l.pct}%
-            </tspan>
-          </text>
-        ))}
+              <tspan>{l.label}</tspan>
+              <tspan
+                x={l.x}
+                dy="24"
+                fontSize="20"
+                fontWeight="700"
+                fill={weakest ? c.rose : c.pct}
+                className="font-mono"
+              >
+                {l.pct}%
+              </tspan>
+            </text>
+          )
+        })}
       </svg>
     </div>
   )
