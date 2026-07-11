@@ -211,7 +211,7 @@ export function ProgressClient({ userId }: { userId: string }) {
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1.5">
                     <div
-                      className="h-full rounded-full transition-all bg-blue-800"
+                      className="h-full rounded-full transition-all bg-orange-500"
                       style={{ width: `${errorPct}%` }}
                     />
                   </div>

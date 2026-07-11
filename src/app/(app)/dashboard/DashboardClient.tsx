@@ -14,7 +14,7 @@ import { Onboarding } from './onboarding'
 import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
 import {
-  ArrowRight, Lightbulb, AlertTriangle, Bot, Lock,
+  ArrowRight, Lightbulb, AlertTriangle,
 } from 'lucide-react'
 import { formatSecsLong } from '@/components/quiz/pacing'
 import { PaceBar } from '@/components/quiz/pacing-bar'
@@ -132,7 +132,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   cy="60"
                   r={RING_R}
                   fill="none"
-                  stroke="#f5b840"
+                  stroke="#F97316"
                   strokeWidth="13"
                   strokeLinecap="round"
                   strokeDasharray={RING_C.toFixed(1)}
@@ -148,7 +148,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               </text>
             </svg>
             <div className="min-w-0">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[#f5b840] mb-0.5">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-orange-400 mb-0.5">
                 Readiness
               </p>
               <p className="font-serif text-2xl font-black leading-tight">
@@ -196,11 +196,11 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               </span>
               <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden" aria-hidden="true">
                 <span
-                  className="block h-full rounded-full bg-[#f5b840]"
+                  className="block h-full rounded-full bg-orange-500"
                   style={{ width: `${pct}%` }}
                 />
               </span>
-              <span className="font-mono text-xs font-bold tabular-nums text-[#f5b840] shrink-0">
+              <span className="font-mono text-xs font-bold tabular-nums text-orange-400 shrink-0">
                 {Math.round(pct)}%
               </span>
             </Link>
@@ -341,32 +341,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
         )
       })()}
 
-      {/* ═══ AI TUTOR — prominent entry with the orange accent (owner wants the
-          AI feature visible on Home; icon + "Ask →" are accents, the screen's
-          one orange BUTTON remains the Start-here tile) ═══ */}
-      <Link
-        href="/tutor"
-        className="flex items-center gap-3 bg-white border border-line rounded-xl shadow-card px-4 py-2.5 mb-2.5 min-h-[56px] hover:border-orange-300 transition-colors"
-      >
-        <span className="w-9 h-9 rounded-[7px] bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-          <Bot size={20} aria-hidden="true" />
-        </span>
-        <span className="min-w-0">
-          <span className="block text-sm font-bold text-gray-900">AI Tutor</span>
-          <span className="block text-[11px] text-steel truncate">
-            Stuck on a concept? Ask anything about EPA 608
-          </span>
-        </span>
-        {isFree ? (
-          <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 rounded-full px-2 py-0.5">
-            <Lock size={10} aria-hidden="true" /> Pro
-          </span>
-        ) : (
-          <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-xs font-bold text-orange-600">
-            Ask <ArrowRight size={14} aria-hidden="true" />
-          </span>
-        )}
-      </Link>
+      {/* (AI Tutor Home row removed — the floating bubble is the AI entry.) */}
 
       {/* ═══ PACE (72s/question is a hard LIMIT — over it you won't finish) ═══ */}
       {paceMs !== null && (

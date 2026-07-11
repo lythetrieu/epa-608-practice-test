@@ -423,7 +423,7 @@ export default function FlashcardClient() {
       {/* Progress bar */}
       <div className="h-1 bg-gray-200 shrink-0">
         <div
-          className="h-full bg-blue-800 transition-all duration-300"
+          className="h-full bg-orange-500 transition-all duration-300"
           style={{ width: `${((currentIdx + (flyOff ? 1 : 0)) / cards.length) * 100}%` }}
         />
       </div>

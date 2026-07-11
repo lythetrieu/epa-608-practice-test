@@ -147,7 +147,7 @@ function Stars({ score }: { score?: number | null }) {
   const n = starsFor(score)
   if (n === 0) return null
   return (
-    <span aria-label={`${n} of 3 stars`} className="shrink-0 text-[13px] leading-none" style={{ color: '#f5b840' }}>
+    <span aria-label={`${n} of 3 stars`} className="shrink-0 text-[13px] leading-none" style={{ color: '#F97316' }}>
       {'★'.repeat(n)}
     </span>
   )
@@ -825,7 +825,7 @@ export default function StudyPathClient({
                   </div>
                   <span className="block mt-1.5 font-mono text-[11px] font-semibold text-steel tabular-nums">
                     {done}/{items.length} levels · <span className="text-primary-900">{pct}%</span> ·{' '}
-                    <span aria-hidden="true" style={{ color: '#f5b840' }}>★</span>
+                    <span aria-hidden="true" style={{ color: '#F97316' }}>★</span>
                     <span> {starsEarned}/{starsPossible}</span>
                     <span className="sr-only"> stars</span>
                   </span>

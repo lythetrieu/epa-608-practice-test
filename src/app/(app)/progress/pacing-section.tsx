@@ -44,9 +44,9 @@ const CHIP_CLASSES: Record<PaceDelta, string> = {
   red: 'bg-red-50 text-red-600',
 }
 const BAR_CLASSES: Record<PaceDelta, string> = {
-  green: 'bg-blue-800',
-  amber: 'bg-blue-800',
-  red: 'bg-blue-800',
+  green: 'bg-orange-500',
+  amber: 'bg-orange-500',
+  red: 'bg-orange-500',
 }
 
 function deltaChipText(avgMs: number, budgetMs: number): string {

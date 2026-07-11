@@ -48,7 +48,7 @@ export function PaceBar({
           />
           {/* Navy fill up to the user's average */}
           <div
-            className="absolute inset-y-0 left-0 rounded-md bg-blue-800"
+            className="absolute inset-y-0 left-0 rounded-md bg-orange-500"
             style={{ width: `${fillPct}%` }}
           />
           {/* Red tick at the hard limit */}

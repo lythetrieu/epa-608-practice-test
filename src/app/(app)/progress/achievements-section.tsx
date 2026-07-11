@@ -28,16 +28,15 @@ import {
 import type { Achievements } from '@/lib/achievements-server'
 
 const INK = '#001d57'
-const NAVY = '#003087'
 
 // Rarity is rendered as muted TEXT only — no colored chips/bars. Legendary
-// amber is the single warm exception (gold-for-achievement rule; matches the
-// gold inside the badge art).
+// orange is the single warm exception (gold was dropped from the UI —
+// orange is the brand accent; gold survives only inside the badge art).
 const RARITY_CLASS: Record<BadgeRarity, string> = {
   common: 'text-gray-400',
   rare: 'text-blue-700',
   epic: 'text-[#001d57] font-semibold',
-  legendary: 'text-amber-600 font-semibold',
+  legendary: 'text-orange-600 font-semibold',
 }
 
 // Local view of the payload. rarity / xp / badgeXp are OPTIONAL: payloads
@@ -114,7 +113,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
         <div className="h-2 rounded-full bg-gray-100 overflow-hidden" aria-hidden="true">
           <div
             className="h-full rounded-full"
-            style={{ width: `${pct}%`, background: NAVY }}
+            style={{ width: `${pct}%`, background: '#F97316' }}
           />
         </div>
       </div>

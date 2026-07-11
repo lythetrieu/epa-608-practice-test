@@ -420,7 +420,7 @@ export function QuizEngine({
         {/* Progress bar */}
         <div className="h-1 bg-gray-100 rounded-full mt-2 -mb-0.5">
           <div
-            className="h-full bg-blue-800 rounded-full transition-all duration-300"
+            className="h-full bg-orange-500 rounded-full transition-all duration-300"
             style={{ width: `${((showExplanations ? revealed.size : answeredCount) / questions.length) * 100}%` }}
           />
         </div>
@@ -531,7 +531,7 @@ export function QuizEngine({
               {showExplanations ? `${revealed.size}/${questions.length} answered` : `${answeredCount}/${questions.length} answered`}
             </p>
             <div className="h-1.5 bg-gray-200 rounded-full mt-1 mx-auto max-w-[200px]">
-              <div className="h-full bg-blue-800 rounded-full transition-all" style={{ width: `${((showExplanations ? revealed.size : answeredCount) / questions.length) * 100}%` }} />
+              <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${((showExplanations ? revealed.size : answeredCount) / questions.length) * 100}%` }} />
             </div>
           </div>
 
