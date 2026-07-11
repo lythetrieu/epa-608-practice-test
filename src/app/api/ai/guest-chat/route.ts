@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
   if (!limit.success) {
     return Response.json({
-      error: 'Daily limit reached (10 free questions per day). Get Pro for unlimited AI help.',
+      error: 'Daily limit reached (10 free questions per day). Get Pro for 1,000 AI questions/month.',
       remaining: 0,
       upgradeRequired: true,
     }, { status: 429 })

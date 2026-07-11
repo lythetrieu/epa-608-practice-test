@@ -308,7 +308,7 @@ function BubbleUpsell({ onClose }: { onClose: () => void }) {
         <h2 className="text-base font-bold text-gray-900 mb-1">🔒 AI Tutor — unlock with Pro</h2>
         <p className="text-sm text-steel mb-6 max-w-xs">
           Get instant, personalized answers on refrigerants, regulations, recovery and safety —
-          plus voice, chat history, and 1,000 questions a day.
+          plus voice, chat history, and 1,000 questions a month.
         </p>
         <Link
           href="/checkout.html"
