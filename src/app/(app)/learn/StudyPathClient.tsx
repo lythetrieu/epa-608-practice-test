@@ -778,7 +778,7 @@ export default function StudyPathClient({
           </h1>
           <div className="mt-1.5 mb-3.5 flex items-center gap-2.5">
             <div className="flex-1 h-2 bg-blue-50 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
+              <div className="h-full bg-orange-500 rounded-full transition-all duration-500" style={{ width: `${overallPct}%` }} />
             </div>
             <span className="shrink-0 font-mono text-[13px] font-bold text-primary-900 tabular-nums">
               {totalMastered}/{concepts.length} · {overallPct}%
@@ -821,7 +821,7 @@ export default function StudyPathClient({
                     </span>
                   </div>
                   <div className="h-2 bg-blue-50 rounded-full overflow-hidden mt-2">
-                    <div className="h-full bg-blue-800 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
+                    <div className="h-full bg-orange-500 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
                   </div>
                   <span className="block mt-1.5 font-mono text-[11px] font-semibold text-steel tabular-nums">
                     {done}/{items.length} levels · <span className="text-primary-900">{pct}%</span> ·{' '}

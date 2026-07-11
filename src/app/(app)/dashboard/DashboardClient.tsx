@@ -319,7 +319,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                   </p>
                   <div className="h-2 rounded-full bg-blue-50 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-blue-800"
+                      className="h-full rounded-full bg-orange-500"
                       style={{ width: `${cat?.readinessPct ?? 0}%` }}
                     />
                   </div>
