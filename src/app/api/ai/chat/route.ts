@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { TIER_LIMITS } from '@/types'
-import { SYSTEM_PROMPT, retrieveKnowledge, enforcePromptBudget } from '@/lib/ai/prompts'
+import { SYSTEM_PROMPT, PERSONAL_TUTOR_RULES, retrieveKnowledge, enforcePromptBudget } from '@/lib/ai/prompts'
 import { buildUserContext, searchRelevantQuestions } from '@/lib/ai/context'
 import { z } from 'zod'
 
@@ -115,9 +115,11 @@ export async function POST(request: NextRequest) {
     searchRelevantQuestions(lastUserMsg),
   ])
 
-  // Call OpenRouter
+  // Call OpenRouter. Order matters for enforcePromptBudget, which trims the
+  // system message from the END: rules + student data lead, the large
+  // variable KB retrieval trails so it's what gets truncated under pressure.
   const apiMessages = enforcePromptBudget([
-    { role: 'system', content: SYSTEM_PROMPT + '\n' + retrieveKnowledge(lastUserMsg) + '\n' + userContext + '\n' + questionContext },
+    { role: 'system', content: SYSTEM_PROMPT + '\n' + PERSONAL_TUTOR_RULES + '\n' + userContext + '\n' + retrieveKnowledge(lastUserMsg) + '\n' + questionContext },
     ...messages.slice(-10),
   ])
 
