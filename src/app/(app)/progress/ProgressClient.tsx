@@ -5,7 +5,7 @@
 // and re-renders silently when fresh data lands.
 //
 // Section order (analysis center, deduped, compacted):
-//   1. Analysis Overview  — radar + headline stats at a glance
+//   1. Section strengths  — light radar card + headline stat row
 //   2. What to practice next — topics + sections + the Weak Spot Drill CTA
 //   3. Pacing             — ONE card, 50/50: pace summary | slow topics
 //   4. Improvement + Recent tests — side-by-side on sm+, stacked on mobile
@@ -80,27 +80,15 @@ function ProgressSkeleton() {
   )
 }
 
-/** Overview stat cell (ink hero card) — white mono number over a tiny uppercase
- *  kicker. `primary` bumps the number for the king stat (accuracy on mobile). */
-function OverviewStat({
-  value,
-  label,
-  primary = false,
-}: {
-  value: string
-  label: string
-  primary?: boolean
-}) {
+/** Overview stat mini card — big mono ink number over a tiny uppercase steel
+ *  label. Four of these sit in a grid-cols-4 row under the radar card. */
+function OverviewStat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex-1 min-w-0 px-1 text-center">
-      <div
-        className={`font-mono font-bold text-white tabular-nums leading-tight ${
-          primary ? 'text-2xl' : 'text-lg'
-        }`}
-      >
+    <div className="bg-white rounded-xl border border-line shadow-card px-1 py-3 text-center min-w-0">
+      <div className="font-mono text-xl font-bold text-primary-900 tabular-nums leading-tight">
         {value}
       </div>
-      <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.08em] text-white/60 mt-0.5 truncate">
+      <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-steel mt-1 truncate">
         {label}
       </div>
     </div>
@@ -149,139 +137,83 @@ export function ProgressClient({ userId }: { userId: string }) {
   const chartData = radarData.length >= 3 ? radarData : useSectionFallback ? data.sectionRadar! : null
 
   const fallbackCaption = useSectionFallback && (
-    <p className="text-[11px] text-white/60 mt-2 text-center">
+    <p className="text-[11px] text-steel mt-2 text-center">
       By section — practice more topics to unlock the detailed topic radar.
     </p>
   )
-
-  // One-line verdict in plain trade language, derived from the radar axes.
-  // Pro only — the radar insight is gated, so the header must not leak it.
-  let verdict: { strongest: string; weakest: string } | null = null
-  if (isPro && chartData) {
-    const axes = chartData
-      .filter((d) => d.maxScore > 0)
-      .map((d) => ({ label: d.label, pct: d.score / d.maxScore }))
-    if (axes.length >= 2) {
-      const sorted = [...axes].sort((a, b) => b.pct - a.pct)
-      const strongest = sorted[0]
-      const weakest = sorted[sorted.length - 1]
-      if (strongest.pct !== weakest.pct) {
-        verdict = { strongest: strongest.label, weakest: weakest.label }
-      }
-    }
-  }
 
   return (
     <div className="p-4 sm:p-6 max-w-3xl mx-auto">
       <h1 className="font-serif text-2xl sm:text-3xl font-black text-gray-900 mb-1">Progress</h1>
       <p className="text-steel text-sm mb-6">Your weak spots &amp; test history</p>
 
-      {/* ── 1. Analysis Overview — ink hero card (same language as Home):
-             radar light-on-dark + instrument-panel stats ─────────────────── */}
+      {/* ── 1. Section strengths — light, calm card (reference design):
+             serif heading + airy radar, then a row of 4 stat mini cards ──── */}
       {chartData || overview ? (
         <section className="mb-6">
-          <div className="bg-primary-900 rounded-xl shadow-card p-5 sm:p-6">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-4">
-              <h2 className="font-mono text-[10px] font-semibold text-white/55 uppercase tracking-[0.12em]">
-                Analysis Overview
+          {chartData ? (
+            <div className="bg-white rounded-xl border border-line shadow-card p-5 sm:p-8 mb-2">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-primary-900 mb-5">
+                Section strengths
               </h2>
-              {verdict && (
-                <p className="text-[11px] text-white/70 min-w-0 truncate">
-                  Strongest: <span className="font-semibold text-white">{verdict.strongest}</span>
-                  <span className="text-white/40"> · </span>
-                  Weakest: <span className="font-semibold text-rose-300">{verdict.weakest}</span>
-                </p>
-              )}
-            </div>
-            {/* Golden-ratio split on sm+: radar hero column ~62%, stats ~38%.
-                Mobile stacks: radar centered on top, one stat strip below. */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-6">
               {/* Radar — Pro sees it plain, free sees it blurred behind a lock */}
-              {chartData ? (
-                <div className="sm:flex-[1.62] min-w-0 text-center">
-                  {isPro ? (
-                    <>
-                      <RadarChart data={chartData} variant="dark" highlightWeakest />
-                      {fallbackCaption}
-                    </>
-                  ) : (
-                    <>
-                      {/* Real radar rendered but BLURRED — free users see the insight exists */}
-                      <div className="relative inline-block w-full max-w-xs mx-auto mb-4">
-                        <div className="blur-md pointer-events-none select-none" aria-hidden>
-                          <RadarChart data={chartData} variant="dark" />
-                        </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-primary-900/40 rounded-lg">
-                          <div className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center">
-                            <Lock size={20} className="text-blue-800" aria-hidden />
-                          </div>
-                          <p className="text-sm font-semibold text-white">Radar Chart — Pro</p>
-                        </div>
-                      </div>
-                      {useSectionFallback && (
-                        <p className="text-[11px] text-white/60 -mt-2 mb-3">
-                          By section — practice more topics to unlock the detailed topic radar.
-                        </p>
-                      )}
-                      <p className="text-xs text-white/70 mb-4">
-                        Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
-                      </p>
-                      <Link
-                        href={`/checkout.html`}
-                        className="inline-flex items-center justify-center min-h-[44px] px-5 bg-white text-blue-800 rounded-[7px] text-sm font-bold hover:bg-blue-50 transition-colors"
-                      >
-                        Upgrade — $14.99 lifetime
-                      </Link>
-                    </>
-                  )}
-                </div>
+              {isPro ? (
+                <>
+                  <RadarChart data={chartData} />
+                  {fallbackCaption}
+                </>
               ) : (
-                spots.length > 0 && (
-                  <div className="sm:flex-[1.62] min-w-0 flex items-center">
-                    <p className="text-xs text-white/60">
-                      Take tests across more sections to unlock your topic proficiency radar.
+                <div className="text-center">
+                  {/* Real radar rendered but BLURRED — free users see the insight exists */}
+                  <div className="relative w-full max-w-[300px] mx-auto mb-4">
+                    <div className="blur-md pointer-events-none select-none" aria-hidden>
+                      <RadarChart data={chartData} />
+                    </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/50 rounded-lg">
+                      <div className="w-11 h-11 rounded-full bg-white border border-line shadow-card flex items-center justify-center">
+                        <Lock size={20} className="text-blue-800" aria-hidden />
+                      </div>
+                      <p className="text-sm font-semibold text-primary-900">Radar Chart — Pro</p>
+                    </div>
+                  </div>
+                  {useSectionFallback && (
+                    <p className="text-[11px] text-steel -mt-2 mb-3">
+                      By section — practice more topics to unlock the detailed topic radar.
                     </p>
-                  </div>
-                )
-              )}
-
-              {/* Headline stats — absent on stale payloads → radar alone.
-                  sm+: accuracy is the king readout, 3 support stats under a hairline.
-                  <sm: one 4-cell strip with hairline dividers, accuracy emphasized. */}
-              {overview && (
-                <div className="sm:flex-1 min-w-0">
-                  <div className="hidden sm:block">
-                    <div className="pb-4 border-b border-white/10">
-                      <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-white/60">
-                        Accuracy
-                      </div>
-                      <div className="font-mono text-3xl font-bold text-white tabular-nums leading-tight mt-1">
-                        {overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
-                      </div>
-                      <div className="font-mono text-[11px] text-white/60 tabular-nums mt-1">
-                        {overview.correct}✓ · {overview.wrong}✗
-                      </div>
-                    </div>
-                    <div className="flex divide-x divide-white/10 pt-4">
-                      <OverviewStat value={String(overview.totalTests)} label="tests" />
-                      <OverviewStat value={String(overview.answered)} label="answered" />
-                      <OverviewStat value={String(overview.activeDays)} label="active days" />
-                    </div>
-                  </div>
-                  <div className="flex sm:hidden items-end divide-x divide-white/10 border-t border-white/10 pt-3">
-                    <OverviewStat value={String(overview.totalTests)} label="tests" />
-                    <OverviewStat value={String(overview.answered)} label="answered" />
-                    <OverviewStat
-                      value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
-                      label="accuracy"
-                      primary
-                    />
-                    <OverviewStat value={String(overview.activeDays)} label="active days" />
-                  </div>
+                  )}
+                  <p className="text-xs text-steel mb-4">
+                    Upgrade to see your weak-area breakdown across all 8 topic areas at a glance.
+                  </p>
+                  <Link
+                    href={`/checkout.html`}
+                    className="inline-flex items-center justify-center min-h-[44px] px-5 bg-blue-800 text-white rounded-[7px] text-sm font-bold hover:bg-blue-900 transition-colors"
+                  >
+                    Upgrade — $14.99 lifetime
+                  </Link>
                 </div>
               )}
             </div>
-          </div>
+          ) : (
+            spots.length > 0 && (
+              <p className="text-xs text-steel mb-2">
+                Take tests across more sections to unlock your topic proficiency radar.
+              </p>
+            )
+          )}
+
+          {/* Headline stats — four separate mini cards; absent on stale
+              payloads → radar card alone. */}
+          {overview && (
+            <div className="grid grid-cols-4 gap-2">
+              <OverviewStat value={String(overview.totalTests)} label="tests" />
+              <OverviewStat
+                value={overview.accuracyPct !== null ? `${overview.accuracyPct}%` : '—'}
+                label="accuracy"
+              />
+              <OverviewStat value={String(overview.answered)} label="answered" />
+              <OverviewStat value={String(overview.activeDays)} label="active days" />
+            </div>
+          )}
         </section>
       ) : (
         spots.length > 0 && (

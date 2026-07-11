@@ -9,69 +9,30 @@ type RadarDataPoint = {
 type RadarChartProps = {
   data: RadarDataPoint[]
   size?: number
-  /** 'dark' renders light-on-ink for the navy hero card (Progress overview). */
-  variant?: 'light' | 'dark'
-  /** Tint the weakest axis (label + vertex dot) rose — a status signal only. */
-  highlightWeakest?: boolean
 }
 
-export function RadarChart({
-  data,
-  size = 400,
-  variant = 'light',
-  highlightWeakest = false,
-}: RadarChartProps) {
+/**
+ * Light, calm radar (reference design): thin #e2eaf5 grid, orange data
+ * polygon at ~11% fill, small orange vertex dots, and single-line axis
+ * labels — bold ink section name + muted steel % ("Core 74%").
+ *
+ * Strokes use vectorEffect="non-scaling-stroke" so the grid renders at an
+ * exact 1px and the data polygon at 2px regardless of viewBox scale. The
+ * viewBox is computed from estimated label widths so labels are never
+ * clipped, even long topic names ("Leak & Repair 74%") on the 8-axis chart.
+ */
+export function RadarChart({ data, size = 400 }: RadarChartProps) {
   if (data.length < 3) return null
 
-  // Palette per variant. Light matches the previous hardcoded rendering
-  // exactly (fill-gray-700 = #374151, fill-blue-800 = brand #003087); dark is
-  // the ink-hero treatment: soft white grid, orange data polygon (small
-  // non-button accent), white labels, rose reserved for the weakest axis.
-  const dark = variant === 'dark'
-  const c = dark
-    ? {
-        grid: 'rgba(255,255,255,0.22)',
-        polyFill: 'rgba(249,115,22,0.22)',
-        polyStroke: '#F97316',
-        dot: '#F97316',
-        dotRing: '#001d57',
-        label: 'rgba(255,255,255,0.78)',
-        pct: '#ffffff',
-        rose: '#fda4af',
-      }
-    : {
-        grid: '#e5e7eb',
-        polyFill: 'rgba(0, 48, 135, 0.15)',
-        polyStroke: '#00205c',
-        dot: '#003087',
-        dotRing: '#ffffff',
-        label: '#374151',
-        pct: '#003087',
-        rose: '#e11d48',
-      }
-
-  // Weakest axis (lowest %) — only when requested, at least 2 attempted axes,
-  // and not all equal (no "weakest" in a flat profile).
-  let weakestIdx = -1
-  if (highlightWeakest) {
-    const pcts = data.map((d) => (d.maxScore > 0 ? d.score / d.maxScore : null))
-    const valid = pcts.filter((p): p is number => p !== null)
-    if (valid.length >= 2 && Math.min(...valid) !== Math.max(...valid)) {
-      weakestIdx = pcts.findIndex((p) => p === Math.min(...valid))
-    }
-  }
-
+  const n = data.length
   const cx = size / 2
   const cy = size / 2
-  const radius = size * 0.3 // labels get their room from the padded viewBox
+  const radius = size * 0.3
   const levels = [0.25, 0.5, 0.75, 1.0]
-  const n = data.length
-  const labelRadius = radius + 45
-  // Horizontal/vertical viewBox padding so the bumped-up label font (20 units)
-  // never clips at the edges — side labels ("Leak & Repair") extend well past
-  // the bare chart square.
-  const padX = 50
-  const padY = 10
+  // The 4-axis section radar (common case) gets a bigger label; dense 8-axis
+  // topic radars step down so eight long single-line labels still fit.
+  const fontSize = n <= 5 ? 20 : 17
+  const labelRadius = radius + (n <= 5 ? 36 : 26)
 
   function getPoint(index: number, value: number): [number, number] {
     const angle = (2 * Math.PI * index) / n - Math.PI / 2
@@ -100,7 +61,7 @@ export function RadarChart({
     return { x1: cx, y1: cy, x2: x, y2: y }
   })
 
-  // Label positions
+  // Label positions — comfortably outside the grid
   const labels = data.map((d, i) => {
     const angle = (2 * Math.PI * i) / n - Math.PI / 2
     const lx = cx + labelRadius * Math.cos(angle)
@@ -113,28 +74,43 @@ export function RadarChart({
     return { x: lx, y: ly, label: d.label, pct, anchor }
   })
 
+  // Grow the viewBox to fit every label's estimated width (~0.58em/char) so
+  // side labels never clip and never overflow the card.
+  let minX = 0
+  let maxX = size
+  for (const l of labels) {
+    const w = `${l.label} ${l.pct}%`.length * fontSize * 0.58
+    if (l.anchor === 'start') maxX = Math.max(maxX, l.x + w)
+    else if (l.anchor === 'end') minX = Math.min(minX, l.x - w)
+    else {
+      minX = Math.min(minX, l.x - w / 2)
+      maxX = Math.max(maxX, l.x + w / 2)
+    }
+  }
+  const pad = 12
+  const padY = fontSize // headroom for the top/bottom centered labels
+
   return (
-    // max-w-[300px] — the radar is the Overview hero and the page's main
-    // visual; label font is 20 viewBox units (~12px rendered at 300px wide).
-    <div className="w-full max-w-[300px] mx-auto px-2">
+    <div className="w-full max-w-[300px] mx-auto">
       <svg
-        viewBox={`${-padX} ${-padY} ${size + padX * 2} ${size + padY * 2}`}
-        className="w-full h-auto overflow-visible"
+        viewBox={`${minX - pad} ${-padY} ${maxX - minX + pad * 2} ${size + padY * 2}`}
+        className="w-full h-auto"
         role="img"
         aria-label="Radar chart showing proficiency across topic areas"
       >
-        {/* Concentric reference polygons — soft radial grid */}
+        {/* Concentric reference polygons — thin, very light grid */}
         {levels.map((level) => (
           <polygon
             key={level}
             points={polygonPoints(level)}
             fill="none"
-            stroke={c.grid}
-            strokeWidth="1.75"
+            stroke="#e2eaf5"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
           />
         ))}
 
-        {/* Axis lines */}
+        {/* Spokes */}
         {axes.map((a, i) => (
           <line
             key={i}
@@ -142,65 +118,58 @@ export function RadarChart({
             y1={a.y1}
             x2={a.x2}
             y2={a.y2}
-            stroke={c.grid}
-            strokeWidth="1.75"
+            stroke="#e2eaf5"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
           />
         ))}
 
-        {/* Data polygon */}
+        {/* Data polygon — orange, soft fill */}
         <polygon
           points={dataPolygon}
-          fill={c.polyFill}
-          stroke={c.polyStroke}
-          strokeWidth="3"
+          fill="rgba(249,115,22,0.11)"
+          stroke="#F97316"
+          strokeWidth="2"
           strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
         />
 
-        {/* Vertex dots — weakest axis punched out in rose (status signal) */}
+        {/* Small orange vertex dots */}
         {normalized.map((val, i) => {
           const [px, py] = getPoint(i, val)
-          const weakest = i === weakestIdx
           return (
             <circle
               key={i}
               cx={px}
               cy={py}
-              r={weakest ? 5.5 : 4.5}
-              fill={weakest ? c.rose : c.dot}
-              stroke={c.dotRing}
-              strokeWidth="2"
+              r="5"
+              fill="#F97316"
+              stroke="#ffffff"
+              strokeWidth="1.5"
+              vectorEffect="non-scaling-stroke"
             />
           )
         })}
 
-        {/* Labels */}
-        {labels.map((l, i) => {
-          const weakest = i === weakestIdx
-          return (
-            <text
-              key={i}
-              x={l.x}
-              y={l.y}
-              textAnchor={l.anchor}
-              dominantBaseline="central"
-              fill={weakest ? c.rose : c.label}
-              fontSize="20"
-              fontWeight="500"
-            >
-              <tspan>{l.label}</tspan>
-              <tspan
-                x={l.x}
-                dy="24"
-                fontSize="20"
-                fontWeight="700"
-                fill={weakest ? c.rose : c.pct}
-                className="font-mono"
-              >
-                {l.pct}%
-              </tspan>
-            </text>
-          )
-        })}
+        {/* Labels — "Core 74%": bold ink name + muted steel % */}
+        {labels.map((l, i) => (
+          <text
+            key={i}
+            x={l.x}
+            y={l.y}
+            textAnchor={l.anchor}
+            dominantBaseline="central"
+            fontSize={fontSize}
+          >
+            <tspan fill="#001d57" fontWeight="600">
+              {l.label}
+            </tspan>
+            <tspan fill="#4a6690" fontWeight="500">
+              {' '}
+              {l.pct}%
+            </tspan>
+          </text>
+        ))}
       </svg>
     </div>
   )
