@@ -8,6 +8,7 @@ import AiTutorBubble from '@/components/AiTutorBubble'
 import { LocaleProvider } from '@/lib/i18n-context'
 import { PageTransition } from '@/components/PageTransition'
 import { TIER_LIMITS, type Tier } from '@/types'
+import { getAIQueriesRemainingMonthly } from '@/lib/tier'
 
 // Private app — never indexed by search engines
 export const metadata: Metadata = {
@@ -23,10 +24,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const profile = await getUserProfile(user.id)
   const tier = (profile?.tier ?? 'free') as Tier
-  const aiQueriesRemaining = Math.max(
-    0,
-    TIER_LIMITS[tier].aiQueriesPerDay - (profile?.ai_queries_today ?? 0),
-  )
+  // Monthly quota (shared chat + explain counter): free 10/month, Pro 1,000/month.
+  // getUserProfile selects a column subset without ai_queries_reset_at (a
+  // legacy daily field the monthly helper never reads) — default it to
+  // satisfy UserProfile. Absent ai_queries_month/_key = zero usage (SAFE-DEPLOY).
+  const aiQueriesRemaining = profile
+    ? getAIQueriesRemainingMonthly({ ...profile, ai_queries_reset_at: '' })
+    : TIER_LIMITS[tier].aiQueriesPerMonth
 
   return (
     <LocaleProvider>
@@ -48,7 +52,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
         <BottomTabBar userId={user.id} />
 
-        {/* Floating AI Tutor — Pro chat, or upsell for free. Hidden on /test/* */}
+        {/* Floating AI Tutor — chat for all tiers (free within monthly quota). Launcher hidden on /test/* */}
         <AiTutorBubble tier={tier} aiQueriesRemaining={aiQueriesRemaining} />
       </div>
     </LocaleProvider>

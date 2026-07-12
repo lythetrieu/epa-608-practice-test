@@ -41,13 +41,33 @@ export function isTeamAdmin(profile: UserProfile): boolean {
 }
 
 /**
- * Returns the number of AI queries the user can still make today.
- * Returns 0 for the free tier or if the daily limit is exhausted.
+ * LEGACY (daily model, pre-migration-031): AI queries remaining today.
+ * Kept for the fallback path while the monthly migration may not be live.
  */
 export function getAIQueriesRemaining(profile: UserProfile): number {
   const limit = TIER_LIMITS[profile.tier].aiQueriesPerDay
   if (limit <= 0) return 0
   return Math.max(0, limit - profile.ai_queries_today)
+}
+
+/**
+ * Returns the number of AI queries (chat + explain, shared counter) the user
+ * can still make this month. Free tiers are allowed — chat is free-with-quota
+ * under the monthly model (free 10/mo, Pro 1,000/mo).
+ *
+ * SAFE-DEPLOY: if migration 031 hasn't run, ai_queries_month/_key are absent
+ * from the profile row — treat usage as 0 (the API routes enforce the real
+ * limit via their legacy daily fallback in that case). A stale month key also
+ * counts as 0, mirroring increment_ai_usage_monthly's rollover.
+ */
+export function getAIQueriesRemainingMonthly(profile: UserProfile): number {
+  const limit = TIER_LIMITS[profile.tier].aiQueriesPerMonth
+  if (limit <= 0) return 0
+  const currentKey = new Date().toISOString().slice(0, 7) // UTC 'YYYY-MM'
+  const used = profile.ai_queries_month_key === currentKey
+    ? (profile.ai_queries_month ?? 0)
+    : 0
+  return Math.max(0, limit - used)
 }
 
 /**

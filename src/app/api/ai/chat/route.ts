@@ -29,59 +29,91 @@ export async function POST(request: NextRequest) {
 
   const tier = profile.tier as keyof typeof TIER_LIMITS
 
-  // AI Tutor CHAT is Pro-only. Free users get ELI5/Explain (see /api/ai/explain)
-  // but not open-ended chat. This gate runs BEFORE the increment so a blocked
-  // free request never consumes their daily ELI5 allowance.
-  if (!TIER_LIMITS[tier].hasAiChat) {
-    return Response.json(
-      { error: 'AI Tutor chat is a Pro feature. Upgrade to chat with the tutor.', upgradeRequired: true },
-      { status: 403 },
-    )
-  }
-
-  const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
-  if (dailyLimit <= 0) {
-    return Response.json({ error: 'Daily AI limit reached. Upgrade for more conversations.', upgradeRequired: true }, { status: 403 })
-  }
-
-  // Daily limit check + increment.
-  // Prefer the atomic RPC (race-free reset-check + increment in one statement);
-  // fall back to the original read-modify-write if the RPC isn't present yet
-  // (SAFE-DEPLOY: code ships before migration 030 runs).
+  // MONTHLY quota model (migration 031): one shared counter for chat + explain.
+  // Free = 10/month, Pro = 1,000/month. Chat is now FREE-with-quota.
+  // SAFE-DEPLOY: if the monthly RPC isn't live yet (rpcError), fall back to the
+  // EXACT legacy behavior — Pro-only chat gate + daily increment_ai_usage.
   const admin = createAdminClient()
-  // currentCount = count BEFORE this request, so downstream remaining =
-  // dailyLimit - currentCount - 1 stays identical to the pre-RPC semantics.
-  let currentCount = profile.ai_queries_today
+  const monthlyLimit = TIER_LIMITS[tier].aiQueriesPerMonth
+  // remaining AFTER this request — sent back via X-AI-Remaining.
+  let remaining: number
 
-  const { data: rpcData, error: rpcError } = await admin.rpc('increment_ai_usage', {
+  const { data: monthlyData, error: monthlyRpcError } = await admin.rpc('increment_ai_usage_monthly', {
     p_user_id: user.id,
-    p_limit: dailyLimit,
+    p_limit: monthlyLimit,
   })
-  const rpcRow = Array.isArray(rpcData) ? rpcData[0] : rpcData
+  const monthlyRow = Array.isArray(monthlyData) ? monthlyData[0] : monthlyData
 
-  if (!rpcError && rpcRow) {
-    if (rpcRow.rejected) {
-      return Response.json({ error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 }, { status: 429 })
+  if (!monthlyRpcError && monthlyRow) {
+    if (monthlyRow.rejected) {
+      return Response.json(
+        {
+          error: `Monthly AI limit reached (${monthlyLimit}/month). Upgrade to Pro for 1,000/month.`,
+          remaining: 0,
+          upgradeRequired: tier === 'free',
+        },
+        { status: 429 },
+      )
     }
-    currentCount = rpcRow.new_count - 1
+    remaining = Math.max(0, monthlyLimit - monthlyRow.new_count)
   } else {
-    // Fallback: original non-atomic logic.
-    const now = new Date()
-    const resetAt = new Date(profile.ai_queries_reset_at)
-    const today = new Date(now.toISOString().split('T')[0])
-
-    if (resetAt < today) {
-      await admin.from('users_profile').update({
-        ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
-      }).eq('id', user.id)
-      currentCount = 0
-    } else if (currentCount >= dailyLimit) {
-      return Response.json({ error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 }, { status: 429 })
-    } else {
-      await admin.from('users_profile').update({
-        ai_queries_today: currentCount + 1,
-      }).eq('id', user.id)
+    // ── LEGACY fallback (migration 031 not live yet) ────────────────────────
+    // AI Tutor CHAT is Pro-only on the legacy path. Free users get ELI5/Explain
+    // (see /api/ai/explain) but not open-ended chat. This gate runs BEFORE the
+    // increment so a blocked free request never consumes their daily allowance.
+    // NOTE: free tier now has hasAiChat=true (monthly model), so gate on tier
+    // directly to preserve the old Pro-only behavior.
+    if (tier === 'free') {
+      return Response.json(
+        { error: 'AI Tutor chat is a Pro feature. Upgrade to chat with the tutor.', upgradeRequired: true },
+        { status: 403 },
+      )
     }
+
+    const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
+    if (dailyLimit <= 0) {
+      return Response.json({ error: 'Daily AI limit reached. Upgrade for more conversations.', upgradeRequired: true }, { status: 403 })
+    }
+
+    // Daily limit check + increment.
+    // Prefer the atomic RPC (race-free reset-check + increment in one statement);
+    // fall back to the original read-modify-write if the RPC isn't present yet
+    // (SAFE-DEPLOY: code ships before migration 030 runs).
+    // currentCount = count BEFORE this request, so downstream remaining =
+    // dailyLimit - currentCount - 1 stays identical to the pre-RPC semantics.
+    let currentCount = profile.ai_queries_today
+
+    const { data: rpcData, error: rpcError } = await admin.rpc('increment_ai_usage', {
+      p_user_id: user.id,
+      p_limit: dailyLimit,
+    })
+    const rpcRow = Array.isArray(rpcData) ? rpcData[0] : rpcData
+
+    if (!rpcError && rpcRow) {
+      if (rpcRow.rejected) {
+        return Response.json({ error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 }, { status: 429 })
+      }
+      currentCount = rpcRow.new_count - 1
+    } else {
+      // Fallback: original non-atomic logic.
+      const now = new Date()
+      const resetAt = new Date(profile.ai_queries_reset_at)
+      const today = new Date(now.toISOString().split('T')[0])
+
+      if (resetAt < today) {
+        await admin.from('users_profile').update({
+          ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
+        }).eq('id', user.id)
+        currentCount = 0
+      } else if (currentCount >= dailyLimit) {
+        return Response.json({ error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 }, { status: 429 })
+      } else {
+        await admin.from('users_profile').update({
+          ai_queries_today: currentCount + 1,
+        }).eq('id', user.id)
+      }
+    }
+    remaining = Math.max(0, dailyLimit - currentCount - 1)
   }
 
   // Parse request
@@ -188,7 +220,7 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
-            'X-AI-Remaining': String(Math.max(0, dailyLimit - currentCount - 1)),
+            'X-AI-Remaining': String(remaining),
             ...(activeSessionId ? { 'X-Chat-Session-Id': activeSessionId } : {}),
           },
         })

@@ -385,7 +385,7 @@ export default function TutorChat({
       <div className="border-t border-gray-100 bg-white px-4 py-3 shrink-0" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
         {limitReached ? (
           <div className="text-center py-2">
-            <p className="text-sm text-gray-500">Daily limit reached. Resets at midnight UTC.</p>
+            <p className="text-sm text-gray-500">Monthly limit reached — resets on the 1st. Pro gets 1,000 questions/month.</p>
           </div>
         ) : isListening ? (
           /* Listening mode */

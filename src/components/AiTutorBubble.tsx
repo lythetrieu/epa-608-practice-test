@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Bot, Send, X, Maximize2, Lock } from 'lucide-react'
+import { Bot, Send, X, Maximize2 } from 'lucide-react'
 import { TIER_LIMITS, type Tier } from '@/types'
 import { useTutorChat, renderMarkdown, TUTOR_HANDOFF_KEY } from '@/components/tutor/useTutorChat'
 
@@ -12,10 +12,17 @@ type AiTutorBubbleProps = {
   aiQueriesRemaining: number
 }
 
-// Routes where the bubble must NOT appear. Timed/active tests live under
-// /test/<category>?mode=... — usePathname drops the query string, so we hide the
-// bubble on the whole /test/* space (the mode selector is a brief interstitial).
-function isHiddenRoute(pathname: string | null): boolean {
+// Free tier monthly AI quota (shared counter with the per-question explain
+// button). Pro gets 1,000/month. The backend enforces this and returns
+// 429 + upgradeRequired when exhausted — the number here is display-only.
+const FREE_MONTHLY_LIMIT = TIER_LIMITS.free.aiQueriesPerMonth
+
+// Routes where the floating LAUNCHER must not appear. Timed/active tests live
+// under /test/<category>?mode=... — usePathname drops the query string, so we
+// hide the launcher on the whole /test/* space (the mode selector is a brief
+// interstitial). The panel can still be summoned there explicitly via the
+// `epa608:open-tutor` event (Practice mode's "Explain Simply" button).
+function isLauncherHiddenRoute(pathname: string | null): boolean {
   if (!pathname) return false
   return pathname.startsWith('/test/') || pathname === '/tutor'
 }
@@ -23,15 +30,13 @@ function isHiddenRoute(pathname: string | null): boolean {
 export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbleProps) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
-  // Prompt handed over by an `epa608:open-tutor` event (Home fix-plan notes).
-  // Pro users get it PREFILLED in the input (never auto-sent); free users just
-  // see the upsell panel open — that's the conversion surface, on purpose.
+  // Prompt handed over by an `epa608:open-tutor` event (Home fix-plan notes,
+  // Practice "Explain Simply"). It's PREFILLED in the input — never auto-sent.
   const [prefill, setPrefill] = useState<string | null>(null)
-  const hasAiChat = TIER_LIMITS[tier].hasAiChat
 
-  // Open-on-demand: other surfaces (e.g. the dashboard fix-plan note) dispatch
-  // `epa608:open-tutor` with an optional { prompt }. The bubble is hidden on
-  // /test/* and /tutor, but the event only fires from Home so that's fine.
+  // Open-on-demand: other surfaces dispatch `epa608:open-tutor` with an
+  // optional { prompt }. This also opens the panel on /test/* practice pages
+  // where the launcher itself is hidden.
   useEffect(() => {
     const onOpenTutor = (e: Event) => {
       const detail = (e as CustomEvent<{ prompt?: string }>).detail
@@ -42,13 +47,10 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
     return () => window.removeEventListener('epa608:open-tutor', onOpenTutor)
   }, [])
 
-  // Don't render during timed tests, or on the full /tutor page (redundant there).
-  if (isHiddenRoute(pathname)) return null
-
   return (
     <>
       {/* Floating launcher — bottom-right; sits above the mobile tab bar (bottom-20) */}
-      {!open && (
+      {!open && !isLauncherHiddenRoute(pathname) && (
         <button
           onClick={() => setOpen(true)}
           aria-label="Open AI Tutor"
@@ -56,17 +58,12 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
           style={{ background: '#001d57', marginBottom: 'env(safe-area-inset-bottom)' }}
         >
           <Bot size={26} aria-hidden />
-          {!hasAiChat && (
-            <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full bg-amber-400 flex items-center justify-center">
-              <Lock size={11} className="text-blue-950" aria-hidden />
-            </span>
-          )}
         </button>
       )}
 
       {open && (
         <BubblePanel
-          hasAiChat={hasAiChat}
+          tier={tier}
           aiQueriesRemaining={aiQueriesRemaining}
           prefill={prefill}
           onClose={() => {
@@ -80,12 +77,12 @@ export default function AiTutorBubble({ tier, aiQueriesRemaining }: AiTutorBubbl
 }
 
 function BubblePanel({
-  hasAiChat,
+  tier,
   aiQueriesRemaining,
   prefill,
   onClose,
 }: {
-  hasAiChat: boolean
+  tier: Tier
   aiQueriesRemaining: number
   prefill: string | null
   onClose: () => void
@@ -103,33 +100,32 @@ function BubblePanel({
           sm:inset-auto sm:right-6 sm:bottom-6 sm:w-96 sm:h-[560px] sm:max-h-[calc(100dvh-3rem)] sm:rounded-2xl"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
-        {hasAiChat ? (
-          <BubbleChat aiQueriesRemaining={aiQueriesRemaining} prefill={prefill} onClose={onClose} />
-        ) : (
-          <BubbleUpsell onClose={onClose} />
-        )}
+        <BubbleChat tier={tier} aiQueriesRemaining={aiQueriesRemaining} prefill={prefill} onClose={onClose} />
       </div>
     </>
   )
 }
 
-// ─── Pro chat (compact, shares logic with /tutor via useTutorChat) ───────────
+// ─── Chat (free within monthly quota, Pro 1,000/mo; shares logic with /tutor) ─
 
 function BubbleChat({
+  tier,
   aiQueriesRemaining,
   prefill,
   onClose,
 }: {
+  tier: Tier
   aiQueriesRemaining: number
   prefill: string | null
   onClose: () => void
 }) {
-  const { messages, isLoading, remaining, error, sendMessage, chatSessionId } = useTutorChat({
+  const { messages, isLoading, remaining, error, upgradeRequired, sendMessage, chatSessionId } = useTutorChat({
     initialRemaining: aiQueriesRemaining,
   })
   const [input, setInput] = useState(prefill ?? '')
   const endRef = useRef<HTMLDivElement>(null)
-  const limitReached = remaining <= 0
+  const isFree = tier === 'free'
+  const limitReached = remaining <= 0 || upgradeRequired
 
   // A fix-plan "Ask AI Tutor" fired while the panel was already open: refresh
   // the prefilled draft (user still has to press Send — never auto-send).
@@ -156,7 +152,7 @@ function BubbleChat({
           <Bot size={20} className="text-blue-800" aria-hidden />
           <div className="leading-tight">
             <p className="font-bold text-gray-900 text-sm">AI Tutor</p>
-            <p className="text-[11px] text-steel">{limitReached ? 'Daily limit reached' : `${remaining} left today`}</p>
+            <p className="text-[11px] text-steel">{limitReached ? 'Monthly limit reached' : `${remaining} left this month`}</p>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -193,7 +189,7 @@ function BubbleChat({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
-        {messages.length === 0 && (
+        {messages.length === 0 && !limitReached && (
           <div className="h-full flex flex-col items-center justify-center text-center px-4">
             <Bot size={36} className="text-blue-800 mb-3" aria-hidden />
             <p className="text-sm font-semibold text-gray-800 mb-1">Ask me anything about EPA 608</p>
@@ -239,6 +235,25 @@ function BubbleChat({
           </div>
         ))}
 
+        {/* Monthly quota exhausted — inline upsell (conversion surface) */}
+        {limitReached && (
+          <div className={`${messages.length === 0 ? 'h-full flex items-center' : ''}`}>
+            <div className="w-full bg-blue-50 border border-line rounded-xl p-4 text-center">
+              <p className="text-sm font-semibold text-gray-900 mb-1">Monthly free limit reached</p>
+              <p className="text-xs text-steel mb-3">Pro gets 1,000 questions/month.</p>
+              <Link
+                href="/pricing.html"
+                onClick={onClose}
+                className="inline-block w-full px-4 py-2.5 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90"
+                style={{ background: '#F97316' }}
+              >
+                $14.99 lifetime →
+              </Link>
+              <p className="text-[11px] text-gray-400 mt-1.5 line-through">$39.99</p>
+            </div>
+          </div>
+        )}
+
         {error && (
           <div className="flex justify-center">
             <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg px-3 py-2">{error}</div>
@@ -250,75 +265,42 @@ function BubbleChat({
       {/* Input */}
       <div className="border-t border-line px-3 py-3 shrink-0">
         {limitReached ? (
-          <p className="text-center text-xs text-steel py-1">Daily limit reached. Resets at midnight UTC.</p>
+          <p className="text-center text-xs text-steel py-1">
+            {isFree ? `You've used all ${FREE_MONTHLY_LIMIT} free questions this month.` : 'Monthly limit reached. Resets on the 1st.'}
+          </p>
         ) : (
-          <div className="flex items-end gap-2">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  submit()
-                }
-              }}
-              placeholder="Ask a question…"
-              rows={1}
-              disabled={isLoading}
-              className="flex-1 resize-none rounded-xl border border-line bg-gray-50 px-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 disabled:opacity-50 max-h-24"
-            />
-            <button
-              onClick={submit}
-              disabled={!input.trim() || isLoading}
-              className="shrink-0 w-11 h-11 rounded-xl bg-blue-800 text-white flex items-center justify-center hover:bg-blue-900 disabled:opacity-40 disabled:cursor-not-allowed"
-              aria-label="Send"
-            >
-              <Send size={18} />
-            </button>
-          </div>
+          <>
+            <div className="flex items-end gap-2">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    submit()
+                  }
+                }}
+                placeholder="Ask a question…"
+                rows={1}
+                disabled={isLoading}
+                className="flex-1 resize-none rounded-xl border border-line bg-gray-50 px-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 disabled:opacity-50 max-h-24"
+              />
+              <button
+                onClick={submit}
+                disabled={!input.trim() || isLoading}
+                className="shrink-0 w-11 h-11 rounded-xl bg-blue-800 text-white flex items-center justify-center hover:bg-blue-900 disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Send"
+              >
+                <Send size={18} />
+              </button>
+            </div>
+            {isFree && (
+              <p className="text-[11px] text-steel font-mono mt-1.5">
+                {remaining}/{FREE_MONTHLY_LIMIT} free questions left this month
+              </p>
+            )}
+          </>
         )}
-      </div>
-    </>
-  )
-}
-
-// ─── Free upsell (bubble visible on purpose — conversion surface) ────────────
-
-function BubbleUpsell({ onClose }: { onClose: () => void }) {
-  return (
-    <>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
-        <div className="flex items-center gap-2">
-          <Bot size={20} className="text-blue-800" aria-hidden />
-          <p className="font-bold text-gray-900 text-sm">AI Tutor</p>
-        </div>
-        <button
-          onClick={onClose}
-          className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
-          aria-label="Close AI Tutor"
-        >
-          <X size={18} />
-        </button>
-      </div>
-
-      <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center text-center px-6 py-8">
-        <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-4">
-          <Lock size={26} className="text-blue-800" aria-hidden />
-        </div>
-        <h2 className="text-base font-bold text-gray-900 mb-1">🔒 AI Tutor — unlock with Pro</h2>
-        <p className="text-sm text-steel mb-6 max-w-xs">
-          Get instant, personalized answers on refrigerants, regulations, recovery and safety —
-          plus voice, chat history, and 1,000 questions a month.
-        </p>
-        <Link
-          href="/checkout.html"
-          onClick={onClose}
-          className="w-full max-w-xs px-5 py-3 rounded-xl font-bold text-white text-center transition-opacity hover:opacity-90"
-          style={{ background: '#F97316' }}
-        >
-          Upgrade to Pro — $14.99
-        </Link>
-        <p className="text-[11px] text-gray-400 mt-2 line-through">$39.99</p>
       </div>
     </>
   )

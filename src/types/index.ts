@@ -26,8 +26,9 @@ export const TIER_LIMITS = {
     hasStudyPath: true,          // OPEN to free for now (flip to false to make it Pro-only)
     hasRadarChart: false,        // Pro only — free sees raw scores only
     hasTimedMode: false,         // Pro only — timed simulation
-    hasAiChat: false,            // AI Tutor CHAT is Pro-only (explain/ELI5 stays free)
-    aiQueriesPerDay: 10,         // 10/day free (ELI5/Explain); Pro gets 1000
+    hasAiChat: true,             // AI Tutor chat is free-with-quota (monthly model)
+    aiQueriesPerDay: 10,         // LEGACY fallback only (pre-migration-031 daily model)
+    aiQueriesPerMonth: 10,       // shared monthly counter: chat + explain/ELI5
     hasPDF: false,
   },
   starter: {
@@ -42,7 +43,8 @@ export const TIER_LIMITS = {
     hasRadarChart: true,
     hasTimedMode: true,
     hasAiChat: true,
-    aiQueriesPerDay: 1000,
+    aiQueriesPerDay: 1000,       // LEGACY fallback only (pre-migration-031 daily model)
+    aiQueriesPerMonth: 1000,     // shared monthly counter: chat + explain/ELI5
     hasPDF: true,
   },
   ultimate: {
@@ -57,7 +59,8 @@ export const TIER_LIMITS = {
     hasRadarChart: true,
     hasTimedMode: true,
     hasAiChat: true,
-    aiQueriesPerDay: 1000,
+    aiQueriesPerDay: 1000,       // LEGACY fallback only (pre-migration-031 daily model)
+    aiQueriesPerMonth: 1000,     // shared monthly counter: chat + explain/ELI5
     hasPDF: true,
   },
   pro: {
@@ -72,7 +75,8 @@ export const TIER_LIMITS = {
     hasRadarChart: true,
     hasTimedMode: true,
     hasAiChat: true,
-    aiQueriesPerDay: 1000,
+    aiQueriesPerDay: 1000,       // LEGACY fallback only (pre-migration-031 daily model)
+    aiQueriesPerMonth: 1000,     // shared monthly counter: chat + explain/ELI5
     hasPDF: true,
   },
 } as const
@@ -90,6 +94,10 @@ export type UserProfile = {
   is_team_admin: boolean
   ai_queries_today: number
   ai_queries_reset_at: string
+  // Monthly AI quota (migration 031). Optional: columns may not exist yet
+  // (SAFE-DEPLOY — code ships before the migration runs).
+  ai_queries_month?: number
+  ai_queries_month_key?: string
   created_at: string
 }
 

@@ -32,58 +32,88 @@ export async function POST(request: NextRequest) {
       { status: 403 },
     )
   }
-  const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
-  if (dailyLimit <= 0) {
-    return NextResponse.json(
-      { error: 'You have reached your daily AI limit. Upgrade for more.', upgradeRequired: true },
-      { status: 403 },
-    )
-  }
-
-  // Daily limit check + increment.
-  // Prefer the atomic RPC (race-free reset-check + increment in one statement);
-  // fall back to the original read-modify-write if the RPC isn't present yet
-  // (SAFE-DEPLOY: code ships before migration 030 runs).
+  // MONTHLY quota model (migration 031): one shared counter for chat + explain.
+  // Free = 10/month, Pro = 1,000/month.
+  // SAFE-DEPLOY: if the monthly RPC isn't live yet (rpcError), fall back to the
+  // EXACT legacy behavior — daily increment_ai_usage (free ELI5 = 10/day).
   const admin = createAdminClient()
-  // currentCount = count BEFORE this request, so downstream remaining =
-  // dailyLimit - currentCount - 1 stays identical to the pre-RPC semantics.
-  let currentCount = profile.ai_queries_today
+  const monthlyLimit = TIER_LIMITS[tier].aiQueriesPerMonth
+  // remaining AFTER this request — returned in the response body.
+  let remaining: number
 
-  const { data: rpcData, error: rpcError } = await admin.rpc('increment_ai_usage', {
+  const { data: monthlyData, error: monthlyRpcError } = await admin.rpc('increment_ai_usage_monthly', {
     p_user_id: user.id,
-    p_limit: dailyLimit,
+    p_limit: monthlyLimit,
   })
-  const rpcRow = Array.isArray(rpcData) ? rpcData[0] : rpcData
+  const monthlyRow = Array.isArray(monthlyData) ? monthlyData[0] : monthlyData
 
-  if (!rpcError && rpcRow) {
-    if (rpcRow.rejected) {
+  if (!monthlyRpcError && monthlyRow) {
+    if (monthlyRow.rejected) {
       return NextResponse.json(
-        { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
+        {
+          error: `Monthly AI limit reached (${monthlyLimit}/month). Upgrade to Pro for 1,000/month.`,
+          remaining: 0,
+          upgradeRequired: tier === 'free',
+        },
         { status: 429 },
       )
     }
-    currentCount = rpcRow.new_count - 1
+    remaining = Math.max(0, monthlyLimit - monthlyRow.new_count)
   } else {
-    // Fallback: original non-atomic logic.
-    const now = new Date()
-    const resetAt = new Date(profile.ai_queries_reset_at)
-    const today = new Date(now.toISOString().split('T')[0])
-
-    if (resetAt < today) {
-      await admin.from('users_profile').update({
-        ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
-      }).eq('id', user.id)
-      currentCount = 0
-    } else if (currentCount >= dailyLimit) {
+    // ── LEGACY fallback (migration 031 not live yet) ────────────────────────
+    const dailyLimit = TIER_LIMITS[tier].aiQueriesPerDay
+    if (dailyLimit <= 0) {
       return NextResponse.json(
-        { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
-        { status: 429 },
+        { error: 'You have reached your daily AI limit. Upgrade for more.', upgradeRequired: true },
+        { status: 403 },
       )
-    } else {
-      await admin.from('users_profile').update({
-        ai_queries_today: currentCount + 1,
-      }).eq('id', user.id)
     }
+
+    // Daily limit check + increment.
+    // Prefer the atomic RPC (race-free reset-check + increment in one statement);
+    // fall back to the original read-modify-write if the RPC isn't present yet
+    // (SAFE-DEPLOY: code ships before migration 030 runs).
+    // currentCount = count BEFORE this request, so downstream remaining =
+    // dailyLimit - currentCount - 1 stays identical to the pre-RPC semantics.
+    let currentCount = profile.ai_queries_today
+
+    const { data: rpcData, error: rpcError } = await admin.rpc('increment_ai_usage', {
+      p_user_id: user.id,
+      p_limit: dailyLimit,
+    })
+    const rpcRow = Array.isArray(rpcData) ? rpcData[0] : rpcData
+
+    if (!rpcError && rpcRow) {
+      if (rpcRow.rejected) {
+        return NextResponse.json(
+          { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
+          { status: 429 },
+        )
+      }
+      currentCount = rpcRow.new_count - 1
+    } else {
+      // Fallback: original non-atomic logic.
+      const now = new Date()
+      const resetAt = new Date(profile.ai_queries_reset_at)
+      const today = new Date(now.toISOString().split('T')[0])
+
+      if (resetAt < today) {
+        await admin.from('users_profile').update({
+          ai_queries_today: 1, ai_queries_reset_at: now.toISOString(),
+        }).eq('id', user.id)
+        currentCount = 0
+      } else if (currentCount >= dailyLimit) {
+        return NextResponse.json(
+          { error: `Daily limit reached (${dailyLimit}/day). Resets at midnight.`, remaining: 0 },
+          { status: 429 },
+        )
+      } else {
+        await admin.from('users_profile').update({
+          ai_queries_today: currentCount + 1,
+        }).eq('id', user.id)
+      }
+    }
+    remaining = Math.max(0, dailyLimit - currentCount - 1)
   }
 
   // Parse request
@@ -126,7 +156,7 @@ export async function POST(request: NextRequest) {
         const explanation = data.choices?.[0]?.message?.content ?? 'Could not generate explanation.'
         return NextResponse.json({
           explanation,
-          remaining: Math.max(0, dailyLimit - currentCount - 1),
+          remaining,
         })
       }
     } catch { /* try next model */ }

@@ -28,6 +28,9 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
   const [history, setHistory] = useState<ChatHistoryItem[]>([])
   const [remaining, setRemaining] = useState(initialRemaining)
   const [error, setError] = useState<string | null>(null)
+  // Set when the server says the monthly quota is exhausted (429 +
+  // upgradeRequired) — callers render an upgrade prompt instead of an error.
+  const [upgradeRequired, setUpgradeRequired] = useState(false)
 
   useEffect(() => {
     if (!loadHistory) return
@@ -103,6 +106,13 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
         })
         if (!response.ok) {
           const errData = await response.json().catch(() => null)
+          if (response.status === 429 || errData?.upgradeRequired) {
+            // Monthly quota exhausted — surface as upsell, not a red error box.
+            setUpgradeRequired(true)
+            setRemaining(0)
+            setMessages(newMessages)
+            return
+          }
           throw new Error(errData?.error ?? `Request failed (${response.status})`)
         }
         const newSessionId = response.headers.get('X-Chat-Session-Id')
@@ -138,7 +148,14 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
             }
           }
         }
-        setRemaining((r) => Math.max(0, r - 1))
+        // Prefer the server's count (shared monthly counter with the explain
+        // button); fall back to a local decrement if the header is missing.
+        const serverRemaining = response.headers.get('X-AI-Remaining')
+        if (serverRemaining !== null && !Number.isNaN(Number(serverRemaining))) {
+          setRemaining(Math.max(0, Number(serverRemaining)))
+        } else {
+          setRemaining((r) => Math.max(0, r - 1))
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Something went wrong')
         setMessages(newMessages)
@@ -158,6 +175,7 @@ export function useTutorChat({ initialRemaining, loadHistory = false }: UseTutor
     remaining,
     error,
     setError,
+    upgradeRequired,
     loadChat,
     adoptSession,
     startNewChat,

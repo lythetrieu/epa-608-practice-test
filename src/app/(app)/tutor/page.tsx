@@ -1,7 +1,7 @@
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import { TIER_LIMITS, type Tier } from '@/types'
+import { getAIQueriesRemainingMonthly } from '@/lib/tier'
 import TutorChat from './TutorChat'
 
 export default async function TutorPage() {
@@ -11,41 +11,15 @@ export default async function TutorPage() {
   const profile = await getUserProfile(user.id)
 
   const tier = (profile?.tier ?? 'free') as Tier
-  const limits = TIER_LIMITS[tier]
 
-  if (!limits.hasAiChat) {
-    return (
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="max-w-md text-center">
-          <div className="text-5xl mb-4">🎓</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">AI Tutor</h1>
-          <p className="text-gray-500 mb-6">
-            Get instant help with EPA 608 exam topics. Ask questions about
-            refrigerants, regulations, safety procedures, and more.
-          </p>
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
-            <p className="text-sm text-blue-800 font-medium mb-1">
-              AI Tutor is a Pro feature
-            </p>
-            <p className="text-xs text-blue-600">
-              Free accounts get the AI Explain button on questions. Pro unlocks the full AI Tutor chat.
-            </p>
-          </div>
-          <Link
-            href={`/checkout.html`}
-            className="inline-block px-6 py-3 bg-blue-800 text-white rounded-xl font-bold hover:bg-blue-900 transition-colors"
-          >
-            Upgrade Now
-          </Link>
-        </div>
-      </div>
-    )
-  }
-
-  const aiQueriesRemaining = Math.max(
-    0,
-    limits.aiQueriesPerDay - (profile?.ai_queries_today ?? 0),
-  )
+  // Free users can chat too (10 questions/month, shared with the explain
+  // button); Pro gets 1,000/month. The API enforces the quota server-side.
+  // getUserProfile selects a column subset without ai_queries_reset_at (a
+  // legacy daily field the monthly helper never reads) — default it to
+  // satisfy UserProfile. Absent ai_queries_month/_key = zero usage (SAFE-DEPLOY).
+  const aiQueriesRemaining = profile
+    ? getAIQueriesRemainingMonthly({ ...profile, ai_queries_reset_at: '' })
+    : TIER_LIMITS[tier].aiQueriesPerMonth
 
   return (
     <TutorChat
