@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { submitRateLimit } from '@/lib/ratelimit'
-import { canonicalMulti, isMulti } from '@/lib/multi'
+import { canonicalMulti, isMulti, answerEquals } from '@/lib/multi'
 import { filterRowsToPool } from '@/lib/question-pool'
 import { z } from 'zod'
 
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     return {
       questionId: q.id as string,
       category: q.category as string,
-      correct: userAnswer === correctAnswer,
+      correct: answerEquals(userAnswer, correctAnswer),
       correctAnswer,
       explanation: (q.explanation as string) ?? '',
       sourceRef: (q.source_ref as string) ?? '',

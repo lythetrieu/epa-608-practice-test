@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
-import { canonicalMulti, MULTI_SEP } from '@/lib/multi'
+import { canonicalMulti, MULTI_SEP, answerEquals } from '@/lib/multi'
 import { ELI5Button } from './ELI5Button'
 import { ReportButton } from './ReportButton'
 import type { AnswerRecord, QuizEngineProps, QuizOutcome, QuizQuestion } from './types'
@@ -126,7 +126,7 @@ export function QuizEngine({
       const answer = answers[qq.id] ?? null
       const record: AnswerRecord = { questionId: qq.id, answer }
       // Correctness is only client-knowable in open-book (practice) mode.
-      if (showExplanations && qq.answer_text !== undefined) record.correct = answer === qq.answer_text
+      if (showExplanations && qq.answer_text !== undefined) record.correct = answerEquals(answer, qq.answer_text)
       const viewed = firstViewedRef.current[qq.id]
       if (viewed != null) record.firstViewedAt = viewed
       const timeMs = answeredTimeRef.current[qq.id]
@@ -375,7 +375,7 @@ export function QuizEngine({
   // TEST CHROME — Practice / Timed Simulation / Weak Spots drill
   // ═══════════════════════════════════════════════════════════════════════════
   const correctAnswer = q?.answer_text
-  const isCorrect = showExplanations && isRevealed && answers[q.id] === correctAnswer
+  const isCorrect = showExplanations && isRevealed && answerEquals(answers[q.id], correctAnswer)
 
   return (
     <div className="h-[calc(100dvh-3.5rem)] md:h-dvh bg-gray-50 flex flex-col overflow-hidden">
@@ -450,8 +450,8 @@ export function QuizEngine({
             {q.options.map((opt, i) => {
               const letter = ['A', 'B', 'C', 'D', 'E'][i]
               const selected = isMulti ? (answers[q.id]?.split(MULTI_SEP).includes(opt) ?? false) : answers[q.id] === opt
-              const isCorrectOption = showExplanations && isRevealed && opt === correctAnswer
-              const isWrongPick = showExplanations && isRevealed && selected && opt !== correctAnswer
+              const isCorrectOption = showExplanations && isRevealed && answerEquals(opt, correctAnswer)
+              const isWrongPick = showExplanations && isRevealed && selected && !answerEquals(opt, correctAnswer)
 
               // Styling: practice reveal overrides selection colors.
               let btnClass = selected

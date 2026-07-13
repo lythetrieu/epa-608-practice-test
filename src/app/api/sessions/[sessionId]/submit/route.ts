@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { z } from 'zod'
-import { canonicalMulti, isMulti } from '@/lib/multi'
+import { canonicalMulti, isMulti, answerEquals } from '@/lib/multi'
 
 const schema = z.object({
   answers: z.record(z.string(), z.string()),
@@ -68,7 +68,7 @@ export async function POST(
     return {
       questionId: q.id,
       category: q.category as string,
-      correct: (answers[q.id] ?? '') === correctAnswer,
+      correct: answerEquals(answers[q.id], correctAnswer),
       correctAnswer,
       explanation: showExplanations ? q.explanation : '',
       sourceRef: showExplanations ? q.source_ref : '',

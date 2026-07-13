@@ -18,3 +18,12 @@ export function canonicalMulti(answers: string[] | null | undefined): string {
 export function isMulti(questionType: string | null | undefined): boolean {
   return questionType === 'multi_select'
 }
+
+// Whitespace-tolerant answer equality for scoring. Single-select stores raw
+// answer_text (unlike multi-select, which is canonicalised here), so a stray
+// space from a SkillCat import would otherwise mark correct picks wrong for
+// every user. Trimming an already-canonical multi string is a harmless no-op.
+// A null/undefined side (unanswered) is never equal.
+export function answerEquals(a: string | null | undefined, b: string | null | undefined): boolean {
+  return a != null && b != null && a.trim() === b.trim()
+}

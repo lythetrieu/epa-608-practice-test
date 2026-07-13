@@ -3,6 +3,7 @@ import { getIdentifier, publicScoreRateLimit } from '@/lib/ratelimit'
 import { z } from 'zod'
 import { getQuiz, deleteQuiz } from '@/lib/quiz-store'
 import { buildConceptBreakdown } from '@/lib/concept-map'
+import { answerEquals } from '@/lib/multi'
 
 const schema = z.object({
   quizId: z.string().uuid(),
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
   for (const qId of quiz.questionIds) {
     const correctAnswer = quiz.answers[qId]
     const userAnswer = answers[qId] || null
-    const isCorrect = userAnswer === correctAnswer
+    const isCorrect = answerEquals(userAnswer, correctAnswer)
 
     if (isCorrect) score++
 
