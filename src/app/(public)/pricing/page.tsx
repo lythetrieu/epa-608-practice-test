@@ -29,7 +29,7 @@ export default function PricingPage() {
           <span className="text-blue-800">Now fix it.</span>
         </h1>
         <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-          Free practice shows your weak spots. Pro gives you the tools to fix them — and a guarantee you&apos;ll pass.
+          Free practice shows your weak spots. Pro gives you the tools to fix them before exam day.
         </p>
       </section>
 
@@ -57,7 +57,7 @@ export default function PricingPage() {
               <Feature included text="Signup = sync history across devices" />
               <Feature included={false} text="Blind-spot drill (auto-targeted test)" />
               <Feature included={false} text="Full AI Tutor (1,000 questions/month)" />
-              <Feature included={false} text="Pass guarantee — full refund" />
+              <Feature included={false} text="Timed exam simulator (25 or 100 questions)" />
             </div>
 
             <Link href="/" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] border-2 border-gray-200 text-gray-700 rounded-xl font-semibold text-base hover:bg-gray-50 transition-colors">
@@ -75,19 +75,19 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$14.99</span>
               <span className="text-gray-500 ml-2">one-time, lifetime</span>
             </div>
-            <p className="mt-3 text-sm text-gray-600">For technicians who need to pass fast — and want proof they did.</p>
+            <p className="mt-3 text-sm text-gray-600">For technicians who need to pass fast — the first time.</p>
 
             <div className="mt-6 space-y-3">
               <Feature included text="Everything in Free" />
               <Feature included text="Blind-spot drill — auto test your weak topics" bold />
               <Feature included text="AI Study Helper — 1,000 questions/month" bold />
-              <Feature included text="Pass guarantee — full refund if you fail" bold />
+              <Feature included text="Timed exam simulator + readiness score" bold />
             </div>
 
             <a href="/checkout.html" className="mt-8 block w-full text-center px-6 py-3 min-h-[48px] bg-blue-800 text-white rounded-xl font-bold text-base hover:bg-blue-900 transition-colors">
               Get Pro — $14.99
             </a>
-            <p className="mt-3 text-center text-xs text-gray-500">One-time payment. Lifetime access. Money back if you don&apos;t pass.</p>
+            <p className="mt-3 text-center text-xs text-gray-500">One-time payment. Lifetime access. No subscription, ever.</p>
           </div>
         </div>
 
@@ -98,12 +98,12 @@ export default function PricingPage() {
           </p>
         </div>
 
-        {/* Pass Guarantee */}
+        {/* Why $14.99 once */}
         <div className="mt-12 max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-2xl p-6 sm:p-8 text-center">
-          <h3 className="text-xl font-bold text-blue-900 mb-3">Pass Guarantee</h3>
+          <h3 className="text-xl font-bold text-blue-900 mb-3">Less than one exam retake</h3>
           <p className="text-sm text-blue-800 leading-relaxed">
-            Complete 10+ practice tests scoring 70%+. Take the real EPA 608 exam within 90 days.
-            If you don&apos;t pass on your first attempt, send us your score report — we refund 100%. No questions asked.
+            The real Section 608 exam costs $10–$40 every attempt — fail once and you rebook and pay again.
+            Pro is $14.99 one time, lifetime: no subscription, no renewals, and every future feature we ship is included.
           </p>
         </div>
 
