@@ -50,15 +50,15 @@ export default async function AnalyticsPage() {
     // Test sessions (submitted only) - score and total for averages
     admin.from('test_sessions').select('score, total, submitted_at, user_id').not('submitted_at', 'is', null),
     // Pending question reports
-    admin.from('question_reports').select('*', { count: 'exact', head: true }),
+    admin.from('question_reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
     // AI chat sessions total
     admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }),
     // AI chat sessions this week
     admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
     // Recent signups
     admin.from('users_profile').select('id, email, tier, created_at').order('created_at', { ascending: false }).limit(10),
-    // Recent reports
-    admin.from('question_reports').select('id, question_id, reason, created_at').order('created_at', { ascending: false }).limit(10),
+    // Recent reports (pending queue only)
+    admin.from('question_reports').select('id, question_id, reason, created_at').eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
     // Daily signups (last 14 days)
     admin.from('users_profile').select('created_at').gte('created_at', fourteenAgo),
     // Daily tests (last 14 days)
