@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
     ...messages.slice(-10),
   ])
 
-  const models = ['google/gemma-4-31b-it:free', 'meta-llama/llama-3.3-70b-instruct:free', 'qwen/qwen3-next-80b-a3b-instruct:free', 'qwen/qwen-2.5-72b-instruct']
+  const models = ['deepseek/deepseek-v4-flash', 'qwen/qwen-2.5-72b-instruct']
 
   for (const model of models) {
     try {

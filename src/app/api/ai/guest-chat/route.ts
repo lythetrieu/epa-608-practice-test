@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 // Use full knowledge base but with shorter response limit for guests
 const GUEST_SYSTEM_PROMPT = SYSTEM_PROMPT.replace(
-  'Maximum 150 words unless user asks for detail.',
-  'Maximum 100 words. Be concise. Direct answer + 2-3 bullets max.'
+  'Keep replies under 80 words by default.',
+  'Keep replies under 50 words — one-line answer + one memory trick, nothing more.'
 )
 
 const schema = z.object({
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     { role: 'user', content: message },
   ])
 
-  const models = ['google/gemma-4-31b-it:free', 'meta-llama/llama-3.3-70b-instruct:free', 'qwen/qwen3-next-80b-a3b-instruct:free', 'qwen/qwen-2.5-72b-instruct']
+  const models = ['deepseek/deepseek-v4-flash', 'qwen/qwen-2.5-72b-instruct']
 
   let lastStatus = 0
   let lastDetail = ''
