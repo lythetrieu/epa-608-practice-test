@@ -1,5 +1,4 @@
 import { cache } from 'react'
-import { headers } from 'next/headers'
 import { createClient } from './server'
 
 // Request-deduped auth helpers. React `cache()` collapses repeated calls within
@@ -51,23 +50,6 @@ export type CurrentUser = {
 // — they resolve to undefined, which each caller already tolerates (see type doc
 // above). react cache() still dedupes repeated calls within one render.
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
-  // FAST PATH: middleware already verified this request's session and forwarded
-  // the result as the `x-mw-user` request header — so skip the render-side
-  // getClaims round-trip. Middleware sets this ONLY from verified claims and
-  // deletes any client-supplied value first, so it can't be spoofed. Sentinel
-  // 'anon' = verified-no-session. A MISSING header (path middleware didn't run
-  // on) falls through to getClaims below — never less correct than before.
-  try {
-    const fwd = (await headers()).get('x-mw-user')
-    if (fwd === 'anon') return null
-    if (fwd) {
-      const u = JSON.parse(fwd) as CurrentUser
-      if (u?.id) return u
-    }
-  } catch {
-    // Malformed header (should never happen) → fall through to getClaims.
-  }
-
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()
   const claims = data?.claims

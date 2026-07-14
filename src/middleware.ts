@@ -144,26 +144,6 @@ export async function middleware(request: NextRequest) {
       }
     : null
 
-  // Forward the VERIFIED identity to server components / route handlers so
-  // getCurrentUser() can skip its own getClaims round-trip. DELETE any client-
-  // supplied value first, then set ONLY from the verified JWT claims — cannot be
-  // spoofed. 'anon' = verified-no-session. Built AFTER getClaims so request
-  // headers already reflect any refreshed session cookies; only the final
-  // pass-through uses these (redirects/401s render no page that reads them).
-  const fwdHeaders = new Headers(request.headers)
-  fwdHeaders.delete('x-mw-user')
-  fwdHeaders.set(
-    'x-mw-user',
-    user
-      ? JSON.stringify({
-          id: user.id,
-          email: user.email,
-          app_metadata: claims?.app_metadata,
-          user_metadata: claims?.user_metadata,
-        })
-      : 'anon',
-  )
-
   // getClaims() may have ROTATED the refresh token (via getSession), writing new
   // auth cookies into supabaseResponse. EVERY response we return from here on
   // must carry those cookies — returning a fresh NextResponse without them
@@ -239,13 +219,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Always return supabaseResponse so cookie mutations are preserved
-  // Final pass-through: rebuild the "continue" response so the render sees the
-  // forwarded x-mw-user header, and copy the refreshed session cookies onto it
-  // (withSessionCookies) so token rotation is preserved exactly as before.
-  return tagNoindex(
-    setAuthFlag(withSessionCookies(NextResponse.next({ request: { headers: fwdHeaders } }))),
-    appHost,
-  )
+  return tagNoindex(setAuthFlag(supabaseResponse), appHost)
 }
 
 export const config = {
