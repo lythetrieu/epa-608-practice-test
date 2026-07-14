@@ -195,6 +195,13 @@ export function renderMarkdown(text: string): string {
     '<pre class="bg-gray-100 rounded-lg p-3 my-2 overflow-x-auto text-sm"><code>$2</code></pre>',
   )
   html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">$1</code>')
+  // Markdown links — INTERNAL app paths only. The href must start with "/" and
+  // contain no ":" (blocks javascript:/data:/external), so the AI cannot inject
+  // an off-site or script link even though this is rendered via dangerouslySet.
+  html = html.replace(
+    /\[([^\]]+)\]\((\/[a-zA-Z0-9/_.-]*)\)/g,
+    '<a href="$2" class="text-blue-700 font-medium underline">$1</a>',
+  )
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>')
   html = html.replace(/^### (.+)$/gm, '<h4 class="font-semibold text-gray-800 mt-3 mb-1">$1</h4>')
