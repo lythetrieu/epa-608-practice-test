@@ -13,7 +13,7 @@ import { readCache, writeCache } from '@/lib/local-first'
 
 // Must match BANK_VERSION in src/app/api/app/question-bank/route.ts — bump
 // BOTH when the row shape changes; mismatched cached payloads are refetched.
-const BANK_VERSION = 1
+const BANK_VERSION = 2
 
 /** Refetch the bank when the cached copy is older than this. */
 const BANK_TTL_MS = 24 * 60 * 60 * 1000

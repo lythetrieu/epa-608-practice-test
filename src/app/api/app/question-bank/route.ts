@@ -23,7 +23,9 @@ export const dynamic = 'force-dynamic'
 // can start with zero network.
 
 // Bump when the row shape below changes — clients ignore mismatched versions.
-const BANK_VERSION = 1
+// v2: QBv3 Type II re-tag (t2-leak-rates/t2-leak-inspections/t2-evac-levels/
+// t2-accessories) — forces stale cached subtopic tags out immediately.
+const BANK_VERSION = 2
 
 // Exactly the fields quizzes need. Strips admin/meta columns (verified, tags,
 // created_at). question_type + correct_answers exist in prod (selected by

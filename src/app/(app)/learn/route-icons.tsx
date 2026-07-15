@@ -161,6 +161,8 @@ const RULES: Array<[RegExp, ({ size }: P) => ReactElement]> = [
   [/dehydration|evac/, VacuumPump],
   [/equipment/, Toolbox],
   [/safety|repairs/, HardHat],
+  [/inspection/, Clipboard],
+  [/accessor/, Toolbox],
   [/leak/, LeakDetector],
   [/supplemental|review/, CrossedWrench],
   [/intro|classif/, DoorTag],

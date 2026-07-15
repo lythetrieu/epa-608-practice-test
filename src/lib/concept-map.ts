@@ -41,13 +41,19 @@ export const SUBTOPIC_TO_CONCEPT: Record<string, ConceptInfo> = {
   't1-safety':       { id: 't1-safety',       title: 'Type I Safety',             category: 'Type I' },
   't1-supplemental': { id: 't1-supplemental', title: 'Type I Mixed Review',       category: 'Type I' },
 
-  // ── Type II (6) ─────────────────────────────────────────────────────────
-  't2-intro':         { id: 't2-intro',         title: 'Introduction & Classifications', category: 'Type II' },
-  't2-leak-repair':   { id: 't2-leak-repair',   title: 'Leak Repair & Rates',            category: 'Type II' },
-  't2-recovery':      { id: 't2-recovery',      title: 'Refrigerant Recovery',           category: 'Type II' },
-  't2-evac-charging': { id: 't2-evac-charging', title: 'Evacuation & Charging',          category: 'Type II' },
-  't2-repairs-safety':{ id: 't2-repairs-safety',title: 'Repairs & Safety',               category: 'Type II' },
-  't2-supplemental':  { id: 't2-supplemental',  title: 'Type II Mixed Review',           category: 'Type II' },
+  // ── Type II (9) ─────────────────────────────────────────────────────────
+  // QBv3 split: t2-leak-repair → t2-leak-rates + t2-leak-inspections, plus
+  // t2-evac-levels and t2-accessories broken out to match the ESCO manual's
+  // section density (Type II is the thickest section of the four).
+  't2-intro':            { id: 't2-intro',            title: 'Introduction & Classifications',    category: 'Type II' },
+  't2-leak-rates':       { id: 't2-leak-rates',       title: 'Leak Rates & Thresholds',           category: 'Type II' },
+  't2-leak-inspections': { id: 't2-leak-inspections', title: 'Repair Timeframes & Inspections',   category: 'Type II' },
+  't2-recovery':         { id: 't2-recovery',         title: 'Refrigerant Recovery',              category: 'Type II' },
+  't2-evac-levels':      { id: 't2-evac-levels',      title: 'Required Evacuation Levels',        category: 'Type II' },
+  't2-accessories':      { id: 't2-accessories',      title: 'System Accessories',                category: 'Type II' },
+  't2-evac-charging':    { id: 't2-evac-charging',    title: 'Evacuation & Charging',             category: 'Type II' },
+  't2-repairs-safety':   { id: 't2-repairs-safety',   title: 'Repairs & Safety',                  category: 'Type II' },
+  't2-supplemental':     { id: 't2-supplemental',     title: 'Type II Mixed Review',              category: 'Type II' },
 
   // ── Type III (7) ────────────────────────────────────────────────────────
   't3-intro':         { id: 't3-intro',         title: 'Type III Introduction',     category: 'Type III' },
