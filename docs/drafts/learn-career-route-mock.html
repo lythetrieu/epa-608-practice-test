@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EPA608 Learn — "Service Route" career mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0f2440; --navy-2: #16304f; --navy-3: #1e3a5f; --ink: #0f172a;
+    --line: #e2e8f0; --muted: #64748b; --bg: #f4f7fb;
+    --blue: #2563eb; --blue-l: #eff6ff;
+    --green: #059669; --green-l: #ecfdf5;
+    --gold: #f59e0b; --road: #d4dde8; --roadline: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink);
+    background-image: radial-gradient(circle at 1px 1px, rgba(15,36,64,.045) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 16px 16px 90px; }
+
+  .switch { display: flex; gap: 8px; margin-bottom: 14px; }
+  .switch button {
+    flex: 1; border: 1.5px solid var(--line); background: #fff; border-radius: 12px;
+    padding: 9px; font: 700 12.5px Inter; color: var(--muted); cursor: pointer;
+  }
+  .switch button.on { border-color: var(--navy); color: var(--navy); background: #eaf0f7; }
+  .screen { display: none; } .screen.on { display: block; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .r1 { animation: rise .4s .02s ease-out backwards; }
+  .r2 { animation: rise .4s .09s ease-out backwards; }
+  .r3 { animation: rise .4s .16s ease-out backwards; }
+
+  /* ═══ HERO — career rank ═══ */
+  .hero {
+    position: relative; overflow: hidden; color: #fff; border-radius: 20px; padding: 19px 20px 17px;
+    background: linear-gradient(155deg, var(--navy) 15%, var(--navy-2) 60%, #1b3a63);
+    box-shadow: 0 14px 30px rgba(15,36,64,.22);
+  }
+  .hero::after { content: ''; position: absolute; right: -70px; top: -80px; width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(96,165,250,.22), transparent 65%); }
+  .eyebrow { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .65; }
+  .hero h1 { font-size: 21px; font-weight: 900; letter-spacing: -.02em; margin-top: 3px; }
+  .rankrow { display: flex; align-items: center; gap: 10px; margin-top: 13px; position: relative; z-index: 1; }
+  .rankrow .rk { font-size: 12px; font-weight: 800; white-space: nowrap; }
+  .rankrow .rk.dim { opacity: .55; font-weight: 700; }
+  .rankbar { flex: 1; height: 7px; border-radius: 99px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .rankbar i { display: block; height: 100%; width: 46%; border-radius: 99px;
+    background: linear-gradient(90deg, #60a5fa, #93c5fd); }
+  .chips { display: flex; gap: 8px; margin-top: 12px; position: relative; z-index: 1; }
+  .chip { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 6px 13px;
+    font-size: 12.5px; font-weight: 700; }
+
+  /* ═══ NEXT STOP card ═══ */
+  .continue {
+    position: relative; display: flex; align-items: center; gap: 14px; margin-top: 14px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 15px 16px; box-shadow: 0 8px 22px rgba(15,36,64,.08); overflow: hidden;
+  }
+  .continue::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(180deg, var(--blue), #60a5fa); }
+  .continue .icwrap { flex: none; width: 48px; height: 48px; border-radius: 14px;
+    background: linear-gradient(155deg, var(--navy), var(--navy-3));
+    display: grid; place-items: center; color: #8db9ff; }
+  .continue .t { flex: 1; min-width: 0; }
+  .kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--blue); }
+  .continue .name { font-weight: 800; font-size: 15.5px; margin-top: 2px; }
+  .continue .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .play { background: linear-gradient(180deg, #17335a, var(--navy)); color: #fff; border: 0;
+    border-radius: 999px; font: 800 13px Inter; padding: 11px 19px; cursor: pointer; white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(15,36,64,.35), inset 0 1px 0 rgba(255,255,255,.14); }
+
+  .sectionlabel { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800;
+    letter-spacing: .09em; color: var(--muted); text-transform: uppercase; margin: 20px 2px 10px; }
+  .sectionlabel::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* ═══ JOB-TYPE (world) cards ═══ */
+  .worlds { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+  .world { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px; cursor: pointer; transition: transform .16s ease, box-shadow .16s ease; }
+  .world:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(15,36,64,.11); }
+  .world .art { height: 44px; display: flex; align-items: center; }
+  .world .art svg { height: 40px; width: auto; }
+  .world .nm { font-weight: 800; font-size: 14.5px; margin-top: 8px; }
+  .world .job { font-size: 11px; color: var(--blue); font-weight: 700; margin-top: 1px; }
+  .world .st { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+  .world .st .star { color: var(--gold); }
+  .bar { height: 5px; background: #edf1f6; border-radius: 99px; margin-top: 10px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #34d399, var(--green)); }
+  .badge { position: absolute; top: 11px; right: 11px; font-size: 9.5px; font-weight: 800;
+    padding: 4px 9px; border-radius: 999px; }
+  .b-now { background: var(--blue-l); color: var(--blue); }
+  .b-done { background: var(--green-l); color: var(--green); }
+
+  /* ═══ ROUTE (screen 2) ═══ */
+  .worldhead { position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(155deg, var(--navy) 15%, var(--navy-2) 70%, #1b3a63);
+    color: #fff; border-radius: 18px; padding: 15px 17px; box-shadow: 0 12px 26px rgba(15,36,64,.2); }
+  .worldhead .back { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+    background: rgba(255,255,255,.1); color: #fff; text-decoration: none; font-size: 16px; flex: none; }
+  .worldhead .ti { flex: 1; }
+  .worldhead .ti b { font-size: 16.5px; font-weight: 900; }
+  .worldhead .ti span { display: block; font-size: 11.5px; opacity: .7; margin-top: 2px; }
+
+  .route { position: relative; height: 1210px; margin-top: 14px; }
+  .route svg.road { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .stop { position: absolute; width: 58px; height: 58px; transform: translate(-50%, -50%); }
+  .pad {
+    width: 100%; height: 100%; border-radius: 50%;
+    display: grid; place-items: center; background: #fff;
+    border: 2.5px solid var(--line); box-shadow: 0 3px 8px rgba(15,36,64,.12);
+    position: relative; cursor: pointer; transition: transform .14s ease;
+  }
+  .pad:hover { transform: scale(1.06); }
+  .pad svg { width: 26px; height: 26px; }
+
+  .stop .stars { position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; letter-spacing: 1px; color: var(--gold); white-space: nowrap;
+    filter: drop-shadow(0 1px 1px rgba(15,36,64,.3)); }
+  .stop .stars .off { opacity: .25; }
+
+  .stop .lbl { position: absolute; top: 50%; transform: translateY(-50%); width: 150px; }
+  .stop.lft .lbl { left: 74px; text-align: left; }
+  .stop.rgt .lbl { right: 74px; text-align: right; }
+  .lbl .nm { font-weight: 800; font-size: 13px; line-height: 1.25; }
+  .lbl .st { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .stop.done .pad { background: var(--green-l); border-color: #86d8b4; color: var(--green); }
+  .stop.done .checkmini { position: absolute; right: -4px; bottom: -4px; width: 19px; height: 19px;
+    border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center;
+    font-size: 10px; font-weight: 900; border: 2px solid #fff; }
+
+  .stop.now { width: 74px; height: 74px; }
+  .stop.now .pad { background: linear-gradient(155deg, #17335a, var(--navy)); border-color: var(--navy-3);
+    color: #9cc3ff; box-shadow: 0 10px 22px rgba(15,36,64,.4); }
+  .stop.now .pad svg { width: 40px; height: 40px; }
+  .stop.now .ring { position: absolute; inset: -8px; border-radius: 50%;
+    border: 3px solid var(--blue); animation: pu 1.7s ease-out infinite; }
+  @keyframes pu { 0% { transform: scale(.9); opacity: .75; } 70% { transform: scale(1.14); opacity: 0; } 100% { opacity: 0; } }
+  .playnow { display: inline-block; margin-top: 5px; background: linear-gradient(180deg, #17335a, var(--navy));
+    color: #fff; border-radius: 999px; font-size: 11.5px; font-weight: 800; padding: 6px 13px; cursor: pointer;
+    box-shadow: 0 3px 8px rgba(15,36,64,.3); }
+
+  .stop.locked { opacity: .5; }
+  .stop.locked .pad { background: #f1f5f9; color: #94a3b8; cursor: default; }
+  .stop.locked .pad:hover { transform: none; }
+
+  /* Testing Center — end of route */
+  .center {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 92%; overflow: hidden; border-radius: 18px; color: #fff;
+    background: linear-gradient(150deg, var(--navy) 20%, var(--navy-2) 65%, #23456f);
+    padding: 15px 16px; display: flex; gap: 13px; align-items: center;
+    box-shadow: 0 14px 28px rgba(15,36,64,.25);
+  }
+  .center::before { content: ''; position: absolute; top: 0; left: -80%; width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+    animation: shine 3.2s ease-in-out infinite; }
+  @keyframes shine { 0%, 55% { left: -80%; } 100% { left: 130%; } }
+  .center .bwrap { flex: none; width: 50px; height: 50px; border-radius: 14px;
+    background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14);
+    display: grid; place-items: center; color: #9cc3ff; }
+  .center .t { flex: 1; }
+  .center .t b { font-size: 15px; font-weight: 900; }
+  .center .t span { display: block; font-size: 11.5px; opacity: .75; margin-top: 2px; }
+  .center .lockpill { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px; font-size: 11px; font-weight: 800; padding: 7px 12px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="switch">
+    <button class="on" onclick="show(0,this)">① The trade</button>
+    <button onclick="show(1,this)">② Core — service route</button>
+  </div>
+
+  <!-- ═══ SCREEN 1 — career dashboard ═══ -->
+  <div class="screen on">
+    <div class="hero r1">
+      <div class="eyebrow">EPA 608 · Your road to the card</div>
+      <h1>Apprentice, day 4 on the job</h1>
+      <div class="rankrow">
+        <span class="rk">🧢 Apprentice</span>
+        <div class="rankbar"><i></i></div>
+        <span class="rk dim">EPA Certified Tech</span>
+      </div>
+      <div class="chips">
+        <span class="chip">🔥 4 day streak</span>
+        <span class="chip">⚡ 2,140 XP</span>
+      </div>
+    </div>
+
+    <div class="continue r2">
+      <div class="icwrap">
+        <!-- van icon (hand-drawn) -->
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 16V8.5A1.5 1.5 0 0 1 3.5 7H17l4.5 4H28a2 2 0 0 1 2 2v3"/>
+          <path d="M2 16h28M17 7v4h4.5"/>
+          <circle cx="9" cy="18.5" r="2.6"/><circle cx="24" cy="18.5" r="2.6"/>
+          <path d="M5.5 10.5h6"/>
+        </svg>
+      </div>
+      <div class="t">
+        <div class="kicker">Next stop · Core route</div>
+        <div class="name">Recovery, Recycle &amp; Reclaim</div>
+        <div class="meta">10 questions · pass 8/10 · ~4 min</div>
+      </div>
+      <button class="play">Roll out ▸</button>
+    </div>
+
+    <div class="sectionlabel r3">Your job sites — 4 exam sections</div>
+    <div class="worlds r3">
+
+      <div class="world" onclick="show(1,document.querySelectorAll('.switch button')[1])">
+        <span class="badge b-now">ON ROUTE</span>
+        <div class="art">
+          <!-- toolbag / shop fundamentals -->
+          <svg viewBox="0 0 44 36" fill="none" stroke="#0f2440" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="12" width="36" height="19" rx="3"/>
+            <path d="M16 12V9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3M4 20h36M22 17v6"/>
+          </svg>
+        </div>
+        <div class="nm">Core</div>
+        <div class="job">Shop fundamentals</div>
+        <div class="st">6 of 11 stops · <span class="star">★</span> 13</div>
+        <div class="bar"><i style="width:55%"></i></div>
+      </div>
+
+      <div class="world">
+        <span class="badge b-done">JOB DONE ✓</span>
+        <div class="art">
+          <!-- fridge / small appliance -->
+          <svg viewBox="0 0 30 40" fill="none" stroke="#0f2440" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="3" width="18" height="34" rx="3"/>
+            <path d="M6 16h18M10 8v4M10 21v6"/>
+          </svg>
+        </div>
+        <div class="nm">Type I</div>
+        <div class="job">Appliance calls</div>
+        <div class="st">5 of 5 stops · <span class="star">★</span> 11</div>
+        <div class="bar"><i style="width:100%"></i></div>
+      </div>
+
+      <div class="world">
+        <div class="art">
+          <!-- house + condenser unit -->
+          <svg viewBox="0 0 46 38" fill="none" stroke="#0f2440" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 18 17 6l13 12M8 16v16h18V16"/>
+            <rect x="30" y="22" width="12" height="10" rx="2"/>
+            <circle cx="36" cy="27" r="3"/><path d="M36 25.2v3.6M34.4 27h3.2"/>
+            <path d="M14 32v-7h6v7"/>
+          </svg>
+        </div>
+        <div class="nm">Type II</div>
+        <div class="job">Residential &amp; rooftop</div>
+        <div class="st">0 of 6 stops</div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+
+      <div class="world">
+        <div class="art">
+          <!-- plant room / chiller building -->
+          <svg viewBox="0 0 46 38" fill="none" stroke="#0f2440" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 34V12h14v22M18 18h24v16M4 34h38"/>
+            <path d="M8 17h6M8 22h6M8 27h6"/>
+            <circle cx="30" cy="26" r="4.5"/><path d="M30 23.2v5.6M27.2 26h5.6"/>
+            <path d="M37 22v8"/>
+          </svg>
+        </div>
+        <div class="nm">Type III</div>
+        <div class="job">Plant room chillers</div>
+        <div class="st">0 of 5 stops</div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN 2 — the service route ═══ -->
+  <div class="screen">
+    <div class="worldhead r1">
+      <a class="back" href="#" onclick="show(0,document.querySelectorAll('.switch button')[0]);return false">←</a>
+      <div class="ti"><b>Core · Service route</b><span>6 of 11 stops cleared · pass 8/10 per stop</span></div>
+      <span class="chip">★ 13</span>
+    </div>
+
+    <div class="route r2">
+      <!-- the road -->
+      <svg class="road" viewBox="0 0 428 1210" preserveAspectRatio="none" fill="none">
+        <path id="rd" d="M110 50
+          C 110 100, 318 92, 318 142
+          C 318 192, 110 184, 110 234
+          C 110 284, 318 276, 318 326
+          C 318 376, 110 368, 110 418
+          C 110 468, 318 460, 318 510
+          C 318 560, 110 552, 110 602
+          C 110 652, 318 644, 318 694
+          C 318 744, 110 736, 110 786
+          C 110 836, 318 828, 318 878
+          C 318 928, 110 920, 110 970
+          C 110 1020, 214 1030, 214 1090"
+          stroke="#d4dde8" stroke-width="24" stroke-linecap="round"/>
+        <path d="M110 50
+          C 110 100, 318 92, 318 142
+          C 318 192, 110 184, 110 234
+          C 110 284, 318 276, 318 326
+          C 318 376, 110 368, 110 418
+          C 110 468, 318 460, 318 510
+          C 318 560, 110 552, 110 602
+          C 110 652, 318 644, 318 694
+          C 318 744, 110 736, 110 786
+          C 110 836, 318 828, 318 878
+          C 318 928, 110 920, 110 970
+          C 110 1020, 214 1030, 214 1090"
+          stroke="#ffffff" stroke-width="2.5" stroke-dasharray="9 12" stroke-linecap="round"/>
+      </svg>
+
+      <!-- stops (positions match road anchors) -->
+      <!-- 1 ozone -->
+      <div class="stop done lft" style="left:110px; top:50px;">
+        <span class="stars">★★★</span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5h16M4 14.5h16M12 3.5a13 13 0 0 1 0 17M12 3.5a13 13 0 0 0 0 17"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Ozone &amp; Depletion</div><div class="st">100%</div></div>
+      </div>
+
+      <!-- 2 refrigerant cylinder -->
+      <div class="stop done rgt" style="left:318px; top:142px;">
+        <span class="stars">★★<span class="off">★</span></span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h6M12 2v3"/><rect x="7.5" y="5" width="9" height="17" rx="3.5"/><path d="M10 10h4"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Refrigerant Types</div><div class="st">best 90%</div></div>
+      </div>
+
+      <!-- 3 blends: two drops -->
+      <div class="stop done lft" style="left:110px; top:234px;">
+        <span class="stars">★<span class="off">★★</span></span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4s4 4.6 4 7.6a4 4 0 0 1-8 0C5 8.6 9 4 9 4z"/><path d="M17 11s3 3.4 3 5.6a3 3 0 0 1-6 0c0-2.2 3-5.6 3-5.6z"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Blends &amp; Glide</div><div class="st">80% — replay for ★★</div></div>
+      </div>
+
+      <!-- 4 oil can -->
+      <div class="stop done rgt" style="left:318px; top:326px;">
+        <span class="stars">★★<span class="off">★</span></span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10h7l6-3v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M9 10V7h4M2.5 12.5 6 11"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Refrigerant Oils</div><div class="st">best 90%</div></div>
+      </div>
+
+      <!-- 5 gauge manifold -->
+      <div class="stop done lft" style="left:110px; top:418px;">
+        <span class="stars">★★★</span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="4.5"/><circle cx="16.5" cy="9" r="4.5" /><path d="M8 9l1.8-1.8M16.5 9l1.5-2M6 13.5 4.5 21M18.5 13.5 20 21M12 12.8V21"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Refrigeration Cycle</div><div class="st">100%</div></div>
+      </div>
+
+      <!-- 6 clipboard work order -->
+      <div class="stop done rgt" style="left:318px; top:510px;">
+        <span class="stars">★★<span class="off">★</span></span>
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h3"/></svg>
+        <span class="checkmini">✓</span></div>
+        <div class="lbl"><div class="nm">Regulations &amp; CAA</div><div class="st">best 90%</div></div>
+      </div>
+
+      <!-- 7 CURRENT: the van is here -->
+      <div class="stop now lft" style="left:110px; top:602px;">
+        <span class="ring"></span>
+        <div class="pad">
+          <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 16V8.5A1.5 1.5 0 0 1 3.5 7H17l4.5 4H28a2 2 0 0 1 2 2v3"/>
+            <path d="M2 16h28M17 7v4h4.5"/>
+            <circle cx="9" cy="18.5" r="2.6"/><circle cx="24" cy="18.5" r="2.6"/>
+            <path d="M5.5 10.5h6"/>
+          </svg>
+        </div>
+        <div class="lbl"><div class="nm">Recovery, Recycle &amp; Reclaim</div>
+          <div class="st">10 questions · ~4 min</div>
+          <span class="playnow">▶ PLAY</span></div>
+      </div>
+
+      <!-- 8 vacuum pump -->
+      <div class="stop locked rgt" style="left:318px; top:694px;">
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="11" height="10" rx="2"/><circle cx="9.5" cy="14" r="2.2"/><path d="M15 12h3l3-3M4 19v2h11v-2M7 9V7h5v2"/></svg></div>
+        <div class="lbl"><div class="nm">Dehydration &amp; Evacuation</div><div class="st">Clear stop 7 first</div></div>
+      </div>
+
+      <!-- 9 toolbox -->
+      <div class="stop locked lft" style="left:110px; top:786px;">
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M9 9V7a3 3 0 0 1 6 0v2M3 14h18M12 12.5v3"/></svg></div>
+        <div class="lbl"><div class="nm">Equipment &amp; Components</div></div>
+      </div>
+
+      <!-- 10 hard hat -->
+      <div class="stop locked rgt" style="left:318px; top:878px;">
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a8 8 0 0 1 16 0"/><path d="M2.5 16h19M10 8.5V6h4v2.5M12 6v10"/></svg></div>
+        <div class="lbl"><div class="nm">Safety &amp; Leaks</div></div>
+      </div>
+
+      <!-- 11 crossed wrench -->
+      <div class="stop locked lft" style="left:110px; top:970px;">
+        <div class="pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3z"/></svg></div>
+        <div class="lbl"><div class="nm">Core Mixed Review</div></div>
+      </div>
+
+      <!-- Testing Center at the end of the road -->
+      <div class="center">
+        <div class="bwrap">
+          <!-- testing center building + flag -->
+          <svg viewBox="0 0 30 30" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 26V12l11-6 11 6v14M4 26h22M15 6V2.5M15 2.5h5v3h-5"/>
+            <path d="M10 26v-6h4v6M18 17h4v4h-4z"/>
+          </svg>
+        </div>
+        <div class="t"><b>Testing Center — Core Exam</b>
+        <span>25 questions · timed 30:00 · the real exam format</span></div>
+        <span class="lockpill">🔒 5 stops left</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  function show(i, btn) {
+    document.querySelectorAll('.screen').forEach((s, k) => s.classList.toggle('on', k === i));
+    document.querySelectorAll('.switch button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+</script>
+</body>
+</html>

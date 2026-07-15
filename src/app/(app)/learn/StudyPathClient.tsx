@@ -11,6 +11,7 @@ import type { QuizOutcome, QuizQuestion } from '@/components/quiz/types'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { track } from '@/lib/track'
 import StudyMaterials from './StudyMaterials'
+import { VanIcon, TestingCenterIcon, iconForConcept, Road } from './route-icons'
 
 // Per-question AI tutor — on-demand "explain simply" for any reviewed question.
 // Mirrors the PracticeClient pattern so every learning surface has the same tutor.
@@ -904,37 +905,41 @@ export default function StudyPathClient({
           const s = statusAt(i)
           const num = String(i + 1).padStart(2, '0')
           const first = i === 0
-          const aboveFilled = i > 0 && (i - 1) < cur
-          const belowFilled = i < cur
           return (
             <li key={c.id} className="relative flex gap-3 sm:gap-5">
               <div className="hidden sm:flex w-7 shrink-0 items-center justify-end pt-3">
                 <span className={`text-xs font-bold tabular-nums ${s === 'locked' ? 'text-slate-300' : 'text-slate-400'}`}>{num}</span>
               </div>
-              <div className="relative flex flex-col items-center w-10 shrink-0 self-stretch">
-                {first ? <span className="flex-1" /> : <span className="w-[3px] flex-1 rounded-full" style={{ background: aboveFilled ? ACCENT : '#e2e8f0' }} />}
+              <div className="relative flex flex-col items-center w-12 shrink-0 self-stretch">
+                {first ? <span className="flex-1" /> : <Road />}
                 <div className="my-1">
                   {s === 'done' && (
-                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full text-white ring-4 ring-white shadow-sm" style={{ background: ACCENT }}>
-                      <Check size={16} strokeWidth={3} />
+                    // Job done: green pad, the concept's trade icon, mini check.
+                    <span className="relative z-10 grid place-items-center w-11 h-11 rounded-full ring-4 ring-white shadow-sm" style={{ background: '#ecfdf5', border: '2px solid #86d8b4', color: '#059669' }}>
+                      {iconForConcept(c.id, 20)}
+                      <span className="absolute -right-1 -bottom-1 grid place-items-center w-[18px] h-[18px] rounded-full text-white border-2 border-white" style={{ background: '#059669' }}>
+                        <Check size={10} strokeWidth={4} />
+                      </span>
                     </span>
                   )}
                   {s === 'current' && (
-                    <span className="relative z-10 grid place-items-center w-10 h-10">
+                    // Your service van is parked at this stop.
+                    <span className="relative z-10 grid place-items-center w-12 h-12">
                       <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}40` }} />
-                      <span className="relative grid place-items-center w-10 h-10 rounded-full bg-white shadow-md ring-4" style={{ ['--tw-ring-color' as unknown as string]: ACCENT }}>
-                        <span className="w-3 h-3 rounded-full" style={{ background: ACCENT }} />
+                      <span className="relative grid place-items-center w-12 h-12 rounded-full shadow-md ring-4 ring-white" style={{ background: ACCENT, color: '#9cc3ff' }}>
+                        <VanIcon size={28} />
                       </span>
                     </span>
                   )}
                   {s === 'locked' && (
-                    <span className="relative z-10 grid place-items-center w-9 h-9 rounded-full bg-white border-2 border-slate-300 text-slate-400 ring-4 ring-white">
-                      <Lock size={15} />
+                    // Upcoming stop: same trade icon, dimmed — you can see what's ahead.
+                    <span className="relative z-10 grid place-items-center w-11 h-11 rounded-full bg-white border-2 border-slate-200 text-slate-300 ring-4 ring-white">
+                      {iconForConcept(c.id, 20)}
                     </span>
                   )}
                 </div>
                 {/* Always a bottom connector — the Boss Exam node follows the last level. */}
-                <span className="w-[3px] flex-1 rounded-full" style={{ background: belowFilled ? ACCENT : '#e2e8f0' }} />
+                <Road />
               </div>
               <div className={`flex-1 min-w-0 ${s === 'current' ? 'py-1.5' : 'py-2.5'}`}>
                 {s === 'done' && (
@@ -1005,11 +1010,12 @@ export default function StudyPathClient({
         {/* BOSS EXAM — final node of the world: the real timed section exam */}
         <li className="relative flex gap-3 sm:gap-5">
           <div className="hidden sm:flex w-7 shrink-0" aria-hidden="true" />
-          <div className="relative flex flex-col items-center w-10 shrink-0 self-stretch">
-            <span className="w-[3px] flex-1 rounded-full" style={{ background: cur >= worldItems.length && worldItems.length > 0 ? ACCENT : '#e2e8f0' }} />
+          <div className="relative flex flex-col items-center w-12 shrink-0 self-stretch">
+            <Road />
             <div className="my-1">
-              <span aria-hidden="true" className="relative z-10 grid place-items-center w-10 h-10 rounded-full text-lg text-white ring-4 ring-white shadow-sm" style={{ background: '#001d57' }}>
-                🏰
+              {/* End of the route: the testing center building. */}
+              <span aria-hidden="true" className="relative z-10 grid place-items-center w-12 h-12 rounded-full text-white ring-4 ring-white shadow-sm" style={{ background: '#001d57', color: '#9cc3ff' }}>
+                <TestingCenterIcon size={24} />
               </span>
             </div>
             <span className="flex-1" />

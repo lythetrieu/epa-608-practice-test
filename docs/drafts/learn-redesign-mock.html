@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EPA608 Learn — polished mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0f2440; --navy-2: #16304f; --navy-3: #1e3a5f; --ink: #0f172a;
+    --line: #e2e8f0; --muted: #64748b; --bg: #f4f7fb;
+    --blue: #2563eb; --blue-l: #eff6ff;
+    --green: #059669; --green-l: #ecfdf5;
+    --gold: #f59e0b; --red: #e11d48;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink);
+    background-image: radial-gradient(circle at 1px 1px, rgba(15,36,64,.045) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 16px 16px 90px; }
+
+  /* mock-only screen switcher */
+  .switch { display: flex; gap: 8px; margin-bottom: 14px; }
+  .switch button {
+    flex: 1; border: 1.5px solid var(--line); background: #fff; border-radius: 12px;
+    padding: 9px; font: 700 12.5px Inter; color: var(--muted); cursor: pointer;
+    transition: all .15s ease;
+  }
+  .switch button.on { border-color: var(--navy); color: var(--navy); background: #eaf0f7; }
+  .screen { display: none; } .screen.on { display: block; }
+
+  /* entrance stagger */
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .r1 { animation: rise .4s .02s ease-out backwards; }
+  .r2 { animation: rise .4s .08s ease-out backwards; }
+  .r3 { animation: rise .4s .14s ease-out backwards; }
+  .r4 { animation: rise .4s .20s ease-out backwards; }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(155deg, var(--navy) 15%, var(--navy-2) 60%, #1b3a63);
+    color: #fff; border-radius: 20px; padding: 20px 20px 18px;
+    box-shadow: 0 14px 30px rgba(15,36,64,.22);
+  }
+  .hero::after {
+    content: ''; position: absolute; right: -70px; top: -80px; width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(96,165,250,.22), transparent 65%);
+  }
+  .hero .eyebrow { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .65; }
+  .hero h1 { font-size: 22px; font-weight: 900; letter-spacing: -.02em; margin-top: 3px; }
+  .chips { display: flex; gap: 8px; margin-top: 13px; position: relative; z-index: 1; }
+  .chip {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(4px); border-radius: 999px; padding: 6px 13px;
+    font-size: 12.5px; font-weight: 700;
+  }
+  .chip .ic { font-size: 13px; }
+
+  /* ═══ CONTINUE CARD ═══ */
+  .continue {
+    position: relative; display: flex; align-items: center; gap: 14px; margin-top: 14px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 15px 16px; box-shadow: 0 8px 22px rgba(15,36,64,.08);
+    overflow: hidden;
+  }
+  .continue::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(180deg, var(--blue), #60a5fa); border-radius: 4px 0 0 4px;
+  }
+  .continue .icwrap {
+    flex: none; width: 46px; height: 46px; border-radius: 14px;
+    background: linear-gradient(155deg, var(--navy), var(--navy-3));
+    display: grid; place-items: center; color: #7fb2ff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .continue .t { flex: 1; min-width: 0; }
+  .kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--blue); }
+  .continue .name { font-weight: 800; font-size: 15.5px; letter-spacing: -.01em; margin-top: 2px; }
+  .continue .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .play {
+    background: linear-gradient(180deg, #17335a, var(--navy)); color: #fff; border: 0; border-radius: 999px;
+    font: 800 13px Inter; padding: 11px 19px; cursor: pointer; white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(15,36,64,.35), inset 0 1px 0 rgba(255,255,255,.14);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .play:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(15,36,64,.4), inset 0 1px 0 rgba(255,255,255,.14); }
+
+  .sectionlabel {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--muted);
+    text-transform: uppercase; margin: 20px 2px 10px;
+  }
+  .sectionlabel::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* ═══ WORLDS GRID ═══ */
+  .worlds { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+  .world {
+    position: relative; background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 14px 13px; cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  .world:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(15,36,64,.11); border-color: #cbd8e6; }
+  .world .emwrap {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 19px;
+  }
+  .w-core .emwrap { background: #e0edff; }
+  .w-t1 .emwrap { background: #fef3c7; }
+  .w-t2 .emwrap { background: #e0f2f1; }
+  .w-t3 .emwrap { background: #ede9fe; }
+  .world .nm { font-weight: 800; font-size: 14.5px; letter-spacing: -.01em; margin-top: 9px; }
+  .world .st { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+  .world .st .star { color: var(--gold); }
+  .bar { height: 5px; background: #edf1f6; border-radius: 99px; margin-top: 10px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #34d399, var(--green)); }
+  .world .badge {
+    position: absolute; top: 11px; right: 11px; font-size: 9.5px; font-weight: 800;
+    letter-spacing: .04em; padding: 4px 9px; border-radius: 999px;
+  }
+  .b-now { background: var(--blue-l); color: var(--blue); }
+  .b-done { background: var(--green-l); color: var(--green); }
+
+  /* ═══ WORLD VIEW ═══ */
+  .worldhead {
+    position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(155deg, var(--navy) 15%, var(--navy-2) 70%, #1b3a63);
+    color: #fff; border-radius: 18px; padding: 15px 17px;
+    box-shadow: 0 12px 26px rgba(15,36,64,.2);
+  }
+  .worldhead::after {
+    content: ''; position: absolute; right: -60px; top: -70px; width: 190px; height: 190px;
+    background: radial-gradient(circle, rgba(96,165,250,.2), transparent 65%);
+  }
+  .worldhead .back {
+    width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+    background: rgba(255,255,255,.1); color: #fff; text-decoration: none; font-size: 16px; flex: none;
+  }
+  .worldhead .ti { flex: 1; position: relative; z-index: 1; }
+  .worldhead .ti b { font-size: 16.5px; font-weight: 900; letter-spacing: -.01em; }
+  .worldhead .ti span { display: block; font-size: 11.5px; opacity: .7; margin-top: 2px; }
+  .worldhead .chip { flex: none; }
+
+  .styletoggle { display: flex; gap: 6px; margin: 13px 0 2px; }
+  .styletoggle button {
+    border: 1.5px solid var(--line); background: #fff; border-radius: 999px;
+    padding: 7px 14px; font: 700 12px Inter; color: var(--muted); cursor: pointer;
+    transition: all .15s ease;
+  }
+  .styletoggle button.on { border-color: var(--blue); color: var(--blue); background: var(--blue-l); }
+
+  /* ═══ PATH ═══ */
+  .path { position: relative; margin-top: 12px; }
+  .rail {
+    position: absolute; left: 33px; top: 12px; bottom: 12px; width: 3px; border-radius: 99px;
+    background: repeating-linear-gradient(#dbe4ee 0 7px, transparent 7px 14px);
+  }
+  .lvl { position: relative; display: flex; align-items: center; gap: 13px; padding: 8px 0; transition: transform .3s ease; }
+  .dot {
+    position: relative; z-index: 1; flex: none;
+    width: 48px; height: 48px; margin-left: 10px; border-radius: 15px;
+    display: grid; place-items: center;
+    border: 2px solid transparent; background: #fff;
+    box-shadow: 0 2px 6px rgba(15,36,64,.06);
+  }
+  .dot svg { width: 21px; height: 21px; }
+  .lvl .t { min-width: 0; }
+  .lvl .t .nm { font-weight: 700; font-size: 14px; letter-spacing: -.005em; }
+  .lvl .t .st { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .stars { font-size: 11px; letter-spacing: 1.5px; color: var(--gold); }
+  .stars .off { opacity: .2; }
+  @keyframes starpop { 0% { transform: scale(0) rotate(-30deg); } 70% { transform: scale(1.25) rotate(4deg); } 100% { transform: scale(1); } }
+  .lvl.done .stars { display: inline-block; animation: starpop .45s .3s ease-out backwards; }
+
+  .lvl.done .dot { background: var(--green-l); border-color: #a7e3c9; color: var(--green); }
+  .lvl.done .nm { color: #14532d; }
+  .lvl.done .checkmini {
+    position: absolute; right: -5px; bottom: -5px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--green); color: #fff; display: grid; place-items: center; font-size: 10px; font-weight: 900;
+    border: 2px solid #fff;
+  }
+
+  /* current — the ONLY play */
+  .lvl.now .dot {
+    width: 62px; height: 62px; margin-left: 3px; border-radius: 19px;
+    background: linear-gradient(155deg, #17335a, var(--navy)); color: #8db9ff; border-color: var(--navy-3);
+    box-shadow: 0 10px 22px rgba(15,36,64,.35), inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .lvl.now .dot svg { width: 26px; height: 26px; }
+  .lvl.now .ring { position: absolute; inset: -7px; border-radius: 24px; border: 3px solid var(--blue); animation: pu 1.7s ease-out infinite; }
+  @keyframes pu { 0% { transform: scale(.9); opacity: .75; } 70% { transform: scale(1.12); opacity: 0; } 100% { opacity: 0; } }
+  .lvl.now .nm { font-size: 15.5px; font-weight: 800; }
+  .playnow {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+    background: linear-gradient(180deg, #17335a, var(--navy)); color: #fff;
+    border-radius: 999px; font-size: 12.5px; font-weight: 800; padding: 8px 16px; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(15,36,64,.3), inset 0 1px 0 rgba(255,255,255,.14);
+    transition: transform .12s ease;
+  }
+  .playnow:hover { transform: translateY(-1px); }
+
+  .lvl.locked { opacity: .48; }
+  .lvl.locked .dot { background: #f1f5f9; border-color: var(--line); color: #94a3b8; box-shadow: none; }
+  .lvl.locked .nm { color: #64748b; }
+
+  /* OPTION B — gentle serpentine */
+  .path.curvy .rail { display: none; }
+  .path.curvy .lvl:nth-of-type(3)  { transform: translateX(46px); }
+  .path.curvy .lvl:nth-of-type(4)  { transform: translateX(84px); }
+  .path.curvy .lvl:nth-of-type(5)  { transform: translateX(46px); }
+  .path.curvy .lvl:nth-of-type(7)  { transform: translateX(-6px); }
+  .path.curvy .lvl:nth-of-type(8)  { transform: translateX(40px); }
+  .path.curvy .lvl:nth-of-type(9)  { transform: translateX(86px); }
+  .path.curvy .lvl:nth-of-type(10) { transform: translateX(46px); }
+  .path.curvy .lvl:nth-of-type(12) { transform: translateX(-6px); }
+
+  /* ═══ CHECKPOINT ═══ */
+  .checkpoint {
+    position: relative; z-index: 1; overflow: hidden; margin-top: 16px;
+    background: linear-gradient(150deg, var(--navy) 20%, var(--navy-2) 65%, #23456f);
+    color: #fff; border-radius: 18px; padding: 17px 17px;
+    display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 14px 28px rgba(15,36,64,.25);
+  }
+  .checkpoint::before {
+    content: ''; position: absolute; top: 0; left: -80%; width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+    animation: shine 3.2s ease-in-out infinite;
+  }
+  @keyframes shine { 0%, 55% { left: -80%; } 100% { left: 130%; } }
+  .checkpoint .emwrap {
+    flex: none; width: 48px; height: 48px; border-radius: 15px;
+    background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14);
+    display: grid; place-items: center; font-size: 23px;
+  }
+  .checkpoint .t { flex: 1; }
+  .checkpoint .t b { font-size: 15.5px; font-weight: 900; letter-spacing: -.01em; }
+  .checkpoint .t span { display: block; font-size: 12px; opacity: .75; margin-top: 3px; }
+  .checkpoint .lockpill {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px; font-size: 11px; font-weight: 800; padding: 7px 12px; white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="switch">
+    <button class="on" onclick="show(0,this)">① Learn dashboard</button>
+    <button onclick="show(1,this)">② Inside Core world</button>
+  </div>
+
+  <!-- ═══ SCREEN 1 ═══ -->
+  <div class="screen on">
+    <div class="hero r1">
+      <div class="eyebrow">EPA 608 · Study Path</div>
+      <h1>Keep the streak alive, Trieu</h1>
+      <div class="chips">
+        <span class="chip"><span class="ic">🔥</span> 4 day streak</span>
+        <span class="chip"><span class="ic">⚡</span> 2,140 XP</span>
+      </div>
+    </div>
+
+    <div class="continue r2">
+      <div class="icwrap">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/><path d="M17 5h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2"/><path d="m10 8 5 4-5 4z"/></svg>
+      </div>
+      <div class="t">
+        <div class="kicker">Continue · Core</div>
+        <div class="name">Recovery, Recycle &amp; Reclaim</div>
+        <div class="meta">10 questions · pass 8/10 · ~4 min</div>
+      </div>
+      <button class="play">Resume ▸</button>
+    </div>
+
+    <div class="sectionlabel r3">Your 4 exam sections</div>
+    <div class="worlds r4">
+      <div class="world w-core" onclick="show(1,document.querySelectorAll('.switch button')[1])">
+        <span class="badge b-now">IN PROGRESS</span>
+        <div class="emwrap">🧊</div>
+        <div class="nm">Core</div>
+        <div class="st">6 of 11 levels · <span class="star">⭐</span> 13</div>
+        <div class="bar"><i style="width:55%"></i></div>
+      </div>
+      <div class="world w-t1">
+        <span class="badge b-done">PASSED ✓</span>
+        <div class="emwrap">🔌</div>
+        <div class="nm">Type I</div>
+        <div class="st">5 of 5 levels · <span class="star">⭐</span> 11</div>
+        <div class="bar"><i style="width:100%"></i></div>
+      </div>
+      <div class="world w-t2">
+        <div class="emwrap">🔧</div>
+        <div class="nm">Type II</div>
+        <div class="st">0 of 6 levels</div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+      <div class="world w-t3">
+        <div class="emwrap">🏭</div>
+        <div class="nm">Type III</div>
+        <div class="st">0 of 5 levels</div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN 2 ═══ -->
+  <div class="screen">
+    <div class="worldhead r1">
+      <a class="back" href="#" onclick="show(0,document.querySelectorAll('.switch button')[0]);return false">←</a>
+      <div class="ti"><b>🧊 Core</b><span>6 of 11 levels · pass 8/10 to clear a level</span></div>
+      <span class="chip"><span class="ic">⭐</span> 13</span>
+    </div>
+
+    <div class="styletoggle r2">
+      <button class="on" onclick="pathStyle(false,this)">A · Thẳng gọn</button>
+      <button onclick="pathStyle(true,this)">B · Uốn lượn kiểu game</button>
+    </div>
+
+    <div class="path r3" id="corepath">
+      <div class="rail"></div>
+
+      <!-- done levels: unique icon + mini check + stars -->
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Ozone &amp; Ozone Depletion</div>
+        <div class="st"><span class="stars">★★★</span> · 100%</div></div></div>
+
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 6l16 12M20 6 4 18M7 3.5 12 6l5-2.5M7 20.5 12 18l5 2.5M2.8 9.5 6 12l-3.2 2.5M21.2 9.5 18 12l3.2 2.5"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Refrigerant Types &amp; Identification</div>
+        <div class="st"><span class="stars">★★<span class="off">★</span></span> · best 90%</div></div></div>
+
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v7a4 4 0 0 0 8 0V3"/><path d="M5 21h14M12 14v7"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Refrigerant Blends &amp; Glide</div>
+        <div class="st"><span class="stars">★<span class="off">★★</span></span> · best 80% — replay for ★★</div></div></div>
+
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.5 7.3 6.5 12a6.5 6.5 0 0 1-13 0c0-4.7 6.5-12 6.5-12z"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Refrigerant Oils</div>
+        <div class="st"><span class="stars">★★<span class="off">★</span></span> · best 90%</div></div></div>
+
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Refrigeration Cycle</div>
+        <div class="st"><span class="stars">★★★</span> · 100%</div></div></div>
+
+      <div class="lvl done"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M7 6.5 12 3l5 3.5"/><path d="M4 21h16M6 21v-8M18 21v-8M2.5 13h19"/><path d="M8 9.5h8"/></svg>
+          <span class="checkmini">✓</span></div>
+        <div class="t"><div class="nm">Regulations &amp; Clean Air Act</div>
+        <div class="st"><span class="stars">★★<span class="off">★</span></span> · best 90%</div></div></div>
+
+      <!-- current -->
+      <div class="lvl now"><div class="dot"><span class="ring"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19a5 5 0 1 1 3-9 6 6 0 0 1 11 2.5A4.5 4.5 0 0 1 17.5 19z"/><path d="m12 13-2 3h4l-2 3"/></svg></div>
+        <div class="t"><div class="nm">Recovery, Recycle &amp; Reclaim</div>
+        <div class="st">10 questions · ~4 min</div>
+        <span class="playnow">▶ PLAY</span></div></div>
+
+      <div class="lvl locked"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5s-3 3.5-3 5.5a7 7 0 0 0 7 7z"/></svg></div>
+        <div class="t"><div class="nm">Dehydration &amp; Evacuation</div>
+        <div class="st">Clear level 7 to unlock</div></div></div>
+
+      <div class="lvl locked"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3z"/></svg></div>
+        <div class="t"><div class="nm">Equipment &amp; Components</div></div></div>
+
+      <div class="lvl locked"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/></svg></div>
+        <div class="t"><div class="nm">Safety &amp; Leaks</div></div></div>
+
+      <div class="lvl locked"><div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 4.9-9 4.9-9-4.9z"/><path d="m3 12 9 4.9 9-4.9M3 17l9 4.9 9-4.9"/></svg></div>
+        <div class="t"><div class="nm">Core Mixed Review</div></div></div>
+
+      <div class="checkpoint r4">
+        <span class="emwrap">🎓</span>
+        <div class="t"><b>Core Exam Simulation</b>
+        <span>25 questions · timed 30:00 · the real exam format</span></div>
+        <span class="lockpill">🔒 5 levels left</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  function show(i, btn) {
+    document.querySelectorAll('.screen').forEach((s, k) => s.classList.toggle('on', k === i));
+    document.querySelectorAll('.switch button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  function pathStyle(curvy, btn) {
+    document.getElementById('corepath').classList.toggle('curvy', curvy);
+    document.querySelectorAll('.styletoggle button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+</script>
+</body>
+</html>
