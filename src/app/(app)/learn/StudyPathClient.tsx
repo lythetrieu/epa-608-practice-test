@@ -914,10 +914,10 @@ export default function StudyPathClient({
                 {first ? <span className="flex-1" /> : <Road />}
                 <div className="my-1">
                   {s === 'done' && (
-                    // Job done: green pad, the concept's trade icon, mini check.
-                    <span className="relative z-10 grid place-items-center w-11 h-11 rounded-full ring-4 ring-white shadow-sm" style={{ background: '#ecfdf5', border: '2px solid #86d8b4', color: '#059669' }}>
-                      {iconForConcept(c.id, 20)}
-                      <span className="absolute -right-1 -bottom-1 grid place-items-center w-[18px] h-[18px] rounded-full text-white border-2 border-white" style={{ background: '#059669' }}>
+                    // Job done: soft navy pad + full-color trade icon, green check badge.
+                    <span className="relative z-10 grid place-items-center w-12 h-12 rounded-full ring-2 ring-white shadow-sm" style={{ background: '#eef4fb', border: '1.5px solid #b3cdee' }}>
+                      {iconForConcept(c.id, 30)}
+                      <span className="absolute -right-1 -bottom-1 grid place-items-center w-[18px] h-[18px] rounded-full text-white border-2 border-white" style={{ background: '#16a34a' }}>
                         <Check size={10} strokeWidth={4} />
                       </span>
                     </span>
@@ -932,9 +932,9 @@ export default function StudyPathClient({
                     </span>
                   )}
                   {s === 'locked' && (
-                    // Upcoming stop: same trade icon, dimmed — you can see what's ahead.
-                    <span className="relative z-10 grid place-items-center w-11 h-11 rounded-full bg-white border-2 border-slate-200 text-slate-300 ring-4 ring-white">
-                      {iconForConcept(c.id, 20)}
+                    // Upcoming stop: same trade icon, greyed — you can see what's ahead.
+                    <span className="relative z-10 grid place-items-center w-12 h-12 rounded-full bg-white border border-slate-200 ring-2 ring-white">
+                      <span style={{ filter: 'grayscale(1) opacity(0.45)' }}>{iconForConcept(c.id, 30)}</span>
                     </span>
                   )}
                 </div>
