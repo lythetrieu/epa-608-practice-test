@@ -171,7 +171,7 @@ VALUES
  '["type-ii","qbv3-new"]', 'single_choice', '["To store liquid refrigerant leaving the condenser"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
- 'Receiver receives liquid from the condenser; accumulator catches liquid before the compressor.',
+ 'Receiver receives liquid from the condenser — accumulator catches liquid before the compressor.',
  'Receiver vs accumulator is a classic swap — receiver = liquid line, accumulator = suction line.'),
 
 ('t2-qbv3-new-0010', 'Type II', 't2-accessories-008',
@@ -207,7 +207,7 @@ VALUES
  '["type-ii","qbv3-new"]', 'single_choice', '["A low refrigerant charge (flash gas in the liquid line)"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
- 'Clear glass = solid liquid; bubbles = missing refrigerant.',
+ 'Clear glass = solid liquid, bubbles = missing refrigerant.',
  'Bubbles point to undercharge — overcharge shows up as high head pressure, not bubbles.'),
 
 -- t2-repairs-safety (2)
