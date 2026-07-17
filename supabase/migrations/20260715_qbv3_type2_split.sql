@@ -1,23 +1,23 @@
 -- ============================================================================
--- QBv3 — Type II 6 → 9 levels (per ESCO manual section density)
+-- QBv3 - Type II 6 -> 9 levels (per ESCO manual section density)
 -- ----------------------------------------------------------------------------
 -- 1. t2-leak-repair (20Q) splits into t2-leak-rates + t2-leak-inspections
 -- 2. 13 t2-supplemental questions re-tagged to the new levels they belong to
--- 3. 15 NEW questions inserted (evac-levels ×8, accessories ×4, safety ×2,
---    intro ×1) — sourced from ESCO 608 Type II manual, canonical-facts checked
+-- 3. 15 NEW questions inserted (evac-levels x8, accessories x4, safety x2,
+--    intro x1) - sourced from ESCO 608 Type II manual, canonical-facts checked
 -- 4. study_path_progress rows for t2-leak-repair copied to BOTH successor
 --    levels (users keep their stars), old rows removed
 --
 -- Run the WHOLE file once in the prod SQL Editor (sequvmxgtmbirnixeril).
 -- Pairs with app commit: concept-map.ts 9-level Type II + BANK_VERSION 2.
--- Final counts: intro 10 · rates 10 · inspections 15 · recovery 11 ·
--- evac-levels 10 · accessories 10 · evac-charging 10 · repairs-safety 10 ·
+-- Final counts: intro 10 - rates 10 - inspections 15 - recovery 11 -
+-- evac-levels 10 - accessories 10 - evac-charging 10 - repairs-safety 10 -
 -- supplemental 26  (Type II total 112 = 97 old + 15 new)
 -- ============================================================================
 
 BEGIN;
 
--- ─── 1) t2-leak-rates ── categories, thresholds, leak-rate math ─────────────
+-- --- 1) t2-leak-rates -- categories, thresholds, leak-rate math -------------
 UPDATE public.questions SET subtopic_id = 't2-leak-rates-001' WHERE subtopic_id = 't2-supplemental-001';
 UPDATE public.questions SET subtopic_id = 't2-leak-rates-002' WHERE subtopic_id = 't2-supplemental-002';
 UPDATE public.questions SET subtopic_id = 't2-leak-rates-003' WHERE subtopic_id = 't2-supplemental-003';
@@ -29,7 +29,7 @@ UPDATE public.questions SET subtopic_id = 't2-leak-rates-008' WHERE subtopic_id 
 UPDATE public.questions SET subtopic_id = 't2-leak-rates-009' WHERE subtopic_id = 't2-leak-repair-015'; -- commercial classification
 UPDATE public.questions SET subtopic_id = 't2-leak-rates-010' WHERE subtopic_id = 't2-leak-repair-019'; -- when charging triggers calc
 
--- ─── 2) t2-leak-inspections ── timeframes, verification, records, detection ─
+-- --- 2) t2-leak-inspections -- timeframes, verification, records, detection -
 UPDATE public.questions SET subtopic_id = 't2-leak-inspections-001' WHERE subtopic_id = 't2-leak-repair-002';
 UPDATE public.questions SET subtopic_id = 't2-leak-inspections-002' WHERE subtopic_id = 't2-leak-repair-003';
 UPDATE public.questions SET subtopic_id = 't2-leak-inspections-003' WHERE subtopic_id = 't2-leak-repair-004';
@@ -46,11 +46,11 @@ UPDATE public.questions SET subtopic_id = 't2-leak-inspections-013' WHERE subtop
 UPDATE public.questions SET subtopic_id = 't2-leak-inspections-014' WHERE subtopic_id = 't2-leak-repair-018';
 UPDATE public.questions SET subtopic_id = 't2-leak-inspections-015' WHERE subtopic_id = 't2-leak-repair-020';
 
--- ─── 3) t2-evac-levels ── the 2 existing chart questions move over ──────────
+-- --- 3) t2-evac-levels -- the 2 existing chart questions move over ----------
 UPDATE public.questions SET subtopic_id = 't2-evac-levels-001' WHERE subtopic_id = 't2-supplemental-025';
 UPDATE public.questions SET subtopic_id = 't2-evac-levels-002' WHERE subtopic_id = 't2-supplemental-026';
 
--- ─── 4) t2-accessories ── sight glass / drier / accumulator / valves ────────
+-- --- 4) t2-accessories -- sight glass / drier / accumulator / valves --------
 UPDATE public.questions SET subtopic_id = 't2-accessories-001' WHERE subtopic_id = 't2-supplemental-027';
 UPDATE public.questions SET subtopic_id = 't2-accessories-002' WHERE subtopic_id = 't2-supplemental-028';
 UPDATE public.questions SET subtopic_id = 't2-accessories-003' WHERE subtopic_id = 't2-supplemental-029';
@@ -58,7 +58,7 @@ UPDATE public.questions SET subtopic_id = 't2-accessories-004' WHERE subtopic_id
 UPDATE public.questions SET subtopic_id = 't2-accessories-005' WHERE subtopic_id = 't2-supplemental-031';
 UPDATE public.questions SET subtopic_id = 't2-accessories-006' WHERE subtopic_id = 't2-supplemental-032';
 
--- ─── 5) 15 NEW questions ────────────────────────────────────────────────────
+-- --- 5) 15 NEW questions ----------------------------------------------------
 INSERT INTO public.questions
   (id, category, subtopic_id, question, options, answer_text, explanation,
    source_ref, difficulty, verified, tags, question_type, correct_answers,
@@ -81,13 +81,13 @@ VALUES
  'Using recovery equipment manufactured after November 15, 1993, to what level must an R-22 appliance containing LESS than 200 pounds of refrigerant be evacuated?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
  '0 inches Hg vacuum',
- 'The evacuation chart requires R-22 appliances under 200 lbs to reach only 0 in Hg (atmospheric pressure) — the same level for both pre- and post-1993 recovery equipment.',
+ 'The evacuation chart requires R-22 appliances under 200 lbs to reach only 0 in Hg (atmospheric pressure) - the same level for both pre- and post-1993 recovery equipment.',
  '608 Type II.txt - Required Evacuation Levels', 'medium', true,
  '["type-ii","qbv3-new"]', 'single_choice', '["0 inches Hg vacuum"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Small R-22 job = zero: just get it down to atmospheric.',
- 'R-22 under 200 lbs is the easiest row of the chart — 0 in Hg with old OR new equipment.'),
+ 'R-22 under 200 lbs is the easiest row of the chart - 0 in Hg with old OR new equipment.'),
 
 ('t2-qbv3-new-0003', 'Type II', 't2-evac-levels-005',
  'Using recovery equipment manufactured after November 15, 1993, to what level must an R-22 appliance containing 200 pounds or MORE of refrigerant be evacuated?',
@@ -99,7 +99,7 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Big R-22: 10 with new gear, 4 with old gear.',
- '200 lbs is the line that changes the whole chart — check the charge size before picking a number.'),
+ '200 lbs is the line that changes the whole chart - check the charge size before picking a number.'),
 
 ('t2-qbv3-new-0004', 'Type II', 't2-evac-levels-006',
  'To what level must a very-high-pressure appliance using R-503 be evacuated before opening, regardless of charge size?',
@@ -111,18 +111,18 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Very high pressure = very easy target: 0 in Hg, always.',
- 'See R-13 or R-503? Stop calculating — the answer is 0 in Hg.'),
+ 'See R-13 or R-503? Stop calculating - the answer is 0 in Hg.'),
 
 ('t2-qbv3-new-0005', 'Type II', 't2-evac-levels-007',
  'Using post-1993 recovery equipment, what evacuation level applies to an R-502 appliance containing 200 pounds or more of refrigerant?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
  '15 inches Hg vacuum',
- '"Other high-pressure" appliances (CFC-12, R-500, R-502, R-114) at 200 lbs or more require 15 in Hg with post-1993 equipment — the deepest vacuum on the high-pressure chart.',
+ '"Other high-pressure" appliances (CFC-12, R-500, R-502, R-114) at 200 lbs or more require 15 in Hg with post-1993 equipment - the deepest vacuum on the high-pressure chart.',
  '608 Type II.txt - Required Evacuation Levels', 'hard', true,
  '["type-ii","qbv3-new"]', 'single_choice', '["15 inches Hg vacuum"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
- '15 is the chart maximum — reserved for big non-R-22 high-pressure systems with new equipment.',
+ '15 is the chart maximum - reserved for big non-R-22 high-pressure systems with new equipment.',
  'R-502 at 200+ lbs with new equipment is the only high-pressure combo that hits 15 in Hg.'),
 
 ('t2-qbv3-new-0006', 'Type II', 't2-evac-levels-008',
@@ -146,7 +146,7 @@ VALUES
  '["type-ii","qbv3-new"]', 'single_choice', '["Evacuate the appliance to 0 psig instead"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
- 'Leaky system rule: get it to 0 psig — never vent.',
+ 'Leaky system rule: get it to 0 psig - never vent.',
  'Any answer that involves venting refrigerant is automatically wrong on an EPA question.'),
 
 ('t2-qbv3-new-0008', 'Type II', 't2-evac-levels-010',
@@ -159,7 +159,7 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Minor job = 0 psig. Major job or disposal = the chart.',
- 'Do not give a chart vacuum for a drier swap — non-major means 0 psig only.'),
+ 'Do not give a chart vacuum for a drier swap - non-major means 0 psig only.'),
 
 -- t2-accessories (4)
 ('t2-qbv3-new-0009', 'Type II', 't2-accessories-007',
@@ -171,14 +171,14 @@ VALUES
  '["type-ii","qbv3-new"]', 'single_choice', '["To store liquid refrigerant leaving the condenser"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
- 'Receiver receives liquid from the condenser — accumulator catches liquid before the compressor.',
- 'Receiver vs accumulator is a classic swap — receiver = liquid line, accumulator = suction line.'),
+ 'Receiver receives liquid from the condenser - accumulator catches liquid before the compressor.',
+ 'Receiver vs accumulator is a classic swap - receiver = liquid line, accumulator = suction line.'),
 
 ('t2-qbv3-new-0010', 'Type II', 't2-accessories-008',
  'What is the purpose of a compressor crankcase heater?',
  '["To prevent refrigerant from migrating into and condensing in the compressor oil during the off cycle","To keep discharge gas hot enough to prevent flooding","To warm the evaporator during the defrost cycle","To boil off moisture trapped in the filter drier"]',
  'To prevent refrigerant from migrating into and condensing in the compressor oil during the off cycle',
- 'During the off cycle refrigerant migrates to the coldest point — often the crankcase — and condenses into the oil. The crankcase heater keeps the oil warm so liquid refrigerant cannot accumulate and slug the compressor at startup.',
+ 'During the off cycle refrigerant migrates to the coldest point - often the crankcase - and condenses into the oil. The crankcase heater keeps the oil warm so liquid refrigerant cannot accumulate and slug the compressor at startup.',
  '608 Type II.txt - Suction Line and Compressor Accessories', 'medium', true,
  '["type-ii","qbv3-new"]', 'single_choice', '["To prevent refrigerant from migrating into and condensing in the compressor oil during the off cycle"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
@@ -195,7 +195,7 @@ VALUES
  '["type-ii","qbv3-new"]', 'single_choice', '["Moisture and solid particles"]',
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
- 'Filter = particles, drier = moisture — the name is the function.',
+ 'Filter = particles, drier = moisture - the name is the function.',
  'Non-condensables are removed by recovery and evacuation, not by the drier.'),
 
 ('t2-qbv3-new-0012', 'Type II', 't2-accessories-010',
@@ -208,7 +208,7 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
  'Clear glass = solid liquid, bubbles = missing refrigerant.',
- 'Bubbles point to undercharge — overcharge shows up as high head pressure, not bubbles.'),
+ 'Bubbles point to undercharge - overcharge shows up as high head pressure, not bubbles.'),
 
 -- t2-repairs-safety (2)
 ('t2-qbv3-new-0013', 'Type II', 't2-repairs-safety-101',
@@ -221,7 +221,7 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Repairs & Safety',
  'Oil + oxygen + pressure = explosion. Nitrogen only.',
- 'Compressed air counts as an oxygen answer — both are always wrong for pressure testing.'),
+ 'Compressed air counts as an oxygen answer - both are always wrong for pressure testing.'),
 
 ('t2-qbv3-new-0014', 'Type II', 't2-repairs-safety-102',
  'Why should a low flow of dry nitrogen be passed through refrigerant piping while brazing?',
@@ -233,7 +233,7 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Repairs & Safety',
  'Nitrogen while brazing keeps the inside of the pipe shiny.',
- 'Oxide flakes end up in the filter drier — that is the clue linking brazing to nitrogen.'),
+ 'Oxide flakes end up in the filter drier - that is the clue linking brazing to nitrogen.'),
 
 -- t2-intro (1)
 ('t2-qbv3-new-0015', 'Type II', 't2-intro-101',
@@ -246,9 +246,9 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Introduction',
  'Type II = the high-pressure middle: bigger than Type I, hotter than Type III.',
- 'MVAC is never covered by 608 Types — it is Section 609.');
+ 'MVAC is never covered by 608 Types - it is Section 609.');
 
--- ─── 6) Users keep their stars: copy t2-leak-repair progress to BOTH halves ─
+-- --- 6) Users keep their stars: copy t2-leak-repair progress to BOTH halves -
 INSERT INTO public.study_path_progress
   (user_id, concept_id, status, pass_count, attempts, best_score, last_score, last_passed)
 SELECT p.user_id, x.new_id, p.status, p.pass_count, p.attempts,
@@ -260,17 +260,17 @@ ON CONFLICT (user_id, concept_id) DO NOTHING;
 
 DELETE FROM public.study_path_progress WHERE concept_id = 't2-leak-repair';
 
--- ─── 7) Re-point any study materials off the retired concept id ─────────────
+-- --- 7) Re-point any study materials off the retired concept id -------------
 UPDATE public.learning_assets
 SET concept_id = 't2-leak-rates'
 WHERE concept_id = 't2-leak-repair';
 
 COMMIT;
 
--- ─── VERIFY (run after commit; expected counts in comments) ─────────────────
--- intro 10 · leak-rates 10 · leak-inspections 15 · recovery 11 ·
--- evac-levels 10 · accessories 10 · evac-charging 10 · repairs-safety 10 ·
--- supplemental 26 — and t2-leak-repair must be GONE.
+-- --- VERIFY (run after commit; expected counts in comments) -----------------
+-- intro 10 - leak-rates 10 - leak-inspections 15 - recovery 11 -
+-- evac-levels 10 - accessories 10 - evac-charging 10 - repairs-safety 10 -
+-- supplemental 26 - and t2-leak-repair must be GONE.
 SELECT regexp_replace(subtopic_id, '-\d+$', '') AS prefix, count(*)
 FROM public.questions
 WHERE subtopic_id LIKE 't2-%'
