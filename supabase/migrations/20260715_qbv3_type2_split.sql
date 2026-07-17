@@ -64,7 +64,6 @@ INSERT INTO public.questions
    source_ref, difficulty, verified, tags, question_type, correct_answers,
    scoring, source_quiz, memory_tip, exam_trick)
 VALUES
--- t2-evac-levels (8)
 ('t2-qbv3-new-0001', 'Type II', 't2-evac-levels-003',
  'Under EPA rules, which of the following is considered a MAJOR repair requiring evacuation to the prescribed vacuum level?',
  '["Replacing a liquid-line filter drier","Removing the compressor","Replacing a Schrader valve core","Adjusting the TXV superheat setting"]',
@@ -75,8 +74,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Major = pulling one of the BIG four: compressor, condenser, evaporator, auxiliary heat exchanger.',
- 'If the part is small enough to carry in one hand, it is not a major repair.'),
+ 'If the part is small enough to carry in one hand, it is not a major repair.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0002', 'Type II', 't2-evac-levels-004',
  'Using recovery equipment manufactured after November 15, 1993, to what level must an R-22 appliance containing LESS than 200 pounds of refrigerant be evacuated?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
@@ -87,8 +91,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Small R-22 job = zero: just get it down to atmospheric.',
- 'R-22 under 200 lbs is the easiest row of the chart - 0 in Hg with old OR new equipment.'),
+ 'R-22 under 200 lbs is the easiest row of the chart - 0 in Hg with old OR new equipment.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0003', 'Type II', 't2-evac-levels-005',
  'Using recovery equipment manufactured after November 15, 1993, to what level must an R-22 appliance containing 200 pounds or MORE of refrigerant be evacuated?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
@@ -99,8 +108,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Big R-22: 10 with new gear, 4 with old gear.',
- '200 lbs is the line that changes the whole chart - check the charge size before picking a number.'),
+ '200 lbs is the line that changes the whole chart - check the charge size before picking a number.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0004', 'Type II', 't2-evac-levels-006',
  'To what level must a very-high-pressure appliance using R-503 be evacuated before opening, regardless of charge size?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
@@ -111,8 +125,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Very high pressure = very easy target: 0 in Hg, always.',
- 'See R-13 or R-503? Stop calculating - the answer is 0 in Hg.'),
+ 'See R-13 or R-503? Stop calculating - the answer is 0 in Hg.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0005', 'Type II', 't2-evac-levels-007',
  'Using post-1993 recovery equipment, what evacuation level applies to an R-502 appliance containing 200 pounds or more of refrigerant?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
@@ -123,8 +142,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  '15 is the chart maximum - reserved for big non-R-22 high-pressure systems with new equipment.',
- 'R-502 at 200+ lbs with new equipment is the only high-pressure combo that hits 15 in Hg.'),
+ 'R-502 at 200+ lbs with new equipment is the only high-pressure combo that hits 15 in Hg.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0006', 'Type II', 't2-evac-levels-008',
  'Using recovery equipment manufactured BEFORE November 15, 1993, what evacuation level applies to an R-502 appliance containing 150 pounds of refrigerant?',
  '["0 inches Hg vacuum","4 inches Hg vacuum","10 inches Hg vacuum","15 inches Hg vacuum"]',
@@ -135,8 +159,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Old gear, easy target: pre-93 equipment never has to pull deeper than 4 in Hg on high-pressure systems.',
- '"Before November 15, 1993" in the question usually means the answer is 4.'),
+ '"Before November 15, 1993" in the question usually means the answer is 4.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0007', 'Type II', 't2-evac-levels-009',
  'An appliance has leaks that would prevent reaching the prescribed evacuation level, and continuing would substantially contaminate the recovered refrigerant. What does EPA allow?',
  '["Evacuate the appliance to 0 psig instead","Vent the remaining refrigerant slowly outdoors","Skip recovery entirely and repair the leak first","Pressurize with nitrogen and then release the mixture"]',
@@ -147,8 +176,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Leaky system rule: get it to 0 psig - never vent.',
- 'Any answer that involves venting refrigerant is automatically wrong on an EPA question.'),
+ 'Any answer that involves venting refrigerant is automatically wrong on an EPA question.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0008', 'Type II', 't2-evac-levels-010',
  'Before performing a NON-major repair that is not followed by disposal, the appliance must be evacuated to what pressure?',
  '["0 psig (atmospheric pressure)","10 inches Hg vacuum","15 inches Hg vacuum","500 microns"]',
@@ -159,9 +193,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Evacuation Levels',
  'Minor job = 0 psig. Major job or disposal = the chart.',
- 'Do not give a chart vacuum for a drier swap - non-major means 0 psig only.'),
+ 'Do not give a chart vacuum for a drier swap - non-major means 0 psig only.');
 
--- t2-accessories (4)
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0009', 'Type II', 't2-accessories-007',
  'What is the purpose of the receiver in a refrigeration system?',
  '["To store liquid refrigerant leaving the condenser","To prevent liquid refrigerant from reaching the compressor","To remove moisture from the refrigerant","To meter refrigerant into the evaporator"]',
@@ -172,8 +210,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
  'Receiver receives liquid from the condenser - accumulator catches liquid before the compressor.',
- 'Receiver vs accumulator is a classic swap - receiver = liquid line, accumulator = suction line.'),
+ 'Receiver vs accumulator is a classic swap - receiver = liquid line, accumulator = suction line.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0010', 'Type II', 't2-accessories-008',
  'What is the purpose of a compressor crankcase heater?',
  '["To prevent refrigerant from migrating into and condensing in the compressor oil during the off cycle","To keep discharge gas hot enough to prevent flooding","To warm the evaporator during the defrost cycle","To boil off moisture trapped in the filter drier"]',
@@ -184,8 +227,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
  'Crankcase heater = keeps refrigerant out of the oil while the compressor sleeps.',
- 'Anything about the "off cycle" plus compressor oil points to the crankcase heater.'),
+ 'Anything about the "off cycle" plus compressor oil points to the crankcase heater.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0011', 'Type II', 't2-accessories-009',
  'What does a liquid-line filter drier remove from the refrigerant?',
  '["Moisture and solid particles","Oil and non-condensables","Air and nitrogen","Acid vapor only"]',
@@ -196,8 +244,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
  'Filter = particles, drier = moisture - the name is the function.',
- 'Non-condensables are removed by recovery and evacuation, not by the drier.'),
+ 'Non-condensables are removed by recovery and evacuation, not by the drier.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0012', 'Type II', 't2-accessories-010',
  'Bubbles seen in a liquid-line sight glass during normal operation most likely indicate what?',
  '["A low refrigerant charge (flash gas in the liquid line)","An overcharged system","A restricted suction line","Too much oil in the system"]',
@@ -208,9 +261,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Accessories',
  'Clear glass = solid liquid, bubbles = missing refrigerant.',
- 'Bubbles point to undercharge - overcharge shows up as high head pressure, not bubbles.'),
+ 'Bubbles point to undercharge - overcharge shows up as high head pressure, not bubbles.');
 
--- t2-repairs-safety (2)
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0013', 'Type II', 't2-repairs-safety-101',
  'Which gas must NEVER be used to pressurize a refrigeration system for leak testing?',
  '["Oxygen or compressed air","Dry nitrogen with a pressure regulator","A small refrigerant trace charge with dry nitrogen","Carbon dioxide from a regulated cylinder"]',
@@ -221,8 +278,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Repairs & Safety',
  'Oil + oxygen + pressure = explosion. Nitrogen only.',
- 'Compressed air counts as an oxygen answer - both are always wrong for pressure testing.'),
+ 'Compressed air counts as an oxygen answer - both are always wrong for pressure testing.');
 
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0014', 'Type II', 't2-repairs-safety-102',
  'Why should a low flow of dry nitrogen be passed through refrigerant piping while brazing?',
  '["To prevent oxide scale from forming inside the tubing","To cool the joint faster after brazing","To raise the flame temperature","To detect leaks while the joint is still hot"]',
@@ -233,9 +295,13 @@ VALUES
  '{"style":"exact_match","points_if_incorrect":0,"points_if_all_correct":1,"correct_options_needed":1,"incorrect_options_allowed":0,"points_if_partially_correct":0}',
  'Type II Repairs & Safety',
  'Nitrogen while brazing keeps the inside of the pipe shiny.',
- 'Oxide flakes end up in the filter drier - that is the clue linking brazing to nitrogen.'),
+ 'Oxide flakes end up in the filter drier - that is the clue linking brazing to nitrogen.');
 
--- t2-intro (1)
+INSERT INTO public.questions
+  (id, category, subtopic_id, question, options, answer_text, explanation,
+   source_ref, difficulty, verified, tags, question_type, correct_answers,
+   scoring, source_quiz, memory_tip, exam_trick)
+VALUES
 ('t2-qbv3-new-0015', 'Type II', 't2-intro-101',
  'A Type II certification allows a technician to service or dispose of which appliances?',
  '["High-pressure and very-high-pressure appliances, except small appliances and MVAC systems","Only appliances containing 5 pounds of refrigerant or less","Low-pressure chillers only","Any appliance, including motor vehicle air conditioning"]',
