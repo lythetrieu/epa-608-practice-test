@@ -11,7 +11,7 @@ import type { QuizOutcome, QuizQuestion } from '@/components/quiz/types'
 import { CONCEPT_VISUALS } from './concept-visuals'
 import { track } from '@/lib/track'
 import StudyMaterials from './StudyMaterials'
-import { VanIcon, TestingCenterIcon, iconForConcept, Road } from './route-icons'
+import { VanIcon, TestingCenterIcon, iconForConcept } from './route-icons'
 
 // Per-question AI tutor — on-demand "explain simply" for any reviewed question.
 // Mirrors the PracticeClient pattern so every learning surface has the same tutor.
@@ -871,6 +871,24 @@ export default function StudyPathClient({
   const WORLD_SLUGS: Record<string, string> = { 'Core': 'core', 'Type I': 'type-1', 'Type II': 'type-2', 'Type III': 'type-3' }
   const bossSlug = WORLD_SLUGS[activeWorld] ?? 'core'
 
+  // ── Serpentine "winding road" geometry (preview build) ──────────────────────
+  // Levels zig-zag between two lanes; the Boss node centers at the end. A single
+  // bezier road threads all anchors; stops are absolutely placed on it.
+  const RW = 360, LX = 96, RX = 264, CX = 180, STEP = 128, Y0 = 64
+  const laneX = (i: number) => (i % 2 === 0 ? LX : RX)
+  const nodeY = (i: number) => Y0 + i * STEP
+  const bossIdx = worldItems.length
+  const bossY = nodeY(bossIdx)
+  const routeH = bossY + 100
+  const anchors: Array<readonly [number, number]> = worldItems.map((_, i) => [laneX(i), nodeY(i)] as const)
+  anchors.push([CX, bossY] as const)
+  let road = anchors.length ? `M ${anchors[0][0]} ${anchors[0][1]}` : ''
+  for (let i = 1; i < anchors.length; i++) {
+    const [ax, ay] = anchors[i - 1]
+    const [bx, by] = anchors[i]
+    road += ` C ${ax} ${ay + STEP * 0.55}, ${bx} ${by - STEP * 0.55}, ${bx} ${by}`
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f8fafc', backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.045) 1px, transparent 0)', backgroundSize: '22px 22px' }}>
       {/* header */}
@@ -899,144 +917,71 @@ export default function StudyPathClient({
         <p className="mt-1.5 text-sm text-slate-500 max-w-md">Clear each level with 8 of 10 to unlock the next one.</p>
       </div>
 
-      {/* metro study line */}
-      <ol className="max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-24 relative">
+      {/* winding "service route" — levels zig-zag along a curved road */}
+      <div className="relative mx-auto pb-24" style={{ width: '100%', maxWidth: RW, height: routeH }}>
+        <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 ${RW} ${routeH}`} fill="none" preserveAspectRatio="none" aria-hidden="true">
+          <path d={road} stroke="#d4dde8" strokeWidth={22} strokeLinecap="round" strokeLinejoin="round" />
+          <path d={road} stroke="#ffffff" strokeWidth={2.5} strokeDasharray="9 12" strokeLinecap="round" />
+        </svg>
+
         {worldItems.map((c, i) => {
           const s = statusAt(i)
-          const num = String(i + 1).padStart(2, '0')
-          const first = i === 0
+          const x = laneX(i), y = nodeY(i)
+          const best = progress[c.id]?.bestScore
+          const tries = progress[c.id]?.attempts ?? 0
           return (
-            <li key={c.id} className="relative flex gap-3 sm:gap-5">
-              <div className="hidden sm:flex w-7 shrink-0 items-center justify-end pt-3">
-                <span className={`text-xs font-bold tabular-nums ${s === 'locked' ? 'text-slate-300' : 'text-slate-400'}`}>{num}</span>
-              </div>
-              <div className="relative flex flex-col items-center w-12 shrink-0 self-stretch">
-                {first ? <span className="flex-1" /> : <Road />}
-                <div className="my-1">
-                  {s === 'done' && (
-                    // Job done: soft navy pad + full-color trade icon, green check badge.
-                    <span className="relative z-10 grid place-items-center w-12 h-12 rounded-full ring-2 ring-white shadow-sm" style={{ background: '#eef4fb', border: '1.5px solid #b3cdee' }}>
-                      {iconForConcept(c.id, 30)}
-                      <span className="absolute -right-1 -bottom-1 grid place-items-center w-[18px] h-[18px] rounded-full text-white border-2 border-white" style={{ background: '#16a34a' }}>
-                        <Check size={10} strokeWidth={4} />
-                      </span>
-                    </span>
-                  )}
-                  {s === 'current' && (
-                    // Your service van is parked at this stop.
-                    <span className="relative z-10 grid place-items-center w-12 h-12">
-                      <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}40` }} />
-                      <span className="relative grid place-items-center w-12 h-12 rounded-full shadow-md ring-4 ring-white" style={{ background: ACCENT, color: '#9cc3ff' }}>
-                        <VanIcon size={28} />
-                      </span>
-                    </span>
-                  )}
-                  {s === 'locked' && (
-                    // Upcoming stop: same trade icon, greyed — you can see what's ahead.
-                    <span className="relative z-10 grid place-items-center w-12 h-12 rounded-full bg-white border border-slate-200 ring-2 ring-white">
-                      <span style={{ filter: 'grayscale(1) opacity(0.45)' }}>{iconForConcept(c.id, 30)}</span>
-                    </span>
-                  )}
+            <div key={c.id} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(x / RW) * 100}%`, top: y, width: 138 }}>
+              <div className="h-4 mb-1 flex items-center justify-center"><Stars score={best} /></div>
+              {s === 'done' && (
+                <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="relative grid place-items-center rounded-full ring-4 ring-white shadow-sm hover:brightness-105 active:translate-y-0.5 transition" style={{ width: 56, height: 56, background: '#eef4fb', border: '1.5px solid #b3cdee' }} aria-label={c.title}>
+                  {iconForConcept(c.id, 32)}
+                  <span className="absolute -right-1 -bottom-1 grid place-items-center w-[19px] h-[19px] rounded-full text-white border-2 border-white" style={{ background: '#16a34a' }}>
+                    <Check size={11} strokeWidth={4} />
+                  </span>
+                </button>
+              )}
+              {s === 'current' && (
+                <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="relative grid place-items-center" style={{ width: 70, height: 70 }} aria-label={`Start ${c.title}`}>
+                  <span className="absolute inset-0 rounded-full animate-ping" style={{ background: `${ACCENT}33` }} />
+                  <span className="relative grid place-items-center rounded-full shadow-md ring-4 ring-white" style={{ width: 70, height: 70, background: ACCENT, color: '#9cc3ff' }}>
+                    <VanIcon size={36} />
+                  </span>
+                </button>
+              )}
+              {s === 'locked' && (
+                <div className="relative grid place-items-center rounded-full ring-4 ring-white bg-white" style={{ width: 56, height: 56, border: '1px solid #e2e8f0' }}>
+                  <span style={{ filter: 'grayscale(1) opacity(0.4)' }}>{iconForConcept(c.id, 32)}</span>
+                  <span className="absolute -right-1 -bottom-1 grid place-items-center w-[19px] h-[19px] rounded-full bg-white border border-slate-200 text-slate-400">
+                    <Lock size={10} />
+                  </span>
                 </div>
-                {/* Always a bottom connector — the Boss Exam node follows the last level. */}
-                <Road />
-              </div>
-              <div className={`flex-1 min-w-0 ${s === 'current' ? 'py-1.5' : 'py-2.5'}`}>
-                {s === 'done' && (
-                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="w-full text-left rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md hover:border-slate-300 transition">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5 min-w-0">
-                          <h3 className="text-[15px] font-semibold tracking-tight text-slate-900 truncate">{c.title}</h3>
-                          <Stars score={progress[c.id]?.bestScore} />
-                        </div>
-                        <p className="mt-0.5 text-xs text-slate-400">
-                          {progress[c.id]?.bestScore ? `Best ${progress[c.id].bestScore}%` : '10 questions · pass 8/10'}
-                          {progress[c.id]?.attempts ? ` · ${progress[c.id].attempts} ${progress[c.id].attempts === 1 ? 'try' : 'tries'}` : ''}
-                        </p>
-                      </div>
-                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold font-mono tabular-nums text-blue-800 bg-blue-50 border border-blue-100 px-2 py-1 rounded-md">
-                        <Check size={12} strokeWidth={3} /> {progress[c.id]?.bestScore ? `${progress[c.id].bestScore}%` : 'Cleared'}
-                      </span>
-                    </div>
+              )}
+              <div className="mt-2 text-center px-1" style={{ width: 138 }}>
+                <div className={`text-[11.5px] font-semibold leading-tight ${s === 'locked' ? 'text-slate-400' : 'text-slate-800'}`}>{c.title}</div>
+                <div className="text-[10px] mt-0.5 text-slate-400">
+                  {s === 'done' ? (best ? `Best ${best}%` : 'Cleared') : s === 'current' ? '10 Q · pass 8/10' : 'Locked'}
+                </div>
+                {s === 'current' && (
+                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-1.5 inline-flex items-center gap-1 text-white text-[12px] font-semibold px-3 py-1.5 rounded-lg shadow-sm hover:brightness-110 transition" style={{ background: '#F97316' }}>
+                    {tries > 0 ? 'Try again' : 'Start'} <ArrowRight size={13} />
                   </button>
                 )}
-                {s === 'current' && (
-                  // Featured card: slim 1.5px ORANGE border (approved skin) — the
-                  // "You are here" pill stays navy, danger note stays rose.
-                  <div className="rounded-2xl border-[1.5px] bg-white px-4 py-4 sm:px-5" style={{ borderColor: '#F97316', boxShadow: '0 8px 24px -8px rgba(15,23,42,0.18)' }}>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md" style={{ color: ACCENT, backgroundColor: '#eef4fb' }}>
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} /> You are here
-                      </span>
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? (
-                        <span className="text-[11px] font-bold tabular-nums" style={{ color: '#e11d48' }}>Last {progress[c.id]?.lastScore}% · need 80%</span>
-                      ) : (
-                        <span className="text-[11px] font-medium text-slate-400">Next up</span>
-                      )}
-                    </div>
-                    <div className="mt-2.5 flex items-center gap-1.5 min-w-0">
-                      <h3 className="text-lg font-bold tracking-tight text-slate-900">{c.title}</h3>
-                      <Stars score={progress[c.id]?.bestScore} />
-                    </div>
-                    <p className="mt-0.5 text-xs text-slate-500">
-                      10 questions · pass 8/10
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? ` · best ${progress[c.id]?.bestScore}% · ${progress[c.id]?.attempts} ${progress[c.id]?.attempts === 1 ? 'try' : 'tries'}` : ''}
-                    </p>
-                    {/* Current-level action = the Study Path screen's ONE orange */}
-                    <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-3.5 inline-flex items-center gap-1.5 text-white text-sm font-semibold pl-4 pr-3.5 py-2.5 rounded-xl shadow-sm w-full sm:w-auto justify-center hover:brightness-110 transition" style={{ background: '#F97316' }}>
-                      {(progress[c.id]?.attempts ?? 0) > 0 ? 'Try again' : 'Start level'} <ArrowRight size={16} />
-                    </button>
-                  </div>
-                )}
-                {s === 'locked' && (
-                  <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-0">
-                        <h3 className="text-[15px] font-semibold tracking-tight text-slate-400 truncate">{c.title}</h3>
-                        <p className="mt-0.5 text-xs text-slate-300">10 questions</p>
-                      </div>
-                      <span className="ml-auto shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 bg-white border border-slate-200 px-2 py-1 rounded-md">
-                        <Lock size={12} /> Locked
-                      </span>
-                    </div>
-                  </div>
-                )}
               </div>
-            </li>
+            </div>
           )
         })}
 
-        {/* BOSS EXAM — final node of the world: the real timed section exam */}
-        <li className="relative flex gap-3 sm:gap-5">
-          <div className="hidden sm:flex w-7 shrink-0" aria-hidden="true" />
-          <div className="relative flex flex-col items-center w-12 shrink-0 self-stretch">
-            <Road />
-            <div className="my-1">
-              {/* End of the route: the testing center building. */}
-              <span aria-hidden="true" className="relative z-10 grid place-items-center w-12 h-12 rounded-full text-white ring-4 ring-white shadow-sm" style={{ background: '#001d57', color: '#9cc3ff' }}>
-                <TestingCenterIcon size={24} />
-              </span>
-            </div>
-            <span className="flex-1" />
+        {/* BOSS EXAM — the testing center caps the route */}
+        <div className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(CX / RW) * 100}%`, top: bossY, width: 160 }}>
+          <Link href={`/test/${bossSlug}?mode=test`} className="relative grid place-items-center rounded-full ring-4 ring-white shadow-md hover:brightness-110 active:translate-y-0.5 transition" style={{ width: 64, height: 64, background: '#001d57', color: '#9cc3ff' }} aria-label="Boss Exam">
+            <TestingCenterIcon size={30} />
+          </Link>
+          <div className="mt-2 text-center">
+            <div className="text-[11.5px] font-bold text-slate-800">Boss Exam</div>
+            <div className="text-[10px] text-slate-400 mt-0.5">25 Q · timed · 72%</div>
           </div>
-          <div className="flex-1 min-w-0 py-1.5">
-            <Link
-              href={`/test/${bossSlug}?mode=test`}
-              className="block rounded-2xl px-4 py-4 sm:px-5 text-white shadow-md border-b-4 border-black/25 hover:brightness-110 active:translate-y-0.5 transition"
-              style={{ background: '#001d57' }}
-            >
-              <div className="flex items-center gap-3">
-                <div className="min-w-0">
-                  <h3 className="text-[15px] sm:text-base font-bold tracking-tight">Boss Exam — 25 questions, 72% to pass, timed</h3>
-                  <p className="mt-0.5 text-xs text-white/70">The real exam, simulated</p>
-                </div>
-                <ArrowRight size={18} className="ml-auto shrink-0 text-white/80" />
-              </div>
-            </Link>
-          </div>
-        </li>
-      </ol>
+        </div>
+      </div>
 
       {cur >= worldItems.length && (
         <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">
