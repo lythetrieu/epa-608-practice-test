@@ -314,22 +314,34 @@ VALUES
  'Type II = the high-pressure middle: bigger than Type I, hotter than Type III.',
  'MVAC is never covered by 608 Types - it is Section 609.');
 
--- --- 6) Users keep their stars: copy t2-leak-repair progress to BOTH halves -
-INSERT INTO public.study_path_progress
-  (user_id, concept_id, status, pass_count, attempts, best_score, last_score, last_passed)
-SELECT p.user_id, x.new_id, p.status, p.pass_count, p.attempts,
-       p.best_score, p.last_score, p.last_passed
-FROM public.study_path_progress p
-CROSS JOIN (VALUES ('t2-leak-rates'), ('t2-leak-inspections')) AS x(new_id)
-WHERE p.concept_id = 't2-leak-repair'
-ON CONFLICT (user_id, concept_id) DO NOTHING;
+-- --- 6+7) Optional cleanup, guarded so a missing table cannot abort the tx --
+-- These tables may not exist in every environment (study_path_progress /
+-- learning_assets are feature-gated). Only run the cleanup where they exist so
+-- the core re-tag + inserts always commit.
+DO $qbv3$
+BEGIN
+  IF to_regclass('public.study_path_progress') IS NOT NULL THEN
+    -- Users keep their stars: copy t2-leak-repair progress to BOTH halves.
+    INSERT INTO public.study_path_progress
+      (user_id, concept_id, status, pass_count, attempts, best_score, last_score, last_passed)
+    SELECT p.user_id, x.new_id, p.status, p.pass_count, p.attempts,
+           p.best_score, p.last_score, p.last_passed
+    FROM public.study_path_progress p
+    CROSS JOIN (VALUES ('t2-leak-rates'), ('t2-leak-inspections')) AS x(new_id)
+    WHERE p.concept_id = 't2-leak-repair'
+    ON CONFLICT (user_id, concept_id) DO NOTHING;
 
-DELETE FROM public.study_path_progress WHERE concept_id = 't2-leak-repair';
+    DELETE FROM public.study_path_progress WHERE concept_id = 't2-leak-repair';
+  END IF;
 
--- --- 7) Re-point any study materials off the retired concept id -------------
-UPDATE public.learning_assets
-SET concept_id = 't2-leak-rates'
-WHERE concept_id = 't2-leak-repair';
+  IF to_regclass('public.learning_assets') IS NOT NULL THEN
+    -- Re-point any study materials off the retired concept id.
+    UPDATE public.learning_assets
+    SET concept_id = 't2-leak-rates'
+    WHERE concept_id = 't2-leak-repair';
+  END IF;
+END
+$qbv3$;
 
 COMMIT;
 
