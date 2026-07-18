@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>32 icon flat brand — production</title>
+<style>
+  :root{--navy:#003087;--steel:#4a6690;--paper:#eef2f7;--card:#fff;--muted:#5d738c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);font-family:ui-rounded,'SF Pro Rounded',system-ui,sans-serif;color:#0f213b;padding:28px 22px 70px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 20px;max-width:660px;line-height:1.5}
+  h2{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px;display:flex;gap:10px;align-items:center;font-weight:800}
+  h2::after{content:"";flex:1;height:1px;background:#dbe3ec}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+  .tile{background:var(--card);border:1px solid #e4ebf3;border-radius:16px;padding:14px 6px 11px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 1px 2px rgba(20,48,79,.05)}
+  .pad{position:relative;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#eef4fb;border:1.5px solid #b3cdee;box-shadow:0 0 0 2px #fff}
+  .pad svg{width:30px;height:30px;display:block}
+  .chk{position:absolute;right:-4px;bottom:-4px;width:18px;height:18px;border-radius:50%;background:#16a34a;border:2px solid #fff;display:grid;place-items:center;color:#fff;font-size:10px;font-weight:900}
+  .name{font-size:11px;font-weight:700;text-align:center;line-height:1.2}
+  .id{font-size:9px;color:var(--muted)}
+  .pad.lock{background:#fff;border-color:#e2e8f0;box-shadow:0 0 0 2px #fff}
+  .pad.lock svg{filter:grayscale(1) opacity(.45)}
+  .pad.lock .chk{display:none}
+  .pad.navy{background:var(--navy);border-color:var(--navy);color:#9cc3ff}
+  .pad.navy svg{width:24px;height:24px;stroke:#9cc3ff;fill:none}
+  .big{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid #e4ebf3;border-radius:16px;padding:16px}
+  .big .pad{width:64px;height:64px}.big .pad svg{width:34px;height:34px}
+  .row2{display:flex;gap:22px;flex-wrap:wrap}
+</style></head><body>
+
+<h1>32 icon — Flat, đồng + đỏ + navy brand</h1>
+<p class="sub">Vật liệu thật: <b style="color:#c2703d">đồng</b> = bình/gas/dầu · <b style="color:#e11d48">đỏ</b> = kim đồng hồ + lửa + báo động · <b style="color:#16a34a">xanh</b> = việc tích cực · <b style="color:#003087">navy</b> = thân/bezel · gold = sao. Kích thước = production thật (20px).</p>
+
+<h2>Core · 11</h2><div class="grid" id="core"></div>
+<h2>Type I · 5</h2><div class="grid" id="t1"></div>
+<h2>Type II · 9 (QBv3)</h2><div class="grid" id="t2"></div>
+<h2>Type III · 7</h2><div class="grid" id="t3"></div>
+
+<h2>Trạng thái pad</h2>
+<div class="row2">
+  <div class="tile"><span class="pad" id="d1"></span><span class="name">Done</span></div>
+  <div class="tile"><span class="pad lock" id="l1"></span><span class="name">Locked</span></div>
+  <div class="tile"><span class="pad navy" id="van"></span><span class="name">Current (van)</span></div>
+  <div class="tile"><span class="pad navy" id="boss"></span><span class="name">Boss Exam</span></div>
+</div>
+
+<h2>Phóng to xem nét</h2>
+<div class="big" id="big"></div>
+
+<script>
+const NAVY='#003087',STEEL='#4a6690',SKY='#d9e6f7',COPPER='#c2703d',COPPER_D='#a95a2b',RED='#e11d48',GREEN='#16a34a',GOLD='#eab308';
+function star(cx,cy,r){let p=[];for(let i=0;i<10;i++){const rad=i%2===0?r:r*0.45,a=Math.PI/5*i-Math.PI/2;p.push((cx+rad*Math.cos(a)).toFixed(2)+','+(cy+rad*Math.sin(a)).toFixed(2))}return `<polygon points="${p.join(' ')}" fill="${GOLD}"/>`}
+function gauge(cx,cy,r,nx,ny){return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${NAVY}"/><circle cx="${cx}" cy="${cy}" r="${r*0.66}" fill="${SKY}"/><path d="M${cx} ${cy} ${nx} ${ny}" fill="none" stroke="${RED}" stroke-width="2" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${r*0.17}" fill="${NAVY}"/>`}
+const S='<svg viewBox="0 0 24 24">',E='</svg>';
+const I={
+'core-ozone':[`${S}<circle cx="12" cy="12" r="9" fill="${NAVY}"/><g fill="none" stroke="${SKY}" stroke-width="1.4"><path d="M3.5 10h17M3.5 14h17M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></g>${E}`,'Ozone'],
+'core-refrigerants':[`${S}<rect x="7" y="6" width="10" height="15.5" rx="4.5" fill="${COPPER}"/><path d="M7 11c0-2.6 2-5 5-5s5 2.4 5 5v.3H7z" fill="${COPPER_D}"/><rect x="7" y="12.8" width="10" height="3.6" fill="${SKY}"/><rect x="9.5" y="3" width="5" height="3.2" rx="1.2" fill="${STEEL}"/><rect x="10.8" y="1.5" width="2.4" height="2" rx="1" fill="${STEEL}"/>${E}`,'Refrigerant Types'],
+'core-blends':[`${S}<path d="M8.5 3.5s4.2 5 4.2 8.1a4.2 4.2 0 0 1-8.4 0C4.3 8.5 8.5 3.5 8.5 3.5z" fill="${NAVY}"/><path d="M16.8 10.5s3 3.6 3 5.7a3 3 0 0 1-6 0c0-2.1 3-5.7 3-5.7z" fill="${COPPER}"/>${E}`,'Blends'],
+'core-oils':[`${S}<path d="M6 11h7l6-3v7.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" fill="${COPPER}"/><path d="M9 11V8h4" fill="none" stroke="${STEEL}" stroke-width="1.6" stroke-linecap="round"/><path d="M2.5 12.6 6 11" fill="none" stroke="${STEEL}" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 15c0 .9-.75 1.5-1.5 0 0-1.5.75-2.2.75-2.2s.75.7.75 2.2z" fill="${COPPER_D}"/>${E}`,'Oils'],
+'core-cycle':[`${S}<g fill="none" stroke="${NAVY}" stroke-width="2.4" stroke-linecap="round"><path d="M19 9.5A8 8 0 0 0 5.4 6"/><path d="M5 14.5a8 8 0 0 0 13.6 2.6"/></g><path d="M5.6 2v4.2h4.2z" fill="${NAVY}"/><path d="M18.4 22v-4.2h-4.2z" fill="${NAVY}"/><circle cx="12" cy="12" r="2.4" fill="${RED}"/>${E}`,'Cycle'],
+'core-regulations':[`${S}<rect x="4.5" y="4" width="15" height="17" rx="2.5" fill="${NAVY}"/><rect x="6.5" y="6.5" width="11" height="12" rx="1.5" fill="${SKY}"/><rect x="8.5" y="2.5" width="7" height="3.5" rx="1.2" fill="${STEEL}"/><path d="M8.5 12.5l2 2 3.5-4" fill="none" stroke="${GREEN}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${E}`,'Regulations'],
+'core-recovery':[`${S}<rect x="3.5" y="7.5" width="13" height="12" rx="2" fill="${NAVY}"/><circle cx="10" cy="13.5" r="3" fill="${SKY}"/><circle cx="10" cy="13.5" r="1" fill="${RED}"/><path d="M16.5 10.5h2.5l2.5-2.5" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="6.5" y="4.5" width="7" height="3" rx="1" fill="${STEEL}"/>${E}`,'Recovery 3R'],
+'core-dehydration':[`${S}<rect x="3.5" y="8.5" width="12" height="11" rx="2" fill="${NAVY}"/><circle cx="9.5" cy="14" r="2.8" fill="${SKY}"/><circle cx="9.5" cy="14" r="0.9" fill="${RED}"/><path d="M15.5 11.5h3l2.5-2.5" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="6.5" y="5.5" width="6" height="3" rx="1" fill="${STEEL}"/>${E}`,'Dehydration'],
+'core-equipment':[`${S}<rect x="3" y="9.5" width="18" height="10.5" rx="2" fill="${NAVY}"/><path d="M8.5 9.5V7.5a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/><rect x="3" y="12.5" width="18" height="2.5" fill="${SKY}"/><rect x="10.3" y="11.5" width="3.4" height="4.5" rx="1" fill="${RED}"/>${E}`,'Equipment'],
+'core-safety':[`${S}<path d="M4 16a8 8 0 0 1 16 0z" fill="${NAVY}"/><rect x="2.5" y="16" width="19" height="2.6" rx="1.3" fill="${STEEL}"/><path d="M10 8.5V6.2h4v2.3" fill="none" stroke="${SKY}" stroke-width="2" stroke-linecap="round"/>${E}`,'Safety'],
+'core-supplemental':[`${S}<circle cx="12" cy="12" r="9" fill="${NAVY}"/>${star(12,12,5.4)}${E}`,'Mixed Review'],
+'t1-regulations':[`${S}<rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="${NAVY}"/><rect x="6" y="10.5" width="12" height="1.6" fill="${SKY}"/><rect x="14.5" y="5" width="1.6" height="3" rx="0.8" fill="${STEEL}"/><rect x="14.5" y="13.5" width="1.6" height="3.5" rx="0.8" fill="${STEEL}"/>${E}`,'T1 Regulations'],
+'t1-recovery':[`${S}<rect x="2.5" y="14" width="19" height="6" rx="3" fill="${NAVY}"/><rect x="9" y="6" width="6" height="9" rx="1.5" fill="${COPPER}"/><path d="M12 6V2.5" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/><path d="M9 2.5h6" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/>${E}`,'Small App Recovery'],
+'t1-servicing':[`${S}${gauge(12,10.5,7.5,15,7.5)}<rect x="9.5" y="18.5" width="5" height="3" rx="1" fill="${STEEL}"/>${E}`,'Servicing'],
+'t1-safety':[`${S}<rect x="2.5" y="8" width="19" height="8" rx="4" fill="${NAVY}"/><circle cx="8" cy="12" r="2.6" fill="${SKY}"/><circle cx="16" cy="12" r="2.6" fill="${SKY}"/><path d="M2.5 10.5 1 9M21.5 10.5 23 9" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round"/>${E}`,'T1 Safety'],
+'t1-supplemental':[`${S}<path d="M12 2.5l8 3v6c0 5-3.6 8.2-8 10-4.4-1.8-8-5-8-10v-6z" fill="${NAVY}"/>${star(12,11,5)}${E}`,'Mixed Review'],
+'t2-intro':[`${S}<path d="M8 3h8a2 2 0 0 1 2 2v16l-6-3-6 3V5a2 2 0 0 1 2-2z" fill="${NAVY}"/><rect x="9.5" y="7.5" width="5" height="1.6" rx="0.8" fill="${SKY}"/><rect x="9.5" y="11" width="5" height="1.6" rx="0.8" fill="${SKY}"/>${E}`,'Intro'],
+'t2-leak-rates':[`${S}${gauge(12,12,8.5,15.4,8.6)}${E}`,'Leak Rates'],
+'t2-leak-inspections':[`${S}<rect x="3.5" y="4" width="12" height="17" rx="2.5" fill="${NAVY}"/><rect x="5.5" y="6.5" width="8" height="12" rx="1.2" fill="${SKY}"/><rect x="6.5" y="2.5" width="6" height="3.4" rx="1.1" fill="${STEEL}"/><circle cx="16" cy="15" r="3.6" fill="none" stroke="${GREEN}" stroke-width="2.2"/><path d="M18.6 17.6 21.5 20.5" fill="none" stroke="${GREEN}" stroke-width="2.4" stroke-linecap="round"/>${E}`,'Inspections'],
+'t2-recovery':[`${S}<rect x="8" y="3.5" width="8" height="12" rx="3.5" fill="${COPPER}"/><path d="M8 7c0-1.9 1.4-3.5 4-3.5s4 1.6 4 3.5v.2H8z" fill="${COPPER_D}"/><rect x="10" y="1.5" width="4" height="2.5" rx="1" fill="${STEEL}"/><rect x="4" y="17" width="16" height="3" rx="1.5" fill="${STEEL}"/><path d="M7 20v1.5M17 20v1.5M12 15.5V17" fill="none" stroke="${STEEL}" stroke-width="1.6" stroke-linecap="round"/>${E}`,'Recovery + Scale'],
+'t2-evac-levels':[`${S}<rect x="3.5" y="3.5" width="17" height="17" rx="2.5" fill="${NAVY}"/><rect x="7" y="13" width="2.6" height="4" rx="1" fill="${GREEN}"/><rect x="10.7" y="9.5" width="2.6" height="7.5" rx="1" fill="${GREEN}"/><rect x="14.4" y="6.5" width="2.6" height="10.5" rx="1" fill="${SKY}"/>${E}`,'Evac Levels'],
+'t2-accessories':[`${S}<rect x="1.5" y="10.5" width="21" height="3" rx="1.5" fill="${NAVY}"/><circle cx="12" cy="12" r="5" fill="${NAVY}"/><circle cx="12" cy="12" r="3.4" fill="${SKY}"/><circle cx="10.7" cy="13.2" r="0.9" fill="${GREEN}"/><circle cx="13.2" cy="10.8" r="0.9" fill="${GREEN}"/>${E}`,'Accessories'],
+'t2-evac-charging':[`${S}<circle cx="7.5" cy="8.5" r="4.6" fill="${NAVY}"/><circle cx="16.5" cy="8.5" r="4.6" fill="${NAVY}"/><circle cx="7.5" cy="8.5" r="2.4" fill="${SKY}"/><circle cx="16.5" cy="8.5" r="2.4" fill="${SKY}"/><circle cx="7.5" cy="8.5" r="0.9" fill="${RED}"/><circle cx="16.5" cy="8.5" r="0.9" fill="${RED}"/><rect x="6" y="12" width="12" height="2.4" rx="1.2" fill="${STEEL}"/><path d="M7.5 14.4 6 21M16.5 14.4 18 21M12 13.4V21" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round"/>${E}`,'Evac & Charging'],
+'t2-repairs-safety':[`${S}<path d="M18.6 3.5s2.7 3.2 2.7 5.1a2.7 2.7 0 0 1-5.4 0c0-1.9 2.7-5.1 2.7-5.1z" fill="${RED}"/><path d="M18.6 6.4s1.1 1.5 1.1 2.4a1.1 1.1 0 0 1-2.2 0c0-.9 1.1-2.4 1.1-2.4z" fill="${GOLD}"/><path d="m8.8 14.4 3.4 3.4-6 6L2.8 20.4z" fill="${NAVY}"/><path d="m13.4 13.2 2.6 2.6-1.9 1.9-2.6-2.6z" fill="${STEEL}"/>${E}`,'Repairs & Safety'],
+'t2-supplemental':[`${S}<circle cx="12" cy="12" r="9" fill="${NAVY}"/>${star(12,12,5.4)}${E}`,'Mixed Review'],
+'t3-intro':[`${S}<rect x="2.5" y="8" width="19" height="9" rx="4.5" fill="${NAVY}"/><circle cx="8" cy="12.5" r="1.6" fill="${SKY}"/><rect x="8.5" y="5.5" width="2" height="3" fill="${STEEL}"/><rect x="13.5" y="5.5" width="2" height="3" fill="${STEEL}"/><path d="M6.5 17v3.5M17.5 17v3.5" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/>${E}`,'Chiller Intro'],
+'t3-leak-detection':[`${S}<rect x="7.5" y="9" width="6" height="12.5" rx="2" fill="${NAVY}"/><path d="M10.5 9V4.5c3 0 4 2 7 2" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18.5" cy="6.5" r="2.4" fill="${GREEN}"/><rect x="8.8" y="16.5" width="3.4" height="1.6" rx="0.8" fill="${SKY}"/>${E}`,'Leak Detection'],
+'t3-leak-repair':[`${S}<rect x="2" y="8.5" width="20" height="7" rx="2" fill="${NAVY}"/><rect x="9" y="6" width="6" height="12" rx="1.5" fill="${GREEN}"/><path d="M12 18.5s1.7 2 1.7 3.1a1.7 1.7 0 0 1-3.4 0c0-1.1 1.7-3.1 1.7-3.1z" fill="${SKY}"/>${E}`,'Leak Repair'],
+'t3-recovery':[`${S}<rect x="2.5" y="10" width="19" height="9" rx="4.5" fill="${COPPER}"/><path d="M2.5 14.5c0-2.5 2-4.5 9.5-4.5s9.5 2 9.5 4.5" fill="${COPPER_D}"/><circle cx="12" cy="6" r="2.8" fill="${NAVY}"/><circle cx="12" cy="6" r="1.3" fill="${SKY}"/><path d="M12 8.8v1.2" fill="none" stroke="${STEEL}" stroke-width="1.8"/>${E}`,'LP Recovery'],
+'t3-evac-charging':[`${S}<rect x="4.5" y="6.5" width="15" height="14" rx="2.5" fill="${NAVY}"/><rect x="7" y="9" width="10" height="5" rx="1.2" fill="${GREEN}"/><path d="M9 3.5h6M12 3.5V6.5" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/><g fill="${SKY}"><circle cx="9" cy="17.5" r="1"/><circle cx="12" cy="17.5" r="1"/><circle cx="15" cy="17.5" r="1"/></g>${E}`,'Micron Gauge'],
+'t3-repairs-safety':[`${S}<path d="M6 17V9.5a6 6 0 0 1 12 0V17l1.5 2H4.5z" fill="${NAVY}"/><path d="M10 19.5a2 2 0 0 0 4 0z" fill="${STEEL}"/><path d="M12 3.5V2" fill="none" stroke="${STEEL}" stroke-width="2" stroke-linecap="round"/><path d="M4 8a5 5 0 0 1 0-4M20 8a5 5 0 0 0 0-4" fill="none" stroke="${RED}" stroke-width="1.8" stroke-linecap="round"/>${E}`,'Alarm Safety'],
+'t3-supplemental':[`${S}<path d="M7.5 3.5h9v5.5a4.5 4.5 0 0 1-9 0z" fill="${NAVY}"/><path d="M7.5 4.5H4.5a3 3 0 0 0 3 3.8M16.5 4.5h3a3 3 0 0 1-3 3.8" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="9" y="18.5" width="6" height="2.5" rx="1" fill="${STEEL}"/><path d="M12 13.5v5" fill="none" stroke="${STEEL}" stroke-width="2"/>${star(12,6.2,2.6)}${E}`,'Trophy'],
+};
+const groups={core:['core-ozone','core-refrigerants','core-blends','core-oils','core-cycle','core-regulations','core-recovery','core-dehydration','core-equipment','core-safety','core-supplemental'],
+t1:['t1-regulations','t1-recovery','t1-servicing','t1-safety','t1-supplemental'],
+t2:['t2-intro','t2-leak-rates','t2-leak-inspections','t2-recovery','t2-evac-levels','t2-accessories','t2-evac-charging','t2-repairs-safety','t2-supplemental'],
+t3:['t3-intro','t3-leak-detection','t3-leak-repair','t3-recovery','t3-evac-charging','t3-repairs-safety','t3-supplemental']};
+for(const g in groups){document.getElementById(g).innerHTML=groups[g].map(id=>`<div class="tile"><span class="pad">${I[id][0]}<span class="chk">✓</span></span><span class="name">${I[id][1]}</span><span class="id">${id}</span></div>`).join('')}
+document.getElementById('d1').innerHTML=I['core-refrigerants'][0]+'<span class="chk">✓</span>';
+document.getElementById('l1').innerHTML=I['core-refrigerants'][0];
+document.getElementById('van').innerHTML='<svg viewBox="0 0 32 24" style="width:26px;height:20px" stroke="#9cc3ff" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16V8.5A1.5 1.5 0 0 1 3.5 7H17l4.5 4H28a2 2 0 0 1 2 2v3"/><path d="M2 16h28M17 7v4h4.5"/><circle cx="9" cy="18.5" r="2.6"/><circle cx="24" cy="18.5" r="2.6"/><path d="M5.5 10.5h6"/></svg>';
+document.getElementById('boss').innerHTML='<svg viewBox="0 0 30 30" stroke="#9cc3ff" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 26V12l11-6 11 6v14M4 26h22M15 6V2.5M15 2.5h5v3h-5"/><path d="M10 26v-6h4v6M18 17h4v4h-4z"/></svg>';
+document.getElementById('big').innerHTML=['core-refrigerants','t2-evac-charging','t2-leak-rates','core-cycle','t3-intro','t2-repairs-safety','core-supplemental'].map(id=>`<span class="pad">${I[id][0]}<span class="chk">✓</span></span>`).join('');
+</script>
+</body></html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 style icon — HVAC</title>
+<style>
+  :root{
+    --navy:#14304f; --muted:#5d738c; --paper:#eef2f7; --card:#fff;
+    --done-bg:#eafaf2; --done-bd:#8fd7b4; --done-ic:#128052;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);font-family:ui-rounded,'SF Pro Rounded',system-ui,sans-serif;color:var(--navy);padding:30px 22px 70px;-webkit-font-smoothing:antialiased}
+  h1{font-size:23px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 8px;max-width:680px;line-height:1.5}
+  .cols{display:flex;gap:0;margin:18px 0 6px;padding-left:210px}
+  .colh{flex:1;text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+  .row{display:flex;align-items:center;gap:0;background:var(--card);border:1px solid #e4ebf3;border-radius:20px;margin-bottom:14px;padding:16px 14px;box-shadow:0 1px 3px rgba(20,48,79,.06)}
+  .label{width:196px;flex:0 0 196px;padding-right:14px}
+  .label .n{font-size:15px;font-weight:800;margin:0 0 3px}
+  .label .d{font-size:11.5px;color:var(--muted);line-height:1.4}
+  .cell{flex:1;display:flex;justify-content:center}
+  .cell.proof{flex:0 0 78px}
+
+  .pad{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--done-bg);border:1.5px solid var(--done-bd);color:var(--done-ic);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .pad svg{width:32px;height:32px}
+  .pad.cur{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 6px 16px rgba(20,48,79,.28)}
+
+  /* ── shared base ── */
+  svg{display:block}
+  .st{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+  .fl{fill:currentColor;stroke:none}
+
+  /* ── Style 1 · Duotone line ── */
+  .s1 .st{stroke-width:1.6}
+  .s1 .duo{fill:currentColor;opacity:.15;stroke:none}
+  /* ── Style 2 · Instrument bold ── */
+  .s2 .st{stroke-width:2.1}
+  .s2 .duo{fill:currentColor;opacity:.16;stroke:none}
+  .s2 .tick{stroke-width:1.6}
+  /* ── Style 3 · Solid cutout ── */
+  .s3 .fl{fill:currentColor}
+  /* ── Style 4 · Blueprint ── */
+  .s4 .st{stroke-width:1.1}
+  .s4 .g{stroke-width:1;stroke-dasharray:2.2 2.4;opacity:.5}
+  /* ── Style 5 · Chunky rounded ── */
+  .s5 .st{stroke-width:3}
+  .s5 .duo{fill:currentColor;opacity:.14;stroke:none}
+</style>
+</head>
+<body>
+
+<h1>5 style — chọn 1 để áp cả 32 màn</h1>
+<p class="sub">Cùng 4 icon (đồng hồ đo · bình gas · chiller · đèn khò) qua 5 style. Tất cả một màu <b>currentColor</b> nên đều đổi màu theo trạng thái — cột phải là bằng chứng trên pad navy (màn hiện tại).</p>
+
+<div class="cols">
+  <div class="colh">Đồng hồ đo</div>
+  <div class="colh">Bình gas</div>
+  <div class="colh">Chiller</div>
+  <div class="colh">Đèn khò</div>
+  <div class="colh" style="flex:0 0 78px">Trên navy</div>
+</div>
+
+<!-- ══════════ STYLE 1 · DUOTONE LINE ══════════ -->
+<div class="row s1">
+  <div class="label"><p class="n">1 · Duotone line</p><p class="d">Nét mảnh 1.6 + khối mờ 15%. Thanh, sang, hiện đại.</p></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="10.5" r="7.5"/><circle class="st" cx="12" cy="10.5" r="7.5"/><path class="st" d="M12 10.5 15.4 7.1"/><circle class="st" cx="12" cy="10.5" r="1"/><path class="st" d="M12 18v2M9.5 20.3h5"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="7.5" y="5" width="9" height="16.5" rx="3.3"/><rect class="st" x="7.5" y="5" width="9" height="16.5" rx="3.3"/><path class="st" d="M9.5 5V3.2h5V5M12 3.2V2M9.6 14.5h4.8"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="3" y="8.5" width="18" height="8" rx="4"/><rect class="st" x="3" y="8.5" width="18" height="8" rx="4"/><path class="st" d="M9 8.5V6h6v2.5M6.5 16.5V20M17.5 16.5V20"/><circle class="st" cx="8" cy="12.5" r="1.1"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="duo" d="M18.6 4.4s2.5 2.9 2.5 4.6a2.5 2.5 0 0 1-5 0c0-1.7 2.5-4.6 2.5-4.6z"/><path class="duo" d="m9.2 14.9 3-3 2.9 2.9-3 3z"/><path class="st" d="M3.4 20.6 9.2 14.9M15.1 14.8l1.8-1.8"/><path class="st" d="m9.2 14.9 3-3 2.9 2.9-3 3z"/><path class="st" d="M18.6 4.4s2.5 2.9 2.5 4.6a2.5 2.5 0 0 1-5 0c0-1.7 2.5-4.6 2.5-4.6z"/></svg></span></div>
+  <div class="cell proof"><span class="pad cur"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="10.5" r="7.5"/><circle class="st" cx="12" cy="10.5" r="7.5"/><path class="st" d="M12 10.5 15.4 7.1"/><circle class="st" cx="12" cy="10.5" r="1"/><path class="st" d="M12 18v2M9.5 20.3h5"/></svg></span></div>
+</div>
+
+<!-- ══════════ STYLE 2 · INSTRUMENT BOLD ══════════ -->
+<div class="row s2">
+  <div class="label"><p class="n">2 · Instrument đậm</p><p class="d">Nét đậm 2.1 + kim &amp; vạch chia + đinh tán. Cơ khí, đọc ra “đồng hồ nạp gas” ngay.</p></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="10.5" r="7.6"/><circle class="st" cx="12" cy="10.5" r="7.6"/><path class="tick st" d="M12 3.6v1.4M7.6 4.9l.7 1.2M16.4 4.9l-.7 1.2M4.3 8l1.2.7M19.7 8l-1.2.7"/><path class="st" d="M12 10.5 15.1 7.4"/><circle class="fl" cx="12" cy="10.5" r="1.3"/><path class="st" d="M12 18.1v2M9.6 20.3h4.8"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="7.3" y="5" width="9.4" height="16.5" rx="3.4"/><rect class="st" x="7.3" y="5" width="9.4" height="16.5" rx="3.4"/><path class="st" d="M9.5 5V3.1h5V5"/><circle class="st" cx="12" cy="2.3" r="1.3"/><path class="tick st" d="M9.4 13.2h5.2M9.4 15.6h5.2"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="3" y="8.3" width="18" height="8.4" rx="4.2"/><rect class="st" x="3" y="8.3" width="18" height="8.4" rx="4.2"/><path class="st" d="M9 8.3V5.8h6v2.5M6.5 16.7v3.3M17.5 16.7v3.3"/><path class="tick st" d="M11 11v3M13.2 11v3M15.4 11v3"/><circle class="fl" cx="7.6" cy="12.5" r="1.1"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="duo" d="M18.6 4.1s2.7 3.1 2.7 4.9a2.7 2.7 0 0 1-5.4 0c0-1.8 2.7-4.9 2.7-4.9z"/><path class="duo" d="m9 15 3-3 3 3-3 3z"/><path class="st" d="M18.6 4.1s2.7 3.1 2.7 4.9a2.7 2.7 0 0 1-5.4 0c0-1.8 2.7-4.9 2.7-4.9z"/><path class="st" d="M18.6 6.4c0 1.6-1.3 2.6-1.3 3.6"/><path class="st" d="M3.2 20.8 9 15M15 15l1.7-1.7"/><path class="st" d="m9 15 3-3 3 3-3 3z"/></svg></span></div>
+  <div class="cell proof"><span class="pad cur"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="10.5" r="7.6"/><circle class="st" cx="12" cy="10.5" r="7.6"/><path class="tick st" d="M12 3.6v1.4M7.6 4.9l.7 1.2M16.4 4.9l-.7 1.2M4.3 8l1.2.7M19.7 8l-1.2.7"/><path class="st" d="M12 10.5 15.1 7.4"/><circle class="fl" cx="12" cy="10.5" r="1.3"/><path class="st" d="M12 18.1v2M9.6 20.3h4.8"/></svg></span></div>
+</div>
+
+<!-- ══════════ STYLE 3 · SOLID CUTOUT ══════════ -->
+<div class="row s3">
+  <div class="label"><p class="n">3 · Khối đặc khoét</p><p class="d">Silhouette đặc, chi tiết là lỗ khoét lộ màu pad. Đọc như huy hiệu/biển đồng, rất chắc.</p></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="fl" fill-rule="evenodd" d="M12 2.9a7.6 7.6 0 1 0 0 15.2 7.6 7.6 0 0 0 0-15.2zm0 2.4a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/><path class="fl" d="M11.1 10.5 15.3 6.9l-2.8 4.2z"/><circle class="fl" cx="12" cy="10.5" r="1.5"/><path class="fl" d="M9.4 18.3h5.2v2.6H9.4z"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="fl" fill-rule="evenodd" d="M9.3 4.8h5.4c1.6 0 2.9 1.3 2.9 2.9v10.9c0 1.6-1.3 2.9-2.9 2.9H9.3c-1.6 0-2.9-1.3-2.9-2.9V7.7c0-1.6 1.3-2.9 2.9-2.9zm.6 8.4v1.9h4.2v-1.9z"/><path class="fl" d="M9.4 3h5.2v1.9H9.4z"/><rect class="fl" x="10.8" y="1" width="2.4" height="2.4" rx="1.2"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="fl" fill-rule="evenodd" d="M7 8h10a4 4 0 0 1 0 8H7a4 4 0 0 1 0-8zm4.4 2.6v2.8h1.2v-2.8zm2.6 0v2.8h1.2v-2.8z"/><circle class="fl" cx="7.4" cy="12" r="1.4"/><path class="fl" d="M9.2 5.8h6V8h-6zM6 16.4h1.9V20H6zM16.1 16.4H18V20h-1.9z"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="fl" fill-rule="evenodd" d="M18.6 3.8c.4.5 3 3.5 3 5.5a3 3 0 0 1-6 0c0-2 2.6-5 3-5.5zm0 3.6c-.3.4-1 1.3-1 2a1 1 0 0 0 2 0c0-.7-.7-1.6-1-2z"/><path class="fl" d="m8.8 13.6 3.6 3.6-6 6-3.6-3.6z"/><path class="fl" d="m13.6 13.4 2.4 2.4-1.8 1.8-2.4-2.4z"/></svg></span></div>
+  <div class="cell proof"><span class="pad cur"><svg viewBox="0 0 24 24"><path class="fl" fill-rule="evenodd" d="M12 2.9a7.6 7.6 0 1 0 0 15.2 7.6 7.6 0 0 0 0-15.2zm0 2.4a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/><path class="fl" d="M11.1 10.5 15.3 6.9l-2.8 4.2z"/><circle class="fl" cx="12" cy="10.5" r="1.5"/><path class="fl" d="M9.4 18.3h5.2v2.6H9.4z"/></svg></span></div>
+</div>
+
+<!-- ══════════ STYLE 4 · BLUEPRINT ══════════ -->
+<div class="row s4">
+  <div class="label"><p class="n">4 · Bản vẽ kỹ thuật</p><p class="d">Nét kim 1.1 + đường gióng nét đứt. Chính xác, “kỹ sư”, hơi lạnh.</p></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="g st" d="M12 1v3M12 17v3M2.5 10.5h3M18.5 10.5h3"/><circle class="st" cx="12" cy="10.5" r="7.5"/><path class="st" d="M12 10.5 15.4 7.1"/><circle class="st" cx="12" cy="10.5" r=".8"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="g st" d="M12 1.5v3.5M5 5v16M19 5v16"/><rect class="st" x="7.5" y="5" width="9" height="16.5" rx="3.3"/><path class="st" d="M9.5 5V3.2h5V5M9.6 14.5h4.8"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="g st" d="M2 12.5h20"/><rect class="st" x="3" y="8.5" width="18" height="8" rx="4"/><path class="st" d="M9 8.5V6h6v2.5M6.5 16.5V20M17.5 16.5V20"/><circle class="st" cx="8" cy="12.5" r="1"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="g st" d="M18.6 2v2M20.6 4l-1.2 1M16.6 4l1.2 1"/><path class="st" d="M18.6 5s2.5 2.9 2.5 4.6a2.5 2.5 0 0 1-5 0c0-1.7 2.5-4.6 2.5-4.6z"/><path class="st" d="M3.4 20.6 9.2 14.9M15.1 14.8l1.8-1.8"/><path class="st" d="m9.2 14.9 3-3 2.9 2.9-3 3z"/></svg></span></div>
+  <div class="cell proof"><span class="pad cur"><svg viewBox="0 0 24 24"><path class="g st" d="M12 1v3M12 17v3M2.5 10.5h3M18.5 10.5h3"/><circle class="st" cx="12" cy="10.5" r="7.5"/><path class="st" d="M12 10.5 15.4 7.1"/><circle class="st" cx="12" cy="10.5" r=".8"/></svg></span></div>
+</div>
+
+<!-- ══════════ STYLE 5 · CHUNKY ROUNDED ══════════ -->
+<div class="row s5">
+  <div class="label"><p class="n">5 · Nét bo dày</p><p class="d">Nét 3px bo tròn, ít chi tiết. Thân thiện, kiểu game — dễ đọc ở mobile nhỏ.</p></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="11" r="7"/><circle class="st" cx="12" cy="11" r="7"/><path class="st" d="M12 11 14.9 8.1"/><path class="st" d="M12 18v2.3"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="8" y="6" width="8" height="15" rx="4"/><rect class="st" x="8" y="6" width="8" height="15" rx="4"/><path class="st" d="M10 6V4h4v2"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><rect class="duo" x="3.5" y="9" width="17" height="7.5" rx="3.75"/><rect class="st" x="3.5" y="9" width="17" height="7.5" rx="3.75"/><path class="st" d="M7 16.5V19.5M17 16.5V19.5"/></svg></span></div>
+  <div class="cell"><span class="pad"><svg viewBox="0 0 24 24"><path class="duo" d="M18.4 4.8s2.6 3 2.6 4.7a2.6 2.6 0 0 1-5.2 0c0-1.7 2.6-4.7 2.6-4.7z"/><path class="st" d="M18.4 4.8s2.6 3 2.6 4.7a2.6 2.6 0 0 1-5.2 0c0-1.7 2.6-4.7 2.6-4.7z"/><path class="st" d="M4 20 10 14"/><path class="duo" d="m9.5 14.5 2.5-2.5 2.5 2.5-2.5 2.5z"/><path class="st" d="m9.5 14.5 2.5-2.5 2.5 2.5-2.5 2.5z"/></svg></span></div>
+  <div class="cell proof"><span class="pad cur"><svg viewBox="0 0 24 24"><circle class="duo" cx="12" cy="11" r="7"/><circle class="st" cx="12" cy="11" r="7"/><path class="st" d="M12 11 14.9 8.1"/><path class="st" d="M12 18v2.3"/></svg></span></div>
+</div>
+
+</body>
+</html>

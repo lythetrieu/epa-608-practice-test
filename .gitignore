@@ -63,3 +63,11 @@ public/questions-flagged.json
 public/questions-validated.json
 public/questions-needs-verify.json
 public/questions-legacy-backup.json
+node_modules
+tests/e2e/.auth/
+tests/e2e/.artifacts/
+tests/e2e/report/
+tests/e2e/report-runs/
+tests/e2e/loop-*.log
+.env.local
+tests/e2e/videos/

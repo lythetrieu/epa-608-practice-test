@@ -475,6 +475,9 @@ export default function StudyPathClient({
           passCount: existing.passCount,
           lastPassed: existing.lastPassed,
           lastScore: data.percentage,
+          // Signed proof of the grade from /api/public/score — the server only
+          // credits a score (and mastery) when this verifies.
+          gradeToken: data.gradeToken,
         }),
       }).catch(() => {})
 

@@ -29,11 +29,11 @@ const nextConfig: NextConfig = {
               // 'unsafe-inline' kept for Next.js + Google Tag Manager/Analytics
               // inline bootstrap. Payment processor = Polar only.
               process.env.NODE_ENV === 'development'
-                ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net"
-                : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net",
+                ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms"
+                : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https:",
-              "connect-src 'self' https://*.supabase.co http://127.0.0.1:54321 https://openrouter.ai https://www.google-analytics.com https://analytics.google.com https://polar.sh https://*.polar.sh https://api.polar.sh",
+              "connect-src 'self' https://*.supabase.co http://127.0.0.1:54321 https://openrouter.ai https://www.google-analytics.com https://analytics.google.com https://polar.sh https://*.polar.sh https://api.polar.sh https://*.clarity.ms",
               "frame-src https://buy.polar.sh https://polar.sh https://*.polar.sh",
             ].join('; '),
           },

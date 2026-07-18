@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getIdentifier, publicScoreRateLimit } from '@/lib/ratelimit'
 import { z } from 'zod'
 import { getQuiz, deleteQuiz } from '@/lib/quiz-store'
+import { issueGradeToken } from '@/lib/grade-token'
 import { buildConceptBreakdown } from '@/lib/concept-map'
 import { answerEquals } from '@/lib/multi'
 
@@ -117,6 +118,9 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     score, total, percentage, passed,
+    // Signed proof of this grade — /api/study-path/progress only grants mastery
+    // for a score that arrives inside a valid token (see lib/grade-token.ts).
+    gradeToken: issueGradeToken(quizId, percentage),
     category: quiz.category,
     results, weakAreas, strongAreas,
     conceptBreakdown: conceptData.concepts.filter(c => c.total > 0),

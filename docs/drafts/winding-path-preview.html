@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Winding study path — Type II</title>
+<style>
+  :root{--navy:#003087}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f8fafc;background-image:radial-gradient(circle at 1px 1px,rgba(15,23,42,.045) 1px,transparent 0);background-size:22px 22px;font-family:ui-rounded,'SF Pro Rounded',system-ui,sans-serif;color:#0f213b}
+  .hdr{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid #e2e8f0}
+  .hdrin{max-width:512px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:12px}
+  .hdrin b{font-size:15px}.chip{margin-left:auto;font-size:12px;font-weight:700;color:var(--navy);background:#eef4fb;padding:4px 8px;border-radius:6px}
+  .title{max-width:512px;margin:0 auto;padding:26px 20px 0}
+  .eyebrow{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+  h2{font-size:24px;font-weight:900;margin:6px 0 6px}.sub{font-size:14px;color:#64748b;margin:0}
+  .route{position:relative;margin:24px auto 0;width:100%;max-width:360px}
+  .route>svg.road{position:absolute;inset:0;width:100%;height:100%}
+  .stop{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;width:138px}
+  .stars{height:16px;margin-bottom:4px;font-size:12px;letter-spacing:1px;color:#f59e0b}
+  .stars .off{color:#cbd5e1}
+  .pad{position:relative;display:grid;place-items:center;border-radius:50%;box-shadow:0 0 0 4px #fff}
+  .pad svg{display:block}
+  .done .pad{width:56px;height:56px;background:#eef4fb;border:1.5px solid #b3cdee}
+  .done .pad svg{width:32px;height:32px}
+  .chk{position:absolute;right:-4px;bottom:-4px;width:19px;height:19px;border-radius:50%;background:#16a34a;border:2px solid #fff;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:900}
+  .now .pad{width:70px;height:70px;background:var(--navy);color:#9cc3ff;box-shadow:0 0 0 4px #fff,0 8px 18px rgba(0,48,135,.3)}
+  .now .pad svg{width:36px;height:26px}
+  .ping{position:absolute;inset:0;border-radius:50%;background:rgba(0,48,135,.22);animation:ping 1.6s cubic-bezier(0,0,.2,1) infinite}
+  @keyframes ping{75%,100%{transform:scale(1.7);opacity:0}}
+  .locked .pad{width:56px;height:56px;background:#fff;border:1px solid #e2e8f0}
+  .locked .pad svg{width:32px;height:32px;filter:grayscale(1) opacity(.4)}
+  .lockmini{position:absolute;right:-4px;bottom:-4px;width:19px;height:19px;border-radius:50%;background:#fff;border:1px solid #e2e8f0;display:grid;place-items:center;color:#94a3b8;font-size:10px}
+  .lbl{margin-top:8px;text-align:center;width:138px}
+  .lbl .nm{font-size:11.5px;font-weight:700;line-height:1.15;color:#1e293b}
+  .locked .lbl .nm{color:#94a3b8}
+  .lbl .st{font-size:10px;margin-top:2px;color:#94a3b8}
+  .start{margin-top:6px;display:inline-flex;align-items:center;gap:4px;background:#F97316;color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+  .boss .pad{width:64px;height:64px;background:#001d57;color:#9cc3ff}
+  .boss .pad svg{width:30px;height:30px}
+  .boss .lbl .nm{font-size:11.5px;font-weight:800;color:#1e293b}
+</style></head><body>
+
+<div class="hdr"><div class="hdrin"><span style="color:#64748b">← Sections</span><b>🔧 Type II</b><span class="chip">3 / 9</span></div></div>
+<div class="title">
+  <div class="eyebrow">EPA 608 · Study Route</div>
+  <h2>Type II levels</h2>
+  <p class="sub">Clear each level with 8 of 10 to unlock the next one.</p>
+</div>
+
+<div class="route" id="route"></div>
+
+<script>
+const NAVY='#003087',STEEL='#4a6690',SKY='#d9e6f7',COPPER='#c2703d',COPPER_D='#a95a2b',RED='#e11d48',GREEN='#16a34a',GOLD='#eab308';
+const S='<svg viewBox="0 0 24 24">',E='</svg>';
+function star(cx,cy,r){let p=[];for(let i=0;i<10;i++){const rad=i%2===0?r:r*0.45,a=Math.PI/5*i-Math.PI/2;p.push((cx+rad*Math.cos(a)).toFixed(2)+','+(cy+rad*Math.sin(a)).toFixed(2))}return `<polygon points="${p.join(' ')}" fill="${GOLD}"/>`}
+function gauge(cx,cy,r,nx,ny){return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${NAVY}"/><circle cx="${cx}" cy="${cy}" r="${r*0.66}" fill="${SKY}"/><path d="M${cx} ${cy} ${nx} ${ny}" fill="none" stroke="${RED}" stroke-width="2" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${r*0.17}" fill="${NAVY}"/>`}
+const ICON={
+'t2-intro':`${S}<path d="M8 3h8a2 2 0 0 1 2 2v16l-6-3-6 3V5a2 2 0 0 1 2-2z" fill="${NAVY}"/><rect x="9.5" y="7.5" width="5" height="1.6" rx="0.8" fill="${SKY}"/><rect x="9.5" y="11" width="5" height="1.6" rx="0.8" fill="${SKY}"/>${E}`,
+'t2-leak-rates':`${S}${gauge(12,12,8.5,15.4,8.6)}${E}`,
+'t2-leak-inspections':`${S}<rect x="3.5" y="4" width="12" height="17" rx="2.5" fill="${NAVY}"/><rect x="5.5" y="6.5" width="8" height="12" rx="1.2" fill="${SKY}"/><rect x="6.5" y="2.5" width="6" height="3.4" rx="1.1" fill="${STEEL}"/><circle cx="16" cy="15" r="3.6" fill="none" stroke="${GREEN}" stroke-width="2.2"/><path d="M18.6 17.6 21.5 20.5" fill="none" stroke="${GREEN}" stroke-width="2.4" stroke-linecap="round"/>${E}`,
+'t2-recovery':`${S}<rect x="8" y="3.5" width="8" height="12" rx="3.5" fill="${COPPER}"/><path d="M8 7c0-1.9 1.4-3.5 4-3.5s4 1.6 4 3.5v.2H8z" fill="${COPPER_D}"/><rect x="10" y="1.5" width="4" height="2.5" rx="1" fill="${STEEL}"/><rect x="4" y="17" width="16" height="3" rx="1.5" fill="${STEEL}"/><path d="M7 20v1.5M17 20v1.5M12 15.5V17" fill="none" stroke="${STEEL}" stroke-width="1.6" stroke-linecap="round"/>${E}`,
+'t2-evac-levels':`${S}<rect x="3.5" y="3.5" width="17" height="17" rx="2.5" fill="${NAVY}"/><rect x="7" y="13" width="2.6" height="4" rx="1" fill="${GREEN}"/><rect x="10.7" y="9.5" width="2.6" height="7.5" rx="1" fill="${GREEN}"/><rect x="14.4" y="6.5" width="2.6" height="10.5" rx="1" fill="${SKY}"/>${E}`,
+'t2-accessories':`${S}<rect x="1.5" y="10.5" width="21" height="3" rx="1.5" fill="${NAVY}"/><circle cx="12" cy="12" r="5" fill="${NAVY}"/><circle cx="12" cy="12" r="3.4" fill="${SKY}"/><circle cx="10.7" cy="13.2" r="0.9" fill="${GREEN}"/><circle cx="13.2" cy="10.8" r="0.9" fill="${GREEN}"/>${E}`,
+'t2-evac-charging':`${S}<circle cx="7.5" cy="8.5" r="4.6" fill="${NAVY}"/><circle cx="16.5" cy="8.5" r="4.6" fill="${NAVY}"/><circle cx="7.5" cy="8.5" r="2.4" fill="${SKY}"/><circle cx="16.5" cy="8.5" r="2.4" fill="${SKY}"/><circle cx="7.5" cy="8.5" r="0.9" fill="${RED}"/><circle cx="16.5" cy="8.5" r="0.9" fill="${RED}"/><rect x="6" y="12" width="12" height="2.4" rx="1.2" fill="${STEEL}"/><path d="M7.5 14.4 6 21M16.5 14.4 18 21M12 13.4V21" fill="none" stroke="${STEEL}" stroke-width="1.8" stroke-linecap="round"/>${E}`,
+'t2-repairs-safety':`${S}<path d="M18.6 3.5s2.7 3.2 2.7 5.1a2.7 2.7 0 0 1-5.4 0c0-1.9 2.7-5.1 2.7-5.1z" fill="${RED}"/><path d="M18.6 6.4s1.1 1.5 1.1 2.4a1.1 1.1 0 0 1-2.2 0c0-.9 1.1-2.4 1.1-2.4z" fill="${GOLD}"/><path d="m8.8 14.4 3.4 3.4-6 6L2.8 20.4z" fill="${NAVY}"/><path d="m13.4 13.2 2.6 2.6-1.9 1.9-2.6-2.6z" fill="${STEEL}"/>${E}`,
+'t2-supplemental':`${S}<circle cx="12" cy="12" r="9" fill="${NAVY}"/>${star(12,12,5.4)}${E}`,
+};
+const VAN='<svg viewBox="0 0 32 24" fill="none" stroke="#9cc3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16V8.5A1.5 1.5 0 0 1 3.5 7H17l4.5 4H28a2 2 0 0 1 2 2v3"/><path d="M2 16h28M17 7v4h4.5"/><circle cx="9" cy="18.5" r="2.6"/><circle cx="24" cy="18.5" r="2.6"/><path d="M5.5 10.5h6"/></svg>';
+const BOSS='<svg viewBox="0 0 30 30" fill="none" stroke="#9cc3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 26V12l11-6 11 6v14M4 26h22M15 6V2.5M15 2.5h5v3h-5"/><path d="M10 26v-6h4v6M18 17h4v4h-4z"/></svg>';
+
+const LEVELS=[
+ {id:'t2-intro',nm:'Introduction & Classifications',s:'done',best:100,stars:3},
+ {id:'t2-leak-rates',nm:'Leak Rates & Thresholds',s:'done',best:90,stars:2},
+ {id:'t2-leak-inspections',nm:'Repair Timeframes & Inspections',s:'done',best:80,stars:1},
+ {id:'t2-recovery',nm:'Refrigerant Recovery',s:'now'},
+ {id:'t2-evac-levels',nm:'Required Evacuation Levels',s:'locked'},
+ {id:'t2-accessories',nm:'System Accessories',s:'locked'},
+ {id:'t2-evac-charging',nm:'Evacuation & Charging',s:'locked'},
+ {id:'t2-repairs-safety',nm:'Repairs & Safety',s:'locked'},
+ {id:'t2-supplemental',nm:'Type II Mixed Review',s:'locked'},
+];
+// geometry — mirrors StudyPathClient
+const RW=360,LX=96,RX=264,CX=180,STEP=128,Y0=64;
+const laneX=i=>i%2===0?LX:RX, nodeY=i=>Y0+i*STEP;
+const bossY=nodeY(LEVELS.length), routeH=bossY+100;
+const anchors=LEVELS.map((_,i)=>[laneX(i),nodeY(i)]); anchors.push([CX,bossY]);
+let road=`M ${anchors[0][0]} ${anchors[0][1]}`;
+for(let i=1;i<anchors.length;i++){const[ax,ay]=anchors[i-1],[bx,by]=anchors[i];road+=` C ${ax} ${ay+STEP*0.55}, ${bx} ${by-STEP*0.55}, ${bx} ${by}`;}
+const route=document.getElementById('route');
+route.style.height=routeH+'px';
+let html=`<svg class="road" viewBox="0 0 ${RW} ${routeH}" preserveAspectRatio="none" fill="none"><path d="${road}" stroke="#d4dde8" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="${road}" stroke="#fff" stroke-width="2.5" stroke-dasharray="9 12" stroke-linecap="round"/></svg>`;
+const starStr=n=>[0,1,2].map(k=>k<n?'★':'<span class="off">★</span>').join('');
+LEVELS.forEach((L,i)=>{
+  const x=laneX(i),y=nodeY(i);
+  let pad='',st='';
+  if(L.s==='done'){pad=`<div class="pad">${ICON[L.id]}<span class="chk">✓</span></div>`;st=`Best ${L.best}%`;}
+  else if(L.s==='now'){pad=`<div class="pad"><span class="ping"></span>${VAN}</div>`;st='10 Q · pass 8/10';}
+  else{pad=`<div class="pad">${ICON[L.id]}<span class="lockmini">🔒</span></div>`;st='Locked';}
+  html+=`<div class="stop ${L.s}" style="left:${x/RW*100}%;top:${y}px">
+    <div class="stars">${L.s==='done'?starStr(L.stars):''}</div>${pad}
+    <div class="lbl"><div class="nm">${L.nm}</div><div class="st">${st}</div>${L.s==='now'?'<div class="start">Start ▸</div>':''}</div>
+  </div>`;
+});
+html+=`<div class="stop boss" style="left:${CX/RW*100}%;top:${bossY}px"><div class="pad">${BOSS}</div><div class="lbl"><div class="nm">Boss Exam</div><div class="st">25 Q · timed · 72%</div></div></div>`;
+route.innerHTML=html;
+</script>
+</body></html>
