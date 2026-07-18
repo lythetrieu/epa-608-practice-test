@@ -1,8 +1,13 @@
 name: Daily QA
 
-# Runs the whole quality system against production every morning, plus on any
-# pull request. A failure here means a real user is (or is about to be) hurt —
-# the artifacts include video + trace for every failed test.
+# Runs the quality system against production every morning, plus on every PR.
+# A failure here means a real user is (or is about to be) hurt — each failed
+# test ships with video + trace in the run's artifact.
+#
+# SECURITY NOTE: this repository is PUBLIC. The service-role key is only handed
+# to the scheduled/manual runs. Pull requests deliberately run WITHOUT it, so a
+# PR can never execute code that reads the key. Data-layer specs skip in that
+# mode; the schedule still covers them daily.
 
 on:
   schedule:
@@ -19,11 +24,14 @@ concurrency:
   group: daily-qa-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  issues: write # so a failing canary can raise/refresh one tracking issue
+
 env:
   E2E_BASE_URL: ${{ github.event.inputs.base_url || 'https://app.epa608practicetest.net' }}
 
 jobs:
-  # ── Layer 0: the code itself ────────────────────────────────────────────────
   static:
     name: Types · Lint · Dependencies
     runs-on: ubuntu-latest
@@ -41,9 +49,8 @@ jobs:
 
       - name: Dependency vulnerabilities (high+)
         run: npm audit --audit-level=high
-        continue-on-error: true # report, don't block the canary
+        continue-on-error: true
 
-  # ── Layers 1-6: the running product ────────────────────────────────────────
   e2e:
     name: Function · Security · Data · A11y · Content
     runs-on: ubuntu-latest
@@ -61,9 +68,15 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # withheld on pull_request — see SECURITY NOTE above
+          SUPABASE_SERVICE_ROLE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.SUPABASE_SERVICE_ROLE_KEY }}
           E2E_WORKERS: '3'
         run: npx playwright test
+
+      # Readable result on the run page itself — no download needed.
+      - name: Write summary
+        if: always()
+        run: node tests/e2e/summarize.js --md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload report (video + trace for every failure)
         if: always()
@@ -74,7 +87,42 @@ jobs:
             tests/e2e/report
             tests/e2e/videos
           retention-days: 14
+          if-no-files-found: ignore
 
-      - name: Summarise failures in the run log
-        if: failure()
-        run: node tests/e2e/summarize.js || true
+      # One living issue for the canary, refreshed each failure, closed when green.
+      - name: Raise / refresh the canary issue
+        if: always() && github.event_name != 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const failed = '${{ job.status }}' === 'failure'
+            const title = '🔴 Daily QA is failing'
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'qa-canary',
+            })
+            const existing = open.find(i => i.title === title)
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+
+            if (!failed) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: existing.number, body: `✅ Back to green — ${runUrl}` })
+                await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: existing.number, state: 'closed' })
+              }
+              return
+            }
+
+            let summary = '_summary unavailable_'
+            try { summary = require('child_process').execSync('node tests/e2e/summarize.js --md').toString() } catch {}
+            const body = `${summary}\n\n[Full run, with video + trace →](${runUrl})`
+
+            if (existing) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body })
+            } else {
+              await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['qa-canary'] })
+            }
