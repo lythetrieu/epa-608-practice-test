@@ -7,6 +7,10 @@ import type { Page } from '@playwright/test'
 // sub-44px tap targets are real usability bugs, not box-ticking.
 
 async function scan(page: Page, label: string) {
+  // The onboarding tour fades in over the dashboard; scanning mid-transition
+  // reads half-applied colours and reports contrast failures that do not exist
+  // once painted. Let the page settle first.
+  await page.waitForTimeout(1500)
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze()

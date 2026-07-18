@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Settings, LogOut, Zap } from 'lucide-react'
 import { clearLocalFirstCache, readCache } from '@/lib/local-first'
 import { getTierLabel } from '@/lib/tier'
@@ -21,6 +21,17 @@ type AccountSheetProps = {
 // Mobile account bottom sheet — opened from the avatar in the top bar.
 // Always mounted so the slide-up transition can play; hidden via translate-y.
 export default function AccountSheet({ open, onClose, username, tier, userId }: AccountSheetProps) {
+  // The sheet stays mounted so the slide-up can animate, so while it is closed
+  // its buttons are still tabbable even though it is aria-hidden — a keyboard
+  // or screen-reader user could land inside a hidden dialog (axe:
+  // aria-hidden-focus). `inert` takes the whole subtree out of the tab order.
+  // Set via ref because React 18 does not accept `inert` as a JSX prop.
+  const sheetRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = sheetRef.current
+    if (el) el.inert = !open
+  }, [open])
+
   const isPro = tier !== 'free'
 
   // Rank line reads the dashboard's local-first snapshot (no extra fetch).
@@ -46,6 +57,7 @@ export default function AccountSheet({ open, onClose, username, tier, userId }: 
 
       {/* Sheet */}
       <div
+        ref={sheetRef}
         role="dialog"
         aria-label="Account"
         aria-hidden={!open}
