@@ -86,6 +86,7 @@ jobs:
           path: |
             tests/e2e/report
             tests/e2e/videos
+            tests/e2e/.artifacts
           retention-days: 14
           if-no-files-found: ignore
 
