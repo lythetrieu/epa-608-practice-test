@@ -1,0 +1,80 @@
+name: Daily QA
+
+# Runs the whole quality system against production every morning, plus on any
+# pull request. A failure here means a real user is (or is about to be) hurt —
+# the artifacts include video + trace for every failed test.
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 01:00 UTC = 08:00 Vietnam
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Target to test (defaults to production)'
+        required: false
+        default: 'https://app.epa608practicetest.net'
+
+concurrency:
+  group: daily-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  E2E_BASE_URL: ${{ github.event.inputs.base_url || 'https://app.epa608practicetest.net' }}
+
+jobs:
+  # ── Layer 0: the code itself ────────────────────────────────────────────────
+  static:
+    name: Types · Lint · Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+
+      - name: TypeScript
+        run: npx tsc --noEmit
+
+      - name: ESLint
+        run: npm run lint --if-present
+
+      - name: Dependency vulnerabilities (high+)
+        run: npm audit --audit-level=high
+        continue-on-error: true # report, don't block the canary
+
+  # ── Layers 1-6: the running product ────────────────────────────────────────
+  e2e:
+    name: Function · Security · Data · A11y · Content
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+
+      - name: Install browsers (Chromium + WebKit for iOS Safari)
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run the quality suite
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          E2E_WORKERS: '3'
+        run: npx playwright test
+
+      - name: Upload report (video + trace for every failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-report-${{ github.run_number }}
+          path: |
+            tests/e2e/report
+            tests/e2e/videos
+          retention-days: 14
+
+      - name: Summarise failures in the run log
+        if: failure()
+        run: node tests/e2e/summarize.js || true
