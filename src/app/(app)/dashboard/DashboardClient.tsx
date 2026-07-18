@@ -326,13 +326,13 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
                           practiced,
                         })
                       }
-                      className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded hover:bg-orange-600 transition-colors after:absolute after:-inset-2 after:content-['']"
+                      className="absolute -top-2.5 left-3 z-10 bg-orange-700 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded hover:bg-orange-800 transition-colors after:absolute after:-inset-2 after:content-['']"
                       aria-label={`Open fix plan for ${category}`}
                     >
                       Fix this →
                     </button>
                   ) : isNext ? (
-                    <span className="absolute -top-2.5 left-3 z-10 bg-orange-500 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded pointer-events-none">
+                    <span className="absolute -top-2.5 left-3 z-10 bg-orange-700 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded pointer-events-none">
                       Start here →
                     </span>
                   ) : null}

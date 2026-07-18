@@ -71,7 +71,7 @@ export default async function UserDetailPage({
       {/* Back link */}
       <Link
         href="/admin/users"
-        className="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block"
+        className="text-sm text-gray-500 hover:text-gray-700 mb-6 inline-block"
       >
         &larr; Back to Users
       </Link>

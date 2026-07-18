@@ -146,7 +146,7 @@ export function TeamAdminClient({
         <button
           onClick={regenerateCode}
           disabled={regenerating}
-          className="mt-3 text-sm text-gray-400 hover:text-gray-600 underline disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+          className="mt-3 text-sm text-gray-500 hover:text-gray-700 underline disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
         >
           {regenerating ? 'Regenerating...' : 'Regenerate link'}
         </button>
@@ -208,7 +208,7 @@ export function TeamAdminClient({
                             <button
                               onClick={() => setConfirmRemoveId(null)}
                               disabled={removingId === m.user_id}
-                              className="text-xs font-medium text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                              className="text-xs font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50"
                             >
                               Cancel
                             </button>

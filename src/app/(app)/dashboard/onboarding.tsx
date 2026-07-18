@@ -53,7 +53,7 @@ export function Onboarding({ show }: { show: boolean }) {
         <div className="px-6 sm:px-8 pb-6 flex items-center justify-between">
           <button
             onClick={dismiss}
-            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
             Skip
           </button>

@@ -277,7 +277,7 @@ export default function FlashcardClient() {
 
           <Link
             href="/dashboard"
-            className="block text-center text-sm text-gray-400 hover:text-gray-600 mt-6"
+            className="block text-center text-sm text-gray-500 hover:text-gray-700 mt-6"
           >
             Back to Dashboard
           </Link>
@@ -356,7 +356,7 @@ export default function FlashcardClient() {
 
           <Link
             href="/dashboard"
-            className="block text-center text-sm text-gray-400 hover:text-gray-600"
+            className="block text-center text-sm text-gray-500 hover:text-gray-700"
           >
             Back to Dashboard
           </Link>

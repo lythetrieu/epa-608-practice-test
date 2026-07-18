@@ -51,7 +51,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </div>
           <div className="leading-tight">
             <div className="text-white font-bold text-sm">EPA 608</div>
-            <div className="text-white/40 text-xs">Practice Test</div>
+            <div className="text-white/70 text-xs">Practice Test</div>
           </div>
         </Link>
       </div>
@@ -126,7 +126,7 @@ export default function AppSidebar({ email, tier, isTeamAdmin, isAdmin }: AppSid
           </div>
           <div className="min-w-0">
             <p className="text-white text-xs font-semibold truncate">{username}</p>
-            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isPro ? 'bg-blue-400/20 text-blue-300' : 'bg-white/10 text-white/50'}`}>
+            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isPro ? 'bg-blue-400/20 text-blue-300' : 'bg-white/10 text-white/80'}`}>
               {getTierLabel(tier)}
             </span>
           </div>

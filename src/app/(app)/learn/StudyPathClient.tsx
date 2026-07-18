@@ -827,7 +827,7 @@ export default function StudyPathClient({
                       allDone
                         ? 'bg-green-50 text-green-700 border-green-200'
                         : cat === recommendedWorld
-                          ? 'bg-orange-50 text-orange-600 border-orange-300'
+                          ? 'bg-orange-50 text-orange-800 border-orange-300'
                           : started
                             ? 'bg-blue-50 text-blue-800 border-blue-100'
                             : 'bg-gray-100 text-gray-600 border-gray-200'

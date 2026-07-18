@@ -127,7 +127,7 @@ function Feature({ included, text, bold }: { included: boolean; text: string; bo
       ) : (
         <X size={18} className="text-gray-300 shrink-0 mt-0.5" />
       )}
-      <span className={`text-sm ${included ? (bold ? 'text-gray-900 font-semibold' : 'text-gray-700') : 'text-gray-400'}`}>
+      <span className={`text-sm ${included ? (bold ? 'text-gray-900 font-semibold' : 'text-gray-700') : 'text-gray-500'}`}>
         {text}
       </span>
     </div>
