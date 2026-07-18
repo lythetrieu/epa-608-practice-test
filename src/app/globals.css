@@ -98,6 +98,15 @@
 .shepherd-element .shepherd-text {
   color: #374151; /* gray-700 */
 }
+.shepherd-element .shepherd-button {
+  /* library default is #cce1f9 on #3288e6 (2.7:1); brand navy + white ≈ 14:1 */
+  background: #003087;
+  color: #ffffff;
+}
+.shepherd-element .shepherd-button:hover {
+  background: #00205c;
+  color: #ffffff;
+}
 .shepherd-element .shepherd-button-secondary {
   color: #4b5563; /* gray-600 on #f8f9f9 ≈ 7:1 */
 }
