@@ -201,7 +201,7 @@ export function PracticeNextSection({
             <Link
               href={`/checkout.html`}
               className="shrink-0 px-4 py-2 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
-            >
+             prefetch={false}>
               Upgrade — $14.99
             </Link>
           </div>

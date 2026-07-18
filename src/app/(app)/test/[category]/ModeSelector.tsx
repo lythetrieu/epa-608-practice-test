@@ -72,7 +72,7 @@ export default function ModeSelector({ slug, category, isPro }: { slug: string; 
               <Link
                 href={`/checkout.html`}
                 className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-800 text-white rounded-[7px] text-sm font-semibold hover:bg-blue-900 transition-colors"
-              >
+               prefetch={false}>
                 Unlock Timed Simulation — $14.99 lifetime
               </Link>
             </div>

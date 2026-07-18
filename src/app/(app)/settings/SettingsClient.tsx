@@ -309,7 +309,7 @@ export default function SettingsClient({
           <Link
             href={`/checkout.html`}
             className="inline-block px-5 py-2.5 bg-blue-800 text-white rounded-lg text-sm font-semibold hover:bg-blue-900 transition-colors"
-          >
+           prefetch={false}>
             Upgrade to Pro
           </Link>
         )}
