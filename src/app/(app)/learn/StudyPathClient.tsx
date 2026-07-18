@@ -874,7 +874,7 @@ export default function StudyPathClient({
   // ── Serpentine "winding road" geometry (preview build) ──────────────────────
   // Levels zig-zag between two lanes; the Boss node centers at the end. A single
   // bezier road threads all anchors; stops are absolutely placed on it.
-  const RW = 360, LX = 96, RX = 264, CX = 180, STEP = 128, Y0 = 64
+  const RW = 360, LX = 96, RX = 264, CX = 180, STEP = 132, Y0 = 108
   const laneX = (i: number) => (i % 2 === 0 ? LX : RX)
   const nodeY = (i: number) => Y0 + i * STEP
   const bossIdx = worldItems.length
@@ -918,8 +918,8 @@ export default function StudyPathClient({
       </div>
 
       {/* winding "service route" — levels zig-zag along a curved road */}
-      <div className="relative mx-auto pb-24" style={{ width: '100%', maxWidth: RW, height: routeH }}>
-        <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 ${RW} ${routeH}`} fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <div className="relative mx-auto mt-4 pb-24" style={{ width: '100%', maxWidth: RW }}>
+        <svg className="block w-full h-auto" viewBox={`0 0 ${RW} ${routeH}`} fill="none" aria-hidden="true">
           <path d={road} stroke="#d4dde8" strokeWidth={22} strokeLinecap="round" strokeLinejoin="round" />
           <path d={road} stroke="#ffffff" strokeWidth={2.5} strokeDasharray="9 12" strokeLinecap="round" />
         </svg>
@@ -930,7 +930,7 @@ export default function StudyPathClient({
           const best = progress[c.id]?.bestScore
           const tries = progress[c.id]?.attempts ?? 0
           return (
-            <div key={c.id} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(x / RW) * 100}%`, top: y, width: 138 }}>
+            <div key={c.id} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(x / RW) * 100}%`, top: `${(y / routeH) * 100}%`, width: 138 }}>
               <div className="h-4 mb-1 flex items-center justify-center"><Stars score={best} /></div>
               {s === 'done' && (
                 <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="relative grid place-items-center rounded-full ring-4 ring-white shadow-sm hover:brightness-105 active:translate-y-0.5 transition" style={{ width: 56, height: 56, background: '#eef4fb', border: '1.5px solid #b3cdee' }} aria-label={c.title}>
@@ -972,7 +972,7 @@ export default function StudyPathClient({
         })}
 
         {/* BOSS EXAM — the testing center caps the route */}
-        <div className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(CX / RW) * 100}%`, top: bossY, width: 160 }}>
+        <div className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${(CX / RW) * 100}%`, top: `${(bossY / routeH) * 100}%`, width: 160 }}>
           <Link href={`/test/${bossSlug}?mode=test`} className="relative grid place-items-center rounded-full ring-4 ring-white shadow-md hover:brightness-110 active:translate-y-0.5 transition" style={{ width: 64, height: 64, background: '#001d57', color: '#9cc3ff' }} aria-label="Boss Exam">
             <TestingCenterIcon size={30} />
           </Link>
