@@ -221,6 +221,12 @@ export default function StudyPathClient({
     results?: { questionId: string; correct: boolean; userAnswer: string | null; correctAnswer: string }[]
   } | null>(null)
   const [activeWorld, setActiveWorld] = useState<string | null>(null) // null = dashboard; else show that World's path
+  // QA aid: /learn?unlock=1 makes every stop tappable (no data change) so the
+  // team can walk each level. Only affects the signed-in viewer's own screen.
+  const [unlockAll, setUnlockAll] = useState(false)
+  useEffect(() => {
+    try { setUnlockAll(new URLSearchParams(window.location.search).get('unlock') === '1') } catch { /* noop */ }
+  }, [])
 
   // Deep link: /learn?section=Core (Home's section cards) opens that world's
   // path directly instead of landing on the section picker again.
@@ -948,7 +954,13 @@ export default function StudyPathClient({
                   </span>
                 </button>
               )}
-              {s === 'locked' && (
+              {s === 'locked' && unlockAll && (
+                // QA unlock: tappable, full-color, small unlock hint badge.
+                <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="relative grid place-items-center rounded-full ring-4 ring-white bg-white shadow-sm hover:brightness-105 active:translate-y-0.5 transition" style={{ width: 56, height: 56, border: '1.5px dashed #b3cdee' }} aria-label={c.title}>
+                  {iconForConcept(c.id, 32)}
+                </button>
+              )}
+              {s === 'locked' && !unlockAll && (
                 <div className="relative grid place-items-center rounded-full ring-4 ring-white bg-white" style={{ width: 56, height: 56, border: '1px solid #e2e8f0' }}>
                   <span style={{ filter: 'grayscale(1) opacity(0.4)' }}>{iconForConcept(c.id, 32)}</span>
                   <span className="absolute -right-1 -bottom-1 grid place-items-center w-[19px] h-[19px] rounded-full bg-white border border-slate-200 text-slate-400">
@@ -957,13 +969,13 @@ export default function StudyPathClient({
                 </div>
               )}
               <div className="mt-2 text-center px-1" style={{ width: 138 }}>
-                <div className={`text-[11.5px] font-semibold leading-tight ${s === 'locked' ? 'text-slate-400' : 'text-slate-800'}`}>{c.title}</div>
+                <div className={`text-[11.5px] font-semibold leading-tight ${s === 'locked' && !unlockAll ? 'text-slate-400' : 'text-slate-800'}`}>{c.title}</div>
                 <div className="text-[10px] mt-0.5 text-slate-400">
-                  {s === 'done' ? (best ? `Best ${best}%` : 'Cleared') : s === 'current' ? '10 Q · pass 8/10' : 'Locked'}
+                  {s === 'done' ? (best ? `Best ${best}%` : 'Cleared') : s === 'current' ? '10 Q · pass 8/10' : unlockAll ? 'Preview · open' : 'Locked'}
                 </div>
-                {s === 'current' && (
-                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-1.5 inline-flex items-center gap-1 text-white text-[12px] font-semibold px-3 py-1.5 rounded-lg shadow-sm hover:brightness-110 transition" style={{ background: '#F97316' }}>
-                    {tries > 0 ? 'Try again' : 'Start'} <ArrowRight size={13} />
+                {(s === 'current' || (s === 'locked' && unlockAll)) && (
+                  <button onClick={() => openConcept(c.subtopicPrefix, c.id)} className="mt-1.5 inline-flex items-center gap-1 text-white text-[12px] font-semibold px-3 py-1.5 rounded-lg shadow-sm hover:brightness-110 transition" style={{ background: s === 'current' ? '#F97316' : '#003087' }}>
+                    {s === 'current' ? (tries > 0 ? 'Try again' : 'Start') : 'Open'} <ArrowRight size={13} />
                   </button>
                 )}
               </div>
