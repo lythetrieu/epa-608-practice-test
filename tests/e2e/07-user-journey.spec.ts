@@ -12,6 +12,8 @@ import type { Page } from '@playwright/test'
 // driven yet — the loop logs and stops there rather than pretending to pass.
 const OPTION = /^([A-D]\s.+|True|False)$/
 const QUESTION = 'What is the leak rate threshold for comfort cooling?'
+// Everything on a quiz screen that is NOT an answer.
+const CHROME_EXACT = /^(exit|back|next question|submit answers|sign out|home|study path|practice|practice test|progress|ai tutor|account|send|skip|new chat|history|ask ai: why\?)$/i
 
 /** Read the question currently on screen, for the log. */
 async function currentQuestion(page: Page): Promise<string> {
@@ -22,6 +24,12 @@ async function currentQuestion(page: Page): Promise<string> {
 
 /** Answer one question and advance. Returns false when the quiz has ended. */
 async function answerOne(page: Page): Promise<boolean> {
+  // Stop the moment the quiz is over. The review screen still has buttons
+  // ("Ask AI: why?") and the driver used to keep clicking them, sailing past
+  // ten answers and clicking things a finished user never would.
+  const screenNow = await page.locator('body').innerText().catch(() => '')
+  if (/Your answer\s*[·:]|passing mark|you mastered|didn'?t pass/i.test(screenNow)) return false
+
   const options = page.getByRole('button', { name: OPTION })
   // Wait for the next question to paint rather than guessing a delay — this is
   // what a person does: they wait until they can see the choices.
@@ -32,6 +40,29 @@ async function answerOne(page: Page): Promise<boolean> {
     .catch(() => false)
 
   if (!appeared) {
+    // SELECT-ALL questions render bare values ("R-744") that no answer-text
+    // pattern can distinguish from chrome, so identify them by the prompt and
+    // then take every button that is not a known control.
+    const screen = await page.locator('body').innerText().catch(() => '')
+    if (/SELECT ALL THAT APPLY/i.test(screen)) {
+      const all = page.getByRole('button')
+      const total = await all.count().catch(() => 0)
+      const picks: number[] = []
+      for (let i = 0; i < total; i++) {
+        const label = (await all.nth(i).innerText().catch(() => '')).trim()
+        if (!label || label.includes('$') || CHROME_EXACT.test(label)) continue
+        picks.push(i)
+      }
+      // these questions want more than one answer
+      for (const i of picks.slice(0, 2)) await all.nth(i).click({ timeout: 6000 }).catch(() => {})
+      const go = page.getByRole('button', { name: /next question|submit answers|next|finish|continue/i }).first()
+      if (await go.waitFor({ state: 'visible', timeout: 6000 }).then(() => true).catch(() => false)) {
+        await go.click()
+        await page.waitForTimeout(700)
+        return true
+      }
+    }
+
     // Numeric-entry questions have a box instead of choices.
     const numeric = page.locator('input[type="number"], input[inputmode="numeric"]').first()
     if (await numeric.isVisible().catch(() => false)) {
