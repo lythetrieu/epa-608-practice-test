@@ -153,8 +153,19 @@ test.describe('a real user studies a level', () => {
     await start.click()
     await freePage.waitForTimeout(2000)
 
-    // the quiz must actually present a question with answers
+    // Some levels open on a lesson/summary screen and only start the quiz after
+    // a second tap, so give that a nudge before deciding nothing rendered.
     const firstOptions = freePage.getByRole('button', { name: OPTION })
+    if (!(await firstOptions.first().isVisible({ timeout: 8000 }).catch(() => false))) {
+      const begin = freePage
+        .getByRole('button', { name: /^(start|begin|start quiz|got it|continue|start level)$/i })
+        .first()
+      if (await begin.isVisible().catch(() => false)) {
+        await begin.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {})
+        await begin.click().catch(() => {})
+        await freePage.waitForTimeout(2000)
+      }
+    }
     await expect(firstOptions.first(), 'level opened but no answer options rendered').toBeVisible({ timeout: 15_000 })
 
     // work through the quiz
