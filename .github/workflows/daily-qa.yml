@@ -36,9 +36,9 @@ jobs:
     name: Types · Lint · Dependencies
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
       - run: npm ci
 
       - name: TypeScript
@@ -56,9 +56,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
       - run: npm ci
 
       - name: Install browsers (Chromium + WebKit for iOS Safari)
@@ -80,7 +80,7 @@ jobs:
 
       - name: Upload report (video + trace for every failure)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: qa-report-${{ github.run_number }}
           path: |
