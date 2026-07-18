@@ -225,7 +225,12 @@ export default function StudyPathClient({
   // team can walk each level. Only affects the signed-in viewer's own screen.
   const [unlockAll, setUnlockAll] = useState(false)
   useEffect(() => {
-    try { setUnlockAll(new URLSearchParams(window.location.search).get('unlock') === '1') } catch { /* noop */ }
+    try {
+      const q = new URLSearchParams(window.location.search).get('unlock')
+      if (q === '1') localStorage.setItem('epa608_qa_unlock', '1')
+      else if (q === '0') localStorage.removeItem('epa608_qa_unlock')
+      setUnlockAll(localStorage.getItem('epa608_qa_unlock') === '1')
+    } catch { /* noop */ }
   }, [])
 
   // Deep link: /learn?section=Core (Home's section cards) opens that world's
