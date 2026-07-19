@@ -46,7 +46,9 @@ async function closePersona(ctx: BrowserContext, page: Page, testInfo: TestInfo,
   await page.close().catch(() => {})
   await ctx.close().catch(() => {}) // finalizes the .webm
   if (!video) return
-  const failed = testInfo.status !== testInfo.expectedStatus
+  // E2E_KEEP_VIDEO=1 keeps the recording even when the test passes, for when
+  // you want to WATCH the journey rather than debug a failure.
+  const failed = testInfo.status !== testInfo.expectedStatus || process.env.E2E_KEEP_VIDEO === '1'
   try {
     if (failed) {
       const src = await video.path()

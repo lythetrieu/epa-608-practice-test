@@ -156,7 +156,15 @@ test.describe('a real user studies a level', () => {
     // Some levels open on a lesson/summary screen and only start the quiz after
     // a second tap, so give that a nudge before deciding nothing rendered.
     const firstOptions = freePage.getByRole('button', { name: OPTION })
-    if (!(await firstOptions.first().isVisible({ timeout: 8000 }).catch(() => false))) {
+    // Don't gate on lettered options alone: SELECT-ALL questions render bare
+    // values ("Humidity") with no A/B/C/D prefix, so a level whose first
+    // question is a SELECT-ALL looks empty even though the quiz is painted.
+    // The "QUESTION n" heading is present for every question type.
+    const quizIsUp = async (timeout: number) =>
+      (await firstOptions.first().isVisible({ timeout }).catch(() => false)) ||
+      /QUESTION\s+\d/i.test(await freePage.locator('body').innerText().catch(() => ''))
+
+    if (!(await quizIsUp(8000))) {
       const begin = freePage
         .getByRole('button', { name: /^(start|begin|start quiz|got it|continue|start level)$/i })
         .first()
@@ -166,7 +174,7 @@ test.describe('a real user studies a level', () => {
         await freePage.waitForTimeout(2000)
       }
     }
-    await expect(firstOptions.first(), 'level opened but no answer options rendered').toBeVisible({ timeout: 15_000 })
+    expect(await quizIsUp(15_000), 'level opened but no question rendered').toBe(true)
 
     // work through the quiz
     let answered = 0
