@@ -11,7 +11,10 @@ name: Daily QA
 
 on:
   schedule:
-    - cron: '0 1 * * *' # 01:00 UTC = 08:00 Vietnam
+    - cron: '0 1 * * *' # 01:00 UTC = 08:00 Vietnam — the one that files the report
+    - cron: '0 4,7,10,13,16,19,22 * * *' # every 3h in between, to catch regressions early
+  push:
+    branches: [main] # a bad merge should not wait for the next slot
   pull_request:
   workflow_dispatch:
     inputs:
@@ -21,7 +24,9 @@ on:
         default: 'https://app.epa608practicetest.net'
 
 concurrency:
-  group: daily-qa-${{ github.ref }}
+  # Keyed by event too: a 3-hourly cron and a push to main share a ref, and
+  # without this they would cancel each other and report a false "cancelled".
+  group: daily-qa-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 permissions:
@@ -50,6 +55,37 @@ jobs:
       - name: Dependency vulnerabilities (high+)
         run: npm audit --audit-level=high
         continue-on-error: true
+
+  # The journey specs drive a real quiz, and the questions come back in a random
+  # order — so a format the driver mishandles (SELECT-ALL, numeric entry) only
+  # surfaces on the runs where it happens to land first. One pass a day found
+  # that class of bug roughly once a week; five passes finds it the same morning.
+  soak:
+    name: Journey soak (randomised, 5 passes)
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Replay the user journey five times
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npx playwright test 07-user-journey --project=desktop --repeat-each=5 --workers=3
+      - name: Upload failures
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: soak-${{ github.run_number }}
+          path: |
+            tests/e2e/videos
+            tests/e2e/.artifacts
+          retention-days: 14
+          if-no-files-found: ignore
 
   e2e:
     name: Function · Security · Data · A11y · Content
