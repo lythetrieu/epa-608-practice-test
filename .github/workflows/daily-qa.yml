@@ -62,7 +62,8 @@ jobs:
   # that class of bug roughly once a week; five passes finds it the same morning.
   soak:
     name: Journey soak (randomised, 5 passes)
-    if: github.event_name == 'schedule'
+    # Not on push/PR — five replays is too slow to gate a merge on.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
