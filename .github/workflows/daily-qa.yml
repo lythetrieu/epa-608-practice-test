@@ -61,11 +61,11 @@ jobs:
   # surfaces on the runs where it happens to land first. One pass a day found
   # that class of bug roughly once a week; five passes finds it the same morning.
   soak:
-    name: Journey soak (randomised, 5 passes)
-    # Not on push/PR — five replays is too slow to gate a merge on.
+    name: Journey soak + exploratory wander
+    # Not on push/PR — the replays are too slow to gate a merge on.
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -77,6 +77,17 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: npx playwright test 07-user-journey --project=desktop --repeat-each=5 --workers=3
+      # A different random walk every run: the seed is the run number, so each
+      # day's wander takes a path no earlier run took — this is what surfaces
+      # bugs nobody wrote a test for (it found the GA4 CSP block on day one).
+      - name: Wander the app on a fresh seed
+        if: always()
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPLORE_SEED: ${{ github.run_number }}
+          EXPLORE_STEPS: '30'
+        run: npx playwright test 08-explore --project=desktop --workers=1
       - name: Upload failures
         if: failure()
         uses: actions/upload-artifact@v5
