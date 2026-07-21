@@ -33,7 +33,10 @@ const nextConfig: NextConfig = {
                 : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://www.clarity.ms https://c.clarity.ms https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https:",
-              "connect-src 'self' https://*.supabase.co http://127.0.0.1:54321 https://openrouter.ai https://www.google-analytics.com https://analytics.google.com https://polar.sh https://*.polar.sh https://api.polar.sh https://*.clarity.ms https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+              // www.google.com + region-specific analytics hosts are where GA4
+              // Google-Signals sends its /g/collect beacon; without them CSP
+              // refuses the beacon on every page (found by the explorer sweep).
+              "connect-src 'self' https://*.supabase.co http://127.0.0.1:54321 https://openrouter.ai https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.google.com https://polar.sh https://*.polar.sh https://api.polar.sh https://*.clarity.ms https://va.vercel-scripts.com https://vitals.vercel-insights.com",
               "frame-src https://buy.polar.sh https://polar.sh https://*.polar.sh",
             ].join('; '),
           },
