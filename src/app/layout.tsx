@@ -66,7 +66,11 @@ export default function RootLayout({
             The previously-duplicated direct gtag.js + inline gtag config for
             G-KJ8X1DQ1GT were removed: configure that GA4 tag inside GTM instead
             of loading a second, parallel analytics pipeline on every page. */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KSX9M3DD');` }} />
+        {/* Internal-traffic guard: visits with ?noga=1 (persisted) or automated
+            browsers (navigator.webdriver) never load GTM/GA — keeps QA sweeps,
+            smoke tests, and the owner's own browsing out of Analytics. ?noga=0 re-enables. */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(location.search.indexOf('noga=1')>-1)localStorage.setItem('pp_no_track','1');if(location.search.indexOf('noga=0')>-1)localStorage.removeItem('pp_no_track');window.__no_track=(navigator.webdriver===true)||localStorage.getItem('pp_no_track')==='1';}catch(e){window.__no_track=(navigator.webdriver===true);}if(window.__no_track){window['ga-disable-G-KJ8X1DQ1GT']=true;}})();` }} />
+        <script dangerouslySetInnerHTML={{ __html: `if(!window.__no_track)(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KSX9M3DD');` }} />
         <script dangerouslySetInnerHTML={{ __html: `(function(){if(localStorage.getItem('epa608-theme')==='dark')document.documentElement.classList.add('dark')})()` }} />
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
