@@ -13,8 +13,10 @@ on:
   schedule:
     - cron: '0 1 * * *' # 01:00 UTC = 08:00 Vietnam — the one that files the report
     - cron: '0 4,7,10,13,16,19,22 * * *' # every 3h in between, to catch regressions early
-  push:
-    branches: [main] # a bad merge should not wait for the next slot
+  # NOTE: deliberately NOT triggered on push. A push to main also kicks off the
+  # Vercel deploy, so a push-triggered run tests production mid-swap and reds out
+  # on 404'd chunk hashes + React #418 — a guaranteed false alarm every merge.
+  # The 3-hourly schedule catches a bad merge within hours without that race.
   pull_request:
   workflow_dispatch:
     inputs:
@@ -24,8 +26,6 @@ on:
         default: 'https://app.epa608practicetest.net'
 
 concurrency:
-  # Keyed by event too: a 3-hourly cron and a push to main share a ref, and
-  # without this they would cancel each other and report a false "cancelled".
   group: daily-qa-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
