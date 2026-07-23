@@ -86,30 +86,3 @@
     @apply inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700;
   }
 }
-
-/* ── Shepherd onboarding tour: accessible contrast ─────────────────────────
-   The library's default theme renders its title and secondary button in
-   #a5a5a5 on a near-white panel (2.2:1), which axe flags as a serious
-   WCAG AA failure on /dashboard. Darken both to clear 4.5:1. */
-.shepherd-element .shepherd-title {
-  color: #1f2937; /* gray-800 on #f3f3f3 ≈ 11:1 */
-  font-weight: 700;
-}
-.shepherd-element .shepherd-text {
-  color: #374151; /* gray-700 */
-}
-.shepherd-element .shepherd-button {
-  /* library default is #cce1f9 on #3288e6 (2.7:1); brand navy + white ≈ 14:1 */
-  background: #003087;
-  color: #ffffff;
-}
-.shepherd-element .shepherd-button:hover {
-  background: #00205c;
-  color: #ffffff;
-}
-.shepherd-element .shepherd-button-secondary {
-  color: #4b5563; /* gray-600 on #f8f9f9 ≈ 7:1 */
-}
-.shepherd-element .shepherd-button-secondary:hover {
-  color: #1f2937;
-}

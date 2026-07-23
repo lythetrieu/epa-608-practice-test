@@ -10,7 +10,6 @@ import { useState } from 'react'
 import { useLocalFirst } from '@/lib/local-first'
 import type { DashboardData } from '@/lib/dashboard-data'
 import { SECTION_CATEGORIES } from '@/lib/section-progress'
-import { GuidedTour } from './guided-tour'
 import { Onboarding } from './onboarding'
 import { ProActivatedBanner } from './pro-activated-banner'
 import { AnonymousMigrator } from './anonymous-migrator'
@@ -96,14 +95,13 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
   const overall = readiness.overall
   const name = userName
 
-  // Onboarding/tour gate on `fresh` so a stale or absent cache never flashes
-  // the new-user tour at an existing user.
+  // Onboarding gates on `fresh` so a stale or absent cache never flashes the
+  // new-user welcome at an existing user.
   const isNewUser = fresh && totalTests === 0
 
   return (
     <div className="p-3 sm:p-5 max-w-3xl mx-auto">
       <AnonymousMigrator />
-      {isNewUser && <GuidedTour />}
       <Onboarding show={isNewUser} />
       <ProActivatedBanner isPro={!isFree && lifetimeAccess} />
 
@@ -112,11 +110,10 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       <section
         className="rounded-2xl p-4 sm:p-5 mb-3 text-white"
         style={{ background: '#001d57' }}
-        data-tour="header"
       >
         {/* Row 1: readiness ring (left) + gold kicker + big status word — with
             "Hi, {name} 👋" in the top-right corner. */}
-        <div className="flex items-start justify-between gap-3" data-tour="readiness">
+        <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-4 min-w-0">
             <svg
               width="84"
@@ -270,7 +267,7 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
           null
 
         return (
-          <div className="grid grid-cols-2 gap-2 mb-2.5" data-tour="sections">
+          <div className="grid grid-cols-2 gap-2 mb-2.5">
             {SECTION_CATEGORIES.map(category => {
               const emoji = SECTION_EMOJI[category] ?? '📋'
               const cat = readiness.byCategory.find(c => c.category === category)
@@ -295,7 +292,6 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
               return (
                 <div
                   key={category}
-                  data-tour={category === 'Core' ? 'core' : undefined}
                   className={`relative bg-white rounded-xl shadow-card px-4 py-3 transition-colors ${
                     isNext
                       ? 'border-[1.5px] border-orange-500 hover:border-orange-600'
