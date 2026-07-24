@@ -244,7 +244,12 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
       </section>
 
       {/* ═══ PROGRESS BY SECTION — the tiles ARE the call to action ═══ */}
-      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mt-1 mb-1.5 px-0.5">
+      {/* Golden-ratio breathing room around the heading. The "Fix this" badge
+          juts 10px above each card (-top-2.5), so a tight mb let it crowd the
+          heading text. Space ABOVE : BELOW ≈ 1.618 : 1 — 26px above (hero mb-3
+          = 12px + mt-3.5 = 14px) to 16px below (mb-4), clearing the badge by
+          6px and grouping the heading with its tiles. */}
+      <h2 className="font-mono text-[10px] font-semibold text-steel uppercase tracking-[0.12em] mt-3.5 mb-4 px-0.5">
         Progress by section
       </h2>
       {/* 2×2 grid — one glance answers "what next?" and "how far am I?".
