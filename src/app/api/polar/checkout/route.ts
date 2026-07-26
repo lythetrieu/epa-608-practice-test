@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { APP_URL } from '@/lib/site-config'
 import { createClient } from '@/lib/supabase/server'
+import { polarCustomerEmail } from '@/lib/polar'
 
 export const dynamic = 'force-dynamic'
 // Node runtime: reads the Supabase session (SSR cookies) to identify the buyer.
@@ -66,7 +67,7 @@ export async function GET(_request: NextRequest) {
         products: [productId],
         success_url: `${APP_URL}/api/polar/success?checkout_id={CHECKOUT_ID}`,
         customer_external_id: userId,
-        ...(userEmail ? { customer_email: userEmail } : {}),
+        ...(polarCustomerEmail(userEmail) ? { customer_email: polarCustomerEmail(userEmail) } : {}),
         metadata: { user_id: userId },
       }),
     })
