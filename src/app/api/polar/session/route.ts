@@ -97,8 +97,24 @@ export async function GET(request: NextRequest) {
     const data = await res.json().catch(() => ({}))
     if (!res.ok || !data?.url) {
       console.error('Polar create checkout failed:', res.status, JSON.stringify(data))
+      // Polar's 422 envelope is { error: "RequestValidationError", detail: [...] }
+      // where ONLY the detail array names the offending field. Reading `error`
+      // first threw that away, so a broken checkout reported nothing more than
+      // "RequestValidationError" — true, and useless. Surface both.
+      const validation = Array.isArray(data?.detail)
+        ? data.detail
+            .map((d: { loc?: unknown[]; msg?: string; type?: string }) =>
+              `${(d.loc ?? []).join('.')}: ${d.msg ?? d.type ?? '?'}`,
+            )
+            .slice(0, 8)
+        : null
       return NextResponse.json(
-        { error: 'session_failed', status: res.status, detail: data?.error ?? data?.detail ?? null },
+        {
+          error: 'session_failed',
+          status: res.status,
+          detail: data?.error ?? (typeof data?.detail === 'string' ? data.detail : null),
+          validation,
+        },
         { status: 502, headers },
       )
     }
