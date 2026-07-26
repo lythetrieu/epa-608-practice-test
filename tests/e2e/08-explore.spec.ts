@@ -37,6 +37,13 @@ function rng(seed: number) {
 const OFF_LIMITS =
   /sign out|log out|delete|remove|cancel subscription|upgrade|checkout|pay|buy|subscribe|ask ai|tutor|send|billing portal/i
 
+// Buy buttons that say a PRICE instead of "upgrade" — the AI-quota upsell reads
+// "$14.99 lifetime →", which slipped past OFF_LIMITS and had the wanderer
+// opening the checkout page, which mints a real Polar session server-side. A
+// read-only sweep must not create billing objects, so price-shaped labels and
+// the lifetime/go-pro wording are off limits too.
+const PRICE_LABEL = /\$\s*\d|lifetime|go pro|get pro|unlock/i
+
 const IGNORE_CONSOLE = [
   /Download the React DevTools/i,
   /Microsoft Clarity/i,
@@ -132,7 +139,7 @@ test.describe('a user who wanders', () => {
       // Drop anything destructive or billable.
       const safe: number[] = []
       for (let i = 0; i < labels.length; i++) {
-        if (!labels[i] || OFF_LIMITS.test(labels[i])) continue
+        if (!labels[i] || OFF_LIMITS.test(labels[i]) || PRICE_LABEL.test(labels[i])) continue
         safe.push(i)
       }
       if (!safe.length) break

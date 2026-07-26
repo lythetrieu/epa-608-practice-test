@@ -453,9 +453,12 @@ export function DashboardClient({ userId, userName }: { userId: string; userName
             <p className="font-bold text-sm">Unlock Pro features</p>
             <p className="text-blue-100 text-xs"><span className="font-mono">$14.99</span> one-time — lifetime access</p>
           </div>
-          <Link href="/checkout.html" className="shrink-0 px-4 bg-white rounded-[7px] font-bold text-xs min-h-[44px] inline-flex items-center" style={{ color: '#003087' }} prefetch={false}>
+          {/* Plain <a> — /checkout.html is a rewrite to a static page, so a
+              <Link> asks for an RSC payload that 404s on click, not just on
+              prefetch. */}
+          <a href="/checkout.html" className="shrink-0 px-4 bg-white rounded-[7px] font-bold text-xs min-h-[44px] inline-flex items-center" style={{ color: '#003087' }}>
             Upgrade
-          </Link>
+          </a>
         </div>
       )}
 

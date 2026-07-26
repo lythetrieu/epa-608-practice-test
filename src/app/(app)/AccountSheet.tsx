@@ -108,16 +108,19 @@ export default function AccountSheet({ open, onClose, username, tier, userId }: 
           Settings
         </Link>
 
+        {/* Plain <a>: /checkout.html is a rewritten static page, not a Next
+            route, so a <Link> requests an RSC payload that 404s on click too
+            — prefetch={false} only silenced the hover fetch. */}
         {!isPro && (
-          <Link
+          <a
             href="/checkout.html"
             onClick={onClose}
             className="flex items-center gap-3 px-3 py-3 min-h-[44px] text-sm font-semibold rounded-xl bg-orange-50"
             style={{ color: '#F97316' }}
-           prefetch={false}>
+          >
             <Zap size={20} className="shrink-0" aria-hidden />
             Upgrade to Pro · $14.99
-          </Link>
+          </a>
         )}
 
         {/* Wipe local-first snapshots before the sign-out POST navigates away —

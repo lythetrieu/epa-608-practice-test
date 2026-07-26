@@ -241,19 +241,20 @@ function BubbleChat({
             <div className="w-full bg-blue-50 border border-line rounded-xl p-4 text-center">
               <p className="text-sm font-semibold text-gray-900 mb-1">Monthly free limit reached</p>
               <p className="text-xs text-steel mb-3">Pro gets 1,000 questions/month.</p>
-              {/* prefetch off: /pricing.html is served by a rewrite to the
-                  static marketing page, not a Next route, so the RSC prefetch
-                  404s (the click itself is a clean 200). Same reason as the
-                  /checkout.html links in AccountSheet + DashboardClient. */}
-              <Link
+              {/* Plain <a>, not <Link>: /pricing.html is a rewrite to the
+                  static marketing page, not a Next route. A <Link> asks for an
+                  RSC payload that does not exist — 404 — both on prefetch AND
+                  on click (prefetch={false} only silences the first). The
+                  pricing page's /checkout.html button uses a plain anchor for
+                  exactly this reason. */}
+              <a
                 href="/pricing.html"
-                prefetch={false}
                 onClick={onClose}
                 className="inline-block w-full px-4 py-2.5 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90"
                 style={{ background: '#F97316' }}
               >
                 $14.99 lifetime →
-              </Link>
+              </a>
               <p className="text-[11px] text-gray-400 mt-1.5 line-through">$39.99</p>
             </div>
           </div>

@@ -110,11 +110,12 @@ export default function PricingPage() {
         {/* Enterprise */}
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-2">Training a team of HVAC technicians?</p>
-          {/* prefetch off — /contact.html is a rewritten static page, so its
-              RSC prefetch 404s while the click itself is a clean 200. */}
-          <Link href="/contact.html" prefetch={false} className="text-blue-800 font-semibold hover:underline">
+          {/* Plain <a> — /contact.html is a rewritten static page, not a Next
+              route, so a <Link> asks for an RSC payload that 404s on click as
+              well as on prefetch. Matches the /checkout.html button above. */}
+          <a href="/contact.html" className="text-blue-800 font-semibold hover:underline">
             Contact us for enterprise pricing →
-          </Link>
+          </a>
         </div>
       </section>
     </main>
