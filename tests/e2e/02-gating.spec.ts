@@ -8,13 +8,27 @@ import type { Page } from '@playwright/test'
 async function startsTimedTest(page: Page): Promise<boolean> {
   // A live timed test shows a running countdown (mm:ss) AND the answered
   // counter. The gated path bounces free users to the mode selector / upgrade.
-  await page.goto('/test/core?mode=test', { waitUntil: 'networkidle' }).catch(() => {})
-  if (/upgrade|pricing|checkout/i.test(page.url())) return false
-  const body = await page.locator('body').innerText().catch(() => '')
-  const hasUpgrade = /upgrade to pro|go pro|pro only|unlock timed/i.test(body)
-  const hasTimer = /\b\d{1,2}:\d{2}\b/.test(body)
-  const hasCounter = /\d+\s*\/\s*\d+\s*answered/i.test(body)
-  return hasTimer && hasCounter && !hasUpgrade
+  //
+  // The quiz mounts client-side, so the countdown and the answered-counter
+  // appear a beat AFTER navigation settles. Reading the body once used to race
+  // that render and report Pro as "over-gated" while the failure screenshot
+  // showed a perfectly live 30:00 timer on CORE 1/25 — the app was fine, the
+  // check was early. Poll until one of the two outcomes is actually on screen.
+  await page.goto('/test/core?mode=test', { waitUntil: 'domcontentloaded' }).catch(() => {})
+
+  const deadline = Date.now() + 15_000
+  while (Date.now() < deadline) {
+    // Gated: bounced to the paywall. Checked first so the free case still
+    // resolves on the first pass instead of waiting out the deadline.
+    if (/upgrade|pricing|checkout/i.test(page.url())) return false
+    const body = await page.locator('body').innerText().catch(() => '')
+    if (/upgrade to pro|go pro|pro only|unlock timed/i.test(body)) return false
+    const hasTimer = /\b\d{1,2}:\d{2}\b/.test(body)
+    const hasCounter = /\d+\s*\/\s*\d+\s*answered/i.test(body)
+    if (hasTimer && hasCounter) return true
+    await page.waitForTimeout(500)
+  }
+  return false
 }
 
 test.describe('timed-mode gate', () => {

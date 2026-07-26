@@ -45,6 +45,20 @@ const IGNORE_CONSOLE = [
   /net::ERR_.*(clarity|analytics|gtag)/i,
   /Content Security Policy.*clarity\.ms/i,
   /clarity\.ms.*Content Security Policy/i,
+  // The browser's own "Failed to load resource: … status of 4xx" line carries
+  // no URL, so it can only ever say THAT something 4xx'd, never WHAT. A failure
+  // like that costs a trace download to diagnose. The response hook below
+  // reports the same failures WITH the URL, so drop the blind duplicate.
+  /Failed to load resource.*status of 4\d{2}/i,
+]
+
+// 4xx responses a healthy app is SUPPOSED to produce while wandering. Anything
+// 4xx not listed here is reported (with its URL) so it can be judged on sight.
+const EXPECTED_4XX: Array<{ re: RegExp; why: string }> = [
+  // The AI monthly quota doing its job: the free tier is capped, and the app
+  // answers a spent allowance with a 429 plus the "Monthly free limit reached"
+  // upsell. CI burns this account's quota within days of a new month.
+  { re: /\/api\/ai\/chat/, why: 'AI monthly quota exhausted — enforced by design' },
 ]
 
 function watchErrors(page: Page) {
@@ -57,7 +71,15 @@ function watchErrors(page: Page) {
   })
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`))
   page.on('response', (r) => {
-    if (r.status() >= 500) errors.push(`HTTP ${r.status()} ${r.url()}`)
+    const status = r.status()
+    if (status < 400) return
+    const url = r.url()
+    const expected = EXPECTED_4XX.find((e) => e.re.test(url))
+    if (expected && status < 500) {
+      console.log(`[explore] tolerated HTTP ${status} ${url} — ${expected.why}`)
+      return
+    }
+    errors.push(`HTTP ${status} ${url}`)
   })
   return errors
 }
