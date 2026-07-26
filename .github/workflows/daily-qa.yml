@@ -72,10 +72,26 @@ jobs:
         with: { node-version: 22, cache: npm }
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+
+      # Both steps below drive AUTHENTICATED personas, which the fixtures mint
+      # with the service-role key. Without it they write empty sessions, every
+      # spec test.skip()s, and the job still reports success — a green light
+      # over a suite that ran nothing. This job silently no-op'd that way from
+      # 21–26 Jul; fail loudly instead of ever repeating it.
+      - name: Refuse to run blind
+        env:
+          SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SERVICE_KEY" ]; then
+            echo "::error::SUPABASE_SERVICE_ROLE_KEY is empty — every authed spec would skip and this job would pass without testing anything."
+            exit 1
+          fi
+
       - name: Replay the user journey five times
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npx playwright test 07-user-journey --project=desktop --repeat-each=5 --workers=3
       # A different random walk every run: the seed is the run number, so each
       # day's wander takes a path no earlier run took — this is what surfaces
@@ -85,6 +101,7 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           EXPLORE_SEED: ${{ github.run_number }}
           EXPLORE_STEPS: '30'
         run: npx playwright test 08-explore --project=desktop --workers=1
