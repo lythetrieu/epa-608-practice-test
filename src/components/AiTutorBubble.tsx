@@ -241,8 +241,13 @@ function BubbleChat({
             <div className="w-full bg-blue-50 border border-line rounded-xl p-4 text-center">
               <p className="text-sm font-semibold text-gray-900 mb-1">Monthly free limit reached</p>
               <p className="text-xs text-steel mb-3">Pro gets 1,000 questions/month.</p>
+              {/* prefetch off: /pricing.html is served by a rewrite to the
+                  static marketing page, not a Next route, so the RSC prefetch
+                  404s (the click itself is a clean 200). Same reason as the
+                  /checkout.html links in AccountSheet + DashboardClient. */}
               <Link
                 href="/pricing.html"
+                prefetch={false}
                 onClick={onClose}
                 className="inline-block w-full px-4 py-2.5 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90"
                 style={{ background: '#F97316' }}

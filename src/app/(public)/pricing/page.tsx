@@ -110,7 +110,9 @@ export default function PricingPage() {
         {/* Enterprise */}
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-2">Training a team of HVAC technicians?</p>
-          <Link href="/contact.html" className="text-blue-800 font-semibold hover:underline">
+          {/* prefetch off — /contact.html is a rewritten static page, so its
+              RSC prefetch 404s while the click itself is a clean 200. */}
+          <Link href="/contact.html" prefetch={false} className="text-blue-800 font-semibold hover:underline">
             Contact us for enterprise pricing →
           </Link>
         </div>
