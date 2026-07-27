@@ -1,0 +1,108 @@
+name: Production Watchdog
+
+# Every morning, read what REAL users did overnight and post it where Trieu will
+# actually see it. The QA suite proves the app CAN work; this notices what
+# happened to the people paying for it — a customer who paid and never got Pro
+# is invisible to any synthetic test, and has gone unnoticed here before.
+#
+# Deliberately a GitHub Action and not a Claude scheduled task: the scheduled
+# task only fires while the desktop app is open, and it has already missed days
+# that way. This runs whether or not any laptop is awake.
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 01:00 UTC = 08:00 Vietnam
+  workflow_dispatch:
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    name: Read production, post the digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+
+      - name: Build the digest
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TZ: Asia/Ho_Chi_Minh
+        run: node scripts/watchdog.mjs > digest.md
+
+      - name: Post it
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const body = fs.readFileSync('digest.md', 'utf8')
+            const alerts = Number((body.match(/<!--ALERTS:(\d+)-->/) ?? [])[1] ?? 0)
+            const { owner, repo } = context.repo
+            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`
+
+            // One rolling thread for the daily log — a new issue per day would
+            // bury everything else in the tracker within a month.
+            const LOG_TITLE = '📊 Production Watchdog — nhật ký hằng ngày'
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: 'watchdog-log',
+            })
+            let log = open.find(i => i.title === LOG_TITLE)
+            if (!log) {
+              const created = await github.rest.issues.create({
+                owner, repo, title: LOG_TITLE, labels: ['watchdog-log'],
+                body: 'Mỗi sáng 8:00 (giờ VN), bản tóm tắt hoạt động thật của người dùng được đăng vào đây dưới dạng bình luận.\n\nBáo động 🔴 sẽ mở issue riêng để không bị trôi.',
+              })
+              log = created.data
+            }
+
+            // Self-check: a watchdog that quietly stops running is worse than
+            // none, so each run measures the gap since the previous one and says
+            // so out loud rather than pretending the silence never happened.
+            let gapNote = ''
+            const { data: comments } = await github.rest.issues.listComments({
+              owner, repo, issue_number: log.number, per_page: 100,
+            })
+            const last = comments.at(-1)
+            if (last) {
+              const hours = (Date.now() - new Date(last.created_at)) / 3.6e6
+              if (hours > 26) {
+                gapNote = `> ⚠️ **Watchdog đã im lặng ${Math.round(hours / 24)} ngày** (lần trước: ${last.created_at.slice(0, 10)}). Có thể lịch chạy đã hỏng — nên kiểm tra.\n\n`
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: log.number, body: gapNote + body,
+            })
+
+            // Anything that costs money or trust gets its own issue, because a
+            // comment on a long thread is easy to scroll past.
+            const ALERT_TITLE = '🔴 Watchdog: có vấn đề cần xem'
+            const { data: openAlerts } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: 'watchdog-alert',
+            })
+            const existing = openAlerts.find(i => i.title === ALERT_TITLE)
+
+            if (alerts > 0) {
+              const alertBody = `${body}\n\n[Xem lần chạy →](${runUrl})`
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: alertBody })
+              } else {
+                await github.rest.issues.create({ owner, repo, title: ALERT_TITLE, body: alertBody, labels: ['watchdog-alert'] })
+              }
+            } else if (existing) {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `✅ Sáng nay không còn cảnh báo nào — [lần chạy](${runUrl})`,
+              })
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' })
+            }
