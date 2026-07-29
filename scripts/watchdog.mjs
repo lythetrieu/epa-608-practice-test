@@ -45,6 +45,18 @@ function maskEmail(email) {
   return `${local.slice(0, 2)}***@${domain}`
 }
 
+// The e2e personas live in the same production database and behave like very
+// busy users: CI runs eight times a day, takes quizzes and spends AI quota. Left
+// in, they outrank real people — the first run of this report nominated a test
+// account with 251 AI questions as the top upgrade prospect, and counted three
+// users at the AI cap when only one was a person. Every number here excludes
+// them, so the digest describes customers and nothing else.
+const TEST_DOMAIN = '@epa608-test.local'
+const notTest = (q) => q.not('email', 'like', `%${TEST_DOMAIN}`)
+
+const { data: testRows } = await db.from('users_profile').select('id').like('email', `%${TEST_DOMAIN}`)
+const TEST_IDS = new Set((testRows ?? []).map((r) => r.id))
+
 /** count(*) with a filter chain, without pulling rows over the wire. */
 async function count(table, build = (q) => q) {
   const { count: n, error } = await build(db.from(table).select('*', { count: 'exact', head: true }))
@@ -56,14 +68,14 @@ const alerts = [] // 🔴 things that cost money or trust — surfaced separatel
 const chores = [] // ⚠️ things worth doing today, not emergencies
 
 // ── Người dùng ────────────────────────────────────────────────────────────
-const signups24 = await count('users_profile', (q) => q.gte('created_at', since24h))
-const signups7d = await count('users_profile', (q) => q.gte('created_at', since7d))
-const proTotal = await count('users_profile', (q) => q.eq('lifetime_access', true))
+const signups24 = await count('users_profile', (q) => notTest(q).gte('created_at', since24h))
+const signups7d = await count('users_profile', (q) => notTest(q).gte('created_at', since7d))
+const proTotal = await count('users_profile', (q) => notTest(q).eq('lifetime_access', true))
 // Approximate: users_profile has no "upgraded_at", so this leans on updated_at
 // and will occasionally count an unrelated profile edit. Good enough to notice
 // "we sold something yesterday"; not an accounting figure.
 const proNew24 = await count('users_profile', (q) =>
-  q.eq('lifetime_access', true).gte('updated_at', since24h),
+  notTest(q).eq('lifetime_access', true).gte('updated_at', since24h),
 )
 
 // ── 🔴 Trả tiền nhưng chưa thành Pro ──────────────────────────────────────
@@ -103,15 +115,16 @@ for (const row of pending ?? []) {
 // ── Hoạt động luyện thi ───────────────────────────────────────────────────
 const { data: sessions, error: sErr } = await db
   .from('test_sessions')
-  .select('category, score, total')
+  .select('user_id, category, score, total')
   .not('submitted_at', 'is', null)
   .gte('submitted_at', since24h)
 if (sErr) throw new Error(`test_sessions: ${sErr.message}`)
 
+const realSessions = (sessions ?? []).filter((s) => !TEST_IDS.has(s.user_id))
 const byCat = {}
 let scored = 0
 let pctSum = 0
-for (const s of sessions ?? []) {
+for (const s of realSessions) {
   byCat[s.category ?? '?'] = (byCat[s.category ?? '?'] ?? 0) + 1
   if (s.total > 0) {
     scored++
@@ -121,12 +134,101 @@ for (const s of sessions ?? []) {
 const avgPct = scored ? Math.round(pctSum / scored) : null
 
 // ── AI Tutor ──────────────────────────────────────────────────────────────
-const aiChats24 = await count('ai_chat_sessions', (q) => q.gte('created_at', since24h))
+// Counted in JS rather than with a count(*) because the exclusion is by user id,
+// and the daily volume is small enough that pulling the ids is cheaper than
+// getting a NOT IN list of UUIDs right in the query string.
+const { data: chatRows, error: cErr } = await db
+  .from('ai_chat_sessions')
+  .select('user_id')
+  .gte('created_at', since24h)
+if (cErr) throw new Error(`ai_chat_sessions: ${cErr.message}`)
+const aiChats24 = (chatRows ?? []).filter((c) => !TEST_IDS.has(c.user_id)).length
 // Free tier is capped at 10 AI questions a month. Anyone sitting at the cap is
 // a warm upgrade prospect, so this line is a sales signal as much as a health one.
 const atCap = await count('users_profile', (q) =>
-  q.eq('lifetime_access', false).gte('ai_queries_month', 10),
+  notTest(q).eq('lifetime_access', false).gte('ai_queries_month', 10),
 )
+
+// ── 👤 Người đáng nhìn hôm nay ────────────────────────────────────────────
+// Averages hide people. "5 lượt thi, TB 84%" reads fine while one person fails
+// Type II four times in a row and quietly leaves. Nobody ever said "that's
+// weird" at a summary statistic — you have to be pointed at an actual person,
+// with a link, before the pattern-matching a human is good at can fire at all.
+const perUser = new Map()
+for (const s of sessions ?? []) {
+  if (!s.user_id || TEST_IDS.has(s.user_id)) continue
+  const u = perUser.get(s.user_id) ?? { n: 0, pctSum: 0, scored: 0 }
+  u.n++
+  if (s.total > 0) {
+    u.scored++
+    u.pctSum += (s.score / s.total) * 100
+  }
+  perUser.set(s.user_id, u)
+}
+
+/** email + admin link for a set of ids, in one round-trip. */
+async function profilesFor(ids) {
+  if (!ids.length) return new Map()
+  const { data } = await db.from('users_profile').select('id, email').in('id', ids)
+  return new Map((data ?? []).map((p) => [p.id, p.email]))
+}
+
+const spotlight = []
+
+// Busiest — worth seeing what a heavy day actually looks like.
+const busiest = [...perUser.entries()].sort((a, b) => b[1].n - a[1].n)[0]
+
+// Struggling: repeated attempts that are NOT improving. These are the people
+// about to give up, and they never write in to say so.
+const struggling = [...perUser.entries()]
+  .filter(([, u]) => u.n >= 2 && u.scored > 0 && u.pctSum / u.scored < 50)
+  .sort((a, b) => a[1].pctSum / a[1].scored - b[1].pctSum / b[1].scored)
+  .slice(0, 2)
+
+const sessionIds = [busiest?.[0], ...struggling.map((s) => s[0])].filter(Boolean)
+const emails = await profilesFor([...new Set(sessionIds)])
+const who = (id) => `\`${maskEmail(emails.get(id) ?? '?')}\` — [xem](${ADMIN}/users/${id})`
+
+if (busiest && busiest[1].n >= 2) {
+  const avg = busiest[1].scored ? Math.round(busiest[1].pctSum / busiest[1].scored) : null
+  spotlight.push(`**Chăm nhất**: ${busiest[1].n} lượt thi${avg === null ? '' : `, TB ${avg}%`} — ${who(busiest[0])}`)
+}
+for (const [id, u] of struggling) {
+  spotlight.push(
+    `**Đang vật lộn**: ${u.n} lượt, TB **${Math.round(u.pctSum / u.scored)}%** — ${who(id)} ` +
+      `_(thi lại nhiều mà điểm không lên — nhóm dễ bỏ cuộc nhất)_`,
+  )
+}
+
+// Free accounts sitting at the monthly AI cap: someone who wanted more help and
+// hit a wall. The warmest upgrade conversation available, and it expires.
+const { data: capped } = await db
+  .from('users_profile')
+  .select('id, email, ai_queries_month')
+  .not('email', 'like', `%${TEST_DOMAIN}`)
+  .eq('lifetime_access', false)
+  .gte('ai_queries_month', 10)
+  .order('ai_queries_month', { ascending: false })
+  .limit(3)
+for (const c of capped ?? []) {
+  spotlight.push(
+    `**Chạm trần AI** (${c.ai_queries_month} câu/tháng): \`${maskEmail(c.email)}\` — ` +
+      `[xem](${ADMIN}/users/${c.id}) _(muốn dùng thêm nhưng bị chặn → dễ mua Pro)_`,
+  )
+}
+
+// A brand-new Pro is the one customer whose experience you cannot afford to
+// guess about — look at what they did right after paying.
+const { data: newPro } = await db
+  .from('users_profile')
+  .select('id, email')
+  .not('email', 'like', `%${TEST_DOMAIN}`)
+  .eq('lifetime_access', true)
+  .gte('updated_at', since24h)
+  .limit(3)
+for (const p of newPro ?? []) {
+  spotlight.push(`**Vừa lên Pro**: \`${maskEmail(p.email)}\` — [xem họ dùng gì](${ADMIN}/users/${p.id})`)
+}
 
 // ── Câu hỏi bị báo lỗi ────────────────────────────────────────────────────
 const { data: reports, error: rErr } = await db
@@ -144,7 +246,7 @@ if (pendingReports > 0) {
 // A day with zero signups AND zero quizzes AND zero AI is far more likely to be
 // a broken query or a dead deploy than a genuinely silent day. Say so instead of
 // printing a calm page of zeros.
-if (signups24 === 0 && (sessions?.length ?? 0) === 0 && aiChats24 === 0) {
+if (signups24 === 0 && realSessions.length === 0 && aiChats24 === 0) {
   alerts.push(
     '**KHÔNG CÓ HOẠT ĐỘNG NÀO trong 24h** — không đăng ký, không lượt thi, không AI. ' +
       'Nhiều khả năng app hỏng hoặc truy vấn sai, chứ không phải ngày yên tĩnh. Cần kiểm tra ngay.',
@@ -169,12 +271,19 @@ out.push(`- Pro mới: **${proNew24}** · tổng Pro: ${proTotal}`)
 out.push('')
 
 out.push('### Luyện thi')
-out.push(`- Lượt nộp bài: **${sessions?.length ?? 0}**`)
+out.push(`- Lượt nộp bài: **${realSessions.length}**`)
 if (Object.keys(byCat).length) {
   out.push(`  - ${Object.entries(byCat).map(([c, n]) => `${c}: ${n}`).join(' · ')}`)
 }
 out.push(`- Điểm trung bình: ${avgPct === null ? '—' : `**${avgPct}%**`}`)
 out.push('')
+
+if (spotlight.length) {
+  out.push('### 👤 Người đáng nhìn hôm nay')
+  out.push('_Bấm vào xem họ thật sự đã làm gì — con số trung bình luôn giấu mất người cụ thể._')
+  for (const s of spotlight) out.push(`- ${s}`)
+  out.push('')
+}
 
 out.push('### AI Tutor')
 out.push(`- Phiên chat: **${aiChats24}**`)
