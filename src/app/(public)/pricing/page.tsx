@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: 'EPA 608 Practice Test Pricing — Free Practice + Pro $14.99',
   description:
     'Free EPA 608 practice: all sections, full 569-question bank with a free account, AI Tutor 10 questions/month. Pro $14.99 one-time lifetime: 1,000 AI questions/month, Weak Spot Drill, timed exam simulator.',
+  // The same pricing exists at epa608practicetest.net/pricing.html on the
+  // marketing host, which is the one in the sitemap and the one every internal
+  // link points at. Two indexable copies of one page on two hosts compete with
+  // each other, so this route names that copy as the canonical instead of
+  // arguing with it. Left crawlable on purpose: the page must stay reachable
+  // for signed-in users arriving from inside the app.
+  alternates: { canonical: 'https://epa608practicetest.net/pricing.html' },
 }
 
 export default function PricingPage() {
