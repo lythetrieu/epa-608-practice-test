@@ -1,4 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/server'
+import { fetchAllRows } from '@/lib/analytics-behavior'
 import { getCurrentUser, getUserProfile } from '@/lib/supabase/auth'
 import { redirect } from 'next/navigation'
 
@@ -13,6 +14,15 @@ export default async function AnalyticsPage() {
 
   const admin = createAdminClient()
 
+  // The e2e personas live in this database and CI drives them eight times a
+  // day. Counted in, they are the most active users on the platform: they
+  // abandon 100% of the quizzes they start against 17% for real students, and
+  // they held 98% of all AI sessions. Every figure below excludes them.
+  const TEST_DOMAIN = '@epa608-test.local'
+  const notTest = <T,>(q: T): T => (q as any).not('email', 'like', `%${TEST_DOMAIN}`)
+  const { data: testRows } = await admin.from('users_profile').select('id').like('email', `%${TEST_DOMAIN}`)
+  const TEST_IDS = new Set((testRows ?? []).map((r) => r.id))
+
   // ── Fetch all data in parallel ──
   const now = new Date()
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString()
@@ -26,7 +36,7 @@ export default async function AnalyticsPage() {
     { count: usersToday },
     { count: usersThisWeek },
     { count: usersThisMonth },
-    { data: sessionStats },
+    { data: sessionStatsRaw },
     { count: pendingReports },
     { count: totalAiSessions },
     { count: aiSessionsThisWeek },
@@ -40,13 +50,13 @@ export default async function AnalyticsPage() {
     failedRes,
   ] = await Promise.all([
     // Total users
-    admin.from('users_profile').select('*', { count: 'exact', head: true }),
+    notTest(admin.from('users_profile').select('*', { count: 'exact', head: true })),
     // New users today
-    admin.from('users_profile').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
+    notTest(admin.from('users_profile').select('*', { count: 'exact', head: true })).gte('created_at', todayStart),
     // New users this week
-    admin.from('users_profile').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
+    notTest(admin.from('users_profile').select('*', { count: 'exact', head: true })).gte('created_at', weekAgo),
     // New users this month
-    admin.from('users_profile').select('*', { count: 'exact', head: true }).gte('created_at', monthAgo),
+    notTest(admin.from('users_profile').select('*', { count: 'exact', head: true })).gte('created_at', monthAgo),
     // Test sessions (submitted only) - score and total for averages
     admin.from('test_sessions').select('score, total, submitted_at, user_id').not('submitted_at', 'is', null),
     // Pending question reports
@@ -56,7 +66,7 @@ export default async function AnalyticsPage() {
     // AI chat sessions this week
     admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
     // Recent signups
-    admin.from('users_profile').select('id, email, tier, created_at').order('created_at', { ascending: false }).limit(10),
+    notTest(admin.from('users_profile').select('id, email, tier, created_at')).order('created_at', { ascending: false }).limit(10),
     // Recent reports (pending queue only)
     admin.from('question_reports').select('id, question_id, reason, created_at').eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
     // Daily signups (last 14 days)
@@ -65,14 +75,17 @@ export default async function AnalyticsPage() {
     admin.from('test_sessions').select('submitted_at').not('submitted_at', 'is', null).gte('submitted_at', fourteenAgo),
     // Recent AI chat sessions with user email
     admin.from('ai_chat_sessions')
-      .select('id, user_id, title, messages, created_at, updated_at')
+      .select('id, user_id, title, created_at, updated_at')
       .order('updated_at', { ascending: false })
       .limit(20),
     // Top AI users (join with users_profile)
-    admin.from('users_profile')
-      .select('id, email, ai_queries_today, tier')
-      .gt('ai_queries_today', 0)
-      .order('ai_queries_today', { ascending: false })
+    // ai_queries_today is a leftover from the pre-15-Jul daily quota. Nothing
+    // resets it any more, so it still holds counts from June — 25 accounts read
+    // as "active today" when only 8 have touched AI this month. The live
+    // counter is ai_queries_month.
+    notTest(admin.from('users_profile').select('id, email, ai_queries_month, tier'))
+      .gt('ai_queries_month', 0)
+      .order('ai_queries_month', { ascending: false })
       .limit(10),
     // Aggregate rollups (tier tally, active 7d/30d, distinct anon, ai today) — migration 028
     admin.rpc('admin_analytics_summary', { p_week_ago: weekAgo, p_month_ago: monthAgo }),
@@ -85,15 +98,21 @@ export default async function AnalyticsPage() {
     { count: totalAnonSessions },
     { count: anonSessionsToday },
     { data: recentAnonSessions },
-    { data: anonByCategory },
+    anonByCatRes,
     { count: totalAnonStarts },
   ] = await Promise.all([
     admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }),
     admin.from('anonymous_sessions').select('*', { count: 'exact', head: true }).gte('submitted_at', todayStart),
     admin.from('anonymous_sessions').select('anonymous_id, category, score, total, submitted_at, city, time_spent').order('submitted_at', { ascending: false }).limit(20),
-    admin.from('anonymous_sessions').select('category, score, total').gte('submitted_at', monthAgo),
+    fetchAllRows<{ category: string | null; score: number; total: number }>((from, to) =>
+      admin.from('anonymous_sessions').select('category, score, total').gte('submitted_at', monthAgo).range(from, to)),
     admin.from('anonymous_starts').select('*', { count: 'exact', head: true }),
   ])
+
+  const anonByCategory = anonByCatRes.rows
+
+  // Real students only — the personas skew every average on this page.
+  const sessionStats = (sessionStatsRaw ?? []).filter((s: { user_id: string }) => !TEST_IDS.has(s.user_id))
 
   // ── Aggregate summary (migration 028) with graceful fallback ──
   // If the RPCs aren't present yet, fall back to the original in-JS scans so
@@ -145,10 +164,23 @@ export default async function AnalyticsPage() {
   }
 
   // ── Calculate metrics ──
+  // The RPC tallies free/starter/ultimate only, but the table also holds a
+  // 'pro' tier — one real account sits in it and was being counted nowhere.
+  // Paid status is read from lifetime_access, which is what the payment code
+  // checks; for real users the two agree exactly (19 = 19), so either would do,
+  // and the one the money uses wins.
+  const { count: proTierCount } = await notTest(
+    admin.from('users_profile').select('*', { count: 'exact', head: true }),
+  ).eq('tier', 'pro')
+  const { count: paidCount } = await notTest(
+    admin.from('users_profile').select('*', { count: 'exact', head: true }),
+  ).eq('lifetime_access', true)
+
   const tierMap: Record<string, number> = {
     free: summary.tier_free,
     starter: summary.tier_starter,
     ultimate: summary.tier_ultimate,
+    ...(proTierCount ? { pro: proTierCount } : {}),
   }
 
   const totalTests = sessionStats?.length ?? 0
@@ -162,6 +194,14 @@ export default async function AnalyticsPage() {
     const passed = sessionStats.filter((s: { score: number; total: number }) => (s.score / s.total) * 100 >= 70).length
     passRate = Math.round((passed / sessionStats.length) * 100)
   }
+
+  // Recomputed rather than trusted: the RPC reports ai_total_today from the
+  // dead daily column, which still carries June's numbers.
+  const { data: aiMonthRows } = await notTest(
+    admin.from('users_profile').select('ai_queries_month'),
+  ).gt('ai_queries_month', 0)
+  const aiTotalMonth = (aiMonthRows ?? []).reduce((t, r) => t + (r.ai_queries_month || 0), 0)
+  const aiUsersMonth = (aiMonthRows ?? []).length
 
   const uniqueActive7d = summary.active_7d
   const uniqueActive30d = summary.active_30d
@@ -179,11 +219,11 @@ export default async function AnalyticsPage() {
     : 0
 
   type AiSession = { id: string; user_id: string; title: string; messages: unknown[]; created_at: string; updated_at: string }
-  type TopAiUser = { id: string; email: string; ai_queries_today: number; tier: string }
+  type TopAiUser = { id: string; email: string; ai_queries_month: number; tier: string }
 
-  const totalAiToday = summary.ai_total_today
-  const aiUsersWithQueriesCount = summary.ai_users_today
-  const avgQueriesPerUser = aiUsersWithQueriesCount > 0 ? (totalAiToday / aiUsersWithQueriesCount).toFixed(1) : '0'
+  const totalAiMonth = aiTotalMonth
+  const aiUsersWithQueriesCount = aiUsersMonth
+  const avgQueriesPerUser = aiUsersWithQueriesCount > 0 ? (totalAiMonth / aiUsersWithQueriesCount).toFixed(1) : '0'
 
   // Daily signups chart data (last 14 days)
   const signupsByDay: Record<string, number> = {}
@@ -210,16 +250,27 @@ export default async function AnalyticsPage() {
 
   // Tier chart
   const tierTotal = (totalUsers ?? 1) || 1
+  // 'Pro' only appears when someone is actually in that tier — one real account
+  // is, and the RPC's free/starter/ultimate tally left them out of every chart.
   const tierEntries: [string, number, string][] = [
     ['Free', tierMap.free, 'bg-gray-400'],
     ['Starter', tierMap.starter, 'bg-blue-600'],
     ['Ultimate', tierMap.ultimate, 'bg-amber-500'],
+    ...(tierMap.pro ? ([['Pro', tierMap.pro, 'bg-green-600']] as [string, number, string][]) : []),
   ]
+  // The number the money agrees with: lifetime_access is what the payment code
+  // checks. For real accounts it matches the paid-tier tally exactly; if these
+  // two ever diverge, someone paid and did not get what they bought.
+  const paidUsers = paidCount ?? 0
 
   return (
     <div className="p-4 sm:p-6 max-w-6xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Analytics Dashboard</h1>
-      <p className="text-sm text-gray-400 mb-6">Business metrics overview</p>
+      <p className="text-sm text-gray-400 mb-1">Business metrics overview</p>
+      <p className="text-xs text-gray-400 mb-6">
+        <strong className="text-gray-600">{paidUsers}</strong> tài khoản đã trả tiền (theo
+        lifetime_access) · tài khoản test đã được loại khỏi mọi con số
+      </p>
 
       {/* ═══ METRIC CARDS ═══ */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
@@ -244,8 +295,8 @@ export default async function AnalyticsPage() {
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">API &amp; AI Token Usage</h3>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <div>
-            <div className="text-2xl font-bold text-purple-600">{totalAiToday}</div>
-            <div className="text-xs text-gray-500">AI Queries Today</div>
+            <div className="text-2xl font-bold text-purple-600">{totalAiMonth}</div>
+            <div className="text-xs text-gray-500">AI Queries This Month</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-purple-600">{totalAiSessions ?? 0}</div>
@@ -256,7 +307,7 @@ export default async function AnalyticsPage() {
             <div className="text-xs text-gray-500">Chat Sessions (7d)</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-blue-600">~${((totalAiToday * 5000 * 0.0000005) + (totalAiToday * 1000 * 0.000002)).toFixed(2)}</div>
+            <div className="text-2xl font-bold text-blue-600">~${((totalAiMonth * 5000 * 0.0000005) + (totalAiMonth * 1000 * 0.000002)).toFixed(2)}</div>
             <div className="text-xs text-gray-500">Est. AI Cost Today</div>
             <div className="text-xs text-gray-400">~5K in + 1K out tokens/query</div>
           </div>
@@ -525,7 +576,7 @@ export default async function AnalyticsPage() {
                     <tr key={u.id}>
                       <td className="py-1.5 text-gray-700 truncate max-w-[240px]">{u.email}</td>
                       <td className="py-1.5">
-                        <span className="text-sm font-bold text-blue-800">{u.ai_queries_today}</span>
+                        <span className="text-sm font-bold text-blue-800">{u.ai_queries_month}</span>
                       </td>
                       <td className="py-1.5">
                         <TierBadge tier={u.tier} />

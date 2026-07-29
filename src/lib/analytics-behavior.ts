@@ -50,7 +50,7 @@ export type Behaviour = {
  * healthy. Page through explicitly, and if the cap is ever hit, return the flag
  * so the page can say so instead of quietly rounding a lie.
  */
-async function fetchAllRows<T>(
+export async function fetchAllRows<T>(
   query: (from: number, to: number) => PromiseLike<{ data: T[] | null }>,
   maxRows = 60_000,
 ): Promise<{ rows: T[]; truncated: boolean }> {
