@@ -194,6 +194,16 @@ function BubbleChat({
             <Bot size={36} className="text-blue-800 mb-3" aria-hidden />
             <p className="text-sm font-semibold text-gray-800 mb-1">Ask me anything about EPA 608</p>
             <p className="text-xs text-steel mb-4">Recovery, refrigerants, regulations, safety…</p>
+            {/* Starters, not questions. These used to fire sendMessage on click,
+                spending one of a free account's ten monthly questions on a
+                canned demo before the student had asked anything of their own.
+                Prefill instead — which is what the /tutor page's identical
+                buttons and the `epa608:open-tutor` handler above already do, so
+                this panel was the one surface charging for a tap. Nearly half
+                of real chats in production match a canned string; some were
+                deliberate sends from /tutor, but every one from here was
+                spent before the person had typed a thing. */}
+            <p className="text-[11px] text-steel mb-2">Cần gợi ý? Bấm để điền vào ô, sửa thoải mái:</p>
             <div className="w-full space-y-2">
               {[
                 'What is the de minimis release rule?',
@@ -201,7 +211,7 @@ function BubbleChat({
               ].map((q) => (
                 <button
                   key={q}
-                  onClick={() => sendMessage(q)}
+                  onClick={() => setInput(q)}
                   className="w-full text-left text-xs bg-blue-50 text-blue-700 px-3 py-2.5 rounded-[7px] hover:bg-blue-100 transition-colors"
                 >
                   {q}
