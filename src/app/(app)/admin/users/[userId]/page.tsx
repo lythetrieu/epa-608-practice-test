@@ -18,14 +18,13 @@ type Session = {
 type ChatRow = {
   id: string
   title: string | null
-  messages: { role?: string; content?: string }[] | null
   created_at: string
 }
 
 /** One thing the person did, at a time — quiz attempts and questions, merged. */
 type Event =
   | { at: string; kind: 'quiz'; category: string; pct: number | null; expired: boolean }
-  | { at: string; kind: 'ask'; question: string; turns: number }
+  | { at: string; kind: 'ask'; question: string }
 
 export default async function UserDetailPage({
   params,
@@ -60,9 +59,13 @@ export default async function UserDetailPage({
   // What did they ASK, not just what did they score. A run of failed Type II
   // attempts tells you someone is stuck; the questions they typed between those
   // attempts tell you what they were stuck ON — which is the part you can fix.
+  // Deliberately NOT selecting `messages`: the column carries every turn of the
+  // conversation and was 50KB of a 114KB page load, spent on a decorative
+  // "3 messages" badge. `title` is the opening question and is set on all 306
+  // rows in production, so the timeline reads the same for a third of the bytes.
   const { data: chats } = await admin
     .from('ai_chat_sessions')
-    .select('id, title, messages, created_at')
+    .select('id, title, created_at')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
     .limit(100)
@@ -102,8 +105,7 @@ export default async function UserDetailPage({
     ...((chats ?? []) as ChatRow[]).map((c): Event => ({
       at: c.created_at,
       kind: 'ask',
-      question: c.title || c.messages?.find((m) => m.role === 'user')?.content || '(trống)',
-      turns: c.messages?.length ?? 0,
+      question: c.title || '(không có tiêu đề)',
     })),
   ]
     .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
@@ -230,9 +232,6 @@ export default async function UserDetailPage({
                     <span className="shrink-0" aria-hidden>💬</span>
                     <span className="min-w-0 text-gray-700">
                       Asked: <span className="italic">&ldquo;{e.question.slice(0, 140)}&rdquo;</span>
-                      {e.turns > 1 && (
-                        <span className="text-gray-400"> · {e.turns} messages</span>
-                      )}
                     </span>
                   </>
                 )}
