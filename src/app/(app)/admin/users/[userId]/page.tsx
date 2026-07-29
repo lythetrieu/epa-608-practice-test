@@ -15,6 +15,18 @@ type Session = {
   is_expired: boolean
 }
 
+type ChatRow = {
+  id: string
+  title: string | null
+  messages: { role?: string; content?: string }[] | null
+  created_at: string
+}
+
+/** One thing the person did, at a time — quiz attempts and questions, merged. */
+type Event =
+  | { at: string; kind: 'quiz'; category: string; pct: number | null; expired: boolean }
+  | { at: string; kind: 'ask'; question: string; turns: number }
+
 export default async function UserDetailPage({
   params,
 }: {
@@ -45,6 +57,26 @@ export default async function UserDetailPage({
     .eq('user_id', userId)
     .order('started_at', { ascending: false })
 
+  // What did they ASK, not just what did they score. A run of failed Type II
+  // attempts tells you someone is stuck; the questions they typed between those
+  // attempts tell you what they were stuck ON — which is the part you can fix.
+  const { data: chats } = await admin
+    .from('ai_chat_sessions')
+    .select('id, title, messages, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(100)
+
+  // Current state, NOT an event log: this table keeps one row per concept and
+  // overwrites it, so updated_at is "last touched" and there is no history to
+  // replay. Shown as its own panel rather than faked into the timeline.
+  const { data: pathRows } = await admin
+    .from('study_path_progress')
+    .select('concept_id, status, attempts, best_score, last_score, updated_at')
+    .eq('user_id', userId)
+    .order('updated_at', { ascending: false })
+    .limit(60)
+
   const allSessions: Session[] = sessions ?? []
   const completedSessions = allSessions.filter((s) => s.submitted_at)
   const totalTests = completedSessions.length
@@ -56,6 +88,27 @@ export default async function UserDetailPage({
             100,
         )
       : 0
+  // Interleave quizzes and questions on one clock. Read top-to-bottom you get
+  // the story a table of scores can't tell: failed, asked this, failed again,
+  // left. Capped because the point is the recent stretch, not the archive.
+  const timeline: Event[] = [
+    ...allSessions.map((s): Event => ({
+      at: s.submitted_at ?? s.started_at,
+      kind: 'quiz',
+      category: s.category,
+      pct: s.submitted_at && s.total > 0 ? Math.round(((s.score ?? 0) / s.total) * 100) : null,
+      expired: s.is_expired,
+    })),
+    ...((chats ?? []) as ChatRow[]).map((c): Event => ({
+      at: c.created_at,
+      kind: 'ask',
+      question: c.title || c.messages?.find((m) => m.role === 'user')?.content || '(trống)',
+      turns: c.messages?.length ?? 0,
+    })),
+  ]
+    .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
+    .slice(0, 60)
+
   const passCount = completedSessions.filter(
     (s) => s.score !== null && Math.round((s.score / s.total) * 100) >= 70,
   ).length
@@ -129,6 +182,106 @@ export default async function UserDetailPage({
           <div className="text-sm text-gray-500 mt-1">Tests Passed</div>
         </div>
       </div>
+
+      {/* Activity timeline — quizzes and questions on one clock */}
+      <h2 className="text-lg font-semibold text-gray-900 mb-1">Activity</h2>
+      <p className="text-sm text-gray-500 mb-4">
+        Quizzes and AI questions in the order they happened — what they asked between attempts is
+        usually what they were stuck on.
+      </p>
+
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+        {timeline.length === 0 ? (
+          <div className="px-6 py-8 text-center text-gray-400 text-sm">No activity yet.</div>
+        ) : (
+          <ol className="divide-y divide-gray-100">
+            {timeline.map((e, i) => (
+              <li key={i} className="px-5 py-3 flex items-start gap-3 text-sm">
+                <span className="w-36 shrink-0 text-xs text-gray-400 tabular-nums pt-0.5">
+                  {new Date(e.at).toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+                {e.kind === 'quiz' ? (
+                  <>
+                    <span className="shrink-0" aria-hidden>📝</span>
+                    <span className="min-w-0">
+                      <span className="font-medium text-gray-900">{e.category}</span>
+                      {e.pct === null ? (
+                        <span className="text-gray-400"> — started, not submitted</span>
+                      ) : (
+                        <span
+                          className={
+                            e.pct >= 70 ? 'text-green-700 font-semibold' : 'text-red-600 font-semibold'
+                          }
+                        >
+                          {' '}
+                          — {e.pct}%
+                        </span>
+                      )}
+                      {e.expired && <span className="text-amber-600"> (ran out of time)</span>}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="shrink-0" aria-hidden>💬</span>
+                    <span className="min-w-0 text-gray-700">
+                      Asked: <span className="italic">&ldquo;{e.question.slice(0, 140)}&rdquo;</span>
+                      {e.turns > 1 && (
+                        <span className="text-gray-400"> · {e.turns} messages</span>
+                      )}
+                    </span>
+                  </>
+                )}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+
+      {/* Study path — current state per concept. Not a timeline: this table is
+          overwritten in place, so there is no history to show. */}
+      {(pathRows?.length ?? 0) > 0 && (
+        <>
+          <h2 className="text-lg font-semibold text-gray-900 mb-1">Study path</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Current state per concept (this table is overwritten, so there is no history).
+          </p>
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+                  <tr>
+                    <th className="px-6 py-3 text-left font-medium">Concept</th>
+                    <th className="px-6 py-3 text-left font-medium">Status</th>
+                    <th className="px-6 py-3 text-left font-medium">Attempts</th>
+                    <th className="px-6 py-3 text-left font-medium">Best</th>
+                    <th className="px-6 py-3 text-left font-medium">Last touched</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {pathRows?.map((p) => (
+                    <tr key={p.concept_id}>
+                      <td className="px-6 py-3 font-mono text-xs text-gray-700">{p.concept_id}</td>
+                      <td className="px-6 py-3">{p.status}</td>
+                      <td className="px-6 py-3 tabular-nums">{p.attempts}</td>
+                      <td className="px-6 py-3 tabular-nums">
+                        {p.best_score === null ? '—' : `${p.best_score}%`}
+                      </td>
+                      <td className="px-6 py-3 text-gray-500">
+                        {new Date(p.updated_at).toLocaleDateString('en-US')}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Test sessions table */}
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
