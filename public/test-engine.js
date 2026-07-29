@@ -190,7 +190,7 @@ function initTestEngine(config) {
       try {
         if (!localStorage.getItem('epa608_anon_id'))
           localStorage.setItem('epa608_anon_id', 'anon-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8));
-        fetch('https://epa608practicetest.net/api/anonymous-sessions/start', {
+        fetch('https://app.epa608practicetest.net/api/anonymous-sessions/start', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ anonymous_id: localStorage.getItem('epa608_anon_id'), category: CATEGORY })
         }).catch(function(){});
@@ -491,7 +491,7 @@ function initTestEngine(config) {
       try {
         var anonId = localStorage.getItem('epa608_anon_id') || null;
         var timeSpent = this.startedAt ? Math.round((Date.now() - this.startedAt) / 1000) : null;
-        fetch('https://epa608practicetest.net/api/anonymous-sessions', {
+        fetch('https://app.epa608practicetest.net/api/anonymous-sessions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ anonymous_id: anonId, category: CATEGORY, score: score,
