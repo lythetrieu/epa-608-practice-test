@@ -228,7 +228,7 @@ function initTestEngine(config) {
     trackAnswer: function(i) {
       var q = this.questions[i];
       if (isLoggedIn() && q.id) {
-        fetch('https://epa608practicetest.net/api/practice/track', {
+        fetch('/api/practice/track', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ questionId: q.id, correct: this.isCorrect(i) })
