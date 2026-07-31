@@ -87,6 +87,7 @@ type PolarCheckout = {
   external_customer_id?: string | null
   total_amount?: number
   embed_origin?: string | null
+  product_id?: string
 }
 
 export async function reconcile(): Promise<Reconciliation> {
@@ -120,6 +121,12 @@ export async function reconcile(): Promise<Reconciliation> {
   // another product made a sale.
   const OUR_PRODUCT = process.env.POLAR_PRODUCT_ID ?? ''
   const isOurs = (pid?: string) => !OUR_PRODUCT || !pid || pid === OUR_PRODUCT
+
+  // Checkout attempts are organisation-wide too, and the first version of this
+  // file counted every one of them. That described this product's funnel with
+  // its siblings' abandoned carts — numbers that look precise and belong to
+  // somebody else.
+  checkouts = checkouts.filter((c) => isOurs(c.product_id))
 
   const paid = orders.filter((o) => o.paid || o.status === 'paid')
   const rows: Row[] = []
