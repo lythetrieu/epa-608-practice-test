@@ -34,6 +34,17 @@ export type Row = {
   userId: string | null
 }
 
+/** Somebody who reached the payment form. What happened next is the question. */
+export type Attempt = {
+  id: string
+  at: string
+  status: string
+  email: string
+  amountCents: number
+  origin: string
+  userId: string | null
+}
+
 export type Reconciliation =
   | { ok: false; error: string }
   | {
@@ -42,21 +53,36 @@ export type Reconciliation =
       counts: { paidOrders: number; granted: number; missing: number; noAccount: number; freeOrders: number }
       revenueCents: number
       proInDb: number
+      /** Checkout attempts by status — `failed` is the one that means lost money. */
+      checkoutCounts: Record<string, number>
+      failed: Attempt[]
+      checkoutTotal: number
     }
 
-async function fetchAllOrders(token: string): Promise<PolarOrder[]> {
-  const out: PolarOrder[] = []
+/** Polar pages at 100; ask for every page rather than trusting the first. */
+async function fetchAll<T>(token: string, path: string): Promise<T[]> {
+  const out: T[] = []
   for (let page = 1; page <= 50; page++) {
-    const res = await fetch(`https://api.polar.sh/v1/orders/?page=${page}&limit=100`, {
+    const res = await fetch(`https://api.polar.sh/v1/${path}/?page=${page}&limit=100`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     })
-    if (!res.ok) throw new Error(`Polar ${res.status}: ${(await res.text()).slice(0, 200)}`)
-    const data = (await res.json()) as { items?: PolarOrder[]; pagination?: { max_page?: number } }
+    if (!res.ok) throw new Error(`Polar /${path} ${res.status}: ${(await res.text()).slice(0, 200)}`)
+    const data = (await res.json()) as { items?: T[]; pagination?: { max_page?: number } }
     out.push(...(data.items ?? []))
     if (page >= (data.pagination?.max_page ?? 1)) break
   }
   return out
+}
+
+type PolarCheckout = {
+  id: string
+  status: string
+  created_at: string
+  customer_email?: string | null
+  external_customer_id?: string | null
+  total_amount?: number
+  embed_origin?: string | null
 }
 
 export async function reconcile(): Promise<Reconciliation> {
@@ -64,8 +90,12 @@ export async function reconcile(): Promise<Reconciliation> {
   if (!token) return { ok: false, error: 'POLAR_ACCESS_TOKEN chưa được đặt trên server.' }
 
   let orders: PolarOrder[]
+  let checkouts: PolarCheckout[]
   try {
-    orders = await fetchAllOrders(token)
+    ;[orders, checkouts] = await Promise.all([
+      fetchAll<PolarOrder>(token, 'orders'),
+      fetchAll<PolarCheckout>(token, 'checkouts'),
+    ])
   } catch (e) {
     return { ok: false, error: String(e).slice(0, 300) }
   }
@@ -114,8 +144,35 @@ export async function reconcile(): Promise<Reconciliation> {
     (p) => p.lifetime_access && !String(p.email ?? '').endsWith('@epa608-test.local'),
   ).length
 
+  // Every checkout that got as far as the payment form. `expired` is somebody
+  // who opened it and wandered off — normal, and the bulk of them. `failed` is
+  // different: they tried to pay and it did not go through, which is a lost
+  // sale and sometimes a bug on our side rather than a declined card.
+  const checkoutCounts: Record<string, number> = {}
+  for (const c of checkouts) checkoutCounts[c.status] = (checkoutCounts[c.status] ?? 0) + 1
+
+  const failed: Attempt[] = checkouts
+    .filter((c) => c.status === 'failed')
+    .map((c) => {
+      const email = String(c.customer_email ?? '').toLowerCase().trim()
+      const prof = (c.external_customer_id ? byId.get(c.external_customer_id) : undefined) ?? byEmail.get(email)
+      return {
+        id: c.id,
+        at: c.created_at,
+        status: c.status,
+        email,
+        amountCents: c.total_amount ?? 0,
+        origin: c.embed_origin ?? '',
+        userId: prof?.id ?? null,
+      }
+    })
+    .sort((a, b) => b.at.localeCompare(a.at))
+
   return {
     ok: true,
+    checkoutCounts,
+    failed,
+    checkoutTotal: checkouts.length,
     rows,
     counts: {
       paidOrders: paid.length,

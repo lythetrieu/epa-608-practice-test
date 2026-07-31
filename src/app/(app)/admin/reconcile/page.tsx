@@ -74,6 +74,75 @@ export default async function ReconcilePage() {
             nên chỉ cần lo khi nó <em>nhỏ hơn</em>.
           </div>
 
+          {/* ── Ai đã thử trả tiền ───────────────────────────────────── */}
+          <h2 className="text-lg font-semibold text-gray-900 mb-1">Người đã mở trang thanh toán</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            <strong>expired</strong> là mở rồi bỏ đi — bình thường, và chiếm đa số.{' '}
+            <strong className="text-red-700">failed</strong> mới đáng lo: họ <em>đã bấm trả tiền</em>{' '}
+            nhưng không thành công — mất một đơn hàng, và đôi khi là lỗi phía mình chứ không phải thẻ
+            bị từ chối.
+          </p>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-5 mb-4">
+            <div className="flex flex-wrap gap-6">
+              <div>
+                <div className="text-2xl font-bold text-gray-900">{r.checkoutTotal}</div>
+                <div className="text-xs text-gray-500">tổng lượt mở</div>
+              </div>
+              {Object.entries(r.checkoutCounts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([status, n]) => (
+                  <div key={status}>
+                    <div
+                      className={`text-2xl font-bold ${
+                        status === 'failed'
+                          ? 'text-red-600'
+                          : status === 'succeeded'
+                            ? 'text-green-600'
+                            : 'text-gray-400'
+                      }`}
+                    >
+                      {n}
+                    </div>
+                    <div className="text-xs text-gray-500">{status}</div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {r.failed.length > 0 && (
+            <div className="bg-white rounded-xl border border-red-300 overflow-hidden mb-8">
+              <div className="bg-red-50 px-5 py-3 text-sm font-semibold text-red-800">
+                {r.failed.length} lượt trả tiền THẤT BẠI — nên liên hệ hỏi họ gặp lỗi gì
+              </div>
+              <table className="w-full text-sm">
+                <tbody className="divide-y divide-gray-100">
+                  {r.failed.map((f) => (
+                    <tr key={f.id}>
+                      <td className="px-5 py-3 whitespace-nowrap text-gray-600">
+                        {new Date(f.at).toLocaleDateString('vi-VN')}
+                      </td>
+                      <td className="px-5 py-3">
+                        {f.userId ? (
+                          <Link href={`/admin/users/${f.userId}`} className="text-blue-700 hover:underline">
+                            {f.email || '(không có email)'}
+                          </Link>
+                        ) : (
+                          f.email || '(không có email)'
+                        )}
+                      </td>
+                      <td className="px-5 py-3 text-right tabular-nums text-gray-600">
+                        {usd(f.amountCents)}
+                      </td>
+                      <td className="px-5 py-3 text-xs text-gray-400">{f.origin}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Từng đơn đã trả tiền</h2>
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
