@@ -1,0 +1,130 @@
+// Did everyone who paid actually get what they bought?
+//
+// Our own tables cannot answer that. When fulfilment fails there is no row to
+// find — the customer paid Polar, we never heard about it, and the database
+// looks exactly as it would if they had never come. The only authority on who
+// paid is Polar, so the check has to start there and work back.
+//
+// This ran for the first time after Polar disabled the EPA 608 webhook: every
+// order.paid delivery since the hosts split had answered 301, ten retries each,
+// and nobody had a way to tell whether a buyer had slipped through.
+
+import { createAdminClient } from '@/lib/supabase/server'
+
+type PolarCustomer = { id?: string; email?: string; name?: string; external_id?: string }
+type PolarOrder = {
+  id: string
+  created_at: string
+  status: string
+  paid?: boolean
+  total_amount?: number
+  currency?: string
+  customer?: PolarCustomer
+  product?: { name?: string }
+}
+
+export type Row = {
+  orderId: string
+  at: string
+  amountCents: number
+  product: string
+  email: string
+  /** 'ok' paid and has Pro · 'missing' paid, has an account, no Pro · 'no_account' paid, never signed up */
+  verdict: 'ok' | 'missing' | 'no_account'
+  userId: string | null
+}
+
+export type Reconciliation =
+  | { ok: false; error: string }
+  | {
+      ok: true
+      rows: Row[]
+      counts: { paidOrders: number; granted: number; missing: number; noAccount: number; freeOrders: number }
+      revenueCents: number
+      proInDb: number
+    }
+
+async function fetchAllOrders(token: string): Promise<PolarOrder[]> {
+  const out: PolarOrder[] = []
+  for (let page = 1; page <= 50; page++) {
+    const res = await fetch(`https://api.polar.sh/v1/orders/?page=${page}&limit=100`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    })
+    if (!res.ok) throw new Error(`Polar ${res.status}: ${(await res.text()).slice(0, 200)}`)
+    const data = (await res.json()) as { items?: PolarOrder[]; pagination?: { max_page?: number } }
+    out.push(...(data.items ?? []))
+    if (page >= (data.pagination?.max_page ?? 1)) break
+  }
+  return out
+}
+
+export async function reconcile(): Promise<Reconciliation> {
+  const token = process.env.POLAR_ACCESS_TOKEN
+  if (!token) return { ok: false, error: 'POLAR_ACCESS_TOKEN chưa được đặt trên server.' }
+
+  let orders: PolarOrder[]
+  try {
+    orders = await fetchAllOrders(token)
+  } catch (e) {
+    return { ok: false, error: String(e).slice(0, 300) }
+  }
+
+  const admin = createAdminClient()
+  const { data: profiles } = await admin.from('users_profile').select('id, email, lifetime_access')
+  const byEmail = new Map<string, { id: string; lifetime_access: boolean }>()
+  const byId = new Map<string, { id: string; lifetime_access: boolean }>()
+  for (const p of profiles ?? []) {
+    const rec = { id: p.id, lifetime_access: Boolean(p.lifetime_access) }
+    if (p.email) byEmail.set(String(p.email).toLowerCase().trim(), rec)
+    byId.set(p.id, rec)
+  }
+
+  const paid = orders.filter((o) => o.paid || o.status === 'paid')
+  const rows: Row[] = []
+  let revenueCents = 0
+  let freeOrders = 0
+
+  for (const o of paid) {
+    const amount = o.total_amount ?? 0
+    revenueCents += amount
+    if (amount === 0) freeOrders++
+
+    const email = String(o.customer?.email ?? '').toLowerCase().trim()
+    // Match on external_id first: checkout sets customer_external_id to the
+    // Supabase user id, so it survives a buyer paying from a different address
+    // than the one they registered with — which email matching would miss.
+    const profile =
+      (o.customer?.external_id ? byId.get(o.customer.external_id) : undefined) ?? byEmail.get(email)
+
+    rows.push({
+      orderId: o.id,
+      at: o.created_at,
+      amountCents: amount,
+      product: o.product?.name ?? '—',
+      email,
+      userId: profile?.id ?? null,
+      verdict: !profile ? 'no_account' : profile.lifetime_access ? 'ok' : 'missing',
+    })
+  }
+
+  rows.sort((a, b) => b.at.localeCompare(a.at))
+
+  const proInDb = (profiles ?? []).filter(
+    (p) => p.lifetime_access && !String(p.email ?? '').endsWith('@epa608-test.local'),
+  ).length
+
+  return {
+    ok: true,
+    rows,
+    counts: {
+      paidOrders: paid.length,
+      granted: rows.filter((r) => r.verdict === 'ok').length,
+      missing: rows.filter((r) => r.verdict === 'missing').length,
+      noAccount: rows.filter((r) => r.verdict === 'no_account').length,
+      freeOrders,
+    },
+    revenueCents,
+    proInDb,
+  }
+}
