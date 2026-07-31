@@ -68,6 +68,13 @@ export default async function ReconcilePage() {
           </div>
 
           <div className="text-sm text-gray-500 mb-4">
+            {r.counts.otherProduct > 0 && (
+              <>
+                {r.counts.otherProduct} đơn thuộc <strong>sản phẩm khác</strong> trên cùng tài khoản
+                Polar (gts / parapathways) — có liệt kê nhưng <em>không</em> chấm điểm, vì khách của
+                chúng không có tài khoản trong database này.{' '}
+              </>
+            )}
             Database đang có <strong className="text-gray-800">{r.proInDb}</strong> tài khoản Pro
             (đã loại tài khoản test). Con số này thường <em>lớn hơn</em> số đơn đã trả — vì có tài
             khoản được cấp tay và {r.counts.freeOrders > 0 && <>{r.counts.freeOrders} đơn $0, </>}
@@ -179,6 +186,9 @@ export default async function ReconcilePage() {
                         )}
                         {row.verdict === 'no_account' && (
                           <span className="text-amber-700">⚠️ chưa tạo tài khoản</span>
+                        )}
+                        {row.verdict === 'other_product' && (
+                          <span className="text-gray-400">— sản phẩm khác ({row.product})</span>
                         )}
                       </td>
                     </tr>

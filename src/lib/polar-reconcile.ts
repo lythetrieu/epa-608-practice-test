@@ -20,7 +20,7 @@ type PolarOrder = {
   total_amount?: number
   currency?: string
   customer?: PolarCustomer
-  product?: { name?: string }
+  product?: { id?: string; name?: string }
 }
 
 export type Row = {
@@ -29,8 +29,12 @@ export type Row = {
   amountCents: number
   product: string
   email: string
-  /** 'ok' paid and has Pro · 'missing' paid, has an account, no Pro · 'no_account' paid, never signed up */
-  verdict: 'ok' | 'missing' | 'no_account'
+  /**
+   * 'ok' paid and has Pro · 'missing' paid, has an account, no Pro ·
+   * 'no_account' paid, never signed up · 'other_product' belongs to a sibling
+   * product on the same Polar account, so this database cannot judge it.
+   */
+  verdict: 'ok' | 'missing' | 'no_account' | 'other_product'
   userId: string | null
 }
 
@@ -50,7 +54,7 @@ export type Reconciliation =
   | {
       ok: true
       rows: Row[]
-      counts: { paidOrders: number; granted: number; missing: number; noAccount: number; freeOrders: number }
+      counts: { paidOrders: number; granted: number; missing: number; noAccount: number; freeOrders: number; otherProduct: number }
       revenueCents: number
       proInDb: number
       /** Checkout attempts by status — `failed` is the one that means lost money. */
@@ -110,6 +114,13 @@ export async function reconcile(): Promise<Reconciliation> {
     byId.set(p.id, rec)
   }
 
+  // One Polar account serves three products. Orders for the siblings must not
+  // be measured against THIS database — their buyers legitimately have no row
+  // here, and counting them as unfulfilled would invent a crisis every time
+  // another product made a sale.
+  const OUR_PRODUCT = process.env.POLAR_PRODUCT_ID ?? ''
+  const isOurs = (pid?: string) => !OUR_PRODUCT || !pid || pid === OUR_PRODUCT
+
   const paid = orders.filter((o) => o.paid || o.status === 'paid')
   const rows: Row[] = []
   let revenueCents = 0
@@ -134,7 +145,13 @@ export async function reconcile(): Promise<Reconciliation> {
       product: o.product?.name ?? '—',
       email,
       userId: profile?.id ?? null,
-      verdict: !profile ? 'no_account' : profile.lifetime_access ? 'ok' : 'missing',
+      verdict: !isOurs(o.product?.id)
+        ? 'other_product'
+        : !profile
+          ? 'no_account'
+          : profile.lifetime_access
+            ? 'ok'
+            : 'missing',
     })
   }
 
@@ -175,11 +192,14 @@ export async function reconcile(): Promise<Reconciliation> {
     checkoutTotal: checkouts.length,
     rows,
     counts: {
-      paidOrders: paid.length,
+      // Headline counts describe THIS product only; sibling orders are listed
+      // but never scored.
+      paidOrders: rows.filter((r) => r.verdict !== 'other_product').length,
       granted: rows.filter((r) => r.verdict === 'ok').length,
       missing: rows.filter((r) => r.verdict === 'missing').length,
       noAccount: rows.filter((r) => r.verdict === 'no_account').length,
       freeOrders,
+      otherProduct: rows.filter((r) => r.verdict === 'other_product').length,
     },
     revenueCents,
     proInDb,
