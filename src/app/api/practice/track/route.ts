@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { corsHeaders } from '@/lib/site-config'
 import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
@@ -33,14 +34,27 @@ type Item = z.infer<typeof item>
 // Postgres "undefined column" — the new columns haven't been ALTERed in yet.
 const UNDEFINED_COLUMN = '42703'
 
+// The quiz on the marketing host posts here, which is a cross-ORIGIN call even
+// though it is same-SITE. Without these headers the browser discards the
+// response and never sends the auth cookie, so every answer a signed-in student
+// gave on epa608practicetest.net vanished — silently, with the quiz behaving
+// perfectly on screen. Credentialed CORS is what makes the cookie travel.
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders(request, 'POST, OPTIONS', { credentials: true }),
+  })
+}
+
 export async function POST(request: NextRequest) {
+  const cors = corsHeaders(request, 'POST, OPTIONS', { credentials: true })
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: cors })
 
   const body = await request.json().catch(() => ({}))
   const parsed = schema.safeParse(body)
-  if (!parsed.success) return NextResponse.json({ error: 'Invalid' }, { status: 400 })
+  if (!parsed.success) return NextResponse.json({ error: 'Invalid' }, { status: 400, headers: cors })
 
   const items: Item[] = 'results' in parsed.data ? parsed.data.results : [parsed.data]
 
@@ -72,5 +86,5 @@ export async function POST(request: NextRequest) {
     await supabase.from('user_progress').insert(minimalRows)
   }
 
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true }, { headers: cors })
 }

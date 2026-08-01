@@ -41,13 +41,25 @@ export function allowedOrigin(req: Request): string {
  * CORS headers that reflect the request's Origin when it is the app, the
  * marketing site, or an allowed extra origin (the Astro build). Falls back to APP_URL.
  */
-export function corsHeaders(req: Request, methods = 'POST, OPTIONS'): Record<string, string> {
+export function corsHeaders(
+  req: Request,
+  methods = 'POST, OPTIONS',
+  /**
+   * Set for routes that read the signed-in user from the auth cookie. The
+   * cookie is already scoped to `.epa608practicetest.net`, so marketing → app
+   * is same-site and SameSite=Lax lets it through; what was missing is the
+   * browser's permission to SEND it cross-ORIGIN, which is this header. Note
+   * the spec forbids pairing it with `Allow-Origin: *`, hence the allowlist.
+   */
+  opts: { credentials?: boolean } = {},
+): Record<string, string> {
   const origin = req.headers.get('origin') ?? ''
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : APP_URL
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': methods,
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    ...(opts.credentials ? { 'Access-Control-Allow-Credentials': 'true' } : {}),
     'Vary': 'Origin',
   }
 }
