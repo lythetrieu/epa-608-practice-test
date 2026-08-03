@@ -49,6 +49,9 @@ export type Attempt = {
   userId: string | null
 }
 
+/** One month of the checkout funnel: form opens → distinct people → payments. */
+export type FunnelMonth = { month: string; opened: number; people: number; succeeded: number }
+
 export type Reconciliation =
   | { ok: false; error: string }
   | {
@@ -61,6 +64,7 @@ export type Reconciliation =
       checkoutCounts: Record<string, number>
       failed: Attempt[]
       checkoutTotal: number
+      funnelMonths: FunnelMonth[]
     }
 
 /** Polar pages at 100; ask for every page rather than trusting the first. */
@@ -175,6 +179,24 @@ export async function reconcile(): Promise<Reconciliation> {
   const checkoutCounts: Record<string, number> = {}
   for (const c of checkouts) checkoutCounts[c.status] = (checkoutCounts[c.status] ?? 0) + 1
 
+  // The same numbers cut by month, because the all-time total hides trend
+  // breaks — a month where signups triple while payments stall reads as
+  // "healthy overall" until it is bucketed. `people` dedupes repeat opens by
+  // the same customer (external id, else email, else the session itself).
+  const byMonth = new Map<string, { opened: number; who: Set<string>; succeeded: number }>()
+  for (const c of checkouts) {
+    const m = String(c.created_at ?? '').slice(0, 7)
+    if (!m) continue
+    const b = byMonth.get(m) ?? { opened: 0, who: new Set<string>(), succeeded: 0 }
+    b.opened++
+    b.who.add(String(c.external_customer_id || c.customer_email || c.id).toLowerCase().trim())
+    if (c.status === 'succeeded') b.succeeded++
+    byMonth.set(m, b)
+  }
+  const funnelMonths: FunnelMonth[] = [...byMonth.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([month, v]) => ({ month, opened: v.opened, people: v.who.size, succeeded: v.succeeded }))
+
   const failed: Attempt[] = checkouts
     .filter((c) => c.status === 'failed')
     .map((c) => {
@@ -196,6 +218,7 @@ export async function reconcile(): Promise<Reconciliation> {
     ok: true,
     checkoutCounts,
     failed,
+    funnelMonths,
     checkoutTotal: checkouts.length,
     rows,
     counts: {

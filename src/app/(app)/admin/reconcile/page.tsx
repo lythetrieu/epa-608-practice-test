@@ -117,6 +117,38 @@ export default async function ReconcilePage() {
             </div>
           </div>
 
+          {r.funnelMonths.length > 0 && (
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-4">
+              <div className="px-5 py-3 text-sm font-semibold text-gray-800 border-b border-gray-100">
+                Phễu checkout theo tháng — lượt mở form → người (đã khử trùng lặp) → trả thành công
+              </div>
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+                  <tr>
+                    <th className="px-5 py-2 text-left font-medium">Tháng</th>
+                    <th className="px-5 py-2 text-right font-medium">Lượt mở</th>
+                    <th className="px-5 py-2 text-right font-medium">Người</th>
+                    <th className="px-5 py-2 text-right font-medium">Trả OK</th>
+                    <th className="px-5 py-2 text-right font-medium">Người → trả</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {r.funnelMonths.map((m) => (
+                    <tr key={m.month}>
+                      <td className="px-5 py-2 font-mono text-gray-700">{m.month}</td>
+                      <td className="px-5 py-2 text-right tabular-nums text-gray-600">{m.opened}</td>
+                      <td className="px-5 py-2 text-right tabular-nums text-gray-600">{m.people}</td>
+                      <td className="px-5 py-2 text-right tabular-nums font-semibold text-green-700">{m.succeeded}</td>
+                      <td className="px-5 py-2 text-right tabular-nums text-gray-800">
+                        {m.people > 0 ? `${Math.round((m.succeeded / m.people) * 100)}%` : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {r.failed.length > 0 && (
             <div className="bg-white rounded-xl border border-red-300 overflow-hidden mb-8">
               <div className="bg-red-50 px-5 py-3 text-sm font-semibold text-red-800">
