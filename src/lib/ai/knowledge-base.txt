@@ -690,3 +690,14 @@ YOUR COMPLETE KNOWLEDGE BASE:
 - A 15 psig rated rupture disc is located on the evaporator of a centrifugal chiller.
 - When charging through the evaporator charging valve, do not over-pressurize the system.
 - Isopropyl alcohol should be used to remove ice from sight glasses or viewing glasses (Type III).
+
+## EXAM STRUCTURE, PASSING SCORE, COST & CERTIFICATION
+- Each EPA 608 section (Core, Type I, Type II, Type III) has 25 questions.
+- The Universal certification exam is 100 questions total: Core plus all three Type sections.
+- The passing score is 72% per section — 18 correct out of 25 questions. It is NOT 70%; some prep providers round down to 70%, but 18 of 25 equals 72%.
+- Every section must be passed separately at 72% on the proctored exam.
+- The ONLY exception: the Type I mail-in open-book exam requires 84% (21 of 25). An open-book Core does not count toward Universal certification.
+- If you fail one section, you only retake that section — sections already passed stay passed.
+- EPA 608 certification NEVER expires. It is a lifetime credential with no renewal requirement.
+- Exam cost: about $10–$40 per attempt through local proctoring organizations; ESCO's online remote-proctored exam costs more, roughly $60–$85. Retakes are charged again at the same price.
+- Section 608 covers stationary refrigeration and air-conditioning equipment. Section 609 covers motor vehicle air conditioning (MVAC) — a separate certification.

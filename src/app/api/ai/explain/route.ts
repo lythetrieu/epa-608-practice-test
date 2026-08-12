@@ -146,17 +146,21 @@ export async function POST(request: NextRequest) {
           ],
           stream: false,
           temperature: 0.3,
-          max_tokens: 200,
+          // DeepSeek V4 Flash is a reasoning model: with a small max_tokens it
+          // spends the whole budget thinking and returns EMPTY content — which
+          // this route used to ship as a 200 with placeholder text, so the
+          // Qwen fallback below never got a turn. Disable reasoning and treat
+          // empty content as a failure, not a success.
+          max_tokens: 300,
+          reasoning: { enabled: false },
         }),
       })
 
       if (res.ok) {
         const data = await res.json()
-        const explanation = data.choices?.[0]?.message?.content ?? 'Could not generate explanation.'
-        return NextResponse.json({
-          explanation,
-          remaining,
-        })
+        const explanation = String(data.choices?.[0]?.message?.content ?? '').trim()
+        if (explanation) return NextResponse.json({ explanation, remaining })
+        console.warn('ai/explain: empty content from', model)
       }
     } catch { /* try next model */ }
   }
