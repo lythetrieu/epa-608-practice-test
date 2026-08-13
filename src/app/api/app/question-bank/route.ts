@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 //
 // Returns the FULL bank the signed-in user is entitled to, INCLUDING
 // answer_text / correct_answers / explanation. That is intentional and
-// approved: every ACCOUNT (free included) gets the full 569-question bank
+// approved: every ACCOUNT (free included) gets the full 604-question bank
 // (see TIER_LIMITS — questionPoolLimit is Infinity for all tiers; the gating
 // model differentiates Pro by features, not question count). Anonymous users
 // never reach this route (middleware 401s /api/app/* + in-route auth check),

@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { randomUUID } from 'crypto'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { hasPositionalOptions } from '@/lib/option-order'
 
 // Load micro-lessons (teaching content for each concept). Used only by POST —
 // the GET concept overview now comes from the shared buildStudyPathConcepts().
@@ -196,9 +197,12 @@ export async function POST(request: NextRequest) {
     // Return without answers
     const clientQuestions = picked.map(q => {
       const opts = [...q.options]
-      for (let i = opts.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opts[i], opts[j]] = [opts[j], opts[i]]
+      // Order carries meaning for "Both (a) and (c)" style options — leave those.
+      if (!hasPositionalOptions(opts)) {
+        for (let i = opts.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [opts[i], opts[j]] = [opts[j], opts[i]]
+        }
       }
       return { id: q.id, category: q.category, question: q.question, options: opts, difficulty: q.difficulty, question_type: q.question_type }
     })

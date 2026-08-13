@@ -13,7 +13,7 @@ import { TIER_LIMITS, type Category, type Tier } from '@/types'
  * Because the selection is "ORDER BY id LIMIT N", the same 200 ids come back
  * every time regardless of when the user plays — it is a stable free pool, not
  * a 200/day quota. Paid tiers (questionPoolLimit === Infinity) get the full
- * ~569-question bank, unchanged.
+ * ~604-question bank, unchanged.
  *
  * The anonymous on-page sample (src/app/api/public/*) is a SEPARATE surface and
  * is not affected by anything here.

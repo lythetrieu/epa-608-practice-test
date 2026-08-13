@@ -150,9 +150,11 @@ const BOSS_PASS_RATIO = 0.72
 const BEAT_CLOCK_MIN_SAMPLE = 25
 // fixer: this many once-wrong questions whose LATEST attempt is correct.
 const FIXER_MIN_QUESTIONS = 10
-// full-bank: distinct questions answered ≥ the published bank size (~569 —
-// see question-pool.ts). Computed over a bounded newest-first window, see
-// countDistinctQuestions below for the honest limitation.
+// full-bank: distinct questions answered ≥ this milestone. Deliberately
+// FROZEN at 569 even though the bank has since grown past it — raising the
+// threshold would revoke the badge from users who already earned it.
+// Computed over a bounded newest-first window, see countDistinctQuestions
+// below for the honest limitation.
 export const FULL_BANK_SIZE = 569
 
 // ── Wave-2 badge criteria ──
@@ -174,7 +176,7 @@ const NIGHT_OWL_START_HOUR = 3
 const NIGHT_OWL_END_HOUR = 9
 // century: lifetime answers (correct + wrong).
 const CENTURY_ANSWERS = 100
-// half-bank: distinct questions ≥ half the ~569 bank.
+// half-bank: half of the frozen full-bank milestone above.
 export const HALF_BANK_SIZE = 285
 // marathon-day: this many answers on a single UTC day (see maxAnswersInADay).
 const MARATHON_DAY_ANSWERS = 100

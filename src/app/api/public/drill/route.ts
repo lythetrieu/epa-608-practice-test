@@ -4,6 +4,7 @@ import { getIdentifier, publicDrillRateLimit } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
+import { hasPositionalOptions } from '@/lib/option-order'
 
 const schema = z.object({
   weakSubtopics: z.array(z.string()).min(1).max(20),
@@ -73,9 +74,12 @@ export async function POST(request: NextRequest) {
     // Return without answers, shuffle options
     const clientQuestions = picked.map(q => {
       const opts = [...q.options]
-      for (let i = opts.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opts[i], opts[j]] = [opts[j], opts[i]]
+      // Order carries meaning for "Both (a) and (c)" style options — leave those.
+      if (!hasPositionalOptions(opts)) {
+        for (let i = opts.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [opts[i], opts[j]] = [opts[j], opts[i]]
+        }
       }
       return { id: q.id, category: q.category, question: q.question, options: opts, difficulty: q.difficulty }
     })

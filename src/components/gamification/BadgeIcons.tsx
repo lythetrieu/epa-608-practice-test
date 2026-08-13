@@ -267,7 +267,7 @@ function GlyphStreak({ p, days }: GlyphProps & { days: number }) {
   );
 }
 
-/** Stacked answer cards with "569" — full question bank. */
+/** Stacked answer cards with "569" — the full-bank milestone. */
 function GlyphFullBank({ p }: GlyphProps) {
   return (
     <g>

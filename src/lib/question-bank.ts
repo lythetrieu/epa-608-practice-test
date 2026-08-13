@@ -10,6 +10,7 @@
 // post answers once, at the end, to POST /api/app/submit for server grading.
 
 import { readCache, writeCache } from '@/lib/local-first'
+import { shuffleOptionsSafely } from './option-order'
 
 // Must match BANK_VERSION in src/app/api/app/question-bank/route.ts — bump
 // BOTH when the row shape changes; mismatched cached payloads are refetched.
@@ -166,5 +167,7 @@ export function pickQuestions(
 
   // Per-question option shuffle on COPIES (never mutate the cached bank),
   // matching the server response from /api/questions.
-  return picked.map((q) => (shuffle ? { ...q, options: fisherYates([...q.options]) } : q))
+  return picked.map((q) =>
+    shuffle ? { ...q, options: shuffleOptionsSafely(q.options, fisherYates) } : q,
+  )
 }

@@ -103,7 +103,7 @@ export const BADGE_CAPTIONS: Record<AchievementBadgeId, string> = {
   'streak-3': 'Practice 3 days in a row.',
   'streak-7': 'Practice 7 days in a row.',
   'streak-14': 'Practice 14 days in a row.',
-  'full-bank': 'Answer all 569 questions in the question bank at least once.',
+  'full-bank': 'Answer 569 different questions from the bank at least once.',
   'beat-the-clock': 'Average 72 seconds or less per question across 25+ timed answers.',
   fixer: 'Turn 10 questions you once missed into correct answers on your latest try.',
   'first-test': 'Complete your first practice test.',

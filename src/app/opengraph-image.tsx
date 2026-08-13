@@ -44,7 +44,7 @@ export default async function OGImage() {
             marginBottom: 40,
           }}
         >
-          Free. 569 Questions. AI-Powered. Pass the First Time.
+          Free. 604 Questions. AI-Powered. Pass the First Time.
         </div>
 
         {/* Feature pills */}

@@ -4,6 +4,7 @@ import { questionRateLimit, getIdentifier } from '@/lib/ratelimit'
 import { canAccessCategory, TIER_LIMITS } from '@/lib/tier'
 import { isFreePool, filterRowsToPool } from '@/lib/question-pool'
 import { z } from 'zod'
+import { hasPositionalOptions } from '@/lib/option-order'
 
 const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
@@ -183,11 +184,15 @@ export async function POST(request: NextRequest) {
   const ordered = questionIds.map(id => {
     const q = questions?.find((q: any) => q.id === id)
     if (!q) return null
-    // Shuffle answer options so correct answer isn't always in the same position
+    // Shuffle answer options so correct answer isn't always in the same
+    // position — except when an option says "Both (a) and (c)" or "All of the
+    // above", where the order carries meaning. See lib/option-order.ts.
     const shuffledOptions = [...(q as any).options]
-    for (let i = shuffledOptions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]
+    if (!hasPositionalOptions(shuffledOptions)) {
+      for (let i = shuffledOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]
+      }
     }
     return { ...(q as any), options: shuffledOptions }
   }).filter(Boolean)

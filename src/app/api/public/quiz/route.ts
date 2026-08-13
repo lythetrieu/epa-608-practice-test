@@ -4,6 +4,7 @@ import { getIdentifier, publicQuizRateLimit } from '@/lib/ratelimit'
 import { saveQuiz } from '@/lib/quiz-store'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
+import { hasPositionalOptions } from '@/lib/option-order'
 
 const schema = z.object({
   category: z.enum(['Core', 'Type I', 'Type II', 'Type III', 'Universal']),
@@ -183,9 +184,12 @@ export async function POST(request: NextRequest) {
   // Return questions WITHOUT answer_text — shuffle options per question
   const clientQuestions = shuffled.map(q => {
     const opts = [...q.options]
-    for (let i = opts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [opts[i], opts[j]] = [opts[j], opts[i]]
+    // Order carries meaning for "Both (a) and (c)" style options — leave those.
+    if (!hasPositionalOptions(opts)) {
+      for (let i = opts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opts[i], opts[j]] = [opts[j], opts[i]]
+      }
     }
     return {
       id: q.id,
