@@ -31,6 +31,14 @@ export default async function AnalyticsPage() {
 
   const fourteenAgo = new Date(now.getTime() - 14 * 86400000).toISOString()
 
+  // The e2e personas drive the AI tutor from CI several times a day; without
+  // this filter they are ~95% of ai_chat_sessions and "Recent AI Conversations"
+  // shows nothing but robots (the persona trap, again).
+  const { data: testUsers } = await admin.from('users_profile').select('id').like('email', `%${TEST_DOMAIN}`)
+  const testIds = (testUsers ?? []).map((u) => u.id)
+  const noTestSessions = <T,>(q: T): T =>
+    testIds.length ? ((q as any).not('user_id', 'in', `(${testIds.join(',')})`) as T) : q
+
   const [
     { count: totalUsers },
     { count: usersToday },
@@ -62,9 +70,9 @@ export default async function AnalyticsPage() {
     // Pending question reports
     admin.from('question_reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
     // AI chat sessions total
-    admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }),
+    noTestSessions(admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true })),
     // AI chat sessions this week
-    admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
+    noTestSessions(admin.from('ai_chat_sessions').select('*', { count: 'exact', head: true })).gte('created_at', weekAgo),
     // Recent signups
     notTest(admin.from('users_profile').select('id, email, tier, created_at')).order('created_at', { ascending: false }).limit(10),
     // Recent reports (pending queue only)
@@ -73,9 +81,10 @@ export default async function AnalyticsPage() {
     admin.from('users_profile').select('created_at').gte('created_at', fourteenAgo),
     // Daily tests (last 14 days)
     admin.from('test_sessions').select('submitted_at').not('submitted_at', 'is', null).gte('submitted_at', fourteenAgo),
-    // Recent AI chat sessions with user email
-    admin.from('ai_chat_sessions')
-      .select('id, user_id, title, created_at, updated_at')
+    // Recent AI chat sessions. `messages` must be selected — the table renders
+    // messages.length, and without the column every row displayed "0".
+    noTestSessions(admin.from('ai_chat_sessions')
+      .select('id, user_id, title, messages, created_at, updated_at'))
       .order('updated_at', { ascending: false })
       .limit(20),
     // Top AI users (join with users_profile)
