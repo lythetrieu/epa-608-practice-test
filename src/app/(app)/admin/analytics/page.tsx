@@ -31,11 +31,9 @@ export default async function AnalyticsPage() {
 
   const fourteenAgo = new Date(now.getTime() - 14 * 86400000).toISOString()
 
-  // The e2e personas drive the AI tutor from CI several times a day; without
-  // this filter they are ~95% of ai_chat_sessions and "Recent AI Conversations"
-  // shows nothing but robots (the persona trap, again).
-  const { data: testUsers } = await admin.from('users_profile').select('id').like('email', `%${TEST_DOMAIN}`)
-  const testIds = (testUsers ?? []).map((u) => u.id)
+  // Same exclusion for tables keyed by user_id rather than email: AI sessions
+  // (the personas held 95% of them) and the wrong-answer scan.
+  const testIds = [...TEST_IDS]
   const noTestSessions = <T,>(q: T): T =>
     testIds.length ? ((q as any).not('user_id', 'in', `(${testIds.join(',')})`) as T) : q
 
@@ -160,7 +158,12 @@ export default async function AnalyticsPage() {
       .map((r) => ({ id: r.id, question: r.question ?? r.id, fails: Number(r.fails) || 0 }))
   } else {
     // Fallback: original scan of every wrong answer + in-JS tally + question lookup.
-    const { data: failedQuestions } = await admin.from('user_progress').select('question_id, correct').eq('correct', false)
+    // Robots excluded here too: the RPC does it in SQL, and a fallback that
+    // silently counted the personas would put the same five Type I questions
+    // back on the page the moment the RPC is unavailable.
+    const { data: failedQuestions } = testIds.length
+      ? await admin.from('user_progress').select('question_id, correct').eq('correct', false).not('user_id', 'in', `(${testIds.join(',')})`)
+      : await admin.from('user_progress').select('question_id, correct').eq('correct', false)
     const failMap: Record<string, number> = {}
     failedQuestions?.forEach((r: { question_id: string }) => { failMap[r.question_id] = (failMap[r.question_id] || 0) + 1 })
     const top5Failed = Object.entries(failMap).sort((a, b) => b[1] - a[1]).slice(0, 5)

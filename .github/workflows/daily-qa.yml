@@ -105,6 +105,15 @@ jobs:
           EXPLORE_SEED: ${{ github.run_number }}
           EXPLORE_STEPS: '30'
         run: npx playwright test 08-explore --project=desktop --workers=1
+      # The personas write to the same prod tables real students use. Clear
+      # their tracks every run so analytics never has to argue with robots.
+      - name: Sweep persona rows out of prod
+        if: always()
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node tests/e2e/cleanup-personas.mjs
+
       - name: Upload failures
         if: failure()
         uses: actions/upload-artifact@v5
